@@ -1,10 +1,20 @@
 import React from 'react';
 import { thStyle, tdStyle, groupThStyle } from './table-cell-styles.js';
 
-function getColumnSizingStyle({ width, truncate = false }) {
-  return truncate
-    ? { width: '100%', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }
-    : { width };
+/* `truncate` and `wrap` are the two answers to "this value is longer than its
+ * column". They are mutually exclusive: `truncate` keeps the row one line tall
+ * and ends it with an ellipsis; `wrap` lets the row grow so the whole value
+ * stays readable. Without either, the cell's `white-space: nowrap` lets the
+ * text run out of its column and over whatever the next column holds — an
+ * action control included, which is how a value came to be painted on top of
+ * an edit button. */
+function getColumnSizingStyle({ width, truncate = false, wrap = false }) {
+  if (truncate) return { width: '100%', maxWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' };
+  /* `keep-all` is the Korean rule: break between words, never inside one.
+   * `overflow-wrap: anywhere` is the escape hatch for an unbroken token
+   * (a URL, an identifier) that is wider than the column on its own. */
+  if (wrap) return { width, whiteSpace: 'normal', wordBreak: 'keep-all', overflowWrap: 'anywhere' };
+  return { width };
 }
 
 /* `columnLabelsHidden` keeps `<th scope="col">` for assistive technology while
@@ -54,12 +64,12 @@ function getTableCellPadding(size = 'md') {
 }
 
 /** Public style helpers for product-owned native tables that must match LDS Table cells. */
-export function getTableHeaderCellStyle({ size = 'md', padding, align = 'left', width, truncate = false } = {}) {
-  return { ...thStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+export function getTableHeaderCellStyle({ size = 'md', padding, align = 'left', width, truncate = false, wrap = false } = {}) {
+  return { ...thStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate, wrap }) };
 }
 
-export function getTableDataCellStyle({ size = 'md', padding, align = 'left', width, truncate = false } = {}) {
-  return { ...tdStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+export function getTableDataCellStyle({ size = 'md', padding, align = 'left', width, truncate = false, wrap = false } = {}) {
+  return { ...tdStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate, wrap }) };
 }
 
 function TableCellContent({ truncate, children }) {
@@ -99,7 +109,7 @@ function TableRow({ columns, row, rowIndex, size, pad, hover, banded, rowHeaderK
     >
       {columns.map((c) => {
         const content = typeof c.render === 'function' ? c.render(row) : row[c.key];
-        const cellStyle = getTableDataCellStyle({ size, padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate });
+        const cellStyle = getTableDataCellStyle({ size, padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate, wrap: c.wrap });
         const cellContent = <TableCellContent truncate={c.truncate}>{content}</TableCellContent>;
         // WCAG 1.3.1 / APG Table pattern: the cell that identifies the row is a
         // row header, so a screen reader can read it back with every other cell
@@ -166,12 +176,59 @@ export function Table({
   // would silently replace that visible name and risk a name/visible-text
   // mismatch (WCAG 2.5.3), so the ARIA names only apply without a caption.
   const nameFromAria = caption == null;
+
+  /* The surface scrolls horizontally when the columns outrun their container.
+   * WCAG 2.1.1 / `scrollable-region-focusable`: whatever a pointer can scroll,
+   * a keyboard must be able to scroll too. This surface used to be a plain
+   * `div`, so the columns past the fold were reachable with a mouse and with
+   * nothing else — the same contract `ScrollArea` already documents and
+   * implements, bypassed by the component that needs it most.
+   *
+   * Overflow is measured, so a table that fits adds no tab stop. The region
+   * borrows the table's own name: it is the same object, and a second name
+   * would make a screen reader announce two things where there is one.
+   *
+   * A caller that already declares the region (a specimen that knows it is
+   * always wide) keeps its own `role`/`tabIndex`/name — measurement only fills
+   * in what was not stated. */
+  const surfaceRef = React.useRef(null);
+  const captionId = `${React.useId()}-caption`;
+  const [scrolls, setScrolls] = React.useState(false);
+  /* The same measurement `ScrollArea` makes, kept here rather than shared:
+   * `Table` ships in Product and the layer contract forbids reaching into a
+   * Core internal by subpath, and `ScrollArea` itself cannot be reused because
+   * it owns `maxHeight` and scrolls both axes while this surface scrolls
+   * horizontally and lets the page own its height. Only the x axis counts — a
+   * long table must not claim a horizontal region it does not have. */
+  React.useEffect(() => {
+    const node = surfaceRef.current;
+    if (!node) return undefined;
+    const measure = () => {
+      const next = node.scrollWidth - node.clientWidth > 1;
+      setScrolls((prev) => (prev === next ? prev : next));
+    };
+    measure();
+    if (typeof ResizeObserver === 'undefined') return undefined;
+    const ro = new ResizeObserver(measure);
+    ro.observe(node);
+    for (const child of Array.from(node.children)) ro.observe(child);
+    return () => ro.disconnect();
+  }, [columns, rows, size]);
+  const surfaceName = tableLabel ?? rest['aria-label'];
+  const surfaceNamedBy = tableLabelledBy ?? rest['aria-labelledby'] ?? (caption != null ? captionId : undefined);
+  const surfaceNamed = surfaceName != null || surfaceNamedBy != null;
+
   return (
     <div
       {...rest}
+      ref={surfaceRef}
       className={['lk-scroll-surface', className].filter(Boolean).join(' ')}
       data-scrollbar="auto"
       data-scroll-gutter="auto"
+      role={rest.role ?? (scrolls && surfaceNamed ? 'region' : undefined)}
+      aria-label={rest['aria-label'] ?? (scrolls && surfaceName != null ? surfaceName : undefined)}
+      aria-labelledby={rest['aria-labelledby'] ?? (scrolls && surfaceName == null ? surfaceNamedBy : undefined)}
+      tabIndex={rest.tabIndex ?? (scrolls ? 0 : undefined)}
       style={{ overflowX: 'auto', scrollbarGutter: 'auto', ...style }}
     >
       <table
@@ -181,6 +238,7 @@ export function Table({
       >
         {caption != null && (
           <caption
+            id={captionId}
             style={{
               captionSide: 'top',
               paddingBottom: 'var(--space-2)',
@@ -201,8 +259,8 @@ export function Table({
                 key={c.key}
                 scope="col"
                 style={columnLabelsHidden
-                  ? hiddenHeaderCellStyle(c.align || 'left', getColumnSizingStyle({ width: c.width, truncate: c.truncate }))
-                  : getTableHeaderCellStyle({ size, padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate })}
+                  ? hiddenHeaderCellStyle(c.align || 'left', getColumnSizingStyle({ width: c.width, truncate: c.truncate, wrap: c.wrap }))
+                  : getTableHeaderCellStyle({ size, padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate, wrap: c.wrap })}
               >
                 {columnLabelsHidden
                   ? <span style={HIDDEN_HEADER_LABEL_STYLE}>{c.label}</span>

@@ -8,8 +8,10 @@ import {
 // components/data/Table.jsx
 import React from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
-function getColumnSizingStyle({ width, truncate = false }) {
-  return truncate ? { width: "100%", maxWidth: 0, overflow: "hidden", textOverflow: "ellipsis" } : { width };
+function getColumnSizingStyle({ width, truncate = false, wrap = false }) {
+  if (truncate) return { width: "100%", maxWidth: 0, overflow: "hidden", textOverflow: "ellipsis" };
+  if (wrap) return { width, whiteSpace: "normal", wordBreak: "keep-all", overflowWrap: "anywhere" };
+  return { width };
 }
 var hiddenHeaderCellStyle = (align, sizing) => ({
   ...sizing,
@@ -38,11 +40,11 @@ function getTableRowMinHeight(size = "md") {
 function getTableCellPadding(size = "md") {
   return size === "sm" ? "var(--lk-table-cell-pad-sm, var(--component-table-cell-padding-sm, 6px 12px))" : "var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 8px 16px))";
 }
-function getTableHeaderCellStyle({ size = "md", padding, align = "left", width, truncate = false } = {}) {
-  return { ...thStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+function getTableHeaderCellStyle({ size = "md", padding, align = "left", width, truncate = false, wrap = false } = {}) {
+  return { ...thStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate, wrap }) };
 }
-function getTableDataCellStyle({ size = "md", padding, align = "left", width, truncate = false } = {}) {
-  return { ...tdStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate }) };
+function getTableDataCellStyle({ size = "md", padding, align = "left", width, truncate = false, wrap = false } = {}) {
+  return { ...tdStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate, wrap }) };
 }
 function TableCellContent({ truncate, children }) {
   if (!truncate) return children;
@@ -84,7 +86,7 @@ function TableRow({ columns, row, rowIndex, size, pad, hover, banded, rowHeaderK
       style: { background: hover && h ? hoverBackground : restBackground, transition: "background var(--dur-fast) var(--ease-out)", ...style },
       children: columns.map((c) => {
         const content = typeof c.render === "function" ? c.render(row) : row[c.key];
-        const cellStyle = getTableDataCellStyle({ size, padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate });
+        const cellStyle = getTableDataCellStyle({ size, padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate, wrap: c.wrap });
         const cellContent = /* @__PURE__ */ jsx(TableCellContent, { truncate: c.truncate, children: content });
         if (rowHeaderKey != null && c.key === rowHeaderKey) {
           return /* @__PURE__ */ jsx("th", { scope: "row", style: { ...cellStyle, fontWeight: "inherit" }, children: cellContent }, c.key);
@@ -114,13 +116,38 @@ function Table({
 }) {
   const pad = getTableCellPadding(size);
   const nameFromAria = caption == null;
+  const surfaceRef = React.useRef(null);
+  const captionId = `${React.useId()}-caption`;
+  const [scrolls, setScrolls] = React.useState(false);
+  React.useEffect(() => {
+    const node = surfaceRef.current;
+    if (!node) return void 0;
+    const measure = () => {
+      const next = node.scrollWidth - node.clientWidth > 1;
+      setScrolls((prev) => prev === next ? prev : next);
+    };
+    measure();
+    if (typeof ResizeObserver === "undefined") return void 0;
+    const ro = new ResizeObserver(measure);
+    ro.observe(node);
+    for (const child of Array.from(node.children)) ro.observe(child);
+    return () => ro.disconnect();
+  }, [columns, rows, size]);
+  const surfaceName = tableLabel ?? rest["aria-label"];
+  const surfaceNamedBy = tableLabelledBy ?? rest["aria-labelledby"] ?? (caption != null ? captionId : void 0);
+  const surfaceNamed = surfaceName != null || surfaceNamedBy != null;
   return /* @__PURE__ */ jsx(
     "div",
     {
       ...rest,
+      ref: surfaceRef,
       className: ["lk-scroll-surface", className].filter(Boolean).join(" "),
       "data-scrollbar": "auto",
       "data-scroll-gutter": "auto",
+      role: rest.role ?? (scrolls && surfaceNamed ? "region" : void 0),
+      "aria-label": rest["aria-label"] ?? (scrolls && surfaceName != null ? surfaceName : void 0),
+      "aria-labelledby": rest["aria-labelledby"] ?? (scrolls && surfaceName == null ? surfaceNamedBy : void 0),
+      tabIndex: rest.tabIndex ?? (scrolls ? 0 : void 0),
       style: { overflowX: "auto", scrollbarGutter: "auto", ...style },
       children: /* @__PURE__ */ jsxs(
         "table",
@@ -132,6 +159,7 @@ function Table({
             caption != null && /* @__PURE__ */ jsx(
               "caption",
               {
+                id: captionId,
                 style: {
                   captionSide: "top",
                   paddingBottom: "var(--space-2)",
@@ -148,7 +176,7 @@ function Table({
               "th",
               {
                 scope: "col",
-                style: columnLabelsHidden ? hiddenHeaderCellStyle(c.align || "left", getColumnSizingStyle({ width: c.width, truncate: c.truncate })) : getTableHeaderCellStyle({ size, padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate }),
+                style: columnLabelsHidden ? hiddenHeaderCellStyle(c.align || "left", getColumnSizingStyle({ width: c.width, truncate: c.truncate, wrap: c.wrap })) : getTableHeaderCellStyle({ size, padding: pad, align: c.align || "left", width: c.width, truncate: c.truncate, wrap: c.wrap }),
                 children: columnLabelsHidden ? /* @__PURE__ */ jsx("span", { style: HIDDEN_HEADER_LABEL_STYLE, children: c.label }) : /* @__PURE__ */ jsx(TableCellContent, { truncate: c.truncate, children: c.label })
               },
               c.key
@@ -189,4 +217,4 @@ export {
   getTableDataCellStyle,
   Table
 };
-//# sourceMappingURL=chunk-BAOIXDMQ.js.map
+//# sourceMappingURL=chunk-UEO3OWLK.js.map
