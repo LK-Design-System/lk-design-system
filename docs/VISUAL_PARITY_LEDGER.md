@@ -23,8 +23,8 @@ parity gates.
 | Named public exports | 224 | Public package surface covered by type checks |
 | Storybook public stories | 521 | Component and pattern surfaces only |
 | Storybook hidden visual parity stories | 100 | Tagged `visual-parity` and `!dev` |
-| Visual inventory React stories | 753 | Current implementation stories checked by the accessibility guard |
-| Accessibility checked implementation stories | 753 | Current implementation stories checked by the accessibility guard |
+| Visual inventory React stories | 755 | Current implementation stories checked by the accessibility guard |
+| Accessibility checked implementation stories | 755 | Current implementation stories checked by the accessibility guard |
 
 ## Parity source of truth
 
