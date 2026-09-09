@@ -2,6 +2,34 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.2.8 - 2026-09-09
+
+Paired Robotics release: `0.1.0-rc.43`. This patch adds one column option and repairs a keyboard
+gap in `Table`; nothing existing changes.
+
+### Added
+
+- `Table` column option `wrap`: let a long value wrap onto more lines instead of running out of its
+  column. Cells are `white-space: nowrap` by default, so a column that declared neither `truncate`
+  nor `wrap` painted its overflow over whatever the next column held — an action control included.
+  A product detail table did exactly that: a description ran across its own edit button, and neither
+  the value nor the button could be told apart. `truncate` was the only existing answer and it is
+  the wrong one for free text, because the full value then survives only in a hover title, which a
+  touch user never receives. Wrapping follows the Korean rule (`word-break: keep-all`), breaking
+  between words and never inside one, with `overflow-wrap: anywhere` reserved for a single token
+  wider than its column. `truncate` wins when both are set.
+
+### Fixed
+
+- `Table`: the horizontal scroll surface is now keyboard reachable. It was a plain `div` with
+  `overflow-x: auto`, so columns past the fold could be reached with a pointer and with nothing
+  else (WCAG 2.1.1, `scrollable-region-focusable`). `ScrollArea` already documents and implements
+  that contract; the component that most needs it bypassed it. The surface now measures its own
+  overflow and, only when it actually scrolls, takes `tabIndex={0}` and a `role="region"` named by
+  the table itself — a second name would make a screen reader announce two things where there is
+  one. A table that fits adds no tab stop. A caller that already declares `role`, `tabIndex` or a
+  name keeps its own values.
+
 ## 0.2.7 - 2026-09-09
 
 Paired Robotics release: `0.1.0-rc.42`. This minor adds one Product component and the alarm
