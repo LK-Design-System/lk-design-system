@@ -58,6 +58,7 @@ const ALLOWED_LATIN_STORY_TOKENS = new Set([
   'GPU',
   'Home',
   'HUD',
+  'LED',
   'ID',
   'JSON',
   'LiDAR',

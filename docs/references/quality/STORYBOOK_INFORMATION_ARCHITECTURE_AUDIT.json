@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "480bf73aae654d481b48b99ebea19eb12e2eb6638b5f962fbd538867c1da949b",
+    "storybookIndexSha256": "57eadab4e517a11c28f305cd67ee23f700c6b00b2efeccbdced769d5830a5e47",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -20581,7 +20581,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayDrawer.stories.jsx",
-      "sourceSha256": "4995f045a69576fd245075461f918b890eb6804ee708685692c1763a425e146e",
+      "sourceSha256": "7910833501b184e5662dc66fa3183d2e3f71058bb06b13560eb74183db0a7c5f",
       "primaryOwner": "Drawer",
       "ownerComponents": [
         "Drawer"
@@ -20615,8 +20615,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-09-08",
-      "reviewedSourceSha256": "4995f045a69576fd245075461f918b890eb6804ee708685692c1763a425e146e",
+      "reviewedAt": "2026-09-17",
+      "reviewedSourceSha256": "7910833501b184e5662dc66fa3183d2e3f71058bb06b13560eb74183db0a7c5f",
       "stories": [
         {
           "id": "lds-product-overlay-drawer--drawer-open",
@@ -20642,6 +20642,32 @@
             "Button"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-overlay-drawer--brand-close-control",
+          "name": "변형·상태 · 브랜드 표면의 최소 닫기",
+          "exportName": "BrandCloseControl",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Drawer"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
         },
         {
           "id": "lds-product-overlay-drawer--drawer-sheet-focus-contract",
@@ -20703,32 +20729,6 @@
             "Textarea"
           ],
           "reviewNote": "2026-08-09 source, built index, and live rendered review at 900x800 and 360x700 confirmed compact Drawer ownership, responsive role, public visibility, density metrics, focus behavior, and no horizontal overflow."
-        },
-        {
-          "id": "lds-product-overlay-drawer--brand-close-control",
-          "name": "변형 · 브랜드 표면의 최소 닫기",
-          "exportName": "BrandCloseControl",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "variants-states",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "Drawer"
-          ],
-          "supportingComponents": [
-            "Button"
-          ],
-          "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
         },
         {
           "id": "lds-product-overlay-drawer--drawer-card",

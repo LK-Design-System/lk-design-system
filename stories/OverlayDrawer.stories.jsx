@@ -237,7 +237,7 @@ export const DrawerOpen = {
 };
 
 export const BrandCloseControl = {
-  name: '변형 · 브랜드 표면의 최소 닫기',
+  name: '변형·상태 · 브랜드 표면의 최소 닫기',
   parameters: storyDescription(
     '브랜드 Drawer에서 닫기 control의 테두리·채움은 제거하되, 흰색 X·접근 가능한 이름·기존 target과 modal dismiss 계약은 유지하는 조합입니다.',
   ),

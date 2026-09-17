@@ -394,6 +394,11 @@
         "role": "overview"
       },
       {
+        "id": "lds-product-overlay-drawer--brand-close-control",
+        "name": "변형·상태 · 브랜드 표면의 최소 닫기",
+        "role": "variants-states"
+      },
+      {
         "id": "lds-product-overlay-drawer--drawer-sheet-focus-contract",
         "name": "상호작용 · 초점 순환과 복원",
         "role": "interaction"
@@ -402,11 +407,6 @@
         "id": "lds-product-overlay-drawer--compact-density",
         "name": "반응형 · 조밀한 폼",
         "role": "responsive"
-      },
-      {
-        "id": "lds-product-overlay-drawer--brand-close-control",
-        "name": "변형 · 브랜드 표면의 최소 닫기",
-        "role": "variants-states"
       }
     ],
     "hiddenEvidence": 1
