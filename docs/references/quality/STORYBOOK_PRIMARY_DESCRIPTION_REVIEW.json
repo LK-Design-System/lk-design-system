@@ -254,6 +254,25 @@
       ]
     },
     {
+      "pageTitle": "LDS Core/Components/Content/Missing Value",
+      "importPath": "./stories/ContentMissingValue.stories.jsx",
+      "storyId": "lds-core-components-content-missing-value--missing-value-overview",
+      "exportName": "MissingValueOverview",
+      "descriptionHash": "7b992d472ab1aedeab57bf2f0dba7daa1442413393a81a04a1423e72d5954c7a",
+      "sentences": [
+        {
+          "hash": "e53cc658ab317900c0a8a9f09c89b4da12423319b62543c195dfad10906915b2",
+          "text": "담당자가 지정되지 않은 행을 읽는 상황입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "c38f3b451f9f0f1b2b0dbc29df181951e0caa85823b9742b84f8e286afef13ca",
+          "text": "값이 없는 자리는 조용하지만 읽을 수 있는 대비를 유지하고, 미처리 0은 결측으로 위장하지 않는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Core/Components/Content/Overline",
       "importPath": "./stories/ContentOverline.stories.jsx",
       "storyId": "lds-core-components-content-overline--eyebrow-overview",

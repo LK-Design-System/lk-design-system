@@ -16,6 +16,7 @@ export { ContentBadge } from './components/content/ContentBadge.jsx';
 export { Divider } from './components/content/Divider.jsx';
 export { Kbd } from './components/content/Kbd.jsx';
 export { ListCell } from './components/content/ListCell.jsx';
+export { MissingValue } from './components/content/MissingValue.jsx';
 export { Overline } from './components/content/Overline.jsx';
 export { Prose } from './components/content/Prose.jsx';
 export { SourceTag } from './components/content/SourceTag.jsx';

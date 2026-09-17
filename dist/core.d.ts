@@ -17,6 +17,7 @@ export { ContentBadge } from '../components/content/ContentBadge';
 export { Divider } from '../components/content/Divider';
 export { Kbd } from '../components/content/Kbd';
 export { ListCell } from '../components/content/ListCell';
+export { MissingValue } from '../components/content/MissingValue';
 export { Overline } from '../components/content/Overline';
 export { Prose } from '../components/content/Prose';
 export { SourceTag } from '../components/content/SourceTag';

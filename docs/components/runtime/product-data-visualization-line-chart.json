@@ -325,6 +325,11 @@
         "role": "scenario"
       },
       {
+        "id": "lds-product-data-visualization-line-chart--point-inspection",
+        "name": "시나리오 · 시점 조회",
+        "role": "scenario"
+      },
+      {
         "id": "lds-product-data-visualization-line-chart--telemetry-reference",
         "name": "시나리오 · 원격 측정 기준선",
         "role": "scenario"

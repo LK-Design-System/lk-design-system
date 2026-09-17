@@ -52,6 +52,10 @@
     "slug": "core-components-content-media-patterns"
   },
   {
+    "storybookTitle": "LDS Core/Components/Content/Missing Value",
+    "slug": "core-components-content-missing-value"
+  },
+  {
     "storybookTitle": "LDS Core/Components/Content/Overline",
     "slug": "core-components-content-overline"
   },

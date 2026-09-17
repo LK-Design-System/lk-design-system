@@ -130,6 +130,7 @@ const PROFILE_TOKEN_AUTOMATIC_IDS = new Set([
 
 const FIXED_IDS = new Set([
   'alarm-case-banner',
+  'missing-value',
   'lockup',
   'link',
   'social-button',
@@ -425,7 +426,7 @@ function validateEntryDecision(entry) {
 }
 
 export function buildDensityCoverage(componentContent, profileContract) {
-  assert(componentContent?.summary?.componentEntries === 211, `${componentRegistryPath} must currently declare the R3A M0 census of 211 entries.`);
+  assert(componentContent?.summary?.componentEntries === 212, `${componentRegistryPath} must currently declare the R3A M0 census of 212 entries.`);
   assert(Array.isArray(componentContent.entries), `${componentRegistryPath} entries must be an array.`);
   assert(Array.isArray(profileContract?.allowedOverrides), `${profileContractPath} allowedOverrides must be an array.`);
   validateCuratedDecisionSet(componentContent);

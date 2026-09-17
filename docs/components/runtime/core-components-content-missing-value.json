@@ -1,0 +1,138 @@
+{
+  "slug": "core-components-content-missing-value",
+  "title": "Missing Value",
+  "storybookTitle": "LDS Core/Components/Content/Missing Value",
+  "layer": "Core",
+  "family": "Content",
+  "primaryOwner": "MissingValue",
+  "ownerComponents": [
+    "MissingValue"
+  ],
+  "supportingComponents": [],
+  "purpose": "표와 항목값 목록에서 이 행에는 값이 없다는 사실을 전달합니다. 목록에 행이 하나도 없거나 아직 불러오는 중이면 셀이 아니라 EmptyState와 ResourceState가 그 상태를 소유합니다.",
+  "useWhen": [],
+  "avoidWhen": [
+    "Control Full Daedeok: 해당 없음 — 같은 이유이며, 제어 액션이나 안전 상태를 소유하지 않는다.",
+    "Carbon Design System — Empty states: 표의 empty state는 표와 머리행·꼬리행을 대신한다. 즉 \"행이 없음\"은 표면 상태이고 \"이 값이 없음\"은 셀 데이터로, 서로 다른 계층이다. 위 선택 기준 표가 이 구분을 따른다.",
+    "| 상황 | 선택 | 이유 | | --- | --- | --- | | 행은 있는데 이 셀·항목의 값만 없음 | MissingValue | 값이 없다는 사실 자체가 데이터다 | | 목록에 행이 하나도 없음 | EmptyState | 표를 대신하는 화면 상태다 | | 아직 불러오는 중이거나 실패함 | ResourceState | 결측이 아니라 자원의 상태다 | | 값이 0이거나 빈 문자열임 | 그 값을 그대로 표시 | 결측으로 위장하지 않는다 |."
+  ],
+  "anatomy": [
+    {
+      "part": "label",
+      "rule": "보조기술에 읽히는 문구. 결측은 \"값 없음\"(기본), 해당 없음은 \"해당 없음\"만 사용합니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "보조기술에 읽히는 문구. 결측은 \"값 없음\"(기본), 해당 없음은 \"해당 없음\"만 사용합니다.",
+      "owner": "MissingValueProps"
+    }
+  ],
+  "states": [],
+  "behavior": [
+    "글리프를 직접 적지 않는다. —를 문자열로 넣으면 보조기술에서 문장부호로 읽히거나 건너뛰어져 \"값이 없다\"는 사실이 전달되지 않는다.",
+    "Adobe Spectrum — Table: \"When there are gaps in the data, use an en dash (–) to represent null or not applicable (N/A) values.\" 결측을 빈 칸이 아니라 글리프로 표시한다는 근거다. 의도적 차이 — Spectrum은 en dash(–)를, LDS는 em dash(—)를 쓴다. LDS 규약이 AIDESIGNSYSTEMGUIDE.md와 표·DataGrid 가이드 세 곳에서 이미 —로 고정돼 있고 글리프 폭 차이가 의미를 바꾸지 않으므로 기존 표기를 유지한다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "색은 --color-semantic-label-alternative다. 값보다 조용하되 AA(4.5:1)를 충족하는 label 계열이며, label-assistive·label-disable은 AA 미달이라 쓰지 않는다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "320px 같은 좁은 폭에서도 한 글자라 줄바꿈 대상이 아니다. 인접 값과 붙어 보이지 않도록 셀 padding은 호출부 표가 소유한다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "LK Portal: gap — 같은 규약을 제품이 27개 파일에서 직접 구현하고 있다. 규약은 LDS가 정의하고 수단은 제품에 맡긴 상태였다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "MissingValue는 값이 없는 자리를 표시한다. 보이는 자리에는 em dash를 그리고 보조기술에는 \"값 없음\"을 읽어 준다. 결측은 빈 문자열, 숫자 0, loading, error와 다른 데이터이므로 같은 표시로 합치지 않는다."
+    },
+    {
+      "subject": "--color-semantic-label-alternative",
+      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "label은 \"값 없음\"(기본)과 \"해당 없음\" 두 가지만 사용한다. 값이 없는 이유를 문구로 설명하려면 셀이 아니라 그 자리에 맞는 상태 컴포넌트를 쓴다.",
+    "label: 보조기술 문구 (기본 \"값 없음\").",
+    "표 안에서는 머리행 연결이 유지되어야 이 문구가 \"어떤 항목의 값이 없는지\"로 읽힌다. 셀 자체를 비우지 않는 것이 그 전제다."
+  ],
+  "accessibility": [
+    "글리프는 aria-hidden이고 문구는 VisuallyHidden으로 전달한다. 화면 낭독기마다 빈 셀과 대시를 읽는 방식이 다르므로, 무엇이 읽힐지를 글리프에 맡기지 않고 문구로 고정한다.",
+    "WebAIM — Creating Accessible Tables: Data Tables: 화면 낭독기는 머리행과 셀 내용을 이어서 읽는다. 셀에 무엇이 들어 있느냐가 곧 announce되는 내용이므로, 시각 글리프만으로는 \"값 없음\"이 전달된다고 보장할 수 없다. 이 컴포넌트가 글리프와 문구를 분리하는 근거다."
+  ],
+  "exceptions": [],
+  "related": [],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<MissingValue />\n<MissingValue label=\"해당 없음\" />"
+    },
+    {
+      "label": "추가 조합 2",
+      "code": "<Table\n  columns={[{ key: 'owner', header: '담당', render: (row) => row.owner ?? <MissingValue /> }]}\n  rows={rows}\n  tableLabel=\"장치\"\n/>"
+    }
+  ],
+  "tokens": [
+    "--color-semantic-label-alternative"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/ContentMissingValue.stories.jsx",
+    "entryStoryId": "lds-core-components-content-missing-value--missing-value-overview",
+    "publicStories": [
+      {
+        "id": "lds-core-components-content-missing-value--missing-value-overview",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-core-components-content-missing-value--missing-value-label-override",
+        "name": "변형·상태 · 해당 없음",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-core-components-content-missing-value--missing-value-narrow",
+        "name": "반응형 · 320px 좁은 폭",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 1
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "omitted-no-evidence",
+    "avoidWhen": "evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "omitted-no-evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "omitted-no-evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

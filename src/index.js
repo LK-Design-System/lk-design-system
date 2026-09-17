@@ -43,6 +43,7 @@ export { ExpandableText } from '../components/content/ExpandableText.jsx';
 export { Kbd } from '../components/content/Kbd.jsx';
 export { ListCell } from '../components/content/ListCell.jsx';
 export { LogViewer } from '../components/content/LogViewer.jsx';
+export { MissingValue } from '../components/content/MissingValue.jsx';
 export { Overline } from '../components/content/Overline.jsx';
 export { Prose } from '../components/content/Prose.jsx';
 export { ReactionBar } from '../components/content/ReactionBar.jsx';

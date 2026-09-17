@@ -24,7 +24,10 @@ const meta = {
 export default meta;
 
 export const PointInspection = {
-  name: '시점 조회',
+  name: '시나리오 · 시점 조회',
+  parameters: storyDescription(
+    '값이 비는 시점이 섞인 사용률을 tooltip으로 짚어 보는 상황입니다. 수집되지 않은 2분 지점이 0으로 위장되지 않고 미수집으로 읽히는지, 끊어진 구간이 이어진 선처럼 보이지 않는지 확인하세요.',
+  ),
   render: () => <LineChart aria-label="시점별 사용률" showTooltip yLabel="%" xDomain={[0, 3]}
     tooltipXValues={[0, 1, 2, 3]} series={[{ name: 'CPU', points: [{ x: 0, y: 0 }, { x: 1, y: 35 }] }, { name: 'CPU', points: [{ x: 3, y: 50 }] }]}
     renderTooltip={x => <span>{x}분 · CPU {x === 2 ? '미수집' : `${[0, 35, null, 50][x]}%`}</span>} />,

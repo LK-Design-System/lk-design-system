@@ -4,6 +4,9 @@
 var _chunkKXHNWUJLcjs = require('./chunk-KXHNWUJL.cjs');
 
 
+var _chunkBCLRINDUcjs = require('./chunk-BCLRINDU.cjs');
+
+
 var _chunk677EM4M2cjs = require('./chunk-677EM4M2.cjs');
 
 // components/data/LineChart.jsx
@@ -99,6 +102,9 @@ function LineChart({
   showGrid = true,
   showLegend = true,
   showPoints = false,
+  showTooltip = false,
+  tooltipXValues,
+  renderTooltip,
   referenceLines = [],
   emptyLabel = "\uB370\uC774\uD130\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.",
   formatX,
@@ -126,6 +132,45 @@ function LineChart({
   const fx = formatX || defaultFormatX;
   const fy = formatY || defaultFormatY;
   const hasData = allPoints.length > 0;
+  const values = [...new Set((_nullishCoalesce(tooltipXValues, () => ( allPoints.map((point) => point.x)))).filter(Number.isFinite))].sort((a, b) => a - b);
+  const [activeX, setActiveX] = _react2.default.useState(null);
+  const [tooltipVisible, setTooltipVisible] = _react2.default.useState(false);
+  const selectedX = values.includes(activeX) ? activeX : values.at(-1);
+  const pointsAtSelectedX = normalized.flatMap((item) => item.points.filter((point) => point.x === selectedX));
+  const selectedY = pointsAtSelectedX.length ? pointsAtSelectedX.reduce((sum, point) => sum + point.y, 0) / pointsAtSelectedX.length : (yMin + yMax) / 2;
+  const [tooltipAnchor, setTooltipAnchor] = _react2.default.useState(null);
+  const resolvedTooltipAnchor = _nullishCoalesce(tooltipAnchor, () => ( {
+    x: sx(_nullishCoalesce(selectedX, () => ( xMax))),
+    y: sy(selectedY)
+  }));
+  const tooltipEnabled = showTooltip && values.length > 0;
+  const selectPointer = (event) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const chartX = (event.clientX - bounds.left) * chartWidth / bounds.width;
+    const chartY = (event.clientY - bounds.top) * chartHeight / bounds.height;
+    const x = xMin + (chartX - pad.left) / innerWidth * (xMax - xMin);
+    setActiveX(values.reduce((nearest, value) => Math.abs(value - x) < Math.abs(nearest - x) ? value : nearest, values[0]));
+    setTooltipAnchor({
+      x: Math.min(pad.left + innerWidth, Math.max(pad.left, chartX)),
+      y: Math.min(pad.top + innerHeight, Math.max(pad.top, chartY))
+    });
+    setTooltipVisible(true);
+  };
+  const selectKeyboard = (event) => {
+    const index = values.indexOf(selectedX);
+    const next = event.key === "ArrowLeft" ? Math.max(0, index - 1) : event.key === "ArrowRight" ? Math.min(values.length - 1, index + 1) : event.key === "Home" ? 0 : event.key === "End" ? values.length - 1 : null;
+    if (next !== null) {
+      event.preventDefault();
+      const nextX = values[next];
+      const points = normalized.flatMap((item) => item.points.filter((point) => point.x === nextX));
+      const nextY = points.length ? points.reduce((sum, point) => sum + point.y, 0) / points.length : (yMin + yMax) / 2;
+      setActiveX(nextX);
+      setTooltipAnchor({ x: sx(nextX), y: sy(nextY) });
+      setTooltipVisible(true);
+    } else if (event.key === "Escape") {
+      setTooltipVisible(false);
+    }
+  };
   const rawId = _react2.default.useId();
   const clipId = `line-chart-${rawId.replace(/:/g, "")}-clip`;
   const descriptionId = `${rawId}-description`;
@@ -173,7 +218,15 @@ function LineChart({
       children: [
         description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: descriptionId, children: description }),
         resolvedSummary != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: summaryId, "data-chart-summary": true, children: resolvedSummary }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, ChartTooltip, { enabled: tooltipEnabled, open: tooltipVisible, anchor: resolvedTooltipAnchor, onOpenChange: setTooltipVisible, content: !tooltipEnabled ? null : renderTooltip ? renderTooltip(selectedX) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: "var(--space-1)" }, children: [
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { children: fx(selectedX) }),
+          normalized.flatMap((item) => item.points.filter((point) => point.x === selectedX).map((point) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { children: [
+            item.name,
+            ": ",
+            fy(point.y),
+            yLabel ? ` ${yLabel}` : ""
+          ] }, item.id)))
+        ] }), children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "svg",
           {
             viewBox: `0 0 ${chartWidth} ${chartHeight}`,
@@ -181,6 +234,15 @@ function LineChart({
             "aria-label": chartLabel,
             "aria-describedby": joinIds(ariaDescribedBy, description != null && descriptionId, resolvedSummary != null && summaryId),
             "data-chart-type": "line",
+            tabIndex: tooltipEnabled ? 0 : void 0,
+            onPointerMove: tooltipEnabled ? selectPointer : void 0,
+            onPointerDown: tooltipEnabled ? (event) => {
+              selectPointer(event);
+              event.currentTarget.focus();
+            } : void 0,
+            onFocus: tooltipEnabled ? () => setTooltipVisible(true) : void 0,
+            onBlur: tooltipEnabled ? () => setTooltipVisible(false) : void 0,
+            onKeyDown: tooltipEnabled ? selectKeyboard : void 0,
             style: {
               display: "block",
               width: "100%",
@@ -230,7 +292,7 @@ function LineChart({
                   x: pad.left - 8,
                   y: sy(tick) + 3,
                   textAnchor: "end",
-                  fill: "var(--color-semantic-label-assistive)",
+                  fill: "var(--color-semantic-label-alternative)",
                   style: { fontSize: AXIS_TICK_SIZE, fontVariantNumeric: "tabular-nums" },
                   children: fy(tick)
                 },
@@ -242,7 +304,7 @@ function LineChart({
                   x: sx(tick),
                   y: pad.top + innerHeight + 16,
                   textAnchor: index === 0 ? "start" : index === xTickValues.length - 1 ? "end" : "middle",
-                  fill: "var(--color-semantic-label-assistive)",
+                  fill: "var(--color-semantic-label-alternative)",
                   style: { fontSize: AXIS_TICK_SIZE, fontVariantNumeric: "tabular-nums" },
                   children: fx(tick)
                 },
@@ -291,36 +353,49 @@ function LineChart({
                   )
                 ] }, _nullishCoalesce(_nullishCoalesce(line.id, () => ( line.label)), () => ( index)));
               }),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { clipPath: `url(#${clipId})`, children: normalized.map((item, index) => {
-                const color = item.color || PALETTE[index % PALETTE.length];
-                const path = linePath(item.points, sx, sy);
-                return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { children: [
-                  item.points.length > 1 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-                    "path",
-                    {
-                      d: path,
-                      fill: "none",
-                      stroke: color,
-                      style: { strokeWidth: SERIES_STROKE },
-                      strokeLinejoin: "round",
-                      strokeLinecap: "round",
-                      strokeDasharray: item.dashed ? "5 4" : void 0
-                    }
-                  ),
-                  (showPoints || item.points.length === 1) && item.points.map((point, pointIndex) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-                    "circle",
-                    {
-                      cx: sx(point.x),
-                      cy: sy(point.y),
-                      r: "3",
-                      fill: "var(--color-semantic-background-elevated-normal)",
-                      stroke: color,
-                      style: { strokeWidth: SERIES_STROKE }
-                    },
-                    `${item.id}-${pointIndex}`
-                  ))
-                ] }, item.id);
-              }) }),
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { clipPath: `url(#${clipId})`, children: [
+                tooltipEnabled && tooltipVisible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  "line",
+                  {
+                    x1: sx(selectedX),
+                    x2: sx(selectedX),
+                    y1: pad.top,
+                    y2: pad.top + innerHeight,
+                    stroke: "var(--color-semantic-label-alternative)",
+                    strokeDasharray: "4 4"
+                  }
+                ),
+                normalized.map((item, index) => {
+                  const color = item.color || PALETTE[index % PALETTE.length];
+                  const path = linePath(item.points, sx, sy);
+                  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { children: [
+                    item.points.length > 1 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                      "path",
+                      {
+                        d: path,
+                        fill: "none",
+                        stroke: color,
+                        style: { strokeWidth: SERIES_STROKE },
+                        strokeLinejoin: "round",
+                        strokeLinecap: "round",
+                        strokeDasharray: item.dashed ? "5 4" : void 0
+                      }
+                    ),
+                    (showPoints || item.points.length === 1) && item.points.map((point, pointIndex) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                      "circle",
+                      {
+                        cx: sx(point.x),
+                        cy: sy(point.y),
+                        r: "3",
+                        fill: "var(--color-semantic-background-elevated-normal)",
+                        stroke: color,
+                        style: { strokeWidth: SERIES_STROKE }
+                      },
+                      `${item.id}-${pointIndex}`
+                    ))
+                  ] }, item.id);
+                })
+              ] }),
               !hasData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                 "text",
                 {
@@ -330,14 +405,14 @@ function LineChart({
                   textAnchor: "middle",
                   dominantBaseline: "middle",
                   fontWeight: "var(--fw-medium)",
-                  fill: "var(--color-semantic-label-assistive)",
+                  fill: "var(--color-semantic-label-alternative)",
                   style: { fontSize: EMPTY_LABEL_SIZE },
                   children: emptyLabel
                 }
               )
             ]
           }
-        ),
+        ) }),
         showLegend && normalized.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           _chunkKXHNWUJLcjs.Legend,
           {
@@ -363,8 +438,38 @@ function LineChart({
     }
   );
 }
+function ChartTooltip({ enabled, open, anchor, content, children, onOpenChange }) {
+  if (!enabled) return children;
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+    "span",
+    {
+      style: { position: "relative", display: "block", width: "100%" },
+      onPointerLeave: (event) => {
+        if (!event.currentTarget.contains(event.currentTarget.ownerDocument.activeElement)) onOpenChange(false);
+      },
+      children: [
+        children,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          _chunkBCLRINDUcjs.Tooltip,
+          {
+            content,
+            open,
+            onOpenChange,
+            delay: { open: 0, close: 150 },
+            withinPortal: false,
+            styles: {
+              root: { position: "absolute", left: anchor.x, top: anchor.y, width: 1, height: 1 },
+              bubble: { pointerEvents: "auto" }
+            },
+            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { display: "block", width: 1, height: 1 } })
+          }
+        )
+      ]
+    }
+  );
+}
 
 
 
 exports.LineChart = LineChart;
-//# sourceMappingURL=chunk-X2PVQAUY.cjs.map
+//# sourceMappingURL=chunk-4W5SR34Z.cjs.map

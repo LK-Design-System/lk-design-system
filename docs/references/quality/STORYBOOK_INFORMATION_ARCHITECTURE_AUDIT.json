@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "6d9647cc4407c1be1641a27ec0e46d263e158169cfbc41c22b476e2ea5512e21",
+    "storybookIndexSha256": "480bf73aae654d481b48b99ebea19eb12e2eb6638b5f962fbd538867c1da949b",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -61,42 +61,42 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 199,
-    "stories": 753,
-    "publicStories": 521,
-    "hiddenStories": 232,
-    "componentDescriptions": 194,
-    "pagesWithVisibleCanvasIntroduction": 194,
-    "pagesWithDecisionGuidance": 187,
-    "describedPublicStories": 521,
-    "reviewedPages": 199,
-    "reviewedStories": 753,
+    "pages": 200,
+    "stories": 760,
+    "publicStories": 525,
+    "hiddenStories": 235,
+    "componentDescriptions": 195,
+    "pagesWithVisibleCanvasIntroduction": 195,
+    "pagesWithDecisionGuidance": 188,
+    "describedPublicStories": 525,
+    "reviewedPages": 200,
+    "reviewedStories": 760,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
-      "overview": 182,
+      "overview": 183,
       "usage": 42,
-      "variants-states": 113,
+      "variants-states": 114,
       "interaction": 57,
-      "responsive": 83,
-      "scenario": 28,
-      "visual-parity": 100,
-      "internal-contract": 128
+      "responsive": 84,
+      "scenario": 29,
+      "visual-parity": 101,
+      "internal-contract": 130
     },
     "dispositions": {
-      "keep": 198,
+      "keep": 199,
       "merge": 0,
       "split": 0,
       "hide": 1
     },
     "layers": {
       "Core": {
-        "pages": 65,
-        "stories": 237,
-        "public": 130,
-        "hidden": 107,
-        "guideReadyPages": 65
+        "pages": 66,
+        "stories": 241,
+        "public": 133,
+        "hidden": 108,
+        "guideReadyPages": 66
       },
       "Foundation": {
         "pages": 16,
@@ -107,9 +107,9 @@
       },
       "Product": {
         "pages": 113,
-        "stories": 485,
-        "public": 368,
-        "hidden": 117,
+        "stories": 488,
+        "public": 369,
+        "hidden": 119,
         "guideReadyPages": 112
       },
       "Theme": {
@@ -1660,6 +1660,134 @@
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+    },
+    {
+      "title": "LDS Core/Components/Content/Missing Value",
+      "layer": "Core",
+      "family": "Content",
+      "importPath": "./stories/ContentMissingValue.stories.jsx",
+      "sourceSha256": "da94efada586f96f9957debbc2166b27fe2c52826a1aacb3e18a94cec392c3f9",
+      "primaryOwner": "MissingValue",
+      "ownerComponents": [
+        "MissingValue"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 3,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-core-components-content-missing-value--missing-value-overview",
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "medium",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-09-17",
+      "reviewedSourceSha256": "da94efada586f96f9957debbc2166b27fe2c52826a1aacb3e18a94cec392c3f9",
+      "stories": [
+        {
+          "id": "lds-core-components-content-missing-value--missing-value-overview",
+          "name": "개요",
+          "exportName": "MissingValueOverview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "MissingValue"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "표 안에서 결측 셀과 숫자 0을 나란히 두어, 값이 없다는 사실과 값이 0이라는 사실이 서로 다른 데이터로 읽히는지 보이는 진입 스토리다."
+        },
+        {
+          "id": "lds-core-components-content-missing-value--missing-value-label-override",
+          "name": "변형·상태 · 해당 없음",
+          "exportName": "MissingValueLabelOverride",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "MissingValue"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "결측과 해당 없음이 같은 글리프를 쓰고 낭독 문구만 달라진다는 계약을 고정한다. 셀에 임의 설명을 넣는 사용을 막기 위해 두 문구만 노출한다."
+        },
+        {
+          "id": "lds-core-components-content-missing-value--missing-value-narrow",
+          "name": "반응형 · 320px 좁은 폭",
+          "exportName": "MissingValueNarrow",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "MissingValue"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "320px에서 한 글자 표시가 셀 높이를 늘리지 않는지 확인한다. 간격은 표가 소유하므로 이 스토리는 컴포넌트 쪽 회귀만 본다."
+        },
+        {
+          "id": "lds-core-components-content-missing-value--missing-value-card",
+          "name": "Missing value card parity",
+          "exportName": "MissingValueCard",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "MissingValue"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "시각 회귀용 숨김 스토리다. 글리프와 label-alternative 색이 표 표면 위에서 유지되는지만 고정한다."
+        }
+      ]
     },
     {
       "title": "LDS Core/Components/Content/Overline",
@@ -13693,7 +13821,7 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataTable.stories.jsx",
-      "sourceSha256": "461f01eb875598d0535b1b0259b42090bbdc0c4b9628db2fd061f1e525398a32",
+      "sourceSha256": "2330ed4be4e6d9f2c257dd11e684b26dfd9521ae8dccebff11b588bc2cc407e9",
       "primaryOwner": "Table",
       "ownerComponents": [
         "Table"
@@ -13701,7 +13829,7 @@
       "supportingComponents": [],
       "visibility": {
         "public": 5,
-        "hidden": 4
+        "hidden": 6
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -13716,8 +13844,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-09-09",
-      "reviewedSourceSha256": "461f01eb875598d0535b1b0259b42090bbdc0c4b9628db2fd061f1e525398a32",
+      "reviewedAt": "2026-09-17",
+      "reviewedSourceSha256": "2330ed4be4e6d9f2c257dd11e684b26dfd9521ae8dccebff11b588bc2cc407e9",
       "stories": [
         {
           "id": "lds-product-data-collections-table--static-table",
@@ -13908,6 +14036,29 @@
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
+          "id": "lds-product-data-collections-table--scrollable-region-keyboard-contract",
+          "name": "Scrollable region is keyboard reachable",
+          "exportName": "ScrollableRegionKeyboardContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Table"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "넘치는 표의 스크롤 영역이 키보드로 도달 가능한지 고정하는 숨김 계약 스토리다. 셀 기본값 nowrap이 만드는 가로 넘침을 재현한다."
+        },
+        {
           "id": "lds-product-data-collections-table--table-card",
           "name": "Table card parity",
           "exportName": "TableCard",
@@ -13929,6 +14080,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-data-collections-table--wrapping-column-contract",
+          "name": "Wrapping column",
+          "exportName": "WrappingColumnContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Table"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "wrap 열이 고정 폭 열과 함께 있을 때 줄바꿈과 열 폭 배분을 고정하는 숨김 계약 스토리다."
         }
       ],
       "reviewNote": "2026-09-09 re-review after the 0.2.6 additive axis: source, role, ownership and visibility unchanged; play and Axe clean in the static build."
@@ -16163,20 +16337,20 @@
       "layer": "Product",
       "family": "Visualization",
       "importPath": "./stories/DataLineChart.stories.jsx",
-      "sourceSha256": "6bd232684f216505461d139b2092a296205cb61be1d7f3056b49a939403e13a4",
+      "sourceSha256": "b68e65ccd0708b1a3e823244ffbcf61088f6d43087f609bb6140a2133edca92c",
       "primaryOwner": "LineChart",
       "ownerComponents": [
         "LineChart"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 4,
+        "public": 5,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-visualization-line-chart--line-charts",
-        "describedPublicStories": 4,
+        "describedPublicStories": 5,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -16186,8 +16360,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "6bd232684f216505461d139b2092a296205cb61be1d7f3056b49a939403e13a4",
+      "reviewedAt": "2026-09-17",
+      "reviewedSourceSha256": "b68e65ccd0708b1a3e823244ffbcf61088f6d43087f609bb6140a2133edca92c",
       "stories": [
         {
           "id": "lds-product-data-visualization-line-chart--line-charts",
@@ -16259,6 +16433,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-data-visualization-line-chart--point-inspection",
+          "name": "시나리오 · 시점 조회",
+          "exportName": "PointInspection",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "scenario",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "LineChart"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "값이 비는 시점을 포함한 tooltip 조회를 보여 준다. 미수집 시점을 0으로 위장하지 않는지 확인하는 공개 스토리다."
         },
         {
           "id": "lds-product-data-visualization-line-chart--telemetry-reference",

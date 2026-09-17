@@ -21,6 +21,7 @@
 | [Disclosure](guides/core-components-content-disclosure.md) | Core / Content | `Accordion`, `Collapsible` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Lists](guides/core-components-content-lists.md) | Core / Content | `Accordion`, `ListCell` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Media Patterns](guides/core-components-content-media-patterns.md) | Core / Content | `Thumbnail` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
+| [Missing Value](guides/core-components-content-missing-value.md) | Core / Content | `MissingValue` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Overline](guides/core-components-content-overline.md) | Core / Content | `Overline` | mapped | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
 | [Prose](guides/core-components-content-prose.md) | Core / Content | `Prose` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Step List](guides/core-components-content-step-list.md) | Core / Content | `StepList` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
@@ -102,7 +103,7 @@
 | [Data Collection Panel](guides/product-data-collections-data-collection-panel.md) | Product / Collections | `DataCollectionPanel` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 6 hidden |
 | [Data Grid](guides/product-data-collections-data-grid.md) | Product / Collections | `DataGrid` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 1 hidden |
 | [File Browser](guides/product-data-collections-file-browser.md) | Product / Collections | `FileBrowser` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
-| [Table](guides/product-data-collections-table.md) | Product / Collections | `Table` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 4 hidden |
+| [Table](guides/product-data-collections-table.md) | Product / Collections | `Table` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 6 hidden |
 | [Tree](guides/product-data-collections-tree.md) | Product / Collections | `Tree` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Carousel](guides/product-data-display-carousel.md) | Product / Display | `Carousel` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
 | [Description List](guides/product-data-display-description-list.md) | Product / Display | `DescriptionList` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
@@ -120,7 +121,7 @@
 | [Chart Frame](guides/product-data-visualization-chart-frame.md) | Product / Visualization | `ChartFrame` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Donut Chart](guides/product-data-visualization-donut-chart.md) | Product / Visualization | `DonutChart` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Legend](guides/product-data-visualization-legend.md) | Product / Visualization | `Legend` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
-| [Line Chart](guides/product-data-visualization-line-chart.md) | Product / Visualization | `LineChart` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
+| [Line Chart](guides/product-data-visualization-line-chart.md) | Product / Visualization | `LineChart` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 0 hidden |
 | [Network Graph](guides/product-data-visualization-network-graph.md) | Product / Visualization | `NetworkGraph` | not-tracked | implemented | not-tracked | not-tracked | 8 public / 0 hidden |
 | [Sparkline](guides/product-data-visualization-sparkline.md) | Product / Visualization | `Sparkline` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Canvas Shell](guides/product-editor-canvas-shell.md) | Product / Editor | `CanvasEditorShell` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |

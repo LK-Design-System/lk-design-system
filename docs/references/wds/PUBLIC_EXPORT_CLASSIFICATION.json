@@ -186,6 +186,17 @@
       ]
     },
     {
+      "name": "Generic missing value affordance",
+      "ownerLayer": "core",
+      "provenance": "product-extension",
+      "exports": [
+        "MissingValue"
+      ],
+      "storyEvidence": [
+        "stories/ContentMissingValue.stories.jsx"
+      ]
+    },
+    {
       "name": "WDS-adjacent product content",
       "ownerLayer": "product",
       "provenance": "wds-adjacent",

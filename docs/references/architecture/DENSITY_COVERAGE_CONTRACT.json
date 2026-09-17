@@ -9,16 +9,16 @@
   },
   "source": {
     "componentRegistry": "docs/components/component-content.json",
-    "componentRegistryFingerprint": "9b8e4ad4ad53b4503061e0559f3e8a4b92b43414f630de4034e304964f55d589",
+    "componentRegistryFingerprint": "4dba2d1ac03e251547d6d053ec2a4077b2ddfb4174bfc3aa1db05f732bf65c9f",
     "expressionProfileContract": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
     "expressionProfileContractFingerprint": "88c3fd6a5eb8fb61896af87aa266ab3bf93cae9195c7b6eefd911d566c0a1b5c"
   },
   "summary": {
-    "entryCount": 211,
+    "entryCount": 212,
     "categoryCounts": {
       "profile-token-automatic": 7,
       "explicit-size-density": 93,
-      "fixed": 96,
+      "fixed": 97,
       "not-applicable": 15
     },
     "profileAwareEntries": 97
@@ -639,6 +639,20 @@
         "density"
       ],
       "profileTokens": []
+    },
+    {
+      "id": "missing-value",
+      "title": "MissingValue",
+      "source": "components/content/MissingValue.jsx",
+      "ownerLayer": "core",
+      "category": "fixed",
+      "profileAware": false,
+      "explicitAxes": [],
+      "profileTokens": [],
+      "owner": "LDS Core owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
     },
     {
       "id": "overline",
