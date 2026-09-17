@@ -2,6 +2,32 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.2.9 - 2026-09-17
+
+Paired Robotics release: `0.1.0-rc.44`. This patch adds one Core primitive; nothing existing
+changes.
+
+### Added
+
+- `MissingValue` (Core / Content): the cell that has no value. LDS already fixed the rule in three
+  documents — draw an em dash, speak `값 없음`, and never merge missing with an empty string, a
+  numeric `0`, loading or error — but shipped no component, so the rule lived only in prose that
+  told the product to do it in `column render`. One consumer alone reimplements it in 27 files, and
+  nothing stopped a twenty-eighth from emitting a bare hyphen. The glyph is `aria-hidden` and the
+  spoken text travels in `VisuallyHidden`, so what a reader announces no longer depends on how that
+  particular reader treats a lone dash or an empty cell. `label` accepts the two sanctioned strings
+  (`값 없음`, `해당 없음`) and nothing else; a cell is not the place to explain *why* a value is
+  absent. The colour is `--color-semantic-label-alternative`: quieter than a real value, still AA.
+  A collection with no rows at all remains `EmptyState`/`ResourceState` — that is a surface state,
+  not cell data.
+
+### Changed
+
+- Storybook IA ledger: `LDS Product/Overlay/Drawer` takes the `변형·상태 · ` role prefix its
+  contract spells out, `LED` joins the audience Latin allowlist beside `GNSS`/`GPU`/`HUD`, and the
+  six description sentences left unreviewed on Schedule Calendar, Alarm Case and Dot Matrix Preview
+  are recorded. `check:storybook-ia` is green again.
+
 ## 0.2.8 - 2026-09-09
 
 Paired Robotics release: `0.1.0-rc.43`. This patch adds one column option and repairs a keyboard
