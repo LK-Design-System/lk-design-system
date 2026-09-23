@@ -30,7 +30,7 @@
 
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
-| `tone` | `"signal" \| "neutral" \| "danger"` | No | Text action tone mapped through LK theme tokens. @default "signal" |
+| `tone` | `"signal" \| "neutral" \| "danger" \| "inherit"` | No | Text action tone mapped through LK theme tokens. @default "signal" |
 | `color` | `"primary" \| "assistive"` | No | color axis. When set, it takes precedence over tone. |
 | `size` | `"sm" \| "md" \| "lg" \| "small" \| "medium" \| "large"` | No | Aliases map small/medium/large to sm/md/lg. @default "md" |
 | `arrow` | `boolean` | No |  |
@@ -65,6 +65,7 @@
 
 ## Content and writing
 
+- tone: signal, neutral, danger, inherit. inherit는 Banner·Callout처럼 부모 surface가 이미 접근 가능한 contextual foreground를 정한 경우 그 색을 그대로 사용합니다.
 - TextButton is a button-style action with sizes and loading state. Use Link for pure anchor/navigation text with underline control.
 
 ## Accessibility
@@ -72,7 +73,7 @@
 - loading prevents repeated activation, renders a spinner, and sets aria-busy; use loadingLabel for the single screen-reader name (기본값 불러오는 중). Existing content keeps its width while visually hidden.
 - loading은 native disabled가 아니라 aria-disabled="true" + aria-busy="true"로 처리해 focus를 유지합니다(Button과 동일한 계약).
 - Native disabled removes the action from focus. aria-disabled="true" keeps it discoverable while applying unavailable styling and blocking activation.
-- WAI-ARIA Button Pattern의 keyboard/disabled 계약을 따릅니다. WDS 직접 축은 primary/assistive, small/medium, disable이며 danger, lg, underline, loading, anchor는 LDS 확장입니다.
+- WAI-ARIA Button Pattern의 keyboard/disabled 계약을 따릅니다. WDS 직접 축은 primary/assistive, small/medium, disable이며 danger, inherit, lg, underline, loading, anchor는 LDS 확장입니다.
 
 ## Related components
 
@@ -91,6 +92,7 @@
 ```jsx
 <TextButton>View all</TextButton>
 <TextButton tone="neutral" underline>Cancel</TextButton>
+<TextButton tone="inherit" size="sm">상세 보기</TextButton>
 <TextButton loading loadingLabel="Loading more">Loading</TextButton>
 <TextButton as="a" href="/products">View products</TextButton>
 ```

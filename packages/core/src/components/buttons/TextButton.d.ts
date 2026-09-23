@@ -2,7 +2,7 @@ import * as React from "react";
 
 export interface TextButtonOwnProps {
   /** Text action tone mapped through LK theme tokens. @default "signal" */
-  tone?: "signal" | "neutral" | "danger";
+  tone?: "signal" | "neutral" | "danger" | "inherit";
   /** color axis. When set, it takes precedence over tone. */
   color?: "primary" | "assistive";
   /** Aliases map small/medium/large to sm/md/lg. @default "md" */

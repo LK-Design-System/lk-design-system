@@ -5,11 +5,13 @@ compact "more" actions.
 ```jsx
 <TextButton>View all</TextButton>
 <TextButton tone="neutral" underline>Cancel</TextButton>
+<TextButton tone="inherit" size="sm">상세 보기</TextButton>
 <TextButton loading loadingLabel="Loading more">Loading</TextButton>
 <TextButton as="a" href="/products">View products</TextButton>
 ```
 
-- **tone**: `signal`, `neutral`, `danger`.
+- **tone**: `signal`, `neutral`, `danger`, `inherit`. `inherit`는 Banner·Callout처럼 부모 surface가
+  이미 접근 가능한 contextual foreground를 정한 경우 그 색을 그대로 사용합니다.
 - **size**: `sm`, `md`, `lg`.
 - **underline** gives link-style emphasis; **as="a"** renders a link.
 - **loading** prevents repeated activation, renders a spinner, and sets
@@ -26,6 +28,6 @@ compact "more" actions.
   for pure anchor/navigation text with underline control.
 - [WAI-ARIA Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/)의
   keyboard/disabled 계약을 따릅니다. WDS 직접 축은 primary/assistive,
-  small/medium, disable이며 `danger`, `lg`, underline, loading, anchor는 LDS 확장입니다.
+  small/medium, disable이며 `danger`, `inherit`, `lg`, underline, loading, anchor는 LDS 확장입니다.
 
 TypeScript preserves the rendered element's props through the generic `as` contract. `as="a"` accepts anchor props such as `href`; the default remains a native button, and custom components retain their declared prop requirements.

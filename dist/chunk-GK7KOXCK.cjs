@@ -4,7 +4,7 @@
 var _chunkBCWCCXJXcjs = require('./chunk-BCWCCXJX.cjs');
 
 
-var _chunkYZTWCTTZcjs = require('./chunk-YZTWCTTZ.cjs');
+var _chunk7KE62MGMcjs = require('./chunk-7KE62MGM.cjs');
 
 
 var _chunk7OXVB7WXcjs = require('./chunk-7OXVB7WX.cjs');
@@ -142,7 +142,7 @@ function FilterBar({
                 filter.id
               );
             }),
-            onClearFilters && filters.length > 1 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkYZTWCTTZcjs.TextButton, { size: "sm", tone: "neutral", "data-filter-bar-clear": "", onClick: onClearFilters, children: clearLabel })
+            onClearFilters && filters.length > 1 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7KE62MGMcjs.TextButton, { size: "sm", tone: "neutral", "data-filter-bar-clear": "", onClick: onClearFilters, children: clearLabel })
           ] }),
           resultText != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-filter-bar-result": "", style: { marginLeft: "auto", color: "var(--color-semantic-label-alternative)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-medium)", fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }, children: resultText })
         ] }),
@@ -155,4 +155,4 @@ function FilterBar({
 
 
 exports.FilterBar = FilterBar;
-//# sourceMappingURL=chunk-PWP6BW4F.cjs.map
+//# sourceMappingURL=chunk-GK7KOXCK.cjs.map

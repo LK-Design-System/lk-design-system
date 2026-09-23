@@ -16,6 +16,7 @@ import {
   Spinner,
   Stepper,
   Switch,
+  TextButton,
   ThemeToggle,
   ToggleButton,
 } from '../src/index.js';
@@ -142,7 +143,7 @@ export const StatusInventory = {
   name: '상태 컴포넌트',
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 920 }}>
-      <Banner tone="info" title="데이터 동기화 진행 중" action={<Button size="sm" variant="ghost">상세 보기</Button>}>
+      <Banner tone="info" title="데이터 동기화 진행 중" action={<TextButton tone="inherit" size="sm">상세 보기</TextButton>}>
         최신 데이터를 불러오고 있습니다.
       </Banner>
       <Callout tone="cautionary" title="필수 항목 확인" icon={<Icon name="triangle-exclamation" />}>

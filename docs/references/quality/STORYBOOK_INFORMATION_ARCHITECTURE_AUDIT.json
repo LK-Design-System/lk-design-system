@@ -7384,14 +7384,14 @@
       "layer": "Core",
       "family": "Status",
       "importPath": "./stories/StatusFeedback.stories.jsx",
-      "sourceSha256": "c1ae898f2e8e3da6919247ee01ada4beb9fb1c43f78105071f1864ffeb443b72",
+      "sourceSha256": "e78321d7cc28859aae8442322488a8d85009e5c1974042221e08427215aac262",
       "primaryOwner": "Banner",
       "ownerComponents": [
         "Banner",
         "Callout"
       ],
       "supportingComponents": [
-        "Button"
+        "TextButton"
       ],
       "visibility": {
         "public": 2,
@@ -7410,8 +7410,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-28",
-      "reviewedSourceSha256": "c1ae898f2e8e3da6919247ee01ada4beb9fb1c43f78105071f1864ffeb443b72",
+      "reviewedAt": "2026-09-23",
+      "reviewedSourceSha256": "e78321d7cc28859aae8442322488a8d85009e5c1974042221e08427215aac262",
       "stories": [
         {
           "id": "lds-core-components-status-notices-and-callouts--notices-and-callouts",
@@ -7436,7 +7436,7 @@
           ],
           "supportingComponents": [
             "Banner",
-            "Button"
+            "TextButton"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
         },
@@ -7462,7 +7462,8 @@
             "Banner"
           ],
           "supportingComponents": [
-            "Callout"
+            "Callout",
+            "TextButton"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
         },
@@ -7490,7 +7491,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation.\n\n2026-09-23 re-review for the Banner/Callout action contract: Banner and Callout examples now carry a single borderless TextButton tone=\"inherit\" action (Callout gains the optional action prop), and BannerSurfaceVariants adds a 320px reflow section. Story set, names, order, roles and visibility are unchanged; rendered at normal width, 320px and dark background in the dev server."
     },
     {
       "title": "LDS Core/Components/Status/Notification",

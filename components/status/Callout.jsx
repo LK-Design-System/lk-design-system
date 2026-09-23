@@ -28,7 +28,7 @@ function normalizeIcon(icon, fallbackIcon) {
  * reading column. The two used to differ by 2px, which made them look
  * interchangeable — the rank is now asserted in StatusFeedback.stories.jsx.
  */
-export function Callout({ tone = 'signal', title, headingLevel = false, children, icon, density, style, ...rest }) {
+export function Callout({ tone = 'signal', title, headingLevel = false, children, action, icon, density, className, style, ...rest }) {
   const resolvedDensity = useResolvedDensity(density, 'comfortable');
   const compact = resolvedDensity === 'compact';
   const navy = tone === 'navy';
@@ -47,9 +47,13 @@ export function Callout({ tone = 'signal', title, headingLevel = false, children
   const Heading = headingLevel ? `h${headingLevel}` : 'div';
   return (
     <div
+      data-slot="root"
       data-density={resolvedDensity}
+      className={['lk-callout', className].filter(Boolean).join(' ')}
       style={{
         display: 'flex',
+        minWidth: 0,
+        maxWidth: '100%',
         gap: compact ? 'var(--space-3)' : 'var(--space-4)',
         padding: compact ? 'var(--space-3) var(--space-4)' : 'var(--space-5) var(--space-6)',
         boxSizing: 'border-box',
@@ -63,6 +67,8 @@ export function Callout({ tone = 'signal', title, headingLevel = false, children
       {...rest}
     >
       <span
+        data-slot="icon"
+        className="lk-callout__icon"
         aria-hidden="true"
         style={{
           width: ICON_SIZE,
@@ -77,9 +83,18 @@ export function Callout({ tone = 'signal', title, headingLevel = false, children
       >
         {normalizedIcon}
       </span>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        {title != null && <Heading style={{ margin: 0, fontSize: 'var(--body1-size)', lineHeight: 'var(--body1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: navy ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-label-normal)', marginBottom: children != null ? 'var(--space-1-5)' : 0 }}>{title}</Heading>}
-        {children != null && <div style={{ fontSize: 'var(--label1-size)', lineHeight: compact ? 'var(--label1-line)' : 'var(--label1-reading-line)', color: navy ? 'var(--color-semantic-brand-on-surface-subtle)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
+      <div data-slot="content" className="lk-callout__content" style={{ flex: 1, minWidth: 0 }}>
+        {title != null && <Heading data-slot="title" className="lk-callout__title" style={{ margin: 0, fontSize: 'var(--body1-size)', lineHeight: 'var(--body1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, color: navy ? 'var(--color-semantic-brand-on-surface)' : 'var(--color-semantic-label-normal)', marginBottom: children != null ? 'var(--space-1-5)' : 0 }}>{title}</Heading>}
+        {children != null && <div data-slot="body" className="lk-callout__body" style={{ fontSize: 'var(--label1-size)', lineHeight: compact ? 'var(--label1-line)' : 'var(--label1-reading-line)', color: navy ? 'var(--color-semantic-brand-on-surface-subtle)' : 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>{children}</div>}
+        {action != null && (
+          <div
+            data-slot="action"
+            className="lk-callout__action"
+            style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', minWidth: 0, maxWidth: '100%', marginTop: title != null || children != null ? 'var(--space-2)' : 0, color: c, overflowWrap: 'anywhere' }}
+          >
+            {action}
+          </div>
+        )}
       </div>
     </div>
   );

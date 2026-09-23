@@ -14,7 +14,7 @@ export interface BannerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 
   title?: React.ReactNode;
   /** 본문 메시지. */
   children?: React.ReactNode;
-  /** 끝의 액션 노드(예: 텍스트 Button). */
+  /** 상태를 직접 해결하거나 관련 상세로 이동하는 단일 저강조 액션 노드. */
   action?: React.ReactNode;
   /** 닫기 버튼 표시; 클릭 시 호출. */
   onClose?: () => void;

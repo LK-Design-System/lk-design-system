@@ -42,7 +42,7 @@ function TextButton({
     large: "lg"
   }[size] || size;
   const normalizedColor = color === "assistive" ? "assistive" : color === "primary" ? "primary" : void 0;
-  const textColor = normalizedColor === "assistive" ? "var(--color-semantic-label-alternative)" : normalizedColor === "primary" ? BRAND_FOREGROUND : tone === "neutral" ? "var(--color-semantic-label-neutral)" : tone === "danger" ? "var(--color-semantic-status-negative-text)" : BRAND_FOREGROUND;
+  const textColor = normalizedColor === "assistive" ? "var(--color-semantic-label-alternative)" : normalizedColor === "primary" ? BRAND_FOREGROUND : tone === "inherit" ? "inherit" : tone === "neutral" ? "var(--color-semantic-label-neutral)" : tone === "danger" ? "var(--color-semantic-status-negative-text)" : BRAND_FOREGROUND;
   const fs = normalizedSize === "sm" ? "var(--label1-size)" : normalizedSize === "lg" ? 17 : "var(--body1-size)";
   const ls = normalizedSize === "sm" ? "var(--label1-spacing)" : "var(--body1-spacing)";
   const h = normalizedSize === "sm" ? 28 : normalizedSize === "lg" ? 36 : 32;
@@ -132,4 +132,4 @@ function TextButton({
 
 
 exports.TextButton = TextButton;
-//# sourceMappingURL=chunk-YZTWCTTZ.cjs.map
+//# sourceMappingURL=chunk-7KE62MGM.cjs.map

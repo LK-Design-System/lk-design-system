@@ -1,23 +1,23 @@
-"use client";
-import {
-  Popover
-} from "./chunk-4WF6RUKN.js";
-import {
-  Chip
-} from "./chunk-YWI3XRCL.js";
-import {
-  StatusBadge
-} from "./chunk-5EN742OP.js";
-import {
-  TextButton
-} from "./chunk-KINAKYSR.js";
-import {
-  Icon
-} from "./chunk-IKUN5X7H.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+var _chunkRAJPV3WVcjs = require('./chunk-RAJPV3WV.cjs');
+
+
+var _chunkBCWCCXJXcjs = require('./chunk-BCWCCXJX.cjs');
+
+
+var _chunkTHYZ4IEGcjs = require('./chunk-THYZ4IEG.cjs');
+
+
+var _chunk7KE62MGMcjs = require('./chunk-7KE62MGM.cjs');
+
+
+var _chunk7OXVB7WXcjs = require('./chunk-7OXVB7WX.cjs');
 
 // components/content/SourceDisclosure.jsx
-import React from "react";
-import { Fragment, jsx, jsxs } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 var AVAILABILITY_META = {
   stale: { label: "\uC624\uB798\uB428", tone: "cautionary" },
   missing: { label: "\uCC3E\uC744 \uC218 \uC5C6\uC74C", tone: "negative" },
@@ -45,7 +45,7 @@ function partitionSources(sources) {
   return { visible, withheld };
 }
 function hasDisclosureContent(source) {
-  return source.excerpt != null || source.description != null || source.observedAt != null || source.updatedAt != null || (source.metadata?.length ?? 0) > 0;
+  return source.excerpt != null || source.description != null || source.observedAt != null || source.updatedAt != null || (_nullishCoalesce(_optionalChain([source, 'access', _ => _.metadata, 'optionalAccess', _2 => _2.length]), () => ( 0))) > 0;
 }
 function disclosureAriaLabel(source) {
   if (typeof source.label === "string") return `${source.label} \uC138\uBD80 \uC815\uBCF4`;
@@ -53,9 +53,9 @@ function disclosureAriaLabel(source) {
   return "\uCD9C\uCC98 \uC138\uBD80 \uC815\uBCF4";
 }
 function ExternalLinkContent({ children }) {
-  return /* @__PURE__ */ jsxs("span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0 }, children: [
-    /* @__PURE__ */ jsx("span", { style: { minWidth: 0, overflowWrap: "anywhere" }, children }),
-    /* @__PURE__ */ jsx(Icon, { name: "external-link", size: 14, "aria-hidden": "true", style: { flexShrink: 0 } })
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "inline-flex", alignItems: "center", gap: "var(--space-1)", minWidth: 0 }, children: [
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { minWidth: 0, overflowWrap: "anywhere" }, children }),
+    /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7OXVB7WXcjs.Icon, { name: "external-link", size: 14, "aria-hidden": "true", style: { flexShrink: 0 } })
   ] });
 }
 function SourceLabel({ source, onSourceActivate }) {
@@ -68,8 +68,8 @@ function SourceLabel({ source, onSourceActivate }) {
     whiteSpace: "normal"
   };
   if (source.href != null) {
-    return /* @__PURE__ */ jsx(
-      TextButton,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      _chunk7KE62MGMcjs.TextButton,
       {
         as: "a",
         href: source.href,
@@ -80,13 +80,13 @@ function SourceLabel({ source, onSourceActivate }) {
         "aria-label": source.actionAriaLabel,
         className: "lk-textbtn lk-source-disclosure__source-link",
         style: linkStyle,
-        children: /* @__PURE__ */ jsx(ExternalLinkContent, { children: source.label })
+        children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, ExternalLinkContent, { children: source.label })
       }
     );
   }
   if (typeof onSourceActivate === "function") {
-    return /* @__PURE__ */ jsx(
-      TextButton,
+    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+      _chunk7KE62MGMcjs.TextButton,
       {
         size: "sm",
         underline: true,
@@ -98,23 +98,23 @@ function SourceLabel({ source, onSourceActivate }) {
       }
     );
   }
-  return /* @__PURE__ */ jsx("strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", fontWeight: "var(--fw-semibold)", overflowWrap: "anywhere" }, children: source.label });
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { style: { color: "var(--color-semantic-label-strong)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", fontWeight: "var(--fw-semibold)", overflowWrap: "anywhere" }, children: source.label });
 }
 function SourceBadges({ source }) {
   const availability = source.availability != null ? AVAILABILITY_META[source.availability] : void 0;
   if (source.badge == null && availability == null) return null;
-  return /* @__PURE__ */ jsxs("span", { className: "lk-source-disclosure__status", style: { display: "inline-flex", flexWrap: "wrap", gap: "var(--space-1)", flexShrink: 0 }, children: [
-    source.badge != null && /* @__PURE__ */ jsx(StatusBadge, { tone: source.badge.tone ?? "neutral", style: { whiteSpace: "nowrap" }, children: source.badge.label }),
-    availability != null && /* @__PURE__ */ jsx(StatusBadge, { tone: availability.tone, style: { whiteSpace: "nowrap" }, children: source.availabilityLabel ?? availability.label })
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { className: "lk-source-disclosure__status", style: { display: "inline-flex", flexWrap: "wrap", gap: "var(--space-1)", flexShrink: 0 }, children: [
+    source.badge != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkTHYZ4IEGcjs.StatusBadge, { tone: _nullishCoalesce(source.badge.tone, () => ( "neutral")), style: { whiteSpace: "nowrap" }, children: source.badge.label }),
+    availability != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkTHYZ4IEGcjs.StatusBadge, { tone: availability.tone, style: { whiteSpace: "nowrap" }, children: _nullishCoalesce(source.availabilityLabel, () => ( availability.label)) })
   ] });
 }
 function SourceRow({ source, first, onSourceActivate }) {
-  const panelId = React.useId();
-  const [expanded, setExpanded] = React.useState(Boolean(source.defaultExpanded));
+  const panelId = _react2.default.useId();
+  const [expanded, setExpanded] = _react2.default.useState(Boolean(source.defaultExpanded));
   const hasPanel = hasDisclosureContent(source);
-  const showMetadata = source.observedAt != null || source.updatedAt != null || (source.metadata?.length ?? 0) > 0;
-  return /* @__PURE__ */ jsxs("li", { style: { borderTop: first ? "none" : "1px solid var(--color-semantic-line-normal-alternative)" }, children: [
-    /* @__PURE__ */ jsxs(
+  const showMetadata = source.observedAt != null || source.updatedAt != null || (_nullishCoalesce(_optionalChain([source, 'access', _3 => _3.metadata, 'optionalAccess', _4 => _4.length]), () => ( 0))) > 0;
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "li", { style: { borderTop: first ? "none" : "1px solid var(--color-semantic-line-normal-alternative)" }, children: [
+    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
       "div",
       {
         className: "lk-source-disclosure__source-row",
@@ -131,7 +131,7 @@ function SourceRow({ source, first, onSourceActivate }) {
           padding: "var(--space-3) 0"
         },
         children: [
-          hasPanel ? /* @__PURE__ */ jsx(
+          hasPanel ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "button",
             {
               type: "button",
@@ -155,8 +155,8 @@ function SourceRow({ source, first, onSourceActivate }) {
                 cursor: "pointer",
                 transition: "background var(--dur-fast) var(--ease-out)"
               },
-              children: /* @__PURE__ */ jsx(
-                Icon,
+              children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                _chunk7OXVB7WXcjs.Icon,
                 {
                   className: "lk-source-disclosure__chevron",
                   name: "chevron-right-small",
@@ -169,17 +169,17 @@ function SourceRow({ source, first, onSourceActivate }) {
           ) : (
             /* Keeps identity aligned down the column when a row has nothing to
                expand, without inventing a control that does nothing. */
-            /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { width: "var(--space-6)" } })
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { width: "var(--space-6)" } })
           ),
-          /* @__PURE__ */ jsxs("span", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
-            /* @__PURE__ */ jsx(SourceLabel, { source, onSourceActivate }),
-            (source.kind != null || source.location != null) && /* @__PURE__ */ jsx("span", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", overflowWrap: "anywhere" }, children: [source.kind, source.location].filter(Boolean).join(" \xB7 ") })
+          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, SourceLabel, { source, onSourceActivate }),
+            (source.kind != null || source.location != null) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", overflowWrap: "anywhere" }, children: [source.kind, source.location].filter(Boolean).join(" \xB7 ") })
           ] }),
-          /* @__PURE__ */ jsx(SourceBadges, { source })
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, SourceBadges, { source })
         ]
       }
     ),
-    hasPanel && /* @__PURE__ */ jsxs(
+    hasPanel && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
       "div",
       {
         id: panelId,
@@ -193,7 +193,7 @@ function SourceRow({ source, first, onSourceActivate }) {
           marginInlineStart: "var(--space-8)"
         },
         children: [
-          source.excerpt != null && /* @__PURE__ */ jsx(
+          source.excerpt != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             "blockquote",
             {
               cite: source.href,
@@ -202,22 +202,22 @@ function SourceRow({ source, first, onSourceActivate }) {
               children: source.excerpt
             }
           ),
-          source.description != null && /* @__PURE__ */ jsx("p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: source.description }),
+          source.description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: source.description }),
           showMetadata && /* Key beside value, not spread across the panel width: an
              auto-fit track stretches two pairs to opposite edges of a wide
              surface and stops reading as one record. */
-          /* @__PURE__ */ jsxs("dl", { style: { display: "grid", gridTemplateColumns: "auto minmax(0, 1fr)", columnGap: "var(--space-4)", rowGap: "var(--space-1)", margin: 0 }, children: [
-            source.observedAt != null && /* @__PURE__ */ jsxs(Fragment, { children: [
-              /* @__PURE__ */ jsx("dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: "\uAD00\uCE21 \uC2DC\uAC01" }),
-              /* @__PURE__ */ jsx("dd", { style: { margin: 0, color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", overflowWrap: "anywhere" }, children: source.observedAt })
+          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "dl", { style: { display: "grid", gridTemplateColumns: "auto minmax(0, 1fr)", columnGap: "var(--space-4)", rowGap: "var(--space-1)", margin: 0 }, children: [
+            source.observedAt != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: "\uAD00\uCE21 \uC2DC\uAC01" }),
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "dd", { style: { margin: 0, color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", overflowWrap: "anywhere" }, children: source.observedAt })
             ] }),
-            source.updatedAt != null && /* @__PURE__ */ jsxs(Fragment, { children: [
-              /* @__PURE__ */ jsx("dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: "\uAC31\uC2E0 \uC2DC\uAC01" }),
-              /* @__PURE__ */ jsx("dd", { style: { margin: 0, color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", overflowWrap: "anywhere" }, children: source.updatedAt })
+            source.updatedAt != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: "\uAC31\uC2E0 \uC2DC\uAC01" }),
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "dd", { style: { margin: 0, color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", overflowWrap: "anywhere" }, children: source.updatedAt })
             ] }),
-            (source.metadata ?? []).map((item) => /* @__PURE__ */ jsxs(React.Fragment, { children: [
-              /* @__PURE__ */ jsx("dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: item.label }),
-              /* @__PURE__ */ jsx("dd", { style: { margin: 0, color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", overflowWrap: "anywhere" }, children: item.value })
+            (_nullishCoalesce(source.metadata, () => ( []))).map((item) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "dt", { style: { color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: item.label }),
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "dd", { style: { margin: 0, color: "var(--color-semantic-label-strong)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", overflowWrap: "anywhere" }, children: item.value })
             ] }, item.label))
           ] })
         ]
@@ -227,19 +227,19 @@ function SourceRow({ source, first, onSourceActivate }) {
 }
 function renderSourceChip(source, onSourceActivate) {
   const chipLink = source.href != null ? { as: "a", href: source.href, target: "_blank", rel: "noopener noreferrer" } : typeof onSourceActivate === "function" ? { as: "button", type: "button", onClick: () => onSourceActivate(source) } : {};
-  return /* @__PURE__ */ jsx("li", { style: { minWidth: 0, maxWidth: "100%" }, children: /* @__PURE__ */ jsxs(
-    Chip,
+  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "li", { style: { minWidth: 0, maxWidth: "100%" }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+    _chunkBCWCCXJXcjs.Chip,
     {
       size: "sm",
       variant: "outlined",
-      leading: /* @__PURE__ */ jsx(Icon, { name: "document-text", size: 14 }),
+      leading: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7OXVB7WXcjs.Icon, { name: "document-text", size: 14 }),
       "aria-label": source.actionAriaLabel,
       className: "lk-source-disclosure__chip",
       ...chipLink,
       style: { maxWidth: "100%", minWidth: 0 },
       children: [
-        /* @__PURE__ */ jsx("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: source.label }),
-        source.href != null && /* @__PURE__ */ jsx(Icon, { name: "arrow-up-right", size: 12, "aria-hidden": "true", style: { flexShrink: 0 } })
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: source.label }),
+        source.href != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7OXVB7WXcjs.Icon, { name: "arrow-up-right", size: 12, "aria-hidden": "true", style: { flexShrink: 0 } })
       ]
     }
   ) }, source.id);
@@ -248,8 +248,8 @@ function renderSourceRow(source, onSourceActivate) {
   const Comp = source.href != null ? "a" : typeof onSourceActivate === "function" ? "button" : "span";
   const interactive = Comp !== "span";
   const linkProps = source.href != null ? { href: source.href, target: "_blank", rel: "noopener noreferrer" } : typeof onSourceActivate === "function" ? { type: "button", onClick: () => onSourceActivate(source) } : {};
-  return /* @__PURE__ */ jsxs("li", { style: { minWidth: 0 }, children: [
-    /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "li", { style: { minWidth: 0 }, children: [
+    /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
       Comp,
       {
         className: "lk-source-disclosure__row",
@@ -276,13 +276,13 @@ function renderSourceRow(source, onSourceActivate) {
           transition: "background var(--dur-fast) var(--ease-out)"
         },
         children: [
-          /* @__PURE__ */ jsx(Icon, { name: "document-text", size: 16, "aria-hidden": "true", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)" } }),
-          /* @__PURE__ */ jsx("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: source.label }),
-          source.href != null && /* @__PURE__ */ jsx(Icon, { name: "arrow-up-right", size: 14, "aria-hidden": "true", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)" } })
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7OXVB7WXcjs.Icon, { name: "document-text", size: 16, "aria-hidden": "true", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)" } }),
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: source.label }),
+          source.href != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7OXVB7WXcjs.Icon, { name: "arrow-up-right", size: 14, "aria-hidden": "true", style: { flexShrink: 0, color: "var(--color-semantic-label-alternative)" } })
         ]
       }
     ),
-    source.excerpt != null && /* @__PURE__ */ jsx(
+    source.excerpt != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
       "blockquote",
       {
         cite: source.href,
@@ -342,20 +342,20 @@ function SourceDisclosure({
   style,
   ...rest
 }) {
-  const titleId = React.useId();
+  const titleId = _react2.default.useId();
   const Heading = `h${Math.min(6, Math.max(2, headingLevel))}`;
   const { visible, withheld } = partitionSources(sources);
   const withheldTotal = withheld + Math.max(0, hiddenCount);
-  const withheldLine = withheldTotal > 0 ? hiddenMessage ?? `\uAD8C\uD55C\uC774 \uC5C6\uC5B4 \uCD9C\uCC98 ${withheldTotal}\uAC1C\uB294 \uD45C\uC2DC\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.` : null;
+  const withheldLine = withheldTotal > 0 ? _nullishCoalesce(hiddenMessage, () => ( `\uAD8C\uD55C\uC774 \uC5C6\uC5B4 \uCD9C\uCC98 ${withheldTotal}\uAC1C\uB294 \uD45C\uC2DC\uD558\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4.`)) : null;
   const mutedLineStyle = { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)" };
   if (variant === "inline") {
     if (visible.length === 0) {
-      return /* @__PURE__ */ jsx("div", { ...rest, className: ["lk-source-disclosure", "lk-source-disclosure--inline", className].filter(Boolean).join(" "), style: { minWidth: 0, fontFamily: "var(--font-sans)", ...style }, children: /* @__PURE__ */ jsx("p", { style: mutedLineStyle, children: withheldLine ?? emptyMessage }) });
+      return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { ...rest, className: ["lk-source-disclosure", "lk-source-disclosure--inline", className].filter(Boolean).join(" "), style: { minWidth: 0, fontFamily: "var(--font-sans)", ...style }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { style: mutedLineStyle, children: _nullishCoalesce(withheldLine, () => ( emptyMessage)) }) });
     }
-    return /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx("style", { children: PANEL_CSS }),
-      /* @__PURE__ */ jsxs(
-        Popover,
+    return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
+      /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: PANEL_CSS }),
+      /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        _chunkRAJPV3WVcjs.Popover,
         {
           ...rest,
           className: ["lk-source-disclosure", "lk-source-disclosure--inline", className].filter(Boolean).join(" "),
@@ -364,7 +364,7 @@ function SourceDisclosure({
           defaultOpen,
           ariaLabel: typeof title === "string" ? title : "\uCD9C\uCC98",
           style,
-          trigger: /* @__PURE__ */ jsxs(
+          trigger: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
             "button",
             {
               type: "button",
@@ -390,11 +390,11 @@ function SourceDisclosure({
                 transition: "background var(--dur-fast) var(--ease-out)"
               },
               children: [
-                /* @__PURE__ */ jsx(Icon, { name: "book", size: 16, "aria-hidden": "true", style: { flexShrink: 0 } }),
-                /* @__PURE__ */ jsxs("span", { style: { whiteSpace: "nowrap" }, children: [
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7OXVB7WXcjs.Icon, { name: "book", size: 16, "aria-hidden": "true", style: { flexShrink: 0 } }),
+                /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { whiteSpace: "nowrap" }, children: [
                   title,
                   " ",
-                  /* @__PURE__ */ jsxs("span", { style: { color: "var(--color-semantic-label-alternative)", fontVariantNumeric: "tabular-nums" }, children: [
+                  /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { color: "var(--color-semantic-label-alternative)", fontVariantNumeric: "tabular-nums" }, children: [
                     visible.length,
                     "\uAC1C"
                   ] })
@@ -403,7 +403,7 @@ function SourceDisclosure({
             }
           ),
           children: [
-            /* @__PURE__ */ jsx(
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "ul",
               {
                 className: "lk-source-disclosure__rows",
@@ -411,14 +411,14 @@ function SourceDisclosure({
                 children: visible.map((source) => renderSourceRow(source, onSourceActivate))
               }
             ),
-            withheldLine != null && /* @__PURE__ */ jsx("p", { className: "lk-source-disclosure__withheld", style: { margin: "var(--space-2) 0 0", padding: "0 var(--space-2)", maxWidth: 360, color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: withheldLine })
+            withheldLine != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { className: "lk-source-disclosure__withheld", style: { margin: "var(--space-2) 0 0", padding: "0 var(--space-2)", maxWidth: 360, color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: withheldLine })
           ]
         }
       )
     ] });
   }
   const Root = variant === "list" ? "section" : "div";
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     Root,
     {
       ...rest,
@@ -433,9 +433,9 @@ function SourceDisclosure({
         ...style
       },
       children: [
-        /* @__PURE__ */ jsx("style", { children: PANEL_CSS }),
-        titleVisuallyHidden && description == null ? /* @__PURE__ */ jsx(Heading, { id: titleId, style: VISUALLY_HIDDEN_STYLE, children: title }) : /* @__PURE__ */ jsxs("header", { style: { display: "grid", gap: "var(--space-1)" }, children: [
-          /* @__PURE__ */ jsx(
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: PANEL_CSS }),
+        titleVisuallyHidden && description == null ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Heading, { id: titleId, style: VISUALLY_HIDDEN_STYLE, children: title }) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "header", { style: { display: "grid", gap: "var(--space-1)" }, children: [
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
             Heading,
             {
               id: titleId,
@@ -456,23 +456,23 @@ function SourceDisclosure({
               children: title
             }
           ),
-          description != null && /* @__PURE__ */ jsx("p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: description })
+          description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { style: { margin: 0, color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: description })
         ] }),
-        visible.length === 0 ? /* @__PURE__ */ jsx("p", { style: mutedLineStyle, children: withheldLine ?? emptyMessage }) : variant === "chips" ? /* @__PURE__ */ jsx("ul", { style: { margin: 0, padding: 0, listStyle: "none", display: "flex", flexWrap: "wrap", gap: "var(--space-2)", minWidth: 0 }, children: visible.map((source) => renderSourceChip(source, onSourceActivate)) }) : (
+        visible.length === 0 ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { style: mutedLineStyle, children: _nullishCoalesce(withheldLine, () => ( emptyMessage)) }) : variant === "chips" ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { style: { margin: 0, padding: 0, listStyle: "none", display: "flex", flexWrap: "wrap", gap: "var(--space-2)", minWidth: 0 }, children: visible.map((source) => renderSourceChip(source, onSourceActivate)) }) : (
           /* Borderless: the embedding container owns the surface. Provenance is
              always read inside something — a document card, a Collapsible, a
              detail panel — so drawing a perimeter here puts a second border a
              few pixels inside the first. Rows are separated by their own rules,
              which is all the grouping a list needs once a surface encloses it. */
-          /* @__PURE__ */ jsx("ul", { style: { margin: 0, padding: 0, listStyle: "none" }, children: visible.map((source, index) => /* @__PURE__ */ jsx(SourceRow, { source, first: index === 0, onSourceActivate }, source.id)) })
+          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "ul", { style: { margin: 0, padding: 0, listStyle: "none" }, children: visible.map((source, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, SourceRow, { source, first: index === 0, onSourceActivate }, source.id)) })
         ),
-        visible.length > 0 && withheldLine != null && /* @__PURE__ */ jsx("p", { className: "lk-source-disclosure__withheld", style: { margin: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: withheldLine })
+        visible.length > 0 && withheldLine != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { className: "lk-source-disclosure__withheld", style: { margin: 0, color: "var(--color-semantic-label-alternative)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: withheldLine })
       ]
     }
   );
 }
 
-export {
-  SourceDisclosure
-};
-//# sourceMappingURL=chunk-BWESEVFM.js.map
+
+
+exports.SourceDisclosure = SourceDisclosure;
+//# sourceMappingURL=chunk-JP4OW6U4.cjs.map

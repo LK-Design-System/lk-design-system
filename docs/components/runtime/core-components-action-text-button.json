@@ -25,7 +25,7 @@
   "properties": [
     {
       "name": "tone",
-      "type": "\"signal\" | \"neutral\" | \"danger\"",
+      "type": "\"signal\" | \"neutral\" | \"danger\" | \"inherit\"",
       "required": false,
       "description": "Text action tone mapped through LK theme tokens. @default \"signal\"",
       "owner": "TextButtonOwnProps"
@@ -136,6 +136,7 @@
   ],
   "responsive": [],
   "contentGuidance": [
+    "tone: signal, neutral, danger, inherit. inherit는 Banner·Callout처럼 부모 surface가 이미 접근 가능한 contextual foreground를 정한 경우 그 색을 그대로 사용합니다.",
     "TextButton is a button-style action with sizes and loading state. Use Link for pure anchor/navigation text with underline control."
   ],
   "accessibility": [
@@ -169,7 +170,7 @@
   "examples": [
     {
       "label": "기본 조합",
-      "code": "<TextButton>View all</TextButton>\n<TextButton tone=\"neutral\" underline>Cancel</TextButton>\n<TextButton loading loadingLabel=\"Loading more\">Loading</TextButton>\n<TextButton as=\"a\" href=\"/products\">View products</TextButton>"
+      "code": "<TextButton>View all</TextButton>\n<TextButton tone=\"neutral\" underline>Cancel</TextButton>\n<TextButton tone=\"inherit\" size=\"sm\">상세 보기</TextButton>\n<TextButton loading loadingLabel=\"Loading more\">Loading</TextButton>\n<TextButton as=\"a\" href=\"/products\">View products</TextButton>"
     }
   ],
   "tokens": [

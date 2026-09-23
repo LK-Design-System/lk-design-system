@@ -1104,7 +1104,7 @@
       "importPath": "./stories/StatusFeedback.stories.jsx",
       "storyId": "lds-core-components-status-notices-and-callouts--notices-and-callouts",
       "exportName": "NoticesAndCallouts",
-      "descriptionHash": "5038e2c89ff03c23c217d43057ff1df82c2e58c6409d729eee6f7752a9cab162",
+      "descriptionHash": "54530cfca39c2de1060b3c504d0c5b259fa1c6d1f8a6ee49898a8851e24a166d",
       "sentences": [
         {
           "hash": "04af02a1f9b1e03851ffa8764d82978ce3591bc47b240764190c1cfa2a474e80",
@@ -1112,8 +1112,8 @@
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "ed4cfaf83c61439332183bbecf51c8b7d7f5ade65c116f33b95c0fff693e4e96",
-          "text": "저장·동기화 상태에는 적절한 role과 선택적 행동이 제공되고 절차 안내에는 불필요한 live 상태나 닫기 동작이 없는지 확인하세요.",
+          "hash": "748f47d04ca06cb0b6514e11b4e39bf6917dad9c7a2b6a72d54207ecd8a1d59d",
+          "text": "저장·동기화 상태에는 적절한 role과 선택적 행동이 제공되고, Callout의 저강조 행동은 안내 의미를 유지하면서 불필요한 live 상태나 닫기 동작을 만들지 않는지 확인하세요.",
           "decision": "retained-in-canvas"
         }
       ]

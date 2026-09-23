@@ -23,7 +23,7 @@ function normalizeIcon(icon, fallbackIcon) {
     style: { display: "block", ...icon.props.style }
   });
 }
-function Callout({ tone = "signal", title, headingLevel = false, children, icon, density, style, ...rest }) {
+function Callout({ tone = "signal", title, headingLevel = false, children, action, icon, density, className, style, ...rest }) {
   const resolvedDensity = _chunkZAM5AMCOcjs.useResolvedDensity.call(void 0, density, "comfortable");
   const compact = resolvedDensity === "compact";
   const navy = tone === "navy";
@@ -41,9 +41,13 @@ function Callout({ tone = "signal", title, headingLevel = false, children, icon,
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
+      "data-slot": "root",
       "data-density": resolvedDensity,
+      className: ["lk-callout", className].filter(Boolean).join(" "),
       style: {
         display: "flex",
+        minWidth: 0,
+        maxWidth: "100%",
         gap: compact ? "var(--space-3)" : "var(--space-4)",
         padding: compact ? "var(--space-3) var(--space-4)" : "var(--space-5) var(--space-6)",
         boxSizing: "border-box",
@@ -59,6 +63,8 @@ function Callout({ tone = "signal", title, headingLevel = false, children, icon,
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
+            "data-slot": "icon",
+            className: "lk-callout__icon",
             "aria-hidden": "true",
             style: {
               width: ICON_SIZE,
@@ -73,9 +79,18 @@ function Callout({ tone = "signal", title, headingLevel = false, children, icon,
             children: normalizedIcon
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { flex: 1, minWidth: 0 }, children: [
-          title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Heading, { style: { margin: 0, fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)", fontWeight: "var(--fw-bold)", letterSpacing: 0, color: navy ? "var(--color-semantic-brand-on-surface)" : "var(--color-semantic-label-normal)", marginBottom: children != null ? "var(--space-1-5)" : 0 }, children: title }),
-          children != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: { fontSize: "var(--label1-size)", lineHeight: compact ? "var(--label1-line)" : "var(--label1-reading-line)", color: navy ? "var(--color-semantic-brand-on-surface-subtle)" : "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children })
+        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "content", className: "lk-callout__content", style: { flex: 1, minWidth: 0 }, children: [
+          title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, Heading, { "data-slot": "title", className: "lk-callout__title", style: { margin: 0, fontSize: "var(--body1-size)", lineHeight: "var(--body1-line)", fontWeight: "var(--fw-bold)", letterSpacing: 0, color: navy ? "var(--color-semantic-brand-on-surface)" : "var(--color-semantic-label-normal)", marginBottom: children != null ? "var(--space-1-5)" : 0 }, children: title }),
+          children != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-slot": "body", className: "lk-callout__body", style: { fontSize: "var(--label1-size)", lineHeight: compact ? "var(--label1-line)" : "var(--label1-reading-line)", color: navy ? "var(--color-semantic-brand-on-surface-subtle)" : "var(--color-semantic-label-neutral)", wordBreak: "keep-all" }, children }),
+          action != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+            "div",
+            {
+              "data-slot": "action",
+              className: "lk-callout__action",
+              style: { display: "flex", alignItems: "center", flexWrap: "wrap", minWidth: 0, maxWidth: "100%", marginTop: title != null || children != null ? "var(--space-2)" : 0, color: c, overflowWrap: "anywhere" },
+              children: action
+            }
+          )
         ] })
       ]
     }
@@ -85,4 +100,4 @@ function Callout({ tone = "signal", title, headingLevel = false, children, icon,
 
 
 exports.Callout = Callout;
-//# sourceMappingURL=chunk-VBJLTDN4.cjs.map
+//# sourceMappingURL=chunk-MB6GA2I7.cjs.map

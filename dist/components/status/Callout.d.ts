@@ -11,6 +11,8 @@ export interface CalloutProps extends Omit<React.HTMLAttributes<HTMLDivElement>,
   /** tone별 기본 아이콘을 교체합니다. 생략하거나 null을 전달해도 기본 아이콘은 유지됩니다. */
   icon?: React.ReactElement | null;
   children?: React.ReactNode;
+  /** 안내와 직접 연결된 단일 저강조 다음 행동. */
+  action?: React.ReactNode;
 }
 
 /** tone별 아이콘과 외곽선 없는 tint 표면을 제공하는 강조 노트 블록 — 안내 / 팁. */

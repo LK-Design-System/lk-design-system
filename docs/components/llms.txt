@@ -716,7 +716,7 @@ Compiled source: docs/components/component-content.json
 
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
-| `tone` | `"signal" \| "neutral" \| "danger"` | No | Text action tone mapped through LK theme tokens. @default "signal" |
+| `tone` | `"signal" \| "neutral" \| "danger" \| "inherit"` | No | Text action tone mapped through LK theme tokens. @default "signal" |
 | `color` | `"primary" \| "assistive"` | No | color axis. When set, it takes precedence over tone. |
 | `size` | `"sm" \| "md" \| "lg" \| "small" \| "medium" \| "large"` | No | Aliases map small/medium/large to sm/md/lg. @default "md" |
 | `arrow` | `boolean` | No |  |
@@ -751,6 +751,7 @@ Compiled source: docs/components/component-content.json
 
 ## Content and writing
 
+- tone: signal, neutral, danger, inherit. inherit는 Banner·Callout처럼 부모 surface가 이미 접근 가능한 contextual foreground를 정한 경우 그 색을 그대로 사용합니다.
 - TextButton is a button-style action with sizes and loading state. Use Link for pure anchor/navigation text with underline control.
 
 ## Accessibility
@@ -758,7 +759,7 @@ Compiled source: docs/components/component-content.json
 - loading prevents repeated activation, renders a spinner, and sets aria-busy; use loadingLabel for the single screen-reader name (기본값 불러오는 중). Existing content keeps its width while visually hidden.
 - loading은 native disabled가 아니라 aria-disabled="true" + aria-busy="true"로 처리해 focus를 유지합니다(Button과 동일한 계약).
 - Native disabled removes the action from focus. aria-disabled="true" keeps it discoverable while applying unavailable styling and blocking activation.
-- WAI-ARIA Button Pattern의 keyboard/disabled 계약을 따릅니다. WDS 직접 축은 primary/assistive, small/medium, disable이며 danger, lg, underline, loading, anchor는 LDS 확장입니다.
+- WAI-ARIA Button Pattern의 keyboard/disabled 계약을 따릅니다. WDS 직접 축은 primary/assistive, small/medium, disable이며 danger, inherit, lg, underline, loading, anchor는 LDS 확장입니다.
 
 ## Related components
 
@@ -777,6 +778,7 @@ Compiled source: docs/components/component-content.json
 ```jsx
 <TextButton>View all</TextButton>
 <TextButton tone="neutral" underline>Cancel</TextButton>
+<TextButton tone="inherit" size="sm">상세 보기</TextButton>
 <TextButton loading loadingLabel="Loading more">Loading</TextButton>
 <TextButton as="a" href="/products">View products</TextButton>
 ```
@@ -7787,6 +7789,7 @@ const firstFieldRef = useRef(null);
 
 - Atlassian Banner와 Section Message 및 MUI Alert의 기본 standard 변형처럼, 상태 알림은 톤 배경·아이콘·텍스트만으로 식별하고 전체 외곽선을 기본 시각 문법으로 사용하지 않습니다. LDS는 standalone과 embedded 모두 이 낮은 chrome 방향을 기본 계약으로 정하고 별도 outlined 축을 추가하지 않습니다.
 - Primer Banner의 card 안 flush 배치처럼, 컨테이너 상태는 별도의 둥근 카드로 중첩하지 않고 부모 표면의 폭에 결합합니다. LDS에서는 이를 variant="embedded"로 명시합니다. Primer의 상·하단 separator는 채택하지 않습니다. LDS 카드에서는 부모 외곽선과 Banner tint가 이미 경계를 제공해 선을 더하면 이중 chrome으로 읽히기 때문입니다.
+- Adobe Spectrum Alert Banner와 Carbon Actionable Notification처럼 메시지를 직접 해결하는 contextual action은 하나로 제한합니다. LDS는 외곽선 버튼 대신 부모 tone foreground를 상속하는 저강조 텍스트 action을 기본 조합으로 정합니다.
 - Carbon Notification usage가 notification과 callout을 목적·지속성·상호작용으로 구분하는 것처럼, LDS도 시각적 강조 정도가 아니라 동적 상태와 액션 여부로 Banner를 선택합니다. 외부 스타일을 복제하지 않고 LDS의 status tone, spacing, radius를 유지합니다.
 
 ## Anatomy
@@ -7795,7 +7798,7 @@ const firstFieldRef = useRef(null);
 | --- | --- |
 | tone | 톤. canonical은 signal · positive · cautionary · negative이며 info · success · warning · error는 canonicalise 이전 소비자를 위해 동결된 별칭입니다(같은 표면으로 정규화되며 새 코드에서는 쓰지 않습니다). 기본값은 canonical 표기입니다 — 이전 기본값 "info"는 같은 표면으로 정규화되던 별칭 표기였습니다. |
 | title | 굵은 헤드라인 줄. |
-| action | 끝의 액션 노드(예: 텍스트 Button). |
+| action | 안내와 직접 연결된 단일 저강조 다음 행동. |
 | closeLabel | 닫기 버튼의 접근성 레이블. @default "닫기" |
 | icon | tone별 기본 아이콘을 교체합니다. 생략하거나 null을 전달해도 기본 아이콘은 유지됩니다. |
 
@@ -7807,7 +7810,7 @@ const firstFieldRef = useRef(null);
 | `variant` | `'standalone' \| 'embedded'` | No | 표면 배치. embedded는 부모 패널 내부의 edge-to-edge 상태 띠입니다. @default "standalone" |
 | `title` | `React.ReactNode` | No | 굵은 헤드라인 줄. |
 | `children` | `React.ReactNode` | No | 본문 메시지. |
-| `action` | `React.ReactNode` | No | 끝의 액션 노드(예: 텍스트 Button). |
+| `action` | `React.ReactNode` | No | 상태를 직접 해결하거나 관련 상세로 이동하는 단일 저강조 액션 노드. |
 | `onClose` | `() = void` | No | 닫기 버튼 표시; 클릭 시 호출. |
 | `closeLabel` | `string` | No | 닫기 버튼의 접근성 레이블. @default "닫기" |
 | `tone` | `'signal' \| 'positive' \| 'cautionary' \| 'negative' \| 'navy'` | No |  |
@@ -7816,6 +7819,7 @@ const firstFieldRef = useRef(null);
 | `density` | `'comfortable' \| 'compact'` | No | 내부 여백과 본문 행간. compact component scope를 상속하며 명시값이 우선합니다. |
 | `icon` | `React.ReactElement \| null` | No | tone별 기본 아이콘을 교체합니다. 생략하거나 null을 전달해도 기본 아이콘은 유지됩니다. |
 | `children` | `React.ReactNode` | No |  |
+| `action` | `React.ReactNode` | No | 안내와 직접 연결된 단일 저강조 다음 행동. |
 
 ## States
 
@@ -7828,6 +7832,7 @@ const firstFieldRef = useRef(null);
 
 - variant="embedded"는 WDS 원본 variant axis가 아니라 LDS composition extension입니다. 부모 패널의 header 바로 다음에 edge-to-edge로 배치하며, 부모가 외곽 border·radius·shadow를 소유합니다. Banner는 tone tint로 상태 영역을 구분하고 모든 자체 테두리와 radius를 제거합니다.
 - tone 아이콘은 공통 Icon registry의 statusToneStyle 글리프(circle-info-fill, circle-check-fill, triangle-exclamation-fill, circle-close-fill)를 사용합니다. severity 글리프를 인라인 SVG로 새로 그리지 않습니다 — 같은 상태는 Callout·ValidationSummary와 같은 모양으로 표시되어야 합니다.
+- 닫기 액션도 공통 Icon name="close"를 사용하며 closeLabel이 버튼의 접근 가능한 이름을 제공합니다.
 - GNOME HIG Banners의 현재 view에 지속되는 중요 상태 패턴을 반영해, dialog를 열 정도는 아니지만 사용자가 다음 행동 전에 알아야 하는 상태에 Banner를 씁니다.
 - Banner — 현재 화면에서 동적으로 변하는 시스템 상태를 알리는 인라인 공지 바(외곽선 없는 틴트 서피스, 톤 아이콘, 메시지, 선택적 액션/닫기).
 
@@ -7841,19 +7846,27 @@ const firstFieldRef = useRef(null);
 | --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 | --body2-size | 15px |
 
+## Responsive
+
+- 좁은 폭에서는 메시지 영역을 유연하게 줄이고 action을 본문 아래로 줄바꿈해 가로 overflow를 만들지 않습니다. 닫기 버튼은 우측 상단의 trailing control로 유지합니다.
+
 ## Content and writing
 
 - 선택 기준 — 비동기 작업, 연결, 권한, 검증 결과처럼 상태가 바뀌며 사용자가 알아야 하는 정보에는 Banner를 사용합니다. 상태와 함께 다음 행동이 필요하면 action, 사용자가 숨겨도 되는 비차단 알림이면 onClose를 제공합니다. Banner는 기본적으로 live status이며 negative tone은 alert이므로, 처음부터 본문에 남아 있는 설명을 단지 색으로 강조하려는 용도로 사용하지 않습니다.
 - tone — canonical signal · positive · cautionary · negative를 받으며 기본값은 signal입니다. 기존 info · success · warning · error도 별칭으로 계속 동작하지만 동결된 어휘라 새 코드에서는 쓰지 않습니다(check:api-grammar가 ledger에 없는 별칭 신규 도입을 차단합니다). 기본값이 한동안 "info"로 표기돼 있었는데, 별칭 정규화를 거쳐 signal과 같은 표면으로 렌더되던 같은 값이라 canonical 표기로 통일했습니다 — 렌더 결과는 바뀌지 않습니다.
+- action은 한 Banner에 하나만 두고, 기본 조합은 외곽선 없는 TextButton tone="inherit" size="sm" 또는 Link tone="inherit"입니다. 페이지 primary CTA와 경쟁하는 filled Button, 서로 다른 결정을 요구하는 복수 control, 메시지와 무관한 보조 도구는 넣지 않습니다. 복수 결정이 필요하면 해당 폼·패널의 ActionArea나 Dialog가 행동을 소유합니다. CTA 활성화가 Banner를 자동으로 닫지는 않으며 실행·loading·해소 후 제거는 제품 상태가 소유합니다.
 - 패널 전체의 현재 gate/state를 짧게 알릴 때는 header 바로 아래에 variant="embedded"를 사용합니다. 정상·잠금처럼 설명이 없어도 이해되는 상태는 제목 한 줄로 유지하고, 오류 원인이나 복구 방법이 필요한 경우에만 본문을 추가합니다. 부모 표면 안에서 style로 border와 radius를 임의 덮어쓰지 않습니다.
-- 독립된 동적 알림에는 standalone, 떠 있는 일시 메시지에는 Toast, 본문에 계속 남는 절차·주의·맥락 설명에는 Callout을 사용합니다. 액션이나 닫기가 필요하다는 이유만으로 정적 설명을 Banner로 바꾸지 말고, 실제로 상태가 변하는지 먼저 판단합니다.
+
+## Accessibility
+
+- 접근성상 시각 배치가 바뀌어도 DOM과 키보드 순서는 콘텐츠 → action → dismiss를 유지합니다. Banner가 나타났다는 이유로 CTA에 초점을 자동 이동하지 않으며, action은 native button 또는 link와 구체적인 접근 가능한 이름을 사용합니다.
 
 ## Related components
 
 | Component | Relationship |
 | --- | --- |
 | `Callout` | 같은 페이지가 소유 |
-| `Button` | 대표 시나리오에서 조합 |
+| `TextButton` | 대표 시나리오에서 조합 |
 | `EmptyState` | 대표 시나리오에서 조합 |
 | `Skeleton` | 대표 시나리오에서 조합 |
 | `Spinner` | 대표 시나리오에서 조합 |
@@ -7864,7 +7877,7 @@ const firstFieldRef = useRef(null);
 
 ```jsx
 <Banner tone="signal" title="문서 업데이트" onClose={dismiss}>디자인 시스템 문서가 업데이트되었습니다.</Banner>
-<Banner tone="cautionary">일부 항목에 검토가 필요합니다.</Banner>
+<Banner tone="cautionary" action={<TextButton tone="inherit" size="sm">다시 시도</TextButton>}>일부 항목에 검토가 필요합니다.</Banner>
 <Banner variant="embedded" tone="cautionary" title="제어 대기">상위 패널의 상태를 설명합니다.</Banner>
 ```
 
@@ -7890,6 +7903,7 @@ const firstFieldRef = useRef(null);
 - `--radius-xl`
 - `--space-0-5`
 - `--space-1-5`
+- `--space-2`
 - `--space-3`
 - `--space-4`
 - `--space-5`
@@ -7917,6 +7931,8 @@ const firstFieldRef = useRef(null);
 - [MUI Alert의 기본 standard 변형](https://mui.com/material-ui/react-alert/#variants)
 - [Primer Banner](https://primer.style/product/components/banner/)
 - [Fluent 2 MessageBar](https://fluent2.microsoft.design/components/web/react/core/messagebar/usage)
+- [Adobe Spectrum Alert Banner](https://spectrum.adobe.com/page/alert-banner/)
+- [Carbon Actionable Notification](https://carbondesignsystem.com/components/notification/usage/#actionable)
 - [GNOME HIG Banners](https://developer.gnome.org/hig/patterns/feedback/banners.html)
 - [Carbon Notification usage](https://carbondesignsystem.com/components/notification/usage/)
 
