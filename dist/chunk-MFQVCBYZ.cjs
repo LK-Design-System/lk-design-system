@@ -5,26 +5,19 @@
 
 
 
-
-var _chunkLDSQW2RPcjs = require('./chunk-LDSQW2RP.cjs');
-
+var _chunkZRHSDRSMcjs = require('./chunk-ZRHSDRSM.cjs');
 
 
 
 
-var _chunkEBP5HCWAcjs = require('./chunk-EBP5HCWA.cjs');
+
+var _chunkGWMGPLNWcjs = require('./chunk-GWMGPLNW.cjs');
 
 
-var _chunkZHXNBK3Scjs = require('./chunk-ZHXNBK3S.cjs');
+var _chunkXGKLO45Tcjs = require('./chunk-XGKLO45T.cjs');
 
-
-var _chunkFVL575B5cjs = require('./chunk-FVL575B5.cjs');
-
-// components/editor/EditorToolbar.jsx
+// components/content/Tooltip.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-
-// packages/core/dist/chunk-A4M3FBLH.js
-
 var _jsxruntime = require('react/jsx-runtime');
 var POS = {
   top: { bottom: "100%", left: "50%" },
@@ -156,14 +149,14 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
   vars,
   ...rest
 }, forwardedRef) {
-  const [visible, setVisible] = _chunkLDSQW2RPcjs.useControllableOpen.call(void 0, { open, defaultOpen, onOpenChange });
+  const [visible, setVisible] = _chunkZRHSDRSMcjs.useControllableOpen.call(void 0, { open, defaultOpen, onOpenChange });
   const requestedPlace = position || placement || "top";
   const wrapperRef = _react2.default.useRef(null);
-  const mergedWrapperRef = _chunkEBP5HCWAcjs.useMergedRefs.call(void 0, wrapperRef, forwardedRef);
+  const mergedWrapperRef = _chunkGWMGPLNWcjs.useMergedRefs.call(void 0, wrapperRef, forwardedRef);
   const bubbleRef = _react2.default.useRef(null);
   const tooltipId = _react2.default.useId();
-  const getTrigger = _react2.default.useCallback(() => _chunkLDSQW2RPcjs.findOverlayTrigger.call(void 0, wrapperRef.current), []);
-  const floating = _chunkLDSQW2RPcjs.useFloatingPosition.call(void 0, {
+  const getTrigger = _react2.default.useCallback(() => _chunkZRHSDRSMcjs.findOverlayTrigger.call(void 0, wrapperRef.current), []);
+  const floating = _chunkZRHSDRSMcjs.useFloatingPosition.call(void 0, {
     open: visible,
     anchorRef: wrapperRef,
     panelRef: bubbleRef,
@@ -240,7 +233,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
     },
     [clearTimer, setVisible]
   );
-  const layer = _chunkLDSQW2RPcjs.useLightDismiss.call(void 0, {
+  const layer = _chunkZRHSDRSMcjs.useLightDismiss.call(void 0, {
     open: visible,
     rootRef: wrapperRef,
     getTrigger,
@@ -275,7 +268,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
   const validTrigger = _react2.default.isValidElement(children) && children.type !== _react2.default.Fragment;
   const renderedChildren = validTrigger ? _react2.default.cloneElement(children, {
     "data-anchored-overlay-trigger": "",
-    "aria-describedby": _chunkLDSQW2RPcjs.appendAriaReference.call(void 0, children.props["aria-describedby"], tooltipId)
+    "aria-describedby": _chunkZRHSDRSMcjs.appendAriaReference.call(void 0, children.props["aria-describedby"], tooltipId)
   }) : children;
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "span",
@@ -284,29 +277,30 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
       ...rest,
       "data-slot": "root",
       "data-open": visible ? "true" : void 0,
-      className: _chunkEBP5HCWAcjs.partClassName.call(void 0, classNames, "root", className) || void 0,
+      className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "root", className) || void 0,
       "data-anchored-overlay-trigger": validTrigger ? void 0 : "",
       "aria-describedby": validTrigger ? void 0 : tooltipId,
       tabIndex: rest.tabIndex,
-      style: { ..._chunkEBP5HCWAcjs.componentVars.call(void 0, vars, "--lds-tooltip-"), position: "relative", display: "inline-flex", ..._chunkEBP5HCWAcjs.partStyle.call(void 0, styles, "root"), ...style },
+      style: { ..._chunkGWMGPLNWcjs.componentVars.call(void 0, vars, "--lds-tooltip-"), position: "relative", display: "inline-flex", ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "root"), ...style },
       onMouseEnter: showTooltip,
       onMouseLeave: hideTooltip,
       onFocus: showOnFocus,
       onBlur: hideOnBlur,
       children: [
         renderedChildren,
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkLDSQW2RPcjs.OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: wrapperRef, layer: "anchored", children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkXGKLO45Tcjs.OverlayPortal, { open: visible, withinPortal, portalTarget, anchorRef: wrapperRef, layer: "anchored", children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
           "span",
           {
             ref: bubbleRef,
             id: tooltipId,
             "data-slot": "bubble",
-            className: _chunkEBP5HCWAcjs.partClassName.call(void 0, classNames, "bubble") || void 0,
+            "data-theme": "light",
+            className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "bubble") || void 0,
             role: "tooltip",
             "aria-hidden": visible ? false : void 0,
             "data-placement": place,
             style: {
-              ..._chunkEBP5HCWAcjs.componentVars.call(void 0, vars, "--lds-tooltip-"),
+              ..._chunkGWMGPLNWcjs.componentVars.call(void 0, vars, "--lds-tooltip-"),
               position: withinPortal ? "fixed" : "absolute",
               ...withinPortal ? { top: _nullishCoalesce(floating.y, () => ( -9999)), left: _nullishCoalesce(floating.x, () => ( -9999)) } : pos,
               ...withinPortal ? {} : bubbleOffset(place, align),
@@ -334,7 +328,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
               visibility: visible && bubblePath ? "visible" : "hidden",
               opacity: visible ? 1 : 0,
               transition: "opacity var(--dur-fast) var(--ease-out)",
-              ..._chunkEBP5HCWAcjs.partStyle.call(void 0, styles, "bubble")
+              ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "bubble")
             },
             children: [
               bubblePath && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
@@ -344,7 +338,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
                   focusable: "false",
                   "data-lds-tooltip-surface": "",
                   "data-slot": "surface",
-                  className: _chunkEBP5HCWAcjs.partClassName.call(void 0, classNames, "surface") || void 0,
+                  className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "surface") || void 0,
                   "data-arrow-axis": _nullishCoalesce(arrowPosition, () => ( void 0)),
                   "data-arrow-height": arrow ? arrowHeight : void 0,
                   width: bubbleBox.w,
@@ -357,7 +351,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
                     display: "block",
                     overflow: "visible",
                     pointerEvents: "none",
-                    ..._chunkEBP5HCWAcjs.partStyle.call(void 0, styles, "surface")
+                    ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "surface")
                   },
                   children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
                     "path",
@@ -375,7 +369,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
                 {
                   "data-lds-tooltip-content": true,
                   "data-slot": "content",
-                  className: _chunkEBP5HCWAcjs.partClassName.call(void 0, classNames, "content") || void 0,
+                  className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "content") || void 0,
                   style: {
                     position: "relative",
                     zIndex: 1,
@@ -386,7 +380,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
                     maxHeight: contentMaxHeight,
                     overflowY: contentMaxHeight != null ? "auto" : void 0,
                     overflowX: contentMaxHeight != null ? "hidden" : void 0,
-                    ..._chunkEBP5HCWAcjs.partStyle.call(void 0, styles, "content")
+                    ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "content")
                   },
                   children: [
                     /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: content }),
@@ -394,11 +388,11 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
                       "span",
                       {
                         "data-slot": "shortcut",
-                        className: _chunkEBP5HCWAcjs.partClassName.call(void 0, classNames, "shortcut") || void 0,
+                        className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "shortcut") || void 0,
                         style: {
                           color: "var(--color-semantic-inverse-label-alternative-soft)",
                           fontWeight: "var(--fw-bold)",
-                          ..._chunkEBP5HCWAcjs.partStyle.call(void 0, styles, "shortcut")
+                          ..._chunkGWMGPLNWcjs.partStyle.call(void 0, styles, "shortcut")
                         },
                         children: shortcut
                       }
@@ -414,117 +408,7 @@ var Tooltip = _react2.default.forwardRef(function Tooltip2({
   );
 });
 
-// components/editor/EditorToolbar.jsx
-
-function EditorToolbar({
-  items = [],
-  value,
-  defaultValue,
-  onChange,
-  orientation = "vertical",
-  label = "\uD3B8\uC9D1 \uB3C4\uAD6C",
-  disabled = false,
-  disabledReason,
-  tooltipPosition,
-  style,
-  className,
-  onKeyDown,
-  onFocusCapture,
-  ...rest
-}) {
-  const controlled = value !== void 0;
-  const first = items[0] && (items[0].value != null ? items[0].value : items[0]);
-  const [internal, setInternal] = _react2.default.useState(defaultValue != null ? defaultValue : first);
-  const cur = controlled ? value : internal;
-  const activeEnabledItem = items.find((item) => {
-    const itemValue = item.value != null ? item.value : item;
-    return itemValue === cur && !disabled && !item.disabled;
-  });
-  const firstEnabledItem = items.find((item) => !disabled && !item.disabled);
-  const preferredFocusItem = _nullishCoalesce(_nullishCoalesce(activeEnabledItem, () => ( firstEnabledItem)), () => ( (!disabled ? items[0] : void 0)));
-  const preferredFocusValue = preferredFocusItem != null ? preferredFocusItem.value != null ? preferredFocusItem.value : preferredFocusItem : void 0;
-  const pick = (v, itemDisabled) => {
-    if (disabled || itemDisabled) return;
-    if (!controlled) setInternal(v);
-    onChange && onChange(v);
-  };
-  const resolvedTooltipPosition = _nullishCoalesce(tooltipPosition, () => ( (orientation === "vertical" ? "right" : "bottom")));
-  return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-    _chunkZHXNBK3Scjs.Toolbar,
-    {
-      ...rest,
-      className: ["lk-editor-toolbar", className].filter(Boolean).join(" "),
-      label,
-      orientation,
-      itemSelector: "[data-lk-editor-toolbar-item]",
-      preferredItemKey: preferredFocusValue,
-      includeAriaDisabledItems: true,
-      "aria-disabled": disabled || void 0,
-      "aria-description": disabled && typeof disabledReason === "string" ? disabledReason : void 0,
-      "data-orientation": orientation,
-      onKeyDown,
-      onFocusCapture,
-      style: {
-        width: "fit-content",
-        maxWidth: "100%",
-        boxSizing: "border-box",
-        gap: "var(--space-1)",
-        padding: 0,
-        background: "transparent",
-        border: 0,
-        borderRadius: 0,
-        boxShadow: "none",
-        ...style
-      },
-      children: items.map((it) => {
-        const v = it.value != null ? it.value : it;
-        const on = v === cur;
-        const itemDisabled = disabled || !!it.disabled;
-        const itemLabel = it.label || String(v);
-        const itemDisabledReason = _nullishCoalesce(it.disabledReason, () => ( disabledReason));
-        return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          Tooltip,
-          {
-            content: itemDisabled && itemDisabledReason != null ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: 2 }, children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: itemLabel }),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { color: "var(--color-semantic-inverse-label-alternative-soft)", fontWeight: "var(--fw-medium)" }, children: itemDisabledReason })
-            ] }) : itemLabel,
-            shortcut: it.shortcut,
-            position: resolvedTooltipPosition,
-            size: "sm",
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-              _chunkFVL575B5cjs.ToggleIcon,
-              {
-                className: "lk-editor-toolbar__button",
-                label: itemLabel,
-                size: "sm",
-                variant: "plain",
-                pressed: on,
-                "aria-disabled": itemDisabled || void 0,
-                "aria-keyshortcuts": _nullishCoalesce(it.ariaKeyShortcuts, () => ( (typeof it.shortcut === "string" ? it.shortcut : void 0))),
-                "aria-description": itemDisabled && typeof itemDisabledReason === "string" ? itemDisabledReason : void 0,
-                "data-lk-editor-toolbar-item": "",
-                "data-lk-toolbar-key": String(v),
-                tabIndex: !disabled && v === preferredFocusValue ? 0 : -1,
-                disabled,
-                onChange: () => pick(v, itemDisabled),
-                style: {
-                  flex: "0 0 auto",
-                  padding: 0,
-                  lineHeight: 0
-                },
-                children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { width: 16, height: 16, display: "inline-grid", placeItems: "center", flex: "0 0 auto" }, children: it.icon || v })
-              }
-            )
-          },
-          v
-        );
-      })
-    }
-  );
-}
 
 
-
-exports.EditorToolbar = EditorToolbar;
-//# sourceMappingURL=chunk-CYSX7PEI.cjs.map
+exports.Tooltip = Tooltip;
+//# sourceMappingURL=chunk-MFQVCBYZ.cjs.map

@@ -103,7 +103,7 @@ function Footer({
     " ",
     it.value
   ] }, i)) });
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "footer", { style: { background: "var(--color-semantic-inverse-background)", padding: "32px 0 40px", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "footer", { "data-theme": "light", style: { background: "var(--color-semantic-inverse-background)", padding: "32px 0 40px", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     backToTop && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, BackToTopButton, {}),
     /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { maxWidth, margin: "0 auto", padding: "0 32px", boxSizing: "border-box" }, children: [
       (brand != null || columns.length > 0) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
@@ -131,4 +131,4 @@ function Footer({
 
 
 exports.Footer = Footer;
-//# sourceMappingURL=chunk-NV6UEU25.cjs.map
+//# sourceMappingURL=chunk-Y73YCKW4.cjs.map

@@ -1,17 +1,17 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-var _chunkAHWXAZZKcjs = require('./chunk-AHWXAZZK.cjs');
-
-
-var _chunkSMSPAH2Mcjs = require('./chunk-SMSPAH2M.cjs');
-
-
-var _chunk7OXVB7WXcjs = require('./chunk-7OXVB7WX.cjs');
+"use client";
+import {
+  Collapsible
+} from "./chunk-LCMOLARR.js";
+import {
+  ToggleIcon
+} from "./chunk-CRCBIV64.js";
+import {
+  Icon
+} from "./chunk-IKUN5X7H.js";
 
 // components/data/AnnotatedImage.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 var ANNOTATION_TONE = {
   signal: "var(--color-semantic-primary-normal)",
   positive: "var(--color-semantic-status-positive-signal)",
@@ -71,7 +71,7 @@ function imageContentBox(frame, image, objectFit) {
   return { left: (frame.width - width) / 2, top: (frame.height - height) / 2, width, height };
 }
 function annotationLabel(annotation, fallback) {
-  return _nullishCoalesce(annotation.label, () => ( fallback));
+  return annotation.label ?? fallback;
 }
 function pointLabelPosition(point) {
   const x = Math.max(0, Math.min(1, Number(point.x) || 0));
@@ -101,21 +101,21 @@ function AnnotatedImage({
   ...rest
 }) {
   const controlled = annotationsVisible !== void 0;
-  const [internalVisible, setInternalVisible] = _react2.default.useState(defaultAnnotationsVisible);
+  const [internalVisible, setInternalVisible] = React.useState(defaultAnnotationsVisible);
   const visible = controlled ? annotationsVisible : internalVisible;
-  const [imageState, setImageState] = _react2.default.useState(src ? "loading" : "empty");
-  const [imageSize, setImageSize] = _react2.default.useState({ width: 0, height: 0 });
-  const [frameSize, setFrameSize] = _react2.default.useState({ width: 0, height: 0 });
-  const frameRef = _react2.default.useRef(null);
-  const overlayId = _react2.default.useId();
-  const detailsId = _react2.default.useId();
+  const [imageState, setImageState] = React.useState(src ? "loading" : "empty");
+  const [imageSize, setImageSize] = React.useState({ width: 0, height: 0 });
+  const [frameSize, setFrameSize] = React.useState({ width: 0, height: 0 });
+  const frameRef = React.useRef(null);
+  const overlayId = React.useId();
+  const detailsId = React.useId();
   const annotations = regions.length + points.length;
   const overlayBox = imageContentBox(frameSize, imageSize, objectFit);
-  _react2.default.useEffect(() => {
+  React.useEffect(() => {
     setImageState(src ? "loading" : "empty");
     setImageSize({ width: 0, height: 0 });
   }, [src]);
-  _react2.default.useLayoutEffect(() => {
+  React.useLayoutEffect(() => {
     const frame = frameRef.current;
     if (!frame) return void 0;
     const measure = () => setFrameSize({ width: frame.clientWidth, height: frame.clientHeight });
@@ -130,16 +130,16 @@ function AnnotatedImage({
   }, [aspectRatio, src]);
   const setVisible = (next) => {
     if (!controlled) setInternalVisible(next);
-    _optionalChain([onAnnotationsVisibleChange, 'optionalCall', _2 => _2(next)]);
+    onAnnotationsVisibleChange?.(next);
   };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ jsxs(
     "figure",
     {
       "data-label-display": labelDisplay,
       style: { display: "grid", gap: "var(--space-3)", width: "100%", minWidth: 0, margin: 0, boxSizing: "border-box", fontFamily: "var(--font-sans)", ...style },
       ...rest,
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: `.lk-annotated-image__point-label {
+        /* @__PURE__ */ jsx("style", { children: `.lk-annotated-image__point-label {
           display: inline-flex;
         }
         @container (max-width: 420px) {
@@ -148,10 +148,11 @@ function AnnotatedImage({
             display: none;
           }
         }` }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        /* @__PURE__ */ jsxs(
           "div",
           {
             ref: frameRef,
+            "data-theme": "light",
             style: {
               position: "relative",
               width: "100%",
@@ -164,7 +165,7 @@ function AnnotatedImage({
               containerType: "inline-size"
             },
             children: [
-              src && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              src && /* @__PURE__ */ jsx(
                 "img",
                 {
                   src,
@@ -178,7 +179,7 @@ function AnnotatedImage({
                   style: { display: "block", width: "100%", height: "100%", objectFit }
                 }
               ),
-              imageState !== "loaded" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              imageState !== "loaded" && /* @__PURE__ */ jsx(
                 "div",
                 {
                   role: imageState === "error" ? "alert" : "status",
@@ -186,8 +187,8 @@ function AnnotatedImage({
                   children: imageState === "loading" ? loadingMessage : imageState === "error" ? errorMessage : emptyMessage
                 }
               ),
-              imageState === "loaded" && annotations > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-                _chunkSMSPAH2Mcjs.ToggleIcon,
+              imageState === "loaded" && annotations > 0 && /* @__PURE__ */ jsx(
+                ToggleIcon,
                 {
                   size: "sm",
                   variant: "on-dark",
@@ -197,10 +198,10 @@ function AnnotatedImage({
                   title: visible ? "\uC8FC\uC11D \uC228\uAE30\uAE30" : "\uC8FC\uC11D \uBCF4\uAE30",
                   "aria-controls": overlayId,
                   style: { position: "absolute", zIndex: 2, top: "var(--space-3)", right: "var(--space-3)", boxShadow: "var(--shadow-md)" },
-                  children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7OXVB7WXcjs.Icon, { name: visible ? "eye" : "eye-slash", size: 16, "aria-hidden": "true" })
+                  children: /* @__PURE__ */ jsx(Icon, { name: visible ? "eye" : "eye-slash", size: 16, "aria-hidden": "true" })
                 }
               ),
-              imageState === "loaded" && annotations > 0 && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+              imageState === "loaded" && annotations > 0 && /* @__PURE__ */ jsxs(
                 "div",
                 {
                   id: overlayId,
@@ -209,13 +210,13 @@ function AnnotatedImage({
                   style: { position: "absolute", left: overlayBox.left, top: overlayBox.top, width: overlayBox.width, height: overlayBox.height, pointerEvents: "none" },
                   children: [
                     regions.map((region, index) => {
-                      const color = _nullishCoalesce(ANNOTATION_TONE[region.tone], () => ( ANNOTATION_TONE.signal));
+                      const color = ANNOTATION_TONE[region.tone] ?? ANNOTATION_TONE.signal;
                       const label = annotationLabel(region, `\uC601\uC5ED ${index + 1}`);
                       const marker = index + 1;
                       const placement = regionLabelPlacement(region, index, regions, overlayBox, frameSize.height);
-                      return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { position: "absolute", left: percent(region.x), top: percent(region.y), width: percent(region.width), height: percent(region.height), boxSizing: "border-box", border: `var(--border-thick) solid ${color}`, borderRadius: "var(--radius-xs)" }, children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { position: "absolute", ...REGION_LABEL_POSITION[placement], display: "inline-flex", alignItems: "center", gap: "var(--space-1)", maxWidth: placement === "inside-top" ? "min(12.5rem, 100%)" : "12.5rem", padding: "var(--space-1) var(--space-2)", overflow: "hidden", boxSizing: "border-box", background: color, color: toneLabelColor(_nullishCoalesce(region.tone, () => ( "signal"))), fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)" }, children: [
-                        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { flexShrink: 0, fontVariantNumeric: "tabular-nums" }, children: marker }),
-                        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+                      return /* @__PURE__ */ jsx("span", { style: { position: "absolute", left: percent(region.x), top: percent(region.y), width: percent(region.width), height: percent(region.height), boxSizing: "border-box", border: `var(--border-thick) solid ${color}`, borderRadius: "var(--radius-xs)" }, children: /* @__PURE__ */ jsxs("span", { style: { position: "absolute", ...REGION_LABEL_POSITION[placement], display: "inline-flex", alignItems: "center", gap: "var(--space-1)", maxWidth: placement === "inside-top" ? "min(12.5rem, 100%)" : "12.5rem", padding: "var(--space-1) var(--space-2)", overflow: "hidden", boxSizing: "border-box", background: color, color: toneLabelColor(region.tone ?? "signal"), fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)" }, children: [
+                        /* @__PURE__ */ jsx("span", { style: { flexShrink: 0, fontVariantNumeric: "tabular-nums" }, children: marker }),
+                        /* @__PURE__ */ jsxs(
                           "span",
                           {
                             className: "lk-annotated-image__label-text",
@@ -227,19 +228,19 @@ function AnnotatedImage({
                             ]
                           }
                         )
-                      ] }) }, _nullishCoalesce(region.id, () => ( index)));
+                      ] }) }, region.id ?? index);
                     }),
                     points.map((point, index) => {
-                      const color = _nullishCoalesce(ANNOTATION_TONE[point.tone], () => ( ANNOTATION_TONE.cautionary));
+                      const color = ANNOTATION_TONE[point.tone] ?? ANNOTATION_TONE.cautionary;
                       const marker = regions.length + index + 1;
-                      const pointText = annotationLabel(point, point.value != null ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
+                      const pointText = annotationLabel(point, point.value != null ? /* @__PURE__ */ jsxs(Fragment, { children: [
                         point.value,
                         point.unit
                       ] }) : `\uC9C0\uC810 ${index + 1}`);
-                      return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { position: "absolute", left: percent(point.x), top: percent(point.y), width: percent((_nullishCoalesce(point.radius, () => ( 0.03))) * 2), minWidth: 18, aspectRatio: "1", transform: "translate(-50%, -50%)", display: "grid", placeItems: "center", border: `var(--border-thick) solid ${color}`, borderRadius: "50%", background: "color-mix(in srgb, var(--color-semantic-inverse-background) 82%, transparent)", color: "var(--color-semantic-inverse-label)", fontSize: "var(--caption2-size)", lineHeight: 1, fontWeight: "var(--fw-bold)", fontVariantNumeric: "tabular-nums" }, children: [
+                      return /* @__PURE__ */ jsxs("span", { style: { position: "absolute", left: percent(point.x), top: percent(point.y), width: percent((point.radius ?? 0.03) * 2), minWidth: 18, aspectRatio: "1", transform: "translate(-50%, -50%)", display: "grid", placeItems: "center", border: `var(--border-thick) solid ${color}`, borderRadius: "50%", background: "color-mix(in srgb, var(--color-semantic-inverse-background) 82%, transparent)", color: "var(--color-semantic-inverse-label)", fontSize: "var(--caption2-size)", lineHeight: 1, fontWeight: "var(--fw-bold)", fontVariantNumeric: "tabular-nums" }, children: [
                         marker,
-                        labelDisplay !== "index" && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { className: "lk-annotated-image__point-label", "data-collapse": labelDisplay === "auto" ? "true" : void 0, style: { position: "absolute", ...pointLabelPosition(point), alignItems: "center", maxWidth: "10rem", padding: "var(--space-1) var(--space-2)", overflow: "hidden", borderRadius: "var(--radius-xs)", background: color, color: toneLabelColor(_nullishCoalesce(point.tone, () => ( "cautionary"))), fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)" }, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: pointText }) })
-                      ] }, _nullishCoalesce(point.id, () => ( index)));
+                        labelDisplay !== "index" && /* @__PURE__ */ jsx("span", { className: "lk-annotated-image__point-label", "data-collapse": labelDisplay === "auto" ? "true" : void 0, style: { position: "absolute", ...pointLabelPosition(point), alignItems: "center", maxWidth: "10rem", padding: "var(--space-1) var(--space-2)", overflow: "hidden", borderRadius: "var(--radius-xs)", background: color, color: toneLabelColor(point.tone ?? "cautionary"), fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)", fontWeight: "var(--fw-bold)" }, children: /* @__PURE__ */ jsx("span", { style: { minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }, children: pointText }) })
+                      ] }, point.id ?? index);
                     })
                   ]
                 }
@@ -247,10 +248,10 @@ function AnnotatedImage({
             ]
           }
         ),
-        (caption != null || annotations > 0) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "figcaption", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--space-2) var(--space-3)", flexWrap: "wrap", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: [
-          caption != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: caption }),
-          annotations > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-            _chunkAHWXAZZKcjs.Collapsible,
+        (caption != null || annotations > 0) && /* @__PURE__ */ jsxs("figcaption", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--space-2) var(--space-3)", flexWrap: "wrap", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: [
+          caption != null && /* @__PURE__ */ jsx("span", { children: caption }),
+          annotations > 0 && /* @__PURE__ */ jsx(
+            Collapsible,
             {
               id: detailsId,
               "data-annotation-summary": "",
@@ -258,21 +259,21 @@ function AnnotatedImage({
               align: "end",
               title: `${summaryLabel} (${annotations})`,
               style: { flex: "0 1 auto", maxWidth: "100%", minWidth: 0, marginLeft: "auto" },
-              children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "ol", { style: { margin: 0, paddingLeft: "var(--space-5)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: [
-                regions.map((region, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "li", { children: [
+              children: /* @__PURE__ */ jsxs("ol", { style: { margin: 0, paddingLeft: "var(--space-5)", color: "var(--color-semantic-label-neutral)", fontSize: "var(--caption1-size)", lineHeight: "var(--caption1-line)" }, children: [
+                regions.map((region, index) => /* @__PURE__ */ jsxs("li", { children: [
                   "\uC601\uC5ED \xB7 ",
                   annotationLabel(region, `\uC601\uC5ED ${index + 1}`),
                   region.score != null ? `, \uC2E0\uB8B0\uB3C4 ${Math.round(region.score * 100)}%` : ""
-                ] }, _nullishCoalesce(region.id, () => ( index)))),
-                points.map((point, index) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "li", { children: [
+                ] }, region.id ?? index)),
+                points.map((point, index) => /* @__PURE__ */ jsxs("li", { children: [
                   "\uC9C0\uC810 \xB7 ",
                   annotationLabel(point, `\uC9C0\uC810 ${index + 1}`),
-                  point.value != null && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
+                  point.value != null && /* @__PURE__ */ jsxs(Fragment, { children: [
                     ", ",
                     point.value,
                     point.unit
                   ] })
-                ] }, _nullishCoalesce(point.id, () => ( index))))
+                ] }, point.id ?? index))
               ] })
             }
           )
@@ -282,7 +283,7 @@ function AnnotatedImage({
   );
 }
 
-
-
-exports.AnnotatedImage = AnnotatedImage;
-//# sourceMappingURL=chunk-FBH7NSWR.cjs.map
+export {
+  AnnotatedImage
+};
+//# sourceMappingURL=chunk-3XPCGMQG.js.map

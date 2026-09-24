@@ -303,7 +303,7 @@ function LogViewer({
       ] })
     ] }),
     /* @__PURE__ */ jsx(VisuallyHidden, { role: "status", "aria-live": "polite", "aria-atomic": "true", children: announcement }),
-    /* @__PURE__ */ jsxs("div", { ref: boxRef, className: "lk-scroll-surface", "data-scrollbar": "auto", "data-scroll-gutter": "stable", role: "log", "aria-live": "off", "aria-label": ariaLabel, tabIndex: 0, onScroll: updateScrollState, style: { height, overflow: "auto", scrollbarGutter: "stable", padding: metrics.panelPadding, borderRadius: "var(--radius-md)", background: "var(--color-semantic-inverse-background)", border: "1px solid var(--color-semantic-inverse-line-normal)", fontFamily: "var(--font-mono)", fontSize: metrics.fontSize, lineHeight: metrics.lineHeight }, children: [
+    /* @__PURE__ */ jsxs("div", { ref: boxRef, className: "lk-scroll-surface", "data-scrollbar": "auto", "data-scroll-gutter": "stable", role: "log", "aria-live": "off", "aria-label": ariaLabel, tabIndex: 0, onScroll: updateScrollState, "data-theme": "light", style: { height, colorScheme: "dark", overflow: "auto", scrollbarGutter: "stable", padding: metrics.panelPadding, borderRadius: "var(--radius-md)", background: "var(--color-semantic-inverse-background)", border: "1px solid var(--color-semantic-inverse-line-normal)", fontFamily: "var(--font-mono)", fontSize: metrics.fontSize, lineHeight: metrics.lineHeight }, children: [
       shown.length === 0 && /* @__PURE__ */ jsx("div", { style: { minHeight: "100%", display: "grid", placeItems: "center", color: "var(--color-semantic-inverse-label-neutral-soft)", fontFamily: "var(--font-sans)", fontSize: "var(--label2-size)", fontWeight: "var(--fw-semibold)" }, children: normalizedQuery ? "\uAC80\uC0C9 \uACB0\uACFC \uC5C6\uC74C" : "\uB85C\uADF8 \uC5C6\uC74C" }),
       virtualActive && topSpacer > 0 && /* @__PURE__ */ jsx("div", { "aria-hidden": "true", style: { height: topSpacer } }),
       visibleLines.map((line, visibleIndex) => {
@@ -343,4 +343,4 @@ function LogViewer({
 export {
   LogViewer
 };
-//# sourceMappingURL=chunk-PMWDHIQD.js.map
+//# sourceMappingURL=chunk-6IDEHAL7.js.map

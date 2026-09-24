@@ -103,7 +103,7 @@ function Footer({
     " ",
     it.value
   ] }, i)) });
-  return /* @__PURE__ */ jsxs("footer", { style: { background: "var(--color-semantic-inverse-background)", padding: "32px 0 40px", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
+  return /* @__PURE__ */ jsxs("footer", { "data-theme": "light", style: { background: "var(--color-semantic-inverse-background)", padding: "32px 0 40px", fontFamily: "var(--font-sans)", ...style }, ...rest, children: [
     backToTop && /* @__PURE__ */ jsx(BackToTopButton, {}),
     /* @__PURE__ */ jsxs("div", { style: { maxWidth, margin: "0 auto", padding: "0 32px", boxSizing: "border-box" }, children: [
       (brand != null || columns.length > 0) && /* @__PURE__ */ jsxs(React.Fragment, { children: [
@@ -131,4 +131,4 @@ function Footer({
 export {
   Footer
 };
-//# sourceMappingURL=chunk-WNGVRONV.js.map
+//# sourceMappingURL=chunk-YNW4EIVS.js.map

@@ -1,7 +1,7 @@
 "use client";
 import {
   EditorToolbar
-} from "../../chunk-B3QJHMYP.js";
+} from "../../chunk-YS3WNUN6.js";
 import "../../chunk-FVASP32B.js";
 import "../../chunk-U36J6NRE.js";
 import "../../chunk-ZENMCU42.js";

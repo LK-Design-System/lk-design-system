@@ -4,7 +4,7 @@
 var _chunkKXHNWUJLcjs = require('./chunk-KXHNWUJL.cjs');
 
 
-var _chunkBCLRINDUcjs = require('./chunk-BCLRINDU.cjs');
+var _chunkMFQVCBYZcjs = require('./chunk-MFQVCBYZ.cjs');
 
 
 var _chunk677EM4M2cjs = require('./chunk-677EM4M2.cjs');
@@ -493,7 +493,7 @@ function ChartTooltip({ enabled, open, anchor, content, children, onOpenChange }
       children: [
         children,
         /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          _chunkBCLRINDUcjs.Tooltip,
+          _chunkMFQVCBYZcjs.Tooltip,
           {
             content,
             open,
@@ -515,4 +515,4 @@ function ChartTooltip({ enabled, open, anchor, content, children, onOpenChange }
 
 
 exports.LineChart = LineChart;
-//# sourceMappingURL=chunk-73MGHJ2Q.cjs.map
+//# sourceMappingURL=chunk-UNX2TO5Q.cjs.map

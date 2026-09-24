@@ -1,22 +1,29 @@
 "use client";
 import {
+  OverlayPortal,
   appendAriaReference,
   findOverlayTrigger,
   useControllableOpen,
   useFloatingPosition,
   useLightDismiss
-} from "./chunk-W2RAOTBU.js";
+} from "./chunk-FVASP32B.js";
 import {
   componentVars,
   partClassName,
   partStyle,
   useMergedRefs
-} from "./chunk-A2U7YIGP.js";
+} from "./chunk-U36J6NRE.js";
 import {
-  OverlayPortal
-} from "./chunk-Z5XUQZMO.js";
+  Toolbar
+} from "./chunk-ZENMCU42.js";
+import {
+  ToggleIcon
+} from "./chunk-DYWB3B2C.js";
 
-// components/content/Tooltip.jsx
+// components/editor/EditorToolbar.jsx
+import React2 from "react";
+
+// packages/core/dist/chunk-DURVJ7IF.js
 import React from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
 var POS = {
@@ -294,6 +301,7 @@ var Tooltip = React.forwardRef(function Tooltip2({
             ref: bubbleRef,
             id: tooltipId,
             "data-slot": "bubble",
+            "data-theme": "light",
             className: partClassName(classNames, "bubble") || void 0,
             role: "tooltip",
             "aria-hidden": visible ? false : void 0,
@@ -407,7 +415,117 @@ var Tooltip = React.forwardRef(function Tooltip2({
   );
 });
 
+// components/editor/EditorToolbar.jsx
+import { jsx as jsx2, jsxs as jsxs2 } from "react/jsx-runtime";
+function EditorToolbar({
+  items = [],
+  value,
+  defaultValue,
+  onChange,
+  orientation = "vertical",
+  label = "\uD3B8\uC9D1 \uB3C4\uAD6C",
+  disabled = false,
+  disabledReason,
+  tooltipPosition,
+  style,
+  className,
+  onKeyDown,
+  onFocusCapture,
+  ...rest
+}) {
+  const controlled = value !== void 0;
+  const first = items[0] && (items[0].value != null ? items[0].value : items[0]);
+  const [internal, setInternal] = React2.useState(defaultValue != null ? defaultValue : first);
+  const cur = controlled ? value : internal;
+  const activeEnabledItem = items.find((item) => {
+    const itemValue = item.value != null ? item.value : item;
+    return itemValue === cur && !disabled && !item.disabled;
+  });
+  const firstEnabledItem = items.find((item) => !disabled && !item.disabled);
+  const preferredFocusItem = activeEnabledItem ?? firstEnabledItem ?? (!disabled ? items[0] : void 0);
+  const preferredFocusValue = preferredFocusItem != null ? preferredFocusItem.value != null ? preferredFocusItem.value : preferredFocusItem : void 0;
+  const pick = (v, itemDisabled) => {
+    if (disabled || itemDisabled) return;
+    if (!controlled) setInternal(v);
+    onChange && onChange(v);
+  };
+  const resolvedTooltipPosition = tooltipPosition ?? (orientation === "vertical" ? "right" : "bottom");
+  return /* @__PURE__ */ jsx2(
+    Toolbar,
+    {
+      ...rest,
+      className: ["lk-editor-toolbar", className].filter(Boolean).join(" "),
+      label,
+      orientation,
+      itemSelector: "[data-lk-editor-toolbar-item]",
+      preferredItemKey: preferredFocusValue,
+      includeAriaDisabledItems: true,
+      "aria-disabled": disabled || void 0,
+      "aria-description": disabled && typeof disabledReason === "string" ? disabledReason : void 0,
+      "data-orientation": orientation,
+      onKeyDown,
+      onFocusCapture,
+      style: {
+        width: "fit-content",
+        maxWidth: "100%",
+        boxSizing: "border-box",
+        gap: "var(--space-1)",
+        padding: 0,
+        background: "transparent",
+        border: 0,
+        borderRadius: 0,
+        boxShadow: "none",
+        ...style
+      },
+      children: items.map((it) => {
+        const v = it.value != null ? it.value : it;
+        const on = v === cur;
+        const itemDisabled = disabled || !!it.disabled;
+        const itemLabel = it.label || String(v);
+        const itemDisabledReason = it.disabledReason ?? disabledReason;
+        return /* @__PURE__ */ jsx2(
+          Tooltip,
+          {
+            content: itemDisabled && itemDisabledReason != null ? /* @__PURE__ */ jsxs2("span", { style: { display: "grid", gap: 2 }, children: [
+              /* @__PURE__ */ jsx2("span", { children: itemLabel }),
+              /* @__PURE__ */ jsx2("span", { style: { color: "var(--color-semantic-inverse-label-alternative-soft)", fontWeight: "var(--fw-medium)" }, children: itemDisabledReason })
+            ] }) : itemLabel,
+            shortcut: it.shortcut,
+            position: resolvedTooltipPosition,
+            size: "sm",
+            children: /* @__PURE__ */ jsx2(
+              ToggleIcon,
+              {
+                className: "lk-editor-toolbar__button",
+                label: itemLabel,
+                size: "sm",
+                variant: "plain",
+                pressed: on,
+                "aria-disabled": itemDisabled || void 0,
+                "aria-keyshortcuts": it.ariaKeyShortcuts ?? (typeof it.shortcut === "string" ? it.shortcut : void 0),
+                "aria-description": itemDisabled && typeof itemDisabledReason === "string" ? itemDisabledReason : void 0,
+                "data-lk-editor-toolbar-item": "",
+                "data-lk-toolbar-key": String(v),
+                tabIndex: !disabled && v === preferredFocusValue ? 0 : -1,
+                disabled,
+                onChange: () => pick(v, itemDisabled),
+                style: {
+                  flex: "0 0 auto",
+                  padding: 0,
+                  lineHeight: 0
+                },
+                children: /* @__PURE__ */ jsx2("span", { "aria-hidden": "true", style: { width: 16, height: 16, display: "inline-grid", placeItems: "center", flex: "0 0 auto" }, children: it.icon || v })
+              }
+            )
+          },
+          v
+        );
+      })
+    }
+  );
+}
+
 export {
-  Tooltip
+  EditorToolbar
 };
-//# sourceMappingURL=chunk-NXAORAX7.js.map
+//# sourceMappingURL=chunk-YS3WNUN6.js.map

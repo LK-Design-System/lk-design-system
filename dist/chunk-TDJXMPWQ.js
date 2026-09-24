@@ -54,6 +54,7 @@ function Snackbar({
       role: urgent ? "alert" : "status",
       "aria-live": urgent ? "assertive" : "polite",
       "data-tone": normalized,
+      "data-theme": "light",
       style: {
         display: "inline-flex",
         alignItems: hasDescription ? "flex-start" : "center",
@@ -182,4 +183,4 @@ function Snackbar({
 export {
   Snackbar
 };
-//# sourceMappingURL=chunk-MA5KRB7Q.js.map
+//# sourceMappingURL=chunk-TDJXMPWQ.js.map
