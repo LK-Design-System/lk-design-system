@@ -161,7 +161,7 @@ export function ContentEditor({
   const hasFooter = meta != null || status != null || helper != null || actions != null || footer != null || maxLength != null;
   const bodyLength = String(currentValue ?? '').length;
   const ring = invalid
-    ? 'var(--color-semantic-status-negative)'
+    ? 'var(--color-semantic-status-negative-foreground)'
     : (titleFocus || bodyFocus) ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-normal-normal)';
 
   const handleTitleChange = (event) => {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "284216dfb2c057f1d21783e3cb96fe188ba0dcd287fd9ddcf4670927d59df92c",
+  "sourceFingerprint": "ce2d64dbdc7cec830443347fbaab824a407a25b8aa994bc2c17f86944c2b52f0",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -2201,7 +2201,7 @@
       ],
       "tokens": [
         "--color-semantic-primary-normal",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-foreground",
         "--space-0-5",
         "--body1-size",
         "--fw-semibold",
@@ -3620,7 +3620,7 @@
         "--space-6",
         "--radius-xl",
         "--radius-sm",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-foreground",
         "--color-semantic-primary-normal",
         "--color-semantic-label-alternative",
         "--dur-fast",
@@ -5123,9 +5123,9 @@
         "--color-semantic-label-normal",
         "--color-semantic-brand-surface",
         "--color-semantic-label-alternative",
-        "--color-semantic-status-positive",
-        "--color-semantic-status-cautionary",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-positive-signal",
+        "--color-semantic-status-cautionary-signal",
+        "--color-semantic-status-negative-signal",
         "--color-semantic-status-positive-text",
         "--color-semantic-status-cautionary-text",
         "--color-semantic-status-negative-text",
@@ -5150,7 +5150,7 @@
         "--fw-medium"
       ],
       "externalReferences": [],
-      "promptSha256": "de20a3d107f28f71f90a92eb6f7fa7b0158e8ba7eb31b2a01ceb1d2ca84ced15"
+      "promptSha256": "df6efce49edb8c8afdf14f1698af4f4b94ad9b8172a8b0a724c1cd7646d70ec9"
     },
     {
       "id": "content-editor",
@@ -5427,7 +5427,7 @@
         "--color-semantic-label-alternative",
         "--dur-fast",
         "--ease-out",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-foreground",
         "--radius-md",
         "--color-semantic-focus-ring",
         "--font-sans",
@@ -6201,8 +6201,10 @@
         "--color-semantic-inverse-label-neutral-soft",
         "--color-semantic-primary-normal",
         "--color-semantic-accent-background-light-blue",
-        "--color-semantic-status-cautionary",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-cautionary-foreground",
+        "--color-semantic-status-cautionary-signal",
+        "--color-semantic-status-negative-foreground",
+        "--color-semantic-status-negative-signal",
         "--caption2-size",
         "--caption2-line",
         "--caption1-size",
@@ -6212,6 +6214,7 @@
         "--font-sans",
         "--space-3",
         "--color-semantic-label-neutral",
+        "--color-semantic-status-cautionary-text",
         "--fw-semibold",
         "--space-1-5",
         "--radius-pill",
@@ -6221,7 +6224,8 @@
         "--color-semantic-label-normal",
         "--radius-sm",
         "--color-semantic-background-elevated-normal",
-        "--color-semantic-static-white",
+        "--color-semantic-status-negative-fill",
+        "--color-semantic-status-negative-on-fill",
         "--radius-md",
         "--color-semantic-inverse-background",
         "--color-semantic-inverse-line-normal",
@@ -6230,7 +6234,7 @@
         "--space-2-5",
         "--color-semantic-inverse-label",
         "--color-semantic-inverse-fill-strong",
-        "--color-semantic-status-positive"
+        "--color-semantic-status-positive-signal"
       ],
       "externalReferences": [],
       "promptSha256": "d70524ca9a13b10a3fd86e8664bfb7a0e7857b53b2e9937b60cb3267a8bfee34"
@@ -8353,9 +8357,9 @@
       ],
       "tokens": [
         "--color-semantic-primary-normal",
-        "--color-semantic-status-positive",
-        "--color-semantic-status-cautionary",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-positive-signal",
+        "--color-semantic-status-cautionary-signal",
+        "--color-semantic-status-negative-signal",
         "--color-semantic-label-neutral",
         "--color-semantic-inverse-label",
         "--color-semantic-static-black",
@@ -11243,7 +11247,7 @@
         "--color-semantic-label-neutral"
       ],
       "externalReferences": [],
-      "promptSha256": "a739e8b2b368b1a5160808bae20b0a57a6103611664fa7e1b3f468b7e9937b2f"
+      "promptSha256": "a93eb9fc4f2a0927374ee533dc44c0d784cd0d75b10738b94c3abdfc2c822604"
     },
     {
       "id": "line-chart",
@@ -15176,7 +15180,7 @@
         "--color-semantic-primary-normal",
         "--color-semantic-background-elevated-normal",
         "--color-semantic-label-assistive",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-foreground",
         "--color-semantic-interaction-inactive",
         "--color-semantic-secondary-surface",
         "--color-semantic-label-normal",
@@ -16449,7 +16453,7 @@
         }
       ],
       "tokens": [
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-foreground",
         "--color-semantic-primary-normal",
         "--color-semantic-label-neutral",
         "--color-semantic-interaction-inactive",
@@ -26280,7 +26284,7 @@
           "url": "https://react-aria.adobe.com/Menu"
         }
       ],
-      "promptSha256": "893d707920dadfec7c1ebe1c65cbff3ae53e4f956d984e8f5920f78ff4f56497"
+      "promptSha256": "6a423be14ddef73d224290774c32bc48d559b5a9e1e7e6e514a8f948e20ed61f"
     },
     {
       "id": "wizard",
@@ -28783,9 +28787,9 @@
       ],
       "tokens": [
         "--color-semantic-inverse-label",
-        "--color-semantic-status-positive",
-        "--color-semantic-status-cautionary",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-positive-signal",
+        "--color-semantic-status-cautionary-signal",
+        "--color-semantic-status-negative-signal",
         "--radius-lg",
         "--component-transient-feedback-bg",
         "--component-transient-feedback-blur",
@@ -28921,9 +28925,9 @@
       ],
       "tokens": [
         "--color-semantic-inverse-label",
-        "--color-semantic-status-positive",
-        "--color-semantic-status-cautionary",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-positive-signal",
+        "--color-semantic-status-cautionary-signal",
+        "--color-semantic-status-negative-signal",
         "--space-2-5",
         "--component-transient-feedback-bg",
         "--component-transient-feedback-blur",
@@ -29820,7 +29824,7 @@
         "--color-semantic-primary-normal",
         "--color-semantic-line-solid-normal",
         "--color-semantic-line-normal-normal",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-foreground",
         "--color-semantic-focus-ring",
         "--color-semantic-fill-normal",
         "--color-semantic-primary-surface-strong",
@@ -32135,7 +32139,7 @@
           "name": "color",
           "type": "string",
           "required": false,
-          "description": "Custom fill color (CSS color value or token, e.g. \"var(--color-semantic-status-positive)\"). Overrides tone when set.",
+          "description": "Custom fill color (CSS color value or token, e.g. \"var(--color-semantic-status-positive-foreground)\"). Overrides tone when set.",
           "owner": "ProgressBarProps"
         },
         {
@@ -34042,9 +34046,9 @@
       ],
       "tokens": [
         "--color-semantic-primary-normal",
-        "--color-semantic-status-positive",
-        "--color-semantic-status-cautionary",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-positive-signal",
+        "--color-semantic-status-cautionary-signal",
+        "--color-semantic-status-negative-signal",
         "--viewer-muted",
         "--caption2-size",
         "--fw-bold",
@@ -36327,7 +36331,7 @@
         "--color-semantic-primary-normal",
         "--color-semantic-secondary-surface",
         "--color-semantic-static-white",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-foreground",
         "--dur-fast",
         "--ease-out",
         "--font-sans",
@@ -36989,7 +36993,7 @@
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive #13BE4C ≈ 2.5:1, -cautionary #EB9C33 ≈ 2.3:1, -negative #EE5656 ≈ 3.2:1. accent(#3878B3 ≈ 4.7:1)만 통과합니다."
+          "rule": "원색 신호 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive-signal #13BE4C ≈ 2.5:1, -cautionary #EB9C33 ≈ 2.3:1, -negative #EE5656 ≈ 3.2:1. accent(#3878B3 ≈ 4.7:1)만 통과합니다."
         },
         {
           "subject": "명시 규칙 3",
@@ -37072,11 +37076,11 @@
         "--color-semantic-label-normal",
         "--color-semantic-line-normal-normal",
         "--color-semantic-primary-normal",
-        "--color-semantic-status-cautionary",
+        "--color-semantic-status-cautionary-signal",
         "--color-semantic-status-cautionary-text",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-signal",
         "--color-semantic-status-negative-text",
-        "--color-semantic-status-positive",
+        "--color-semantic-status-positive-signal",
         "--color-semantic-status-positive-text",
         "--font-sans",
         "--fw-medium",
@@ -44570,9 +44574,9 @@
         "--body2-spacing",
         "--color-semantic-inverse-label",
         "--color-semantic-inverse-label-strong-soft",
-        "--color-semantic-status-cautionary",
-        "--color-semantic-status-negative",
-        "--color-semantic-status-positive",
+        "--color-semantic-status-cautionary-signal",
+        "--color-semantic-status-negative-signal",
+        "--color-semantic-status-positive-signal",
         "--component-transient-feedback-bg",
         "--component-transient-feedback-blur",
         "--font-sans",
@@ -44876,9 +44880,9 @@
         "--body2-size",
         "--body2-spacing",
         "--color-semantic-inverse-label",
-        "--color-semantic-status-cautionary",
-        "--color-semantic-status-negative",
-        "--color-semantic-status-positive",
+        "--color-semantic-status-cautionary-signal",
+        "--color-semantic-status-negative-signal",
+        "--color-semantic-status-positive-signal",
         "--component-transient-feedback-bg",
         "--component-transient-feedback-blur",
         "--font-sans",
@@ -45393,7 +45397,7 @@
         "--color-semantic-primary-surface-normal",
         "--color-semantic-primary-surface-strong",
         "--color-semantic-static-white",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-foreground",
         "--dur-fast",
         "--ease-out",
         "--fw-bold",
@@ -45796,7 +45800,7 @@
         "--color-semantic-line-solid-normal",
         "--color-semantic-primary-normal",
         "--color-semantic-static-white",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-foreground",
         "--component-input-gap",
         "--dur-fast",
         "--ease-out",
@@ -51880,7 +51884,7 @@
           "name": "color",
           "type": "string",
           "required": false,
-          "description": "Custom fill color (CSS color value or token, e.g. \"var(--color-semantic-status-positive)\"). Overrides tone when set.",
+          "description": "Custom fill color (CSS color value or token, e.g. \"var(--color-semantic-status-positive-foreground)\"). Overrides tone when set.",
           "owner": "ProgressBarProps"
         },
         {
@@ -54579,7 +54583,7 @@
         "--color-semantic-primary-normal",
         "--color-semantic-primary-surface-normal",
         "--color-semantic-static-white",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-foreground",
         "--dur-fast",
         "--ease-out",
         "--font-sans",
@@ -55940,7 +55944,7 @@
         "--color-semantic-label-neutral",
         "--color-semantic-primary-normal",
         "--color-semantic-static-white",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-foreground",
         "--fw-semibold",
         "--space-0-5"
       ],
@@ -57687,10 +57691,14 @@
         "--color-semantic-line-normal-normal",
         "--color-semantic-primary-normal",
         "--color-semantic-primary-surface-normal",
-        "--color-semantic-static-white",
-        "--color-semantic-status-cautionary",
-        "--color-semantic-status-negative",
-        "--color-semantic-status-positive",
+        "--color-semantic-status-cautionary-foreground",
+        "--color-semantic-status-cautionary-signal",
+        "--color-semantic-status-cautionary-text",
+        "--color-semantic-status-negative-fill",
+        "--color-semantic-status-negative-foreground",
+        "--color-semantic-status-negative-on-fill",
+        "--color-semantic-status-negative-signal",
+        "--color-semantic-status-positive-signal",
         "--component-icon-button-size-custom",
         "--font-mono",
         "--font-sans",
@@ -60405,7 +60413,7 @@
         "--color-semantic-primary-normal",
         "--color-semantic-primary-surface-normal",
         "--color-semantic-primary-surface-strong",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-negative-foreground",
         "--color-semantic-status-negative-text",
         "--component-button-danger-bg",
         "--component-button-danger-bg-hover",
@@ -66202,9 +66210,9 @@
         "--color-semantic-line-normal-normal",
         "--color-semantic-primary-normal",
         "--color-semantic-static-black",
-        "--color-semantic-status-cautionary",
-        "--color-semantic-status-negative",
-        "--color-semantic-status-positive",
+        "--color-semantic-status-cautionary-signal",
+        "--color-semantic-status-negative-signal",
+        "--color-semantic-status-positive-signal",
         "--font-sans",
         "--fw-bold",
         "--radius-lg",
@@ -67293,7 +67301,7 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<Legend items={[\n  { label: '가용', color: 'var(--color-semantic-status-positive)', shape: 'dot' },\n  { label: '검증 경로', color: 'var(--color-semantic-primary-normal)', shape: 'line', dashed: true },\n]} />"
+          "code": "<Legend items={[\n  { label: '가용', color: 'var(--color-semantic-status-positive-foreground)', shape: 'dot' },\n  { label: '검증 경로', color: 'var(--color-semantic-primary-normal)', shape: 'line', dashed: true },\n]} />"
         }
       ],
       "tokens": [
@@ -74866,7 +74874,7 @@
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "danger 잉크는 상태 색상(--color-semantic-status-negative, 흰 배경에서 3.44:1로 AA 미달)이 아니라 DropdownMenu와 같은 on-light 텍스트 토큰을 씁니다."
+          "rule": "danger 잉크는 신호 색상(--color-semantic-status-negative-signal, 흰 배경에서 3.44:1로 AA 미달)이 아니라 DropdownMenu와 같은 on-light 텍스트 토큰을 씁니다."
         },
         {
           "subject": "--caption1-size",
@@ -80377,7 +80385,7 @@
         },
         {
           "subject": "--color-semantic-status-positive-foreground",
-          "rule": "light: var(--color-atomic-green-40); dark: var(--color-semantic-status-positive)"
+          "rule": "light: var(--color-atomic-green-40); dark: var(--color-semantic-status-positive-signal)"
         },
         {
           "subject": "--space-0",
@@ -86858,12 +86866,12 @@
         "--caption1-size",
         "--caption2-size",
         "--color-semantic-primary-normal",
-        "--color-semantic-status-cautionary",
         "--color-semantic-status-cautionary-foreground",
-        "--color-semantic-status-negative",
+        "--color-semantic-status-cautionary-signal",
         "--color-semantic-status-negative-foreground",
-        "--color-semantic-status-positive",
+        "--color-semantic-status-negative-signal",
         "--color-semantic-status-positive-foreground",
+        "--color-semantic-status-positive-signal",
         "--component-viewer-border",
         "--component-viewer-foreground",
         "--component-viewer-light-border",

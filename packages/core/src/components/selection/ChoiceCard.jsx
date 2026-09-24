@@ -101,7 +101,7 @@ export function ChoiceCard({
   const frameBorder = disabled
     ? 'var(--color-semantic-line-normal-normal)'
     : status === 'negative'
-      ? 'var(--color-semantic-status-negative)'
+      ? 'var(--color-semantic-status-negative-foreground)'
       : selected || activeFocus
         ? 'var(--color-semantic-primary-normal)'
         : activeHover

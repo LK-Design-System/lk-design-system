@@ -45,7 +45,7 @@
 | 명시 규칙 1 | 타입 스케일 정합: 항목 13.5px → --label2-size(13px), 상세 11.5px → --caption1-size(12px)로 스냅했습니다. 이름(13px bold)과의 위계는 굵기·색으로 유지됩니다. |
 | 명시 규칙 2 | Menu shell은 Dropdown Menu와 같은 elevated surface, r16, 8px/20px padding, shadow-md를 사용합니다. |
 | 명시 규칙 3 | 호스트는 --color-semantic-label-를 재매핑하지 않습니다. 팝업은 trigger와 같은 DOM 스코프의 자손이므로 그 반전을 그대로 상속받아, 밝은 패널 위에 흰 글자(대비 1:1)를 그리게 됩니다. 다크 표면에 얹을 때는 위 --component-user-menu- 토큰만 재정의하세요. |
-| 명시 규칙 4 | danger 잉크는 상태 색상(--color-semantic-status-negative, 흰 배경에서 3.44:1로 AA 미달)이 아니라 DropdownMenu와 같은 on-light 텍스트 토큰을 씁니다. |
+| 명시 규칙 4 | danger 잉크는 신호 색상(--color-semantic-status-negative-signal, 흰 배경에서 3.44:1로 AA 미달)이 아니라 DropdownMenu와 같은 on-light 텍스트 토큰을 씁니다. |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 
 ## Responsive

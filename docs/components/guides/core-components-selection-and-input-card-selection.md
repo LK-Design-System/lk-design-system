@@ -108,7 +108,7 @@
 - `--color-semantic-primary-surface-normal`
 - `--color-semantic-primary-surface-strong`
 - `--color-semantic-static-white`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--dur-fast`
 - `--ease-out`
 - `--fw-bold`

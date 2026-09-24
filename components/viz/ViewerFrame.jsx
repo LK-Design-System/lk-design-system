@@ -124,9 +124,9 @@ const ASSERTIVE_BLOCKING_STATES = new Set(['disconnected', 'no-signal', 'error']
 
 const TONE_COLOR = {
   primary: 'var(--color-semantic-primary-normal)',
-  positive: 'var(--color-semantic-status-positive)',
-  cautionary: 'var(--color-semantic-status-cautionary)',
-  negative: 'var(--color-semantic-status-negative)',
+  positive: 'var(--color-semantic-status-positive-signal)',
+  cautionary: 'var(--color-semantic-status-cautionary-signal)',
+  negative: 'var(--color-semantic-status-negative-signal)',
   neutral: 'var(--viewer-muted)',
 };
 

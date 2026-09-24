@@ -102,7 +102,7 @@ function bubbleRadius(groupPosition, outbound) {
 }
 
 function lifecycleTone(kind, state) {
-  if (state === 'failed') return 'var(--color-semantic-status-negative)';
+  if (state === 'failed') return 'var(--color-semantic-status-negative-foreground)';
   if (kind === 'response' && ['pending', 'streaming', 'stopping'].includes(state)) {
     return 'var(--color-semantic-primary-normal)';
   }

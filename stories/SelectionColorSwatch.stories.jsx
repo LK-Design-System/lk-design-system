@@ -26,9 +26,9 @@ export default meta;
 
 const semanticSwatchColors = [
   { value: 'var(--color-semantic-primary-normal)', label: '브랜드 파랑' },
-  { value: 'var(--color-semantic-status-positive)', label: '정상 초록' },
-  { value: 'var(--color-semantic-status-cautionary)', label: '주의 노랑' },
-  { value: 'var(--color-semantic-status-negative)', label: '오류 빨강' },
+  { value: 'var(--color-semantic-status-positive-signal)', label: '정상 초록' },
+  { value: 'var(--color-semantic-status-cautionary-signal)', label: '주의 노랑' },
+  { value: 'var(--color-semantic-status-negative-signal)', label: '오류 빨강' },
   { value: 'var(--color-semantic-inverse-background)', label: '반전 먹색' },
 ];
 
@@ -120,9 +120,9 @@ export const NoSelection = {
 
 const keyboardSwatchColors = [
   { value: 'var(--color-semantic-primary-normal)', label: '브랜드 파랑' },
-  { value: 'var(--color-semantic-status-positive)', label: '정상 초록' },
-  { value: 'var(--color-semantic-status-cautionary)', label: '주의 노랑', disabled: true },
-  { value: 'var(--color-semantic-status-negative)', label: '오류 빨강' },
+  { value: 'var(--color-semantic-status-positive-signal)', label: '정상 초록' },
+  { value: 'var(--color-semantic-status-cautionary-signal)', label: '주의 노랑', disabled: true },
+  { value: 'var(--color-semantic-status-negative-signal)', label: '오류 빨강' },
 ];
 
 export const KeyboardContract = {

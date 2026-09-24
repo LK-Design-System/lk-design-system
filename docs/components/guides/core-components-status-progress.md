@@ -32,7 +32,7 @@
 | `max` | `number` | No | Maximum value. @default 100 |
 | `indeterminate` | `boolean` | No | Shows an unknown-duration moving segment instead of a fixed percentage. @default false |
 | `tone` | `'signal' \| 'positive' \| 'cautionary' \| 'negative'` | No | Fill tone. @default "signal" |
-| `color` | `string` | No | Custom fill color (CSS color value or token, e.g. "var(--color-semantic-status-positive)"). Overrides tone when set. |
+| `color` | `string` | No | Custom fill color (CSS color value or token, e.g. "var(--color-semantic-status-positive-foreground)"). Overrides tone when set. |
 | `size` | `'sm' \| 'md' \| 'lg'` | No | Track height. @default "md" |
 | `label` | `React.ReactNode` | No | Optional visible label. |
 | `showValue` | `boolean` | No | Shows the computed percentage beside the label. @default false |

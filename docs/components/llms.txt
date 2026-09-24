@@ -1060,7 +1060,7 @@ Compiled source: docs/components/component-content.json
 - `--color-semantic-primary-normal`
 - `--color-semantic-secondary-surface`
 - `--color-semantic-static-white`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`
@@ -1347,7 +1347,7 @@ Compiled source: docs/components/component-content.json
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | variant="solid" 은 채움 위에 반전 텍스트(--color-semantic-background-normal-normal)를 올립니다. 따라서 채움색 자체가 AA 4.5:1 을 넘어야 합니다. |
-| 명시 규칙 2 | 원색 상태 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive #13BE4C ≈ 2.5:1, -cautionary #EB9C33 ≈ 2.3:1, -negative #EE5656 ≈ 3.2:1. accent(#3878B3 ≈ 4.7:1)만 통과합니다. |
+| 명시 규칙 2 | 원색 신호 토큰은 이 조건을 만족하지 않습니다 — --color-semantic-status-positive-signal #13BE4C ≈ 2.5:1, -cautionary #EB9C33 ≈ 2.3:1, -negative #EE5656 ≈ 3.2:1. accent(#3878B3 ≈ 4.7:1)만 통과합니다. |
 | 명시 규칙 3 | 그래서 solid 의 상태 톤 채움은 AA -text 토큰(--color-semantic-status-positive-text 등)을 씁니다. 라이트에서는 진한 잉크(5.5–7.5:1), 다크에서는 밝은 톤 + 어두운 반전 텍스트로 뒤집혀 두 테마 모두 통과합니다. |
 | 명시 규칙 4 | 상태를 색으로만 전달하지 마세요(WCAG 1.4.1). 라벨 텍스트나 아이콘으로 의미를 함께 주세요. |
 | --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
@@ -1406,11 +1406,11 @@ Compiled source: docs/components/component-content.json
 - `--color-semantic-label-normal`
 - `--color-semantic-line-normal-normal`
 - `--color-semantic-primary-normal`
-- `--color-semantic-status-cautionary`
+- `--color-semantic-status-cautionary-signal`
 - `--color-semantic-status-cautionary-text`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-signal`
 - `--color-semantic-status-negative-text`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-positive-signal`
 - `--color-semantic-status-positive-text`
 - `--font-sans`
 - `--fw-medium`
@@ -4929,9 +4929,9 @@ const firstFieldRef = useRef(null);
 - `--body2-spacing`
 - `--color-semantic-inverse-label`
 - `--color-semantic-inverse-label-strong-soft`
-- `--color-semantic-status-cautionary`
-- `--color-semantic-status-negative`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-cautionary-signal`
+- `--color-semantic-status-negative-signal`
+- `--color-semantic-status-positive-signal`
 - `--component-transient-feedback-bg`
 - `--component-transient-feedback-blur`
 - `--font-sans`
@@ -5072,9 +5072,9 @@ const firstFieldRef = useRef(null);
 - `--body2-size`
 - `--body2-spacing`
 - `--color-semantic-inverse-label`
-- `--color-semantic-status-cautionary`
-- `--color-semantic-status-negative`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-cautionary-signal`
+- `--color-semantic-status-negative-signal`
+- `--color-semantic-status-positive-signal`
 - `--component-transient-feedback-bg`
 - `--component-transient-feedback-blur`
 - `--font-sans`
@@ -5321,7 +5321,7 @@ const firstFieldRef = useRef(null);
 - `--color-semantic-primary-surface-normal`
 - `--color-semantic-primary-surface-strong`
 - `--color-semantic-static-white`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--dur-fast`
 - `--ease-out`
 - `--fw-bold`
@@ -5482,7 +5482,7 @@ const firstFieldRef = useRef(null);
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-primary-normal`
 - `--color-semantic-static-white`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--component-input-gap`
 - `--dur-fast`
 - `--ease-out`
@@ -8215,7 +8215,7 @@ const firstFieldRef = useRef(null);
 | `max` | `number` | No | Maximum value. @default 100 |
 | `indeterminate` | `boolean` | No | Shows an unknown-duration moving segment instead of a fixed percentage. @default false |
 | `tone` | `'signal' \| 'positive' \| 'cautionary' \| 'negative'` | No | Fill tone. @default "signal" |
-| `color` | `string` | No | Custom fill color (CSS color value or token, e.g. "var(--color-semantic-status-positive)"). Overrides tone when set. |
+| `color` | `string` | No | Custom fill color (CSS color value or token, e.g. "var(--color-semantic-status-positive-foreground)"). Overrides tone when set. |
 | `size` | `'sm' \| 'md' \| 'lg'` | No | Track height. @default "md" |
 | `label` | `React.ReactNode` | No | Optional visible label. |
 | `showValue` | `boolean` | No | Shows the computed percentage beside the label. @default false |
@@ -9683,7 +9683,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-normal`
 - `--color-semantic-static-white`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`
@@ -10304,7 +10304,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--color-semantic-label-neutral`
 - `--color-semantic-primary-normal`
 - `--color-semantic-static-white`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--fw-semibold`
 - `--space-0-5`
 
@@ -11147,10 +11147,14 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--color-semantic-line-normal-normal`
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-normal`
-- `--color-semantic-static-white`
-- `--color-semantic-status-cautionary`
-- `--color-semantic-status-negative`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-cautionary-foreground`
+- `--color-semantic-status-cautionary-signal`
+- `--color-semantic-status-cautionary-text`
+- `--color-semantic-status-negative-fill`
+- `--color-semantic-status-negative-foreground`
+- `--color-semantic-status-negative-on-fill`
+- `--color-semantic-status-negative-signal`
+- `--color-semantic-status-positive-signal`
 - `--component-icon-button-size-custom`
 - `--font-mono`
 - `--font-sans`
@@ -12494,7 +12498,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-normal`
 - `--color-semantic-primary-surface-strong`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--color-semantic-status-negative-text`
 - `--component-button-danger-bg`
 - `--component-button-danger-bg-hover`
@@ -15295,9 +15299,9 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - `--color-semantic-line-normal-normal`
 - `--color-semantic-primary-normal`
 - `--color-semantic-static-black`
-- `--color-semantic-status-cautionary`
-- `--color-semantic-status-negative`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-cautionary-signal`
+- `--color-semantic-status-negative-signal`
+- `--color-semantic-status-positive-signal`
 - `--font-sans`
 - `--fw-bold`
 - `--radius-lg`
@@ -15828,7 +15832,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 ```jsx
 <Legend items={[
-  { label: '가용', color: 'var(--color-semantic-status-positive)', shape: 'dot' },
+  { label: '가용', color: 'var(--color-semantic-status-positive-foreground)', shape: 'dot' },
   { label: '검증 경로', color: 'var(--color-semantic-primary-normal)', shape: 'line', dashed: true },
 ]} />
 ```
@@ -19461,7 +19465,7 @@ css
 | 명시 규칙 1 | 타입 스케일 정합: 항목 13.5px → --label2-size(13px), 상세 11.5px → --caption1-size(12px)로 스냅했습니다. 이름(13px bold)과의 위계는 굵기·색으로 유지됩니다. |
 | 명시 규칙 2 | Menu shell은 Dropdown Menu와 같은 elevated surface, r16, 8px/20px padding, shadow-md를 사용합니다. |
 | 명시 규칙 3 | 호스트는 --color-semantic-label-를 재매핑하지 않습니다. 팝업은 trigger와 같은 DOM 스코프의 자손이므로 그 반전을 그대로 상속받아, 밝은 패널 위에 흰 글자(대비 1:1)를 그리게 됩니다. 다크 표면에 얹을 때는 위 --component-user-menu- 토큰만 재정의하세요. |
-| 명시 규칙 4 | danger 잉크는 상태 색상(--color-semantic-status-negative, 흰 배경에서 3.44:1로 AA 미달)이 아니라 DropdownMenu와 같은 on-light 텍스트 토큰을 씁니다. |
+| 명시 규칙 4 | danger 잉크는 신호 색상(--color-semantic-status-negative-signal, 흰 배경에서 3.44:1로 AA 미달)이 아니라 DropdownMenu와 같은 on-light 텍스트 토큰을 씁니다. |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 
 ## Responsive
@@ -22016,7 +22020,7 @@ API key·token처럼 읽기 전용 값을 잠시 표시하고 복사한 뒤 다�
 | 명시 규칙 1 | 기본 reveal은 10초 뒤 자동으로 닫힙니다. revealed를 외부에서 제어해도 같은 timer가 동작하고 onRevealChange(false)로 닫기를 요청합니다. revealable=false, disabled, 빈 값으로 바뀌면 즉시 masked 상태로 돌아가므로 숨김 기능이 사라진 채 평문이 남지 않습니다. |
 | 명시 규칙 2 | size를 생략하면 내부 Input과 동일하게 bounded compact component scope를 상속합니다. 명시한 size가 우선하고 reveal/copy IconButton은 기존 32px target을 유지합니다. |
 | 명시 규칙 3 | IconButton: 32px plain trailing action과 표준 eye/copy/check/close icon을 사용합니다. copy 성공/실패 icon에만 LDS positive/negative 의미색을 적용하며 별도 action divider, nested card, 고유 shadow나 색상 surface를 추가하지 않습니다. |
-| --color-semantic-status-positive-foreground | light: var(--color-atomic-green-40); dark: var(--color-semantic-status-positive) |
+| --color-semantic-status-positive-foreground | light: var(--color-atomic-green-40); dark: var(--color-semantic-status-positive-signal) |
 | --space-0 | 0px |
 
 ## Content and writing
@@ -25135,12 +25139,12 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 - `--caption1-size`
 - `--caption2-size`
 - `--color-semantic-primary-normal`
-- `--color-semantic-status-cautionary`
 - `--color-semantic-status-cautionary-foreground`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-cautionary-signal`
 - `--color-semantic-status-negative-foreground`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-negative-signal`
 - `--color-semantic-status-positive-foreground`
+- `--color-semantic-status-positive-signal`
 - `--component-viewer-border`
 - `--component-viewer-foreground`
 - `--component-viewer-light-border`

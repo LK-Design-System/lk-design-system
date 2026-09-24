@@ -5,12 +5,12 @@ import { Collapsible } from '../content/Collapsible.jsx';
 
 const ANNOTATION_TONE = {
   signal: 'var(--color-semantic-primary-normal)',
-  positive: 'var(--color-semantic-status-positive)',
-  cautionary: 'var(--color-semantic-status-cautionary)',
-  negative: 'var(--color-semantic-status-negative)',
+  positive: 'var(--color-semantic-status-positive-signal)',
+  cautionary: 'var(--color-semantic-status-cautionary-signal)',
+  negative: 'var(--color-semantic-status-negative-signal)',
   // Compatibility aliases; prefer LDS status tone names above.
-  warning: 'var(--color-semantic-status-cautionary)',
-  danger: 'var(--color-semantic-status-negative)',
+  warning: 'var(--color-semantic-status-cautionary-signal)',
+  danger: 'var(--color-semantic-status-negative-signal)',
   neutral: 'var(--color-semantic-label-neutral)',
 };
 

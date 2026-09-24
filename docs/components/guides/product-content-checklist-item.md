@@ -88,7 +88,7 @@
 - `--color-semantic-label-neutral`
 - `--color-semantic-primary-normal`
 - `--color-semantic-static-white`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--fw-semibold`
 - `--space-0-5`
 

@@ -68,7 +68,7 @@ function CanvasFrame({ children, label = '맵 캔버스' }) {
           borderRadius: '50%',
           background: 'var(--color-semantic-primary-normal)',
           boxShadow:
-            '96px 52px 0 var(--color-semantic-status-positive), 220px -20px 0 var(--color-semantic-status-cautionary)',
+            '96px 52px 0 var(--color-semantic-status-positive-foreground), 220px -20px 0 var(--color-semantic-status-cautionary-foreground)',
         }}
       />
 

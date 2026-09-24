@@ -11,9 +11,9 @@ const ICON = <Icon name="circle-info-fill" size={22} aria-hidden="true" />;
 // landed on a Snackbar instead of a Toast.
 const TONE_ICON_COLOR = {
   normal: "var(--color-semantic-inverse-label)",
-  positive: "var(--color-semantic-status-positive)",
-  cautionary: "var(--color-semantic-status-cautionary)",
-  negative: "var(--color-semantic-status-negative)",
+  positive: "var(--color-semantic-status-positive-signal)",
+  cautionary: "var(--color-semantic-status-cautionary-signal)",
+  negative: "var(--color-semantic-status-negative-signal)",
 };
 
 function normalizeTone(value) {

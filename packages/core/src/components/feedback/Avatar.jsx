@@ -180,7 +180,7 @@ export function Avatar({
     status === "online"
       ? "var(--color-semantic-primary-normal)"
       : status === "busy"
-        ? "var(--color-semantic-status-negative)"
+        ? "var(--color-semantic-status-negative-foreground)"
         : "var(--color-semantic-interaction-inactive)";
   const placeholderKind = resolvePlaceholderKind(
     placeholder,

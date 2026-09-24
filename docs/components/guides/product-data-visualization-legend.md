@@ -69,7 +69,7 @@
 
 ```jsx
 <Legend items={[
-  { label: '가용', color: 'var(--color-semantic-status-positive)', shape: 'dot' },
+  { label: '가용', color: 'var(--color-semantic-status-positive-foreground)', shape: 'dot' },
   { label: '검증 경로', color: 'var(--color-semantic-primary-normal)', shape: 'line', dashed: true },
 ]} />
 ```

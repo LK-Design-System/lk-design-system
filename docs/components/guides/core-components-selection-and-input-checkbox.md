@@ -119,7 +119,7 @@
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-primary-normal`
 - `--color-semantic-static-white`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--component-input-gap`
 - `--dur-fast`
 - `--ease-out`

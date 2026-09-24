@@ -117,7 +117,7 @@
   "examples": [
     {
       "label": "기본 조합",
-      "code": "<Legend items={[\n  { label: '가용', color: 'var(--color-semantic-status-positive)', shape: 'dot' },\n  { label: '검증 경로', color: 'var(--color-semantic-primary-normal)', shape: 'line', dashed: true },\n]} />"
+      "code": "<Legend items={[\n  { label: '가용', color: 'var(--color-semantic-status-positive-foreground)', shape: 'dot' },\n  { label: '검증 경로', color: 'var(--color-semantic-primary-normal)', shape: 'line', dashed: true },\n]} />"
     }
   ],
   "tokens": [

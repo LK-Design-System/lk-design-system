@@ -92,7 +92,7 @@
     },
     {
       "subject": "명시 규칙 4",
-      "rule": "danger 잉크는 상태 색상(--color-semantic-status-negative, 흰 배경에서 3.44:1로 AA 미달)이 아니라 DropdownMenu와 같은 on-light 텍스트 토큰을 씁니다."
+      "rule": "danger 잉크는 신호 색상(--color-semantic-status-negative-signal, 흰 배경에서 3.44:1로 AA 미달)이 아니라 DropdownMenu와 같은 on-light 텍스트 토큰을 씁니다."
     },
     {
       "subject": "--caption1-size",

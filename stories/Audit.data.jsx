@@ -134,9 +134,9 @@ const tokenGroups = [
   ['프라이머리 애저', 'var(--color-semantic-primary-normal)', '주요 CTA'],
   ['시그널 강조색', 'var(--color-semantic-primary-normal)', '링크, 활성 상태, 감지 신호'],
   ['쿨 뉴트럴', 'var(--color-semantic-label-alternative)', '보조 텍스트와 미세 구분'],
-  ['상태 긍정', 'var(--color-semantic-status-positive)', '성공과 정상 상태'],
-  ['상태 주의', 'var(--color-semantic-status-cautionary)', '주의와 점검 상태'],
-  ['상태 위험', 'var(--color-semantic-status-negative)', '오류와 위험 상태'],
+  ['상태 긍정', 'var(--color-semantic-status-positive-signal)', '성공과 정상 상태'],
+  ['상태 주의', 'var(--color-semantic-status-cautionary-signal)', '주의와 점검 상태'],
+  ['상태 위험', 'var(--color-semantic-status-negative-signal)', '오류와 위험 상태'],
   ['보더', 'var(--color-semantic-line-normal-normal)', 'hairline divider'],
 ];
 

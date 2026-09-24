@@ -108,7 +108,7 @@
       "name": "color",
       "type": "string",
       "required": false,
-      "description": "Custom fill color (CSS color value or token, e.g. \"var(--color-semantic-status-positive)\"). Overrides tone when set.",
+      "description": "Custom fill color (CSS color value or token, e.g. \"var(--color-semantic-status-positive-foreground)\"). Overrides tone when set.",
       "owner": "ProgressBarProps"
     },
     {

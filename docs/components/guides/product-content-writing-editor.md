@@ -155,7 +155,7 @@
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-normal`
 - `--color-semantic-primary-surface-strong`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--color-semantic-status-negative-text`
 - `--component-button-danger-bg`
 - `--component-button-danger-bg-hover`

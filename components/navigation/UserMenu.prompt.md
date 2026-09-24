@@ -55,7 +55,7 @@ const [col, setCol] = React.useState(false);
   그리게 됩니다. 다크 표면에 얹을 때는 위 `--component-user-menu-*` 토큰만 재정의하세요.
 - `SideNav appearance="brand"`는 footer 스코프에 이 네 토큰을 자동으로 심습니다. 소비 측
   추가 CSS는 필요 없습니다.
-- danger 잉크는 상태 색상(`--color-semantic-status-negative`, 흰 배경에서 3.44:1로 AA 미달)이
+- danger 잉크는 신호 색상(`--color-semantic-status-negative-signal`, 흰 배경에서 3.44:1로 AA 미달)이
   아니라 `DropdownMenu`와 같은 on-light 텍스트 토큰을 씁니다.
 
 ### 외부 기준과 적용 결론

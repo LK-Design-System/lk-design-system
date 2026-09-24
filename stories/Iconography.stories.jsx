@@ -147,8 +147,8 @@ export const IconSizingAndColor = {
       <section style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center', flexWrap: 'wrap' }}>
         <span style={{ color: 'var(--color-semantic-label-normal)' }}><Icon name="document" size={24} /></span>
         <span style={{ color: 'var(--color-semantic-primary-normal)' }}><Icon name="bookmark" size={24} /></span>
-        <span style={{ color: 'var(--color-semantic-status-positive)' }}><Icon name="circle-check" size={24} /></span>
-        <span style={{ color: 'var(--color-semantic-status-negative)' }}><Icon name="triangle-exclamation" size={24} /></span>
+        <span style={{ color: 'var(--color-semantic-status-positive-foreground)' }}><Icon name="circle-check" size={24} /></span>
+        <span style={{ color: 'var(--color-semantic-status-negative-foreground)' }}><Icon name="triangle-exclamation" size={24} /></span>
       </section>
 
       <section style={a11yPanelStyle}>

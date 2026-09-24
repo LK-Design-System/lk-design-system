@@ -25,9 +25,9 @@ const colors = [
   ['Accent tint', 'var(--color-semantic-primary-surface-normal)'],
   ['Brand ink', 'var(--color-semantic-brand-ink)'],
   ['Border', 'var(--color-semantic-line-solid-normal)'],
-  ['Green (vivid)', 'var(--color-semantic-status-positive)'],
-  ['Amber (vivid)', 'var(--color-semantic-status-cautionary)'],
-  ['Red (vivid)', 'var(--color-semantic-status-negative)'],
+  ['Green (vivid)', 'var(--color-semantic-status-positive-signal)'],
+  ['Amber (vivid)', 'var(--color-semantic-status-cautionary-signal)'],
+  ['Red (vivid)', 'var(--color-semantic-status-negative-signal)'],
 ];
 
 /* 상태색은 "선명한 신호색"과 "AA를 만족하는 텍스트색"이 분리되어 있습니다.
@@ -35,17 +35,17 @@ const colors = [
 const VIVID_STATUS_RULES = [
   {
     role: 'positive',
-    vivid: ['--color-semantic-status-positive', '#13BE4C', '2.47:1'],
+    vivid: ['--color-semantic-status-positive-signal', '#13BE4C', '2.47:1'],
     text: ['--color-semantic-status-positive-text', '#07702E', '6.24:1'],
   },
   {
     role: 'cautionary',
-    vivid: ['--color-semantic-status-cautionary', '#EB9C33', '2.25:1'],
+    vivid: ['--color-semantic-status-cautionary-signal', '#EB9C33', '2.25:1'],
     text: ['--color-semantic-status-cautionary-text', '#7A4A00', '7.48:1'],
   },
   {
     role: 'negative',
-    vivid: ['--color-semantic-status-negative', '#EE5656', '3.44:1'],
+    vivid: ['--color-semantic-status-negative-signal', '#EE5656', '3.44:1'],
     text: ['--color-semantic-status-negative-text', '#A82727', '7.04:1'],
   },
 ];

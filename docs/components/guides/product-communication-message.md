@@ -174,7 +174,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-normal`
 - `--color-semantic-static-white`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`

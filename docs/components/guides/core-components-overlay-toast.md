@@ -111,9 +111,9 @@
 - `--body2-size`
 - `--body2-spacing`
 - `--color-semantic-inverse-label`
-- `--color-semantic-status-cautionary`
-- `--color-semantic-status-negative`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-cautionary-signal`
+- `--color-semantic-status-negative-signal`
+- `--color-semantic-status-positive-signal`
 - `--component-transient-feedback-bg`
 - `--component-transient-feedback-blur`
 - `--font-sans`

@@ -807,7 +807,7 @@ function MisuseExample({ label, children }) {
     <div style={{ display: 'grid', gridTemplateRows: '72px auto', gap: 8, minWidth: 0, padding: 12, border: '1px solid var(--color-semantic-line-normal-normal)', borderRadius: 'var(--radius-md)', background: 'var(--color-semantic-background-elevated-normal)' }}>
       <div style={{ display: 'grid', placeItems: 'center', minWidth: 0, overflow: 'hidden', borderRadius: 'var(--radius-sm)', background: 'var(--color-semantic-background-normal-normal)', position: 'relative' }}>
         {children}
-        <span aria-hidden style={{ position: 'absolute', insetInlineEnd: 6, insetBlockStart: 3, color: 'var(--color-semantic-status-negative)', fontSize: 18, fontWeight: 900 }}>×</span>
+        <span aria-hidden style={{ position: 'absolute', insetInlineEnd: 6, insetBlockStart: 3, color: 'var(--color-semantic-status-negative-foreground)', fontSize: 18, fontWeight: 900 }}>×</span>
       </div>
       {/* 12px 굵은 글씨는 surface 계열 status 색으로는 4.5:1을 넘지 못한다.
           텍스트 전용 토큰을 쓴다. */}

@@ -19,15 +19,15 @@ const ICONS = {
     name: "circle-info-fill",
   },
   positive: {
-    color: "var(--color-semantic-status-positive)",
+    color: "var(--color-semantic-status-positive-signal)",
     name: statusToneStyle("positive").icon,
   },
   cautionary: {
-    color: "var(--color-semantic-status-cautionary)",
+    color: "var(--color-semantic-status-cautionary-signal)",
     name: statusToneStyle("cautionary").icon,
   },
   negative: {
-    color: "var(--color-semantic-status-negative)",
+    color: "var(--color-semantic-status-negative-signal)",
     name: statusToneStyle("negative").icon,
   },
 };

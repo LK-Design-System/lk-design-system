@@ -107,8 +107,8 @@ export const LineCharts = {
           xLabel="epoch"
           yDomain={[0, 1]}
           xTicks={[1, 5, 10, 15, 20]}
-          series={[{ name: 'mAP', color: 'var(--color-semantic-status-positive)', points: mapCurve }]}
-          referenceLines={[{ y: 0.8, label: '목표 80%', color: 'var(--color-semantic-status-cautionary)' }]}
+          series={[{ name: 'mAP', color: 'var(--color-semantic-status-positive-foreground)', points: mapCurve }]}
+          referenceLines={[{ y: 0.8, label: '목표 80%', color: 'var(--color-semantic-status-cautionary-foreground)' }]}
           formatY={(value) => `${Math.round(value * 100)}%`}
           summary="mAP은 20 epoch 동안 상승하며 마지막 값은 목표 80%를 넘습니다."
         />
@@ -145,11 +145,11 @@ export const TelemetryReference = {
         yDomain={[0, 50]}
         showPoints
         referenceLines={[
-          { y: 42, label: '주의', color: 'var(--color-semantic-status-cautionary)' },
-          { y: 46, label: '위험', color: 'var(--color-semantic-status-negative)' },
+          { y: 42, label: '주의', color: 'var(--color-semantic-status-cautionary-foreground)' },
+          { y: 46, label: '위험', color: 'var(--color-semantic-status-negative-foreground)' },
         ]}
         series={[
-          { name: 'temperature', color: 'var(--color-semantic-status-cautionary)', points: temperature },
+          { name: 'temperature', color: 'var(--color-semantic-status-cautionary-foreground)', points: temperature },
           { name: 'current', color: 'var(--color-semantic-primary-normal)', dashed: true, points: currentDraw },
         ]}
       />

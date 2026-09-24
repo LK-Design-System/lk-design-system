@@ -142,7 +142,7 @@
 | `component.input.tokens.background` | color | `--component-input-bg` | `var(--color-semantic-background-elevated-normal)` | — |
 | `component.input.tokens.borderColor` | color | `--component-input-border-color` | `var(--color-semantic-line-normal-normal)` | — |
 | `component.input.tokens.borderColorFocus` | color | `--component-input-border-color-focus` | `var(--color-semantic-primary-normal)` | — |
-| `component.input.tokens.borderColorInvalid` | color | `--component-input-border-color-invalid` | `var(--color-semantic-status-negative)` | — |
+| `component.input.tokens.borderColorInvalid` | color | `--component-input-border-color-invalid` | `var(--color-semantic-status-negative-foreground)` | — |
 | `component.input.tokens.compactTypography` | typography | `--component-input-font-size-sm, --component-input-line-height-sm, --component-input-letter-spacing-sm` | `label1` | — |
 | `component.input.tokens.focusShadow` | shadow | `--component-input-focus-shadow` | `var(--component-input-focus-shadow)` | — |
 | `component.input.tokens.height` | dimension | `--component-input-height` | `var(--component-input-height)` | — |
@@ -581,30 +581,33 @@
 | `semantic.colorRoles.secondary-surface` | color | `--color-semantic-secondary-surface` | `light: #EAECF1; dark: rgba(255, 255, 255, 0.10)` | — |
 | `semantic.colorRoles.static-black` | color | `--color-semantic-static-black` | `light: #000000; dark: #000000` | — |
 | `semantic.colorRoles.static-white` | color | `--color-semantic-static-white` | `light: #FFFFFF; dark: #FFFFFF` | — |
-| `semantic.colorRoles.status-cautionary` | color | `--color-semantic-status-cautionary` | `light: #EB9C33; dark: #EFAF5C` | — |
-| `semantic.colorRoles.status-cautionary-border` | color | `--color-semantic-status-cautionary-border` | `light: color-mix(in srgb, var(--color-semantic-status-cautionary) 42%, var(--color-semantic-line-normal-normal)); dark: color-mix(in srgb, var(--color-semantic-status-cautionary) 48%, var(--color-semantic-line-normal-normal))` | — |
-| `semantic.colorRoles.status-cautionary-foreground` | color | `--color-semantic-status-cautionary-foreground` | `light: var(--color-atomic-orange-39); dark: var(--color-semantic-status-cautionary)` | — |
-| `semantic.colorRoles.status-cautionary-surface` | color | `--color-semantic-status-cautionary-surface` | `light: color-mix(in srgb, var(--color-semantic-status-cautionary) 18%, transparent); dark: color-mix(in srgb, var(--color-semantic-status-cautionary) 20%, transparent)` | — |
+| `semantic.colorRoles.status-cautionary` | color | `--color-semantic-status-cautionary` | `light: var(--color-semantic-status-cautionary-signal); dark: var(--color-semantic-status-cautionary-signal)` | — |
+| `semantic.colorRoles.status-cautionary-border` | color | `--color-semantic-status-cautionary-border` | `light: color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 42%, var(--color-semantic-line-normal-normal)); dark: color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 48%, var(--color-semantic-line-normal-normal))` | — |
+| `semantic.colorRoles.status-cautionary-foreground` | color | `--color-semantic-status-cautionary-foreground` | `light: var(--color-atomic-orange-39); dark: var(--color-semantic-status-cautionary-signal)` | — |
+| `semantic.colorRoles.status-cautionary-signal` | color | `--color-semantic-status-cautionary-signal` | `light: #EB9C33; dark: #EFAF5C` | — |
+| `semantic.colorRoles.status-cautionary-surface` | color | `--color-semantic-status-cautionary-surface` | `light: color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 18%, transparent); dark: color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 20%, transparent)` | — |
 | `semantic.colorRoles.status-cautionary-text` | color | `--color-semantic-status-cautionary-text` | `light: #7A4A00; dark: #F4BE76` | — |
 | `semantic.colorRoles.status-info` | color | `--color-semantic-status-info` | `light: var(--color-semantic-primary-normal); dark: var(--color-semantic-primary-normal)` | — |
 | `semantic.colorRoles.status-info-border` | color | `--color-semantic-status-info-border` | `light: color-mix(in srgb, var(--color-semantic-primary-normal) 36%, var(--color-semantic-line-normal-normal)); dark: color-mix(in srgb, var(--color-semantic-primary-normal) 42%, var(--color-semantic-line-normal-normal))` | — |
 | `semantic.colorRoles.status-info-foreground` | color | `--color-semantic-status-info-foreground` | `light: var(--color-semantic-primary-normal); dark: var(--color-semantic-primary-normal)` | — |
 | `semantic.colorRoles.status-info-surface` | color | `--color-semantic-status-info-surface` | `light: color-mix(in srgb, var(--color-semantic-primary-normal) 12%, transparent); dark: color-mix(in srgb, var(--color-semantic-primary-normal) 16%, transparent)` | — |
 | `semantic.colorRoles.status-info-text` | color | `--color-semantic-status-info-text` | `light: #2D6090; dark: #8CC8F5` | — |
-| `semantic.colorRoles.status-negative` | color | `--color-semantic-status-negative` | `light: #EE5656; dark: #F16F6F` | — |
-| `semantic.colorRoles.status-negative-border` | color | `--color-semantic-status-negative-border` | `light: color-mix(in srgb, var(--color-semantic-status-negative) 38%, var(--color-semantic-line-normal-normal)); dark: color-mix(in srgb, var(--color-semantic-status-negative) 44%, var(--color-semantic-line-normal-normal))` | — |
+| `semantic.colorRoles.status-negative` | color | `--color-semantic-status-negative` | `light: var(--color-semantic-status-negative-signal); dark: var(--color-semantic-status-negative-signal)` | — |
+| `semantic.colorRoles.status-negative-border` | color | `--color-semantic-status-negative-border` | `light: color-mix(in srgb, var(--color-semantic-status-negative-signal) 38%, var(--color-semantic-line-normal-normal)); dark: color-mix(in srgb, var(--color-semantic-status-negative-signal) 44%, var(--color-semantic-line-normal-normal))` | — |
 | `semantic.colorRoles.status-negative-fill` | color | `--color-semantic-status-negative-fill` | `light: var(--color-atomic-red-30); dark: var(--color-atomic-red-30)` | — |
-| `semantic.colorRoles.status-negative-foreground` | color | `--color-semantic-status-negative-foreground` | `light: var(--color-semantic-status-negative); dark: var(--color-semantic-status-negative)` | — |
+| `semantic.colorRoles.status-negative-foreground` | color | `--color-semantic-status-negative-foreground` | `light: var(--color-semantic-status-negative-signal); dark: var(--color-semantic-status-negative-signal)` | — |
 | `semantic.colorRoles.status-negative-on-fill` | color | `--color-semantic-status-negative-on-fill` | `light: var(--color-semantic-static-white); dark: var(--color-semantic-static-white)` | — |
-| `semantic.colorRoles.status-negative-surface` | color | `--color-semantic-status-negative-surface` | `light: color-mix(in srgb, var(--color-semantic-status-negative) 14%, transparent); dark: color-mix(in srgb, var(--color-semantic-status-negative) 20%, transparent)` | — |
+| `semantic.colorRoles.status-negative-signal` | color | `--color-semantic-status-negative-signal` | `light: #EE5656; dark: #F16F6F` | — |
+| `semantic.colorRoles.status-negative-surface` | color | `--color-semantic-status-negative-surface` | `light: color-mix(in srgb, var(--color-semantic-status-negative-signal) 14%, transparent); dark: color-mix(in srgb, var(--color-semantic-status-negative-signal) 20%, transparent)` | — |
 | `semantic.colorRoles.status-negative-text` | color | `--color-semantic-status-negative-text` | `light: #A82727; dark: #FF8585` | — |
 | `semantic.colorRoles.status-neutral-border` | color | `--color-semantic-status-neutral-border` | `light: var(--color-semantic-line-normal-neutral); dark: var(--color-semantic-line-normal-neutral)` | — |
 | `semantic.colorRoles.status-neutral-surface` | color | `--color-semantic-status-neutral-surface` | `light: var(--color-semantic-fill-normal); dark: var(--color-semantic-fill-normal)` | — |
 | `semantic.colorRoles.status-neutral-text` | color | `--color-semantic-status-neutral-text` | `light: var(--color-semantic-label-neutral); dark: var(--color-semantic-label-neutral)` | — |
-| `semantic.colorRoles.status-positive` | color | `--color-semantic-status-positive` | `light: #13BE4C; dark: #3FD270` | — |
-| `semantic.colorRoles.status-positive-border` | color | `--color-semantic-status-positive-border` | `light: color-mix(in srgb, var(--color-semantic-status-positive) 38%, var(--color-semantic-line-normal-normal)); dark: color-mix(in srgb, var(--color-semantic-status-positive) 44%, var(--color-semantic-line-normal-normal))` | — |
-| `semantic.colorRoles.status-positive-foreground` | color | `--color-semantic-status-positive-foreground` | `light: var(--color-atomic-green-40); dark: var(--color-semantic-status-positive)` | — |
-| `semantic.colorRoles.status-positive-surface` | color | `--color-semantic-status-positive-surface` | `light: color-mix(in srgb, var(--color-semantic-status-positive) 14%, transparent); dark: color-mix(in srgb, var(--color-semantic-status-positive) 18%, transparent)` | — |
+| `semantic.colorRoles.status-positive` | color | `--color-semantic-status-positive` | `light: var(--color-semantic-status-positive-signal); dark: var(--color-semantic-status-positive-signal)` | — |
+| `semantic.colorRoles.status-positive-border` | color | `--color-semantic-status-positive-border` | `light: color-mix(in srgb, var(--color-semantic-status-positive-signal) 38%, var(--color-semantic-line-normal-normal)); dark: color-mix(in srgb, var(--color-semantic-status-positive-signal) 44%, var(--color-semantic-line-normal-normal))` | — |
+| `semantic.colorRoles.status-positive-foreground` | color | `--color-semantic-status-positive-foreground` | `light: var(--color-atomic-green-40); dark: var(--color-semantic-status-positive-signal)` | — |
+| `semantic.colorRoles.status-positive-signal` | color | `--color-semantic-status-positive-signal` | `light: #13BE4C; dark: #3FD270` | — |
+| `semantic.colorRoles.status-positive-surface` | color | `--color-semantic-status-positive-surface` | `light: color-mix(in srgb, var(--color-semantic-status-positive-signal) 14%, transparent); dark: color-mix(in srgb, var(--color-semantic-status-positive-signal) 18%, transparent)` | — |
 | `semantic.colorRoles.status-positive-text` | color | `--color-semantic-status-positive-text` | `light: #07702E; dark: #5EE087` | — |
 | `semantic.control.focusRing` | shadow | `--color-semantic-focus-ring` | `0 0 0 4px var(--color-semantic-focus-ring)` | — |
 | `semantic.control.heightLg` | dimension | `--control-h-lg` | `var(--control-h-lg)` | — |
@@ -618,7 +621,7 @@
 | `semantic.layout.mobile.statusBarMinHeight` | dimension | `--mobile-status-bar-min-height` | `44px` | — |
 | `semantic.motion.baseOut` | transition | `--dur-base, --ease-out` | `var(--dur-base) var(--ease-out)` | — |
 | `semantic.motion.fastOut` | transition | `--dur-fast, --ease-out` | `var(--dur-fast) var(--ease-out)` | — |
-| `semantic.status.danger` | color | `--color-semantic-status-negative` | `var(--color-semantic-status-negative)` | — |
+| `semantic.status.danger` | color | `--color-semantic-status-negative-signal` | `var(--color-semantic-status-negative-signal)` | — |
 | `semantic.surface.card` | color | `--color-semantic-background-elevated-normal` | `var(--color-semantic-background-elevated-normal)` | — |
 | `semantic.surface.inset` | color | `--color-semantic-background-elevated-alternative` | `var(--color-semantic-background-elevated-alternative)` | — |
 | `semantic.surface.inverse` | color | `--color-semantic-inverse-background` | `var(--color-semantic-inverse-background)` | — |

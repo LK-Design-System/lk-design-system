@@ -64,7 +64,7 @@ export function Checkbox({
   /* 시각 박스는 그대로 두고 네이티브 입력만 24px까지 넓혀 WCAG 2.5.8 타깃 크기를 만족시킨다. */
   const hitPad = Math.max(0, (24 - d) / 2);
   const iconSize = isMark ? d : (normalizedSize === 'sm' ? 14 : 16);
-  const markTone = status === 'negative' ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-primary-normal)';
+  const markTone = status === 'negative' ? 'var(--color-semantic-status-negative-foreground)' : 'var(--color-semantic-primary-normal)';
   const markIdleColor = activeHover || activeFocus ? 'var(--color-semantic-label-neutral)' : 'var(--color-semantic-interaction-inactive)';
   const boxBackground = disabledState
     ? (on || mixed ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-fill-normal)')

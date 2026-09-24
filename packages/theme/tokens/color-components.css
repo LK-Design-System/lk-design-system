@@ -66,7 +66,7 @@
   --component-input-bg: var(--color-semantic-background-elevated-normal);
   --component-input-border-color: var(--color-semantic-line-normal-normal);
   --component-input-border-color-focus: var(--color-semantic-primary-normal);
-  --component-input-border-color-invalid: var(--color-semantic-status-negative);
+  --component-input-border-color-invalid: var(--color-semantic-status-negative-foreground);
   --component-input-icon-color: var(--color-semantic-label-alternative);
   --component-input-text-color: var(--color-semantic-label-normal);
   --component-input-label-color: var(--color-semantic-label-normal);
@@ -180,7 +180,7 @@
   --component-input-bg: var(--color-semantic-background-elevated-normal);
   --component-input-border-color: var(--color-semantic-line-normal-normal);
   --component-input-border-color-focus: var(--color-semantic-primary-normal);
-  --component-input-border-color-invalid: var(--color-semantic-status-negative);
+  --component-input-border-color-invalid: var(--color-semantic-status-negative-foreground);
   --component-input-icon-color: var(--color-semantic-label-alternative);
   --component-input-text-color: var(--color-semantic-label-normal);
   --component-input-label-color: var(--color-semantic-label-normal);
@@ -295,7 +295,7 @@
     --component-input-bg: var(--color-semantic-background-elevated-normal);
     --component-input-border-color: var(--color-semantic-line-normal-normal);
     --component-input-border-color-focus: var(--color-semantic-primary-normal);
-    --component-input-border-color-invalid: var(--color-semantic-status-negative);
+    --component-input-border-color-invalid: var(--color-semantic-status-negative-foreground);
     --component-input-icon-color: var(--color-semantic-label-alternative);
     --component-input-text-color: var(--color-semantic-label-normal);
     --component-input-label-color: var(--color-semantic-label-normal);

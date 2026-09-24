@@ -103,7 +103,7 @@
 - `--color-semantic-primary-normal`
 - `--color-semantic-secondary-surface`
 - `--color-semantic-static-white`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`

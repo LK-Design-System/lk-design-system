@@ -1538,9 +1538,9 @@
     "status": {
       "danger": {
         "$type": "color",
-        "$value": "var(--color-semantic-status-negative)",
-        "css": "--color-semantic-status-negative",
-        "ref": "semantic.colorRoles.status-negative"
+        "$value": "var(--color-semantic-status-negative-signal)",
+        "css": "--color-semantic-status-negative-signal",
+        "ref": "semantic.colorRoles.status-negative-signal"
       }
     },
     "layout": {
@@ -1853,28 +1853,64 @@
         "$type": "color",
         "css": "--color-semantic-status-positive",
         "modes": {
+          "light": "var(--color-semantic-status-positive-signal)",
+          "dark": "var(--color-semantic-status-positive-signal)"
+        },
+        "origin": "wds-structure-lk-retone",
+        "$description": "Deprecated 2026-09: the shortest status name held a value that fails text contrast (2.25-3.44:1 on white), so it was the easiest one to misuse. Use status-positive-text for text, -foreground for dots, icons, borders and bars, -surface for tinted backgrounds, and -signal only as a vivid hue on dark or photographic backgrounds. Removal: 0.5.0. See docs/TOKEN_GOVERNANCE.md."
+      },
+      "status-positive-signal": {
+        "$type": "color",
+        "css": "--color-semantic-status-positive-signal",
+        "modes": {
           "light": "#13BE4C",
           "dark": "#3FD270"
         },
-        "origin": "wds-structure-lk-retone"
+        "origin": "lds-extension",
+        "group": "status",
+        "$description": "Vivid signal hue and the mix base for status-positive-surface and -border. Not for text (white-page contrast below 4.5:1) and not a solid fill behind text; use -text, -foreground or, for negative, -fill."
       },
       "status-cautionary": {
         "$type": "color",
         "css": "--color-semantic-status-cautionary",
         "modes": {
+          "light": "var(--color-semantic-status-cautionary-signal)",
+          "dark": "var(--color-semantic-status-cautionary-signal)"
+        },
+        "origin": "wds-structure-lk-retone",
+        "$description": "Deprecated 2026-09: the shortest status name held a value that fails text contrast (2.25-3.44:1 on white), so it was the easiest one to misuse. Use status-cautionary-text for text, -foreground for dots, icons, borders and bars, -surface for tinted backgrounds, and -signal only as a vivid hue on dark or photographic backgrounds. Removal: 0.5.0. See docs/TOKEN_GOVERNANCE.md."
+      },
+      "status-cautionary-signal": {
+        "$type": "color",
+        "css": "--color-semantic-status-cautionary-signal",
+        "modes": {
           "light": "#EB9C33",
           "dark": "#EFAF5C"
         },
-        "origin": "wds-structure-lk-retone"
+        "origin": "lds-extension",
+        "group": "status",
+        "$description": "Vivid signal hue and the mix base for status-cautionary-surface and -border. Not for text (white-page contrast below 4.5:1) and not a solid fill behind text; use -text, -foreground or, for negative, -fill."
       },
       "status-negative": {
         "$type": "color",
         "css": "--color-semantic-status-negative",
         "modes": {
+          "light": "var(--color-semantic-status-negative-signal)",
+          "dark": "var(--color-semantic-status-negative-signal)"
+        },
+        "origin": "wds-structure-lk-retone",
+        "$description": "Deprecated 2026-09: the shortest status name held a value that fails text contrast (2.25-3.44:1 on white), so it was the easiest one to misuse. Use status-negative-text for text, -foreground for dots, icons, borders and bars, -surface for tinted backgrounds, -fill for an alarm that must read at a glance, and -signal only as a vivid hue on dark or photographic backgrounds. Removal: 0.5.0. See docs/TOKEN_GOVERNANCE.md."
+      },
+      "status-negative-signal": {
+        "$type": "color",
+        "css": "--color-semantic-status-negative-signal",
+        "modes": {
           "light": "#EE5656",
           "dark": "#F16F6F"
         },
-        "origin": "wds-structure-lk-retone"
+        "origin": "lds-extension",
+        "group": "status",
+        "$description": "Vivid signal hue and the mix base for status-negative-surface and -border. Not for text (white-page contrast below 4.5:1) and not a solid fill behind text; use -text, -foreground or, for negative, -fill."
       },
       "accent-background-lime": {
         "$type": "color",
@@ -2313,8 +2349,8 @@
         "$type": "color",
         "css": "--color-semantic-status-positive-surface",
         "modes": {
-          "light": "color-mix(in srgb, var(--color-semantic-status-positive) 14%, transparent)",
-          "dark": "color-mix(in srgb, var(--color-semantic-status-positive) 18%, transparent)"
+          "light": "color-mix(in srgb, var(--color-semantic-status-positive-signal) 14%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-status-positive-signal) 18%, transparent)"
         },
         "origin": "lds-extension",
         "group": "status"
@@ -2324,7 +2360,7 @@
         "css": "--color-semantic-status-positive-foreground",
         "modes": {
           "light": "var(--color-atomic-green-40)",
-          "dark": "var(--color-semantic-status-positive)"
+          "dark": "var(--color-semantic-status-positive-signal)"
         },
         "origin": "lds-extension",
         "group": "status",
@@ -2334,8 +2370,8 @@
         "$type": "color",
         "css": "--color-semantic-status-positive-border",
         "modes": {
-          "light": "color-mix(in srgb, var(--color-semantic-status-positive) 38%, var(--color-semantic-line-normal-normal))",
-          "dark": "color-mix(in srgb, var(--color-semantic-status-positive) 44%, var(--color-semantic-line-normal-normal))"
+          "light": "color-mix(in srgb, var(--color-semantic-status-positive-signal) 38%, var(--color-semantic-line-normal-normal))",
+          "dark": "color-mix(in srgb, var(--color-semantic-status-positive-signal) 44%, var(--color-semantic-line-normal-normal))"
         },
         "origin": "lds-extension",
         "group": "status"
@@ -2354,8 +2390,8 @@
         "$type": "color",
         "css": "--color-semantic-status-cautionary-surface",
         "modes": {
-          "light": "color-mix(in srgb, var(--color-semantic-status-cautionary) 18%, transparent)",
-          "dark": "color-mix(in srgb, var(--color-semantic-status-cautionary) 20%, transparent)"
+          "light": "color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 18%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 20%, transparent)"
         },
         "origin": "lds-extension",
         "group": "status"
@@ -2365,7 +2401,7 @@
         "css": "--color-semantic-status-cautionary-foreground",
         "modes": {
           "light": "var(--color-atomic-orange-39)",
-          "dark": "var(--color-semantic-status-cautionary)"
+          "dark": "var(--color-semantic-status-cautionary-signal)"
         },
         "origin": "lds-extension",
         "group": "status",
@@ -2375,8 +2411,8 @@
         "$type": "color",
         "css": "--color-semantic-status-cautionary-border",
         "modes": {
-          "light": "color-mix(in srgb, var(--color-semantic-status-cautionary) 42%, var(--color-semantic-line-normal-normal))",
-          "dark": "color-mix(in srgb, var(--color-semantic-status-cautionary) 48%, var(--color-semantic-line-normal-normal))"
+          "light": "color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 42%, var(--color-semantic-line-normal-normal))",
+          "dark": "color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 48%, var(--color-semantic-line-normal-normal))"
         },
         "origin": "lds-extension",
         "group": "status"
@@ -2395,8 +2431,8 @@
         "$type": "color",
         "css": "--color-semantic-status-negative-surface",
         "modes": {
-          "light": "color-mix(in srgb, var(--color-semantic-status-negative) 14%, transparent)",
-          "dark": "color-mix(in srgb, var(--color-semantic-status-negative) 20%, transparent)"
+          "light": "color-mix(in srgb, var(--color-semantic-status-negative-signal) 14%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-status-negative-signal) 20%, transparent)"
         },
         "origin": "lds-extension",
         "group": "status"
@@ -2405,8 +2441,8 @@
         "$type": "color",
         "css": "--color-semantic-status-negative-foreground",
         "modes": {
-          "light": "var(--color-semantic-status-negative)",
-          "dark": "var(--color-semantic-status-negative)"
+          "light": "var(--color-semantic-status-negative-signal)",
+          "dark": "var(--color-semantic-status-negative-signal)"
         },
         "origin": "lds-extension",
         "group": "status"
@@ -2415,8 +2451,8 @@
         "$type": "color",
         "css": "--color-semantic-status-negative-border",
         "modes": {
-          "light": "color-mix(in srgb, var(--color-semantic-status-negative) 38%, var(--color-semantic-line-normal-normal))",
-          "dark": "color-mix(in srgb, var(--color-semantic-status-negative) 44%, var(--color-semantic-line-normal-normal))"
+          "light": "color-mix(in srgb, var(--color-semantic-status-negative-signal) 38%, var(--color-semantic-line-normal-normal))",
+          "dark": "color-mix(in srgb, var(--color-semantic-status-negative-signal) 44%, var(--color-semantic-line-normal-normal))"
         },
         "origin": "lds-extension",
         "group": "status"
@@ -3616,8 +3652,8 @@
         "borderColorInvalid": {
           "$type": "color",
           "css": "--component-input-border-color-invalid",
-          "$value": "var(--color-semantic-status-negative)",
-          "ref": "semantic.status.danger",
+          "$value": "var(--color-semantic-status-negative-foreground)",
+          "ref": "semantic.colorRoles.status-negative-foreground",
           "generated": true
         },
         "focusShadow": {

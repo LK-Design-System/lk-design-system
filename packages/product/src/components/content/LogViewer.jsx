@@ -22,8 +22,8 @@ import { StatusIndicator } from '@lk-design-system/lds-core/components/content/S
 const LEVELS = {
   debug: { c: 'var(--color-semantic-label-assistive)', log: 'var(--color-semantic-inverse-label-neutral-soft)', label: 'DEBUG' },
   info: { c: 'var(--color-semantic-primary-normal)', log: 'var(--color-semantic-accent-background-light-blue)', label: 'INFO' },
-  warn: { c: 'var(--color-semantic-status-cautionary)', log: 'var(--color-semantic-status-cautionary)', label: 'WARN' },
-  error: { c: 'var(--color-semantic-status-negative)', log: 'var(--color-semantic-status-negative)', label: 'ERROR' },
+  warn: { c: 'var(--color-semantic-status-cautionary-foreground)', log: 'var(--color-semantic-status-cautionary-signal)', label: 'WARN' },
+  error: { c: 'var(--color-semantic-status-negative-foreground)', log: 'var(--color-semantic-status-negative-signal)', label: 'ERROR' },
 };
 const ORDER = ['debug', 'info', 'warn', 'error'];
 
@@ -263,7 +263,7 @@ export function LogViewer({
             })()}
             {lastUpdatedAt != null && <span>마지막 수신 <strong>{lastUpdatedAt}</strong></span>}
           </div>
-          {droppedCount > 0 && <span style={{ color: 'var(--color-semantic-status-cautionary)', fontWeight: 'var(--fw-semibold)' }}>누락 {droppedCount}줄</span>}
+          {droppedCount > 0 && <span style={{ color: 'var(--color-semantic-status-cautionary-text)', fontWeight: 'var(--fw-semibold)' }}>누락 {droppedCount}줄</span>}
         </div>
       )}
       {(filter || search || tools) && (
@@ -326,7 +326,7 @@ export function LogViewer({
               >
                 <Icon name="arrow-down" size={15} aria-hidden="true" />
                 <span aria-hidden="true" style={{ position: 'absolute', left: 8, right: 8, bottom: 6, height: 1.5, borderRadius: 'var(--radius-pill)', background: 'currentColor' }} />
-                {latestCount > 0 && <span aria-hidden="true" style={{ position: 'absolute', top: -5, right: -5, minWidth: 16, height: 16, padding: '0 4px', boxSizing: 'border-box', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-status-negative)', color: 'var(--color-semantic-static-white)', fontSize: 'var(--caption2-size)', lineHeight: '16px', fontWeight: 'var(--fw-bold)' }}>{latestCount > 99 ? '99+' : `+${latestCount}`}</span>}
+                {latestCount > 0 && <span aria-hidden="true" style={{ position: 'absolute', top: -5, right: -5, minWidth: 16, height: 16, padding: '0 4px', boxSizing: 'border-box', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-status-negative-fill)', color: 'var(--color-semantic-status-negative-on-fill)', fontSize: 'var(--caption2-size)', lineHeight: '16px', fontWeight: 'var(--fw-bold)' }}>{latestCount > 99 ? '99+' : `+${latestCount}`}</span>}
               </IconButton>
               <IconButton variant="ghost" round={false} size="custom" label="표시 로그 지우기" title="표시 로그 지우기" disabled={currentLines.length === 0} onClick={clearVisible}>
                 <Icon name="trash" size={15} aria-hidden="true" />
@@ -372,7 +372,7 @@ export function LogViewer({
                     if (rowFocusRef.current === node && node.isConnected) rowFocusRef.current = null;
                   }}
                   onClick={() => copyLine(line, index)}
-                  style={{ width: 24, height: 24, border: 'none', borderRadius: 'var(--radius-sm)', background: copied ? 'var(--color-semantic-inverse-fill-strong)' : 'transparent', color: copied ? 'var(--color-semantic-status-positive)' : 'var(--color-semantic-inverse-label-neutral-soft)', cursor: 'pointer', padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}
+                  style={{ width: 24, height: 24, border: 'none', borderRadius: 'var(--radius-sm)', background: copied ? 'var(--color-semantic-inverse-fill-strong)' : 'transparent', color: copied ? 'var(--color-semantic-status-positive-signal)' : 'var(--color-semantic-inverse-label-neutral-soft)', cursor: 'pointer', padding: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'center' }}
                 >
                   <Icon name={copied ? 'circle-check' : 'copy'} size={14} aria-hidden="true" />
                 </button>

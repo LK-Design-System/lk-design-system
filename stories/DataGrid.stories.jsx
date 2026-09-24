@@ -39,7 +39,7 @@ const rows = [
 const statusTone = { '진행 중': 'positive', '검토 중': 'cautionary', 중지: 'offline' };
 
 function ProgressCell({ value }) {
-  const tone = value <= 20 ? 'var(--color-semantic-status-negative)' : value <= 50 ? 'var(--color-semantic-status-cautionary)' : 'var(--color-semantic-primary-normal)';
+  const tone = value <= 20 ? 'var(--color-semantic-status-negative-foreground)' : value <= 50 ? 'var(--color-semantic-status-cautionary-foreground)' : 'var(--color-semantic-primary-normal)';
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'flex-end', gap: 10, width: '100%', minWidth: 112 }}>
       <span style={{ position: 'relative', width: 64, height: 5, borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-fill-strong)', overflow: 'hidden' }}>

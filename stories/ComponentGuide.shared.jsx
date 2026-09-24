@@ -398,7 +398,7 @@ export function ComponentGuideForStory({ slug, embedded }) {
         role="alert"
         data-component-guide-error
         data-component-guide-slug={slug}
-        style={{ padding: 'var(--space-5)', color: 'var(--color-semantic-status-negative)' }}
+        style={{ padding: 'var(--space-5)', color: 'var(--color-semantic-status-negative-text)' }}
       >
         Component guide unavailable: {state.error?.message || slug}
       </div>

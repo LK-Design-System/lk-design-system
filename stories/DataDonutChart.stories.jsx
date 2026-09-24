@@ -37,9 +37,9 @@ export const CompositionRatio = {
           description="정상, 검토, 중지 상태의 구성 비율입니다."
           centerLabel="95%"
           segments={[
-            { id: 'healthy', label: '정상', value: 72, color: 'var(--color-semantic-status-positive)' },
-            { id: 'review', label: '검토', value: 18, color: 'var(--color-semantic-status-cautionary)' },
-            { id: 'stopped', label: '중지', value: 5, color: 'var(--color-semantic-status-negative)' },
+            { id: 'healthy', label: '정상', value: 72, color: 'var(--color-semantic-status-positive-foreground)' },
+            { id: 'review', label: '검토', value: 18, color: 'var(--color-semantic-status-cautionary-foreground)' },
+            { id: 'stopped', label: '중지', value: 5, color: 'var(--color-semantic-status-negative-foreground)' },
           ]}
         />
       </section>

@@ -101,17 +101,20 @@ Color usage rules:
   default choice for general UI.
 - Component tokens (`--component-*`) bind a reusable component to a stable
   combination of semantic roles.
-- Status is a four-role family: `foreground`, `surface`, `border`, and `text`.
-  Do not reuse one status value for all four jobs.
-- `--color-semantic-status-*`의 기본값은 **신호용 선명색**이며 텍스트 대비를
+- Status is a role family: `foreground`, `surface`, `border`, `text`, and
+  `signal` (plus `fill`/`on-fill` for negative). Every status reference names
+  its role; there is no bare `--color-semantic-status-positive|cautionary|negative`
+  to reach for (deprecated, see below). Do not reuse one status value for all jobs.
+- `--color-semantic-status-*-signal`은 **신호용 선명색**이며 텍스트 대비를
   만족하지 않는다(흰 배경 기준 positive `#13BE4C` 2.47:1, cautionary `#EB9C33`
-  2.25:1, negative `#EE5656` 3.44:1). 비텍스트 요소도 WCAG 1.4.11의 3:1을
-  넘어야 하므로, 점·아이콘·테두리·막대 채움은 `--color-semantic-status-*-foreground`를
+  2.25:1, negative `#EE5656` 3.44:1). `*-surface`·`*-border`의 색 혼합 기준이고,
+  직접 칠하는 곳은 어두운 면(inverse 표면, 뷰어, 로그 콘솔)이나 사진 위처럼 선명색이
+  대비를 확보하는 자리뿐이다. 비텍스트 요소도 WCAG 1.4.11의 3:1을 넘어야 하므로,
+  밝은 면 위의 점·아이콘·테두리·막대 채움·차트 계열은 `--color-semantic-status-*-foreground`를
   쓴다. light foreground는 positive `#0F953C`(green-40, 3.90:1), cautionary
-  `#C97A14`(orange-39, 3.35:1), negative는 기본값 그대로(3.44:1)이며 dark는 기본값과
-  같다. 기본값은 `*-surface`·`*-border`의 색 혼합 기준으로 남는다.
-  텍스트와 텍스트 배경에는 AA를 만족하는 `--color-semantic-status-*-text`
-  (5.47:1 / 7.48:1 / 7.04:1)를 쓴다. 선명색을 배경으로 채우고 흰 글자를 올리는
+  `#C97A14`(orange-39, 3.35:1), negative는 signal 그대로(3.44:1)이며 dark는 signal과
+  같다. 텍스트와 텍스트 배경에는 AA를 만족하는 `--color-semantic-status-*-text`
+  (5.47:1 / 7.48:1 / 7.04:1)를 쓴다. signal을 배경으로 채우고 흰 글자를 올리는
   solid 변형은 같은 대비값이 그대로 적용되므로 금지한다 — `*-surface` + `*-text`
   쌍을 쓴다.
 - 운영자가 즉시 대응해야 하는 위급(화재·쓰러짐·비상정지 알람, 파괴적 확인)을 멀리서도
@@ -164,7 +167,32 @@ may be added without an explicit product migration decision.
 | removed | No longer available | Remove only in an explicit breaking change |
 
 Deprecation notes must state the replacement token, affected components, and
-the planned removal timing.
+the planned removal timing. LDS itself stops using a token the moment it is
+deprecated: `npm run check:deprecated-tokens` fails on any reference from
+`components/`, `stories/` or hand-written `tokens/*.css` to a token whose
+`tokens/source.json` entry starts its `$description` with `Deprecated`.
+
+### Deprecated · `--color-semantic-status-positive|cautionary|negative` (removal 0.5.0)
+
+접미사 없는 상태색 이름은 가장 먼저 손이 가는 이름인데, 글자 대비를 만족하지 못하는
+신호용 선명색(흰 배경 2.25~3.44:1)을 담고 있었다. 문서가 막아도 LDS 자체 컴포넌트
+32곳이 이 이름을 직접 썼고, 그중 `SpeedDial`의 위험 동작은 금지된 solid 채움이었다.
+이름은 `-signal`로 옮겼고 기존 이름은 같은 값을 가리키는 deprecated 별칭으로 남는다.
+
+| 용도 | 대체 |
+| --- | --- |
+| 글자, 글자 배경의 전경 | `--color-semantic-status-*-text` |
+| 밝은 면 위의 점·아이콘·테두리·막대·차트 계열 | `--color-semantic-status-*-foreground` |
+| 틴트 배경 | `--color-semantic-status-*-surface` |
+| 어두운 면·사진 위의 선명색, 색 혼합 기준 | `--color-semantic-status-*-signal` |
+| 운영자가 즉시 대응할 위급 채움 | `--color-semantic-status-negative-fill` + `-on-fill` |
+
+- LDS 영향: `components/`와 `stories/`의 모든 참조를 위 표대로 옮겼다. 화면 값은
+  바뀌지 않는다(`-foreground`의 negative는 signal과 같은 값이고, positive·cautionary는
+  이미 문서가 요구하던 더 진한 값이다).
+- 소비자 영향(2026-09-25 조사): Robotics 2곳, 3D 8곳, Slides 28곳, LK Portal 6곳.
+  새 이름은 이 릴리스부터 존재하므로 각 소비자는 이 버전 이상으로 올릴 때 옮긴다.
+- 제거: 0.5.0. 그 전까지 별칭은 같은 값을 유지한다.
 
 ### Removed in 0.4.0 · `--interaction-*`
 

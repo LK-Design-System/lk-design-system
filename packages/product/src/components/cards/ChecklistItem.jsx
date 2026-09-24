@@ -26,7 +26,7 @@ export function ChecklistItem({
 }) {
   const ok = !cross;
   const Row = as;
-  const color = ok ? (dark ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-normal)') : 'var(--color-semantic-status-negative)';
+  const color = ok ? (dark ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-primary-normal)') : 'var(--color-semantic-status-negative-foreground)';
   const resolvedStateLabel = stateLabel === undefined ? (ok ? '포함' : '제외') : stateLabel;
   return (
     <Row style={{ display: 'flex', alignItems: 'flex-start', gap: '11px', listStyle: 'none', ...style }} {...rest}>

@@ -238,8 +238,8 @@ export const EditorShell = {
           <rect x="362" y="72" width="156" height="64" rx="10" fill="var(--color-semantic-background-elevated-normal)" stroke="var(--color-semantic-line-normal-normal)" />
           <path d="M132 220 C206 138 284 205 344 166 C406 126 448 156 502 88" fill="none" stroke="var(--color-semantic-focus-ring)" strokeWidth="24" strokeLinecap="round" />
           <path d="M132 220 C206 138 284 205 344 166 C406 126 448 156 502 88" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="6" strokeLinecap="round" strokeDasharray="12 12" />
-          <circle cx="132" cy="220" r="11" fill="var(--color-semantic-status-positive)" stroke="var(--color-semantic-background-elevated-normal)" strokeWidth="4" />
-          <circle cx="344" cy="166" r="11" fill="var(--color-semantic-status-cautionary)" stroke="var(--color-semantic-background-elevated-normal)" strokeWidth="4" />
+          <circle cx="132" cy="220" r="11" fill="var(--color-semantic-status-positive-foreground)" stroke="var(--color-semantic-background-elevated-normal)" strokeWidth="4" />
+          <circle cx="344" cy="166" r="11" fill="var(--color-semantic-status-cautionary-foreground)" stroke="var(--color-semantic-background-elevated-normal)" strokeWidth="4" />
           <circle cx="502" cy="88" r="11" fill="var(--color-semantic-primary-normal)" stroke="var(--color-semantic-background-elevated-normal)" strokeWidth="4" />
         </svg>
         <div style={{ position: 'absolute', left: 16, bottom: 16, display: 'inline-flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-background-elevated-normal)', border: '1px solid var(--color-semantic-line-normal-normal)', boxShadow: 'var(--shadow-sm)', fontSize: 12, fontWeight: 'var(--fw-bold)' }}>

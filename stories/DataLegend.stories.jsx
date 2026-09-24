@@ -37,9 +37,9 @@ export const Legends = {
           aria-label="지도 레이어 범례"
           items={[
             { id: 'robot', label: '로봇 위치', color: 'var(--color-semantic-primary-normal)', shape: 'dot' },
-            { id: 'route', label: '주행 경로', color: 'var(--color-semantic-status-positive)', shape: 'line' },
-            { id: 'predicted', label: '예측 경로', color: 'var(--color-semantic-status-cautionary)', shape: 'line', dashed: true },
-            { id: 'restricted', label: '제한 구역', color: 'var(--color-semantic-status-negative)' },
+            { id: 'route', label: '주행 경로', color: 'var(--color-semantic-status-positive-foreground)', shape: 'line' },
+            { id: 'predicted', label: '예측 경로', color: 'var(--color-semantic-status-cautionary-foreground)', shape: 'line', dashed: true },
+            { id: 'restricted', label: '제한 구역', color: 'var(--color-semantic-status-negative-foreground)' },
             { id: 'offline', label: '오프라인', color: 'var(--color-semantic-label-disable)', shape: 'dot', disabled: true },
           ]}
         />
@@ -53,9 +53,9 @@ export const Legends = {
           aria-label="설비 상태 범례"
           direction="vertical"
           items={[
-            { id: 'available', label: '가용', color: 'var(--color-semantic-status-positive)', shape: 'dot', value: 12 },
-            { id: 'charging', label: '충전 중', color: 'var(--color-semantic-status-cautionary)', shape: 'dot', value: 4 },
-            { id: 'blocked', label: '작업 정지', color: 'var(--color-semantic-status-negative)', shape: 'dot', value: 2 },
+            { id: 'available', label: '가용', color: 'var(--color-semantic-status-positive-foreground)', shape: 'dot', value: 12 },
+            { id: 'charging', label: '충전 중', color: 'var(--color-semantic-status-cautionary-foreground)', shape: 'dot', value: 4 },
+            { id: 'blocked', label: '작업 정지', color: 'var(--color-semantic-status-negative-foreground)', shape: 'dot', value: 2 },
             { id: 'hidden', label: '숨김 레이어', color: 'var(--color-semantic-label-disable)', shape: 'dot', value: 1, muted: true },
           ]}
         />
@@ -102,7 +102,7 @@ export const CompactChartLegend = {
       items={[
         { id: 'actual', label: '실측', color: 'var(--color-semantic-primary-normal)', shape: 'line' },
         { id: 'target', label: '목표', color: 'var(--color-semantic-accent-foreground-violet)', shape: 'line', dashed: true },
-        { id: 'warning', label: '주의', color: 'var(--color-semantic-status-cautionary)', shape: 'dot' },
+        { id: 'warning', label: '주의', color: 'var(--color-semantic-status-cautionary-foreground)', shape: 'dot' },
       ]}
     />
   ),

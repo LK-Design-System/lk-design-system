@@ -146,7 +146,7 @@ function CanvasSurface({ activeTool = 'select', selectedObject, onSelectObject, 
         <path d="M70 330 L70 92 L240 92 L240 168 L376 168 L376 76 L565 76 L565 330 Z" fill="var(--color-semantic-background-elevated-normal)" stroke="var(--color-semantic-line-solid-normal)" strokeWidth="3" />
         <path d="M70 236 H202 V330 M240 92 V330 M376 168 V330 M468 76 V238 H565" fill="none" stroke="var(--color-semantic-line-normal-normal)" strokeWidth="2" />
         <polyline points="112,284 180,252 286,274 348,214 430,218 516,122" fill="none" stroke="var(--color-semantic-primary-normal)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-        <polygon points="286,196 352,184 386,240 342,286 278,256" fill="var(--color-semantic-status-cautionary-surface, var(--color-semantic-primary-surface-normal))" stroke="var(--color-semantic-status-cautionary)" strokeWidth="3" strokeDasharray="7 5" />
+        <polygon points="286,196 352,184 386,240 342,286 278,256" fill="var(--color-semantic-status-cautionary-surface, var(--color-semantic-primary-surface-normal))" stroke="var(--color-semantic-status-cautionary-signal)" strokeWidth="3" strokeDasharray="7 5" />
         {[['112','284'], ['180','252'], ['286','274'], ['348','214'], ['430','218'], ['516','122']].map(([cx, cy], index) => (
           <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={index === 3 ? 8 : 5} fill={index === 3 ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-background-elevated-normal)'} stroke="var(--color-semantic-primary-normal)" strokeWidth="3" />
         ))}
