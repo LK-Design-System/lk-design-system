@@ -295,6 +295,8 @@
     "--color-semantic-material-outline-outline",
     "--color-semantic-primary-fill",
     "--color-semantic-primary-heavy",
+    "--color-semantic-primary-ink",
+    "--color-semantic-primary-ink-strong",
     "--color-semantic-primary-normal",
     "--color-semantic-primary-strong",
     "--color-semantic-primary-surface-normal",

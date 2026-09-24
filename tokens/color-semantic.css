@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Semantic color roles — 116 tokens / light and dark (GENERATED — do not hand-edit)
+   LK ROBOTICS — Semantic color roles — 118 tokens / light and dark (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -20,6 +20,8 @@
   --color-semantic-primary-strong: #336CA1;
   --color-semantic-primary-heavy: #2D6090;
   --color-semantic-primary-fill: var(--color-semantic-primary-normal);
+  --color-semantic-primary-ink: var(--color-atomic-blue-45);
+  --color-semantic-primary-ink-strong: var(--color-atomic-blue-40);
   --color-semantic-label-neutral: rgba(46, 47, 51, 0.88);
   --color-semantic-label-alternative: rgba(55, 56, 60, 0.74);
   --color-semantic-label-assistive: rgba(55, 56, 60, 0.28);
@@ -139,6 +141,8 @@
   --color-semantic-primary-strong: #3C80BF;
   --color-semantic-primary-heavy: #3775AF;
   --color-semantic-primary-fill: var(--color-semantic-primary-heavy);
+  --color-semantic-primary-ink: var(--color-semantic-primary-normal);
+  --color-semantic-primary-ink-strong: var(--color-semantic-accent-blue-text);
   --color-semantic-label-neutral: rgba(194, 196, 200, 0.88);
   --color-semantic-label-alternative: rgba(174, 176, 182, 0.74);
   --color-semantic-label-assistive: rgba(174, 176, 182, 0.28);
@@ -259,6 +263,8 @@
     --color-semantic-primary-strong: #3C80BF;
     --color-semantic-primary-heavy: #3775AF;
     --color-semantic-primary-fill: var(--color-semantic-primary-heavy);
+    --color-semantic-primary-ink: var(--color-semantic-primary-normal);
+    --color-semantic-primary-ink-strong: var(--color-semantic-accent-blue-text);
     --color-semantic-label-neutral: rgba(194, 196, 200, 0.88);
     --color-semantic-label-alternative: rgba(174, 176, 182, 0.74);
     --color-semantic-label-assistive: rgba(174, 176, 182, 0.28);

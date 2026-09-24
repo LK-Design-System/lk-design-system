@@ -133,6 +133,13 @@ Color usage rules:
   이 역할은 dark에서 `primary-heavy`(4.85:1)로 내려간다. 버튼·뱃지·칩의 채움 토큰도 이
   역할을 가리킨다. 흰 내용이 없는 채움(Slider·Switch 트랙, 진행 막대)은
   `primary-normal`을 그대로 쓴다.
+- `primary-strong`·`primary-heavy`는 **채움 단계**(hover·pressed 채움, dark의
+  `primary-fill`)다. 두 모드 모두 점점 어두워지므로 dark 바탕 위 글자로 쓰면 강할수록
+  대비가 떨어진다(dark 페이지 기준 normal 5.04 → strong 4.09 → heavy 3.51:1). primary
+  색상의 글자·링크·1px 강조 테두리는 `--color-semantic-primary-ink`(light `blue-45`
+  5.53:1, dark `primary-normal` 5.04:1)를, 틴트 면 위에서 더 도드라져야 하는 라벨은
+  `--color-semantic-primary-ink-strong`(light는 더 어둡게, dark는 더 밝게)을 쓴다.
+  `ink` 계열은 모드와 관계없이 강할수록 대비가 오른다.
 - 행·카드·칩·알람·callout의 앞쪽(leading edge)에 색 띠를 두지 않는다. 2px 이상의
   `border-left`/`border-inline-start`, 두꺼운 왼쪽 테두리, `inset Npx 0 0` 줄무늬가 모두
   해당한다. 상태와 선택은 그 역할을 이미 가진 형제 컴포넌트의 방식으로 전달한다:

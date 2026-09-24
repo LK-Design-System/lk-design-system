@@ -573,6 +573,8 @@
 | `semantic.colorRoles.material-outline-outline` | color | `--color-semantic-material-outline-outline` | `light: #73767E; dark: #8E9199` | — |
 | `semantic.colorRoles.primary-fill` | color | `--color-semantic-primary-fill` | `light: var(--color-semantic-primary-normal); dark: var(--color-semantic-primary-heavy)` | — |
 | `semantic.colorRoles.primary-heavy` | color | `--color-semantic-primary-heavy` | `light: #2D6090; dark: #3775AF` | — |
+| `semantic.colorRoles.primary-ink` | color | `--color-semantic-primary-ink` | `light: var(--color-atomic-blue-45); dark: var(--color-semantic-primary-normal)` | — |
+| `semantic.colorRoles.primary-ink-strong` | color | `--color-semantic-primary-ink-strong` | `light: var(--color-atomic-blue-40); dark: var(--color-semantic-accent-blue-text)` | — |
 | `semantic.colorRoles.primary-normal` | color | `--color-semantic-primary-normal` | `light: #3878B3; dark: #5390C9` | — |
 | `semantic.colorRoles.primary-strong` | color | `--color-semantic-primary-strong` | `light: #336CA1; dark: #3C80BF` | — |
 | `semantic.colorRoles.primary-surface-normal` | color | `--color-semantic-primary-surface-normal` | `light: color-mix(in srgb, var(--color-semantic-primary-normal) 10%, transparent); dark: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent)` | — |
