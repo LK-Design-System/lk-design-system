@@ -85,9 +85,9 @@
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
 - `--color-semantic-primary-normal`
-- `--color-semantic-status-cautionary`
-- `--color-semantic-status-negative`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-cautionary-foreground`
+- `--color-semantic-status-negative-foreground`
+- `--color-semantic-status-positive-foreground`
 - `--dur-base`
 - `--ease-in-out`
 - `--ease-out`

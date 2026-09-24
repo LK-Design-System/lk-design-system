@@ -428,12 +428,13 @@ Compiled source: docs/components/component-content.json
 - `--color-semantic-inverse-label`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-solid-normal`
-- `--color-semantic-primary-normal`
 - `--color-semantic-secondary-normal`
 - `--color-semantic-static-white`
 - `--component-button-disabled-bg`
 - `--component-button-disabled-fg-outlined`
 - `--component-button-disabled-outlined-border`
+- `--component-button-primary-bg`
+- `--component-button-signal-bg`
 - `--component-button-transition`
 - `--shadow-accent`
 - `--shadow-indigo`
@@ -563,10 +564,11 @@ Compiled source: docs/components/component-content.json
 - `--color-semantic-label-normal`
 - `--color-semantic-line-normal-neutral`
 - `--color-semantic-line-solid-normal`
-- `--color-semantic-primary-normal`
 - `--color-semantic-secondary-normal`
 - `--color-semantic-secondary-surface`
 - `--color-semantic-static-white`
+- `--component-button-signal-bg`
+- `--component-button-signal-bg-hover`
 - `--component-button-transition`
 - `--component-icon-button-size-custom`
 - `--component-icon-button-size-md`
@@ -2560,9 +2562,9 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 - `--color-semantic-label-normal`
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-primary-normal`
-- `--color-semantic-status-cautionary`
-- `--color-semantic-status-negative`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-cautionary-foreground`
+- `--color-semantic-status-negative-foreground`
+- `--color-semantic-status-positive-foreground`
 - `--font-sans`
 - `--fw-bold`
 - `--label2-size`
@@ -7742,11 +7744,11 @@ const firstFieldRef = useRef(null);
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-neutral`
 - `--color-semantic-primary-normal`
-- `--color-semantic-status-cautionary`
+- `--color-semantic-status-cautionary-foreground`
 - `--color-semantic-status-cautionary-text`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--color-semantic-status-negative-text`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-positive-foreground`
 - `--color-semantic-status-positive-text`
 - `--dur-base`
 - `--ease-out`
@@ -8266,9 +8268,9 @@ const firstFieldRef = useRef(null);
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
 - `--color-semantic-primary-normal`
-- `--color-semantic-status-cautionary`
-- `--color-semantic-status-negative`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-cautionary-foreground`
+- `--color-semantic-status-negative-foreground`
+- `--color-semantic-status-positive-foreground`
 - `--dur-base`
 - `--ease-in-out`
 - `--ease-out`
@@ -17051,9 +17053,9 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-strong`
 - `--color-semantic-primary-normal`
-- `--color-semantic-status-cautionary`
-- `--color-semantic-status-negative`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-cautionary-foreground`
+- `--color-semantic-status-negative-foreground`
+- `--color-semantic-status-positive-foreground`
 - `--component-toggle-icon-size-sm`
 - `--control-h-md`
 - `--font-sans`
@@ -21724,7 +21726,7 @@ const firstOptionRef = useRef(null);
 - `--color-semantic-label-disable`
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
-- `--color-semantic-status-cautionary`
+- `--color-semantic-status-cautionary-foreground`
 - `--component-input-border-color`
 - `--component-input-border-color-focus`
 - `--component-input-focus-shadow`
@@ -22015,8 +22017,8 @@ API key·token처럼 읽기 전용 값을 잠시 표시하고 복사한 뒤 다�
 | 명시 규칙 1 | 기본 reveal은 10초 뒤 자동으로 닫힙니다. revealed를 외부에서 제어해도 같은 timer가 동작하고 onRevealChange(false)로 닫기를 요청합니다. revealable=false, disabled, 빈 값으로 바뀌면 즉시 masked 상태로 돌아가므로 숨김 기능이 사라진 채 평문이 남지 않습니다. |
 | 명시 규칙 2 | size를 생략하면 내부 Input과 동일하게 bounded compact component scope를 상속합니다. 명시한 size가 우선하고 reveal/copy IconButton은 기존 32px target을 유지합니다. |
 | 명시 규칙 3 | IconButton: 32px plain trailing action과 표준 eye/copy/check/close icon을 사용합니다. copy 성공/실패 icon에만 LDS positive/negative 의미색을 적용하며 별도 action divider, nested card, 고유 shadow나 색상 surface를 추가하지 않습니다. |
-| --color-semantic-status-negative | light: #EE5656; dark: #F16F6F |
-| --color-semantic-status-positive | light: #13BE4C; dark: #3FD270 |
+| --color-semantic-status-positive-foreground | light: var(--color-atomic-green-40); dark: var(--color-semantic-status-positive) |
+| --space-0 | 0px |
 
 ## Content and writing
 
@@ -22063,8 +22065,8 @@ API key·token처럼 읽기 전용 값을 잠시 표시하고 복사한 뒤 다�
 
 ### Tokens
 
-- `--color-semantic-status-negative`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-negative-foreground`
+- `--color-semantic-status-positive-foreground`
 - `--space-0`
 - `--space-1`
 
@@ -23212,12 +23214,12 @@ const [value, setValue] = useState('0.');
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-neutral`
 - `--color-semantic-primary-normal`
-- `--color-semantic-status-cautionary`
+- `--color-semantic-status-cautionary-foreground`
 - `--color-semantic-status-cautionary-text`
 - `--color-semantic-status-info-text`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--color-semantic-status-negative-text`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-positive-foreground`
 - `--color-semantic-status-positive-text`
 - `--font-sans`
 - `--fw-bold`
@@ -23348,9 +23350,9 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 - `--color-semantic-label-disable`
 - `--color-semantic-label-neutral`
 - `--color-semantic-primary-normal`
-- `--color-semantic-status-cautionary`
-- `--color-semantic-status-negative`
-- `--color-semantic-status-positive`
+- `--color-semantic-status-cautionary-foreground`
+- `--color-semantic-status-negative-foreground`
+- `--color-semantic-status-positive-foreground`
 - `--ease-in-out`
 - `--font-sans`
 - `--fw-semibold`
@@ -24482,10 +24484,10 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-normal`
 - `--color-semantic-static-white`
-- `--color-semantic-status-cautionary`
+- `--color-semantic-status-cautionary-foreground`
 - `--color-semantic-status-cautionary-surface`
 - `--color-semantic-status-cautionary-text`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--color-semantic-status-negative-surface`
 - `--color-semantic-status-negative-text`
 - `--component-card-radius`

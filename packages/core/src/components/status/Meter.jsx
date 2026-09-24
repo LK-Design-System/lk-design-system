@@ -2,9 +2,9 @@ import React from 'react';
 import { normalizeBoundedValue } from '../internal/bounded-value.js';
 
 const THRESHOLD_FILL = {
-  negative: 'var(--color-semantic-status-negative)',
-  cautionary: 'var(--color-semantic-status-cautionary)',
-  positive: 'var(--color-semantic-status-positive)',
+  negative: 'var(--color-semantic-status-negative-foreground)',
+  cautionary: 'var(--color-semantic-status-cautionary-foreground)',
+  positive: 'var(--color-semantic-status-positive-foreground)',
 };
 
 const THRESHOLD_TEXT = {

@@ -161,9 +161,9 @@ export function SecretField({
   const copyTone = disabled || !hasValue
     ? undefined
     : copyState === 'success'
-      ? 'var(--color-semantic-status-positive)'
+      ? 'var(--color-semantic-status-positive-foreground)'
       : copyState === 'error'
-        ? 'var(--color-semantic-status-negative)'
+        ? 'var(--color-semantic-status-negative-foreground)'
         : undefined;
   const actions = revealable || copyable ? (
     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-0)' }}>

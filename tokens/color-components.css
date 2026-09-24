@@ -1,10 +1,15 @@
 /* ==========================================================================
-   LK ROBOTICS — Component color contracts — 37 tokens (GENERATED — do not hand-edit)
+   LK ROBOTICS — Component color contracts — 42 tokens (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
    ========================================================================== */
 :root, [data-theme="light"], .theme-light {
+  --component-button-primary-bg: var(--color-semantic-primary-normal);
+  --component-button-primary-bg-hover: var(--component-button-primary-bg);
+  --component-button-signal-bg: var(--color-semantic-primary-normal);
+  --component-button-signal-bg-hover: var(--component-button-signal-bg);
+  --component-toggle-icon-bg-active: var(--component-button-primary-bg);
   --component-card-bg-subtle: var(--color-semantic-background-elevated-alternative);
   --component-status-badge-surface: var(--color-semantic-fill-strong);
   --component-status-badge-foreground: var(--color-semantic-label-normal);
@@ -45,6 +50,11 @@
 }
 
 [data-theme="dark"], .theme-dark {
+  --component-button-primary-bg: var(--color-semantic-primary-heavy);
+  --component-button-primary-bg-hover: var(--component-button-primary-bg);
+  --component-button-signal-bg: var(--color-semantic-primary-heavy);
+  --component-button-signal-bg-hover: var(--component-button-signal-bg);
+  --component-toggle-icon-bg-active: var(--component-button-primary-bg);
   --component-card-bg-subtle: var(--color-semantic-background-elevated-alternative);
   --component-status-badge-surface: var(--color-semantic-fill-strong);
   --component-status-badge-foreground: var(--color-semantic-label-normal);
@@ -86,6 +96,11 @@
 
 @media (prefers-color-scheme: dark) {
   [data-theme="auto"], .theme-auto {
+    --component-button-primary-bg: var(--color-semantic-primary-heavy);
+    --component-button-primary-bg-hover: var(--component-button-primary-bg);
+    --component-button-signal-bg: var(--color-semantic-primary-heavy);
+    --component-button-signal-bg-hover: var(--component-button-signal-bg);
+    --component-toggle-icon-bg-active: var(--component-button-primary-bg);
     --component-card-bg-subtle: var(--color-semantic-background-elevated-alternative);
     --component-status-badge-surface: var(--color-semantic-fill-strong);
     --component-status-badge-foreground: var(--color-semantic-label-normal);

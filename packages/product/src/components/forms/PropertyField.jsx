@@ -126,7 +126,7 @@ export function PropertyField({
               title={dirtyLabel}
               style={{
                 marginLeft: 4,
-                color: 'var(--color-semantic-status-cautionary)',
+                color: 'var(--color-semantic-status-cautionary-foreground)',
               }}
             >
               •
@@ -209,7 +209,7 @@ export function PropertyField({
                 focused
                   ? 'var(--component-input-border-color-focus)'
                   : dirty
-                  ? 'var(--color-semantic-status-cautionary)'
+                  ? 'var(--color-semantic-status-cautionary-foreground)'
                   : 'var(--component-input-border-color)'
               }`,
               borderRadius: 'var(--radius-md)',

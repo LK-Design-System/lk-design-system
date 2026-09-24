@@ -13,13 +13,13 @@ const STATUS_PRESENTATION = {
   },
   maintenance: {
     tone: 'cautionary',
-    accent: 'var(--color-semantic-status-cautionary)',
+    accent: 'var(--color-semantic-status-cautionary-foreground)',
     currentSurface: 'var(--color-semantic-status-cautionary-surface)',
     currentText: 'var(--color-semantic-status-cautionary-text)',
   },
   fault: {
     tone: 'negative',
-    accent: 'var(--color-semantic-status-negative)',
+    accent: 'var(--color-semantic-status-negative-foreground)',
     currentSurface: 'var(--color-semantic-status-negative-surface)',
     currentText: 'var(--color-semantic-status-negative-text)',
   },

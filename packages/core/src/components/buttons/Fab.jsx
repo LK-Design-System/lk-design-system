@@ -56,9 +56,9 @@ export function Fab({
   // FAB diameters are intentionally larger than the Button height scale (32/40/48).
   const d = size === 'sm' ? 48 : size === 'lg' ? 64 : 56;
   const palettes = {
-    signal: { bg: 'var(--color-semantic-primary-normal)', fg: 'var(--color-semantic-static-white)', sh: 'var(--shadow-accent)' },
+    signal: { bg: 'var(--component-button-signal-bg)', fg: 'var(--color-semantic-static-white)', sh: 'var(--shadow-accent)' },
     dark: { bg: 'var(--color-semantic-inverse-background)', fg: 'var(--color-semantic-inverse-label)', sh: 'var(--shadow-md)' },
-    primary: { bg: 'var(--color-semantic-primary-normal)', fg: 'var(--color-semantic-static-white)', sh: 'var(--shadow-accent)' },
+    primary: { bg: 'var(--component-button-primary-bg)', fg: 'var(--color-semantic-static-white)', sh: 'var(--shadow-accent)' },
     secondary: { bg: 'var(--color-semantic-secondary-normal)', fg: 'var(--color-semantic-static-white)', sh: 'var(--shadow-indigo)' },
     white: { bg: 'var(--color-semantic-background-elevated-normal)', fg: 'var(--color-semantic-label-normal)', sh: 'var(--shadow-md)' },
   };

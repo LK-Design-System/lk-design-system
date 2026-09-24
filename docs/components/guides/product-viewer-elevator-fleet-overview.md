@@ -132,10 +132,10 @@
 - `--color-semantic-primary-normal`
 - `--color-semantic-primary-surface-normal`
 - `--color-semantic-static-white`
-- `--color-semantic-status-cautionary`
+- `--color-semantic-status-cautionary-foreground`
 - `--color-semantic-status-cautionary-surface`
 - `--color-semantic-status-cautionary-text`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-foreground`
 - `--color-semantic-status-negative-surface`
 - `--color-semantic-status-negative-text`
 - `--component-card-radius`

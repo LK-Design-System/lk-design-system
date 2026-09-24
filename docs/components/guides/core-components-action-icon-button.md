@@ -106,10 +106,11 @@
 - `--color-semantic-label-normal`
 - `--color-semantic-line-normal-neutral`
 - `--color-semantic-line-solid-normal`
-- `--color-semantic-primary-normal`
 - `--color-semantic-secondary-normal`
 - `--color-semantic-secondary-surface`
 - `--color-semantic-static-white`
+- `--component-button-signal-bg`
+- `--component-button-signal-bg-hover`
 - `--component-button-transition`
 - `--component-icon-button-size-custom`
 - `--component-icon-button-size-md`

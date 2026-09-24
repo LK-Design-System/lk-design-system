@@ -60,8 +60,6 @@
   --component-icon-button-size-sm: 32px;
   --component-icon-button-size-md: 40px;
 
-  --component-button-primary-bg: var(--color-semantic-primary-normal);
-  --component-button-primary-bg-hover: var(--component-button-primary-bg);
   --component-button-primary-fg: var(--color-semantic-static-white);
   --component-button-primary-shadow-hover: var(--component-button-shadow-rest);
 
@@ -75,8 +73,6 @@
   --component-button-secondary-fg: var(--color-semantic-static-white);
   --component-button-secondary-shadow-hover: var(--component-button-shadow-rest);
 
-  --component-button-signal-bg: var(--color-semantic-primary-normal);
-  --component-button-signal-bg-hover: var(--component-button-signal-bg);
   --component-button-signal-fg: var(--color-semantic-static-white);
   --component-button-signal-shadow-hover: var(--component-button-shadow-rest);
 
@@ -115,7 +111,6 @@
   --component-toggle-icon-radius: var(--radius-md);
   --component-toggle-icon-bg: var(--color-semantic-background-elevated-normal);
   --component-toggle-icon-bg-hover: var(--color-semantic-fill-alternative);
-  --component-toggle-icon-bg-active: var(--component-button-primary-bg);
   --component-toggle-icon-fg: var(--color-semantic-label-normal);
   --component-toggle-icon-fg-active: var(--component-button-primary-fg);
   --component-toggle-icon-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);

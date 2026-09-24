@@ -12,9 +12,9 @@ function useKeyframes(id, css) {
 
 const TONES = {
   signal: 'var(--color-semantic-primary-normal)',
-  positive: 'var(--color-semantic-status-positive)',
-  cautionary: 'var(--color-semantic-status-cautionary)',
-  negative: 'var(--color-semantic-status-negative)',
+  positive: 'var(--color-semantic-status-positive-foreground)',
+  cautionary: 'var(--color-semantic-status-cautionary-foreground)',
+  negative: 'var(--color-semantic-status-negative-foreground)',
 };
 
 /**

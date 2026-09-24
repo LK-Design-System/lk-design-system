@@ -56,7 +56,7 @@ export function FieldLabel({ htmlFor, id, label, required = false, disabled = fa
       },
     },
     label,
-    required && React.createElement('span', { style: { color: 'var(--color-semantic-status-negative)' } }, ' *'),
+    required && React.createElement('span', { style: { color: 'var(--color-semantic-status-negative-foreground)' } }, ' *'),
   );
 }
 
@@ -124,7 +124,7 @@ export function FieldStatusIcon({ invalid = false, status = 'normal', size = 16 
   return React.createElement(Icon, {
     name: negative ? 'circle-close-fill' : 'circle-check-fill',
     size,
-    color: negative ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-status-positive)',
+    color: negative ? 'var(--color-semantic-status-negative-foreground)' : 'var(--color-semantic-status-positive-foreground)',
     'aria-hidden': 'true',
     style: { flex: '0 0 auto' },
   });
@@ -133,7 +133,7 @@ export function FieldStatusIcon({ invalid = false, status = 'normal', size = 16 
 export function fieldBorderColor({ disabled = false, readOnly = false, invalid = false, status = 'normal', focused = false, hovered = false }) {
   if (disabled) return 'var(--color-semantic-line-normal-neutral)';
   if (invalid || status === 'negative') return 'var(--component-input-border-color-invalid)';
-  if (status === 'positive') return 'var(--color-semantic-status-positive)';
+  if (status === 'positive') return 'var(--color-semantic-status-positive-foreground)';
   if (focused) return 'var(--component-input-border-color-focus)';
   if (hovered && !readOnly) return 'var(--color-semantic-line-solid-normal)';
   return 'var(--component-input-border-color)';

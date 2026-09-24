@@ -90,7 +90,7 @@
 - `--color-semantic-label-disable`
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
-- `--color-semantic-status-cautionary`
+- `--color-semantic-status-cautionary-foreground`
 - `--component-input-border-color`
 - `--component-input-border-color-focus`
 - `--component-input-focus-shadow`

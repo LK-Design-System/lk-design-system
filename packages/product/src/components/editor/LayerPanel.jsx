@@ -6,9 +6,9 @@ import { normalizeStatusTone } from '@lk-design-system/lds-core/component-author
 const LAYER_TONE = {
   offline: 'var(--color-semantic-label-neutral)',
   signal: 'var(--color-semantic-primary-normal)',
-  positive: 'var(--color-semantic-status-positive)',
-  cautionary: 'var(--color-semantic-status-cautionary)',
-  negative: 'var(--color-semantic-status-negative)',
+  positive: 'var(--color-semantic-status-positive-foreground)',
+  cautionary: 'var(--color-semantic-status-cautionary-foreground)',
+  negative: 'var(--color-semantic-status-negative-foreground)',
 };
 
 function collectLayerIds(layers, predicate, ids = []) {

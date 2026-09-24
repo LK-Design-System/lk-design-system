@@ -3,21 +3,21 @@ import React from 'react';
 const CONNECTION_CFG = {
   unknown: { c: 'var(--color-semantic-label-disable)', bars: 0, label: '연결 상태 알 수 없음' },
   connecting: { c: 'var(--color-semantic-primary-normal)', bars: 1, label: '연결 중' },
-  connected: { c: 'var(--color-semantic-status-positive)', bars: 3, label: '연결됨' },
-  degraded: { c: 'var(--color-semantic-status-cautionary)', bars: 1, label: '연결 품질 저하' },
-  reconnecting: { c: 'var(--color-semantic-status-cautionary)', bars: 2, label: '재연결 중' },
+  connected: { c: 'var(--color-semantic-status-positive-foreground)', bars: 3, label: '연결됨' },
+  degraded: { c: 'var(--color-semantic-status-cautionary-foreground)', bars: 1, label: '연결 품질 저하' },
+  reconnecting: { c: 'var(--color-semantic-status-cautionary-foreground)', bars: 2, label: '재연결 중' },
   disconnected: { c: 'var(--color-semantic-label-disable)', bars: 0, label: '연결 끊김' },
-  failed: { c: 'var(--color-semantic-status-negative)', bars: 0, label: '연결 실패' },
+  failed: { c: 'var(--color-semantic-status-negative-foreground)', bars: 0, label: '연결 실패' },
 };
 
 const LEGACY_CFG = {
   connecting: { c: 'var(--color-semantic-primary-normal)', bars: 1, label: '연결 중' },
   ready: { c: 'var(--color-semantic-primary-normal)', bars: 3, label: '연결 준비됨' },
-  online: { c: 'var(--color-semantic-status-positive)', bars: 3, label: '온라인' },
-  reconnecting: { c: 'var(--color-semantic-status-cautionary)', bars: 2, label: '재연결 중' },
-  weak: { c: 'var(--color-semantic-status-cautionary)', bars: 1, label: '신호 약함' },
-  stale: { c: 'var(--color-semantic-status-cautionary)', bars: 1, label: '데이터 지연' },
-  error: { c: 'var(--color-semantic-status-negative)', bars: 0, label: '연결 오류' },
+  online: { c: 'var(--color-semantic-status-positive-foreground)', bars: 3, label: '온라인' },
+  reconnecting: { c: 'var(--color-semantic-status-cautionary-foreground)', bars: 2, label: '재연결 중' },
+  weak: { c: 'var(--color-semantic-status-cautionary-foreground)', bars: 1, label: '신호 약함' },
+  stale: { c: 'var(--color-semantic-status-cautionary-foreground)', bars: 1, label: '데이터 지연' },
+  error: { c: 'var(--color-semantic-status-negative-foreground)', bars: 0, label: '연결 오류' },
   offline: { c: 'var(--color-semantic-label-disable)', bars: 0, label: '오프라인' },
 };
 

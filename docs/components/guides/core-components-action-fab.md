@@ -77,12 +77,13 @@
 - `--color-semantic-inverse-label`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-solid-normal`
-- `--color-semantic-primary-normal`
 - `--color-semantic-secondary-normal`
 - `--color-semantic-static-white`
 - `--component-button-disabled-bg`
 - `--component-button-disabled-fg-outlined`
 - `--component-button-disabled-outlined-border`
+- `--component-button-primary-bg`
+- `--component-button-signal-bg`
 - `--component-button-transition`
 - `--shadow-accent`
 - `--shadow-indigo`

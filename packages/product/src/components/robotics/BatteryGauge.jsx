@@ -11,15 +11,15 @@ const TONE_STYLE = {
     text: 'var(--color-semantic-status-info-text)',
   },
   positive: {
-    fill: 'var(--color-semantic-status-positive)',
+    fill: 'var(--color-semantic-status-positive-foreground)',
     text: 'var(--color-semantic-status-positive-text)',
   },
   cautionary: {
-    fill: 'var(--color-semantic-status-cautionary)',
+    fill: 'var(--color-semantic-status-cautionary-foreground)',
     text: 'var(--color-semantic-status-cautionary-text)',
   },
   negative: {
-    fill: 'var(--color-semantic-status-negative)',
+    fill: 'var(--color-semantic-status-negative-foreground)',
     text: 'var(--color-semantic-status-negative-text)',
   },
 };
