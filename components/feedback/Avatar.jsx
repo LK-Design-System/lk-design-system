@@ -364,7 +364,7 @@ export function Avatar({
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "var(--color-semantic-primary-normal)",
+            background: "var(--color-semantic-primary-fill)",
             color: "var(--color-semantic-static-white)",
             fontSize: Math.max(9, Math.round(resolvedSize * 0.2)),
             fontWeight: "var(--fw-bold)",

@@ -5,14 +5,14 @@
    Regenerate: node scripts/generate-lk-color-system.mjs
    ========================================================================== */
 :root, [data-theme="light"], .theme-light {
-  --component-button-primary-bg: var(--color-semantic-primary-normal);
+  --component-button-primary-bg: var(--color-semantic-primary-fill);
   --component-button-primary-bg-hover: var(--component-button-primary-bg);
   --component-button-primary-fg: var(--color-semantic-static-white);
   --component-button-danger-bg: var(--color-atomic-red-30);
   --component-button-danger-bg-hover: var(--color-atomic-red-20);
   --component-button-danger-fg: var(--color-semantic-static-white);
   --component-button-secondary-bg: var(--color-semantic-secondary-normal);
-  --component-button-signal-bg: var(--color-semantic-primary-normal);
+  --component-button-signal-bg: var(--color-semantic-primary-fill);
   --component-button-signal-bg-hover: var(--component-button-signal-bg);
   --component-button-disabled-bg: var(--color-semantic-fill-normal);
   --component-button-disabled-fg: var(--color-semantic-label-assistive);
@@ -49,7 +49,7 @@
   --component-chip-fg-active: var(--color-semantic-label-normal);
   --component-chip-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
   --component-chip-border-active: var(--border-thin) solid var(--color-semantic-primary-normal);
-  --component-chip-solid-bg: var(--color-semantic-primary-normal);
+  --component-chip-solid-bg: var(--color-semantic-primary-fill);
   --component-chip-solid-fg: var(--color-semantic-static-white);
   --component-chip-solid-border: var(--border-thin) solid transparent;
   --component-divider-color: var(--color-semantic-line-normal-normal);
@@ -70,7 +70,7 @@
   --component-input-icon-color: var(--color-semantic-label-alternative);
   --component-input-text-color: var(--color-semantic-label-normal);
   --component-input-label-color: var(--color-semantic-label-normal);
-  --component-input-required-color: var(--color-semantic-status-negative);
+  --component-input-required-color: var(--color-semantic-status-negative-text);
   --component-card-bg: var(--color-semantic-background-elevated-normal);
   --component-card-bg-subtle: var(--color-semantic-background-elevated-alternative);
   --component-card-bg-dark: var(--color-semantic-inverse-background);
@@ -85,7 +85,7 @@
   --component-status-badge-offline-indicator: var(--color-semantic-interaction-inactive);
   --component-status-badge-signal-indicator: var(--color-semantic-primary-normal);
   --component-status-badge-critical-indicator: var(--color-semantic-status-negative-foreground);
-  --component-badge-signal-bg: var(--color-semantic-primary-normal);
+  --component-badge-signal-bg: var(--color-semantic-primary-fill);
   --component-badge-signal-fg: var(--color-semantic-static-white);
   --component-badge-navy-bg: var(--color-semantic-brand-surface);
   --component-badge-navy-fg: var(--color-semantic-brand-on-surface);
@@ -138,14 +138,14 @@
 }
 
 [data-theme="dark"], .theme-dark {
-  --component-button-primary-bg: var(--color-semantic-primary-heavy);
+  --component-button-primary-bg: var(--color-semantic-primary-fill);
   --component-button-primary-bg-hover: var(--component-button-primary-bg);
   --component-button-primary-fg: var(--color-semantic-static-white);
   --component-button-danger-bg: var(--color-atomic-red-30);
   --component-button-danger-bg-hover: var(--color-atomic-red-20);
   --component-button-danger-fg: var(--color-semantic-static-white);
   --component-button-secondary-bg: var(--color-semantic-secondary-normal);
-  --component-button-signal-bg: var(--color-semantic-primary-heavy);
+  --component-button-signal-bg: var(--color-semantic-primary-fill);
   --component-button-signal-bg-hover: var(--component-button-signal-bg);
   --component-button-disabled-bg: var(--color-semantic-fill-normal);
   --component-button-disabled-fg: var(--color-semantic-label-assistive);
@@ -182,7 +182,7 @@
   --component-chip-fg-active: var(--color-semantic-label-normal);
   --component-chip-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
   --component-chip-border-active: var(--border-thin) solid var(--color-semantic-primary-normal);
-  --component-chip-solid-bg: var(--color-semantic-primary-normal);
+  --component-chip-solid-bg: var(--color-semantic-primary-fill);
   --component-chip-solid-fg: var(--color-semantic-static-white);
   --component-chip-solid-border: var(--border-thin) solid transparent;
   --component-divider-color: var(--color-semantic-line-normal-normal);
@@ -203,7 +203,7 @@
   --component-input-icon-color: var(--color-semantic-label-alternative);
   --component-input-text-color: var(--color-semantic-label-normal);
   --component-input-label-color: var(--color-semantic-label-normal);
-  --component-input-required-color: var(--color-semantic-status-negative);
+  --component-input-required-color: var(--color-semantic-status-negative-text);
   --component-card-bg: var(--color-semantic-background-elevated-normal);
   --component-card-bg-subtle: var(--color-semantic-background-elevated-alternative);
   --component-card-bg-dark: var(--color-semantic-inverse-background);
@@ -218,7 +218,7 @@
   --component-status-badge-offline-indicator: var(--color-semantic-interaction-inactive);
   --component-status-badge-signal-indicator: var(--color-semantic-primary-normal);
   --component-status-badge-critical-indicator: var(--color-semantic-status-negative-foreground);
-  --component-badge-signal-bg: var(--color-semantic-primary-heavy);
+  --component-badge-signal-bg: var(--color-semantic-primary-fill);
   --component-badge-signal-fg: var(--color-semantic-static-white);
   --component-badge-navy-bg: var(--color-semantic-brand-surface);
   --component-badge-navy-fg: var(--color-semantic-brand-on-surface);
@@ -272,14 +272,14 @@
 
 @media (prefers-color-scheme: dark) {
   [data-theme="auto"], .theme-auto {
-    --component-button-primary-bg: var(--color-semantic-primary-heavy);
+    --component-button-primary-bg: var(--color-semantic-primary-fill);
     --component-button-primary-bg-hover: var(--component-button-primary-bg);
     --component-button-primary-fg: var(--color-semantic-static-white);
     --component-button-danger-bg: var(--color-atomic-red-30);
     --component-button-danger-bg-hover: var(--color-atomic-red-20);
     --component-button-danger-fg: var(--color-semantic-static-white);
     --component-button-secondary-bg: var(--color-semantic-secondary-normal);
-    --component-button-signal-bg: var(--color-semantic-primary-heavy);
+    --component-button-signal-bg: var(--color-semantic-primary-fill);
     --component-button-signal-bg-hover: var(--component-button-signal-bg);
     --component-button-disabled-bg: var(--color-semantic-fill-normal);
     --component-button-disabled-fg: var(--color-semantic-label-assistive);
@@ -316,7 +316,7 @@
     --component-chip-fg-active: var(--color-semantic-label-normal);
     --component-chip-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
     --component-chip-border-active: var(--border-thin) solid var(--color-semantic-primary-normal);
-    --component-chip-solid-bg: var(--color-semantic-primary-normal);
+    --component-chip-solid-bg: var(--color-semantic-primary-fill);
     --component-chip-solid-fg: var(--color-semantic-static-white);
     --component-chip-solid-border: var(--border-thin) solid transparent;
     --component-divider-color: var(--color-semantic-line-normal-normal);
@@ -337,7 +337,7 @@
     --component-input-icon-color: var(--color-semantic-label-alternative);
     --component-input-text-color: var(--color-semantic-label-normal);
     --component-input-label-color: var(--color-semantic-label-normal);
-    --component-input-required-color: var(--color-semantic-status-negative);
+    --component-input-required-color: var(--color-semantic-status-negative-text);
     --component-card-bg: var(--color-semantic-background-elevated-normal);
     --component-card-bg-subtle: var(--color-semantic-background-elevated-alternative);
     --component-card-bg-dark: var(--color-semantic-inverse-background);
@@ -352,7 +352,7 @@
     --component-status-badge-offline-indicator: var(--color-semantic-interaction-inactive);
     --component-status-badge-signal-indicator: var(--color-semantic-primary-normal);
     --component-status-badge-critical-indicator: var(--color-semantic-status-negative-foreground);
-    --component-badge-signal-bg: var(--color-semantic-primary-heavy);
+    --component-badge-signal-bg: var(--color-semantic-primary-fill);
     --component-badge-signal-fg: var(--color-semantic-static-white);
     --component-badge-navy-bg: var(--color-semantic-brand-surface);
     --component-badge-navy-fg: var(--color-semantic-brand-on-surface);

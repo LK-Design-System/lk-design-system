@@ -444,7 +444,7 @@ export function MessageFeed({
                   alignItems: 'center',
                   justifyContent: 'center',
                   boxSizing: 'border-box',
-                  background: 'var(--color-semantic-primary-normal)',
+                  background: 'var(--color-semantic-primary-fill)',
                   color: 'var(--color-semantic-static-white)',
                   border: 'var(--border-thin) solid var(--color-semantic-background-normal-normal)',
                   borderRadius: 'var(--radius-pill)',

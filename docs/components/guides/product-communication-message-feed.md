@@ -159,7 +159,7 @@
 - `--color-semantic-background-normal-normal`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-normal`
-- `--color-semantic-primary-normal`
+- `--color-semantic-primary-fill`
 - `--color-semantic-static-white`
 - `--font-sans`
 - `--fw-bold`

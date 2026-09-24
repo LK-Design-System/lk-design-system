@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Semantic color roles — 112 tokens / light and dark (GENERATED — do not hand-edit)
+   LK ROBOTICS — Semantic color roles — 113 tokens / light and dark (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -19,6 +19,7 @@
   --color-semantic-inverse-label: #FFFFFF;
   --color-semantic-primary-strong: #336CA1;
   --color-semantic-primary-heavy: #2D6090;
+  --color-semantic-primary-fill: var(--color-semantic-primary-normal);
   --color-semantic-label-neutral: rgba(46, 47, 51, 0.88);
   --color-semantic-label-alternative: rgba(55, 56, 60, 0.74);
   --color-semantic-label-assistive: rgba(55, 56, 60, 0.28);
@@ -115,7 +116,7 @@
   --color-semantic-data-viz-series-4: var(--color-semantic-accent-foreground-green);
   --color-semantic-data-viz-series-5: var(--color-semantic-accent-foreground-orange);
   --color-semantic-data-viz-series-6: var(--color-semantic-accent-foreground-purple);
-  --color-semantic-data-viz-series-7: var(--color-semantic-accent-foreground-light-blue);
+  --color-semantic-data-viz-series-7: var(--color-atomic-light-blue-30);
   --color-semantic-data-viz-series-8: var(--color-semantic-label-alternative);
 }
 
@@ -134,6 +135,7 @@
   --color-semantic-inverse-label: #171719;
   --color-semantic-primary-strong: #3C80BF;
   --color-semantic-primary-heavy: #3775AF;
+  --color-semantic-primary-fill: var(--color-semantic-primary-heavy);
   --color-semantic-label-neutral: rgba(194, 196, 200, 0.88);
   --color-semantic-label-alternative: rgba(174, 176, 182, 0.74);
   --color-semantic-label-assistive: rgba(174, 176, 182, 0.28);
@@ -230,7 +232,7 @@
   --color-semantic-data-viz-series-4: var(--color-semantic-accent-foreground-green);
   --color-semantic-data-viz-series-5: var(--color-semantic-accent-foreground-orange);
   --color-semantic-data-viz-series-6: var(--color-semantic-accent-foreground-purple);
-  --color-semantic-data-viz-series-7: var(--color-semantic-accent-foreground-light-blue);
+  --color-semantic-data-viz-series-7: var(--color-atomic-light-blue-70);
   --color-semantic-data-viz-series-8: var(--color-semantic-label-alternative);
 }
 
@@ -250,6 +252,7 @@
     --color-semantic-inverse-label: #171719;
     --color-semantic-primary-strong: #3C80BF;
     --color-semantic-primary-heavy: #3775AF;
+    --color-semantic-primary-fill: var(--color-semantic-primary-heavy);
     --color-semantic-label-neutral: rgba(194, 196, 200, 0.88);
     --color-semantic-label-alternative: rgba(174, 176, 182, 0.74);
     --color-semantic-label-assistive: rgba(174, 176, 182, 0.28);
@@ -346,7 +349,7 @@
     --color-semantic-data-viz-series-4: var(--color-semantic-accent-foreground-green);
     --color-semantic-data-viz-series-5: var(--color-semantic-accent-foreground-orange);
     --color-semantic-data-viz-series-6: var(--color-semantic-accent-foreground-purple);
-    --color-semantic-data-viz-series-7: var(--color-semantic-accent-foreground-light-blue);
+    --color-semantic-data-viz-series-7: var(--color-atomic-light-blue-70);
     --color-semantic-data-viz-series-8: var(--color-semantic-label-alternative);
   }
 }

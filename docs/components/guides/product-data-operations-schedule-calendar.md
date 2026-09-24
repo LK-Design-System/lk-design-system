@@ -140,6 +140,7 @@
 - `--color-semantic-label-strong`
 - `--color-semantic-line-normal-normal`
 - `--color-semantic-line-solid-normal`
+- `--color-semantic-primary-fill`
 - `--color-semantic-primary-normal`
 - `--color-semantic-static-white`
 - `--color-semantic-status-negative-text`

@@ -1056,6 +1056,7 @@ Compiled source: docs/components/component-content.json
 - `--color-semantic-label-normal`
 - `--color-semantic-line-normal-normal`
 - `--color-semantic-line-solid-normal`
+- `--color-semantic-primary-fill`
 - `--color-semantic-primary-normal`
 - `--color-semantic-secondary-surface`
 - `--color-semantic-static-white`
@@ -9289,9 +9290,9 @@ ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드�
 - `--color-semantic-inverse-label`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-normal-normal`
-- `--color-semantic-primary-normal`
 - `--color-semantic-static-white`
 - `--color-semantic-status-negative`
+- `--component-button-primary-bg`
 - `--component-button-primary-fg`
 - `--dur-fast`
 - `--ease-out`
@@ -10095,7 +10096,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--color-semantic-background-normal-normal`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-normal`
-- `--color-semantic-primary-normal`
+- `--color-semantic-primary-fill`
 - `--color-semantic-static-white`
 - `--font-sans`
 - `--fw-bold`
@@ -14993,6 +14994,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - `--color-semantic-label-strong`
 - `--color-semantic-line-normal-normal`
 - `--color-semantic-line-solid-normal`
+- `--color-semantic-primary-fill`
 - `--color-semantic-primary-normal`
 - `--color-semantic-static-white`
 - `--color-semantic-status-negative-text`
@@ -24604,7 +24606,7 @@ MQTT·WebSocket처럼 제품이 의존하는 transport의 연결 사실과 품�
 - `--color-semantic-fill-normal`
 - `--color-semantic-label-neutral`
 - `--color-semantic-line-normal-normal`
-- `--color-semantic-primary-normal`
+- `--color-semantic-primary-fill`
 - `--color-semantic-static-white`
 - `--component-viewer-border`
 - `--component-viewer-muted`

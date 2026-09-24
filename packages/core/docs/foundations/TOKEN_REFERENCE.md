@@ -24,7 +24,7 @@
 | `component.badge.tokens.negativeFg` | color | `--component-badge-negative-fg` | `var(--color-semantic-status-negative-text)` | — |
 | `component.badge.tokens.positiveBg` | color | `--component-badge-positive-bg` | `var(--color-semantic-status-positive-surface)` | — |
 | `component.badge.tokens.positiveFg` | color | `--component-badge-positive-fg` | `var(--color-semantic-status-positive-text)` | — |
-| `component.badge.tokens.signalBg` | color | `--component-badge-signal-bg` | `var(--color-semantic-primary-normal)` | — |
+| `component.badge.tokens.signalBg` | color | `--component-badge-signal-bg` | `var(--color-semantic-primary-fill)` | — |
 | `component.badge.tokens.signalFg` | color | `--component-badge-signal-fg` | `var(--color-semantic-static-white)` | — |
 | `component.badge.tokens.steelBg` | color | `--component-badge-steel-bg` | `var(--color-semantic-primary-surface-strong)` | — |
 | `component.badge.tokens.steelFg` | color | `--component-badge-steel-fg` | `var(--color-semantic-accent-blue-text)` | — |
@@ -53,14 +53,14 @@
 | `component.button.tokens.onDarkBgHover` | color | `--component-button-on-dark-bg-hover` | `color-mix(in srgb, var(--color-semantic-static-white) 16%, transparent)` | — |
 | `component.button.tokens.onDarkBorder` | border | `--component-button-on-dark-border` | `var(--border-thin) solid color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent)` | — |
 | `component.button.tokens.onDarkFg` | color | `--component-button-on-dark-fg` | `var(--color-semantic-static-white)` | — |
-| `component.button.tokens.primaryBg` | color | `--component-button-primary-bg` | `var(--color-semantic-primary-normal)` | — |
+| `component.button.tokens.primaryBg` | color | `--component-button-primary-bg` | `var(--color-semantic-primary-fill)` | — |
 | `component.button.tokens.primaryBgHover` | color | `--component-button-primary-bg-hover` | `var(--component-button-primary-bg)` | — |
 | `component.button.tokens.primaryFg` | color | `--component-button-primary-fg` | `var(--color-semantic-static-white)` | — |
 | `component.button.tokens.radius` | dimension | `--component-button-radius` | `var(--component-button-radius)` | — |
 | `component.button.tokens.secondaryBg` | color | `--component-button-secondary-bg` | `var(--color-semantic-secondary-normal)` | — |
 | `component.button.tokens.secondaryBgHover` | color | `--component-button-secondary-bg-hover` | `var(--component-button-secondary-bg)` | — |
 | `component.button.tokens.secondaryFg` | color | `--component-button-secondary-fg` | `var(--color-semantic-static-white)` | — |
-| `component.button.tokens.signalBg` | color | `--component-button-signal-bg` | `var(--color-semantic-primary-normal)` | — |
+| `component.button.tokens.signalBg` | color | `--component-button-signal-bg` | `var(--color-semantic-primary-fill)` | — |
 | `component.button.tokens.signalBgHover` | color | `--component-button-signal-bg-hover` | `var(--component-button-signal-bg)` | — |
 | `component.button.tokens.signalFg` | color | `--component-button-signal-fg` | `var(--color-semantic-static-white)` | — |
 | `component.button.tokens.textHoverOpacity` | number | `--component-button-text-hover-opacity` | `0.9` | — |
@@ -104,7 +104,7 @@
 | `component.chip.tokens.paddingXXs` | dimension | `--component-chip-padding-x-xs` | `var(--component-chip-padding-x-xs)` | — |
 | `component.chip.tokens.radius` | dimension | `--component-chip-radius` | `var(--component-chip-radius)` | — |
 | `component.chip.tokens.selectedBackground` | color | `--component-chip-bg-selected` | `var(--color-semantic-primary-surface-strong)` | — |
-| `component.chip.tokens.solidBackground` | color | `--component-chip-solid-bg` | `var(--color-semantic-primary-normal)` | — |
+| `component.chip.tokens.solidBackground` | color | `--component-chip-solid-bg` | `var(--color-semantic-primary-fill)` | — |
 | `component.chip.tokens.solidBorder` | border | `--component-chip-solid-border` | `var(--border-thin) solid transparent` | — |
 | `component.chip.tokens.solidForeground` | color | `--component-chip-solid-fg` | `var(--color-semantic-static-white)` | — |
 | `component.confirmDialog.tokens.maxWidth` | dimension | `--component-confirm-dialog-max-width` | `var(--component-confirm-dialog-max-width)` | — |
@@ -150,7 +150,7 @@
 | `component.input.tokens.labelColor` | color | `--component-input-label-color` | `var(--color-semantic-label-normal)` | — |
 | `component.input.tokens.labelTypography` | typography | `--component-input-label-font-size, --component-input-label-line-height, --component-input-label-letter-spacing` | `label1` | — |
 | `component.input.tokens.paddingX` | dimension | `--component-input-padding-x` | `var(--component-input-padding-x)` | — |
-| `component.input.tokens.requiredColor` | color | `--component-input-required-color` | `var(--color-semantic-status-negative)` | — |
+| `component.input.tokens.requiredColor` | color | `--component-input-required-color` | `var(--color-semantic-status-negative-text)` | — |
 | `component.input.tokens.textColor` | color | `--component-input-text-color` | `var(--color-semantic-label-normal)` | — |
 | `component.listCell.tokens.paddingYLg` | dimension | `--component-list-cell-padding-y-lg` | `var(--component-list-cell-padding-y-lg)` | — |
 | `component.listCell.tokens.paddingYMd` | dimension | `--component-list-cell-padding-y-md` | `var(--component-list-cell-padding-y-md)` | — |
@@ -574,7 +574,7 @@
 | `semantic.colorRoles.data-viz-series-4` | color | `--color-semantic-data-viz-series-4` | `light: var(--color-semantic-accent-foreground-green); dark: var(--color-semantic-accent-foreground-green)` | — |
 | `semantic.colorRoles.data-viz-series-5` | color | `--color-semantic-data-viz-series-5` | `light: var(--color-semantic-accent-foreground-orange); dark: var(--color-semantic-accent-foreground-orange)` | — |
 | `semantic.colorRoles.data-viz-series-6` | color | `--color-semantic-data-viz-series-6` | `light: var(--color-semantic-accent-foreground-purple); dark: var(--color-semantic-accent-foreground-purple)` | — |
-| `semantic.colorRoles.data-viz-series-7` | color | `--color-semantic-data-viz-series-7` | `light: var(--color-semantic-accent-foreground-light-blue); dark: var(--color-semantic-accent-foreground-light-blue)` | — |
+| `semantic.colorRoles.data-viz-series-7` | color | `--color-semantic-data-viz-series-7` | `light: var(--color-atomic-light-blue-30); dark: var(--color-atomic-light-blue-70)` | — |
 | `semantic.colorRoles.data-viz-series-8` | color | `--color-semantic-data-viz-series-8` | `light: var(--color-semantic-label-alternative); dark: var(--color-semantic-label-alternative)` | — |
 | `semantic.colorRoles.fill-alternative` | color | `--color-semantic-fill-alternative` | `light: rgba(112, 115, 124, 0.05); dark: rgba(112, 115, 124, 0.12)` | — |
 | `semantic.colorRoles.fill-normal` | color | `--color-semantic-fill-normal` | `light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)` | — |
@@ -614,6 +614,7 @@
 | `semantic.colorRoles.material-background-onbackground` | color | `--color-semantic-material-background-onbackground` | `light: #1A1B1E; dark: #E2E3E6` | — |
 | `semantic.colorRoles.material-dimmer` | color | `--color-semantic-material-dimmer` | `light: rgba(23, 23, 25, 0.52); dark: rgba(23, 23, 25, 0.74)` | — |
 | `semantic.colorRoles.material-outline-outline` | color | `--color-semantic-material-outline-outline` | `light: #73767E; dark: #8E9199` | — |
+| `semantic.colorRoles.primary-fill` | color | `--color-semantic-primary-fill` | `light: var(--color-semantic-primary-normal); dark: var(--color-semantic-primary-heavy)` | — |
 | `semantic.colorRoles.primary-heavy` | color | `--color-semantic-primary-heavy` | `light: #2D6090; dark: #3775AF` | — |
 | `semantic.colorRoles.primary-normal` | color | `--color-semantic-primary-normal` | `light: #3878B3; dark: #5390C9` | — |
 | `semantic.colorRoles.primary-strong` | color | `--color-semantic-primary-strong` | `light: #336CA1; dark: #3C80BF` | — |

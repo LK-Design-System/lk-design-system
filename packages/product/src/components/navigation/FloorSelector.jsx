@@ -90,7 +90,7 @@ export function FloorSelector({ floors = [], value, defaultValue, onChange, appe
           <button key={f.value} type="button" role="radio" aria-checked={on} data-value={f.value}
             tabIndex={index === tabStopIndex ? 0 : -1} onClick={() => pick(f.value)}
             style={{ minWidth: dim.item, height: dim.item, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: 0, borderRadius: 'var(--radius-8)', cursor: 'pointer',
-              fontFamily: 'inherit', fontSize: dim.font, fontWeight: on ? 'var(--fw-semibold)' : 'var(--fw-medium)', background: on ? 'var(--color-semantic-primary-normal)' : 'transparent', color: on ? 'var(--color-semantic-static-white)' : skin.idle,
+              fontFamily: 'inherit', fontSize: dim.font, fontWeight: on ? 'var(--fw-semibold)' : 'var(--fw-medium)', background: on ? 'var(--color-semantic-primary-fill)' : 'transparent', color: on ? 'var(--color-semantic-static-white)' : skin.idle,
               transition: 'background var(--dur-fast) var(--ease-out)' }}>
             {f.label}
           </button>

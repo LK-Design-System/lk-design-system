@@ -1853,6 +1853,17 @@
         },
         "origin": "wds-structure-lk-retone"
       },
+      "primary-fill": {
+        "$type": "color",
+        "css": "--color-semantic-primary-fill",
+        "modes": {
+          "light": "var(--color-semantic-primary-normal)",
+          "dark": "var(--color-semantic-primary-heavy)"
+        },
+        "origin": "lds-extension",
+        "group": "primary",
+        "$description": "Primary surface that carries static-white text or icons. Dark primary-normal gives white 3.39:1, so dark steps down to primary-heavy (4.85:1)."
+      },
       "label-neutral": {
         "$type": "color",
         "css": "--color-semantic-label-neutral",
@@ -2779,11 +2790,12 @@
         "$type": "color",
         "css": "--color-semantic-data-viz-series-7",
         "modes": {
-          "light": "var(--color-semantic-accent-foreground-light-blue)",
-          "dark": "var(--color-semantic-accent-foreground-light-blue)"
+          "light": "var(--color-atomic-light-blue-30)",
+          "dark": "var(--color-atomic-light-blue-70)"
         },
         "origin": "lds-extension",
-        "group": "data-viz"
+        "group": "data-viz",
+        "$description": "Sky-blue steps rather than accent-foreground-light-blue, which shares the primary hue (249 deg): series 1 and 7 were dE 5.9 apart in light. Now 8.5 light, 9.2 dark to the nearest series."
       },
       "data-viz-series-8": {
         "$type": "color",
@@ -2834,13 +2846,8 @@
         "primaryBg": {
           "$type": "color",
           "css": "--component-button-primary-bg",
-          "$value": "var(--color-semantic-primary-normal)",
-          "modes": {
-            "light": "var(--color-semantic-primary-normal)",
-            "dark": "var(--color-semantic-primary-heavy)"
-          },
+          "$value": "var(--color-semantic-primary-fill)",
           "ref": "semantic.action.primary",
-          "$description": "Filled primary surfaces carry static white text. Dark primary-normal (#5390C9) gives white only 3.39:1, so the dark fill steps down to primary-heavy (4.85:1), matching badge.signalBg.",
           "generated": true
         },
         "primaryBgHover": {
@@ -2889,13 +2896,8 @@
         "signalBg": {
           "$type": "color",
           "css": "--component-button-signal-bg",
-          "$value": "var(--color-semantic-primary-normal)",
-          "modes": {
-            "light": "var(--color-semantic-primary-normal)",
-            "dark": "var(--color-semantic-primary-heavy)"
-          },
+          "$value": "var(--color-semantic-primary-fill)",
           "ref": "semantic.colorRoles.primary-normal",
-          "$description": "Filled primary surfaces carry static white text. Dark primary-normal (#5390C9) gives white only 3.39:1, so the dark fill steps down to primary-heavy (4.85:1), matching badge.signalBg.",
           "generated": true
         },
         "signalBgHover": {
@@ -3373,7 +3375,7 @@
         "solidBackground": {
           "$type": "color",
           "css": "--component-chip-solid-bg",
-          "$value": "var(--color-semantic-primary-normal)",
+          "$value": "var(--color-semantic-primary-fill)",
           "ref": "semantic.action.accent",
           "source": "Action/Chip",
           "generated": true
@@ -3788,7 +3790,7 @@
         "requiredColor": {
           "$type": "color",
           "css": "--component-input-required-color",
-          "$value": "var(--color-semantic-status-negative)",
+          "$value": "var(--color-semantic-status-negative-text)",
           "generated": true
         }
       }
@@ -3929,11 +3931,7 @@
         "signalBg": {
           "$type": "color",
           "css": "--component-badge-signal-bg",
-          "$value": "var(--color-semantic-primary-normal)",
-          "modes": {
-            "light": "var(--color-semantic-primary-normal)",
-            "dark": "var(--color-semantic-primary-heavy)"
-          },
+          "$value": "var(--color-semantic-primary-fill)",
           "generated": true
         },
         "signalFg": {

@@ -88,9 +88,9 @@
 - `--color-semantic-inverse-label`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-normal-normal`
-- `--color-semantic-primary-normal`
 - `--color-semantic-static-white`
 - `--color-semantic-status-negative`
+- `--component-button-primary-bg`
 - `--component-button-primary-fg`
 - `--dur-fast`
 - `--ease-out`

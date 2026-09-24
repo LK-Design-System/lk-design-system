@@ -162,7 +162,7 @@
       },
       {
         "path": "docs/foundations/TOKEN_REFERENCE.md",
-        "sha256": "50a06ed8c3992749a29b0a532858c5874ea1712b513c51f030c635d2a863ebd9"
+        "sha256": "1faaed37ef12c8f7d1b78151f8f336ee733b2c21cf7ea74b894a7dc7b5e1fe99"
       },
       {
         "path": "docs/foundations/typography.md",
@@ -210,7 +210,7 @@
       },
       {
         "path": "docs/TOKEN_GOVERNANCE.md",
-        "sha256": "2c566dd1e9d2b9a19e03464dca8001ac5eb7a2a96315152d360c8cd43b5b6047"
+        "sha256": "822ed199c10feda92d3410f1746157be78e53427cf8fbad6c75d8a6ba625b02d"
       },
       {
         "path": "llms.txt",
@@ -226,15 +226,15 @@
       },
       {
         "path": "tokens/source.json",
-        "sha256": "3e037463e86975ba3c3572c2677f76acbab83e680bf869f82b3ba1afe7e2032c"
+        "sha256": "2ebc3257b88d42a7d7033b77bcc419182ed5a552deffb15dbd898c276717a22f"
       }
     ]
   },
   "resources": {
     "tokens": {
       "fileCount": 6,
-      "bytes": 33739,
-      "sha256": "4c481293a4bec12cbda53b2a2ac883599a86fc9be83156fc6282a16812263348"
+      "bytes": 33776,
+      "sha256": "7c88477cef172be17bf9c9bb0cd448a38bd80de2c41d2dfa33b9824d29f83d66"
     },
     "assets": {
       "fileCount": 365,
@@ -525,11 +525,11 @@
     },
     {
       "path": "foundations/TOKEN_REFERENCE.md",
-      "sha256": "50a06ed8c3992749a29b0a532858c5874ea1712b513c51f030c635d2a863ebd9",
+      "sha256": "1faaed37ef12c8f7d1b78151f8f336ee733b2c21cf7ea74b894a7dc7b5e1fe99",
       "sources": [
         {
           "path": "docs/foundations/TOKEN_REFERENCE.md",
-          "sha256": "50a06ed8c3992749a29b0a532858c5874ea1712b513c51f030c635d2a863ebd9"
+          "sha256": "1faaed37ef12c8f7d1b78151f8f336ee733b2c21cf7ea74b894a7dc7b5e1fe99"
         }
       ]
     },
@@ -635,21 +635,21 @@
     },
     {
       "path": "policies/TOKEN_GOVERNANCE.md",
-      "sha256": "e530be524861ed189fcaab795ee3fc6159d4e3725af4be03a4b2f033bf73610e",
+      "sha256": "616bcd0abb0c412ad6cf6b31e4040a7931c7d7fce874cb3e929f93310db53777",
       "sources": [
         {
           "path": "docs/TOKEN_GOVERNANCE.md",
-          "sha256": "2c566dd1e9d2b9a19e03464dca8001ac5eb7a2a96315152d360c8cd43b5b6047"
+          "sha256": "822ed199c10feda92d3410f1746157be78e53427cf8fbad6c75d8a6ba625b02d"
         }
       ]
     },
     {
       "path": "token-reference.json",
-      "sha256": "3e037463e86975ba3c3572c2677f76acbab83e680bf869f82b3ba1afe7e2032c",
+      "sha256": "2ebc3257b88d42a7d7033b77bcc419182ed5a552deffb15dbd898c276717a22f",
       "sources": [
         {
           "path": "tokens/source.json",
-          "sha256": "3e037463e86975ba3c3572c2677f76acbab83e680bf869f82b3ba1afe7e2032c"
+          "sha256": "2ebc3257b88d42a7d7033b77bcc419182ed5a552deffb15dbd898c276717a22f"
         }
       ]
     }

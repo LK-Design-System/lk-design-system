@@ -15,7 +15,7 @@ const DEFAULT_TOOLBAR_ITEMS = [
 function RequiredMark() {
   return (
     <>
-      <span aria-hidden="true" style={{ color: 'var(--color-semantic-status-negative)' }}> *</span>
+      <span aria-hidden="true" style={{ color: 'var(--color-semantic-status-negative-text)' }}> *</span>
       <VisuallyHidden> (필수)</VisuallyHidden>
     </>
   );

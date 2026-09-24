@@ -119,6 +119,17 @@ Color usage rules:
   communicates that status.
 - Decorative colors such as ratings and categorical tags use accent or
   data-visualization roles, not status roles.
+- 흰 글자나 아이콘을 primary 채움 위에 올릴 때는 `--color-semantic-primary-fill`을 쓴다.
+  dark `primary-normal`(`#5390C9`)은 흰색과 3.39:1이라 글자 기준에 못 미치므로,
+  이 역할은 dark에서 `primary-heavy`(4.85:1)로 내려간다. 버튼·뱃지·칩의 채움 토큰도 이
+  역할을 가리킨다. 흰 내용이 없는 채움(Slider·Switch 트랙, 진행 막대)은
+  `primary-normal`을 그대로 쓴다.
+- 색상각이 의미 있는 색과 겹치는 강조색은 그 의미 옆에 두지 않는다.
+  `accent-*-light-blue`는 primary와 색상각이 같아(249°) 선택·정보 상태로 읽히므로
+  primary·info 요소 옆의 범주 구분에 쓰지 않는다. `accent-*-red-orange`는
+  cautionary(69°)와 negative(24°) 사이(47°)에 있어 상태 표시 근처의 범주 구분에
+  쓰지 않는다. 차트 계열 7은 같은 이유로 accent light-blue 대신 하늘색 램프
+  (light-blue-30 / -70)를 쓴다.
 - Light and dark values are mandatory for every semantic color. Component
   color contracts are emitted in light, dark, and auto selectors so aliases
   resolve inside the correct theme scope.

@@ -65,7 +65,7 @@ export function SpeedDial({ icon, actions = [], open, defaultOpen = false, onOpe
       <button ref={triggerRef} type="button" aria-label={label} aria-expanded={isOpen} aria-controls={isOpen ? listId : undefined}
         onClick={() => (isOpen ? close() : setOpen(true))}
         style={{ width: 56, height: 56, borderRadius: '50%', border: 'none', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-lg)',
-          background: 'var(--color-semantic-primary-normal)', color: 'var(--component-button-primary-fg)',
+          background: 'var(--component-button-primary-bg)', color: 'var(--component-button-primary-fg)',
           transform: isOpen ? 'rotate(45deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease-out)' }}>
         {icon || <Icon name="plus" size={24} aria-hidden="true" />}
       </button>

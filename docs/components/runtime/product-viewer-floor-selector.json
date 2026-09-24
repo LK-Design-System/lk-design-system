@@ -144,7 +144,7 @@
     "--color-semantic-fill-normal",
     "--color-semantic-label-neutral",
     "--color-semantic-line-normal-normal",
-    "--color-semantic-primary-normal",
+    "--color-semantic-primary-fill",
     "--color-semantic-static-white",
     "--component-viewer-border",
     "--component-viewer-muted",

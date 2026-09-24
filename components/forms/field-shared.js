@@ -56,7 +56,7 @@ export function FieldLabel({ htmlFor, id, label, required = false, disabled = fa
       },
     },
     label,
-    required && React.createElement('span', { style: { color: 'var(--color-semantic-status-negative-foreground)' } }, ' *'),
+    required && React.createElement('span', { style: { color: 'var(--color-semantic-status-negative-text)' } }, ' *'),
   );
 }
 
