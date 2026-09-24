@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Semantic color roles — 113 tokens / light and dark (GENERATED — do not hand-edit)
+   LK ROBOTICS — Semantic color roles — 111 tokens / light and dark (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -63,8 +63,6 @@
   --color-semantic-material-outline-outline: #73767E;
   --color-semantic-background-transparent-normal: rgba(255, 255, 255, 0.08);
   --color-semantic-background-transparent-alternative: rgba(255, 255, 255, 0.28);
-  --color-semantic-accent-violet: transparent;
-  --color-semantic-accent-cyan: transparent;
   --color-semantic-brand-ink: #05132B;
   --color-semantic-brand-surface: #05132B;
   --color-semantic-brand-on-surface: var(--color-semantic-static-white);
@@ -179,8 +177,6 @@
   --color-semantic-material-outline-outline: #8E9199;
   --color-semantic-background-transparent-normal: rgba(33, 34, 37, 0.61);
   --color-semantic-background-transparent-alternative: rgba(33, 34, 37, 0.61);
-  --color-semantic-accent-violet: transparent;
-  --color-semantic-accent-cyan: transparent;
   --color-semantic-brand-ink: #E7EAF2;
   --color-semantic-brand-surface: #05132B;
   --color-semantic-brand-on-surface: var(--color-semantic-static-white);
@@ -296,8 +292,6 @@
     --color-semantic-material-outline-outline: #8E9199;
     --color-semantic-background-transparent-normal: rgba(33, 34, 37, 0.61);
     --color-semantic-background-transparent-alternative: rgba(33, 34, 37, 0.61);
-    --color-semantic-accent-violet: transparent;
-    --color-semantic-accent-cyan: transparent;
     --color-semantic-brand-ink: #E7EAF2;
     --color-semantic-brand-surface: #05132B;
     --color-semantic-brand-on-surface: var(--color-semantic-static-white);

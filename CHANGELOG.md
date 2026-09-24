@@ -2,6 +2,19 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.3.0 - 2026-09-24
+
+Paired Robotics release: `0.1.0-rc.49`. This release removes the color tokens deprecated in 0.2.11.
+Nothing in Core, Product, Robotics or the LK product repositories referenced them.
+
+### Removed (breaking)
+
+- `--color-atomic-neutral-*` (14 steps). Use `--color-atomic-cool-neutral-*` at the same step;
+  every step exists there and differs by at most 2/255 per channel.
+- `--color-semantic-accent-violet` and `--color-semantic-accent-cyan`. Both were transparent in
+  both modes, so an old reference painted nothing before and still paints nothing. Use
+  `accent-background-violet|cyan` for fills and `accent-foreground-violet|cyan` for text and icons.
+
 ## 0.2.13 - 2026-09-24
 
 Paired Robotics release: `0.1.0-rc.48`. This release adds the dense Fleet list for large fleets and

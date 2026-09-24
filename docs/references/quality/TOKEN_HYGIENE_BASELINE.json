@@ -184,20 +184,6 @@
       "--color-atomic-lime-90",
       "--color-atomic-lime-95",
       "--color-atomic-lime-99",
-      "--color-atomic-neutral-10",
-      "--color-atomic-neutral-15",
-      "--color-atomic-neutral-20",
-      "--color-atomic-neutral-22",
-      "--color-atomic-neutral-30",
-      "--color-atomic-neutral-40",
-      "--color-atomic-neutral-5",
-      "--color-atomic-neutral-50",
-      "--color-atomic-neutral-60",
-      "--color-atomic-neutral-70",
-      "--color-atomic-neutral-80",
-      "--color-atomic-neutral-90",
-      "--color-atomic-neutral-95",
-      "--color-atomic-neutral-99",
       "--color-atomic-orange-10",
       "--color-atomic-orange-20",
       "--color-atomic-orange-30",
@@ -264,12 +250,10 @@
       "--color-semantic-accent-background-cyan",
       "--color-semantic-accent-background-pink",
       "--color-semantic-accent-background-purple",
-      "--color-semantic-accent-cyan",
       "--color-semantic-accent-foreground-light-blue",
       "--color-semantic-accent-foreground-lime",
       "--color-semantic-accent-foreground-pink",
       "--color-semantic-accent-foreground-red-orange",
-      "--color-semantic-accent-violet",
       "--color-semantic-background-transparent-alternative",
       "--color-semantic-background-transparent-normal",
       "--color-semantic-data-viz-series-7",
@@ -335,7 +319,6 @@
       "--radius-24",
       "--radius-32",
       "--radius-4xl",
-      "--radius-6",
       "--shadow-green"
     ],
     "invalidNames": [
@@ -343,9 +326,7 @@
       "--color-semantic-line-solid-_strong"
     ],
     "transparentColors": [
-      "primitive.effect.interactionLayerNormal",
-      "semantic.colorRoles.accent-cyan",
-      "semantic.colorRoles.accent-violet"
+      "primitive.effect.interactionLayerNormal"
     ],
     "crossComponentRefs": [
       "--component-chip-disabled-opacity->--component-button-disabled-opacity",
