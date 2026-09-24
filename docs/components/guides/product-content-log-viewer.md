@@ -108,13 +108,13 @@
 - `--caption1-size`
 - `--caption2-line`
 - `--caption2-size`
-- `--color-semantic-accent-background-light-blue`
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-inverse-background`
 - `--color-semantic-inverse-fill-strong`
 - `--color-semantic-inverse-label`
 - `--color-semantic-inverse-label-neutral-soft`
 - `--color-semantic-inverse-line-normal`
+- `--color-semantic-inverse-primary`
 - `--color-semantic-label-assistive`
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`

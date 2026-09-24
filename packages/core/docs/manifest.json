@@ -210,7 +210,7 @@
       },
       {
         "path": "docs/TOKEN_GOVERNANCE.md",
-        "sha256": "2f8935c57a61933521e0a799b0731e11361fb128a44142317c984fc67eefc76e"
+        "sha256": "f6e09936b64474cc45147f1c3f46b733f8394662c5608c057b00e7f3608f4311"
       },
       {
         "path": "llms.txt",
@@ -226,7 +226,7 @@
       },
       {
         "path": "tokens/source.json",
-        "sha256": "f264dcd29d06d8c7929afbf395dd1dc292220f699a1cb2a813dc6b4b8632bac1"
+        "sha256": "0ce5a3171580765ba8d53c8be316a8f2f5381a44508b659383608d430039470e"
       }
     ]
   },
@@ -635,21 +635,21 @@
     },
     {
       "path": "policies/TOKEN_GOVERNANCE.md",
-      "sha256": "07d92055ad1720b3a7a39c1098c72dac69c3e30b4de71e6e68db53dc3e20eeb0",
+      "sha256": "6e88deccfd3be21567537d6c3b7fe4194c70a8d6f60832f778afcc739b28d0dc",
       "sources": [
         {
           "path": "docs/TOKEN_GOVERNANCE.md",
-          "sha256": "2f8935c57a61933521e0a799b0731e11361fb128a44142317c984fc67eefc76e"
+          "sha256": "f6e09936b64474cc45147f1c3f46b733f8394662c5608c057b00e7f3608f4311"
         }
       ]
     },
     {
       "path": "token-reference.json",
-      "sha256": "f264dcd29d06d8c7929afbf395dd1dc292220f699a1cb2a813dc6b4b8632bac1",
+      "sha256": "0ce5a3171580765ba8d53c8be316a8f2f5381a44508b659383608d430039470e",
       "sources": [
         {
           "path": "tokens/source.json",
-          "sha256": "f264dcd29d06d8c7929afbf395dd1dc292220f699a1cb2a813dc6b4b8632bac1"
+          "sha256": "0ce5a3171580765ba8d53c8be316a8f2f5381a44508b659383608d430039470e"
         }
       ]
     }

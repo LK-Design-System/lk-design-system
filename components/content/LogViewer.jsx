@@ -21,7 +21,7 @@ import { StatusIndicator } from './StatusIndicator.jsx';
  */
 const LEVELS = {
   debug: { c: 'var(--color-semantic-label-assistive)', log: 'var(--color-semantic-inverse-label-neutral-soft)', label: 'DEBUG' },
-  info: { c: 'var(--color-semantic-primary-normal)', log: 'var(--color-semantic-accent-background-light-blue)', label: 'INFO' },
+  info: { c: 'var(--color-semantic-primary-normal)', log: 'var(--color-semantic-inverse-primary)', label: 'INFO' },
   warn: { c: 'var(--color-semantic-status-cautionary-foreground)', log: 'var(--color-semantic-status-cautionary-signal)', label: 'WARN' },
   error: { c: 'var(--color-semantic-status-negative-foreground)', log: 'var(--color-semantic-status-negative-signal)', label: 'ERROR' },
 };

@@ -33,10 +33,10 @@ const semanticSwatchColors = [
 ];
 
 const accentSwatchColors = [
-  { value: 'var(--color-semantic-accent-background-light-blue)', label: '연한 파랑' },
+  { value: 'var(--color-semantic-accent-background-cyan)', label: '청록' },
   { value: 'var(--color-semantic-accent-background-violet)', label: '보라' },
   { value: 'var(--color-semantic-accent-background-lime)', label: '라임' },
-  { value: 'var(--color-semantic-accent-background-red-orange)', label: '주홍' },
+  { value: 'var(--color-semantic-accent-background-pink)', label: '분홍' },
 ];
 
 export const SemanticColors = {

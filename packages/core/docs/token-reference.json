@@ -1962,7 +1962,8 @@
           "light": "var(--color-atomic-blue-70)",
           "dark": "#95BADD"
         },
-        "origin": "wds-structure-lk-retone"
+        "origin": "wds-structure-lk-retone",
+        "$description": "Deprecated 2026-09: shares the primary hue (HSL 209, OKLCH 249) so a category tag reads as selected or info. Categorical series use data-viz-series-* (series 7 is the sky ramp); a fixed small set of decorative tags uses lime, cyan, violet, purple or pink. Removal: 0.5.0. See docs/TOKEN_GOVERNANCE.md."
       },
       "accent-background-violet": {
         "$type": "color",
@@ -2043,7 +2044,8 @@
           "light": "#EA7029",
           "dark": "#ED864A"
         },
-        "origin": "wds-structure-lk-retone"
+        "origin": "wds-structure-lk-retone",
+        "$description": "Deprecated 2026-09: sits between negative and cautionary, so a category tag next to status reads as a status. Categorical series use data-viz-series-* (series 7 is the sky ramp); a fixed small set of decorative tags uses lime, cyan, violet, purple or pink. Removal: 0.5.0. See docs/TOKEN_GOVERNANCE.md."
       },
       "accent-background-purple": {
         "$type": "color",
@@ -2079,7 +2081,8 @@
           "light": "#498AC6",
           "dark": "var(--color-atomic-blue-70)"
         },
-        "origin": "wds-structure-lk-retone"
+        "origin": "wds-structure-lk-retone",
+        "$description": "Deprecated 2026-09: shares the primary hue (HSL 209, OKLCH 249) so a category tag reads as selected or info. Categorical series use data-viz-series-* (series 7 is the sky ramp); a fixed small set of decorative tags uses lime, cyan, violet, purple or pink. Removal: 0.5.0. See docs/TOKEN_GOVERNANCE.md."
       },
       "accent-foreground-violet": {
         "$type": "color",
@@ -2115,7 +2118,8 @@
           "light": "#E8661A",
           "dark": "#ED864A"
         },
-        "origin": "wds-structure-lk-retone"
+        "origin": "wds-structure-lk-retone",
+        "$description": "Deprecated 2026-09: sits between negative and cautionary, so a category tag next to status reads as a status. Categorical series use data-viz-series-* (series 7 is the sky ramp); a fixed small set of decorative tags uses lime, cyan, violet, purple or pink. Removal: 0.5.0. See docs/TOKEN_GOVERNANCE.md."
       },
       "accent-foreground-red": {
         "$type": "color",

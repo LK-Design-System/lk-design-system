@@ -133,8 +133,15 @@ Color usage rules:
 - Data visualization uses `--color-semantic-data-viz-series-*`. A chart series
   must not use positive, cautionary, or negative unless that series actually
   communicates that status.
-- Decorative colors such as ratings and categorical tags use accent or
-  data-visualization roles, not status roles.
+- 범주 구분(여러 계열·유형을 색으로 나누는 것)은 `--color-semantic-data-viz-series-*`
+  한 계열로만 한다. 강조색(`accent-*`)은 작은 고정 집합의 장식 태그에만 쓰며, 배경
+  강조색은 의미색과 색상각이 겹치지 않는 lime · cyan · violet · purple · pink 5종이다.
+  전경 강조색 red · orange · green · blue는 달력의 일요일·토요일, 별점, 태그처럼 관례로
+  굳은 표시에만 쓰고, 상태 표시 옆에는 두지 않는다. 어느 쪽도 status 역할을 대신하지 않는다.
+- info와 primary는 같은 색이다(`status-info-*`가 `primary-normal`에서 파생). 관제 화면에서
+  "선택된 대상"과 "정보 알림"이 겹칠 수 있어 분리 여부는 **열린 결정**이다. 결정 전까지
+  한 화면에서 선택 강조와 info 상태를 같은 요소에 겹쳐 쓰지 않는다. 분리할 때는 관제
+  제품(궁릉·대덕) 화면을 놓고 판단한다.
 - 흰 글자나 아이콘을 primary 채움 위에 올릴 때는 `--color-semantic-primary-fill`을 쓴다.
   dark `primary-normal`(`#5390C9`)은 흰색과 3.39:1이라 글자 기준에 못 미치므로,
   이 역할은 dark에서 `primary-heavy`(`blue-50`, 4.66:1)로 내려간다. 버튼·뱃지·칩의 채움 토큰도 이
@@ -153,12 +160,10 @@ Color usage rules:
   공지·사례는 `Banner`의 앞쪽 톤 아이콘과 틴트 면, 짧은 상태 표면은 `StatusBadge`의
   톤 면과 글자, 목록·목차의 현재 항목은 `SideNav`의 선택 글자색과 굵기. 1px 회색
   구분선은 해당하지 않는다. `npm run check:no-leading-bars`가 이를 막는다.
-- 색상각이 의미 있는 색과 겹치는 강조색은 그 의미 옆에 두지 않는다.
-  `accent-*-light-blue`는 primary와 색상각이 같아(249°) 선택·정보 상태로 읽히므로
-  primary·info 요소 옆의 범주 구분에 쓰지 않는다. `accent-*-red-orange`는
-  cautionary(69°)와 negative(24°) 사이(47°)에 있어 상태 표시 근처의 범주 구분에
-  쓰지 않는다. 차트 계열 7은 같은 이유로 accent light-blue 대신 하늘색 램프
-  (light-blue-30 / -70)를 쓴다.
+- 색상각이 의미 있는 색과 겹치는 강조색은 두지 않는다. `accent-*-light-blue`는
+  primary와 색상각이 같아(OKLCH 249°) 선택·정보 상태로 읽히고, `accent-*-red-orange`는
+  cautionary(69°)와 negative(24°) 사이(47°)에 있어 상태로 읽힌다. 두 쌍은
+  deprecated다(아래). 차트 계열 7은 같은 이유로 하늘색 램프(light-blue-30 / -70)를 쓴다.
 - Light and dark values are mandatory for every semantic color. Component
   color contracts are emitted in light, dark, and auto selectors so aliases
   resolve inside the correct theme scope.
@@ -185,6 +190,18 @@ the planned removal timing. LDS itself stops using a token the moment it is
 deprecated: `npm run check:deprecated-tokens` fails on any reference from
 `components/`, `stories/` or hand-written `tokens/*.css` to a token whose
 `tokens/source.json` entry starts its `$description` with `Deprecated`.
+
+### Deprecated · `accent-*-light-blue`, `accent-*-red-orange`, `--color-atomic-orange-39` (removal 0.5.0)
+
+- `--color-semantic-accent-background-light-blue`, `-foreground-light-blue`: primary와
+  색상각이 같아 범주 태그가 선택·정보로 읽힌다. 범주 계열은 `data-viz-series-*`(계열 7이
+  하늘색 램프), 장식 태그는 cyan을 쓴다. LDS 영향: `LogViewer`의 INFO 로그 색은 반전
+  표면용 `--color-semantic-inverse-primary`로 옮겼다(반전 면 위 대비가 오른다).
+- `--color-semantic-accent-background-red-orange`, `-foreground-red-orange`: 상태색 사이에
+  있어 상태로 읽힌다. 장식 태그는 pink를 쓴다. LDS 영향: 스와치 스토리만.
+- `--color-atomic-orange-39`: `orange-40`과 채널당 3/255 이내. cautionary foreground가
+  `orange-40`으로 옮겼다.
+- 소비자 영향(2026-09-25 조사): Robotics·3D·Slides·LK Portal 모두 0곳.
 
 ### Deprecated · `--color-semantic-status-positive|cautionary|negative` (removal 0.5.0)
 
