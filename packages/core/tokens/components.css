@@ -248,6 +248,26 @@
   /* ---- Viewer ---------------------------------------------------------- */
   /* Theme-stable dark and light roles shared by every Viewer preset. */
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /* ---- Card ------------------------------------------------------------ */
   --component-card-border-dark: var(--border-hairline-dark);
   --component-card-radius: var(--radius-xl);

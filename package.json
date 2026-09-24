@@ -1,6 +1,6 @@
 {
   "name": "@lk-design-system/lds-workspace",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "packageManager": "npm@10.9.2",
   "private": true,
   "description": "Private workspace orchestrator for the layered LK ROBOTICS design system.",
@@ -169,7 +169,7 @@
     }
   },
   "devDependencies": {
-    "@lk-design-system/lds-robotics-ui": "file:vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.45.tgz",
+    "@lk-design-system/lds-robotics-ui": "file:vendor/lk-design-system-lds-robotics-ui-0.1.0-rc.46.tgz",
     "@playwright/test": "^1.61.1",
     "@storybook/addon-a11y": "10.4.6",
     "@storybook/addon-docs": "10.4.6",

@@ -2,6 +2,52 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.2.11 - 2026-09-24
+
+Paired Robotics release: `0.1.0-rc.46`. This patch finishes the color review that 0.2.10 began:
+component colors follow nested theme scopes, loud accents calm down, and three tokens are
+deprecated. Nothing is removed; the deprecated names go in 0.3.0.
+
+Core now requires more Theme-provided component tokens, so Core and Theme must stay on the same
+version.
+
+### Added
+
+- `--color-semantic-primary-fill`: the primary surface that carries static-white text or icons.
+  It is primary-normal in light and primary-heavy in dark, where primary-normal gives white only
+  3.39:1. Button primary/signal, Badge signal and Chip solid now point at it.
+
+### Fixed
+
+- 88 color and border component tokens (Button, Chip, Input, Card, Menu, Divider, viewer and
+  others) lived only in `:root`, so inside a nested `.theme-dark` scope under a light page they
+  kept light values. For example, Input and Chip stayed white with dark text. They are now emitted
+  per theme from `tokens/source.json`, like the existing badge contracts.
+- White text on dark primary-normal (3.39:1) in the MessageFeed count badge, ScheduleCalendar's
+  today marker, the Avatar badge and FloorSelector's selected floor now uses `primary-fill`
+  (4.85:1).
+- Required marks in field labels and `ContentEditor` used the negative signal hue as text
+  (3.44:1). They now use `status-negative-text` (7.04:1), as does
+  `--component-input-required-color`.
+- `data-viz-series-7` shared the primary hue, and series 1 and 7 were only dE 5.9 apart in light.
+  It now uses the sky ramp (light-blue-30 / -70).
+
+### Changed
+
+- Lime, violet, pink and purple accents are capped at OKLCH chroma 0.17 on step 50, with lightness
+  and hue kept, so decorative accents no longer outrank the status hues. Contrast against the page
+  moves by at most 0.23. The 16 accent roles for those hues reference their atomic steps instead
+  of repeating hex values.
+- `TOKEN_GOVERNANCE.md` adds the `primary-fill` rule and a rule that keeps hue-colliding accents
+  (light-blue next to primary, red-orange next to status) away from those meanings.
+
+### Deprecated
+
+- `--color-atomic-neutral-*`: every channel is within 2/255 of `cool-neutral` at the same step. Use
+  `--color-atomic-cool-neutral-*`.
+- `--color-semantic-accent-violet` and `--color-semantic-accent-cyan`: transparent in both modes.
+  Use `accent-background-*` or `accent-foreground-*`.
+
 ## 0.2.10 - 2026-09-24
 
 Paired Robotics release: `0.1.0-rc.45`. This patch clears contrast failures and adds one optional

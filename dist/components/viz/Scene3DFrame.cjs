@@ -1,14 +1,14 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkCP3KCN2Vcjs = require('../../chunk-CP3KCN2V.cjs');
-require('../../chunk-TAJIY3AL.cjs');
-require('../../chunk-WFEHGJNA.cjs');
-require('../../chunk-XJM2CPLY.cjs');
-require('../../chunk-KYJJTW3X.cjs');
-require('../../chunk-BXV3SAGJ.cjs');
-require('../../chunk-3YG66XT2.cjs');
+var _chunkAFX7R7NCcjs = require('../../chunk-AFX7R7NC.cjs');
+require('../../chunk-FNHGTQXD.cjs');
+require('../../chunk-DKANR6BI.cjs');
+require('../../chunk-LKGR27DI.cjs');
+require('../../chunk-SO26HRBS.cjs');
+require('../../chunk-5HIUCWH4.cjs');
+require('../../chunk-3DMHJIWS.cjs');
 
 
-exports.Scene3DFrame = _chunkCP3KCN2Vcjs.Scene3DFrame;
+exports.Scene3DFrame = _chunkAFX7R7NCcjs.Scene3DFrame;
 //# sourceMappingURL=Scene3DFrame.cjs.map
