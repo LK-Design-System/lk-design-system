@@ -153,6 +153,7 @@
     "check:storybook-public": "node scripts/check-storybook-public-surface.mjs && node scripts/check-storybook-public-copy.mjs",
     "check:tooltip-alignment": "node scripts/check-tooltip-alignment.mjs",
     "check:surface-ownership": "node scripts/check-surface-ownership.mjs",
+    "generate:icons": "node scripts/generate-icons.mjs",
     "check:icon-drawing-style": "node scripts/check-icon-drawing-style.mjs",
     "capture:pack:baseline": "npm ci && node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --capture-baseline",
     "check:pack:baseline": "npm ci && node scripts/run-package-scripts.mjs build check:generated && node scripts/check-package-artifact.mjs --verify-baseline",

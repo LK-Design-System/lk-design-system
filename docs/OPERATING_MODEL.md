@@ -77,7 +77,7 @@ Product family의 live taxonomy는
 `npm run check:layer-owner-exact-set`은 Product public source/export·component registry·
 canonical Storybook page를 같은 family owner로 대조하고, Robotics external surface와 LDS3D
 package/qualified export가 Product와 겹치거나 역방향 dependency를 만들지 않는지 한 번에
-검사합니다. Product 111 source 중 107개는 registry↔canonical page를 직접 join하며, 공유
+검사합니다. Product source는 registry↔canonical page를 직접 join하며(개수는 검사 출력이 정본), 공유
 composition 때문에 direct primary-owner join을 할 수 없는 `Stat→MetricCard`,
 `BottomNav→NavRail`, `Toolbar→TopBar`와 FileUpload evidence asymmetry 4건만 title·path·export·
 owner·family exact pin과 stale-removal 진단을 가진 closed exception으로 유지합니다. 이 검사는

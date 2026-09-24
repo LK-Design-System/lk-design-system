@@ -213,6 +213,12 @@ async function checkDocs(counts) {
     ['docs/REPOSITORY_INVENTORY.md', `외부 Robotics: \`${counts.robotics.name}@${counts.robotics.version}\` · source entry ${counts.robotics.sourceEntries}개 · named export ${counts.robotics.namedExports}개`],
     ['docs/REPOSITORY_INVENTORY.md', `Storybook 전체 story: ${counts.storybook.total}개`],
     ['docs/REPOSITORY_INVENTORY.md', `Storybook public story: ${counts.storybook.public}개`],
+    // The provenance section restates the headline counts; these lines used to
+    // go unchecked and had already drifted (210/223 and 229 hidden) while the
+    // checked summary above them was current.
+    ['docs/REPOSITORY_INVENTORY.md', `현재 React component entry export: ${counts.componentEntryExports}개`],
+    ['docs/REPOSITORY_INVENTORY.md', `공개 named export: ${counts.namedPublicExports}개`],
+    ['docs/REPOSITORY_INVENTORY.md', `Storybook hidden story: ${counts.storybook.hidden}개`],
     ['docs/REPOSITORY_INVENTORY.md', `숨김 visual parity story: ${counts.storybook.visualParity}개`],
     ['docs/REPOSITORY_INVENTORY.md', `visual inventory React story: ${counts.storybook.implementation}개`],
     ['docs/REPOSITORY_INVENTORY.md', `접근성 guard 검사 대상 implementation story: ${counts.storybook.implementation}개`],

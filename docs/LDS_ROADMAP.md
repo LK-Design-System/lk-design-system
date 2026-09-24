@@ -498,8 +498,10 @@ owner가 소유하고 LDS는 제공된 deployment evidence만 기록한다. O3 A
   승격했다. [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md)는
   `Completed implementation record`로 lifecycle을 닫았다.
 
-이 완료는 `0.1.1` source candidate의 구조 gate에 한정된다. immutable tag와 registry
-publish는 아직 없고, 발행된 stable은 계속 `0.1.0`, pinned Robotics는 `0.1.0-rc.33`이다.
+이 완료는 `0.1.1` source candidate의 구조 gate에 한정된다. 이 판정 시점(2026-08-23)에는
+immutable tag와 registry publish가 없었고 발행된 stable은 `0.1.0`, pinned Robotics는
+`0.1.0-rc.33`이었다. 현재 버전과 pin은 이 문서가 아니라 위 "Current-state sources"(package
+manifest, `ROBOTICS_EXTERNAL_SURFACE.json`, satellite pin report)가 소유한다.
 `0.1.1`을 immutable tag 또는 package publish로 승격하려면 현재 Core documentation
 manifest를 고정한 짝 Robotics release와 release-only current-snapshot gate가 먼저 통과해야 한다.
 Portal/Web Viz의 새 candidate 재검증, main integration과 deployment도 계속 `not-attested`다.

@@ -2,7 +2,7 @@
 
 ## Source of truth
 
-- Status: Current — all 16 workflow responsibility traces are verified.
+- Status: Current — the workflow responsibility traces and their verification state are owned by `docs/references/product-frontends/COVERAGE_AUDIT.json` (`workflows`); this file does not restate their count or status.
 - Last refreshed: 2026-08-22
 - Primary product surfaces: LK operations dashboards, product application shells, data-heavy monitoring and investigation surfaces, and the shared component layers that support them.
 - Evidence reviewed: `readme.md`, `docs/OPERATING_MODEL.md`, `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json`, `docs/references/architecture/PRODUCT_FAMILY_CONTRACT.json`, `docs/PRODUCT_FRONTEND_COVERAGE.md`, `docs/AI_DESIGN_SYSTEM_GUIDE.md`, `docs/COMPONENT_API_STATE_MATRIX.md`, `docs/STORYBOOK_INFORMATION_ARCHITECTURE.md`, `components/layout/DashboardShell.*`, `components/layout/DashboardGrid.*`, and their Storybook stories.

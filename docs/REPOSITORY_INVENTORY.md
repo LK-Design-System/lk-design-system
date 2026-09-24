@@ -38,7 +38,7 @@ Storybook의 732개 스토리 역할·공개 여부·소유 컴포넌트와 196�
 - `docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json`: 외부 Robotics package·revision·문서·public surface 정본
 - `docs/references/architecture/OWNER_AUTHORITY_CONTRACT.json`: live package·token·Storybook owner와 cross-domain boundary authority
 - `docs/references/wds/PUBLIC_EXPORT_CLASSIFICATION.json`: public export와 internal module의 historical provenance·compatibility projection
-- `docs/components/`: 211개 entry, 177개 의사결정 가이드, 정적 reference·platform register, LLM bundle과 machine-readable component registry
+- `docs/components/`: component entry별 레지스트리, 의사결정 가이드, 정적 reference·platform register, LLM bundle과 machine-readable component registry (개수는 `npm run generate:components` 출력과 위 요약이 정본)
 - `scripts/`: 패키지 유지보수 스크립트
 - `.storybook/`: Storybook 런타임 설정
 - `stories/`: 인터랙티브 컴포넌트 문서와 시각 예시
@@ -52,11 +52,11 @@ Storybook의 732개 스토리 역할·공개 여부·소유 컴포넌트와 196�
 
 WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`)과 Storybook의 LDS 컴포넌트/패턴 표면입니다. Storybook은 LDS 컴포넌트와 패턴 표면으로 제한하고, visual parity story는 `!dev`와 `visual-parity` 태그로 숨깁니다.
 
-- 현재 React component entry export: 210개
-- 공개 named export: 223개
+- 현재 React component entry export: 212개
+- 공개 named export: 225개
 - Storybook 전체 story: 760개
 - Storybook public story: 525개
-- Storybook hidden story: 229개
+- Storybook hidden story: 235개
 - 숨김 visual parity story: 101개
 - visual inventory React story: 760개
 - 접근성 guard 검사 대상 implementation story: 760개

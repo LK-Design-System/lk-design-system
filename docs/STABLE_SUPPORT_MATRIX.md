@@ -64,7 +64,8 @@ Core, Theme, Product `0.1.0`의 atomic package availability와 integrity는 `pub
 | LK Web Viz | `ops` · light/dark | `8f493fd3475eb6c7516fdf7d3aca3265c2b7db87`의 stable evidence · local clean gate · GitHub Ubuntu run `32592986712` · owner approval | exact stable install/source/build/4-combination workflow/accessibility는 `workflow-verified`; main integration과 deployment는 `not-attested` |
 
 두 consumer의 Core, Theme, Product pin은 exact `0.1.0` artifact와 checksum으로 재검증됐다.
-Web Viz의 Robotics UI는 별도 저장소가 소유하는 `0.1.0-rc.33`에 고정돼 있다. 이 결과는
+그 증거 시점에 Web Viz의 Robotics UI는 별도 저장소가 소유하는 `0.1.0-rc.33`에 고정돼 있었다
+(현재 pin은 아래 registry가 정본). 이 결과는
 consumer adoption stage만 닫으며 main integration, rollout과 production deployment는 이후에도
 각 product owner가 별도 evidence로 판정한다. 세부 package pin, evidence와 approval 경로는
 [`LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json)이 소유한다.
