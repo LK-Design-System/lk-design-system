@@ -79,3 +79,27 @@ exact-one으로 관리하고, 새 public component가 분류 없이 추가되면
   [Tree view](https://carbondesignsystem.com/components/tree-view/usage/) — 반복 데이터와 tree row를
   24/32/40px 계열의 명시적 size로 관리한다. LDS는 기존 API를 rename하지 않고 profile-aware token으로
   같은 원칙을 적용한다.
+
+## 관제 화면 조합 가이드
+
+관제·모니터링 화면은 새 컴포넌트가 아니라 `ops` 프로필과 기존 부품의 조합이다. 완성 화면과
+배치는 제품(Portal·관제 저장소)이 소유하고, LDS Storybook에는 화면을 두지 않는다.
+
+| 역할 | 부품 | 조밀 설정 |
+| --- | --- | --- |
+| 셸·브랜드 | `DashboardShell`, `Lockup adaptive` | 다크에서 흰 로고는 LK Navy 판 위에만 둔다 |
+| Fleet 요약·필터 | Robotics `FleetHealthSummary` | 칩 높이는 `ops`가 줄인다 |
+| 로봇 목록 | Robotics `FleetRobotRow` | 대수가 많으면 `layout="row"`: 한 표면 안 36px(ops) 행, 1px 구분선 |
+| 로봇 한 대 요약 | Robotics `RobotStatusCard` | 소수 대수·모바일은 카드형 유지 |
+| 알람 | Product `AlarmCaseBanner` | 미확인만 틴트, 심각도는 앞쪽 상태 아이콘 |
+| 측정값 | Product `TelemetryValue`, `TelemetryGauge` | 표시용 색(`*-foreground`), 등폭 숫자 |
+| 반복 데이터 | Core `Table`, Product `DataGrid` | `ops`의 행·셀 토큰 |
+
+- `data-lds-profile="ops"`는 조밀함이 필요한 작업 영역의 조상 요소에 한 번 둔다. 문서 전체가 아니라
+  관제 작업 영역에만 적용해도 된다.
+- `FleetRobotRow layout="row"`의 세로 여백은 `ListCell` `small`(`--component-list-cell-padding-y-sm`,
+  기본 8px, ops 6px)이라 프로필 계약을 늘리지 않고도 목록이 조밀해진다. 행은 테두리 있는 표면 하나에
+  담고, 행마다 카드 외곽을 그리지 않는다.
+- 상태는 StatusBadge·상태 아이콘·틴트 면으로 전달하고, 행·카드·알람 앞에 색 띠를 두지 않는다
+  (`check:no-leading-bars`).
+- 대표 fixture: Robotics `LDS Robotics/Fleet/Overview` → `100대 조밀 목록 (ops)`.
