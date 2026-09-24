@@ -45,7 +45,7 @@
 | --- | --- |
 | 명시 규칙 1 | 눌림 축소(scale 0.86)는 React 상태이며 포인터와 Enter/Space에 동일하게 적용됩니다(현재 값은 data-pressed). DOM style을 직접 만지지 않으므로 포커스를 잃거나 키보드에서 피드백이 빠지지 않습니다. |
 | --color-semantic-label-assistive | light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28) |
-| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+| --color-semantic-primary-normal | light: var(--color-atomic-blue-50); dark: #5390C9 |
 
 ## Content and writing
 

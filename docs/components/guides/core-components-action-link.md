@@ -43,7 +43,7 @@
 | Subject | Rule |
 | --- | --- |
 | --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
-| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+| --color-semantic-primary-normal | light: var(--color-atomic-blue-50); dark: #5390C9 |
 | --fw-semibold | 600 |
 | --space-1 | 4px |
 

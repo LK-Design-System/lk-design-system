@@ -35508,7 +35508,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: #3878B3; dark: #5390C9"
+          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
         },
         {
           "subject": "--fw-semibold",
@@ -51939,7 +51939,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: #3878B3; dark: #5390C9"
+          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
         }
       ],
       "responsive": [],
@@ -52346,7 +52346,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: #3878B3; dark: #5390C9"
+          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
         },
         {
           "subject": "--label1-size",
@@ -52958,7 +52958,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: #3878B3; dark: #5390C9"
+          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
         }
       ],
       "responsive": [],
@@ -53384,7 +53384,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: #3878B3; dark: #5390C9"
+          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
         },
         {
           "subject": "--color-semantic-primary-surface-strong",
@@ -68265,7 +68265,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: #3878B3; dark: #5390C9"
+          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
         },
         {
           "subject": "--fw-medium",
@@ -82872,7 +82872,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: #3878B3; dark: #5390C9"
+          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
         }
       ],
       "responsive": [],

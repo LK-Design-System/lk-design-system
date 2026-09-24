@@ -52,7 +52,7 @@
 | --color-semantic-fill-strong | light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28) |
 | --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
 | --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
-| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+| --color-semantic-primary-normal | light: var(--color-atomic-blue-50); dark: #5390C9 |
 
 ## Accessibility
 

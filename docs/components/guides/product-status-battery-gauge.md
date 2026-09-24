@@ -43,7 +43,7 @@
 | 명시 규칙 2 | 제품의 도메인 규칙이 있다면 tone으로 의미 상태를 명시합니다. 생략하면 이전 API와의 호환을 위해 잔량 기준(≤20% negative · ≤50% cautionary · else positive)을 적용합니다. |
 | --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
 | --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
-| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+| --color-semantic-primary-normal | light: var(--color-atomic-blue-50); dark: #5390C9 |
 
 ## Related components
 

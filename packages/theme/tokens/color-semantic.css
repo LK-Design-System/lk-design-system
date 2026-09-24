@@ -6,7 +6,7 @@
    ========================================================================== */
 :root, [data-theme="light"], .theme-light {
   --color-semantic-static-white: #FFFFFF;
-  --color-semantic-primary-normal: #3878B3;
+  --color-semantic-primary-normal: var(--color-atomic-blue-50);
   --color-semantic-background-normal-normal: #FFFFFF;
   --color-semantic-fill-strong: rgba(112, 115, 124, 0.16);
   --color-semantic-label-normal: #171718;
@@ -41,8 +41,8 @@
   --color-semantic-status-negative: var(--color-semantic-status-negative-signal);
   --color-semantic-status-negative-signal: #EE5656;
   --color-semantic-accent-background-lime: var(--color-atomic-lime-50);
-  --color-semantic-accent-background-cyan: #16BDDA;
-  --color-semantic-accent-background-light-blue: #7BA9D5;
+  --color-semantic-accent-background-cyan: var(--color-atomic-cyan-50);
+  --color-semantic-accent-background-light-blue: var(--color-atomic-blue-70);
   --color-semantic-accent-background-violet: var(--color-atomic-violet-50);
   --color-semantic-accent-background-pink: var(--color-atomic-pink-50);
   --color-semantic-material-dimmer: rgba(23, 23, 25, 0.52);
@@ -54,7 +54,7 @@
   --color-semantic-accent-background-red-orange: #EA7029;
   --color-semantic-accent-background-purple: var(--color-atomic-purple-50);
   --color-semantic-accent-foreground-lime: var(--color-atomic-lime-37);
-  --color-semantic-accent-foreground-cyan: #1198AF;
+  --color-semantic-accent-foreground-cyan: var(--color-atomic-cyan-40);
   --color-semantic-accent-foreground-light-blue: #498AC6;
   --color-semantic-accent-foreground-violet: var(--color-atomic-violet-45);
   --color-semantic-accent-foreground-purple: var(--color-atomic-purple-40);
@@ -91,7 +91,7 @@
   --color-semantic-status-positive-border: color-mix(in srgb, var(--color-semantic-status-positive-signal) 38%, var(--color-semantic-line-normal-normal));
   --color-semantic-status-positive-text: #07702E;
   --color-semantic-status-cautionary-surface: color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 18%, transparent);
-  --color-semantic-status-cautionary-foreground: var(--color-atomic-orange-39);
+  --color-semantic-status-cautionary-foreground: var(--color-atomic-orange-40);
   --color-semantic-status-cautionary-border: color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 42%, var(--color-semantic-line-normal-normal));
   --color-semantic-status-cautionary-text: #7A4A00;
   --color-semantic-status-negative-surface: color-mix(in srgb, var(--color-semantic-status-negative-signal) 14%, transparent);
@@ -139,7 +139,7 @@
   --color-semantic-inverse-background: #FFFFFF;
   --color-semantic-inverse-label: #171719;
   --color-semantic-primary-strong: #3C80BF;
-  --color-semantic-primary-heavy: #3775AF;
+  --color-semantic-primary-heavy: var(--color-atomic-blue-50);
   --color-semantic-primary-fill: var(--color-semantic-primary-heavy);
   --color-semantic-primary-ink: var(--color-semantic-primary-normal);
   --color-semantic-primary-ink-strong: var(--color-semantic-accent-blue-text);
@@ -167,7 +167,7 @@
   --color-semantic-accent-background-violet: var(--color-atomic-violet-60);
   --color-semantic-accent-background-pink: var(--color-atomic-pink-60);
   --color-semantic-material-dimmer: rgba(23, 23, 25, 0.74);
-  --color-semantic-inverse-primary: #3775AF;
+  --color-semantic-inverse-primary: var(--color-atomic-blue-50);
   --color-semantic-line-solid-normal: #37383C;
   --color-semantic-line-solid-neutral: #333438;
   --color-semantic-line-solid-alternative: #2E2F33;
@@ -175,8 +175,8 @@
   --color-semantic-accent-background-red-orange: #ED864A;
   --color-semantic-accent-background-purple: var(--color-atomic-purple-60);
   --color-semantic-accent-foreground-lime: var(--color-atomic-lime-50);
-  --color-semantic-accent-foreground-cyan: #16BDDA;
-  --color-semantic-accent-foreground-light-blue: #7BA9D5;
+  --color-semantic-accent-foreground-cyan: var(--color-atomic-cyan-50);
+  --color-semantic-accent-foreground-light-blue: var(--color-atomic-blue-70);
   --color-semantic-accent-foreground-violet: var(--color-atomic-violet-70);
   --color-semantic-accent-foreground-purple: var(--color-atomic-purple-60);
   --color-semantic-accent-foreground-pink: var(--color-atomic-pink-60);
@@ -261,7 +261,7 @@
     --color-semantic-inverse-background: #FFFFFF;
     --color-semantic-inverse-label: #171719;
     --color-semantic-primary-strong: #3C80BF;
-    --color-semantic-primary-heavy: #3775AF;
+    --color-semantic-primary-heavy: var(--color-atomic-blue-50);
     --color-semantic-primary-fill: var(--color-semantic-primary-heavy);
     --color-semantic-primary-ink: var(--color-semantic-primary-normal);
     --color-semantic-primary-ink-strong: var(--color-semantic-accent-blue-text);
@@ -289,7 +289,7 @@
     --color-semantic-accent-background-violet: var(--color-atomic-violet-60);
     --color-semantic-accent-background-pink: var(--color-atomic-pink-60);
     --color-semantic-material-dimmer: rgba(23, 23, 25, 0.74);
-    --color-semantic-inverse-primary: #3775AF;
+    --color-semantic-inverse-primary: var(--color-atomic-blue-50);
     --color-semantic-line-solid-normal: #37383C;
     --color-semantic-line-solid-neutral: #333438;
     --color-semantic-line-solid-alternative: #2E2F33;
@@ -297,8 +297,8 @@
     --color-semantic-accent-background-red-orange: #ED864A;
     --color-semantic-accent-background-purple: var(--color-atomic-purple-60);
     --color-semantic-accent-foreground-lime: var(--color-atomic-lime-50);
-    --color-semantic-accent-foreground-cyan: #16BDDA;
-    --color-semantic-accent-foreground-light-blue: #7BA9D5;
+    --color-semantic-accent-foreground-cyan: var(--color-atomic-cyan-50);
+    --color-semantic-accent-foreground-light-blue: var(--color-atomic-blue-70);
     --color-semantic-accent-foreground-violet: var(--color-atomic-violet-70);
     --color-semantic-accent-foreground-purple: var(--color-atomic-purple-60);
     --color-semantic-accent-foreground-pink: var(--color-atomic-pink-60);

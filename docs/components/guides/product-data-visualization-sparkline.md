@@ -54,7 +54,7 @@
 | --- | --- |
 | 명시 규칙 1 | 기존 primary stroke, soft fill, 2px inset을 유지하고 좁은 부모에서 비례 축소되도록 max-width만 보강했습니다. |
 | --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
-| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+| --color-semantic-primary-normal | light: var(--color-atomic-blue-50); dark: #5390C9 |
 | --fw-medium | 500 |
 
 ## Responsive

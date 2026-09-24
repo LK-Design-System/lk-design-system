@@ -99,6 +99,13 @@ Color usage rules:
   implementations must not reference them directly.
 - Semantic tokens (`--color-semantic-*`) express product meaning and are the
   default choice for general UI.
+- 새 semantic 값은 atomic 램프 단계를 `var(--color-atomic-*)`로 참조한다. 램프에 없는
+  hex·rgba를 직접 적으면 `npm run check:token-hygiene`의 `rawColorLiterals` 래칫이 막는다.
+  기존 직접 값은 기준선에 남은 부채이며 줄이는 방향으로만 갱신한다. 램프 단계와 채널당
+  몇 단위만 다른 값(근사 중복)은 램프 단계로 합친다 — 2026-09에 primary(`#3878B3` =
+  `blue-50`), accent cyan·light-blue, cautionary foreground(`orange-39` → `orange-40`)를
+  이렇게 합쳤다. 대비 때문에 중간 단계가 필요해 보이면 끼워 넣기 전에 기존 단계로 기준을
+  만족하는지 먼저 측정한다.
 - Component tokens (`--component-*`) bind a reusable component to a stable
   combination of semantic roles.
 - Status is a role family: `foreground`, `surface`, `border`, `text`, and
@@ -112,7 +119,7 @@ Color usage rules:
   대비를 확보하는 자리뿐이다. 비텍스트 요소도 WCAG 1.4.11의 3:1을 넘어야 하므로,
   밝은 면 위의 점·아이콘·테두리·막대 채움·차트 계열은 `--color-semantic-status-*-foreground`를
   쓴다. light foreground는 positive `#0F953C`(green-40, 3.90:1), cautionary
-  `#C97A14`(orange-39, 3.35:1), negative는 signal 그대로(3.44:1)이며 dark는 signal과
+  `#CC7C14`(orange-40, 3.25:1), negative는 signal 그대로(3.44:1)이며 dark는 signal과
   같다. 텍스트와 텍스트 배경에는 AA를 만족하는 `--color-semantic-status-*-text`
   (5.47:1 / 7.48:1 / 7.04:1)를 쓴다. signal을 배경으로 채우고 흰 글자를 올리는
   solid 변형은 같은 대비값이 그대로 적용되므로 금지한다 — `*-surface` + `*-text`
@@ -130,7 +137,7 @@ Color usage rules:
   data-visualization roles, not status roles.
 - 흰 글자나 아이콘을 primary 채움 위에 올릴 때는 `--color-semantic-primary-fill`을 쓴다.
   dark `primary-normal`(`#5390C9`)은 흰색과 3.39:1이라 글자 기준에 못 미치므로,
-  이 역할은 dark에서 `primary-heavy`(4.85:1)로 내려간다. 버튼·뱃지·칩의 채움 토큰도 이
+  이 역할은 dark에서 `primary-heavy`(`blue-50`, 4.66:1)로 내려간다. 버튼·뱃지·칩의 채움 토큰도 이
   역할을 가리킨다. 흰 내용이 없는 채움(Slider·Switch 트랙, 진행 막대)은
   `primary-normal`을 그대로 쓴다.
 - `primary-strong`·`primary-heavy`는 **채움 단계**(hover·pressed 채움, dark의

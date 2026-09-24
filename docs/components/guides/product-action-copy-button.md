@@ -41,7 +41,7 @@ ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드�
 | 명시 규칙 1 | 36/44px 높이는 Button 높이 스케일(32/40/48) 이전의 지오메트리로, 시각 변화를 막기 위해 그대로 유지합니다. |
 | 명시 규칙 2 | CopyButton — value를 클립보드에 복사하고 결과(성공 또는 실패)를 약 1.4초 동안 같은 자리에서 알립니다. |
 | --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
-| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+| --color-semantic-primary-normal | light: var(--color-atomic-blue-50); dark: #5390C9 |
 | --color-semantic-primary-surface-strong | light: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent); dark: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent) |
 
 ## Content and writing

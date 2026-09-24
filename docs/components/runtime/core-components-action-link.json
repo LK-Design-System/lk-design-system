@@ -71,7 +71,7 @@
     },
     {
       "subject": "--color-semantic-primary-normal",
-      "rule": "light: #3878B3; dark: #5390C9"
+      "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
     },
     {
       "subject": "--fw-semibold",
