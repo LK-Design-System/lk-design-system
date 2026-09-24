@@ -224,7 +224,7 @@
       "workspacePackage": {
         "manifest": "package.json",
         "name": "@lk-design-system/lds-3d",
-        "version": "0.1.0-alpha.1"
+        "version": "0.1.0-alpha.2"
       },
       "compositionManifest": "apps/docs/package.json",
       "lockfile": "pnpm-lock.yaml",
@@ -236,25 +236,19 @@
           "manifest": "apps/docs/package.json",
           "name": "@lk-design-system/lds-core",
           "section": "dependencies",
-          "version": "0.1.0-rc.4"
+          "version": "0.2.9"
         },
         {
           "manifest": "apps/docs/package.json",
           "name": "@lk-design-system/lds-theme",
           "section": "dependencies",
-          "version": "0.1.0-rc.4"
+          "version": "0.2.9"
         },
         {
           "manifest": "apps/docs/package.json",
           "name": "@lk-design-system/lds-product",
           "section": "dependencies",
-          "version": "0.1.0-rc.4"
-        },
-        {
-          "manifest": "apps/docs/package.json",
-          "name": "@lk-design-system/lds-robotics-ui",
-          "section": "dependencies",
-          "version": "0.1.0-rc.5"
+          "version": "0.2.9"
         }
       ],
       "scanRoots": [
@@ -271,7 +265,6 @@
         "@lk-design-system/lds-core/styles.css",
         "@lk-design-system/lds-theme/styles.css",
         "@lk-design-system/lds-product/styles.css",
-        "@lk-design-system/lds-robotics-ui/styles.css",
         "../src/styles.css"
       ],
       "storybookPreview": "apps/docs/.storybook/preview.ts",

@@ -290,14 +290,14 @@
       "package": {
         "manifest": "package.json",
         "name": "@lk-design-system/lds-3d",
-        "version": "0.1.0-alpha.1",
+        "version": "0.1.0-alpha.2",
         "repository": "LK-Design-System/lk-design-system-3d"
       },
       "packages": [
         {
           "manifest": "packages/core/package.json",
           "name": "@lk-design-system/lds-3d-core",
-          "version": "0.1.0-alpha.1",
+          "version": "0.1.0-alpha.2",
           "exports": [
             ".",
             "./coordinates"
@@ -333,7 +333,7 @@
           "workspacePackage": {
             "manifest": "package.json",
             "name": "@lk-design-system/lds-3d",
-            "version": "0.1.0-alpha.1"
+            "version": "0.1.0-alpha.2"
           },
           "externalSurface": "docs/references/package-split/LDS3D_EXTERNAL_SURFACE.json",
           "headlessPackages": [

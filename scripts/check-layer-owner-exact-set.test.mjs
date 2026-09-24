@@ -57,7 +57,7 @@ test('current Product, Storybook, Robotics, and LDS3D owner surfaces form one ex
   assert.equal(summary.robotics.sources, 23);
   assert.equal(summary.robotics.exports, 53);
   assert.equal(summary.lds3d.packages, 8);
-  assert.equal(summary.lds3d.qualifiedExports, 41);
+  assert.equal(summary.lds3d.qualifiedExports, 50);
   assert.deepEqual(summary.violations, { unclassified: 0, duplicate: 0, conflict: 0 });
 });
 
