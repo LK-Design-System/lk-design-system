@@ -171,7 +171,7 @@ export const ClipboardFeedback = {
         if (!copiedButton || liveStatus?.textContent?.trim() !== 'Deploy token 복사 완료') {
           throw new Error('copiedLabel must update both the accessible action name and polite live status.');
         }
-        if (copiedButton.style.color !== 'var(--color-semantic-status-positive)' || !icon) {
+        if (copiedButton.style.color !== 'var(--color-semantic-status-positive-foreground)' || !icon) {
           throw new Error('Successful copy feedback must use the positive icon tone.');
         }
         if (view.getComputedStyle(icon).color !== view.getComputedStyle(copiedButton).color || icon.innerHTML === idleSuccessIcon) {
@@ -191,7 +191,7 @@ export const ClipboardFeedback = {
         if (!failedButton || liveStatus?.textContent?.trim() !== 'Recovery token 복사 차단') {
           throw new Error('copyErrorLabel must update both the accessible action name and polite live status.');
         }
-        if (failedButton.style.color !== 'var(--color-semantic-status-negative)' || !icon) {
+        if (failedButton.style.color !== 'var(--color-semantic-status-negative-foreground)' || !icon) {
           throw new Error('Failed copy feedback must use the negative icon tone.');
         }
         if (view.getComputedStyle(icon).color !== view.getComputedStyle(failedButton).color || icon.innerHTML === idleErrorIcon) {
