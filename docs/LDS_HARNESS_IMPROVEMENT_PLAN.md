@@ -56,7 +56,7 @@
 
 | repo | 처리 |
 | --- | --- |
-| core | `1730ea72` — inventory 수치 정정과 검사 확장, Current 문서의 시점 한정, `lds-ui` 스킬의 duration을 토큰 이름으로 |
+| core | `1730ea72` — inventory 수치 정정과 검사 확장, Current 문서의 시점 한정. `lds-ui` 스킬의 duration 문장 수정은 되돌림(아래 H0 참고) |
 | robotics | `2ff1cc6` — 소비자 스킬 참조에서 코드 소유 수치 제거, 개수 하드코딩 제거, 검사가 파일과 manifest를 직접 대조 |
 | slides | `df8a00c` — 임계값 단일 모듈, 스킬 예시 prop·임계값을 카탈로그·게이트와 대조하는 검사, 덱 도식을 토큰에서 직접 읽음 |
 | motion | `19bcb45` — 낡은 핀 표 제거, 손으로 옮긴 slides 타입을 핀의 카탈로그와 대조하는 검사 |
@@ -79,6 +79,12 @@
 
 - 감사 커밋 4개(core·robotics·slides·motion)를 원격에 반영하고 CI·배포 완료까지 확인한다.
 - 3d 발견 5건을 3d의 진행 중 작업과 합쳐 반영하고, 3d CI를 초록으로 되돌린다.
+- **다음 짝 릴리스에 포함할 것**: `lds-ui` 스킬(`docs/agent-skills/lds-ui/SKILL.md` 모션 절)의
+  "fast 120ms / base 200ms / slow 320ms"를 토큰 이름(`--dur-fast` / `--dur-base` / `--dur-slow`)과
+  "값은 expression profile이 정한다"로 바꾼다. 2026-09-24에 반영했다가 되돌렸다 — 스킬은 core
+  문서 manifest에 투영되고, 그 manifest의 지문은 vendored Robotics 패키지가 릴리스 때 고정하므로,
+  core 버전이 그대로인 채 문서를 바꾸면 `check:type-surface`가 짝 Robotics 릴리스 전까지
+  실패한다. 스킬 문구 변경은 Core·Robotics 짝 릴리스와 함께 나간다.
 - **종료 조건**: 다섯 repo의 `main` CI가 모두 초록이고 감사 발견 중 보류(pastel) 외 미처리 0.
 
 ### H1 — 강제 시점 앞당기기
