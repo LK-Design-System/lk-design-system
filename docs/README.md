@@ -107,6 +107,12 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 현재 실행 순서와 backlog는 [`LDS_ROADMAP.md`](LDS_ROADMAP.md)만 소유한다. 아래 문서는
 로드맵 항목의 세부 근거나 완료 기록이며, 같은 우선순위를 별도로 복제하지 않는다.
 
+### Active plans
+
+| Document | Disposition |
+| --- | --- |
+| [`LDS_HARNESS_IMPROVEMENT_PLAN.md`](LDS_HARNESS_IMPROVEMENT_PLAN.md) | R7 하위 계획 — LDS를 DS 본체·계약·저작/소비 하네스로 나눈 감사의 결론과 H0–H5 단계·종료 조건·지표 |
+
 ### Adopted or completed implementation records
 
 | Document | Disposition |

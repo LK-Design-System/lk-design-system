@@ -602,6 +602,10 @@ commit/release, pin 격차 기간, CI·문서 유지 비용을 같은 snapshot�
   stable v1 promotion evidence는 pinned historical 기록으로 유지하며, 다음 adoption 재검증에서
   product owner가 v2 report/schema와 workflow pointer를 갱신한다. 이 adapter closure가 기존
   promotion, main integration 또는 deployment를 자동 승격하지 않는다.
+- 하네스(저작·소비)의 강제 시점, 역할 분리, 결정 복제는
+  [`LDS_HARNESS_IMPROVEMENT_PLAN.md`](LDS_HARNESS_IMPROVEMENT_PLAN.md)의 H0–H5가 세부 단계와
+  종료 조건을 소유한다. 2026-09-24 세 층 감사에서 게이트·생성 정본은 강하고, 실패의 전달(CI 실패가
+  방치됨)·push 전 강제·역할 분리·손으로 쓴 현재 상태 문서가 약하다고 판정했다.
 - plan이 완료되면 implementation record로 바꾸고 active roadmap에서 제거한다.
 - follow-up은 owner·entry trigger·종료 gate·roadmap ID가 없으면 무기한 active로 두지 않는다.
 
@@ -609,6 +613,7 @@ commit/release, pin 격차 기간, CI·문서 유지 비용을 같은 snapshot�
 
 | 문서 | 분류 | 현재 disposition | Roadmap 연결 |
 | --- | --- | --- | --- |
+| [`LDS_HARNESS_IMPROVEMENT_PLAN.md`](LDS_HARNESS_IMPROVEMENT_PLAN.md) | active plan | H0 진행 중 — 감사 발견 정리, 이후 강제 시점·선언의 검사화·역할 분리·사각지대·자체 점검 | R7 |
 | [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | completed implementation record | R0–R4.1 완료; provider/private import/family·Storybook·Robotics·LDS3D exact-set 결정은 durable 계약과 machine gate로 승격 | 없음 |
 | [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | adopted implementation record | `default | ops` 1차 구현 완료 | R3A |
 | [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | completed implementation record | source/type/story/overlay 계약 완료; 제품 증거는 registry가 소유 | R2 |
