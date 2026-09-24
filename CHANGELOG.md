@@ -2,7 +2,10 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
-## Unreleased
+## 0.4.0 - 2026-09-24
+
+Paired Robotics release: `0.1.0-rc.50`. This release removes the interaction tokens deprecated in
+2026-07. Nothing in Core, Product, Robotics or the LK product repositories referenced them.
 
 ### Removed (breaking)
 

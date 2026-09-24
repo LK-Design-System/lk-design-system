@@ -12,7 +12,7 @@
 contract. Figma Variables, Storybook examples, React components, and
 AI-generated UI must all resolve back to this contract. Theme expression
 profiles are the one additive runtime projection: their scope and whitelist
-live in [`EXPRESSION_PROFILE_CONTRACT.json`](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.3.0/docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json),
+live in [`EXPRESSION_PROFILE_CONTRACT.json`](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.0/docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json),
 and values are limited to `tokens/profiles.css` under the Theme package.
 
 Package별 `tokens/semantic-contract.json`은 runtime source에서 산출·검사하는 semantic
@@ -160,10 +160,10 @@ may be added without an explicit product migration decision.
 Deprecation notes must state the replacement token, affected components, and
 the planned removal timing.
 
-### Removed · `--interaction-*` (2026-09)
+### Removed in 0.4.0 · `--interaction-*`
 
-2026-07에 deprecated로 표시했던 Decorate / Interaction 블록(`--interaction-layer-*`,
-`--interaction-opacity-*`, 8개)을 `tokens/effects.css`와 `tokens/source.json`에서 제거했다.
+2026-07에 deprecated로 표시했고 0.4.0에서 제거했다. Decorate / Interaction 블록(`--interaction-layer-*`,
+`--interaction-opacity-*`, 8개)은 `tokens/effects.css`와 `tokens/source.json`에서 빠졌다.
 이름을 다시 쓰지 않는다.
 
 - 영향: 제거 시점(2026-09-24)에 LDS 컴포넌트·스토리·스크립트, Robotics·Slides·3D·Motion,

@@ -160,10 +160,10 @@ may be added without an explicit product migration decision.
 Deprecation notes must state the replacement token, affected components, and
 the planned removal timing.
 
-### Removed · `--interaction-*` (2026-09)
+### Removed in 0.4.0 · `--interaction-*`
 
-2026-07에 deprecated로 표시했던 Decorate / Interaction 블록(`--interaction-layer-*`,
-`--interaction-opacity-*`, 8개)을 `tokens/effects.css`와 `tokens/source.json`에서 제거했다.
+2026-07에 deprecated로 표시했고 0.4.0에서 제거했다. Decorate / Interaction 블록(`--interaction-layer-*`,
+`--interaction-opacity-*`, 8개)은 `tokens/effects.css`와 `tokens/source.json`에서 빠졌다.
 이름을 다시 쓰지 않는다.
 
 - 영향: 제거 시점(2026-09-24)에 LDS 컴포넌트·스토리·스크립트, Robotics·Slides·3D·Motion,
