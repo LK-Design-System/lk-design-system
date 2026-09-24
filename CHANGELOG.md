@@ -2,6 +2,44 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.2.12 - 2026-09-24
+
+Paired Robotics release: `0.1.0-rc.47`. This patch acts on the 0.2.11 visual design review:
+calmer shapes, a brand-correct dark logo, and no leading color bars. Nothing is removed. The radius
+scale changes are recorded in `docs/references/lds-baseline/README.md`.
+
+### Added
+
+- `Lockup` `adaptive`: LK Navy in light; in dark, the white lockup on an LK Navy plate padded by
+  the 0.5X clear space. LK_LOGO_STANDARD 6.2 approves white only on LK Navy. The dark shell had
+  drawn the navy wordmark on the dark background, where it all but vanished.
+- `npm run check:no-leading-bars`, part of `check:fast`, together with the matching rule in
+  `TOKEN_GOVERNANCE.md` and `AGENTS.md`.
+
+### Changed
+
+- Radii come down one step. Controls go 12→8, menus 12→10, cards 16→12, dialogs 24→16 and
+  containers 32→20; button sm/md go 8/10→6/8, chips 10→8 and menu items 10→6.
+- Cards and Metric Cards rest without a shadow; shadows are reserved for overlays.
+- Tag, StatusBadge and ContentBadge are 4px squares; only counts stay pills.
+- AlarmCaseBanner follows the Banner anatomy: a tonal status icon instead of the 4px leading bar,
+  and a tinted surface only while unacknowledged.
+- ScheduleCalendar event chips follow StatusBadge, with a tonal surface and no border or leading
+  edge. Back-to-back chips in the time grid are separated by a ring in the grid colour.
+- Anchor marks the current item the way SideNav does (accent-blue text, bold), with no leading
+  rule.
+- Line Chart uses 1·2·2.5·5 ticks, puts the legend above the plot and the axis title at the axis
+  end, keeps 2px non-scaling strokes, and places reference labels past the line end.
+- Telemetry Gauge arcs use the `*-foreground` indicator roles; in light mode, cautionary had
+  read as brown.
+
+### Fixed
+
+- Side Nav and Top Bar focus rings were clipped by their scroll containers; they are now drawn
+  inside the element. The Command Palette input ring now follows the input radius.
+- Hangul labels no longer take overline tracking. This covers the Metric Card label, `Overline`
+  with Hangul text, and `.lk-overline:lang(ko)`. Metric Card icons are neutral.
+
 ## 0.2.11 - 2026-09-24
 
 Paired Robotics release: `0.1.0-rc.46`. This patch finishes the color review that 0.2.10 began:
