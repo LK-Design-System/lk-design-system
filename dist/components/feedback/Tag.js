@@ -1,7 +1,7 @@
 "use client";
 import {
   Tag
-} from "../../chunk-DJMHZG7V.js";
+} from "../../chunk-2QLX5PDS.js";
 export {
   Tag
 };

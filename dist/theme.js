@@ -13,7 +13,7 @@ import "./chunk-Z5XUQZMO.js";
 import "./chunk-IKUN5X7H.js";
 import {
   Lockup
-} from "./chunk-XR4KRYRJ.js";
+} from "./chunk-PA6EFMYU.js";
 import {
   ProductLockup
 } from "./chunk-TA7JQWNZ.js";
