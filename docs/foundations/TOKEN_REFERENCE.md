@@ -11,8 +11,8 @@
 
 | Path | Type | CSS | Value / modes | Note |
 | --- | --- | --- | --- | --- |
-| `component.actionArea.tokens.background` | color | `--component-action-area-bg` | `var(--component-action-area-bg)` | — |
-| `component.actionArea.tokens.border` | border | `--component-action-area-border` | `var(--component-action-area-border)` | — |
+| `component.actionArea.tokens.background` | color | `--component-action-area-bg` | `var(--color-semantic-background-elevated-normal)` | — |
+| `component.actionArea.tokens.border` | border | `--component-action-area-border` | `var(--border-thin) solid var(--color-semantic-line-normal-normal)` | — |
 | `component.actionArea.tokens.gap` | dimension | `--component-action-area-gap` | `var(--component-action-area-gap)` | — |
 | `component.actionArea.tokens.paddingX` | dimension | `--component-action-area-padding-x` | `var(--component-action-area-padding-x)` | — |
 | `component.actionArea.tokens.paddingY` | dimension | `--component-action-area-padding-y` | `var(--component-action-area-padding-y)` | — |
@@ -28,46 +28,66 @@
 | `component.badge.tokens.signalFg` | color | `--component-badge-signal-fg` | `var(--color-semantic-static-white)` | — |
 | `component.badge.tokens.steelBg` | color | `--component-badge-steel-bg` | `var(--color-semantic-primary-surface-strong)` | — |
 | `component.badge.tokens.steelFg` | color | `--component-badge-steel-fg` | `var(--color-semantic-accent-blue-text)` | — |
-| `component.button.tokens.dangerBg` | color | `--component-button-danger-bg` | `var(--component-button-danger-bg)` | — |
-| `component.button.tokens.dangerBgHover` | color | `--component-button-danger-bg-hover` | `var(--component-button-danger-bg-hover)` | — |
-| `component.button.tokens.dangerFg` | color | `--component-button-danger-fg` | `var(--component-button-danger-fg)` | — |
+| `component.button.tokens.dangerBg` | color | `--component-button-danger-bg` | `var(--color-atomic-red-30)` | — |
+| `component.button.tokens.dangerBgHover` | color | `--component-button-danger-bg-hover` | `var(--color-atomic-red-20)` | — |
+| `component.button.tokens.dangerFg` | color | `--component-button-danger-fg` | `var(--color-semantic-static-white)` | — |
+| `component.button.tokens.darkBg` | color | `--component-button-dark-bg` | `var(--color-semantic-inverse-background)` | — |
+| `component.button.tokens.darkBgHover` | color | `--component-button-dark-bg-hover` | `var(--component-button-dark-bg)` | — |
+| `component.button.tokens.darkFg` | color | `--component-button-dark-fg` | `var(--color-semantic-inverse-label)` | — |
+| `component.button.tokens.disabledBg` | color | `--component-button-disabled-bg` | `var(--color-semantic-fill-normal)` | — |
+| `component.button.tokens.disabledFg` | color | `--component-button-disabled-fg` | `var(--color-semantic-label-assistive)` | — |
+| `component.button.tokens.disabledFgOutlined` | color | `--component-button-disabled-fg-outlined` | `var(--color-semantic-label-disable)` | — |
 | `component.button.tokens.disabledOpacity` | number | `--component-button-disabled-opacity` | `0.45` | — |
+| `component.button.tokens.disabledOutlinedBorder` | border | `--component-button-disabled-outlined-border` | `var(--border-thin) solid var(--color-semantic-line-normal-neutral)` | — |
+| `component.button.tokens.flatBg` | color | `--component-button-flat-bg` | `var(--color-semantic-secondary-surface)` | — |
+| `component.button.tokens.flatBgHover` | color | `--component-button-flat-bg-hover` | `var(--component-button-flat-bg)` | — |
+| `component.button.tokens.flatFg` | color | `--component-button-flat-fg` | `var(--color-semantic-label-normal)` | — |
 | `component.button.tokens.gap` | dimension | `--component-button-gap` | `var(--component-button-gap)` | — |
+| `component.button.tokens.ghostBorder` | border | `--component-button-ghost-border` | `var(--border-thin) solid var(--color-semantic-line-solid-normal)` | — |
+| `component.button.tokens.ghostBorderHover` | color | `--component-button-ghost-border-hover` | `var(--component-button-ghost-border)` | — |
+| `component.button.tokens.ghostFg` | color | `--component-button-ghost-fg` | `var(--color-semantic-label-normal)` | — |
 | `component.button.tokens.heightLg` | dimension | `--component-button-height-lg` | `var(--component-button-height-lg)` | — |
 | `component.button.tokens.heightMd` | dimension | `--component-button-height-md` | `var(--component-button-height-md)` | — |
 | `component.button.tokens.heightSm` | dimension | `--component-button-height-sm` | `var(--component-button-height-sm)` | — |
+| `component.button.tokens.onDarkBg` | color | `--component-button-on-dark-bg` | `color-mix(in srgb, var(--color-semantic-static-white) 14%, transparent)` | — |
+| `component.button.tokens.onDarkBgHover` | color | `--component-button-on-dark-bg-hover` | `color-mix(in srgb, var(--color-semantic-static-white) 16%, transparent)` | — |
+| `component.button.tokens.onDarkBorder` | border | `--component-button-on-dark-border` | `var(--border-thin) solid color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent)` | — |
+| `component.button.tokens.onDarkFg` | color | `--component-button-on-dark-fg` | `var(--color-semantic-static-white)` | — |
 | `component.button.tokens.primaryBg` | color | `--component-button-primary-bg` | `var(--color-semantic-primary-normal)` | — |
 | `component.button.tokens.primaryBgHover` | color | `--component-button-primary-bg-hover` | `var(--component-button-primary-bg)` | — |
-| `component.button.tokens.primaryFg` | color | `--component-button-primary-fg` | `var(--component-button-primary-fg)` | — |
+| `component.button.tokens.primaryFg` | color | `--component-button-primary-fg` | `var(--color-semantic-static-white)` | — |
 | `component.button.tokens.radius` | dimension | `--component-button-radius` | `var(--component-button-radius)` | — |
-| `component.button.tokens.secondaryBg` | color | `--component-button-secondary-bg` | `var(--component-button-secondary-bg)` | — |
+| `component.button.tokens.secondaryBg` | color | `--component-button-secondary-bg` | `var(--color-semantic-secondary-normal)` | — |
+| `component.button.tokens.secondaryBgHover` | color | `--component-button-secondary-bg-hover` | `var(--component-button-secondary-bg)` | — |
+| `component.button.tokens.secondaryFg` | color | `--component-button-secondary-fg` | `var(--color-semantic-static-white)` | — |
 | `component.button.tokens.signalBg` | color | `--component-button-signal-bg` | `var(--color-semantic-primary-normal)` | — |
 | `component.button.tokens.signalBgHover` | color | `--component-button-signal-bg-hover` | `var(--component-button-signal-bg)` | — |
+| `component.button.tokens.signalFg` | color | `--component-button-signal-fg` | `var(--color-semantic-static-white)` | — |
 | `component.button.tokens.textHoverOpacity` | number | `--component-button-text-hover-opacity` | `0.9` | — |
 | `component.button.tokens.transition` | transition | `--component-button-transition` | `none` | — |
-| `component.card.tokens.background` | color | `--component-card-bg` | `var(--component-card-bg)` | — |
-| `component.card.tokens.backgroundDark` | color | `--component-card-bg-dark` | `var(--component-card-bg-dark)` | — |
+| `component.card.tokens.background` | color | `--component-card-bg` | `var(--color-semantic-background-elevated-normal)` | — |
+| `component.card.tokens.backgroundDark` | color | `--component-card-bg-dark` | `var(--color-semantic-inverse-background)` | — |
 | `component.card.tokens.backgroundSubtle` | color | `--component-card-bg-subtle` | `var(--color-semantic-background-elevated-alternative)` | — |
-| `component.card.tokens.border` | border | `--component-card-border` | `var(--component-card-border)` | — |
-| `component.card.tokens.foreground` | color | `--component-card-fg` | `var(--component-card-fg)` | — |
-| `component.card.tokens.foregroundDark` | color | `--component-card-fg-dark` | `var(--component-card-fg-dark)` | — |
+| `component.card.tokens.border` | border | `--component-card-border` | `var(--border-thin) solid var(--color-semantic-line-normal-normal)` | — |
+| `component.card.tokens.foreground` | color | `--component-card-fg` | `var(--color-semantic-label-normal)` | — |
+| `component.card.tokens.foregroundDark` | color | `--component-card-fg-dark` | `var(--color-semantic-static-white)` | — |
 | `component.card.tokens.padding` | dimension | `--component-card-padding` | `var(--component-card-padding)` | — |
 | `component.card.tokens.radius` | dimension | `--component-card-radius` | `var(--component-card-radius)` | — |
 | `component.card.tokens.shadowLg` | shadow | `--component-card-shadow-lg` | `var(--component-card-shadow-lg)` | — |
 | `component.card.tokens.shadowMd` | shadow | `--component-card-shadow-md` | `var(--component-card-shadow-md)` | — |
 | `component.card.tokens.shadowXs` | shadow | `--component-card-shadow-xs` | `var(--component-card-shadow-xs)` | — |
-| `component.chip.tokens.activeBorder` | border | `--component-chip-border-active` | `var(--component-chip-border-active)` | — |
-| `component.chip.tokens.activeForeground` | color | `--component-chip-fg-active` | `var(--component-chip-fg-active)` | — |
-| `component.chip.tokens.background` | color | `--component-chip-bg` | `var(--component-chip-bg)` | — |
-| `component.chip.tokens.backgroundHover` | color | `--component-chip-bg-hover` | `var(--component-chip-bg-hover)` | — |
-| `component.chip.tokens.border` | border | `--component-chip-border` | `var(--component-chip-border)` | — |
+| `component.chip.tokens.activeBorder` | border | `--component-chip-border-active` | `var(--border-thin) solid var(--color-semantic-primary-normal)` | — |
+| `component.chip.tokens.activeForeground` | color | `--component-chip-fg-active` | `var(--color-semantic-label-normal)` | — |
+| `component.chip.tokens.background` | color | `--component-chip-bg` | `var(--color-semantic-background-elevated-normal)` | — |
+| `component.chip.tokens.backgroundHover` | color | `--component-chip-bg-hover` | `var(--color-semantic-background-elevated-normal)` | — |
+| `component.chip.tokens.border` | border | `--component-chip-border` | `var(--border-thin) solid var(--color-semantic-line-normal-normal)` | — |
 | `component.chip.tokens.disabledOpacity` | number | `--component-chip-disabled-opacity` | `var(--component-chip-disabled-opacity)` | — |
 | `component.chip.tokens.fontSizeLg` | dimension | `--component-chip-font-size-lg` | `var(--component-chip-font-size-lg)` | — |
 | `component.chip.tokens.fontSizeMd` | dimension | `--component-chip-font-size-md` | `var(--component-chip-font-size-md)` | — |
 | `component.chip.tokens.fontSizeSm` | dimension | `--component-chip-font-size-sm` | `var(--component-chip-font-size-sm)` | — |
 | `component.chip.tokens.fontSizeXs` | dimension | `--component-chip-font-size-xs` | `var(--component-chip-font-size-xs)` | — |
 | `component.chip.tokens.fontWeight` | fontWeight | `--component-chip-font-weight` | `var(--component-chip-font-weight)` | — |
-| `component.chip.tokens.foreground` | color | `--component-chip-fg` | `var(--component-chip-fg)` | — |
+| `component.chip.tokens.foreground` | color | `--component-chip-fg` | `var(--color-semantic-label-normal)` | — |
 | `component.chip.tokens.gap` | dimension | `--component-chip-gap` | `var(--component-chip-gap)` | — |
 | `component.chip.tokens.heightLg` | dimension | `--component-chip-height-lg` | `var(--component-chip-height-lg)` | — |
 | `component.chip.tokens.heightMd` | dimension | `--component-chip-height-md` | `var(--component-chip-height-md)` | — |
@@ -83,10 +103,10 @@
 | `component.chip.tokens.paddingXSm` | dimension | `--component-chip-padding-x-sm` | `var(--component-chip-padding-x-sm)` | — |
 | `component.chip.tokens.paddingXXs` | dimension | `--component-chip-padding-x-xs` | `var(--component-chip-padding-x-xs)` | — |
 | `component.chip.tokens.radius` | dimension | `--component-chip-radius` | `var(--component-chip-radius)` | — |
-| `component.chip.tokens.selectedBackground` | color | `--component-chip-bg-selected` | `var(--component-chip-bg-selected)` | — |
-| `component.chip.tokens.solidBackground` | color | `--component-chip-solid-bg` | `var(--component-chip-solid-bg)` | — |
-| `component.chip.tokens.solidBorder` | border | `--component-chip-solid-border` | `var(--component-chip-solid-border)` | — |
-| `component.chip.tokens.solidForeground` | color | `--component-chip-solid-fg` | `var(--component-chip-solid-fg)` | — |
+| `component.chip.tokens.selectedBackground` | color | `--component-chip-bg-selected` | `var(--color-semantic-primary-surface-strong)` | — |
+| `component.chip.tokens.solidBackground` | color | `--component-chip-solid-bg` | `var(--color-semantic-primary-normal)` | — |
+| `component.chip.tokens.solidBorder` | border | `--component-chip-solid-border` | `var(--border-thin) solid transparent` | — |
+| `component.chip.tokens.solidForeground` | color | `--component-chip-solid-fg` | `var(--color-semantic-static-white)` | — |
 | `component.confirmDialog.tokens.maxWidth` | dimension | `--component-confirm-dialog-max-width` | `var(--component-confirm-dialog-max-width)` | — |
 | `component.dataGrid.tokens.cellPaddingMd` | string | `--component-data-grid-cell-padding-md` | `var(--component-data-grid-cell-padding-md)` | — |
 | `component.dataGrid.tokens.cellPaddingSm` | string | `--component-data-grid-cell-padding-sm` | `var(--component-data-grid-cell-padding-sm)` | — |
@@ -100,7 +120,9 @@
 | `component.dataToolbar.tokens.gapSm` | dimension | `--component-data-toolbar-gap-sm` | `var(--component-data-toolbar-gap-sm)` | — |
 | `component.dataToolbar.tokens.paddingMd` | string | `--component-data-toolbar-padding-md` | `var(--component-data-toolbar-padding-md)` | — |
 | `component.dataToolbar.tokens.paddingSm` | string | `--component-data-toolbar-padding-sm` | `var(--component-data-toolbar-padding-sm)` | — |
-| `component.divider.tokens.color` | color | `--component-divider-color` | `var(--component-divider-color)` | — |
+| `component.divider.tokens.color` | color | `--component-divider-color` | `var(--color-semantic-line-normal-normal)` | — |
+| `component.divider.tokens.colorNormal` | color | `--component-divider-color-normal` | `var(--color-semantic-line-normal-normal)` | — |
+| `component.divider.tokens.colorThick` | color | `--component-divider-color-thick` | `var(--color-semantic-fill-normal)` | — |
 | `component.divider.tokens.thicknessNormal` | dimension | `--component-divider-thickness-normal` | `var(--component-divider-thickness-normal)` | — |
 | `component.divider.tokens.thicknessThick` | dimension | `--component-divider-thickness-thick` | `var(--component-divider-thickness-thick)` | — |
 | `component.drawer.tokens.bodyPaddingComfortable` | string | `--component-drawer-body-padding-comfortable` | `var(--component-drawer-body-padding-comfortable)` | — |
@@ -117,15 +139,19 @@
 | `component.iconButton.tokens.sizeMd` | dimension | `--component-icon-button-size-md` | `var(--component-icon-button-size-md)` | — |
 | `component.iconButton.tokens.sizeSm` | dimension | `--component-icon-button-size-sm` | `var(--component-icon-button-size-sm)` | — |
 | `component.iconButton.tokens.sizeXs` | dimension | `--component-icon-button-size-xs` | `var(--component-icon-button-size-xs)` | — |
-| `component.input.tokens.background` | color | `--component-input-bg` | `var(--component-input-bg)` | — |
-| `component.input.tokens.borderColor` | color | `--component-input-border-color` | `var(--component-input-border-color)` | — |
-| `component.input.tokens.borderColorFocus` | color | `--component-input-border-color-focus` | `var(--component-input-border-color-focus)` | — |
-| `component.input.tokens.borderColorInvalid` | color | `--component-input-border-color-invalid` | `var(--component-input-border-color-invalid)` | — |
+| `component.input.tokens.background` | color | `--component-input-bg` | `var(--color-semantic-background-elevated-normal)` | — |
+| `component.input.tokens.borderColor` | color | `--component-input-border-color` | `var(--color-semantic-line-normal-normal)` | — |
+| `component.input.tokens.borderColorFocus` | color | `--component-input-border-color-focus` | `var(--color-semantic-primary-normal)` | — |
+| `component.input.tokens.borderColorInvalid` | color | `--component-input-border-color-invalid` | `var(--color-semantic-status-negative)` | — |
 | `component.input.tokens.compactTypography` | typography | `--component-input-font-size-sm, --component-input-line-height-sm, --component-input-letter-spacing-sm` | `label1` | — |
 | `component.input.tokens.focusShadow` | shadow | `--component-input-focus-shadow` | `var(--component-input-focus-shadow)` | — |
 | `component.input.tokens.height` | dimension | `--component-input-height` | `var(--component-input-height)` | — |
+| `component.input.tokens.iconColor` | color | `--component-input-icon-color` | `var(--color-semantic-label-alternative)` | — |
+| `component.input.tokens.labelColor` | color | `--component-input-label-color` | `var(--color-semantic-label-normal)` | — |
 | `component.input.tokens.labelTypography` | typography | `--component-input-label-font-size, --component-input-label-line-height, --component-input-label-letter-spacing` | `label1` | — |
 | `component.input.tokens.paddingX` | dimension | `--component-input-padding-x` | `var(--component-input-padding-x)` | — |
+| `component.input.tokens.requiredColor` | color | `--component-input-required-color` | `var(--color-semantic-status-negative)` | — |
+| `component.input.tokens.textColor` | color | `--component-input-text-color` | `var(--color-semantic-label-normal)` | — |
 | `component.listCell.tokens.paddingYLg` | dimension | `--component-list-cell-padding-y-lg` | `var(--component-list-cell-padding-y-lg)` | — |
 | `component.listCell.tokens.paddingYMd` | dimension | `--component-list-cell-padding-y-md` | `var(--component-list-cell-padding-y-md)` | — |
 | `component.listCell.tokens.paddingYSm` | dimension | `--component-list-cell-padding-y-sm` | `var(--component-list-cell-padding-y-sm)` | — |
@@ -133,26 +159,28 @@
 | `component.menu.tokens.headerFontSize` | dimension | `--component-menu-header-font-size` | `var(--component-menu-header-font-size)` | — |
 | `component.menu.tokens.headerFontWeight` | fontWeight | `--component-menu-header-font-weight` | `var(--component-menu-header-font-weight)` | — |
 | `component.menu.tokens.headerLineHeight` | dimension | `--component-menu-header-line-height` | `var(--component-menu-header-line-height)` | — |
-| `component.menu.tokens.itemActiveRingColor` | color | `--component-menu-item-active-ring-color` | `var(--component-menu-item-active-ring-color)` | — |
-| `component.menu.tokens.itemCheckColor` | color | `--component-menu-item-check-color` | `var(--component-menu-item-check-color)` | — |
+| `component.menu.tokens.itemActiveRingColor` | color | `--component-menu-item-active-ring-color` | `var(--color-semantic-label-normal)` | — |
+| `component.menu.tokens.itemCheckColor` | color | `--component-menu-item-check-color` | `var(--color-semantic-label-normal)` | — |
 | `component.menu.tokens.itemFontSize` | dimension | `--component-menu-item-font-size` | `var(--component-menu-item-font-size)` | — |
-| `component.menu.tokens.itemHoverBg` | color | `--component-menu-item-hover-bg` | `var(--component-menu-item-hover-bg)` | — |
+| `component.menu.tokens.itemHoverBg` | color | `--component-menu-item-hover-bg` | `var(--color-semantic-fill-normal)` | — |
 | `component.menu.tokens.itemLineHeight` | dimension | `--component-menu-item-line-height` | `var(--component-menu-item-line-height)` | — |
 | `component.menu.tokens.itemMinHeight` | dimension | `--component-menu-item-min-height` | `var(--component-menu-item-min-height)` | — |
 | `component.menu.tokens.itemPaddingX` | dimension | `--component-menu-item-padding-x` | `var(--component-menu-item-padding-x)` | — |
 | `component.menu.tokens.itemPaddingY` | dimension | `--component-menu-item-padding-y` | `var(--component-menu-item-padding-y)` | — |
 | `component.menu.tokens.itemRadius` | dimension | `--component-menu-item-radius` | `var(--component-menu-item-radius)` | — |
-| `component.menu.tokens.itemSelectedBg` | color | `--component-menu-item-selected-bg` | `var(--component-menu-item-selected-bg)` | — |
+| `component.menu.tokens.itemSelectedBg` | color | `--component-menu-item-selected-bg` | `var(--color-semantic-fill-alternative)` | — |
 | `component.menu.tokens.maxWidth` | dimension | `--component-menu-max-width` | `var(--component-menu-max-width)` | — |
 | `component.menu.tokens.minWidth` | dimension | `--component-menu-min-width` | `var(--component-menu-min-width)` | — |
 | `component.menu.tokens.paddingX` | dimension | `--component-menu-padding-x` | `var(--component-menu-padding-x)` | — |
 | `component.menu.tokens.paddingY` | dimension | `--component-menu-padding-y` | `var(--component-menu-padding-y)` | — |
 | `component.menu.tokens.radius` | dimension | `--component-menu-radius` | `var(--component-menu-radius)` | — |
 | `component.menu.tokens.scrollbarGap` | dimension | `--component-menu-scrollbar-gap` | `var(--component-menu-scrollbar-gap)` | — |
-| `component.mobileSystemBars.tokens.foreground` | color | `--component-system-bars-fg` | `var(--component-system-bars-fg)` | — |
+| `component.mobileSystemBars.tokens.foreground` | color | `--component-system-bars-fg` | `var(--color-semantic-label-strong)` | — |
 | `component.mobileSystemBars.tokens.homeHeight` | dimension | `--component-system-bars-home-height` | `var(--component-system-bars-home-height)` | — |
 | `component.mobileSystemBars.tokens.homeWidth` | dimension | `--component-system-bars-home-width` | `var(--component-system-bars-home-width)` | — |
+| `component.mobileSystemBars.tokens.mutedFg` | color | `--component-system-bars-muted-fg` | `var(--color-semantic-label-alternative)` | — |
 | `component.notification.tokens.unreadSurface` | color | `--component-notification-unread-surface` | `var(--color-semantic-primary-surface-normal)` | — |
+| `component.overlay.tokens.scrim` | color | `--component-dialog-scrim` | `var(--color-semantic-material-dimmer)` | — |
 | `component.sideNav.tokens.brandActiveForeground` | color | `--component-side-nav-brand-active-foreground` | `var(--color-atomic-navy-shell-68)` | — |
 | `component.sideNav.tokens.brandActiveHoverSurface` | color | `--component-side-nav-brand-active-hover-surface` | `var(--color-atomic-navy-shell-20)` | — |
 | `component.sideNav.tokens.brandActiveSurface` | color | `--component-side-nav-brand-active-surface` | `var(--color-atomic-navy-shell-18)` | — |
@@ -187,28 +215,52 @@
 | `component.table.tokens.rowMinHeightMd` | dimension | `--component-table-row-min-height-md` | `var(--component-table-row-min-height-md)` | — |
 | `component.table.tokens.rowMinHeightSm` | dimension | `--component-table-row-min-height-sm` | `var(--component-table-row-min-height-sm)` | — |
 | `component.toggleIcon.tokens.activeBackground` | color | `--component-toggle-icon-bg-active` | `var(--component-button-primary-bg)` | — |
-| `component.toggleIcon.tokens.background` | color | `--component-toggle-icon-bg` | `var(--component-toggle-icon-bg)` | — |
-| `component.toggleIcon.tokens.border` | border | `--component-toggle-icon-border` | `var(--component-toggle-icon-border)` | — |
+| `component.toggleIcon.tokens.background` | color | `--component-toggle-icon-bg` | `var(--color-semantic-background-elevated-normal)` | — |
+| `component.toggleIcon.tokens.bgHover` | color | `--component-toggle-icon-bg-hover` | `var(--color-semantic-fill-alternative)` | — |
+| `component.toggleIcon.tokens.border` | border | `--component-toggle-icon-border` | `var(--border-thin) solid var(--color-semantic-line-normal-normal)` | — |
+| `component.toggleIcon.tokens.fg` | color | `--component-toggle-icon-fg` | `var(--color-semantic-label-normal)` | — |
+| `component.toggleIcon.tokens.fgActive` | color | `--component-toggle-icon-fg-active` | `var(--component-button-primary-fg)` | — |
 | `component.toggleIcon.tokens.sizeMd` | dimension | `--component-toggle-icon-size-md` | `var(--component-toggle-icon-size-md)` | — |
 | `component.toggleIcon.tokens.sizeSm` | dimension | `--component-toggle-icon-size-sm` | `var(--component-toggle-icon-size-sm)` | — |
 | `component.toolbar.tokens.gap` | dimension | `--component-toolbar-gap` | `var(--component-toolbar-gap)` | — |
 | `component.toolbar.tokens.padding` | dimension | `--component-toolbar-padding` | `var(--component-toolbar-padding)` | — |
 | `component.topBar.tokens.menuGap` | dimension | `--component-topbar-menu-gap` | `var(--component-topbar-menu-gap)` | — |
-| `component.topBar.tokens.menuItemHoverBg` | color | `--component-topbar-menu-item-hover-bg` | `var(--component-topbar-menu-item-hover-bg)` | — |
+| `component.topBar.tokens.menuItemHoverBg` | color | `--component-topbar-menu-item-hover-bg` | `var(--component-menu-item-hover-bg)` | — |
 | `component.topBar.tokens.menuItemMinHeight` | dimension | `--component-topbar-menu-item-min-height` | `var(--component-topbar-menu-item-min-height)` | — |
 | `component.topBar.tokens.menuItemPaddingX` | dimension | `--component-topbar-menu-item-padding-x` | `var(--component-topbar-menu-item-padding-x)` | — |
 | `component.topBar.tokens.menuItemPaddingY` | dimension | `--component-topbar-menu-item-padding-y` | `var(--component-topbar-menu-item-padding-y)` | — |
 | `component.topBar.tokens.menuItemRadius` | dimension | `--component-topbar-menu-item-radius` | `var(--component-topbar-menu-item-radius)` | — |
-| `component.topBar.tokens.menuItemSelectedBg` | color | `--component-topbar-menu-item-selected-bg` | `var(--component-topbar-menu-item-selected-bg)` | — |
+| `component.topBar.tokens.menuItemSelectedBg` | color | `--component-topbar-menu-item-selected-bg` | `var(--component-menu-item-selected-bg)` | — |
 | `component.topBar.tokens.menuMaxWidth` | dimension | `--component-topbar-menu-max-width` | `var(--component-topbar-menu-max-width)` | — |
 | `component.topBar.tokens.menuMinWidth` | dimension | `--component-topbar-menu-min-width` | `var(--component-topbar-menu-min-width)` | — |
 | `component.topBar.tokens.menuPadding` | dimension | `--component-topbar-menu-padding` | `var(--component-topbar-menu-padding)` | — |
 | `component.topBar.tokens.menuRadius` | dimension | `--component-topbar-menu-radius` | `var(--component-topbar-menu-radius)` | — |
+| `component.transientFeedback.tokens.bg` | color | `--component-transient-feedback-bg` | `color-mix(in srgb, var(--color-semantic-inverse-background) 72%, transparent)` | — |
 | `component.tree.tokens.indent` | dimension | `--component-tree-indent` | `var(--component-tree-indent)` | — |
 | `component.tree.tokens.rowGap` | dimension | `--component-tree-row-gap` | `var(--component-tree-row-gap)` | — |
 | `component.tree.tokens.rowMinHeight` | dimension | `--component-tree-row-min-height` | `var(--component-tree-row-min-height)` | — |
 | `component.tree.tokens.rowPaddingX` | dimension | `--component-tree-row-padding-x` | `var(--component-tree-row-padding-x)` | — |
 | `component.tree.tokens.rowPaddingY` | dimension | `--component-tree-row-padding-y` | `var(--component-tree-row-padding-y)` | — |
+| `component.viewer.tokens.border` | color | `--component-viewer-border` | `color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)` | — |
+| `component.viewer.tokens.foreground` | color | `--component-viewer-foreground` | `var(--color-semantic-static-white)` | — |
+| `component.viewer.tokens.lightBorder` | color | `--component-viewer-light-border` | `color-mix(in srgb, var(--color-semantic-static-black) 16%, transparent)` | — |
+| `component.viewer.tokens.lightForeground` | color | `--component-viewer-light-foreground` | `color-mix(in srgb, var(--color-semantic-static-black) 90%, transparent)` | — |
+| `component.viewer.tokens.lightMapBoundary` | color | `--component-viewer-light-map-boundary` | `color-mix(in srgb, var(--color-semantic-static-black) 28%, transparent)` | — |
+| `component.viewer.tokens.lightMapFree` | color | `--component-viewer-light-map-free` | `var(--color-semantic-static-white)` | — |
+| `component.viewer.tokens.lightMapOccupied` | color | `--component-viewer-light-map-occupied` | `color-mix(in srgb, var(--color-semantic-static-black) 79%, transparent)` | — |
+| `component.viewer.tokens.lightMapUnknown` | color | `--component-viewer-light-map-unknown` | `color-mix(in srgb, var(--color-semantic-static-black) 4%, var(--color-semantic-static-white))` | — |
+| `component.viewer.tokens.lightMuted` | color | `--component-viewer-light-muted` | `color-mix(in srgb, var(--color-semantic-static-black) 68%, transparent)` | — |
+| `component.viewer.tokens.lightSurface` | color | `--component-viewer-light-surface` | `var(--color-semantic-static-white)` | — |
+| `component.viewer.tokens.lightSurfaceElevated` | color | `--component-viewer-light-surface-elevated` | `color-mix(in srgb, var(--color-semantic-static-black) 4%, var(--color-semantic-static-white))` | — |
+| `component.viewer.tokens.mapBoundary` | color | `--component-viewer-map-boundary` | `color-mix(in srgb, var(--color-semantic-static-white) 32%, transparent)` | — |
+| `component.viewer.tokens.mapFree` | color | `--component-viewer-map-free` | `color-mix(in srgb, var(--color-semantic-static-black) 78%, var(--color-semantic-primary-normal))` | — |
+| `component.viewer.tokens.mapOccupied` | color | `--component-viewer-map-occupied` | `color-mix(in srgb, var(--color-semantic-static-white) 88%, transparent)` | — |
+| `component.viewer.tokens.mapUnknown` | color | `--component-viewer-map-unknown` | `color-mix(in srgb, var(--color-semantic-static-black) 88%, var(--color-semantic-primary-normal))` | — |
+| `component.viewer.tokens.muted` | color | `--component-viewer-muted` | `color-mix(in srgb, var(--color-semantic-static-white) 72%, transparent)` | — |
+| `component.viewer.tokens.overlay` | color | `--component-viewer-overlay` | `color-mix(in srgb, var(--color-semantic-static-black) 68%, transparent)` | — |
+| `component.viewer.tokens.subtle` | color | `--component-viewer-subtle` | `color-mix(in srgb, var(--color-semantic-static-white) 52%, transparent)` | — |
+| `component.viewer.tokens.surface` | color | `--component-viewer-surface` | `color-mix(in srgb, var(--color-semantic-static-black) 88%, var(--color-semantic-primary-normal))` | — |
+| `component.viewer.tokens.surfaceElevated` | color | `--component-viewer-surface-elevated` | `color-mix(in srgb, var(--color-semantic-static-black) 78%, var(--color-semantic-primary-normal))` | — |
 | `primitive.colorRamps.blue.tokens.10` | color | `--color-atomic-blue-10` | `#0B1722` | — |
 | `primitive.colorRamps.blue.tokens.20` | color | `--color-atomic-blue-20` | `#162E45` | — |
 | `primitive.colorRamps.blue.tokens.30` | color | `--color-atomic-blue-30` | `#21476A` | — |
@@ -630,17 +682,7 @@
 | `runtimeCoverage` | runtime-projection | `--caption2-spacing` | `0.0311em` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/typography.css) |
 | `runtimeCoverage` | runtime-projection | `--component-action-area-shadow-sticky` | `var(--shadow-control)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-action-area-z-index` | `20` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-dark-bg` | `var(--color-semantic-inverse-background)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-dark-bg-hover` | `var(--component-button-dark-bg)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-dark-fg` | `var(--color-semantic-inverse-label)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-dark-shadow-hover` | `var(--component-button-shadow-rest)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-disabled-bg` | `var(--color-semantic-fill-normal)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-disabled-fg` | `var(--color-semantic-label-assistive)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-disabled-fg-outlined` | `var(--color-semantic-label-disable)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-disabled-outlined-border` | `var(--border-thin) solid var(--color-semantic-line-normal-neutral)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-flat-bg` | `var(--color-semantic-secondary-surface)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-flat-bg-hover` | `var(--component-button-flat-bg)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-flat-fg` | `var(--color-semantic-label-normal)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-font-size-lg` | `var(--body1-size)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-font-size-md` | `var(--body2-size)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-font-size-sm` | `var(--label2-size)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
@@ -651,9 +693,6 @@
 | `runtimeCoverage` | runtime-projection | `--component-button-gap-sm` | `4px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-ghost-bg` | `transparent` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-ghost-bg-hover` | `var(--component-button-ghost-bg)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-ghost-border` | `var(--border-thin) solid var(--color-semantic-line-solid-normal)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-ghost-border-hover` | `var(--component-button-ghost-border)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-ghost-fg` | `var(--color-semantic-label-normal)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-icon-only-icon-size-lg` | `24px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-icon-only-icon-size-md` | `20px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-icon-only-icon-size-sm` | `18px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
@@ -668,10 +707,6 @@
 | `runtimeCoverage` | runtime-projection | `--component-button-line-height-lg` | `var(--body1-line)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-line-height-md` | `var(--body2-line)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-line-height-sm` | `var(--label2-line)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-on-dark-bg` | `rgba(255, 255, 255, 0.14)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-on-dark-bg-hover` | `rgba(255, 255, 255, 0.16)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-on-dark-border` | `var(--border-thin) solid rgba(255, 255, 255, 0.28)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-on-dark-fg` | `#FFFFFF` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-padding-lg` | `0 28px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-padding-md` | `0 20px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-padding-sm` | `0 14px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
@@ -679,11 +714,8 @@
 | `runtimeCoverage` | runtime-projection | `--component-button-radius-lg` | `var(--radius-md)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-radius-md` | `var(--radius-10)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-radius-sm` | `var(--radius-8)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-secondary-bg-hover` | `var(--component-button-secondary-bg)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-secondary-fg` | `var(--color-semantic-static-white)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-secondary-shadow-hover` | `var(--component-button-shadow-rest)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-shadow-rest` | `var(--shadow-xs)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-button-signal-fg` | `var(--color-semantic-static-white)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-signal-shadow-hover` | `var(--component-button-shadow-rest)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-transform-hover` | `none` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-button-transform-pressed` | `none` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
@@ -705,52 +737,20 @@
 | `runtimeCoverage` | runtime-projection | `--component-chip-radius-sm` | `var(--radius-8)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-chip-radius-xs` | `var(--radius-sm)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-dialog-radius` | `var(--radius-3xl)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-dialog-scrim` | `var(--color-semantic-material-dimmer)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-dialog-scrim-blur` | `2px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-divider-color-normal` | `var(--color-semantic-line-normal-normal)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-divider-color-thick` | `var(--color-semantic-fill-normal)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-filter-chip-height` | `32px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-input-border-width` | `var(--border-thin)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-input-font-size` | `var(--body1-size)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-input-gap` | `var(--space-2)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-input-icon-color` | `var(--color-semantic-label-alternative)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-input-label-color` | `var(--color-semantic-label-normal)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-input-label-font-weight` | `var(--fw-semibold)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-input-letter-spacing` | `var(--body1-spacing)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-input-line-height` | `var(--body1-line)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-input-radius` | `var(--radius-input)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-input-required-color` | `var(--color-semantic-status-negative)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-input-stack-gap` | `var(--space-2)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-input-text-color` | `var(--color-semantic-label-normal)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-system-bars-muted-fg` | `var(--color-semantic-label-alternative)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-tag-height` | `26px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-toggle-icon-bg-hover` | `var(--color-semantic-fill-alternative)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-toggle-icon-disabled-opacity` | `var(--component-button-disabled-opacity)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-toggle-icon-fg` | `var(--color-semantic-label-normal)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-toggle-icon-fg-active` | `var(--component-button-primary-fg)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-toggle-icon-radius` | `var(--radius-md)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-transient-feedback-bg` | `color-mix(in srgb, var(--color-semantic-inverse-background) 72%, transparent)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--component-transient-feedback-blur` | `20px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-border` | `color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-foreground` | `var(--color-semantic-static-white)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-light-border` | `color-mix(in srgb, var(--color-semantic-static-black) 16%, transparent)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-light-foreground` | `color-mix(in srgb, var(--color-semantic-static-black) 90%, transparent)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-light-map-boundary` | `color-mix(in srgb, var(--color-semantic-static-black) 28%, transparent)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-light-map-free` | `var(--color-semantic-static-white)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-light-map-occupied` | `color-mix(in srgb, var(--color-semantic-static-black) 79%, transparent)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-light-map-unknown` | `color-mix(in srgb, var(--color-semantic-static-black) 4%, var(--color-semantic-static-white))` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-light-muted` | `color-mix(in srgb, var(--color-semantic-static-black) 68%, transparent)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-light-surface` | `var(--color-semantic-static-white)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-light-surface-elevated` | `color-mix(in srgb, var(--color-semantic-static-black) 4%, var(--color-semantic-static-white))` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-map-boundary` | `color-mix(in srgb, var(--color-semantic-static-white) 32%, transparent)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-map-free` | `color-mix(in srgb, var(--color-semantic-static-black) 78%, var(--color-semantic-primary-normal))` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-map-occupied` | `color-mix(in srgb, var(--color-semantic-static-white) 88%, transparent)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-map-unknown` | `color-mix(in srgb, var(--color-semantic-static-black) 88%, var(--color-semantic-primary-normal))` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-muted` | `color-mix(in srgb, var(--color-semantic-static-white) 72%, transparent)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-overlay` | `color-mix(in srgb, var(--color-semantic-static-black) 68%, transparent)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-subtle` | `color-mix(in srgb, var(--color-semantic-static-white) 52%, transparent)` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-surface` | `color-mix(in srgb, var(--color-semantic-static-black) 88%, var(--color-semantic-primary-normal))` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
-| `runtimeCoverage` | runtime-projection | `--component-viewer-surface-elevated` | `color-mix(in srgb, var(--color-semantic-static-black) 78%, var(--color-semantic-primary-normal))` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/components.css) |
 | `runtimeCoverage` | runtime-projection | `--container` | `1440px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/spacing.css) |
 | `runtimeCoverage` | runtime-projection | `--container-read` | `1100px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/spacing.css) |
 | `runtimeCoverage` | runtime-projection | `--container-wide` | `1500px` | Runtime variable is not yet promoted into a primitive, semantic, or component token object; it remains explicitly inventoried and drift-checked. (tokens/spacing.css) |

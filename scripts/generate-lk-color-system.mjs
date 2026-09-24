@@ -100,7 +100,8 @@ for (const [componentName, component] of Object.entries(source.component || {}))
     if (!token?.generated) continue;
     const lightValue = token.modes?.light || token.$value;
     const darkValue = token.modes?.dark || token.$value;
-    assert(token.$type === 'color' && token.css && lightValue && darkValue, `Generated component color ${componentName}.${tokenName} is incomplete.`);
+    // Borders carry a color inside the shorthand, so they need theme scoping too.
+    assert(['color', 'border'].includes(token.$type) && token.css && lightValue && darkValue, `Generated component color ${componentName}.${tokenName} is incomplete.`);
     componentLightDeclarations.push([token.css, lightValue]);
     componentDarkDeclarations.push([token.css, darkValue]);
   }
