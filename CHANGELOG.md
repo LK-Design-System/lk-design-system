@@ -2,6 +2,24 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.4.2 - 2026-09-25
+
+Paired Robotics release: `0.1.0-rc.52`. Dark-mode fix for inverse surfaces, and the last satellite
+references to the deprecated status names.
+
+### Fixed
+
+- `LogViewer`, `Tooltip`, `Snackbar`, `Footer` and `AnnotatedImage` stay dark in both themes. In dark
+  mode `inverse-background` flips to white while the white-alpha `inverse-*-soft`, `-fill`, `-line` and
+  `-icon-muted` roles do not, so these surfaces showed white text on white (LogViewer WARN 1.92:1,
+  ERROR 2.90:1). Their root now renders under `data-theme="light"`, matching light mode; see
+  TOKEN_GOVERNANCE "Inverse surfaces".
+
+### Changed
+
+- Robotics and the 3D docs app no longer reference the deprecated bare status names; their external
+  surfaces record the `-foreground` roles they now read.
+
 ## 0.4.1 - 2026-09-25
 
 Paired Robotics release: `0.1.0-rc.51`. Color roles from the 2026-09-24 color review. Nothing is
