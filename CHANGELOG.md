@@ -2,6 +2,22 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.2.13 - 2026-09-24
+
+Paired Robotics release: `0.1.0-rc.48`. This release adds the dense Fleet list for large fleets and
+documents how an ops monitoring surface is composed. No Core, Theme or Product runtime changes.
+
+### Added
+
+- Robotics `FleetRobotRow` `layout="row"`: one line per robot with no card chrome, a 1px divider,
+  and badges side by side. Its vertical padding comes from ListCell `small`, so
+  `data-lds-profile="ops"` sets the row to 36px (card layout is about 66px). Card layout stays the
+  default for small fleets and mobile.
+- Robotics `RobotStatusCard` `surface="plain"` for list rows. Cards also rest without a shadow,
+  matching 0.2.12.
+- `DENSITY_AND_EXPRESSION_PROFILE_CONTRACT.md` gains an ops monitoring composition guide. The ops
+  surface is the `ops` profile over existing parts, and the finished screen belongs to the product.
+
 ## 0.2.12 - 2026-09-24
 
 Paired Robotics release: `0.1.0-rc.47`. This patch acts on the 0.2.11 visual design review:
