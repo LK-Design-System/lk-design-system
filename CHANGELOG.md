@@ -2,6 +2,43 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.4.1 - 2026-09-25
+
+Paired Robotics release: `0.1.0-rc.51`. Color roles from the 2026-09-24 color review. Nothing is
+removed; the deprecated names below keep their values until 0.5.0.
+
+### Added
+
+- `--color-semantic-status-negative-fill` and `-on-fill` (red-30 + white, 7.26:1 in both modes):
+  the solid fill for an alarm or destructive confirm the operator must act on now. `Button`
+  `danger` now draws from it (same value), and `SpeedDial`'s danger action moves to it from the
+  banned vivid fill.
+- `--color-semantic-status-*-signal`: the vivid status hue under its own name.
+- `--color-semantic-primary-ink` and `-ink-strong`: primary-hue text, link and 1px border roles
+  whose contrast rises with strength in both modes (4.5:1+ on page, alternative, elevated and the
+  primary tint).
+- `npm run check:deprecated-tokens` (in `check:fast`): components, stories and hand-written token
+  CSS may not reference a token `tokens/source.json` marks deprecated.
+
+### Changed
+
+- Every LDS component and story reference to a status color names its role (`-foreground`,
+  `-text`, `-signal`, `-fill`). Light indicators that were below 3:1 now use the darker
+  foreground.
+- Near-duplicates fold into ramp stops: `blue-50` takes the primary value `#3878B3` (dark
+  `primary-fill` 4.85 → 4.66:1, still AA), accent cyan and light-blue reference their stops, and
+  cautionary foreground uses `orange-40` (3.25:1). Every shift is at most 5/255 per channel.
+- `LogViewer` paints INFO lines with `inverse-primary` instead of the light-blue accent.
+- `primary-strong` and `primary-heavy` are documented as fill steps, not text.
+
+### Deprecated (removal 0.5.0)
+
+- `--color-semantic-status-positive|cautionary|negative` → a named role (see TOKEN_GOVERNANCE).
+  Robotics (2), 3D (8), Slides (28) and LK Portal (6) move when they take this release.
+- `--color-semantic-accent-background|foreground-light-blue` and `-red-orange`: they read as
+  selected/info or as a status. No consumer references.
+- `--color-atomic-orange-39` → `orange-40`.
+
 ## 0.4.0 - 2026-09-24
 
 Paired Robotics release: `0.1.0-rc.50`. This release removes the interaction tokens deprecated in

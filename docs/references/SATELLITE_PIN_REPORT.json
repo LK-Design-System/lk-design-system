@@ -1,35 +1,35 @@
 {
   "kind": "lds-satellite-pin-report",
   "generatedBy": "npm run report:satellite-pins",
-  "releaseVersion": "0.4.0",
+  "releaseVersion": "0.4.1",
   "satellites": [
     {
       "id": "robotics-ui",
       "repository": "LK-Design-System/lk-design-system-robotics",
       "axis": "domain-pack",
       "branch": "main",
-      "version": "0.1.0-rc.49",
+      "version": "0.1.0-rc.50",
       "pins": {
         "@lk-design-system/lds-core": [
           {
             "section": "peerDependencies",
-            "range": ">=0.2.13 <0.4.0"
+            "range": ">=0.3.0 <0.5.0"
           }
         ],
         "@lk-design-system/lds-product": [
           {
             "section": "peerDependencies",
-            "range": ">=0.2.13 <0.4.0"
+            "range": ">=0.3.0 <0.5.0"
           }
         ],
         "@lk-design-system/lds-theme": [
           {
             "section": "devDependencies",
-            "range": "0.2.13"
+            "range": "0.3.0"
           }
         ]
       },
-      "status": "behind"
+      "status": "current"
     },
     {
       "id": "slides-ui",

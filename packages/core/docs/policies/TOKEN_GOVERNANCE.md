@@ -12,7 +12,7 @@
 contract. Figma Variables, Storybook examples, React components, and
 AI-generated UI must all resolve back to this contract. Theme expression
 profiles are the one additive runtime projection: their scope and whitelist
-live in [`EXPRESSION_PROFILE_CONTRACT.json`](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.0/docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json),
+live in [`EXPRESSION_PROFILE_CONTRACT.json`](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.1/docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json),
 and values are limited to `tokens/profiles.css` under the Theme package.
 
 Package별 `tokens/semantic-contract.json`은 runtime source에서 산출·검사하는 semantic
@@ -147,7 +147,7 @@ Color usage rules:
   (흰 글자 4.5:1, 페이지 위 글자 4.5:1)으로 따로 정한다. 네이비는 거의 검정이라 상호작용
   색으로 쓰면 본문·비활성 요소와 구분되지 않는다. 브랜드 셸이 필요한 곳(`SideNav`
   `appearance="brand"`)은 네이비 위에 흰색을 합성한 `navy-shell` 램프를 쓴다. 로고 색은
-  UI 토큰으로 대체하지 않는다([로고 표준 §6](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.0/docs/brand/LK_LOGO_STANDARD.md#6-색상과-배경)).
+  UI 토큰으로 대체하지 않는다([로고 표준 §6](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.1/docs/brand/LK_LOGO_STANDARD.md#6-색상과-배경)).
   외부 고객 화면에서 브랜드 인상이 목표가 되면 primary를 Accent 쪽으로 옮길지 이 단락에서
   다시 결정한다.
 - 흰 글자나 아이콘을 primary 채움 위에 올릴 때는 `--color-semantic-primary-fill`을 쓴다.
