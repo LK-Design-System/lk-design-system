@@ -135,7 +135,7 @@ function ProductShellTopBarFixture({ showTransitionDemo = false }) {
         aria-label="제품 전역 헤더"
         navAlign="start"
         navigationLabel="제품 주 탐색"
-        brand={<Lockup variant="inline" tone="ink" height={22} />}
+        brand={<Lockup variant="inline" adaptive height={22} />}
         actions={<ProductActions />}
       >
         {productShellDestinations.map(({ value, label, href }) => (
@@ -296,7 +296,7 @@ export const TopBarDefault = {
       menuStyle.paddingTop !== '8px'
       || menuStyle.paddingLeft !== '8px'
       || menuStyle.gap !== '4px'
-      || menuStyle.borderRadius !== '12px'
+      || menuStyle.borderRadius !== '10px'
       || currentStyle.minHeight !== '40px'
       || currentStyle.paddingTop !== '10px'
       || currentStyle.paddingLeft !== '16px'
@@ -411,7 +411,7 @@ export const LandingHeader = {
         <TopBar
           navAlign="center"
           navigationLabel="밝은 랜딩 주 탐색"
-          brand={<Lockup variant="inline" tone="ink" height={22} />}
+          brand={<Lockup variant="inline" adaptive height={22} />}
           actions={<IconButton variant="ghost" label="검색" size={40} style={{ background: 'transparent', border: 'none', color: 'var(--color-semantic-label-normal)' }}>{SearchIcon}</IconButton>}
           style={{ borderRadius: 'var(--radius-xl)' }}
         >
@@ -452,7 +452,7 @@ function ShellPreview({ layout }) {
         <TopBar
           aria-label={label}
           height={compact ? 56 : 60}
-          brand={<Lockup variant={compact ? 'mark' : 'inline'} tone="ink" height={compact ? 22 : 20} />}
+          brand={<Lockup variant={compact ? 'mark' : 'inline'} adaptive height={compact ? 22 : 20} />}
           actions={<ProductActions compact={compact} />}
         />
       )}
@@ -717,7 +717,7 @@ export const NarrowWidth = {
         aria-label="좁은 폭 탑 바"
         height={56}
         navAlign="start"
-        brand={<Lockup variant="inline" tone="ink" height={20} />}
+        brand={<Lockup variant="inline" adaptive height={20} />}
         actions={(
           <React.Fragment>
             <IconButton variant="ghost" label="전역 검색" size={36}><span aria-hidden="true">{SearchIcon}</span></IconButton>
@@ -834,7 +834,7 @@ export const TopBarCard = {
       <div data-theme="light" style={{ borderRadius: 'var(--radius-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)', marginBottom: 16 }}>
         <TopBar
           navAlign="center"
-          brand={<Lockup variant="inline" tone="ink" height={22} />}
+          brand={<Lockup variant="inline" adaptive height={22} />}
           actions={<IconButton variant="ghost" label="Search" style={{ background: 'transparent', border: 'none', color: 'var(--color-semantic-label-normal)' }}>{SearchIcon}</IconButton>}
         >
           <TopBarStaticNav />

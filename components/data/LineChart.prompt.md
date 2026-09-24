@@ -12,8 +12,18 @@
 ```
 
 - **series** `{id?,name,accessibleLabel?,color,dashed,points:[{x,y}]}[]` · **width/height** · **xTicks/yTicks** · **xDomain/yDomain** · **includeZero** · **showGrid/showLegend/showPoints** · **referenceLines** `{y,label,color?,dashed?}[]` · **emptyLabel** · **formatX/formatY**.
-- 제품 데이터 차트는 `yDomain`/`yTicks`와 locale-aware `formatY`를 명시합니다. LDS의 자동
-  tick은 구조 preview용 균등 분할 fallback이며 분석 화면의 nice-tick 정책을 추론하지 않습니다.
+- y축 눈금은 nice tick입니다. `yTicks`(기본 4)는 간격 수 힌트이고, step은 1·2·2.5·5 × 10ⁿ 중
+  가장 가까운 값으로 맞춥니다(2.5는 0–1·0–100 백분율 축이 0/25/50/75/100으로 읽히도록 유지).
+  자동 domain은 step의 배수로 넓히고, `yDomain`을 명시하면 그 범위를 유지한 채 범위 안의 step 배수에만
+  눈금을 둡니다. 눈금 값은 step 정밀도로 반올림해 부동소수 잡음이 라벨에 나오지 않습니다. 이전의
+  데이터 최대값 균등 분할(0 / 0.22 / 0.45 …)은 격자와 대조해 읽을 수 없어 폐기했습니다.
+  제품 데이터 차트는 여전히 locale-aware `formatY`를 명시합니다.
+- 배치: 범례는 plot 바로 위 한 줄(plot 왼쪽 가장자리 정렬), x축 제목은 SVG 안에서 tick 라벨 바로 아래
+  축 끝에 오른쪽 정렬합니다. 기준선 라벨은 선의 오른쪽 끝 plot 바깥에 두어 series와 겹치지 않으며,
+  라벨 폭만큼 오른쪽 여백을 확보합니다.
+- 시리즈·point·기준선 stroke는 `vector-effect: non-scaling-stroke`라서 굵기가 CSS px입니다. responsive
+  viewBox가 `width`보다 좁게 렌더될 때 2px 선이 ~1.5px로 가늘어지던 문제를 막습니다. 점선 series는
+  그대로 점선입니다.
 - **description / summary** — 차트 맥락 설명과 자동 텍스트 요약 override입니다. 기본 요약은 각 시리즈의 유효 point 수, 시작, 최저, 최고, 마지막 값을 입력 순서대로 제공합니다. 복합 범례 이름은 `accessibleLabel`로 요약 이름을 고정합니다.
 - `referenceLines`는 자동 요약에도 포함됩니다. y domain 안에 그려진 기준선만 대상이며 `기준선 N개.` 뒤에 각 선의 이름·값과 그 선을 넘긴 시리즈 이름(없으면 `초과한 시리즈 없음`)이 이어집니다. 임계선은 `role="img"` SVG 안 텍스트로만 존재하면 보조기술에 전혀 닿지 않으므로, 임계 이탈 판단을 시각 표시에만 맡기지 않습니다. `summary`를 직접 넘기면 기준선 문장도 그 값으로 대체되므로 필요한 내용을 직접 포함시키세요.
 - 다중 시리즈를 **색상만으로 구분하지 않습니다**(WCAG 1.4.1). 텍스트 요약이 1차 대안이고, 시각적으로도 시리즈가 셋 이상이거나 색각 이상 사용자를 고려해야 하면 `dashed`(선 패턴)나 `showPoints`(마커)를 함께 켜서 색 외 단서를 남기세요.

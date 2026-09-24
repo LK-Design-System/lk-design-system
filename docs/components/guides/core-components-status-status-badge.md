@@ -43,7 +43,7 @@
 | 명시 규칙 2 | Storybook에서 모든 tone, Tag 인라인 조합, 긴 라벨, light/dark를 확인합니다. 텍스트 대비 4.5:1, 색 외 visible label, 320px reflow와 20px 인라인 중심을 검증합니다. |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --fw-semibold | 600 |
-| --radius-pill | 999px |
+| --radius-4 | 4px |
 
 ## Content and writing
 
@@ -86,7 +86,7 @@
 - `--caption1-size`
 - `--font-sans`
 - `--fw-semibold`
-- `--radius-pill`
+- `--radius-4`
 - `--space-2`
 
 ### Source contracts

@@ -73,3 +73,6 @@ img { display: block; max-width: 100%; }
 
 /* Tabular numerals for specs, years, telemetry. */
 .lk-nums { font-variant-numeric: tabular-nums; }
+
+/* Wide overline tracking is a Latin-capitals device; on Hangul it splits words into letters. */
+.lk-overline:lang(ko) { letter-spacing: 0; }

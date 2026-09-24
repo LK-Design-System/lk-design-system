@@ -39,7 +39,7 @@ DOM과 시각 순서는 동일합니다. 긴 label·caption·metadata는 좁은 
 - 표면과 경계선은 현재 light/dark semantic theme에서 직접 해석되어야 하며, 다크 scope 안에 라이트 카드 배경을 고정하지 않습니다.
 - `Stat`의 큰 tabular numeral과 label 대비를 따르되 dashboard metric에 필요한 unit, comparison, freshness, action만 추가합니다.
 - `StatusBadge`의 non-color stale label과 `Skeleton`의 reduced-motion loading을 그대로 조합합니다.
-- 기존 uppercase caption label, title1 value, legacy delta color는 호환합니다. 새 footer divider는 freshness/action을 본문 변화값과 분리하기 위해서만 추가했습니다.
+- 기존 uppercase caption label, title1 value, legacy delta color는 호환합니다. label은 `--ls-overline` tracking을 쓰지 않고 `letter-spacing: 0`으로 두어 한국어가 음절 단위로 벌어지지 않게 합니다. header `icon`은 장식 맥락이므로 중립 `--color-semantic-label-alternative`를 상속하며, 상태 색이 필요하면 host가 icon 자체에 색을 지정합니다(MetricCard에는 icon tone prop이 없습니다). 새 footer divider는 freshness/action을 본문 변화값과 분리하기 위해서만 추가했습니다.
 - Footer action은 페이지의 기본 본문 크기를 상속하지 않고 `label2`(13/18)로 고정합니다. 갱신 시각보다 약간만 강조해 보조 탐색으로 읽히고, action 유무가 같은 행의 카드 높이와 하단 여백을 크게 바꾸지 않게 합니다.
 - raw arrow SVG를 새로 유지하지 않고 LDS `Icon` registry의 arrow-up/down을 사용합니다.
 

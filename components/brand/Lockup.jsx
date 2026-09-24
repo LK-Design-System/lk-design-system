@@ -37,6 +37,7 @@ const VIEWBOX_METRICS = Object.freeze(Object.fromEntries(
  * 800 and the canonical fixed PORTAL from pinned Montserrat SemiBold 600 v7.222.
  * ProductLockup's Portal registry entry uses the same paths. No runtime font is required.
  * `tone`: 'ink'/'brand' = official #05132B · 'white' · compatibility currentColor.
+ * `adaptive`: follow the theme — navy in light, white on an LK Navy plate in dark.
  * Constrained black-only output uses the existing explicit `color="#000000"` escape hatch.
  * `height` is the requested natural height; narrow parents scale both axes down
  * together instead of clipping or distorting. Decorative instances get aria-hidden.
@@ -44,9 +45,14 @@ const VIEWBOX_METRICS = Object.freeze(Object.fromEntries(
  * `title` defaults per variant: the canonical Portal asset names itself `LK Portal`,
  * every company variant names itself `LK ROBOTICS`.
  */
-export function Lockup({ variant = 'inline', tone = 'ink', color, height, title, decorative = false, style, ...rest }) {
+export function Lockup({ variant = 'inline', tone = 'ink', adaptive = false, color, height, title, decorative = false, style, ...rest }) {
   const resolvedVariant = Object.prototype.hasOwnProperty.call(VARIANT_VIEWBOX, variant) ? variant : 'inline';
-  const fill = color || (tone === 'white' ? LK_LOGO_COLORS.white : tone === 'current' ? 'currentColor' : LK_LOGO_COLORS.navy);
+  // `adaptive` follows the theme: navy in light, white on an LK Navy plate in dark
+  // (LK_LOGO_STANDARD 6.2 approves white only on LK Navy; plate rule in tokens/components.css).
+  const fill = color || (tone === 'white' ? LK_LOGO_COLORS.white
+    : tone === 'current' ? 'currentColor'
+      : adaptive ? `var(--component-lockup-auto-fill, ${LK_LOGO_COLORS.navy})`
+        : LK_LOGO_COLORS.navy);
   const vb = VARIANT_VIEWBOX[resolvedVariant];
   const minimumHeight = MINIMUM_HEIGHT[resolvedVariant];
   const requestedHeight = Number.isFinite(height) ? height : DEFAULT_HEIGHT[resolvedVariant];
@@ -55,7 +61,7 @@ export function Lockup({ variant = 'inline', tone = 'ink', color, height, title,
   const intrinsicWidth = Number((h * metrics.width / metrics.height).toFixed(6));
   const accessibleTitle = title ?? (resolvedVariant === 'portal' ? 'LK Portal' : 'LK ROBOTICS');
   const a11y = decorative ? { 'aria-hidden': true } : { role: 'img', 'aria-label': accessibleTitle };
-  return (
+  const logo = (
     <svg
       viewBox={vb}
       width={intrinsicWidth}
@@ -89,5 +95,15 @@ export function Lockup({ variant = 'inline', tone = 'ink', color, height, title,
         )}
       </g>
     </svg>
+  );
+  if (!adaptive || color || tone === 'white' || tone === 'current') return logo;
+  // The plate pads by the 0.5X clear space so the navy field is the approved containment.
+  return (
+    <span
+      data-lockup-adaptive=""
+      style={{ display: 'inline-block', lineHeight: 0, maxWidth: '100%', '--lockup-plate-pad': `${Number((h * 0.5).toFixed(2))}px` }}
+    >
+      {logo}
+    </span>
   );
 }

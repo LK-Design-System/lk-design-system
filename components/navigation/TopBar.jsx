@@ -13,6 +13,14 @@ const TOP_BAR_STYLES = `
   [data-top-bar-menu-item]:focus {
     background: var(--component-topbar-menu-item-hover-bg, var(--color-semantic-fill-normal));
   }
+  /* Primary links and disclosures stretch the full bar height inside a
+     scroll-clipped nav, so the global 2px outside ring would be cut to two
+     vertical bars. Inset the ring so it follows the control's own radius. */
+  [data-top-bar-primary]:focus-visible,
+  [data-top-bar-menu-trigger]:focus-visible,
+  [data-top-bar-menu-item]:focus-visible {
+    outline-offset: -2px !important;
+  }
   @media(prefers-reduced-motion:reduce) {
     [data-top-bar-active-indicator],
     [data-top-bar-menu-chevron] {
@@ -371,6 +379,7 @@ export function TopBarNavItem({
           alignSelf: 'stretch',
           padding: href && hasMenu ? '0 4px 0 14px' : '0 14px',
           border: 'none',
+          borderRadius: 'var(--radius-md)',
           background: 'transparent',
           color: fg,
           cursor: 'pointer',
@@ -421,6 +430,7 @@ export function TopBarNavItem({
             minWidth: 28,
             padding: 0,
             border: 'none',
+            borderRadius: 'var(--radius-md)',
             background: 'transparent',
             color: fg,
             cursor: 'pointer',

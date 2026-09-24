@@ -13,7 +13,7 @@ export interface CardOwnProps {
   as?: React.ElementType;
   /** Surface role. `subtle` is an inset grouping surface and defaults to no shadow. @default "default" */
   surface?: "default" | "subtle";
-  /** 기본 그림자 깊이. @default "md" */
+  /** 기본 그림자 깊이. 쉬는 상태의 카드는 그림자 없이 테두리만 씁니다. @default "none" */
   elevation?: "none" | "xs" | "sm" | "md" | "lg";
   /**
    * 카드 전체가 하나의 행동일 때. 호버 리프트 + 그림자 심화에 더해

@@ -202,6 +202,7 @@
     "--label2-line",
     "--label2-size",
     "--label2-spacing",
+    "--lockup-plate-pad",
     "--ls-caption",
     "--ls-overline",
     "--material-control-dimmer",

@@ -96,8 +96,8 @@
 
 - Width, rail width, padding, radius, and item geometry can be tuned only through the documented --lds-side-nav- variables. Navigation value, routing, and shell collapse controls remain product-owned.
 - 내비게이션 disabled 표면은 wrapper opacity 0.45를 공통 문법으로 사용합니다. 개별 자식의 색 토큰을 다시 바꿔 이중으로 흐리게 만들지 않습니다.
+- 항목 keyboard focus ring은 전역 2px focus-indicator를 outline-offset: -2px로 안쪽에 그립니다. 목록이 overflow-x: hidden 스크롤 영역이라 바깥 offset ring은 가장자리에서 잘리므로, 항목 자체 radius를 따르는 inset ring이 잘림 없는 기준입니다.
 - 접힌 레일과 펼친 패널은 SideNav가 소유하는 브랜드 아래 패딩 18px과 44px 목적지 행 높이를 공유합니다. header와 headerCollapsed 슬롯 자체의 intrinsic 높이는 제품이 맞추며, 레일에서는 label·badge가 시각적으로 사라지되 아이콘의 inline 시작 좌표는 바뀌지 않습니다.
-- Carbon UI shell usage — 복잡한 제품 탐색은 header와 지속적인 left panel을 조합하고 좁은 폭에서는 탐색 표면을 전환합니다. 그래서 셸에 붙는 SideNav는 docked를, 독립 배치는 floating을 사용합니다.
 
 ## Content and writing
 

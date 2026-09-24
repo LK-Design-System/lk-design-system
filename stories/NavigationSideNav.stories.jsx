@@ -182,7 +182,7 @@ function SideNavFixture() {
         collapsed={collapsed}
         onCollapsedChange={setCollapsed}
         overlay
-        header={<Lockup variant="inline" height={22} />}
+        header={<Lockup variant="inline" adaptive height={22} />}
         headerCollapsed={<Lockup variant="mark" height={22} />}
         footer={(
           <UserMenu
@@ -283,7 +283,7 @@ function DockedSideNavFixture({ defaultCollapsed = false, initialValue = 'overvi
         width={252}
         collapsedWidth={64}
         brandAlign="start"
-        header={<Lockup variant="inline" height={22} />}
+        header={<Lockup variant="inline" adaptive height={22} />}
         headerCollapsed={<Lockup variant="mark" height={22} />}
         footerGap="var(--space-3)"
         footer={({ collapsed: footerCollapsed }) => (
@@ -452,7 +452,7 @@ function ControlledCollapseFixture() {
         onCollapsedChange={() => setRequests((count) => count + 1)}
         width={252}
         collapsedWidth={64}
-        header={<Lockup variant="inline" height={22} />}
+        header={<Lockup variant="inline" adaptive height={22} />}
         headerCollapsed={<Lockup variant="mark" height={22} />}
         style={{ height: 420 }}
       />
@@ -484,7 +484,7 @@ function CollapsedParentFixture() {
         overlay={overlay}
         width={252}
         collapsedWidth={64}
-        header={<Lockup variant="inline" height={22} />}
+        header={<Lockup variant="inline" adaptive height={22} />}
         headerCollapsed={<Lockup variant="mark" height={22} />}
         style={{ height: 420 }}
       />
@@ -515,7 +515,7 @@ function ManualActiveGroupFixture() {
       value="missions-live"
       autoExpandActiveGroup={false}
       width={252}
-      header={<Lockup variant="inline" height={22} />}
+      header={<Lockup variant="inline" adaptive height={22} />}
       style={{ height: 420 }}
     />
   );

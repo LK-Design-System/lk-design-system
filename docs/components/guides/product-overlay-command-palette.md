@@ -47,10 +47,10 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | Escape는 2단계입니다. 검색어가 남아 있으면 1차 Escape가 검색어만 비우고, 빈 필드에서 누른 Escape만 dialog를 닫습니다. VS Code·Spotlight·Slack의 ⌘K 관습입니다. |
+| 명시 규칙 2 | 검색 input은 테두리 없는 필드지만 자체 --radius-sm을 가지므로 전역 2px focus ring이 사각 모서리가 아닌 input radius를 따라 그려집니다. |
 | --body2-size | 15px |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 
 ## Accessibility
 
@@ -103,6 +103,7 @@
 - `--label1-size`
 - `--radius-2xl`
 - `--radius-md`
+- `--radius-sm`
 - `--shadow-xl`
 - `--space-8`
 

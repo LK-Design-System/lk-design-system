@@ -19,6 +19,7 @@
   `resultsLabel(count)`로 바꿉니다. 같은 formatter가 결과 없음 문구도 만듭니다.
 - 초점 계약은 `initialFocusRef`·`returnFocusRef`·`restoreFocus`로 조정하고, 이름은 `ariaLabel`,
   검색 필드 안내는 `placeholder`로 지정합니다. 표준 `style`은 dialog 표면에 병합됩니다.
+- 검색 input은 테두리 없는 필드지만 자체 `--radius-sm`을 가지므로 전역 2px focus ring이 사각 모서리가 아닌 input radius를 따라 그려집니다.
 - **전역 ⌘K wiring은 제품이 소유합니다.** 컴포넌트는 전역 단축키를 등록하지 않습니다. 제품에서
   `keydown`을 듣고 `(event.metaKey || event.ctrlKey) && event.key === 'k'`일 때 `event.preventDefault()`
   후 `open`을 켜세요. 팔레트가 어떤 화면에서 열려야 하는지는 제품의 라우팅 맥락이 결정합니다.

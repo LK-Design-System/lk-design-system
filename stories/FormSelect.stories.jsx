@@ -267,7 +267,7 @@ export const SelectPopupDensityContract = {
 
       const listboxStyle = getComputedStyle(listbox);
       if (listbox.dataset.density !== expected.density
-        || listboxStyle.borderRadius !== '12px'
+        || listboxStyle.borderRadius !== '10px'
         || listboxStyle.paddingTop !== '8px'
         || listboxStyle.paddingRight !== '8px'
         || listboxStyle.paddingBottom !== '8px'
@@ -291,7 +291,7 @@ export const SelectPopupDensityContract = {
           || style.paddingRight !== '16px'
           || style.paddingBottom !== `${expected.paddingY}px`
           || style.paddingLeft !== '16px'
-          || style.borderRadius !== '10px'
+          || style.borderRadius !== '6px'
           || style.fontSize !== `${expected.fontSize}px`
           || style.lineHeight !== `${expected.lineHeight}px`
           || !indicator) {

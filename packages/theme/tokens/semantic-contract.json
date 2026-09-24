@@ -449,6 +449,7 @@
     "--component-list-cell-padding-y-lg",
     "--component-list-cell-padding-y-md",
     "--component-list-cell-padding-y-sm",
+    "--component-lockup-auto-fill",
     "--component-menu-gap",
     "--component-menu-item-active-ring-color",
     "--component-menu-item-check-color",

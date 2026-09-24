@@ -44,6 +44,7 @@ favicon tile은 iOS AppIcon이나 Android adaptive icon이 아닙니다. 두 앱
 <Lockup variant="mark" tone="white" height={32} decorative />
 <Lockup variant="stacked" tone="current" color="#000000" height={64} />
 <Lockup variant="portal" tone="white" height={20} />
+<Lockup variant="inline" adaptive height={20} />
 ```
 
 ## LK Portal 제품형
@@ -61,6 +62,7 @@ favicon tile은 iOS AppIcon이나 Android adaptive icon이 아닙니다. 두 앱
 
 - **Positive:** 흰색 또는 밝고 단순한 단색 배경에는 공식 네이비 `tone="ink"`를 사용합니다.
 - **Reverse:** 공식 네이비 또는 충분히 어둡고 단순한 배경에는 `tone="white"`를 사용합니다.
+- **Adaptive:** 라이트·다크 테마를 모두 지원하는 제품 셸(Top Bar, Side Nav, Dashboard Shell의 브랜드 슬롯)에는 `adaptive`를 사용합니다. 라이트에서는 `ink`와 같고, 다크에서는 흰색 로고를 LK Navy 판(여백 0.5X) 위에 올립니다. 브랜드 표준 6.2가 흰색 로고를 LK Navy 위에서만 승인하므로, LDS 다크 배경(`#1B1C1E`)에 흰색 로고를 직접 올리지 않습니다.
 - **Mono:** 단색 출력 제약이 확인된 경우에만 검정 `tone="current" color="#000000"` 또는 흰색 반전을 사용합니다. 기업 표기형의 포인트 색을 임의 회색으로 바꾸지 않습니다.
 - **사진 배경:** 로고와 clear space 전체에 안정적인 대비가 없으면 사진 위에 직접 놓지 않고 공식 단색 보호면을 사용합니다.
 - 공식 사각형 자산은 전경과 배경이 함께 고정된 조합입니다. `tone`, `currentColor`나 UI semantic token으로 다시 칠하지 않습니다.

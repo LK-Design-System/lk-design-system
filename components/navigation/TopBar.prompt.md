@@ -29,6 +29,7 @@ Classification: **LK Product Extension**. 랜딩·콘텐츠 사이트에서는 �
   focus는 같은 배경을 사용합니다. 현재 목적지는 `menuItems[].current`로 `aria-current`와 더 약한
   지속 선택 배경을 함께 표시합니다.
 - 드롭다운은 disclosure 클릭·hover·focus로 열리고 브라우저 top layer에서 trigger를 기준으로 위·아래를 선택한 뒤 viewport 안으로 정렬합니다. 링크와 분리된 disclosure chevron은 최소 28px 클릭 폭을 유지하면서 라벨과 시각적으로 4px 간격을 두고, 열리면 180° 회전합니다. active underline과 chevron transition은 `prefers-reduced-motion: reduce`에서 즉시 전환합니다. trigger와 panel 사이의 4px 간격은 160ms pointer grace로 건널 수 있고, panel 바깥의 mouse/touch `pointerdown`, 항목 선택, `Escape`는 닫습니다. 따라서 TopBar의 가로 스크롤 영역이나 셸의 clip에 메뉴를 가두지 않습니다.
+- 주 탐색 링크·disclosure·메뉴 항목의 keyboard focus ring은 전역 2px focus-indicator를 `outline-offset: -2px`로 안쪽에 그리고 각 control의 radius를 따릅니다. 주 탐색 항목은 바 높이 전체로 늘어나고 nav가 `overflow-y: hidden` 스크롤 영역이므로 바깥 offset ring은 위·아래가 잘려 세로 막대 두 개로 보입니다.
 - disclosure에서 `ArrowDown`/`ArrowUp`은 첫/마지막 항목을 열어 포커스하고, 열린 목록 안에서는 `ArrowDown`/`ArrowUp`이 순환하며 `Home`/`End`가 처음/끝으로 이동합니다. `Escape`는 닫은 뒤 disclosure로 포커스를 돌려줍니다. `Enter`/`Space`와 `Tab`은 native button/link 의미를 그대로 사용합니다.
 - `TopBarNavItem`에 전달한 `onMouseEnter`, `onMouseLeave`, `onFocus`, `onBlur`, `onKeyDown`, `onClick`은 내부 동작보다 먼저 호출해 합성합니다. 소비자가 이벤트에서 `preventDefault()`를 호출하면 해당 내부 토글·포커스·hover 처리를 건너뛰므로 `...rest`가 기본 상호작용을 덮어쓰지 않습니다.
 - 좁은 폭에서는 브랜드와 전역 액션을 제거하지 않고 가운데 내비가 먼저 가로 스크롤합니다. 액션이 매우 많으면 액션 슬롯 자체도 가로 스크롤되어 각 컨트롤에 계속 접근할 수 있습니다.

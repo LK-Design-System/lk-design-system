@@ -12,7 +12,8 @@
   "purpose": "LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 800 v7.222, 한글 법인명은 Noto Sans KR ExtraBold 800 v2.004-H2에서 아웃라인으로 생성합니다. construction grid, variant 저장소 정책 최소 크기, 0.5X/1X 여백, 배경·오용·플랫폼 전달 규칙을 함께 확인합니다.",
   "useWhen": [
     "Positive: 흰색 또는 밝고 단순한 단색 배경에는 공식 네이비 tone=\"ink\"를 사용합니다.",
-    "Reverse: 공식 네이비 또는 충분히 어둡고 단순한 배경에는 tone=\"white\"를 사용합니다."
+    "Reverse: 공식 네이비 또는 충분히 어둡고 단순한 배경에는 tone=\"white\"를 사용합니다.",
+    "Adaptive: 라이트·다크 테마를 모두 지원하는 제품 셸(Top Bar, Side Nav, Dashboard Shell의 브랜드 슬롯)에는 adaptive를 사용합니다. 라이트에서는 ink와 같고, 다크에서는 흰색 로고를 LK Navy 판(여백 0.5X) 위에 올립니다. 브랜드 표준 6.2가 흰색 로고를 LK Navy 위에서만 승인하므로, LDS 다크 배경(#1B1C1E)에 흰색 로고를 직접 올리지 않습니다."
   ],
   "avoidWhen": [
     "ROBOTICS: 대문자, Montserrat ExtraBold 정적 weight 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지.",
@@ -39,6 +40,13 @@
       "type": "'ink' | 'white' | 'brand' | 'current'",
       "required": false,
       "description": "채움 프리셋 — 공식 네이비, 반전 화이트, 호환용 currentColor. 제약된 검정 단색 출력은 color=\"#000000\"을 명시합니다. @default \"ink\"",
+      "owner": "LockupProps"
+    },
+    {
+      "name": "adaptive",
+      "type": "boolean",
+      "required": false,
+      "description": "테마를 따릅니다. 라이트에서는 공식 네이비, 다크에서는 LK Navy 판(여백 0.5X) 위의 화이트. 라이트·다크를 모두 지원하는 제품 셸의 브랜드 슬롯에 씁니다. @default false",
       "owner": "LockupProps"
     },
     {
@@ -131,10 +139,12 @@
   "examples": [
     {
       "label": "기본 조합",
-      "code": "<Lockup variant=\"inline\" tone=\"ink\" height={28} />\n<Lockup variant=\"mark\" tone=\"white\" height={32} decorative />\n<Lockup variant=\"stacked\" tone=\"current\" color=\"#000000\" height={64} />\n<Lockup variant=\"portal\" tone=\"white\" height={20} />"
+      "code": "<Lockup variant=\"inline\" tone=\"ink\" height={28} />\n<Lockup variant=\"mark\" tone=\"white\" height={32} decorative />\n<Lockup variant=\"stacked\" tone=\"current\" color=\"#000000\" height={64} />\n<Lockup variant=\"portal\" tone=\"white\" height={20} />\n<Lockup variant=\"inline\" adaptive height={20} />"
     }
   ],
-  "tokens": [],
+  "tokens": [
+    "--component-lockup-auto-fill"
+  ],
   "apiLinks": [],
   "migration": [],
   "platformStatus": {
@@ -173,7 +183,7 @@
     "exceptions": "evidence",
     "related": "evidence",
     "examples": "evidence",
-    "tokens": "omitted-no-evidence",
+    "tokens": "evidence",
     "apiLinks": "evidence",
     "migration": "omitted-no-evidence"
   }

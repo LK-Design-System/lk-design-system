@@ -33,7 +33,7 @@ function resolveChangeTone(direction, changeTone) {
 
 /**
  * LDS Product Data — MetricCard
- * A KPI tile: an uppercase label, a big tabular value, an optional delta chip
+ * A KPI tile: an untracked caption label (uppercase for Latin, no Korean tracking), a big tabular value, an optional delta chip
  * (up = steel-positive, down = brick-red) and a caption. For dashboards / stat
  * bands.
  */
@@ -147,15 +147,15 @@ export function MetricCard({
         border: 'var(--component-card-border)',
         borderRadius: 'var(--component-card-radius)',
         padding: '24px',
-        boxShadow: 'var(--shadow-xs)',
+        boxShadow: 'var(--component-card-shadow-none)',
         fontFamily: 'var(--font-sans)',
         ...style,
       }}
       {...rest}
     >
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, minWidth: 0, marginBottom: 16 }}>
-        {label != null && <span id={labelId} style={{ minWidth: 0, fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 'var(--ls-overline)', textTransform: 'uppercase', overflowWrap: 'anywhere', color: 'var(--color-semantic-label-alternative)' }}>{label}</span>}
-        {icon && <span style={{ color: 'var(--color-semantic-primary-normal)', display: 'inline-flex' }}>{icon}</span>}
+        {label != null && <span id={labelId} style={{ minWidth: 0, fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', fontWeight: 'var(--fw-bold)', letterSpacing: 0, textTransform: 'uppercase', overflowWrap: 'anywhere', color: 'var(--color-semantic-label-alternative)' }}>{label}</span>}
+        {icon && <span data-metric-icon style={{ color: 'var(--color-semantic-label-alternative)', display: 'inline-flex' }}>{icon}</span>}
       </div>
       {body}
       {showFooter && (

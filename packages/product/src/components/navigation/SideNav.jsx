@@ -389,7 +389,7 @@ export const SideNav = React.forwardRef(function SideNav({
     @keyframes lk-sidenav-expanded-content-enter{from{opacity:0;transform:translateX(var(--_lds-side-nav-motion-offset))}to{opacity:1;transform:translateX(0)}}
     @keyframes lk-sidenav-compact-content-enter{from{opacity:0}to{opacity:1}}
     [data-sidenav-value]:active:not(:disabled){background:var(--_lds-side-nav-pressed-surface)!important}
-    [data-sidenav-value]:focus-visible{outline-color:var(--_lds-side-nav-focus-indicator)!important}
+    [data-sidenav-value]:focus-visible{outline-color:var(--_lds-side-nav-focus-indicator)!important;outline-offset:-2px!important}
     [data-collapsed="true"] .lk-sidenav__scroll::-webkit-scrollbar{display:none}
     .lk-sidenav__surface:dir(rtl){--_lds-side-nav-motion-offset:var(--space-1)}
     @media(prefers-reduced-motion:reduce){.lk-sidenav__surface,.lk-sidenav__surface [data-sidenav-motion]{transition-duration:0s!important;transition-delay:0s!important;animation-duration:0s!important;animation-delay:0s!important}}

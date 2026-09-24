@@ -76,7 +76,7 @@ const accountItems = [
 function ProductIdentity() {
   return (
     <div style={{ display: 'grid', justifyItems: 'start', gap: 'var(--space-2)', width: '100%', minWidth: 0 }}>
-      <Lockup variant="inline" height={20} />
+      <Lockup variant="inline" adaptive height={20} />
       <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: 1.1 }}>
         OPERATIONS
       </span>
@@ -87,7 +87,7 @@ function ProductIdentity() {
 function HeaderSlot({ compact = false, branded = false }) {
   const context = (
     <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', minWidth: 0 }}>
-      {(compact || branded) && <Lockup variant={compact ? 'mark' : 'inline'} height={compact ? 22 : 20} />}
+      {(compact || branded) && <Lockup variant={compact ? 'mark' : 'inline'} adaptive height={compact ? 22 : 20} />}
       {(compact || branded) && <span aria-hidden="true" style={{ width: 1, height: 18, flexShrink: 0, background: 'var(--color-semantic-line-solid-normal)' }} />}
       <strong style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--label1-size)' }}>
         대덕 운영 워크스페이스
@@ -119,7 +119,7 @@ function NavigationSlot({ docked = true, branded = true }) {
       defaultValue="overview"
       width={244}
       header={branded ? <ProductIdentity /> : undefined}
-      headerCollapsed={branded ? <Lockup variant="mark" height={21} decorative /> : undefined}
+      headerCollapsed={branded ? <Lockup variant="mark" adaptive height={21} decorative /> : undefined}
       footer={(
         <UserMenu
           name="운영 관리자"
@@ -210,7 +210,7 @@ function TemporaryNavigationShell() {
   const header = (
     <TopBar
       height={56}
-      brand={<Lockup variant="mark" height={22} />}
+      brand={<Lockup variant="mark" adaptive height={22} />}
       actions={(
         <IconButton
           ref={triggerRef}

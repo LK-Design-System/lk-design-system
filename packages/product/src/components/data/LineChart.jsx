@@ -28,7 +28,10 @@ const AXIS_TITLE_SIZE = 'var(--lk-chart-axis-title-size, 10px)';
 const REFERENCE_LABEL_SIZE = 'var(--lk-chart-reference-label-size, 10px)';
 const EMPTY_LABEL_SIZE = 'var(--lk-chart-empty-label-size, 12px)';
 // Stroke weight is the same argument as type size: a 2px line reads as a hair
-// at projection distance. Series and reference lines keep their own knobs
+// at projection distance. Series, point and reference strokes use
+// `vector-effect: non-scaling-stroke`, so the weight is in CSS pixels: without
+// it the responsive viewBox shrank a 2-unit stroke to ~1.5px whenever the chart
+// rendered narrower than its `width`. Series and reference lines keep their own knobs
 // because they carry different weight in the argument.
 const SERIES_STROKE = 'var(--lk-chart-series-stroke, 2)';
 const REFERENCE_STROKE = 'var(--lk-chart-reference-stroke, 1.5)';
@@ -74,6 +77,70 @@ function buildTicks(min, max, count) {
   const safeCount = Math.max(1, Math.floor(count));
   if (safeCount === 1) return [min];
   return Array.from({ length: safeCount }, (_, index) => min + ((max - min) * index) / (safeCount - 1));
+}
+
+/*
+ * Nice y ticks. Splitting the raw data range into equal parts produced labels
+ * such as 0 / 0.22 / 0.45 / 0.67 / 0.89 that nobody can read against a grid.
+ * The step is snapped to the nearest (geometric) member of 1 · 2 · 2.5 · 5 ×
+ * 10^n — 2.5 is kept so a 0–1 or 0–100 percent axis still reads 0/25/50/75/100.
+ * An automatic domain is widened to whole steps; an explicit domain is the
+ * host's decision and keeps its bounds, with ticks placed on step multiples
+ * inside it (d3 `ticks` behavior).
+ */
+const NICE_STEPS = [1, 2, 2.5, 5, 10];
+
+function stepCandidates(span, count) {
+  const raw = span / Math.max(1, count);
+  const power = 10 ** Math.floor(Math.log10(raw));
+  const error = raw / power;
+  const index = NICE_STEPS.reduce((best, candidate, candidateIndex) => (
+    Math.abs(Math.log(error / candidate)) < Math.abs(Math.log(error / NICE_STEPS[best])) ? candidateIndex : best
+  ), 0);
+  // The nearest nice step, then the next one up: widening an automatic domain
+  // to whole steps can add an interval, and the larger step may land closer to
+  // the requested count.
+  return [index, Math.min(index + 1, NICE_STEPS.length - 1)].map((candidateIndex) => {
+    const multiplier = NICE_STEPS[candidateIndex];
+    const step = multiplier * power;
+    const decimals = Math.max(0, -Math.floor(Math.log10(step) + 1e-9) + (multiplier === 2.5 ? 1 : 0));
+    return { step, decimals };
+  });
+}
+
+function ticksForStep(min, max, { step, decimals }, expand) {
+  // Ticks are integer multiples of the step rounded to its precision, so labels
+  // never carry float noise such as 0.30000000000000004.
+  const clean = (value) => Number(value.toFixed(decimals));
+  const epsilon = step * 1e-6;
+  const domain = expand
+    ? [clean(Math.floor((min + epsilon) / step) * step), clean(Math.ceil((max - epsilon) / step) * step)]
+    : [min, max];
+  const first = Math.ceil((domain[0] - epsilon) / step);
+  const last = Math.floor((domain[1] + epsilon) / step);
+  const ticks = [];
+  for (let index = first; index <= last; index += 1) ticks.push(clean(index * step));
+  return { domain, ticks };
+}
+
+function niceTicks(min, max, count, expand) {
+  if (!(max > min)) return { domain: [min, max], ticks: [min] };
+  return stepCandidates(max - min, count)
+    .map((candidate) => ticksForStep(min, max, candidate, expand))
+    .reduce((best, option) => (
+      Math.abs(option.ticks.length - 1 - count) < Math.abs(best.ticks.length - 1 - count) ? option : best
+    ));
+}
+
+function hasExplicitDomain(domain) {
+  return Array.isArray(domain) && domain.length === 2
+    && isFiniteNumber(domain[0]) && isFiniteNumber(domain[1]) && Number(domain[0]) !== Number(domain[1]);
+}
+
+// Rough advance width at the reference-label size, used only to reserve right
+// padding so a label placed past the line end is not clipped.
+function estimateLabelWidth(text) {
+  return [...text].reduce((width, char) => width + (char.charCodeAt(0) > 0x1100 ? 10 : 6), 0);
 }
 
 function resolveTickValues(min, max, ticks, fallbackCount) {
@@ -150,13 +217,22 @@ export function LineChart({
   const allPoints = normalized.flatMap((item) => item.points);
   const chartWidth = Math.max(160, Number(width) || 520);
   const chartHeight = Math.max(120, Number(height) || 240);
-  const pad = { top: 14, right: 22, bottom: xLabel ? 38 : 30, left: 46 };
+  const [xMin, xMax] = resolveDomain(allPoints.map((point) => point.x), xDomain, [0, 1]);
+  const [rawYMin, rawYMax] = resolveDomain(allPoints.map((point) => point.y), yDomain, [0, 1], includeZero);
+  const yScale = niceTicks(rawYMin, rawYMax, Math.max(1, Number(yTicks) || 4), !hasExplicitDomain(yDomain));
+  const [yMin, yMax] = yScale.domain;
+  const yTickValues = yScale.ticks;
+  const xTickValues = resolveTickValues(xMin, xMax, xTicks, 2);
+  const visibleReferenceLines = referenceLines
+    .filter((line) => isFiniteNumber(line.y) && Number(line.y) >= yMin && Number(line.y) <= yMax);
+  // Reference labels sit past the right end of their line, outside the plot,
+  // so they never sit on top of a series; reserve room for the widest one.
+  const referenceLabelWidth = visibleReferenceLines.reduce(
+    (width, line) => Math.max(width, line.label != null ? estimateLabelWidth(nodeText(line.label)) + 8 : 0), 0);
+  // The x-axis title is drawn inside the SVG, right-aligned under the last tick.
+  const pad = { top: 14, right: Math.max(22, referenceLabelWidth), bottom: xLabel ? 36 : 24, left: 46 };
   const innerWidth = Math.max(1, chartWidth - pad.left - pad.right);
   const innerHeight = Math.max(1, chartHeight - pad.top - pad.bottom);
-  const [xMin, xMax] = resolveDomain(allPoints.map((point) => point.x), xDomain, [0, 1]);
-  const [yMin, yMax] = resolveDomain(allPoints.map((point) => point.y), yDomain, [0, 1], includeZero);
-  const xTickValues = resolveTickValues(xMin, xMax, xTicks, 2);
-  const yTickValues = buildTicks(yMin, yMax, Math.max(2, yTicks + 1));
   const sx = (x) => pad.left + ((x - xMin) / (xMax - xMin)) * innerWidth;
   const sy = (y) => pad.top + innerHeight - ((y - yMin) / (yMax - yMin)) * innerHeight;
   const fx = formatX || defaultFormatX;
@@ -211,8 +287,6 @@ export function LineChart({
   const summaryId = `${rawId}-summary`;
   const chartLabel = ariaLabel || (yLabel ? `${yLabel} 라인 차트` : '라인 차트');
   const emptyText = nodeText(emptyLabel) || '데이터가 없습니다.';
-  const visibleReferenceLines = referenceLines
-    .filter((line) => isFiniteNumber(line.y) && Number(line.y) >= yMin && Number(line.y) <= yMax);
   /* Reference lines are threshold annotations, not decoration: they only exist
      inside the `role="img"` SVG, so screen-reader users never learn the
      threshold — nor which series crossed it — unless the text alternative says
@@ -252,7 +326,7 @@ export function LineChart({
     <div
       style={{
         display: 'grid',
-        gap: 'var(--space-3)',
+        gap: 'var(--space-2)',
         width: '100%',
         maxWidth: chartWidth,
         minWidth: 0,
@@ -263,6 +337,17 @@ export function LineChart({
     >
       {description != null && <VisuallyHidden id={descriptionId}>{description}</VisuallyHidden>}
       {resolvedSummary != null && <VisuallyHidden id={summaryId} data-chart-summary>{resolvedSummary}</VisuallyHidden>}
+      {/* The legend reads before the plot, aligned with the plot's left edge.
+          The inset is a percentage of the viewBox width so it stays aligned
+          when the responsive SVG shrinks. */}
+      {showLegend && normalized.length > 0 && (
+        <Legend
+          items={legendItems}
+          size="sm"
+          aria-label="라인 차트 범례"
+          style={{ paddingLeft: `${(pad.left / chartWidth) * 100}%`, maxWidth: '100%' }}
+        />
+      )}
       <ChartTooltip enabled={tooltipEnabled} open={tooltipVisible} anchor={resolvedTooltipAnchor} onOpenChange={setTooltipVisible} content={!tooltipEnabled ? null : renderTooltip ? renderTooltip(selectedX) : (
         <span style={{ display: 'grid', gap: 'var(--space-1)' }}>
           <strong>{fx(selectedX)}</strong>
@@ -353,6 +438,19 @@ export function LineChart({
           </text>
         ))}
 
+        {xLabel && (
+          <text
+            x={pad.left + innerWidth}
+            y={pad.top + innerHeight + 31}
+            textAnchor="end"
+            fontWeight="var(--fw-semibold)"
+            fill="var(--color-semantic-label-alternative)"
+            style={{ fontSize: AXIS_TITLE_SIZE }}
+          >
+            {xLabel}
+          </text>
+        )}
+
         {yLabel && (
           <text
             x={14}
@@ -380,13 +478,15 @@ export function LineChart({
                   y2={y}
                   stroke={color}
                   style={{ strokeWidth: REFERENCE_STROKE }}
+                  vectorEffect="non-scaling-stroke"
                   strokeDasharray={line.dashed === false ? undefined : '4 4'}
                 />
                 {line.label != null && (
                   <text
-                    x={pad.left + innerWidth - 4}
-                    y={y - 5}
-                    textAnchor="end"
+                    x={pad.left + innerWidth + 4}
+                    y={y}
+                    textAnchor="start"
+                    dominantBaseline="middle"
                     fontWeight="var(--fw-semibold)"
                     fill={color}
                     style={{ fontSize: REFERENCE_LABEL_SIZE }}
@@ -415,6 +515,7 @@ export function LineChart({
                     fill="none"
                     stroke={color}
                     style={{ strokeWidth: SERIES_STROKE }}
+                    vectorEffect="non-scaling-stroke"
                     strokeLinejoin="round"
                     strokeLinecap="round"
                     strokeDasharray={item.dashed ? '5 4' : undefined}
@@ -430,6 +531,7 @@ export function LineChart({
                       fill="var(--color-semantic-background-elevated-normal)"
                       stroke={color}
                       style={{ strokeWidth: SERIES_STROKE }}
+                      vectorEffect="non-scaling-stroke"
                     />
                   ))}
               </g>
@@ -454,27 +556,6 @@ export function LineChart({
       </svg>
       </ChartTooltip>
 
-      {showLegend && normalized.length > 0 && (
-        <Legend
-          items={legendItems}
-          size="sm"
-          aria-label="라인 차트 범례"
-          style={{ paddingLeft: pad.left, maxWidth: '100%' }}
-        />
-      )}
-
-      {xLabel && (
-        <div
-          style={{
-            textAlign: 'center',
-            fontSize: 'var(--caption1-size)',
-            lineHeight: 'var(--caption1-line)',
-            color: 'var(--color-semantic-label-alternative)',
-          }}
-        >
-          {xLabel}
-        </div>
-      )}
     </div>
   );
 }

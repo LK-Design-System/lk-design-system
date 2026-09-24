@@ -53,13 +53,13 @@
   /* ---- Radii ------------------------------------------- */
   --radius-xs: 4px; /* annotation boxes, status bar pills — the step below sm */
   --radius-sm: 6px; /* checkbox, tags, small chips */
-  --radius-md: 12px; /* buttons, tabs, controls (base radius = 12) */
-  --radius-input: 12px; /* text inputs, selects (kit-exact) */
-  --radius-lg: 12px; /* menus, popovers */
-  --radius-xl: 16px; /* feature cards, panels (card) */
-  --radius-2xl: 18px; /* product / location cards */
-  --radius-3xl: 24px; /* large cards / sheets */
-  --radius-4xl: 32px; /* containers / modals */
+  --radius-md: 8px; /* buttons, tabs, controls (base radius = 8) */
+  --radius-input: 8px; /* text inputs, selects */
+  --radius-lg: 10px; /* menus, popovers */
+  --radius-xl: 12px; /* feature cards, panels (card) */
+  --radius-2xl: 12px; /* product / location cards */
+  --radius-3xl: 16px; /* large cards / sheets, dialogs */
+  --radius-4xl: 20px; /* containers */
   --radius-pill: 999px; /* tags, avatars, dots, nav pills */
 
   /* Radius aliases (pt values) */

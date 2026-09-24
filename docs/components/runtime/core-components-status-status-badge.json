@@ -61,8 +61,8 @@
       "rule": "600"
     },
     {
-      "subject": "--radius-pill",
-      "rule": "999px"
+      "subject": "--radius-4",
+      "rule": "4px"
     }
   ],
   "responsive": [],
@@ -119,7 +119,7 @@
     "--caption1-size",
     "--font-sans",
     "--fw-semibold",
-    "--radius-pill",
+    "--radius-4",
     "--space-2"
   ],
   "apiLinks": [],

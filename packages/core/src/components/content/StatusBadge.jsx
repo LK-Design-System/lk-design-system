@@ -25,7 +25,7 @@ export function StatusBadge({ children, tone = 'positive', style, ...rest }) {
         height: 20,
         maxWidth: '100%',
         padding: '0 var(--space-2)',
-        borderRadius: 'var(--radius-pill)',
+        borderRadius: 'var(--radius-4)',
         background: appearance.surface,
         color: appearance.foreground,
         fontFamily: 'var(--font-sans)',

@@ -57,8 +57,8 @@ function StructuredSkeleton({ mobile, dense, className, style }) {
 
 /**
  * LK ROBOTICS — Card
- * The neutral surface everything is built on: white, hairline border, soft
- * navy-tinted shadow, 16px radius. `interactive` lifts gently on hover;
+ * The neutral surface everything is built on: white, hairline border, no
+ * shadow at rest, 12px radius (shadows are reserved for overlays). `interactive` lifts gently on hover;
  * `dark` flips to a navy surface for dark sections.
  *
  * Accessibility — an `interactive` card is a real actionable control
@@ -122,7 +122,7 @@ export const Card = React.forwardRef(function Card({
      하나가 Tooltip·Combobox 드롭다운·Fab 같은 **떠 있는** 요소와 같은 그림자를
      달고 가만히 놓여 있었다. 40px 번짐은 오버레이 등급이라 쉬는 표면에는
      과하고, 같은 시스템 안에서 형제 카드와 규칙이 어긋났다. */
-  const resolvedElevation = elevation ?? (surface === 'subtle' ? 'none' : 'xs');
+  const resolvedElevation = elevation ?? 'none';
   const structured = skeleton || save || toggleIcon != null || thumbnail != null || topContent != null || leadingContent != null || trailingContent != null || title != null || description != null || caption != null || subCaption != null || metaCaption != null || bottomContent != null || footer != null;
   const defaultPadding = mobile ? 'var(--space-3)' : dense ? 'var(--space-4)' : 'var(--component-card-padding)';
   const resolvedPaddingValue = padding != null

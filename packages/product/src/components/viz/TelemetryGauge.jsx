@@ -10,11 +10,13 @@ import {
 } from '@lk-design-system/lds-core/component-authoring';
 import { TELEMETRY_STATUS_LABEL as STATUS_LABEL } from '../internal/telemetryStatusLabel.js';
 
+// Arc fills use the non-text indicator roles so light and dark keep the same
+// vivid character; text roles stay on labels (StatusBadge owns status copy).
 const TONE = {
-  signal: 'var(--color-semantic-status-info-text)',
-  positive: 'var(--color-semantic-status-positive-text)',
-  cautionary: 'var(--color-semantic-status-cautionary-text)',
-  negative: 'var(--color-semantic-status-negative-text)',
+  signal: 'var(--color-semantic-primary-normal)',
+  positive: 'var(--color-semantic-status-positive-foreground)',
+  cautionary: 'var(--color-semantic-status-cautionary-foreground)',
+  negative: 'var(--color-semantic-status-negative-foreground)',
 };
 
 function thresholdTone(percent, thresholds) {

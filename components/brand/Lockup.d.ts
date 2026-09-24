@@ -5,6 +5,8 @@ export interface LockupProps extends Omit<React.SVGProps<SVGSVGElement>, 'color'
   variant?: 'mark' | 'stacked' | 'inline' | 'portal';
   /** 채움 프리셋 — 공식 네이비, 반전 화이트, 호환용 currentColor. 제약된 검정 단색 출력은 color="#000000"을 명시합니다. @default "ink" */
   tone?: 'ink' | 'white' | 'brand' | 'current';
+  /** 테마를 따릅니다. 라이트에서는 공식 네이비, 다크에서는 LK Navy 판(여백 0.5X) 위의 화이트. 라이트·다크를 모두 지원하는 제품 셸의 브랜드 슬롯에 씁니다. @default false */
+  adaptive?: boolean;
   /** 호환용 명시 채움. 임의 색을 공식 로고 사용으로 승인하지 않으며 신규 사용은 tone을 우선합니다. */
   color?: string;
   /** 요청 자연 높이. 최소 20 mark / 64 stacked / 20 inline으로 보정됩니다. 기본 responsive style의 축소는 실제 표시 최소를 보장하지 않습니다. @default 32 / 64 / 28 */

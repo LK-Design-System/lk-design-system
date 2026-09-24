@@ -10,7 +10,7 @@
   --component-button-height-sm: 32px;
   --component-button-height-md: 40px;
   --component-button-height-lg: 48px;
-  /* Source-model Action/Button size grading: padding 28/20/14, radius 12/10/8,
+  /* Button size grading: padding 28/20/14, radius 8/8/6 (LDS 2026-09, was 12/10/8),
      gap 6/5/4, type body1/body2/label2, per-size tracking. */
   --component-button-padding-sm: 0 14px;
   --component-button-padding-md: 0 20px;
@@ -31,8 +31,8 @@
   --component-button-font-weight: var(--fw-semibold);
   --component-button-font-weight-assistive: var(--fw-medium);
   --component-button-letter-spacing: var(--component-button-letter-spacing-md);
-  --component-button-radius-sm: var(--radius-8);
-  --component-button-radius-md: var(--radius-10);
+  --component-button-radius-sm: var(--radius-6);
+  --component-button-radius-md: var(--radius-8);
   --component-button-radius-lg: var(--radius-md);
   --component-button-radius: var(--component-button-radius-lg);
   --component-button-icon-size-sm: 16px;
@@ -89,7 +89,7 @@
   --component-chip-height-sm: 32px;
   --component-chip-height-md: 36px;
   --component-chip-height-lg: 40px;
-  /* Source-model Action/Chip size grading: padding 12/11/8/7, radius 10/10/8/6,
+  /* Chip size grading: padding 12/11/8/7, radius 8/8/6/6 (LDS 2026-09, was 10/10/8/6),
      gap 3/3/2/2, type body2/body2/label1/caption1. */
   --component-chip-padding-x-xs: 7px;
   --component-chip-padding-x-sm: var(--space-2);
@@ -115,9 +115,9 @@
   --component-chip-font-weight: var(--fw-medium);
   --component-chip-letter-spacing: var(--component-chip-letter-spacing-md);
   --component-chip-radius-xs: var(--radius-sm);
-  --component-chip-radius-sm: var(--radius-8);
-  --component-chip-radius-md: var(--radius-10);
-  --component-chip-radius-lg: var(--radius-10);
+  --component-chip-radius-sm: var(--radius-6);
+  --component-chip-radius-md: var(--radius-8);
+  --component-chip-radius-lg: var(--radius-8);
   --component-chip-radius: var(--component-chip-radius-md);
   --component-chip-disabled-opacity: var(--component-button-disabled-opacity);
 
@@ -128,7 +128,7 @@
   /* ---- Menu surface ------------------------------------------------------ */
   --component-menu-min-width: 176px;
   --component-menu-max-width: 320px;
-  --component-menu-radius: var(--radius-12);
+  --component-menu-radius: var(--radius-10);
   --component-menu-padding-y: var(--space-2);
   --component-menu-padding-x: var(--space-2);
   --component-menu-gap: var(--space-1);
@@ -138,7 +138,7 @@
   --component-menu-item-padding-x: var(--space-4);
   --component-menu-item-font-size: var(--label1-size);
   --component-menu-item-line-height: var(--label1-line);
-  --component-menu-item-radius: var(--radius-10);
+  --component-menu-item-radius: var(--radius-6);
   --component-menu-header-font-size: var(--label1-size);
   --component-menu-header-line-height: var(--label1-line);
   --component-menu-header-font-weight: var(--fw-semibold);
@@ -281,6 +281,30 @@
   --component-card-shadow-lg: var(--shadow-lg);
   --component-card-hover-transform: translateY(-4px);
   --component-card-transition: var(--transition-base);
+}
+
+/* Lockup adaptive in the dark theme. LK_LOGO_STANDARD 6.2 approves the white
+   lockup only on LK Navy, so it sits on a navy plate padded by the 0.5X clear space. */
+[data-theme="dark"] [data-lockup-adaptive],
+.theme-dark [data-lockup-adaptive] {
+  background: var(--color-semantic-brand-surface);
+  padding: var(--lockup-plate-pad);
+  border-radius: var(--radius-xs);
+}
+
+[data-theme="dark"] [data-theme="light"] [data-lockup-adaptive],
+.theme-dark .theme-light [data-lockup-adaptive] {
+  background: none;
+  padding: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"] [data-lockup-adaptive],
+  .theme-auto [data-lockup-adaptive] {
+    background: var(--color-semantic-brand-surface);
+    padding: var(--lockup-plate-pad);
+    border-radius: var(--radius-xs);
+  }
 }
 
 .lk-data-grid__selection-checkbox:focus-visible + [data-selection-glyph] {

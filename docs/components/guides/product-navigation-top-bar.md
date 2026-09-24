@@ -54,7 +54,7 @@
 | 명시 규칙 1 | 내비는 기본적으로 TopBarNavItem을 사용하면 active underline/dropdown 처리를 유지한다. active underline은 헤더 하단 구분선에 붙이지 않고 좌우 텍스트 padding을 제외한 글자 폭으로, 글자 바로 아래에 표시한다. 활성 목적지가 바뀔 때만 왼쪽을 기준으로 --dur-base(200ms) 동안 펼쳐지며, hover는 글자색만 바꾸고 현재 active underline을 이동시키거나 숨기지 않는다. |
 | 명시 규칙 2 | TopBar 드롭다운은 navigation disclosure 의미를 유지하되 범용 DropdownMenu와 같은 시각 밀도와 적응형 폭을 사용합니다. 콘텐츠에 따라 176–320px 사이에서 늘어나며 viewport 양쪽 16px 여백을 침범하지 않습니다. padding 8px·항목 간격 4px·패널 radius 12px, 항목 14/20px·최소 높이 40px·padding 10px 16px·radius 10px과 폭 경계는 공통 --component-menu- 토큰을 --component-topbar-menu-가 alias합니다. |
 | 명시 규칙 3 | 드롭다운은 disclosure 클릭·hover·focus로 열리고 브라우저 top layer에서 trigger를 기준으로 위·아래를 선택한 뒤 viewport 안으로 정렬합니다. 링크와 분리된 disclosure chevron은 최소 28px 클릭 폭을 유지하면서 라벨과 시각적으로 4px 간격을 두고, 열리면 180° 회전합니다. active underline과 chevron transition은 prefers-reduced-motion: reduce에서 즉시 전환합니다. |
-| 명시 규칙 4 | 타입 스케일 정합: 주 내비 링크 14.5px → --body2-size(15px)로 스냅했습니다. 주 내비는 위로 스냅해 14px 드롭다운 항목보다 위 위계를 유지합니다. |
+| 명시 규칙 4 | 주 탐색 링크·disclosure·메뉴 항목의 keyboard focus ring은 전역 2px focus-indicator를 outline-offset: -2px로 안쪽에 그리고 각 control의 radius를 따릅니다. 주 탐색 항목은 바 높이 전체로 늘어나고 nav가 overflow-y: hidden 스크롤 영역이므로 바깥 offset ring은 위·아래가 잘려 세로 막대 두 개로 보입니다. |
 | --body2-size | 15px |
 
 ## Responsive
@@ -145,6 +145,7 @@
 - `--label1-size`
 - `--radius-10`
 - `--radius-14`
+- `--radius-md`
 - `--shadow-md`
 - `--space-0-5`
 - `--space-1`

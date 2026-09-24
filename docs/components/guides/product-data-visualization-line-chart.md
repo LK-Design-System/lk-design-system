@@ -19,9 +19,10 @@
 
 ### 사용하지 않음
 
-- 제품 데이터 차트는 yDomain/yTicks와 locale-aware formatY를 명시합니다. LDS의 자동 tick은 구조 preview용 균등 분할 fallback이며 분석 화면의 nice-tick 정책을 추론하지 않습니다.
 - renderTooltip(x)는 제품의 시각·단위·집계·결측 표시를 맡습니다. Portal의 원본 최신값과 집계된 이력을 혼동하지 않도록 툴팁에 집계 단위를 표시합니다. 범례·조회 기간·폴링은 제품 소유입니다.
 - 범위: LK Product Extension인 LineChart의 시점 조회만 확장합니다. LK Portal의 장치 리소스 분석이 직접 소비자이며, LK Web Viz와 LK Control Full Daedeok의 transport/실시간 제어 변경은 이 증분에 해당하지 않습니다. 해당 제품의 툴팁 채택을 검증 완료로 주장하지 않습니다.
+- host Card/ChartFrame이 title, surface, action, refresh를 소유합니다. LineChart에는 별도 카드 chrome을 추가하지 않습니다.
+- Carbon accessibility for developers의 meaningful description/data alternative 원칙에 따라 선 모양과 색만 발표하지 않고 시작·범위·마지막 값을 텍스트로 제공합니다.
 
 ## Anatomy
 
@@ -58,15 +59,19 @@
 | `description` | `React.ReactNode` | No | 차트가 무엇의 추이를 보여주는지 설명하는 스크린 리더용 문장. |
 | `summary` | `React.ReactNode` | No | 자동 생성되는 요약을 재정의합니다. 자동 요약은 시리즈별 시작·최저·최고·마지막 값에 이어 그려진 referenceLines의 이름·값과 그 선을 넘긴 시리즈를 덧붙입니다. |
 
+## Behavior and interaction
+
+- Recharts Tooltip의 활성 시점·다중 지표 정보 구성을 참고했습니다. WCAG 1.4.13에 따라 키보드 진입, Escape, hover 유지로 동일 정보를 제공합니다.
+
 ## 정량 규칙
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | 다중 시리즈를 색상만으로 구분하지 않습니다(WCAG 1.4.1). 텍스트 요약이 1차 대안이고, 시각적으로도 시리즈가 셋 이상이거나 색각 이상 사용자를 고려해야 하면 dashed(선 패턴)나 showPoints(마커)를 함께 켜서 색 외 단서를 남기세요. |
-| 명시 규칙 2 | 포인터를 따라가는 동작은 Highcharts tooltip.followPointer의 직접 조작 관례를 따릅니다. 툴팁은 커서와 간격을 두고, WCAG 2.2 SC 1.4.13에 따라 Escape로 닫히며 툴팁 자체를 가리킬 수 있고 포인터나 포커스가 유지되는 동안 사라지지 않습니다. |
-| 명시 규칙 3 | 비교 대상: Legend, Tooltip, BarChart. 차트에 카드 chrome을 추가하지 않고 Core 말풍선의 표면·타이포·간격을 유지합니다. hover 가능한 말풍선과 150ms 닫힘 지연은 포인터 이동을 위한 접근성 차이입니다. |
-| 명시 규칙 4 | Recharts Tooltip의 활성 시점·다중 지표 정보 구성을 참고했습니다. WCAG 1.4.13에 따라 키보드 진입, Escape, hover 유지로 동일 정보를 제공합니다. |
-| --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
+| 명시 규칙 1 | y축 눈금은 nice tick입니다. yTicks(기본 4)는 간격 수 힌트이고, step은 1·2·2.5·5 × 10ⁿ 중 가장 가까운 값으로 맞춥니다(2.5는 0–1·0–100 백분율 축이 0/25/50/75/100으로 읽히도록 유지). 자동 domain은 step의 배수로 넓히고, yDomain을 명시하면 그 범위를 유지한 채 범위 안의 step 배수에만 눈금을 둡니다. 눈금 값은 step 정밀도로 반올림해 부동소수 잡음이 라벨에 나오지 않습니다. 이전의 데이터 최대값 균등 분할(0 / 0.22 / 0.45 …)은 격자와 대조해 읽을 수 없어 폐기했습니다. |
+| 명시 규칙 2 | 시리즈·point·기준선 stroke는 vector-effect: non-scaling-stroke라서 굵기가 CSS px입니다. responsive viewBox가 width보다 좁게 렌더될 때 2px 선이 1.5px로 가늘어지던 문제를 막습니다. 점선 series는 그대로 점선입니다. |
+| 명시 규칙 3 | 다중 시리즈를 색상만으로 구분하지 않습니다(WCAG 1.4.1). 텍스트 요약이 1차 대안이고, 시각적으로도 시리즈가 셋 이상이거나 색각 이상 사용자를 고려해야 하면 dashed(선 패턴)나 showPoints(마커)를 함께 켜서 색 외 단서를 남기세요. |
+| 명시 규칙 4 | 포인터를 따라가는 동작은 Highcharts tooltip.followPointer의 직접 조작 관례를 따릅니다. 툴팁은 커서와 간격을 두고, WCAG 2.2 SC 1.4.13에 따라 Escape로 닫히며 툴팁 자체를 가리킬 수 있고 포인터나 포커스가 유지되는 동안 사라지지 않습니다. |
+| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
 
 ## Responsive
 
@@ -75,10 +80,10 @@
 
 ## Content and writing
 
+- 배치: 범례는 plot 바로 위 한 줄(plot 왼쪽 가장자리 정렬), x축 제목은 SVG 안에서 tick 라벨 바로 아래 축 끝에 오른쪽 정렬합니다. 기준선 라벨은 선의 오른쪽 끝 plot 바깥에 두어 series와 겹치지 않으며, 라벨 폭만큼 오른쪽 여백을 확보합니다.
 - 데이터가 없으면 축과 보이는 emptyLabel을 유지하며 같은 문구를 텍스트 요약으로 제공합니다. loading/error/zoom은 제품이 소유합니다.
 - 축과 빈 상태는 기존 label-alternative 토큰을 사용합니다. 전역 토큰 값은 변경하지 않습니다.
 - BarChart, DonutChart, Sparkline과 같은 named image, 맥락 설명, 결정적 텍스트 요약, 보이는 empty-state 계약을 사용합니다.
-- Legend의 시리즈 이름은 시각 범례를 담당하고, 자동 요약은 색과 선 모양 없이도 값의 범위와 추이를 이해할 수 있게 합니다.
 
 ## Accessibility
 
@@ -124,8 +129,6 @@
 
 ### Tokens
 
-- `--caption1-line`
-- `--caption1-size`
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-data-viz-series-1`
 - `--color-semantic-data-viz-series-2`
@@ -145,7 +148,7 @@
 - `--lk-chart-series-stroke`
 - `--lk-chart-tick-size`
 - `--space-1`
-- `--space-3`
+- `--space-2`
 
 ### Source contracts
 

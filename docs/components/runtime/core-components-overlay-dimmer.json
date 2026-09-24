@@ -92,7 +92,7 @@
     },
     {
       "subject": "--radius-md",
-      "rule": "12px"
+      "rule": "8px"
     }
   ],
   "responsive": [],

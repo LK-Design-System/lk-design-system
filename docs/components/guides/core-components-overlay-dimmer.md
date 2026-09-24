@@ -51,7 +51,7 @@
 | --color-semantic-inverse-background | light: #1B1C1E; dark: #FFFFFF |
 | --color-semantic-inverse-label | light: #FFFFFF; dark: #171719 |
 | --component-dialog-scrim-blur | 2px |
-| --radius-md | 12px |
+| --radius-md | 8px |
 
 ## Accessibility
 

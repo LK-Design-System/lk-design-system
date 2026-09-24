@@ -56,6 +56,7 @@ token보다 우선합니다.
 
 - `NavRail`/`BottomNav`와 icon, caption/label scale, `aria-current="page"` 의미를 공유하되 각 탐색 표면의 밀도에 맞는 선택 시각을 사용합니다. default default SideNav는 넓은 패널에서 상시 wash가 차지하는 면적을 줄이기 위해 현재 leaf의 text-safe accent 잉크·굵기만 유지하며, 섹션 heading, badge, 자식 indent, disclosure chevron, 펼친 panel width를 추가합니다. compact navigation의 선택 표면을 그대로 복제하지 않는 것은 이 면적·위계 차이 때문입니다.
 - anchor와 button은 동일한 padding, radius, hover, pressed, focus, disabled 시각을 공유합니다. 링크 여부가 아니라 `aria-current`만 선택 시각(accent 잉크·굵기, brand에서는 selected fill까지)을 만들며, 링크라는 이유로 underline·shadow·배경을 추가하지 않습니다.
+- 항목 keyboard focus ring은 전역 2px focus-indicator를 `outline-offset: -2px`로 안쪽에 그립니다. 목록이 `overflow-x: hidden` 스크롤 영역이라 바깥 offset ring은 가장자리에서 잘리므로, 항목 자체 radius를 따르는 inset ring이 잘림 없는 기준입니다.
 - `floating`은 기존 SideNav의 border/radius와 overlay 확장 shadow를 유지합니다. `docked`는 앱 셸과 한 평면으로 읽히도록 상시·레일 상태에서 논리적 끝 divider만 사용하지만, overlay 패널이 콘텐츠 위로 펼쳐진 동안에는 floating과 같은 확장 shadow로 부유 위계를 표시하고 접히면 다시 평면으로 돌아갑니다. 두 표면은 항목의 padding, radius, 순간 interaction fill, active ink를 공유합니다.
 - 접힌 레일과 펼친 패널은 SideNav가 소유하는 브랜드 아래 패딩 18px과 44px 목적지 행 높이를 공유합니다. `header`와 `headerCollapsed` 슬롯 자체의 intrinsic 높이는 제품이 맞추며, 레일에서는 label·badge가 시각적으로 사라지되 아이콘의 inline 시작 좌표는 바뀌지 않습니다.
 

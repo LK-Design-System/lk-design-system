@@ -178,7 +178,7 @@
     },
     {
       "subject": "명시 규칙 4",
-      "rule": "타입 스케일 정합: 주 내비 링크 14.5px → --body2-size(15px)로 스냅했습니다. 주 내비는 위로 스냅해 14px 드롭다운 항목보다 위 위계를 유지합니다."
+      "rule": "주 탐색 링크·disclosure·메뉴 항목의 keyboard focus ring은 전역 2px focus-indicator를 outline-offset: -2px로 안쪽에 그리고 각 control의 radius를 따릅니다. 주 탐색 항목은 바 높이 전체로 늘어나고 nav가 overflow-y: hidden 스크롤 영역이므로 바깥 offset ring은 위·아래가 잘려 세로 막대 두 개로 보입니다."
     },
     {
       "subject": "--body2-size",
@@ -275,6 +275,7 @@
     "--label1-size",
     "--radius-10",
     "--radius-14",
+    "--radius-md",
     "--shadow-md",
     "--space-0-5",
     "--space-1",

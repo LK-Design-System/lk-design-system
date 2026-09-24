@@ -35,7 +35,7 @@
 | --- | --- | --- | --- |
 | `as` | `React.ElementType` | No | Root element used for non-interactive document semantics. @default "div" |
 | `surface` | `"default" \| "subtle"` | No | Surface role. subtle is an inset grouping surface and defaults to no shadow. @default "default" |
-| `elevation` | `"none" \| "xs" \| "sm" \| "md" \| "lg"` | No | 기본 그림자 깊이. @default "md" |
+| `elevation` | `"none" \| "xs" \| "sm" \| "md" \| "lg"` | No | 기본 그림자 깊이. 쉬는 상태의 카드는 그림자 없이 테두리만 씁니다. @default "none" |
 | `interactive` | `boolean` | No | 카드 전체가 하나의 행동일 때. 호버 리프트 + 그림자 심화에 더해 role="button", tabIndex=0, Enter/Space 활성화, :focus-visible 링을 부여합니다. 내부에 별도의 버튼·링크를 넣지 마세요. |
 | `dark` | `boolean` | No | 다크 섹션용 네이비 서피스. @default false |
 | `headingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6 \| false` | No | 구조화 모드 title 의 heading 레벨. false 면 heading 의미 없이 div 로 렌더링합니다(제목이 이미 바깥에 있을 때). |

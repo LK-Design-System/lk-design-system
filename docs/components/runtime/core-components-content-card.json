@@ -49,7 +49,7 @@
       "name": "elevation",
       "type": "\"none\" | \"xs\" | \"sm\" | \"md\" | \"lg\"",
       "required": false,
-      "description": "기본 그림자 깊이. @default \"md\"",
+      "description": "기본 그림자 깊이. 쉬는 상태의 카드는 그림자 없이 테두리만 씁니다. @default \"none\"",
       "owner": "CardOwnProps"
     },
     {

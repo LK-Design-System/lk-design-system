@@ -1988,7 +1988,7 @@
           "name": "elevation",
           "type": "\"none\" | \"xs\" | \"sm\" | \"md\" | \"lg\"",
           "required": false,
-          "description": "기본 그림자 깊이. @default \"md\"",
+          "description": "기본 그림자 깊이. 쉬는 상태의 카드는 그림자 없이 테두리만 씁니다. @default \"none\"",
           "owner": "CardOwnProps"
         },
         {
@@ -2570,8 +2570,7 @@
         "--fw-medium",
         "--label2-line",
         "--label2-size",
-        "--radius-8",
-        "--radius-sm",
+        "--radius-4",
         "--space-0-5",
         "--space-1"
       ],
@@ -8076,7 +8075,7 @@
         },
         {
           "subject": "--radius-md",
-          "rule": "12px"
+          "rule": "8px"
         }
       ],
       "responsive": [],
@@ -16669,8 +16668,8 @@
           "rule": "600"
         },
         {
-          "subject": "--radius-pill",
-          "rule": "999px"
+          "subject": "--radius-4",
+          "rule": "4px"
         }
       ],
       "responsive": [],
@@ -16727,7 +16726,7 @@
         "--caption1-size",
         "--font-sans",
         "--fw-semibold",
-        "--radius-pill",
+        "--radius-4",
         "--space-2"
       ],
       "apiLinks": [],
@@ -23959,8 +23958,8 @@
         "--lds-button-height",
         "--lds-button-padding",
         "--lds-button-radius",
+        "--radius-4",
         "--radius-md",
-        "--radius-pill",
         "--radius-sm",
         "--space-1-5",
         "--space-2",
@@ -26315,7 +26314,7 @@
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "Footer action은 페이지의 기본 본문 크기를 상속하지 않고 label2(13/18)로 고정합니다. 갱신 시각보다 약간만 강조해 보조 탐색으로 읽히고, action 유무가 같은 행의 카드 높이와 하단 여백을 크게 바꾸지 않게 합니다."
+          "rule": "기존 uppercase caption label, title1 value, legacy delta color는 호환합니다. label은 --ls-overline tracking을 쓰지 않고 letter-spacing: 0으로 두어 한국어가 음절 단위로 벌어지지 않게 합니다. header icon은 장식 맥락이므로 중립 --color-semantic-label-alternative를 상속하며, 상태 색이 필요하면 host가 icon 자체에 색을 지정합니다(MetricCard에는 icon tone prop이 없습니다)."
         },
         {
           "subject": "--body2-line",
@@ -26323,6 +26322,7 @@
         }
       ],
       "responsive": [
+        "Footer action은 페이지의 기본 본문 크기를 상속하지 않고 label2(13/18)로 고정합니다. 갱신 시각보다 약간만 강조해 보조 탐색으로 읽히고, action 유무가 같은 행의 카드 높이와 하단 여백을 크게 바꾸지 않게 합니다.",
         "Carbon Tile은 표준 카드 행의 크기를 일관되게 유지하고 내부 link를 하단 CTA로 배치합니다. LDS는 freshness가 먼저 읽히는 기존 DOM 순서를 유지하기 위해 link를 logical end에 두되, action 높이가 카드 행 높이를 왜곡하지 않도록 제한합니다.",
         "Reading order and responsive hierarchy.",
         "DOM과 시각 순서는 동일합니다. 긴 label·caption·metadata는 좁은 폭에서 감싸며 value는 tabular numerals와 --title1-size를 유지합니다."
@@ -26386,13 +26386,13 @@
         "--color-semantic-label-neutral",
         "--color-semantic-label-normal",
         "--color-semantic-line-normal-alternative",
-        "--color-semantic-primary-normal",
         "--color-semantic-status-cautionary-text",
         "--color-semantic-status-negative-text",
         "--color-semantic-status-positive-text",
         "--component-card-bg",
         "--component-card-border",
         "--component-card-radius",
+        "--component-card-shadow-none",
         "--font-sans",
         "--fw-bold",
         "--fw-extra",
@@ -26402,17 +26402,13 @@
         "--label1-size",
         "--label2-line",
         "--label2-size",
-        "--ls-overline",
-        "--shadow-xs",
         "--space-1",
         "--space-2",
         "--space-3",
         "--title1-size"
       ],
       "apiLinks": [],
-      "migration": [
-        "기존 uppercase caption label, title1 value, legacy delta color는 호환합니다. 새 footer divider는 freshness/action을 본문 변화값과 분리하기 위해서만 추가했습니다."
-      ],
+      "migration": [],
       "platformStatus": {
         "figma": "not-tracked",
         "react": "implemented",
@@ -26461,7 +26457,7 @@
         "examples": "evidence",
         "tokens": "evidence",
         "apiLinks": "evidence",
-        "migration": "evidence"
+        "migration": "omitted-no-evidence"
       }
     },
     {
@@ -30250,9 +30246,10 @@
         "LineChart — 학습 곡선, 성능 지표, 텔레메트리 추이를 시간/step 축으로 보여주는 다중 시리즈 SVG 라인 차트. 새 charting engine이 아니라 Legend와 semantic token을 조합한 Product/Data pattern입니다."
       ],
       "avoidWhen": [
-        "제품 데이터 차트는 yDomain/yTicks와 locale-aware formatY를 명시합니다. LDS의 자동 tick은 구조 preview용 균등 분할 fallback이며 분석 화면의 nice-tick 정책을 추론하지 않습니다.",
         "renderTooltip(x)는 제품의 시각·단위·집계·결측 표시를 맡습니다. Portal의 원본 최신값과 집계된 이력을 혼동하지 않도록 툴팁에 집계 단위를 표시합니다. 범례·조회 기간·폴링은 제품 소유입니다.",
-        "범위: LK Product Extension인 LineChart의 시점 조회만 확장합니다. LK Portal의 장치 리소스 분석이 직접 소비자이며, LK Web Viz와 LK Control Full Daedeok의 transport/실시간 제어 변경은 이 증분에 해당하지 않습니다. 해당 제품의 툴팁 채택을 검증 완료로 주장하지 않습니다."
+        "범위: LK Product Extension인 LineChart의 시점 조회만 확장합니다. LK Portal의 장치 리소스 분석이 직접 소비자이며, LK Web Viz와 LK Control Full Daedeok의 transport/실시간 제어 변경은 이 증분에 해당하지 않습니다. 해당 제품의 툴팁 채택을 검증 완료로 주장하지 않습니다.",
+        "host Card/ChartFrame이 title, surface, action, refresh를 소유합니다. LineChart에는 별도 카드 chrome을 추가하지 않습니다.",
+        "Carbon accessibility for developers의 meaningful description/data alternative 원칙에 따라 선 모양과 색만 발표하지 않고 시작·범위·마지막 값을 텍스트로 제공합니다."
       ],
       "anatomy": [
         {
@@ -30425,27 +30422,29 @@
         }
       ],
       "states": [],
-      "behavior": [],
+      "behavior": [
+        "Recharts Tooltip의 활성 시점·다중 지표 정보 구성을 참고했습니다. WCAG 1.4.13에 따라 키보드 진입, Escape, hover 유지로 동일 정보를 제공합니다."
+      ],
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "다중 시리즈를 색상만으로 구분하지 않습니다(WCAG 1.4.1). 텍스트 요약이 1차 대안이고, 시각적으로도 시리즈가 셋 이상이거나 색각 이상 사용자를 고려해야 하면 dashed(선 패턴)나 showPoints(마커)를 함께 켜서 색 외 단서를 남기세요."
+          "rule": "y축 눈금은 nice tick입니다. yTicks(기본 4)는 간격 수 힌트이고, step은 1·2·2.5·5 × 10ⁿ 중 가장 가까운 값으로 맞춥니다(2.5는 0–1·0–100 백분율 축이 0/25/50/75/100으로 읽히도록 유지). 자동 domain은 step의 배수로 넓히고, yDomain을 명시하면 그 범위를 유지한 채 범위 안의 step 배수에만 눈금을 둡니다. 눈금 값은 step 정밀도로 반올림해 부동소수 잡음이 라벨에 나오지 않습니다. 이전의 데이터 최대값 균등 분할(0 / 0.22 / 0.45 …)은 격자와 대조해 읽을 수 없어 폐기했습니다."
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "포인터를 따라가는 동작은 Highcharts tooltip.followPointer의 직접 조작 관례를 따릅니다. 툴팁은 커서와 간격을 두고, WCAG 2.2 SC 1.4.13에 따라 Escape로 닫히며 툴팁 자체를 가리킬 수 있고 포인터나 포커스가 유지되는 동안 사라지지 않습니다."
+          "rule": "시리즈·point·기준선 stroke는 vector-effect: non-scaling-stroke라서 굵기가 CSS px입니다. responsive viewBox가 width보다 좁게 렌더될 때 2px 선이 1.5px로 가늘어지던 문제를 막습니다. 점선 series는 그대로 점선입니다."
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "비교 대상: Legend, Tooltip, BarChart. 차트에 카드 chrome을 추가하지 않고 Core 말풍선의 표면·타이포·간격을 유지합니다. hover 가능한 말풍선과 150ms 닫힘 지연은 포인터 이동을 위한 접근성 차이입니다."
+          "rule": "다중 시리즈를 색상만으로 구분하지 않습니다(WCAG 1.4.1). 텍스트 요약이 1차 대안이고, 시각적으로도 시리즈가 셋 이상이거나 색각 이상 사용자를 고려해야 하면 dashed(선 패턴)나 showPoints(마커)를 함께 켜서 색 외 단서를 남기세요."
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "Recharts Tooltip의 활성 시점·다중 지표 정보 구성을 참고했습니다. WCAG 1.4.13에 따라 키보드 진입, Escape, hover 유지로 동일 정보를 제공합니다."
+          "rule": "포인터를 따라가는 동작은 Highcharts tooltip.followPointer의 직접 조작 관례를 따릅니다. 툴팁은 커서와 간격을 두고, WCAG 2.2 SC 1.4.13에 따라 Escape로 닫히며 툴팁 자체를 가리킬 수 있고 포인터나 포커스가 유지되는 동안 사라지지 않습니다."
         },
         {
-          "subject": "--caption1-line",
-          "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
+          "subject": "--color-semantic-background-elevated-normal",
+          "rule": "light: #FFFFFF; dark: #212225"
         }
       ],
       "responsive": [
@@ -30453,10 +30452,10 @@
         "기본은 responsive SVG입니다. width/height는 viewBox 기준 크기이며, 실제 렌더는 부모 너비 안에서 줄어듭니다."
       ],
       "contentGuidance": [
+        "배치: 범례는 plot 바로 위 한 줄(plot 왼쪽 가장자리 정렬), x축 제목은 SVG 안에서 tick 라벨 바로 아래 축 끝에 오른쪽 정렬합니다. 기준선 라벨은 선의 오른쪽 끝 plot 바깥에 두어 series와 겹치지 않으며, 라벨 폭만큼 오른쪽 여백을 확보합니다.",
         "데이터가 없으면 축과 보이는 emptyLabel을 유지하며 같은 문구를 텍스트 요약으로 제공합니다. loading/error/zoom은 제품이 소유합니다.",
         "축과 빈 상태는 기존 label-alternative 토큰을 사용합니다. 전역 토큰 값은 변경하지 않습니다.",
-        "BarChart, DonutChart, Sparkline과 같은 named image, 맥락 설명, 결정적 텍스트 요약, 보이는 empty-state 계약을 사용합니다.",
-        "Legend의 시리즈 이름은 시각 범례를 담당하고, 자동 요약은 색과 선 모양 없이도 값의 범위와 추이를 이해할 수 있게 합니다."
+        "BarChart, DonutChart, Sparkline과 같은 named image, 맥락 설명, 결정적 텍스트 요약, 보이는 empty-state 계약을 사용합니다."
       ],
       "accessibility": [
         "series {id?,name,accessibleLabel?,color,dashed,points:[{x,y}]}[] · width/height · xTicks/yTicks · xDomain/yDomain · includeZero · showGrid/showLegend/showPoints · referenceLines {y,label,color?,dashed?}[] · emptyLabel · formatX/formatY.",
@@ -30509,8 +30508,6 @@
         }
       ],
       "tokens": [
-        "--caption1-line",
-        "--caption1-size",
         "--color-semantic-background-elevated-normal",
         "--color-semantic-data-viz-series-1",
         "--color-semantic-data-viz-series-2",
@@ -30530,7 +30527,7 @@
         "--lk-chart-series-stroke",
         "--lk-chart-tick-size",
         "--space-1",
-        "--space-3"
+        "--space-2"
       ],
       "apiLinks": [],
       "migration": [],
@@ -30582,7 +30579,7 @@
         "anatomy": "evidence",
         "properties": "evidence",
         "states": "omitted-no-evidence",
-        "behavior": "omitted-no-evidence",
+        "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
         "contentGuidance": "evidence",
@@ -36161,8 +36158,8 @@
       "responsive": [
         "Width, rail width, padding, radius, and item geometry can be tuned only through the documented --lds-side-nav- variables. Navigation value, routing, and shell collapse controls remain product-owned.",
         "내비게이션 disabled 표면은 wrapper opacity 0.45를 공통 문법으로 사용합니다. 개별 자식의 색 토큰을 다시 바꿔 이중으로 흐리게 만들지 않습니다.",
-        "접힌 레일과 펼친 패널은 SideNav가 소유하는 브랜드 아래 패딩 18px과 44px 목적지 행 높이를 공유합니다. header와 headerCollapsed 슬롯 자체의 intrinsic 높이는 제품이 맞추며, 레일에서는 label·badge가 시각적으로 사라지되 아이콘의 inline 시작 좌표는 바뀌지 않습니다.",
-        "Carbon UI shell usage — 복잡한 제품 탐색은 header와 지속적인 left panel을 조합하고 좁은 폭에서는 탐색 표면을 전환합니다. 그래서 셸에 붙는 SideNav는 docked를, 독립 배치는 floating을 사용합니다."
+        "항목 keyboard focus ring은 전역 2px focus-indicator를 outline-offset: -2px로 안쪽에 그립니다. 목록이 overflow-x: hidden 스크롤 영역이라 바깥 offset ring은 가장자리에서 잘리므로, 항목 자체 radius를 따르는 inset ring이 잘림 없는 기준입니다.",
+        "접힌 레일과 펼친 패널은 SideNav가 소유하는 브랜드 아래 패딩 18px과 44px 목적지 행 높이를 공유합니다. header와 headerCollapsed 슬롯 자체의 intrinsic 높이는 제품이 맞추며, 레일에서는 label·badge가 시각적으로 사라지되 아이콘의 inline 시작 좌표는 바뀌지 않습니다."
       ],
       "contentGuidance": [
         "ref, className, and style target the native nav landmark.",
@@ -36730,7 +36727,7 @@
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "타입 스케일 정합: 주 내비 링크 14.5px → --body2-size(15px)로 스냅했습니다. 주 내비는 위로 스냅해 14px 드롭다운 항목보다 위 위계를 유지합니다."
+          "rule": "주 탐색 링크·disclosure·메뉴 항목의 keyboard focus ring은 전역 2px focus-indicator를 outline-offset: -2px로 안쪽에 그리고 각 control의 radius를 따릅니다. 주 탐색 항목은 바 높이 전체로 늘어나고 nav가 overflow-y: hidden 스크롤 영역이므로 바깥 offset ring은 위·아래가 잘려 세로 막대 두 개로 보입니다."
         },
         {
           "subject": "--body2-size",
@@ -36827,6 +36824,7 @@
         "--label1-size",
         "--radius-10",
         "--radius-14",
+        "--radius-md",
         "--shadow-md",
         "--space-0-5",
         "--space-1",
@@ -37765,6 +37763,10 @@
           "rule": "Escape는 2단계입니다. 검색어가 남아 있으면 1차 Escape가 검색어만 비우고, 빈 필드에서 누른 Escape만 dialog를 닫습니다. VS Code·Spotlight·Slack의 ⌘K 관습입니다."
         },
         {
+          "subject": "명시 규칙 2",
+          "rule": "검색 input은 테두리 없는 필드지만 자체 --radius-sm을 가지므로 전역 2px focus ring이 사각 모서리가 아닌 input radius를 따라 그려집니다."
+        },
+        {
           "subject": "--body2-size",
           "rule": "15px"
         },
@@ -37775,10 +37777,6 @@
         {
           "subject": "--color-semantic-background-elevated-normal",
           "rule": "light: #FFFFFF; dark: #212225"
-        },
-        {
-          "subject": "--color-semantic-fill-normal",
-          "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
         }
       ],
       "responsive": [],
@@ -37838,6 +37836,7 @@
         "--label1-size",
         "--radius-2xl",
         "--radius-md",
+        "--radius-sm",
         "--shadow-xl",
         "--space-8"
       ],
@@ -44975,7 +44974,7 @@
       ],
       "responsive": [],
       "contentGuidance": [
-        "meter arc는 light/dark surface 모두에서 비텍스트 그래픽 대비를 확보하는 semantic status text role을 사용하고, 상태 의미는 별도 text badge로도 제공합니다.",
+        "meter arc는 text role이 아닌 비텍스트 indicator role(--color-semantic-status-{positive,cautionary,negative}-foreground, signal은 --color-semantic-primary-normal)을 사용해 light/dark에서 같은 선명도를 유지합니다. 텍스트 색은 text role에 남기고, 상태 의미는 별도 text badge로도 제공합니다.",
         "제품 도메인이 severity를 판정해 tone과 구체적인 statusLabel을 전달하는 방식을 우선합니다. 상태는 색과 함께 텍스트 badge로 항상 표시됩니다.",
         "Adobe Spectrum Meter: 보이는 label과 value label을 기본 anatomy로 유지합니다. 시각 스타일은 복제하지 않고 LDS typography·spacing·status token에 맞췄습니다."
       ],
@@ -45020,10 +45019,10 @@
         "--color-semantic-fill-strong",
         "--color-semantic-label-neutral",
         "--color-semantic-label-strong",
-        "--color-semantic-status-cautionary-text",
-        "--color-semantic-status-info-text",
-        "--color-semantic-status-negative-text",
-        "--color-semantic-status-positive-text",
+        "--color-semantic-primary-normal",
+        "--color-semantic-status-cautionary-foreground",
+        "--color-semantic-status-negative-foreground",
+        "--color-semantic-status-positive-foreground",
         "--dur-base",
         "--dur-slow",
         "--ease-out",
@@ -47928,7 +47927,8 @@
       "purpose": "LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 800 v7.222, 한글 법인명은 Noto Sans KR ExtraBold 800 v2.004-H2에서 아웃라인으로 생성합니다. construction grid, variant 저장소 정책 최소 크기, 0.5X/1X 여백, 배경·오용·플랫폼 전달 규칙을 함께 확인합니다.",
       "useWhen": [
         "Positive: 흰색 또는 밝고 단순한 단색 배경에는 공식 네이비 tone=\"ink\"를 사용합니다.",
-        "Reverse: 공식 네이비 또는 충분히 어둡고 단순한 배경에는 tone=\"white\"를 사용합니다."
+        "Reverse: 공식 네이비 또는 충분히 어둡고 단순한 배경에는 tone=\"white\"를 사용합니다.",
+        "Adaptive: 라이트·다크 테마를 모두 지원하는 제품 셸(Top Bar, Side Nav, Dashboard Shell의 브랜드 슬롯)에는 adaptive를 사용합니다. 라이트에서는 ink와 같고, 다크에서는 흰색 로고를 LK Navy 판(여백 0.5X) 위에 올립니다. 브랜드 표준 6.2가 흰색 로고를 LK Navy 위에서만 승인하므로, LDS 다크 배경(#1B1C1E)에 흰색 로고를 직접 올리지 않습니다."
       ],
       "avoidWhen": [
         "ROBOTICS: 대문자, Montserrat ExtraBold 정적 weight 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지.",
@@ -47955,6 +47955,13 @@
           "type": "'ink' | 'white' | 'brand' | 'current'",
           "required": false,
           "description": "채움 프리셋 — 공식 네이비, 반전 화이트, 호환용 currentColor. 제약된 검정 단색 출력은 color=\"#000000\"을 명시합니다. @default \"ink\"",
+          "owner": "LockupProps"
+        },
+        {
+          "name": "adaptive",
+          "type": "boolean",
+          "required": false,
+          "description": "테마를 따릅니다. 라이트에서는 공식 네이비, 다크에서는 LK Navy 판(여백 0.5X) 위의 화이트. 라이트·다크를 모두 지원하는 제품 셸의 브랜드 슬롯에 씁니다. @default false",
           "owner": "LockupProps"
         },
         {
@@ -48047,10 +48054,12 @@
       "examples": [
         {
           "label": "기본 조합",
-          "code": "<Lockup variant=\"inline\" tone=\"ink\" height={28} />\n<Lockup variant=\"mark\" tone=\"white\" height={32} decorative />\n<Lockup variant=\"stacked\" tone=\"current\" color=\"#000000\" height={64} />\n<Lockup variant=\"portal\" tone=\"white\" height={20} />"
+          "code": "<Lockup variant=\"inline\" tone=\"ink\" height={28} />\n<Lockup variant=\"mark\" tone=\"white\" height={32} decorative />\n<Lockup variant=\"stacked\" tone=\"current\" color=\"#000000\" height={64} />\n<Lockup variant=\"portal\" tone=\"white\" height={20} />\n<Lockup variant=\"inline\" adaptive height={20} />"
         }
       ],
-      "tokens": [],
+      "tokens": [
+        "--component-lockup-auto-fill"
+      ],
       "apiLinks": [],
       "migration": [],
       "platformStatus": {
@@ -48089,7 +48098,7 @@
         "exceptions": "evidence",
         "related": "evidence",
         "examples": "evidence",
-        "tokens": "omitted-no-evidence",
+        "tokens": "evidence",
         "apiLinks": "evidence",
         "migration": "omitted-no-evidence"
       }

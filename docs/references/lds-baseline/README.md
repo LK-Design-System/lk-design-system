@@ -47,3 +47,13 @@ Gate — 공유 토큰 값 변경과 같은 급). 절차:
 
 - 2026-08-16 — 최초 채택. WDS parity 추출본에서 바이트 동일 동결. 의도적
   변경 0건.
+- 2026-09-24 — 모서리 둥글기 한 단계 축소(디자인 소유자 승인). 근거: 0.2.11
+  시각 평가에서 버튼 12px·모달 24px·카드 16px에 번진 그림자까지 겹쳐, 관제
+  도구보다 소비자 앱에 가까운 인상이었다(형태 5/10). 컨트롤 8, 메뉴 10,
+  카드 12, 다이얼로그 16, 큰 컨테이너 20으로 낮춘다. 이 폴더에서는
+  `Button/Button` radius 10→8, `Chip/Chip` 10→8, `Textinput/Textfield` 12→8,
+  `Button/Outlined` 10→8, `Select/Select` 12→8, `Textinput/Textarea` 12→8,
+  `Toast/Toast` 12→10, `Content Badge/Content Badge` 8→4(분류·상태 뱃지는
+  4px 사각형, 알림 개수만 알약형), `COMPONENT_DIMENSIONS_DEEP.json`의
+  `ListCell/interaction` 12→10을 바꿨고, 같은 커밋에서 `tokens/spacing.css`의 의미 토큰(`--radius-md/input/lg/xl/2xl/3xl/4xl`)과
+  `tokens/components.css`의 버튼·칩·메뉴 토큰을 맞췄다.

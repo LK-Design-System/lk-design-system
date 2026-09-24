@@ -16,6 +16,7 @@ LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 8
 
 - Positive: 흰색 또는 밝고 단순한 단색 배경에는 공식 네이비 tone="ink"를 사용합니다.
 - Reverse: 공식 네이비 또는 충분히 어둡고 단순한 배경에는 tone="white"를 사용합니다.
+- Adaptive: 라이트·다크 테마를 모두 지원하는 제품 셸(Top Bar, Side Nav, Dashboard Shell의 브랜드 슬롯)에는 adaptive를 사용합니다. 라이트에서는 ink와 같고, 다크에서는 흰색 로고를 LK Navy 판(여백 0.5X) 위에 올립니다. 브랜드 표준 6.2가 흰색 로고를 LK Navy 위에서만 승인하므로, LDS 다크 배경(#1B1C1E)에 흰색 로고를 직접 올리지 않습니다.
 
 ### 사용하지 않음
 
@@ -36,6 +37,7 @@ LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 8
 | --- | --- | --- | --- |
 | `variant` | `'mark' \| 'stacked' \| 'inline' \| 'portal'` | No | 'mark'(심볼만) · 'stacked' · 'inline'(가로) · 'portal'(SemiBold 600 LK Portal 고정 정본; ProductLockup의 portal과 동일 조형). @default "inline" |
 | `tone` | `'ink' \| 'white' \| 'brand' \| 'current'` | No | 채움 프리셋 — 공식 네이비, 반전 화이트, 호환용 currentColor. 제약된 검정 단색 출력은 color="#000000"을 명시합니다. @default "ink" |
+| `adaptive` | `boolean` | No | 테마를 따릅니다. 라이트에서는 공식 네이비, 다크에서는 LK Navy 판(여백 0.5X) 위의 화이트. 라이트·다크를 모두 지원하는 제품 셸의 브랜드 슬롯에 씁니다. @default false |
 | `color` | `string` | No | 호환용 명시 채움. 임의 색을 공식 로고 사용으로 승인하지 않으며 신규 사용은 tone을 우선합니다. |
 | `height` | `number` | No | 요청 자연 높이. 최소 20 mark / 64 stacked / 20 inline으로 보정됩니다. 기본 responsive style의 축소는 실제 표시 최소를 보장하지 않습니다. @default 32 / 64 / 28 |
 | `title` | `string` | No | 접근성 이름. portal은 "LK Portal", 나머지는 "LK ROBOTICS"가 기본값입니다. |
@@ -101,9 +103,14 @@ LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 8
 <Lockup variant="mark" tone="white" height={32} decorative />
 <Lockup variant="stacked" tone="current" color="#000000" height={64} />
 <Lockup variant="portal" tone="white" height={20} />
+<Lockup variant="inline" adaptive height={20} />
 ```
 
 ## Tokens and API
+
+### Tokens
+
+- `--component-lockup-auto-fill`
 
 ### Source contracts
 

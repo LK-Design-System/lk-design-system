@@ -52,7 +52,7 @@ const SIZE_XS = {
   lineHeight: "var(--caption2-line)",
   gap: 'var(--space-0-5)',
   icon: 12,
-  radius: "var(--radius-sm)",
+  radius: "var(--radius-4)",
 };
 const SIZE_SM = {
   padding: "4px 6px",
@@ -60,7 +60,7 @@ const SIZE_SM = {
   lineHeight: "var(--caption1-line)",
   gap: 'var(--space-1)',
   icon: 14,
-  radius: "var(--radius-sm)",
+  radius: "var(--radius-4)",
 };
 const SIZE_MD = {
   padding: "5px 8px",
@@ -68,7 +68,7 @@ const SIZE_MD = {
   lineHeight: "var(--label2-line)",
   gap: 4,
   icon: 16,
-  radius: "var(--radius-8)",
+  radius: "var(--radius-4)",
 };
 const SIZE = {
   xsmall: SIZE_XS,

@@ -390,8 +390,8 @@ export const CompactDensity = {
         style.borderBottomLeftRadius,
       ].every((radius) => Math.abs(Number.parseFloat(radius) - expected) <= 0.5);
     };
-    if (!hasRadius(shell, 16)) {
-      throw new Error('Compact MessageComposer must retain a 16px shell radius.');
+    if (!hasRadius(shell, 12)) {
+      throw new Error('Compact MessageComposer must retain a 12px shell radius.');
     }
     if (Math.abs(input.getBoundingClientRect().height - 40) > 1) {
       throw new Error('Compact MessageComposer must resolve its one-row textarea to 40px.');
@@ -409,8 +409,8 @@ export const CompactDensity = {
       if (current.width < 24 || current.height < 24) {
         throw new Error('Compact MessageComposer actions must retain a minimum 24px target.');
       }
-      if (Math.abs(current.width - 32) > 1 || Math.abs(current.height - 32) > 1 || !hasRadius(actions[index], 12)) {
-        throw new Error('Compact MessageComposer utility and primary actions must keep 32px targets with a 12px radius.');
+      if (Math.abs(current.width - 32) > 1 || Math.abs(current.height - 32) > 1 || !hasRadius(actions[index], 8)) {
+        throw new Error('Compact MessageComposer utility and primary actions must keep 32px targets with an 8px radius.');
       }
       for (const candidate of actions.slice(index + 1)) {
         const next = candidate.getBoundingClientRect();

@@ -47,7 +47,7 @@ export function Tag({ children, tone = 'signal', size = 'sm', solid = false, sty
         letterSpacing: dimensions.letterSpacing, textTransform: 'uppercase', whiteSpace: 'nowrap',
         color: solid ? (t.solidFg || 'var(--color-semantic-static-white)') : t.fg,
         background: solid ? (t.solidBg || t.fg) : t.bg,
-        borderRadius: 'var(--radius-pill)',
+        borderRadius: 'var(--radius-4)',
         ...style,
       }}
       {...rest}

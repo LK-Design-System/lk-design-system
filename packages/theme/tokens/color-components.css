@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Component color contracts — 110 tokens (GENERATED — do not hand-edit)
+   LK ROBOTICS — Component color contracts — 111 tokens (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -97,6 +97,7 @@
   --component-badge-cautionary-fg: var(--color-semantic-status-cautionary-text);
   --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
   --component-badge-negative-fg: var(--color-semantic-status-negative-text);
+  --component-lockup-auto-fill: var(--color-semantic-brand-surface);
   --component-side-nav-brand-surface: var(--color-semantic-brand-surface);
   --component-side-nav-brand-hover-surface: var(--color-atomic-navy-shell-18);
   --component-side-nav-brand-active-surface: var(--color-atomic-navy-shell-18);
@@ -210,6 +211,7 @@
   --component-badge-cautionary-fg: var(--color-semantic-status-cautionary-text);
   --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
   --component-badge-negative-fg: var(--color-semantic-status-negative-text);
+  --component-lockup-auto-fill: var(--color-semantic-static-white);
   --component-side-nav-brand-surface: var(--color-semantic-brand-surface);
   --component-side-nav-brand-hover-surface: var(--color-atomic-navy-shell-18);
   --component-side-nav-brand-active-surface: var(--color-atomic-navy-shell-18);
@@ -324,6 +326,7 @@
     --component-badge-cautionary-fg: var(--color-semantic-status-cautionary-text);
     --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
     --component-badge-negative-fg: var(--color-semantic-status-negative-text);
+    --component-lockup-auto-fill: var(--color-semantic-static-white);
     --component-side-nav-brand-surface: var(--color-semantic-brand-surface);
     --component-side-nav-brand-hover-surface: var(--color-atomic-navy-shell-18);
     --component-side-nav-brand-active-surface: var(--color-atomic-navy-shell-18);

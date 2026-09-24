@@ -179,12 +179,12 @@ export const Overview = {
       || !panelRect
       || panelStyle.paddingBlockStart !== '8px'
       || panelStyle.paddingInlineStart !== '8px'
-      || panelStyle.borderRadius !== '12px'
+      || panelStyle.borderRadius !== '10px'
       || Math.round(panelRect.width) !== Math.round(minimumPanelWidth)
       || Math.round(options[0].getBoundingClientRect().height) !== 40
       || optionStyle.paddingBlockStart !== '10px'
       || optionStyle.paddingInlineStart !== '16px'
-      || optionStyle.borderRadius !== '10px'
+      || optionStyle.borderRadius !== '6px'
     ) {
       throw new Error('LanguageSwitcher menu spacing must match the TopBar menu contract.');
     }

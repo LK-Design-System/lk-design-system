@@ -106,7 +106,7 @@
       "element": "Interaction",
       "w": 359,
       "h": 48,
-      "radius": 12,
+      "radius": 10,
       "fill": "#171719",
       "stroke": null,
       "strokeWeight": 1

@@ -153,7 +153,7 @@
   ],
   "responsive": [],
   "contentGuidance": [
-    "meter arc는 light/dark surface 모두에서 비텍스트 그래픽 대비를 확보하는 semantic status text role을 사용하고, 상태 의미는 별도 text badge로도 제공합니다.",
+    "meter arc는 text role이 아닌 비텍스트 indicator role(--color-semantic-status-{positive,cautionary,negative}-foreground, signal은 --color-semantic-primary-normal)을 사용해 light/dark에서 같은 선명도를 유지합니다. 텍스트 색은 text role에 남기고, 상태 의미는 별도 text badge로도 제공합니다.",
     "제품 도메인이 severity를 판정해 tone과 구체적인 statusLabel을 전달하는 방식을 우선합니다. 상태는 색과 함께 텍스트 badge로 항상 표시됩니다.",
     "Adobe Spectrum Meter: 보이는 label과 value label을 기본 anatomy로 유지합니다. 시각 스타일은 복제하지 않고 LDS typography·spacing·status token에 맞췄습니다."
   ],
@@ -198,10 +198,10 @@
     "--color-semantic-fill-strong",
     "--color-semantic-label-neutral",
     "--color-semantic-label-strong",
-    "--color-semantic-status-cautionary-text",
-    "--color-semantic-status-info-text",
-    "--color-semantic-status-negative-text",
-    "--color-semantic-status-positive-text",
+    "--color-semantic-primary-normal",
+    "--color-semantic-status-cautionary-foreground",
+    "--color-semantic-status-negative-foreground",
+    "--color-semantic-status-positive-foreground",
     "--dur-base",
     "--dur-slow",
     "--ease-out",

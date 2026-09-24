@@ -229,7 +229,7 @@
     "Button/Button": {
       "variant": "Variant=Solid, Color=Primary, Size=Medium, Icon Only=False, Disable=False",
       "height": 40,
-      "radius": 10,
+      "radius": 8,
       "padX": 20,
       "padY": 9,
       "fill": "#0066FF",
@@ -287,7 +287,7 @@
     "Button/Outlined": {
       "variant": "Variant=Primary, Size=Medium, Icon Only=False, Disable=False",
       "height": 40,
-      "radius": 10,
+      "radius": 8,
       "padX": 20,
       "padY": 9,
       "fill": null,
@@ -455,7 +455,7 @@
     "Chip/Chip": {
       "variant": "Size=Medium, Variant=Solid, Disable=False, Active=False",
       "height": 36,
-      "radius": 10,
+      "radius": 8,
       "padX": 11,
       "padY": 7,
       "fill": null,
@@ -526,7 +526,7 @@
     "Content Badge/Content Badge": {
       "variant": "Variant=Solid, Size=Medium, Color=Neutral",
       "height": 28,
-      "radius": 8,
+      "radius": 4,
       "padX": 8,
       "padY": 5,
       "gap": 4,
@@ -1361,7 +1361,7 @@
     "Select/Select": {
       "variant": "Render=Text, Negative=False, Active=False, Focus=False, Disable=False, Overflow=False",
       "height": 48,
-      "radius": 12,
+      "radius": 8,
       "padX": 12,
       "padY": 12,
       "gap": 12,
@@ -1540,7 +1540,7 @@
     "Textinput/Textarea": {
       "variant": "Status=Normal, Resize=Normal, Active=False, Focus=False, Disable=False",
       "height": 86,
-      "radius": 12,
+      "radius": 8,
       "padX": 12,
       "padY": 12,
       "gap": 12,
@@ -1554,7 +1554,7 @@
     "Textinput/Textfield": {
       "variant": "Status=Normal, Active=False, Focus=False, Disable=False, Trailing Button=False",
       "height": 48,
-      "radius": 12,
+      "radius": 8,
       "padX": 12,
       "padY": 12,
       "gap": 12,
@@ -1586,7 +1586,7 @@
     "Toast/Toast": {
       "variant": "Variant=Normal",
       "height": 54,
-      "radius": 12,
+      "radius": 10,
       "padX": 16,
       "padY": 11,
       "gap": 12,
