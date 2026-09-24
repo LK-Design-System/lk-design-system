@@ -2,6 +2,15 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## Unreleased
+
+### Removed (breaking)
+
+- `--interaction-layer-*` and `--interaction-opacity-*` (8 tokens, deprecated since 2026-07). No
+  LDS, satellite or LK product code referenced them. Use `fill-alternative`, `fill-normal` or
+  `fill-strong` for the layers; hover, pressed and focus are expressed per component family and
+  by the focus ring, never by opacity. See `TOKEN_GOVERNANCE.md` for the full table.
+
 ## 0.3.0 - 2026-09-24
 
 Paired Robotics release: `0.1.0-rc.49`. This release removes the color tokens deprecated in 0.2.11.

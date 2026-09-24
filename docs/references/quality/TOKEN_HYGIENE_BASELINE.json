@@ -307,9 +307,6 @@
       "--gap-xl",
       "--gap-xs",
       "--header-h",
-      "--interaction-opacity-hovered",
-      "--interaction-opacity-normal",
-      "--interaction-opacity-pressed",
       "--lh-caption",
       "--lh-display",
       "--lh-lead",
@@ -325,9 +322,7 @@
       "--color-semantic-line-normal-_strong",
       "--color-semantic-line-solid-_strong"
     ],
-    "transparentColors": [
-      "primitive.effect.interactionLayerNormal"
-    ],
+    "transparentColors": [],
     "crossComponentRefs": [
       "--component-chip-disabled-opacity->--component-button-disabled-opacity",
       "--component-toggle-icon-bg-active->--component-button-primary-bg",
@@ -575,9 +570,6 @@
       "tokens/effects.css:--decorate-mask-fade-left:linear-gradient(90deg, #000 0%, transparent 100%)",
       "tokens/effects.css:--decorate-mask-fade-right:linear-gradient( 270deg, #000 0%, transparent 100% )",
       "tokens/effects.css:--decorate-mask-fade-top:linear-gradient(180deg, #000 0%, transparent 100%)",
-      "tokens/effects.css:--interaction-layer-default:rgba(112, 115, 124, 0.08)",
-      "tokens/effects.css:--interaction-layer-light:rgba(112, 115, 124, 0.05)",
-      "tokens/effects.css:--interaction-layer-strong:rgba(112, 115, 124, 0.14)",
       "tokens/effects.css:--material-control-dimmer:rgba(0, 0, 0, 0.42)",
       "tokens/effects.css:--material-control-dimmer:rgba(0, 0, 0, 0.42)",
       "tokens/effects.css:--material-control-dimmer:rgba(0, 0, 0, 0.46)",

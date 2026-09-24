@@ -162,7 +162,7 @@
       },
       {
         "path": "docs/foundations/TOKEN_REFERENCE.md",
-        "sha256": "58da68ff7aeb28b556acaad4837a70d16ac24388b1aae600ff6446f12fd95089"
+        "sha256": "18110783aa91933745330eddc5ee81775f4e8ad544d7d730058e1a2b84839b2f"
       },
       {
         "path": "docs/foundations/typography.md",
@@ -210,7 +210,7 @@
       },
       {
         "path": "docs/TOKEN_GOVERNANCE.md",
-        "sha256": "dacea17e6d0954790a2cc7d2b003fe0290bacdda83ac0d58e18c818755fb5e36"
+        "sha256": "f62a3b9882c8b069ae4bbf95088f4037f687ecc04a3277748cae7832541f3ea8"
       },
       {
         "path": "llms.txt",
@@ -226,7 +226,7 @@
       },
       {
         "path": "tokens/source.json",
-        "sha256": "9bac63646285a7142f50186d95dfd082faf35f7560daf6888502d01842fdcece"
+        "sha256": "68d15dc355766e5fc91c2960557e23ee643962b66d7c5027023ff3cf16adb9a4"
       }
     ]
   },
@@ -525,11 +525,11 @@
     },
     {
       "path": "foundations/TOKEN_REFERENCE.md",
-      "sha256": "58da68ff7aeb28b556acaad4837a70d16ac24388b1aae600ff6446f12fd95089",
+      "sha256": "18110783aa91933745330eddc5ee81775f4e8ad544d7d730058e1a2b84839b2f",
       "sources": [
         {
           "path": "docs/foundations/TOKEN_REFERENCE.md",
-          "sha256": "58da68ff7aeb28b556acaad4837a70d16ac24388b1aae600ff6446f12fd95089"
+          "sha256": "18110783aa91933745330eddc5ee81775f4e8ad544d7d730058e1a2b84839b2f"
         }
       ]
     },
@@ -635,21 +635,21 @@
     },
     {
       "path": "policies/TOKEN_GOVERNANCE.md",
-      "sha256": "aae7e1418f300b6b2ff43d08715173e30e99a802941adaa07e0c256a3e36bb12",
+      "sha256": "d8f61d3f6e672bea18f3651275af45fffc1f2bb9f2b0b203b63b348b6c188b81",
       "sources": [
         {
           "path": "docs/TOKEN_GOVERNANCE.md",
-          "sha256": "dacea17e6d0954790a2cc7d2b003fe0290bacdda83ac0d58e18c818755fb5e36"
+          "sha256": "f62a3b9882c8b069ae4bbf95088f4037f687ecc04a3277748cae7832541f3ea8"
         }
       ]
     },
     {
       "path": "token-reference.json",
-      "sha256": "9bac63646285a7142f50186d95dfd082faf35f7560daf6888502d01842fdcece",
+      "sha256": "68d15dc355766e5fc91c2960557e23ee643962b66d7c5027023ff3cf16adb9a4",
       "sources": [
         {
           "path": "tokens/source.json",
-          "sha256": "9bac63646285a7142f50186d95dfd082faf35f7560daf6888502d01842fdcece"
+          "sha256": "68d15dc355766e5fc91c2960557e23ee643962b66d7c5027023ff3cf16adb9a4"
         }
       ]
     }

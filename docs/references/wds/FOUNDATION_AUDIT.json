@@ -277,22 +277,20 @@
         "stories/FoundationInteraction.stories.jsx#InteractionTokens"
       ],
       "fileEvidence": [
-        "tokens/effects.css",
+        "tokens/color-semantic.css",
+        "tokens/focus.css",
         "tokens/source.json",
         "docs/references/wds/source-pdfs/3decorate.pdf",
         "docs/references/wds/FOUNDATION_SOURCE_PDFS.json"
       ],
       "cssTokens": [
-        "--interaction-layer-normal",
-        "--interaction-layer-default",
-        "--interaction-layer-light",
-        "--interaction-layer-strong",
-        "--interaction-opacity-normal",
-        "--interaction-opacity-hovered",
-        "--interaction-opacity-focused",
-        "--interaction-opacity-pressed"
+        "--color-semantic-fill-alternative",
+        "--color-semantic-fill-normal",
+        "--color-semantic-fill-strong",
+        "--color-semantic-focus-ring",
+        "--color-semantic-focus-indicator"
       ],
-      "notes": "Local PDF export 3decorate.pdf confirms Interaction variants and states. LDS maps those to layer and state opacity tokens."
+      "notes": "Local PDF export 3decorate.pdf confirms Interaction variants and states. LDS keeps the WDS state axis (normal, hovered, focused, pressed) but draws it per component family: state layers use the fill roles and focus is the ring only. The early opacity-ramp mapping (--interaction-layer-*, --interaction-opacity-*) was removed in 2026-09; see docs/TOKEN_GOVERNANCE.md."
     },
     {
       "wdsSource": "2 Element / 2 Spacing / Grid",
