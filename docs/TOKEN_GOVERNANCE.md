@@ -113,7 +113,13 @@ Color usage rules:
   텍스트와 텍스트 배경에는 AA를 만족하는 `--color-semantic-status-*-text`
   (5.47:1 / 7.48:1 / 7.04:1)를 쓴다. 선명색을 배경으로 채우고 흰 글자를 올리는
   solid 변형은 같은 대비값이 그대로 적용되므로 금지한다 — `*-surface` + `*-text`
-  쌍을 쓰거나 배경을 더 어둡게 재정의한다.
+  쌍을 쓴다.
+- 운영자가 즉시 대응해야 하는 위급(화재·쓰러짐·비상정지 알람, 파괴적 확인)을 멀리서도
+  한눈에 보이게 칠해야 할 때만 `--color-semantic-status-negative-fill`과
+  `--color-semantic-status-negative-on-fill` 쌍을 쓴다. 두 모드 모두 `red-30`(`#AA1C1C`)
+  위의 흰색으로 7.26:1이다. `Button variant="danger"`와 `SpeedDial`의 위험 동작이 이
+  역할을 쓴다. 틴트 면(`*-surface`)으로 충분한 일반 오류·검증 실패에는 쓰지 않는다 —
+  화면에 강한 빨강 면이 여럿이면 진짜 위급이 묻힌다.
 - Data visualization uses `--color-semantic-data-viz-series-*`. A chart series
   must not use positive, cautionary, or negative unless that series actually
   communicates that status.

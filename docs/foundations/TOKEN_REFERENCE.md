@@ -28,9 +28,9 @@
 | `component.badge.tokens.signalFg` | color | `--component-badge-signal-fg` | `var(--color-semantic-static-white)` | — |
 | `component.badge.tokens.steelBg` | color | `--component-badge-steel-bg` | `var(--color-semantic-primary-surface-strong)` | — |
 | `component.badge.tokens.steelFg` | color | `--component-badge-steel-fg` | `var(--color-semantic-accent-blue-text)` | — |
-| `component.button.tokens.dangerBg` | color | `--component-button-danger-bg` | `var(--color-atomic-red-30)` | — |
+| `component.button.tokens.dangerBg` | color | `--component-button-danger-bg` | `var(--color-semantic-status-negative-fill)` | — |
 | `component.button.tokens.dangerBgHover` | color | `--component-button-danger-bg-hover` | `var(--color-atomic-red-20)` | — |
-| `component.button.tokens.dangerFg` | color | `--component-button-danger-fg` | `var(--color-semantic-static-white)` | — |
+| `component.button.tokens.dangerFg` | color | `--component-button-danger-fg` | `var(--color-semantic-status-negative-on-fill)` | — |
 | `component.button.tokens.darkBg` | color | `--component-button-dark-bg` | `var(--color-semantic-inverse-background)` | — |
 | `component.button.tokens.darkBgHover` | color | `--component-button-dark-bg-hover` | `var(--component-button-dark-bg)` | — |
 | `component.button.tokens.darkFg` | color | `--component-button-dark-fg` | `var(--color-semantic-inverse-label)` | — |
@@ -593,7 +593,9 @@
 | `semantic.colorRoles.status-info-text` | color | `--color-semantic-status-info-text` | `light: #2D6090; dark: #8CC8F5` | — |
 | `semantic.colorRoles.status-negative` | color | `--color-semantic-status-negative` | `light: #EE5656; dark: #F16F6F` | — |
 | `semantic.colorRoles.status-negative-border` | color | `--color-semantic-status-negative-border` | `light: color-mix(in srgb, var(--color-semantic-status-negative) 38%, var(--color-semantic-line-normal-normal)); dark: color-mix(in srgb, var(--color-semantic-status-negative) 44%, var(--color-semantic-line-normal-normal))` | — |
+| `semantic.colorRoles.status-negative-fill` | color | `--color-semantic-status-negative-fill` | `light: var(--color-atomic-red-30); dark: var(--color-atomic-red-30)` | — |
 | `semantic.colorRoles.status-negative-foreground` | color | `--color-semantic-status-negative-foreground` | `light: var(--color-semantic-status-negative); dark: var(--color-semantic-status-negative)` | — |
+| `semantic.colorRoles.status-negative-on-fill` | color | `--color-semantic-status-negative-on-fill` | `light: var(--color-semantic-static-white); dark: var(--color-semantic-static-white)` | — |
 | `semantic.colorRoles.status-negative-surface` | color | `--color-semantic-status-negative-surface` | `light: color-mix(in srgb, var(--color-semantic-status-negative) 14%, transparent); dark: color-mix(in srgb, var(--color-semantic-status-negative) 20%, transparent)` | — |
 | `semantic.colorRoles.status-negative-text` | color | `--color-semantic-status-negative-text` | `light: #A82727; dark: #FF8585` | — |
 | `semantic.colorRoles.status-neutral-border` | color | `--color-semantic-status-neutral-border` | `light: var(--color-semantic-line-normal-neutral); dark: var(--color-semantic-line-normal-neutral)` | — |

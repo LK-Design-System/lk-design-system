@@ -88,8 +88,8 @@
 - `--color-semantic-inverse-label`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-normal-normal`
-- `--color-semantic-static-white`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-fill`
+- `--color-semantic-status-negative-on-fill`
 - `--component-button-primary-bg`
 - `--component-button-primary-fg`
 - `--dur-fast`

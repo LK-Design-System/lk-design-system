@@ -2431,6 +2431,28 @@
         "origin": "lds-extension",
         "group": "status"
       },
+      "status-negative-fill": {
+        "$type": "color",
+        "css": "--color-semantic-status-negative-fill",
+        "modes": {
+          "light": "var(--color-atomic-red-30)",
+          "dark": "var(--color-atomic-red-30)"
+        },
+        "origin": "lds-extension",
+        "group": "status",
+        "$description": "Solid fill for an alarm or request the operator must act on now (fire, fall, emergency stop, destructive confirm). Carries status-negative-on-fill content at 7.26:1 in both modes. The vivid status-negative-signal gives white only 3.44:1, so it never backs text. Button danger draws from this role."
+      },
+      "status-negative-on-fill": {
+        "$type": "color",
+        "css": "--color-semantic-status-negative-on-fill",
+        "modes": {
+          "light": "var(--color-semantic-static-white)",
+          "dark": "var(--color-semantic-static-white)"
+        },
+        "origin": "lds-extension",
+        "group": "status",
+        "$description": "Text and icons on status-negative-fill."
+      },
       "status-neutral-surface": {
         "$type": "color",
         "css": "--color-semantic-status-neutral-surface",
@@ -2722,8 +2744,8 @@
         "dangerBg": {
           "$type": "color",
           "css": "--component-button-danger-bg",
-          "$value": "var(--color-atomic-red-30)",
-          "ref": "primitive.colorRamps.red.tokens.30",
+          "$value": "var(--color-semantic-status-negative-fill)",
+          "ref": "semantic.colorRoles.status-negative-fill",
           "$description": "LDS safety extension for destructive or emergency requests; not a WDS parity axis.",
           "generated": true
         },
@@ -2737,8 +2759,8 @@
         "dangerFg": {
           "$type": "color",
           "css": "--component-button-danger-fg",
-          "$value": "var(--color-semantic-static-white)",
-          "ref": "semantic.colorRoles.static-white",
+          "$value": "var(--color-semantic-status-negative-on-fill)",
+          "ref": "semantic.colorRoles.status-negative-on-fill",
           "generated": true
         },
         "secondaryBg": {

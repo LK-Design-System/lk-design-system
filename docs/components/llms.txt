@@ -9289,8 +9289,8 @@ ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드�
 - `--color-semantic-inverse-label`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-normal-normal`
-- `--color-semantic-static-white`
-- `--color-semantic-status-negative`
+- `--color-semantic-status-negative-fill`
+- `--color-semantic-status-negative-on-fill`
 - `--component-button-primary-bg`
 - `--component-button-primary-fg`
 - `--dur-fast`

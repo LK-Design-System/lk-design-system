@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Semantic color roles — 111 tokens / light and dark (GENERATED — do not hand-edit)
+   LK ROBOTICS — Semantic color roles — 113 tokens / light and dark (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -93,6 +93,8 @@
   --color-semantic-status-negative-foreground: var(--color-semantic-status-negative);
   --color-semantic-status-negative-border: color-mix(in srgb, var(--color-semantic-status-negative) 38%, var(--color-semantic-line-normal-normal));
   --color-semantic-status-negative-text: #A82727;
+  --color-semantic-status-negative-fill: var(--color-atomic-red-30);
+  --color-semantic-status-negative-on-fill: var(--color-semantic-static-white);
   --color-semantic-status-neutral-surface: var(--color-semantic-fill-normal);
   --color-semantic-status-neutral-border: var(--color-semantic-line-normal-neutral);
   --color-semantic-status-neutral-text: var(--color-semantic-label-neutral);
@@ -207,6 +209,8 @@
   --color-semantic-status-negative-foreground: var(--color-semantic-status-negative);
   --color-semantic-status-negative-border: color-mix(in srgb, var(--color-semantic-status-negative) 44%, var(--color-semantic-line-normal-normal));
   --color-semantic-status-negative-text: #FF8585;
+  --color-semantic-status-negative-fill: var(--color-atomic-red-30);
+  --color-semantic-status-negative-on-fill: var(--color-semantic-static-white);
   --color-semantic-status-neutral-surface: var(--color-semantic-fill-normal);
   --color-semantic-status-neutral-border: var(--color-semantic-line-normal-neutral);
   --color-semantic-status-neutral-text: var(--color-semantic-label-neutral);
@@ -322,6 +326,8 @@
     --color-semantic-status-negative-foreground: var(--color-semantic-status-negative);
     --color-semantic-status-negative-border: color-mix(in srgb, var(--color-semantic-status-negative) 44%, var(--color-semantic-line-normal-normal));
     --color-semantic-status-negative-text: #FF8585;
+    --color-semantic-status-negative-fill: var(--color-atomic-red-30);
+    --color-semantic-status-negative-on-fill: var(--color-semantic-static-white);
     --color-semantic-status-neutral-surface: var(--color-semantic-fill-normal);
     --color-semantic-status-neutral-border: var(--color-semantic-line-normal-neutral);
     --color-semantic-status-neutral-text: var(--color-semantic-label-neutral);

@@ -34,6 +34,7 @@ const pairs = [
   ['brand muted foreground', '--color-semantic-brand-on-surface-muted', '--color-semantic-brand-surface', 4.5],
   ['brand subtle foreground', '--color-semantic-brand-on-surface-subtle', '--color-semantic-brand-surface', 4.5],
   ['brand ink on page', '--color-semantic-brand-ink', '--color-semantic-background-normal-normal', 4.5],
+  ['status negative fill', '--color-semantic-status-negative-on-fill', '--color-semantic-status-negative-fill', 4.5],
   ['button primary', '--component-button-primary-fg', '--component-button-primary-bg', 4.5],
   ['button signal', '--component-button-signal-fg', '--component-button-signal-bg', 4.5],
   ['primary fill with white content', '--color-semantic-static-white', '--color-semantic-primary-fill', 4.5],

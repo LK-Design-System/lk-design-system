@@ -79,8 +79,8 @@ export function SpeedDial({ icon, actions = [], open, defaultOpen = false, onOpe
                 <span id={actionId} style={{ padding: '4px 9px', borderRadius: 'var(--radius-sm)', background: 'var(--color-semantic-inverse-background)', color: 'var(--color-semantic-inverse-label)', fontSize: 'var(--caption1-size)', fontWeight: 'var(--fw-semibold)', boxShadow: 'var(--shadow-sm)', whiteSpace: 'nowrap' }}>{a.label}</span>
                 <button type="button" aria-label={actionLabel} aria-labelledby={actionLabel ? undefined : actionId} onClick={() => { a.onClick && a.onClick(); close({ restoreFocus: true }); }}
                   style={{ width: 40, height: 40, borderRadius: '50%', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-md)',
-                    background: a.danger ? 'var(--color-semantic-status-negative)' : 'var(--color-semantic-background-elevated-normal)',
-                    color: a.danger ? 'var(--color-semantic-static-white)' : 'var(--color-semantic-label-normal)', border: a.danger ? 'none' : '1px solid var(--color-semantic-line-normal-normal)' }}>
+                    background: a.danger ? 'var(--color-semantic-status-negative-fill)' : 'var(--color-semantic-background-elevated-normal)',
+                    color: a.danger ? 'var(--color-semantic-status-negative-on-fill)' : 'var(--color-semantic-label-normal)', border: a.danger ? 'none' : '1px solid var(--color-semantic-line-normal-normal)' }}>
                   {a.icon}
                 </button>
               </li>

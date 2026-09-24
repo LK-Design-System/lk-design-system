@@ -8,9 +8,9 @@
   --component-button-primary-bg: var(--color-semantic-primary-fill);
   --component-button-primary-bg-hover: var(--component-button-primary-bg);
   --component-button-primary-fg: var(--color-semantic-static-white);
-  --component-button-danger-bg: var(--color-atomic-red-30);
+  --component-button-danger-bg: var(--color-semantic-status-negative-fill);
   --component-button-danger-bg-hover: var(--color-atomic-red-20);
-  --component-button-danger-fg: var(--color-semantic-static-white);
+  --component-button-danger-fg: var(--color-semantic-status-negative-on-fill);
   --component-button-secondary-bg: var(--color-semantic-secondary-normal);
   --component-button-signal-bg: var(--color-semantic-primary-fill);
   --component-button-signal-bg-hover: var(--component-button-signal-bg);
@@ -122,9 +122,9 @@
   --component-button-primary-bg: var(--color-semantic-primary-fill);
   --component-button-primary-bg-hover: var(--component-button-primary-bg);
   --component-button-primary-fg: var(--color-semantic-static-white);
-  --component-button-danger-bg: var(--color-atomic-red-30);
+  --component-button-danger-bg: var(--color-semantic-status-negative-fill);
   --component-button-danger-bg-hover: var(--color-atomic-red-20);
-  --component-button-danger-fg: var(--color-semantic-static-white);
+  --component-button-danger-fg: var(--color-semantic-status-negative-on-fill);
   --component-button-secondary-bg: var(--color-semantic-secondary-normal);
   --component-button-signal-bg: var(--color-semantic-primary-fill);
   --component-button-signal-bg-hover: var(--component-button-signal-bg);
@@ -237,9 +237,9 @@
     --component-button-primary-bg: var(--color-semantic-primary-fill);
     --component-button-primary-bg-hover: var(--component-button-primary-bg);
     --component-button-primary-fg: var(--color-semantic-static-white);
-    --component-button-danger-bg: var(--color-atomic-red-30);
+    --component-button-danger-bg: var(--color-semantic-status-negative-fill);
     --component-button-danger-bg-hover: var(--color-atomic-red-20);
-    --component-button-danger-fg: var(--color-semantic-static-white);
+    --component-button-danger-fg: var(--color-semantic-status-negative-on-fill);
     --component-button-secondary-bg: var(--color-semantic-secondary-normal);
     --component-button-signal-bg: var(--color-semantic-primary-fill);
     --component-button-signal-bg-hover: var(--component-button-signal-bg);
