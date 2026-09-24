@@ -116,7 +116,7 @@ const deprecations = await read('docs/DEPRECATIONS.md');
 assert(rootPackage.private === true, 'The workspace orchestrator must remain private.');
 assert(roboticsExternalSurface.package?.name === '@lk-design-system/lds-robotics-ui', 'External Robotics surface must name the published Robotics package.');
 assert(typeof roboticsExternalSurface.package?.version === 'string' && roboticsExternalSurface.package.version.length > 0, 'External Robotics surface must pin a package version.');
-assert(roboticsExternalSurface.schemaVersion === 3 && roboticsExternalSurface.documentation, 'External Robotics surface must expose the v3 documentation contract.');
+assert(roboticsExternalSurface.schemaVersion === 4 && roboticsExternalSurface.documentation, 'External Robotics surface must expose the v4 documentation contract.');
 assert(vendoredRoboticsRelease?.path && vendoredRoboticsRelease?.sha256, 'External Robotics surface must pin the vendored tarball path and SHA-256.');
 assert(vendoredRoboticsRelease.path.includes(roboticsExternalSurface.package.version), 'Vendored Robotics filename must include the external package version.');
 assert(

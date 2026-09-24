@@ -275,7 +275,7 @@ function validateSurfaceShape(surface) {
     'adoptionReportExample',
     'adoptionWorkflow',
   ];
-  if (surface?.schemaVersion !== 3
+  if (surface?.schemaVersion !== 4
     || surface?.kind !== 'lds-robotics-external-public-surface'
     || !surface?.package?.name
     || !['release-candidate', 'published'].includes(surface?.package?.refStatus)
@@ -283,7 +283,8 @@ function validateSurfaceShape(surface) {
     || typeof surface?.documentation?.canonicalContract?.contractVersion !== 'string'
     || !surface?.documentation?.canonicalContract?.source
     || !['release-candidate', 'published'].includes(surface?.documentation?.canonicalContract?.source?.refStatus)
-    || !/^[0-9a-f]{64}$/.test(surface?.documentation?.canonicalContract?.snapshotManifestSha256 ?? '')
+    || !/^[0-9a-f]{64}$/.test(surface?.documentation?.canonicalContract?.derivedInputsSha256 ?? '')
+    || !Array.isArray(surface?.documentation?.canonicalContract?.derivedInputs)
     || !documentationFileKeys.every((key) => surface?.documentation?.files?.[key]?.path && surface.documentation.files[key].sha256)
     || !Array.isArray(surface?.documentation?.domainDocuments)
     || surface.documentation.domainDocuments.length === 0
@@ -292,7 +293,7 @@ function validateSurfaceShape(surface) {
     || !Array.isArray(surface?.localTokenDefinitions)
     || !Array.isArray(surface?.inheritedRuntimeCustomProperties)
     || !Array.isArray(surface?.entries)) {
-    throw new Error('Robotics external surface does not match the supported v3 documentation shape.');
+    throw new Error('Robotics external surface does not match the supported v4 documentation shape.');
   }
   return surface;
 }
@@ -427,7 +428,8 @@ async function roboticsDocumentationDiagnostics(surface, root, ldsRoot, packageJ
     kind: canonical.kind,
     version: canonical.contractVersion,
     source: canonical.source,
-    snapshotManifestSha256: canonical.snapshotManifestSha256,
+    derivedInputs: canonical.derivedInputs,
+    derivedInputsSha256: canonical.derivedInputsSha256,
   };
   if (JSON.stringify(manifest.source?.canonicalAdoption) !== JSON.stringify(expectedCanonicalSource)) {
     diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.manifest.path, 'Documentation manifest canonical adoption source drift.'));
@@ -503,9 +505,19 @@ async function roboticsDocumentationDiagnostics(surface, root, ldsRoot, packageJ
       ...(checklist.facets ?? []).flatMap((facet) => facet.references ?? []),
       ...(checklist.componentMapping?.references ?? []),
     ];
+    // Shared policy references resolve in the installed lds-core peer.
+    const corePeerDocs = '@lk-design-system/lds-core/docs/';
     for (const reference of references) {
-      if (typeof reference !== 'string' || reference.startsWith('@') || /^https?:/.test(reference)) {
-        diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.checklist.path, `Robotics checklist reference must be self-contained: ${reference}.`));
+      if (typeof reference !== 'string' || /^https?:/.test(reference)
+        || (reference.startsWith('@') && !reference.startsWith(corePeerDocs))) {
+        diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.checklist.path, `Robotics checklist reference must be package-relative or ${corePeerDocs}: ${reference}.`));
+        continue;
+      }
+      if (reference.startsWith(corePeerDocs)) {
+        const coreTarget = packageDescendant(root, `node_modules/@lk-design-system/lds-core/docs/${reference.slice(corePeerDocs.length)}`);
+        if (!coreTarget || !await exists(coreTarget)) {
+          diagnostics.push(diagnostic('DOCUMENTATION_SURFACE_MISMATCH', docs.files.checklist.path, `Unresolved lds-core peer reference: ${reference}.`));
+        }
         continue;
       }
       const target = packageDescendant(root, slash(path.relative(root, path.resolve(path.dirname(checklistFile), reference))));

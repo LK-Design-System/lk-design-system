@@ -4,6 +4,7 @@ import path from 'node:path';
 import {
   canonicalSnapshotFromDocumentationManifest,
   canonicalSnapshotMode,
+  currentDerivedInputsFingerprint,
 } from './robotics-canonical-snapshot.mjs';
 
 const root = process.cwd();
@@ -272,7 +273,7 @@ function safeDescendant(directory, relativePath) {
 
 async function validateExternalDocumentation(packageInfo) {
   const surface = roboticsExternalSurface;
-  if (surface?.schemaVersion !== 3 || !surface.documentation) {
+  if (surface?.schemaVersion !== 4 || !surface.documentation) {
     fail(`${packageInfo.name}: external surface must use the v3 documentation contract.`);
     return;
   }
@@ -315,8 +316,12 @@ async function validateExternalDocumentation(packageInfo) {
     try {
       installedCanonical = canonicalSnapshotFromDocumentationManifest(docsManifest);
       snapshotMode = canonicalSnapshotMode({
-        currentRef: `lds-v${rootManifest?.version}`,
         canonicalRef: installedCanonical.source.ref,
+        canonicalDerivedInputsSha256: installedCanonical.derivedInputsSha256,
+        currentDerivedInputsSha256: await currentDerivedInputsFingerprint(
+          path.join(root, 'packages', 'core', 'docs'),
+          installedCanonical.derivedInputs,
+        ),
         surfacePackageRefStatus: surface.package.refStatus,
         installedPackageRefStatus: manifest.lds?.refStatus,
       });
@@ -347,12 +352,6 @@ async function validateExternalDocumentation(packageInfo) {
           !== JSON.stringify(withoutReferenceProjection(checklist))) {
         fail(`${packageInfo.name}: packaged checklist decisions differ from the canonical contract.`);
       }
-      const currentManifestBytes = await readFile(path.join(root, 'packages/core/docs/manifest.json')).catch(() => null);
-      if (!currentManifestBytes
-        || createHash('sha256').update(currentManifestBytes).digest('hex')
-          !== surface.documentation.canonicalContract.snapshotManifestSha256) {
-        fail(`${packageInfo.name}: current-ref Robotics snapshot differs from the current Core documentation manifest.`);
-      }
     }
     if (JSON.stringify(docsManifest.publicDocs) !== JSON.stringify(surface.documentation.publicDocs)) {
       fail(`${packageInfo.name}: installed documentation public URLs differ from the external surface.`);
@@ -361,7 +360,8 @@ async function validateExternalDocumentation(packageInfo) {
       kind: surface.documentation.canonicalContract.kind,
       version: surface.documentation.canonicalContract.contractVersion,
       source: surface.documentation.canonicalContract.source,
-      snapshotManifestSha256: surface.documentation.canonicalContract.snapshotManifestSha256,
+      derivedInputs: surface.documentation.canonicalContract.derivedInputs,
+      derivedInputsSha256: surface.documentation.canonicalContract.derivedInputsSha256,
     };
     if (JSON.stringify(docsManifest.source?.canonicalAdoption) !== JSON.stringify(expectedCanonicalSource)) {
       fail(`${packageInfo.name}: installed documentation canonical source drift.`);
@@ -380,9 +380,8 @@ async function validateExternalDocumentation(packageInfo) {
       .filter((file) => file !== 'manifest.json')
       .sort();
     const records = Array.isArray(docsManifest.documents) ? docsManifest.documents : [];
-    if (records.find(({ path: file }) => file === 'shared/manifest.json')?.sha256
-      !== surface.documentation.canonicalContract.snapshotManifestSha256) {
-      fail(`${packageInfo.name}: installed shared manifest does not match the canonical snapshot pin.`);
+    if (records.some(({ path: file }) => file.startsWith('shared/'))) {
+      fail(`${packageInfo.name}: installed documentation must not bundle a copy of Core docs (shared/).`);
     }
     const recordPaths = records.map(({ path: file }) => file).sort();
     if (JSON.stringify(actualPaths) !== JSON.stringify(recordPaths)) {

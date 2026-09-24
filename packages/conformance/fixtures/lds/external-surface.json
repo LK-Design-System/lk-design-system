@@ -1,6 +1,6 @@
 {
   "$schema": "./ROBOTICS_EXTERNAL_SURFACE.schema.json",
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "kind": "lds-robotics-external-public-surface",
   "package": {
     "name": "@lk-design-system/lds-robotics-ui",
@@ -12,7 +12,10 @@
     "canonicalContract": {
       "kind": "lds-ui-adoption-contract",
       "contractVersion": "1",
-      "snapshotManifestSha256": "98f9e4930eb5d89cab0e86042be2ba06d5f5b22f9b819df192b6bee558869977",
+      "derivedInputs": [
+        { "path": "adoption-checklist.json", "sha256": "900aba6614881280d4c3e2a271fea00f6f5087174f5b38fc866e1c228c67e5c2" }
+      ],
+      "derivedInputsSha256": "fb0cf8166853d5306f993995a2420edc15c4b60665b54b4ab689540531cc21f0",
       "source": {
         "repository": "LK-Design-System/lk-design-system",
         "ref": "lds-v0.1.0-rc.62",
@@ -22,7 +25,7 @@
       }
     },
     "files": {
-      "manifest": { "path": "docs/package/manifest.json", "sha256": "1b346432a3e4eeaa02a1bde8da19c27e2667a82af786b991462249d53bbe7390" },
+      "manifest": { "path": "docs/package/manifest.json", "sha256": "dea17867f9aca39d6b6e6c13f66f4d743dac39a83b8dbba07a790e1db1053cc1" },
       "checklist": { "path": "docs/package/adoption-checklist.json", "sha256": "900aba6614881280d4c3e2a271fea00f6f5087174f5b38fc866e1c228c67e5c2" },
       "contractSchema": { "path": "docs/package/LDS_UI_ADOPTION_CONTRACT.schema.json", "sha256": "67aa871ad7b5ef957f4cbaffb34216ce814eb92bdc4bb3ae5544eb231b5ddd89" },
       "reportSchema": { "path": "docs/package/adoption-report.schema.json", "sha256": "1eeda945b898987559ea52482d6528c08ed478e1459b70ff7c5bb49d91ea3476" },
@@ -47,10 +50,21 @@
       "adoptionWorkflow": "https://lk-design-system.github.io/lk-design-system-robotics/adoption-workflow.md"
     }
   },
-  "upstreamTokenDependencies": ["--color-semantic-primary-normal"],
-  "localTokenDefinitions": ["--component-viewer-surface"],
-  "inheritedRuntimeCustomProperties": ["--product-viewer-surface"],
+  "upstreamTokenDependencies": [
+    "--color-semantic-primary-normal"
+  ],
+  "localTokenDefinitions": [
+    "--component-viewer-surface"
+  ],
+  "inheritedRuntimeCustomProperties": [
+    "--product-viewer-surface"
+  ],
   "entries": [
-    { "source": "components/Widget", "exports": ["Widget"] }
+    {
+      "source": "components/Widget",
+      "exports": [
+        "Widget"
+      ]
+    }
   ]
 }

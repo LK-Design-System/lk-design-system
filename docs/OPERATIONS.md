@@ -37,35 +37,38 @@
 
 ## 2. 릴리스
 
-### 2.1 왜 robotics가 딸려오나
+### 2.1 언제 robotics가 딸려오나
 
-LDS는 robotics의 배포본(tgz)을 vendor에 넣어 쓰고, robotics는 그 안에
-"내가 맞춘 LDS 버전"과 Core 문서 snapshot을 기록해 둔다. 그래서 LDS 버전을
-올리거나 **버전을 올리지 않아도 Core 패키지 문서 표면(`packages/core/docs/*`로
-투영되는 것)을 바꾸면**, 새 릴리스에는 그 LDS ref와 문서 bytes를 기록한 새
-Robotics observation이 필요하다. 상시 source-candidate 검사와 실제 publish gate가
-이 차이를 다르게 다루는 규칙은 바로 아래와 같다.
-**모든 immutable LDS 릴리스에는 robotics 릴리스가 반드시 따라온다.** 다만
-tag·publish 전의 일반 source candidate는 예외적으로 마지막 published Robotics가
-기록한 versioned LDS snapshot을 유지할 수 있다. 이 `published-historical` 모드는
-external surface와 실제 설치본이 모두 같은 published Robotics artifact이고, 그 안의
-canonical observation이 정확할 때만 `check:release-pins`를 통과한다. 이는 main의 source
-계약을 검증하기 위한 상태이지 새 LDS 릴리스가 준비됐다는 뜻이 아니다.
+LDS는 robotics의 배포본(tgz)을 vendor에 넣어 쓴다. robotics는 Core 문서를 복사해
+싣지 않는다 — 공통 정책·Foundation 문서는 소비자가 반드시 함께 설치하는 peer
+`@lk-design-system/lds-core`의 `docs/`에서 읽는다. robotics가 Core에서 **가공해
+싣는 입력은 다섯 개뿐**이다: `adoption-checklist.json`(참조를
+`@lk-design-system/lds-core/docs/...`로 바꿔 투영)과 그대로 다시 싣는 채택 스키마·예시
+넷(`LDS_UI_ADOPTION_CONTRACT.schema.json`, `adoption-report.schema.json`,
+`adoption-report.example.json`, `adoption-config.schema.json`). robotics는 이 다섯
+파일의 해시와 그 지문(`documentation.canonicalContract.derivedInputs` /
+`derivedInputsSha256`)을 기록한다.
+
+그래서 **짝 Robotics 릴리스가 필요한 경우는 두 가지뿐이다.**
+
+1. `packages/core/docs/`의 위 다섯 입력 중 하나가 바뀌었다(채택 계약 변경, 또는
+   checklist가 가리키는 Core 문서 경로의 변경).
+2. robotics 자신의 코드·문서·LDS 핀을 바꾼다.
+
+그 밖의 Core 문서 변경(Foundation·정책 본문, 스킬, 토큰 레퍼런스 등)과 LDS 버전
+상승만으로는 robotics를 다시 릴리스하지 않는다. robotics가 기록한
+`canonicalContract.source.ref`는 입력을 가져온 시점의 LDS ref로 남는다.
+
+상시 source-candidate 검사(`check:release-pins`)는 기록된 지문이 현재 Core 입력의
+지문과 같으면 `current`로 통과한다. 입력이 바뀌었으면 external surface와 실제
+설치본이 모두 같은 published Robotics artifact일 때만 `published-historical`로
+통과한다 — 입력 변경을 main에 먼저 올리고 짝 릴리스로 해소할 수 있게 하는 상태다.
 
 release workflow는 publish 전에
 `node scripts/update-release-pins.mjs --check --require-current-canonical-snapshot`을 별도로
-실행한다. 이 gate는 Robotics canonical ref가 정확히 `lds-v<현재 LDS 버전>`이고 snapshot
-hash가 현재 `packages/core/docs/manifest.json`과 같으며 external surface와 설치본이 모두
-`published`일 때만 통과한다. 따라서 Core 문서 표면을 바꾼 source candidate는 main에서
-green일 수 있지만, 짝 Robotics release 없이는 LDS package publish가 기계적으로 막힌다.
-LDS tag 생성 자체는 §2.4의 paired release 절차가 통제한다.
-
-**순서에 함정이 있다.** robotics 산출물 안에 LDS 버전이 구워지므로
-(이 저장소의 `docs/references/package-split/ROBOTICS_EXTERNAL_SURFACE.json`,
-필드 `documentation.canonicalContract.source.ref` = `lds-v<LDS 버전>`),
-**새 LDS 버전을 먼저 정한 뒤에** robotics를 릴리스해야
-한다. "robotics가 먼저"는 tgz를 만드는 순서일 뿐, 버전을 정하는 순서가
-아니다.
+실행한다. 이 gate는 기록된 지문이 태그된 checkout의 Core 입력 지문과 같고 external
+surface와 설치본이 모두 `published`일 때만 통과한다. 입력이 바뀐 채로는 짝 Robotics
+release 없이 LDS package publish가 기계적으로 막힌다.
 
 **위성은 LDS를 정확한 버전이 아니라 범위로 선언한다.** 이유가 둘이다.
 
@@ -112,16 +115,15 @@ robotics 저장소: **`LK-Design-System/lk-design-system-robotics`**
 
 robotics는 레지스트리에 퍼블리시하지 않는다 — **LDS로 전달되는 경로는
 vendored tgz 하나뿐이다.** 그래서 "릴리스"는 버전을 올리고 pack해서 LDS의
-`vendor/`에 넣는 것까지다. 생성 문서가 `packages/core/docs/*`를 스냅샷으로
-가져가므로, Core 문서 표면이 바뀐 릴리스는 아래 두 저장소 순환을 생략할 수 없다.
+`vendor/`에 넣는 것까지다. §2.1의 두 경우에만 아래 두 저장소 순환을 돈다.
+그 밖의 LDS 릴리스는 vendored robotics를 그대로 두고 §2.4의 LDS 단계만 밟는다.
 
 **선행조건 — 시작 전에 넷을 확인한다:**
 
-1. LDS main CI가 초록이고 `npm run check:release-pins`가 통과한다. 마지막 published
-   Robotics snapshot을 쓰는 source candidate라면 `published-historical` 모드로 green일 수
-   있다(§2.1). 이 경우 release-only current-snapshot gate가 옛 ref/hash를 이유로 실패하는
-   것이 정상이며, 그 실패를 지금 만드는 짝 릴리스로 해소한다. 다른 종류의 빨간불이면
-   먼저 고친다.
+1. LDS main CI가 초록이고 `npm run check:release-pins`가 통과한다. Core 채택 입력을
+   바꾼 source candidate라면 `published-historical` 모드로 green일 수 있다(§2.1). 이
+   경우 release-only gate가 입력 지문 불일치로 실패하는 것이 정상이며, 그 실패를 지금
+   만드는 짝 릴리스로 해소한다. 다른 종류의 빨간불이면 먼저 고친다.
 2. robotics 체크아웃이 `main`이고 origin과 동기이며 작업트리가 깨끗하다.
    다른 작업자의 미푸시 커밋·작업트리 변경이 있으면 릴리스 전에 조율한다.
 3. `NODE_AUTH_TOKEN`이 설정돼 있다 — GitHub Packages 읽기용. `gh` 로그인이
@@ -159,7 +161,7 @@ npm install                    # NODE_AUTH_TOKEN 필요 (GitHub Packages)
 # dev/peer 범위를 지운 뒤 다시 설치하면 새 버전으로 풀린다. `--force`나
 # `--legacy-peer-deps`로 넘기지 않는다 — 그 둘은 릴리스에 잘못된 트리를 굽는다.
 
-# ② 새 LDS Core 문서 표면을 명시적으로 투영하고 Robotics 자체 계약을 검사한다.
+# ② Core 채택 입력 다섯 개를 다시 가져와 투영하고 Robotics 자체 계약을 검사한다.
 npm run generate:docs -- --upstream-root <LDS 체크아웃>/packages/core/docs
 npm run check:local
 npm run check:storybook:local
@@ -170,12 +172,10 @@ npm pack --dry-run --ignore-scripts
 npm pack --pack-destination <LDS 체크아웃>/vendor
 ```
 
-Stable 승격처럼 `packages/core/docs/*`의 release ref나 package migration 문서가 바뀌는
-경우에는 Robotics 문서를 생성하기 전에 그 Core 문서 투영을 먼저 동결한다. 그 뒤
-`docs/PACKAGE_MIGRATION_GUIDE.md`, canonical adoption contract 또는 Core package docs에
-투영되는 source를 다시 바꾸면 Robotics snapshot hash도 달라지므로 같은 Robotics version의
-최종 tgz를 다시 만들고 설치·2차 pin·검사를 반복해야 한다. Tag 뒤에 이 순환을 발견하면
-기존 tag를 움직이지 말고 새 version으로 다시 릴리스한다.
+Robotics 문서를 생성하기 전에 Core 채택 입력(canonical adoption contract와 그 투영)을
+먼저 동결한다. 그 뒤 입력을 다시 바꾸면 Robotics 입력 지문도 달라지므로 같은 Robotics
+version의 최종 tgz를 다시 만들고 설치·2차 pin·검사를 반복해야 한다. Tag 뒤에 이 순환을
+발견하면 기존 tag를 움직이지 말고 새 version으로 다시 릴리스한다.
 
 이 시점에는 아직 Robotics를 커밋·태그하지 않는다. LDS external surface가 옛
 tgz를 가리키므로 cross-repository 검사는 의도적으로 실패한다. §2.4의 2차 해시
@@ -494,7 +494,7 @@ npm run <실패한 검사 이름>
 | --- | --- |
 | `npm run check:fast` | 상시 검사 스위트. **커밋 전 기준이자 release workflow의 검증 본체** |
 | `npm run check` | check:fast + Storybook + pack. 넓게 확인하고 싶을 때 |
-| `node scripts/update-release-pins.mjs --check --require-current-canonical-snapshot` | publish 전용 gate. 현재 LDS ref/Core docs hash와 published Robotics observation의 exact match를 요구 |
+| `node scripts/update-release-pins.mjs --check --require-current-canonical-snapshot` | publish 전용 gate. 현재 Core 채택 입력 지문과 published Robotics observation의 지문 일치를 요구 |
 | `npm run storybook:dev` | 로컬 Storybook (6006). 색 재생성 없이 뜬다 |
 | `npm run report:inventory` | 컴포넌트·스토리 수 (손으로 센 숫자를 믿지 않는다) |
 | `npm run update:release-pins` | 릴리스 파생값 31곳 재계산 |

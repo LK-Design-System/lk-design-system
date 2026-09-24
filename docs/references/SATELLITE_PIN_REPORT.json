@@ -8,7 +8,7 @@
       "repository": "LK-Design-System/lk-design-system-robotics",
       "axis": "domain-pack",
       "branch": "main",
-      "version": "0.1.0-rc.51",
+      "version": "0.1.0-rc.52",
       "pins": {
         "@lk-design-system/lds-core": [
           {
@@ -41,35 +41,35 @@
         "@lk-design-system/lds-core": [
           {
             "section": "peerDependencies",
-            "range": ">=0.1.0-rc.69.28 <0.2.0"
+            "range": ">=0.4.1 <0.5.0"
           },
           {
             "section": "devDependencies",
-            "range": "file:vendor/lk-design-system-lds-core-0.1.0-rc.69.28.tgz"
+            "range": "file:vendor/lk-design-system-lds-core-0.4.1.tgz"
           }
         ],
         "@lk-design-system/lds-product": [
           {
             "section": "peerDependencies",
-            "range": ">=0.1.0-rc.69.28 <0.2.0"
+            "range": ">=0.4.1 <0.5.0"
           },
           {
             "section": "devDependencies",
-            "range": "file:vendor/lk-design-system-lds-product-0.1.0-rc.69.28.tgz"
+            "range": "file:vendor/lk-design-system-lds-product-0.4.1.tgz"
           }
         ],
         "@lk-design-system/lds-theme": [
           {
             "section": "peerDependencies",
-            "range": ">=0.1.0-rc.69.28 <0.2.0"
+            "range": ">=0.4.1 <0.5.0"
           },
           {
             "section": "devDependencies",
-            "range": "file:vendor/lk-design-system-lds-theme-0.1.0-rc.69.28.tgz"
+            "range": "file:vendor/lk-design-system-lds-theme-0.4.1.tgz"
           }
         ]
       },
-      "status": "behind"
+      "status": "current"
     },
     {
       "id": "motion",

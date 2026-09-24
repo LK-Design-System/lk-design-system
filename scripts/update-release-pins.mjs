@@ -5,6 +5,7 @@ import {
   assertCurrentCanonicalSnapshot,
   canonicalSnapshotFromDocumentationManifest,
   canonicalSnapshotMode,
+  currentDerivedInputsFingerprint,
 } from './robotics-canonical-snapshot.mjs';
 
 /**
@@ -178,14 +179,20 @@ for (const id of workspacePackages) {
   let installedDocsManifest = null;
   let installedCanonical = null;
   let snapshotMode = null;
+  let currentDerivedInputsSha256 = null;
   if (installedMatches) {
     installedDocsManifest = JSON.parse(
       await readFile(path.join(packageRoot, ...surface.documentation.files.manifest.path.split('/')), 'utf8'),
     );
     installedCanonical = canonicalSnapshotFromDocumentationManifest(installedDocsManifest);
+    currentDerivedInputsSha256 = await currentDerivedInputsFingerprint(
+      path.join(root, 'packages', 'core', 'docs'),
+      installedCanonical.derivedInputs,
+    );
     snapshotMode = canonicalSnapshotMode({
-      currentRef: `lds-v${ldsVersion}`,
       canonicalRef: installedCanonical.source.ref,
+      canonicalDerivedInputsSha256: installedCanonical.derivedInputsSha256,
+      currentDerivedInputsSha256,
       surfacePackageRefStatus: surface.package?.refStatus,
       installedPackageRefStatus: installed.lds?.refStatus,
     });
@@ -195,7 +202,6 @@ for (const id of workspacePackages) {
   const canonicalPath = installedCanonical?.source?.path;
   let canonicalHash = installedCanonical?.source?.sha256
     ?? surface.documentation?.canonicalContract?.source?.sha256;
-  const currentSnapshotHash = await sha256('packages/core/docs/manifest.json');
   if (snapshotMode === 'current') {
     const currentCanonicalHash = canonicalPath ? await sha256(canonicalPath) : undefined;
     if (currentCanonicalHash !== installedCanonical.source.sha256) {
@@ -211,9 +217,8 @@ for (const id of workspacePackages) {
     }
     assertCurrentCanonicalSnapshot({
       currentRef: `lds-v${ldsVersion}`,
-      canonicalRef: installedCanonical.source.ref,
-      canonicalSnapshotManifestSha256: installedCanonical.snapshotManifestSha256,
-      currentSnapshotManifestSha256: currentSnapshotHash,
+      canonicalDerivedInputsSha256: installedCanonical.derivedInputsSha256,
+      currentDerivedInputsSha256,
       surfacePackageRefStatus: surface.package?.refStatus,
       installedPackageRefStatus: installed.lds?.refStatus,
     });
@@ -230,14 +235,6 @@ for (const id of workspacePackages) {
       JSON.stringify(surface.documentation?.canonicalContract),
       JSON.stringify(installedCanonical),
     );
-    if (snapshotMode === 'current') {
-      record(
-        file,
-        'canonicalContract.snapshotManifestSha256 (current ref)',
-        installedCanonical.snapshotManifestSha256,
-        currentSnapshotHash,
-      );
-    }
   }
 
   // 설치된 robotics 패키지 안의 문서 해시. node_modules가 현재 tgz로 설치돼

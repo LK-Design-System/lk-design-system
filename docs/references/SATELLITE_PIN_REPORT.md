@@ -7,8 +7,8 @@
 
 | 위성 | 축 | 자기 버전 | LDS 핀 | 상태 |
 | --- | --- | --- | --- | --- |
-| `robotics-ui` | domain-pack | 0.1.0-rc.51 | `lds-core` >=0.3.0 <0.5.0 — peerDependencies<br>`lds-product` >=0.3.0 <0.5.0 — peerDependencies<br>`lds-theme` 0.3.0 — devDependencies | 현행 |
-| `slides-ui` | domain-pack | 0.1.0-alpha.11 | `lds-core` >=0.1.0-rc.69.28 <0.2.0 — peerDependencies<br>`lds-core` (vendored tgz) — devDependencies<br>`lds-product` >=0.1.0-rc.69.28 <0.2.0 — peerDependencies<br>`lds-product` (vendored tgz) — devDependencies<br>`lds-theme` >=0.1.0-rc.69.28 <0.2.0 — peerDependencies<br>`lds-theme` (vendored tgz) — devDependencies | 뒤처짐 |
+| `robotics-ui` | domain-pack | 0.1.0-rc.52 | `lds-core` >=0.3.0 <0.5.0 — peerDependencies<br>`lds-product` >=0.3.0 <0.5.0 — peerDependencies<br>`lds-theme` 0.3.0 — devDependencies | 현행 |
+| `slides-ui` | domain-pack | 0.1.0-alpha.11 | `lds-core` >=0.4.1 <0.5.0 — peerDependencies<br>`lds-core` (vendored tgz) — devDependencies<br>`lds-product` >=0.4.1 <0.5.0 — peerDependencies<br>`lds-product` (vendored tgz) — devDependencies<br>`lds-theme` >=0.4.1 <0.5.0 — peerDependencies<br>`lds-theme` (vendored tgz) — devDependencies | 현행 |
 | `motion` | capability-layer | 0.1.0-alpha.5 | `lds-core` (vendored tgz) — dependencies<br>`lds-theme` (vendored tgz) — dependencies<br>`lds-product` (vendored tgz) — dependencies | vendored 앱 (private, 퍼블리시 안 함) |
 | `3d` | capability-layer | 0.1.0-alpha.2 | `lds-core` 0.2.9 — dependencies (`apps/docs`)<br>`lds-product` 0.2.9 — dependencies (`apps/docs`)<br>`lds-theme` 0.2.9 — dependencies (`apps/docs`) | 뒤처짐 |
 

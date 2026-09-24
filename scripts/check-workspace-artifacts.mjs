@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import {
   canonicalSnapshotFromDocumentationManifest,
   canonicalSnapshotMode,
+  currentDerivedInputsFingerprint,
 } from './robotics-canonical-snapshot.mjs';
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -672,17 +673,21 @@ async function assertInstalledDocumentation(packed, consumerDirectory) {
 
     if (workspace.external) {
       invariant(
-        roboticsExternalSurface.schemaVersion === 3
+        roboticsExternalSurface.schemaVersion === 4
           && roboticsExternalSurface.package?.name === workspace.name
           && roboticsExternalSurface.package?.version === installedManifest.version
           && roboticsExternalSurface.package?.refStatus === installedManifest.lds?.refStatus,
-        'robotics: installed package identity differs from the v3 external surface.',
+        'robotics: installed package identity differs from the v4 external surface.',
       );
       const documentation = roboticsExternalSurface.documentation;
       const installedCanonical = canonicalSnapshotFromDocumentationManifest(docsManifest);
       const snapshotMode = canonicalSnapshotMode({
-        currentRef: `lds-v${workspaceRootManifest.version}`,
         canonicalRef: installedCanonical.source.ref,
+        canonicalDerivedInputsSha256: installedCanonical.derivedInputsSha256,
+        currentDerivedInputsSha256: await currentDerivedInputsFingerprint(
+          path.join(repositoryRoot, 'packages', 'core', 'docs'),
+          installedCanonical.derivedInputs,
+        ),
         surfacePackageRefStatus: roboticsExternalSurface.package.refStatus,
         installedPackageRefStatus: installedManifest.lds?.refStatus,
       });
@@ -710,7 +715,8 @@ async function assertInstalledDocumentation(packed, consumerDirectory) {
           kind: documentation.canonicalContract.kind,
           version: documentation.canonicalContract.contractVersion,
           source: documentation.canonicalContract.source,
-          snapshotManifestSha256: documentation.canonicalContract.snapshotManifestSha256,
+          derivedInputs: documentation.canonicalContract.derivedInputs,
+          derivedInputsSha256: documentation.canonicalContract.derivedInputsSha256,
         }),
         'robotics: documentation manifest canonical source differs from the external surface.',
       );
@@ -748,9 +754,8 @@ async function assertInstalledDocumentation(packed, consumerDirectory) {
         'robotics: documentation domain records differ from the external surface.',
       );
       invariant(
-        records.find(({ path: file }) => file === 'shared/manifest.json')?.sha256
-          === documentation.canonicalContract.snapshotManifestSha256,
-        'robotics: upstream snapshot manifest hash differs from the canonical documentation source.',
+        !records.some(({ path: file }) => file.startsWith('shared/')),
+        'robotics: documentation must not bundle a copy of Core docs (shared/).',
       );
       if (snapshotMode === 'current') {
         const canonicalSource = documentation.canonicalContract.source;
@@ -773,22 +778,24 @@ async function assertInstalledDocumentation(packed, consumerDirectory) {
           ),
           'robotics: installed adoption checklist decisions differ from the canonical contract.',
         );
-        const currentManifestBytes = await readFile(path.join(repositoryRoot, 'packages/core/docs/manifest.json'));
-        invariant(
-          createHash('sha256').update(currentManifestBytes).digest('hex')
-            === documentation.canonicalContract.snapshotManifestSha256,
-          'robotics: current-ref snapshot differs from the current Core documentation manifest.',
-        );
       }
       const references = [
         ...(adoptionContract.facets ?? []).flatMap((facet) => facet.references ?? []),
         ...(adoptionContract.componentMapping?.references ?? []),
       ];
+      // Shared policy references resolve in the lds-core peer installed beside Robotics.
+      const corePeerDocs = '@lk-design-system/lds-core/docs/';
+      const corePeerRoot = path.resolve(installedRoot, '..', 'lds-core');
       for (const reference of references) {
         invariant(
-          typeof reference === 'string' && !reference.startsWith('@') && !/^https?:/.test(reference),
-          `robotics: adoption checklist must be self-contained (${reference}).`,
+          typeof reference === 'string' && !/^https?:/.test(reference)
+            && (!reference.startsWith('@') || reference.startsWith(corePeerDocs)),
+          `robotics: adoption checklist references must be package-relative or ${corePeerDocs} (${reference}).`,
         );
+        if (reference.startsWith(corePeerDocs)) {
+          await access(path.join(corePeerRoot, 'docs', ...reference.slice(corePeerDocs.length).split('/')));
+          continue;
+        }
         const target = path.resolve(docsRoot, reference);
         const relative = path.relative(installedRoot, target);
         invariant(relative && !relative.startsWith('..') && !path.isAbsolute(relative), `robotics: checklist reference escapes the package (${reference}).`);

@@ -890,6 +890,7 @@
         "createNavigationFrameRef",
         "createNavigationMapTransform",
         "createNavigationViewportTransform",
+        "evaluatePoseFreshness",
         "isNavigationGeometryCompatible",
         "isNavigationSourceCompatible",
         "navigationAgeMilliseconds",

@@ -7,6 +7,7 @@ import semver from 'semver';
 import {
   canonicalSnapshotFromDocumentationManifest,
   canonicalSnapshotMode,
+  currentDerivedInputsFingerprint,
 } from './robotics-canonical-snapshot.mjs';
 
 const root = process.cwd();
@@ -157,8 +158,12 @@ async function checkRoboticsDocumentation(externalSurface, packageRoot, ldsSourc
   try {
     installedCanonical = canonicalSnapshotFromDocumentationManifest(manifest);
     snapshotMode = canonicalSnapshotMode({
-      currentRef,
       canonicalRef: installedCanonical.source.ref,
+      canonicalDerivedInputsSha256: installedCanonical.derivedInputsSha256,
+      currentDerivedInputsSha256: await currentDerivedInputsFingerprint(
+        path.join(ldsSourceRoot, 'packages', 'core', 'docs'),
+        installedCanonical.derivedInputs,
+      ),
       surfacePackageRefStatus: externalSurface.package.refStatus,
       installedPackageRefStatus: packageJson.lds?.refStatus,
     });
@@ -179,7 +184,8 @@ async function checkRoboticsDocumentation(externalSurface, packageRoot, ldsSourc
     kind: docs.canonicalContract.kind,
     version: docs.canonicalContract.contractVersion,
     source: docs.canonicalContract.source,
-    snapshotManifestSha256: docs.canonicalContract.snapshotManifestSha256,
+    derivedInputs: docs.canonicalContract.derivedInputs,
+    derivedInputsSha256: docs.canonicalContract.derivedInputsSha256,
   };
   if (JSON.stringify(manifest.source?.canonicalAdoption) !== JSON.stringify(expectedCanonicalSource)) {
     throw new Error(`${label} packaged canonical adoption source differs from the external surface.`);
@@ -244,8 +250,8 @@ async function checkRoboticsDocumentation(externalSurface, packageRoot, ldsSourc
       throw new Error(`${label} external-surface and manifest records differ: ${record.path}.`);
     }
   }
-  if (recordByPath.get('shared/manifest.json')?.sha256 !== docs.canonicalContract.snapshotManifestSha256) {
-    throw new Error(`${label} packaged shared manifest does not match the canonical snapshot pin.`);
+  if ([...recordByPath.keys()].some((file) => file.startsWith('shared/'))) {
+    throw new Error(`${label} packaged documentation must not bundle a copy of Core docs (shared/).`);
   }
   const expectedDomainRecords = docs.domainDocuments.map((record) => ({
     path: path.posix.relative(bundleRoot, record.path),
@@ -286,9 +292,20 @@ async function checkRoboticsDocumentation(externalSurface, packageRoot, ldsSourc
     ...(checklist.facets ?? []).flatMap((facet) => facet.references ?? []),
     ...(checklist.componentMapping?.references ?? []),
   ];
+  // Shared policy references resolve in the lds-core peer, i.e. this LDS checkout's Core docs.
+  const corePeerDocs = '@lk-design-system/lds-core/docs/';
   for (const reference of references) {
-    if (typeof reference !== 'string' || /^https?:/.test(reference) || reference.startsWith('@')) {
-      throw new Error(`${label} checklist is not self-contained: ${reference}.`);
+    if (typeof reference !== 'string' || /^https?:/.test(reference)
+      || (reference.startsWith('@') && !reference.startsWith(corePeerDocs))) {
+      throw new Error(`${label} checklist references must be package-relative or ${corePeerDocs}: ${reference}.`);
+    }
+    if (reference.startsWith(corePeerDocs)) {
+      const coreTarget = descendant(path.join(ldsSourceRoot, 'packages', 'core', 'docs'), reference.slice(corePeerDocs.length));
+      if (!coreTarget) throw new Error(`${label} checklist reference escapes Core docs: ${reference}.`);
+      await access(coreTarget).catch(() => {
+        throw new Error(`${label} checklist reference does not resolve in lds-core: ${reference}.`);
+      });
+      continue;
     }
     const target = path.resolve(path.dirname(checklistFile), reference);
     const relative = path.relative(packageRoot, target);

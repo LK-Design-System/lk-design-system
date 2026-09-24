@@ -10,6 +10,7 @@ import {
   assertCurrentCanonicalSnapshot,
   canonicalSnapshotFromDocumentationManifest,
   canonicalSnapshotMode,
+  computeDerivedInputsFingerprint,
 } from './robotics-canonical-snapshot.mjs';
 
 const sha = 'a'.repeat(64);
@@ -22,12 +23,19 @@ const workspaceManifest = JSON.parse(await readFile(path.join(repositoryRoot, 'p
 const currentLdsVersion = workspaceManifest.version;
 const currentLdsRef = `lds-v${currentLdsVersion}`;
 const historicalLdsRef = currentLdsVersion === '0.1.0' ? 'lds-v0.0.0' : 'lds-v0.1.0';
+const derivedInputs = [
+  { path: 'adoption-checklist.json', sha256: sha },
+  { path: 'adoption-report.schema.json', sha256: 'c'.repeat(64) },
+];
+const derivedInputsSha256 = computeDerivedInputsFingerprint(derivedInputs);
+const otherFingerprint = 'b'.repeat(64);
 const packagedManifest = {
   source: {
     canonicalAdoption: {
       kind: 'lds-ui-adoption-contract',
       version: '1',
-      snapshotManifestSha256: sha,
+      derivedInputs,
+      derivedInputsSha256,
       source: {
         repository: 'LK-Design-System/lk-design-system',
         ref: currentLdsRef,
@@ -56,6 +64,7 @@ async function createCrossRepositoryFixture() {
     'docs/references/package-split',
     'docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json',
     'packages/conformance/fixtures',
+    'packages/core/docs',
     'packages/core/package.json',
     'packages/theme/package.json',
     'packages/product/package.json',
@@ -69,7 +78,6 @@ async function createCrossRepositoryFixture() {
 async function createReleasePinsFixture() {
   const fixtureRoot = await createCrossRepositoryFixture();
   await copyFixturePath(fixtureRoot, 'vendor');
-  await copyFixturePath(fixtureRoot, 'packages/core/docs/manifest.json');
   return fixtureRoot;
 }
 
@@ -108,6 +116,11 @@ async function withCrossRepositoryFixture(callback) {
   }
 }
 
+async function changeCoreDerivedInput(fixtureRoot) {
+  const examplePath = path.join(fixtureRoot, 'packages/core/docs/adoption-report.example.json');
+  await writeFile(examplePath, `${await readFile(examplePath, 'utf8')}\n`);
+}
+
 const installedManifestPath = 'node_modules/@lk-design-system/lds-robotics-ui/docs/package/manifest.json';
 const installedPackagePath = 'node_modules/@lk-design-system/lds-robotics-ui/package.json';
 const canonicalContractPath = 'docs/references/adoption/LDS_UI_ADOPTION_CONTRACT.json';
@@ -124,113 +137,125 @@ test('published manifest observation maps exactly to the external surface shape'
   assert.deepEqual(canonicalSnapshotFromDocumentationManifest(packagedManifest), {
     kind: 'lds-ui-adoption-contract',
     contractVersion: '1',
-    snapshotManifestSha256: sha,
+    derivedInputs,
+    derivedInputsSha256,
     source: packagedManifest.source.canonicalAdoption.source,
   });
 });
 
-test('candidate accepts a different versioned snapshot only from the installed published package', () => {
+test('observation must carry the checklist and a fingerprint that matches its records', () => {
+  const withInputs = (inputs, fingerprint = computeDerivedInputsFingerprint(inputs)) => ({
+    source: {
+      canonicalAdoption: {
+        ...packagedManifest.source.canonicalAdoption,
+        derivedInputs: inputs,
+        derivedInputsSha256: fingerprint,
+      },
+    },
+  });
+  assert.throws(
+    () => canonicalSnapshotFromDocumentationManifest(withInputs([{ path: 'adoption-report.schema.json', sha256: sha }])),
+    /must be valid records that include adoption-checklist.json/,
+  );
+  assert.throws(
+    () => canonicalSnapshotFromDocumentationManifest(withInputs(derivedInputs, otherFingerprint)),
+    /fingerprint does not match its records/,
+  );
+});
+
+test('a Core documentation change outside the derived inputs keeps the observation current', () => {
+  // The ref no longer matters: the observation was taken at an older LDS
+  // version, but the Core inputs Robotics derives from are unchanged.
   assert.equal(canonicalSnapshotMode({
-    currentRef: currentLdsRef,
     canonicalRef: historicalLdsRef,
+    canonicalDerivedInputsSha256: derivedInputsSha256,
+    currentDerivedInputsSha256: derivedInputsSha256,
+    surfacePackageRefStatus: 'release-candidate',
+    installedPackageRefStatus: 'release-candidate',
+  }), 'current');
+});
+
+test('changed derived inputs are accepted only from the installed published package', () => {
+  const changed = {
+    canonicalRef: historicalLdsRef,
+    canonicalDerivedInputsSha256: derivedInputsSha256,
+    currentDerivedInputsSha256: otherFingerprint,
+  };
+  assert.equal(canonicalSnapshotMode({
+    ...changed,
     surfacePackageRefStatus: 'published',
     installedPackageRefStatus: 'published',
   }), 'published-historical');
   assert.throws(() => canonicalSnapshotMode({
-    currentRef: currentLdsRef,
+    ...changed,
     canonicalRef: 'main',
     surfacePackageRefStatus: 'published',
     installedPackageRefStatus: 'published',
-  }), /neither the current ref nor an immutable published observation/);
+  }), /does not match the current Core derived inputs and is not an immutable published observation/);
   assert.throws(() => canonicalSnapshotMode({
-    currentRef: currentLdsRef,
-    canonicalRef: historicalLdsRef,
+    ...changed,
     surfacePackageRefStatus: 'release-candidate',
     installedPackageRefStatus: 'published',
-  }), /neither the current ref nor an immutable published observation/);
+  }), /is not an immutable published observation/);
   assert.throws(() => canonicalSnapshotMode({
-    currentRef: currentLdsRef,
-    canonicalRef: historicalLdsRef,
+    ...changed,
     surfacePackageRefStatus: 'published',
     installedPackageRefStatus: 'release-candidate',
-  }), /neither the current ref nor an immutable published observation/);
+  }), /is not an immutable published observation/);
 });
 
-test('same-ref snapshot remains a current candidate contract', () => {
-  assert.equal(canonicalSnapshotMode({
-    currentRef: currentLdsRef,
-    canonicalRef: currentLdsRef,
-    surfacePackageRefStatus: 'release-candidate',
-    installedPackageRefStatus: 'release-candidate',
-  }), 'current');
-});
-
-test('release snapshot requires the exact current ref and Core documentation bytes', () => {
+test('release gate requires the current derived inputs, not the current LDS ref', () => {
   assert.equal(assertCurrentCanonicalSnapshot({
     currentRef: currentLdsRef,
-    canonicalRef: currentLdsRef,
-    canonicalSnapshotManifestSha256: sha,
-    currentSnapshotManifestSha256: sha,
+    canonicalDerivedInputsSha256: derivedInputsSha256,
+    currentDerivedInputsSha256: derivedInputsSha256,
     surfacePackageRefStatus: 'published',
     installedPackageRefStatus: 'published',
   }), 'current');
 
   assert.throws(() => assertCurrentCanonicalSnapshot({
     currentRef: currentLdsRef,
-    canonicalRef: historicalLdsRef,
-    canonicalSnapshotManifestSha256: sha,
-    currentSnapshotManifestSha256: sha,
+    canonicalDerivedInputsSha256: derivedInputsSha256,
+    currentDerivedInputsSha256: otherFingerprint,
     surfacePackageRefStatus: 'published',
     installedPackageRefStatus: 'published',
-  }), new RegExp(`must equal "${currentLdsRef}"`));
+  }), /derived from the current Core adoption inputs/);
 
   assert.throws(() => assertCurrentCanonicalSnapshot({
     currentRef: currentLdsRef,
-    canonicalRef: currentLdsRef,
-    canonicalSnapshotManifestSha256: sha,
-    currentSnapshotManifestSha256: 'b'.repeat(64),
-    surfacePackageRefStatus: 'published',
-    installedPackageRefStatus: 'published',
-  }), /must equal the current Core documentation manifest SHA-256/);
-
-  assert.throws(() => assertCurrentCanonicalSnapshot({
-    currentRef: currentLdsRef,
-    canonicalRef: currentLdsRef,
-    canonicalSnapshotManifestSha256: sha,
-    currentSnapshotManifestSha256: sha,
+    canonicalDerivedInputsSha256: derivedInputsSha256,
+    currentDerivedInputsSha256: derivedInputsSha256,
     surfacePackageRefStatus: 'release-candidate',
     installedPackageRefStatus: 'published',
   }), /requires published external-surface and installed Robotics package observations/);
 });
 
-test('release snapshot rejects malformed release refs and hashes', () => {
+test('release gate rejects malformed release refs and fingerprints', () => {
   assert.throws(() => assertCurrentCanonicalSnapshot({
     currentRef: 'main',
-    canonicalRef: 'main',
-    canonicalSnapshotManifestSha256: sha,
-    currentSnapshotManifestSha256: sha,
+    canonicalDerivedInputsSha256: derivedInputsSha256,
+    currentDerivedInputsSha256: derivedInputsSha256,
     surfacePackageRefStatus: 'published',
     installedPackageRefStatus: 'published',
   }), /release ref "main" is invalid/);
 
   assert.throws(() => assertCurrentCanonicalSnapshot({
     currentRef: currentLdsRef,
-    canonicalRef: currentLdsRef,
-    canonicalSnapshotManifestSha256: 'not-a-hash',
-    currentSnapshotManifestSha256: 'not-a-hash',
+    canonicalDerivedInputsSha256: 'not-a-hash',
+    currentDerivedInputsSha256: 'not-a-hash',
     surfacePackageRefStatus: 'published',
     installedPackageRefStatus: 'published',
-  }), /must equal the current Core documentation manifest SHA-256/);
+  }), /derived from the current Core adoption inputs/);
 });
 
-test('ordinary validation accepts an immutable published historical snapshot without comparing current LDS bytes', async () => {
+test('ordinary validation accepts the installed Robotics observation', async () => {
   await withCrossRepositoryFixture(async (fixtureRoot) => {
     const result = runCrossRepositoryCheck(fixtureRoot);
     assert.equal(result.status, 0, result.stderr || result.stdout);
   });
 });
 
-test('ordinary validation rejects an unpublished historical snapshot', async () => {
+test('ordinary validation rejects changed derived inputs from an unpublished Robotics package', async () => {
   await withCrossRepositoryFixture(async (fixtureRoot) => {
     const packageManifest = await readFixtureJson(fixtureRoot, installedPackagePath);
     packageManifest.lds.refStatus = 'release-candidate';
@@ -238,15 +263,14 @@ test('ordinary validation rejects an unpublished historical snapshot', async () 
 
     const documentationManifest = await readFixtureJson(fixtureRoot, installedManifestPath);
     documentationManifest.source.robotics.refStatus = 'release-candidate';
-    documentationManifest.source.canonicalAdoption.source.ref = historicalLdsRef;
     await writeInstalledManifestAndPin(fixtureRoot, documentationManifest, (surface) => {
       surface.package.refStatus = 'release-candidate';
-      surface.documentation.canonicalContract.source.ref = historicalLdsRef;
     });
+    await changeCoreDerivedInput(fixtureRoot);
 
     const result = runCrossRepositoryCheck(fixtureRoot);
     assert.notEqual(result.status, 0);
-    assert.match(result.stderr, /neither the current ref nor an immutable published observation/);
+    assert.match(result.stderr, /is not an immutable published observation/);
   });
 });
 
@@ -265,7 +289,7 @@ test('ordinary validation rejects a malformed historical observation', async () 
 test('ordinary validation rejects a historical installed/external observation mismatch', async () => {
   await withCrossRepositoryFixture(async (fixtureRoot) => {
     const documentationManifest = await readFixtureJson(fixtureRoot, installedManifestPath);
-    documentationManifest.source.canonicalAdoption.snapshotManifestSha256 = 'b'.repeat(64);
+    documentationManifest.source.canonicalAdoption.source.sha256 = 'b'.repeat(64);
     await writeInstalledManifestAndPin(fixtureRoot, documentationManifest);
 
     const result = runCrossRepositoryCheck(fixtureRoot);
@@ -309,17 +333,25 @@ test('release-pin first write without an installed package preserves canonical p
   }
 });
 
-test('release-only gate remains strict for a published historical observation', async () => {
+test('release gate stays green when Core docs change outside the derived inputs', async () => {
   const fixtureRoot = await createReleasePinsFixture();
   try {
-    const documentationManifest = await readFixtureJson(fixtureRoot, installedManifestPath);
-    documentationManifest.source.canonicalAdoption.source.ref = historicalLdsRef;
-    await writeInstalledManifestAndPin(fixtureRoot, documentationManifest, (surface) => {
-      surface.documentation.canonicalContract.source.ref = historicalLdsRef;
-    });
+    const coreManifestPath = path.join(fixtureRoot, 'packages/core/docs/manifest.json');
+    await writeFile(coreManifestPath, `${await readFile(coreManifestPath, 'utf8')}\n`);
+    const result = runReleasePins(fixtureRoot, ['--check', '--require-current-canonical-snapshot']);
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+  } finally {
+    await rm(fixtureRoot, { recursive: true, force: true, maxRetries: 3 });
+  }
+});
+
+test('release gate fails when a derived Core input changes without a paired Robotics release', async () => {
+  const fixtureRoot = await createReleasePinsFixture();
+  try {
+    await changeCoreDerivedInput(fixtureRoot);
     const result = runReleasePins(fixtureRoot, ['--check', '--require-current-canonical-snapshot']);
     assert.notEqual(result.status, 0);
-    assert.match(result.stderr, new RegExp(`must equal "${currentLdsRef}"`));
+    assert.match(result.stderr, /derived from the current Core adoption inputs/);
   } finally {
     await rm(fixtureRoot, { recursive: true, force: true, maxRetries: 3 });
   }
