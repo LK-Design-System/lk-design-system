@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkM32DHJUWcjs = require('../../chunk-M32DHJUW.cjs');
+var _chunkVSYLYCGDcjs = require('../../chunk-VSYLYCGD.cjs');
 
 
-exports.Anchor = _chunkM32DHJUWcjs.Anchor;
+exports.Anchor = _chunkVSYLYCGDcjs.Anchor;
 //# sourceMappingURL=Anchor.cjs.map

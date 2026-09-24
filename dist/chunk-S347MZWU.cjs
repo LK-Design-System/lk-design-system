@@ -7,6 +7,9 @@ var _chunkXAGJKIDNcjs = require('./chunk-XAGJKIDN.cjs');
 var _chunkD5WHCR6Lcjs = require('./chunk-D5WHCR6L.cjs');
 
 
+var _chunk3DMHJIWScjs = require('./chunk-3DMHJIWS.cjs');
+
+
 var _chunkMBKOVB2Kcjs = require('./chunk-MBKOVB2K.cjs');
 
 // components/robotics/AlarmCaseBanner.jsx
@@ -124,8 +127,10 @@ var AlarmCaseBanner = _react2.default.forwardRef(function AlarmCaseBanner2({
         width: "100%",
         minWidth: 0,
         padding: "var(--space-3) var(--space-4)",
-        background: palette.surface,
-        borderLeft: `4px solid ${palette.foreground}`,
+        // Banner anatomy: a tonal leading icon, no leading bar. Only an unacknowledged
+        // case keeps the tinted surface, so a stack of cases does not paint the view red.
+        background: isActive ? palette.surface : "var(--color-semantic-background-elevated-normal)",
+        boxShadow: isActive ? "none" : "inset 0 0 0 1px var(--color-semantic-line-normal-normal)",
         borderRadius: "var(--radius-lg)",
         fontFamily: "var(--font-sans)",
         color: "var(--color-semantic-label-normal)",
@@ -135,27 +140,30 @@ var AlarmCaseBanner = _react2.default.forwardRef(function AlarmCaseBanner2({
       children: [
         announce && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "p", { role: isActive ? "alert" : "status", "data-slot": "announcement", style: { ...visuallyHidden, margin: 0 }, children: announcement }),
         /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "header", { style: { display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "var(--space-2) var(--space-3)", flexWrap: "wrap", minWidth: 0 }, children: [
-          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: "var(--space-1)", flex: "1 1 14rem", minWidth: 0 }, children: [
-            /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-              Heading,
-              {
-                id: headingId,
-                style: {
-                  margin: 0,
-                  fontSize: "var(--body1-size)",
-                  lineHeight: "var(--body1-line)",
-                  fontWeight: "var(--fw-bold)",
-                  color: "var(--color-semantic-label-strong)",
-                  overflowWrap: "anywhere"
-                },
-                children: title
-              }
-            ),
-            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "target", style: { display: "flex", flexWrap: "wrap", gap: "var(--space-1) var(--space-2)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", color: "var(--color-semantic-label-neutral)", minWidth: 0, overflowWrap: "anywhere" }, children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-normal)" }, children: target }),
-              location != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: location }),
-              occurredAt != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "time", { dateTime: occurredAt, style: { fontVariantNumeric: "tabular-nums" }, children: _nullishCoalesce(occurredLabel, () => ( occurredAt)) }),
-              reference != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "reference", style: { fontFamily: "var(--font-mono)", ...captionStyle }, children: reference })
+          /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "flex-start", gap: "var(--space-2)", flex: "1 1 14rem", minWidth: 0 }, children: [
+            /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk3DMHJIWScjs.Icon, { "data-slot": "severity-icon", name: palette.icon, size: 20, color: palette.foreground, "aria-hidden": "true", style: { flexShrink: 0, marginTop: 2 } }),
+            /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "grid", gap: "var(--space-1)", minWidth: 0 }, children: [
+              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                Heading,
+                {
+                  id: headingId,
+                  style: {
+                    margin: 0,
+                    fontSize: "var(--body1-size)",
+                    lineHeight: "var(--body1-line)",
+                    fontWeight: "var(--fw-bold)",
+                    color: "var(--color-semantic-label-strong)",
+                    overflowWrap: "anywhere"
+                  },
+                  children: title
+                }
+              ),
+              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "target", style: { display: "flex", flexWrap: "wrap", gap: "var(--space-1) var(--space-2)", fontSize: "var(--label1-size)", lineHeight: "var(--label1-line)", color: "var(--color-semantic-label-neutral)", minWidth: 0, overflowWrap: "anywhere" }, children: [
+                /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { fontWeight: "var(--fw-semibold)", color: "var(--color-semantic-label-normal)" }, children: target }),
+                location != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { children: location }),
+                occurredAt != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "time", { dateTime: occurredAt, style: { fontVariantNumeric: "tabular-nums" }, children: _nullishCoalesce(occurredLabel, () => ( occurredAt)) }),
+                reference != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "data-slot": "reference", style: { fontFamily: "var(--font-mono)", ...captionStyle }, children: reference })
+              ] })
             ] })
           ] }),
           /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-slot": "axes", style: { display: "flex", flexWrap: "wrap", gap: "var(--space-1)", justifyContent: "flex-end", flexShrink: 0, maxWidth: "100%" }, children: [
@@ -246,4 +254,4 @@ var AlarmCaseBanner = _react2.default.forwardRef(function AlarmCaseBanner2({
 
 
 exports.AlarmCaseBanner = AlarmCaseBanner;
-//# sourceMappingURL=chunk-QM3F4UIP.cjs.map
+//# sourceMappingURL=chunk-S347MZWU.cjs.map

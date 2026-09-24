@@ -37,7 +37,7 @@ function Anchor({ items = [], active, onChange, style, ...rest }) {
           },
           onMouseEnter: () => setHovered(it.href),
           onMouseLeave: () => setHovered(null),
-          style: { display: "block", padding: "7px 12px", paddingLeft: 12 + (it.level || 0) * 16, borderLeft: `2px solid ${on ? "var(--color-semantic-primary-normal)" : "var(--color-semantic-line-solid-normal)"}`, color: on ? "var(--color-semantic-label-normal)" : hov ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", fontSize: (it.level || 0) > 0 ? "var(--label2-size)" : "var(--label1-size)", fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)", textDecoration: "none", transition: "color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)" },
+          style: { display: "block", padding: "7px 12px", paddingLeft: 12 + (it.level || 0) * 16, color: on ? "var(--color-semantic-accent-blue-text)" : hov ? "var(--color-semantic-label-normal)" : "var(--color-semantic-label-alternative)", fontSize: (it.level || 0) > 0 ? "var(--label2-size)" : "var(--label1-size)", fontWeight: on ? "var(--fw-bold)" : "var(--fw-medium)", textDecoration: "none", transition: "color var(--dur-fast) var(--ease-out)" },
           children: it.label
         }
       ),
@@ -50,4 +50,4 @@ function Anchor({ items = [], active, onChange, style, ...rest }) {
 
 
 exports.Anchor = Anchor;
-//# sourceMappingURL=chunk-M32DHJUW.cjs.map
+//# sourceMappingURL=chunk-VSYLYCGD.cjs.map
