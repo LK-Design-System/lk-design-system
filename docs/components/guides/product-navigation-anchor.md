@@ -39,10 +39,10 @@
 
 | Subject | Rule |
 | --- | --- |
+| --color-semantic-accent-blue-text | light: #336CA1; dark: #B5D5F2 |
 | --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
 | --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
-| --color-semantic-line-solid-normal | light: #E1E2E4; dark: #37383C |
-| --color-semantic-primary-normal | light: #3878B3; dark: #5390C9 |
+| --fw-bold | 700 |
 
 ## Responsive
 
@@ -115,10 +115,9 @@ css
 
 ### Tokens
 
+- `--color-semantic-accent-blue-text`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-normal`
-- `--color-semantic-line-solid-normal`
-- `--color-semantic-primary-normal`
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`

@@ -20,7 +20,8 @@ function buildTree(items) {
 /**
  * LK ROBOTICS — Anchor
  * An in-page table-of-contents nav. Items are `{ href, label, level? }`; the
- * active item takes the signal ink + rule. Controlled (`active`) or
+ * active item takes the SideNav selection treatment (accent-blue text, bold; no
+ * leading rule). Controlled (`active`) or
  * uncontrolled. Renders nested lists (`ul > li > ul`) from item levels so the
  * hierarchy is exposed to assistive tech; the nav defaults to aria-label
  * '목차' (consumer-provided aria-label wins).
@@ -45,7 +46,7 @@ export function Anchor({ items = [], active, onChange, style, ...rest }) {
               onMouseEnter={() => setHovered(it.href)}
               onMouseLeave={() => setHovered(null)}
               /* 하위 레벨은 들여쓰기 + 한 단계 작은 타입으로 위계를 함께 전달한다. */
-              style={{ display: 'block', padding: '7px 12px', paddingLeft: 12 + (it.level || 0) * 16, borderLeft: `2px solid ${on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-line-solid-normal)'}`, color: on ? 'var(--color-semantic-label-normal)' : hov ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)', fontSize: (it.level || 0) > 0 ? 'var(--label2-size)' : 'var(--label1-size)', fontWeight: on ? 'var(--fw-bold)' : 'var(--fw-medium)', textDecoration: 'none', transition: 'color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)' }}
+              style={{ display: 'block', padding: '7px 12px', paddingLeft: 12 + (it.level || 0) * 16, color: on ? 'var(--color-semantic-accent-blue-text)' : hov ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)', fontSize: (it.level || 0) > 0 ? 'var(--label2-size)' : 'var(--label1-size)', fontWeight: on ? 'var(--fw-bold)' : 'var(--fw-medium)', textDecoration: 'none', transition: 'color var(--dur-fast) var(--ease-out)' }}
             >
               {it.label}
             </a>

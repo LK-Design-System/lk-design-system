@@ -1,6 +1,7 @@
 import React from 'react';
 import { StatusBadge } from '@lk-design-system/lds-core/components/content/StatusBadge';
 import { Button } from '@lk-design-system/lds-core/components/buttons/Button';
+import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
 import { statusToneStyle } from '@lk-design-system/lds-core/component-authoring';
 
 /**
@@ -136,8 +137,10 @@ export const AlarmCaseBanner = React.forwardRef(function AlarmCaseBanner({
         width: '100%',
         minWidth: 0,
         padding: 'var(--space-3) var(--space-4)',
-        background: palette.surface,
-        borderLeft: `4px solid ${palette.foreground}`,
+        // Banner anatomy: a tonal leading icon, no leading bar. Only an unacknowledged
+        // case keeps the tinted surface, so a stack of cases does not paint the view red.
+        background: isActive ? palette.surface : 'var(--color-semantic-background-elevated-normal)',
+        boxShadow: isActive ? 'none' : 'inset 0 0 0 1px var(--color-semantic-line-normal-normal)',
         borderRadius: 'var(--radius-lg)',
         fontFamily: 'var(--font-sans)',
         color: 'var(--color-semantic-label-normal)',
@@ -152,31 +155,34 @@ export const AlarmCaseBanner = React.forwardRef(function AlarmCaseBanner({
       )}
 
       <header style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--space-2) var(--space-3)', flexWrap: 'wrap', minWidth: 0 }}>
-        <div style={{ display: 'grid', gap: 'var(--space-1)', flex: '1 1 14rem', minWidth: 0 }}>
-          <Heading
-            id={headingId}
-            style={{
-              margin: 0,
-              fontSize: 'var(--body1-size)',
-              lineHeight: 'var(--body1-line)',
-              fontWeight: 'var(--fw-bold)',
-              color: 'var(--color-semantic-label-strong)',
-              overflowWrap: 'anywhere',
-            }}
-          >
-            {title}
-          </Heading>
-          <div data-slot="target" style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-1) var(--space-2)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', color: 'var(--color-semantic-label-neutral)', minWidth: 0, overflowWrap: 'anywhere' }}>
-            <span style={{ fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-normal)' }}>{target}</span>
-            {location != null && <span>{location}</span>}
-            {occurredAt != null && (
-              <time dateTime={occurredAt} style={{ fontVariantNumeric: 'tabular-nums' }}>
-                {occurredLabel ?? occurredAt}
-              </time>
-            )}
-            {reference != null && (
-              <span data-slot="reference" style={{ fontFamily: 'var(--font-mono)', ...captionStyle }}>{reference}</span>
-            )}
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)', flex: '1 1 14rem', minWidth: 0 }}>
+          <Icon data-slot="severity-icon" name={palette.icon} size={20} color={palette.foreground} aria-hidden="true" style={{ flexShrink: 0, marginTop: 2 }} />
+          <div style={{ display: 'grid', gap: 'var(--space-1)', minWidth: 0 }}>
+            <Heading
+              id={headingId}
+              style={{
+                margin: 0,
+                fontSize: 'var(--body1-size)',
+                lineHeight: 'var(--body1-line)',
+                fontWeight: 'var(--fw-bold)',
+                color: 'var(--color-semantic-label-strong)',
+                overflowWrap: 'anywhere',
+              }}
+            >
+              {title}
+            </Heading>
+            <div data-slot="target" style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-1) var(--space-2)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', color: 'var(--color-semantic-label-neutral)', minWidth: 0, overflowWrap: 'anywhere' }}>
+              <span style={{ fontWeight: 'var(--fw-semibold)', color: 'var(--color-semantic-label-normal)' }}>{target}</span>
+              {location != null && <span>{location}</span>}
+              {occurredAt != null && (
+                <time dateTime={occurredAt} style={{ fontVariantNumeric: 'tabular-nums' }}>
+                  {occurredLabel ?? occurredAt}
+                </time>
+              )}
+              {reference != null && (
+                <span data-slot="reference" style={{ fontFamily: 'var(--font-mono)', ...captionStyle }}>{reference}</span>
+              )}
+            </div>
           </div>
         </div>
         <div data-slot="axes" style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-1)', justifyContent: 'flex-end', flexShrink: 0, maxWidth: '100%' }}>

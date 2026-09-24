@@ -192,8 +192,8 @@ function EventChip({ event, timed, compact, onActivate, style }) {
         margin: 0,
         padding: compact ? '2px var(--space-1-5)' : 'var(--space-1) var(--space-2)',
         boxSizing: 'border-box',
-        border: `1px solid ${tone.border}`,
-        borderLeftWidth: 3,
+        // StatusBadge surface: tonal fill and text role, no border or leading bar.
+        border: 0,
         borderRadius: 'var(--radius-sm)',
         background: tone.surface,
         color: tone.foreground,
@@ -617,6 +617,8 @@ function TimeGridView({ view, anchor, events, today, now, weekStartsOn, minMinut
                         gap: short ? 'var(--space-1)' : 0,
                         zIndex: 1,
                         pointerEvents: 'auto',
+                        // Back-to-back events touch vertically; a ring in the grid colour keeps them apart.
+                        boxShadow: '0 0 0 1px var(--color-semantic-background-elevated-normal)',
                       }}
                     />
                   );

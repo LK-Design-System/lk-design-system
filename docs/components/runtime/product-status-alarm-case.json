@@ -242,7 +242,7 @@
     },
     {
       "subject": "명시 규칙 3",
-      "rule": "바탕은 statusToneStyle surface, 왼쪽 띠는 같은 톤의 foreground입니다. Banner처럼 테두리 없는 틴트 표면이지만 radius-lg와 4px 띠로 목록 안에서 사례 경계를 만듭니다."
+      "rule": "Banner 해부학을 따릅니다: 앞쪽 톤 아이콘(statusToneStyle icon·foreground), 테두리 없는 틴트 표면(미확인일 때만), radius-lg. 앞쪽 색 띠는 쓰지 않습니다. 틴트가 없는 사례는 1px line-normal-normal 외곽으로 목록 안 경계를 만듭니다."
     },
     {
       "subject": "명시 규칙 4",
@@ -313,6 +313,7 @@
     "--body1-size",
     "--caption1-line",
     "--caption1-size",
+    "--color-semantic-background-elevated-normal",
     "--color-semantic-label-neutral",
     "--color-semantic-label-normal",
     "--color-semantic-label-strong",

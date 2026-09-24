@@ -52,6 +52,10 @@
   ],
   "quantitativeRules": [
     {
+      "subject": "--color-semantic-accent-blue-text",
+      "rule": "light: #336CA1; dark: #B5D5F2"
+    },
+    {
       "subject": "--color-semantic-label-alternative",
       "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
     },
@@ -60,12 +64,8 @@
       "rule": "light: #171718; dark: #F7F7F7"
     },
     {
-      "subject": "--color-semantic-line-solid-normal",
-      "rule": "light: #E1E2E4; dark: #37383C"
-    },
-    {
-      "subject": "--color-semantic-primary-normal",
-      "rule": "light: #3878B3; dark: #5390C9"
+      "subject": "--fw-bold",
+      "rule": "700"
     }
   ],
   "responsive": [
@@ -128,10 +128,9 @@
     }
   ],
   "tokens": [
+    "--color-semantic-accent-blue-text",
     "--color-semantic-label-alternative",
     "--color-semantic-label-normal",
-    "--color-semantic-line-solid-normal",
-    "--color-semantic-primary-normal",
     "--dur-fast",
     "--ease-out",
     "--font-sans",

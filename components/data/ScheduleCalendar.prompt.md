@@ -50,7 +50,7 @@ DOM 순서와 시각 순서가 같습니다. 격자는 APG data grid 모델을 �
 ## Visual-delta inventory
 
 - `Calendar`: 300px 고정 폭·38px 날짜 button 대신 전체 폭 격자와 `minmax(96px, 1fr)` 행을 씁니다. 오늘 표시는 Calendar의 ring이 아니라 primary fill pill입니다. 이 차이는 셀 안에 이벤트 chip이 들어가 날짜 숫자가 셀 모서리의 작은 marker가 되어야 하기 때문입니다(외부 스케줄러 관례). 요일 색, 제목 typography, 이전/다음 button geometry(32px, `radius-md`)는 Calendar와 동일합니다.
-- 이벤트 chip은 `StatusBadge` 톤 표면에 왼쪽 3px 톤 border를 더합니다. 시간 격자에서 세로로 길게 늘어난 chip의 톤을 좁은 폭에서도 읽게 하는 기능적 차이입니다.
+- 이벤트 chip은 `StatusBadge`와 같은 톤 표면과 글자 역할을 쓰며 테두리나 앞쪽 색 띠를 두지 않습니다. 시간 격자에서 위아래로 맞붙는 chip은 격자 배경색 1px 외곽으로 2px 틈을 만들어 서로 구분합니다(LDS는 행·칩 앞의 색 띠를 쓰지 않습니다).
 - 격자 선은 `line-normal-normal`, 다른 달 셀은 `background-normal-alternative`로 낮춥니다. shadow·radius·hover lift는 만들지 않습니다.
 
 ## External category evidence

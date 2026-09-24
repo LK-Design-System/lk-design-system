@@ -88,14 +88,13 @@
 
 - +N개는 기본으로 그 날을 day 보기로 엽니다. onOverflowActivate를 주면 제품이 popover·drawer로 대체할 수 있습니다.
 - 겹치는 이벤트가 열을 나누면 chip 제목을 한 줄 말줄임으로 그려 글자 단위 줄바꿈을 막습니다. 480px 이하처럼 월 셀이 40px대로 좁아지는 표면에서는 chip 제목이 거의 보이지 않으므로 제품은 views={['day', 'week']} 또는 defaultView="day"로 시작하는 것이 관례입니다(FullCalendar·Syncfusion 모두 phone 폭에서 day/agenda 계열을 권장).
-- 이벤트 chip은 StatusBadge 톤 표면에 왼쪽 3px 톤 border를 더합니다. 시간 격자에서 세로로 길게 늘어난 chip의 톤을 좁은 폭에서도 읽게 하는 기능적 차이입니다.
 - Syncfusion Scheduler views: 월 셀의 +more overflow, header의 기간 이동과 view switcher, 시간 보기의 현재 시각 표시가 공통 anatomy입니다. +N개와 toolbar 구성에 반영했습니다.
+- ScheduleCalendar는 순찰 실행, 작업 예약, 점검 창처럼 시간에 묶인 이벤트를 월·주·일 격자에 투영하고 빈 시간대를 고르게 하는 LDS Product / Operations 컴포넌트입니다. provenance는 product-extension입니다. 이벤트의 진실(생성·수정·반복 규칙·저장·권한)과 생성/수정 폼은 제품이 소유하고, 이 컴포넌트는 탐색, 격자 keyboard 모델, 이벤트 배치와 overflow만 소유합니다.
 
 ## Content and writing
 
 - Calendar: 300px 고정 폭·38px 날짜 button 대신 전체 폭 격자와 minmax(96px, 1fr) 행을 씁니다. 오늘 표시는 Calendar의 ring이 아니라 primary fill pill입니다. 이 차이는 셀 안에 이벤트 chip이 들어가 날짜 숫자가 셀 모서리의 작은 marker가 되어야 하기 때문입니다(외부 스케줄러 관례). 요일 색, 제목 typography, 이전/다음 button geometry(32px, radius-md)는 Calendar와 동일합니다.
 - FullCalendar TimeGrid view: all-day slot, 시간축 label, slot 범위(slotMinTime/slotMaxTime), now indicator, 겹치는 이벤트의 가로 분할이 카테고리 기대치입니다. minTime/maxTime, 종일 row, 현재 시각 선, column packing에 반영했습니다.
-- 1. toolbar: 이전/다음, 오늘, aria-live="polite" 기간 제목, 보기 전환 SegmentedControl 2. 월: 요일 columnheader → 주 row → 날짜 button(roving) → 이벤트 chip → +N개 overflow 3. 주/일: 요일·날짜 columnheader → 종일 row(종일 이벤트가 있을 때만) → 시간 격자(시간 rowheader, 시간당 slot button, 절대 배치 이벤트, 현재 시각 선).
 
 ## Accessibility
 

@@ -32,7 +32,7 @@
 3. 확인 기록 `dl` (active가 아닐 때만): 처리자 · 시각 · 사유 · 권한. 비어 있는 칸은 `기록 없음`
 4. action 줄: 확인 button(+ 차단 사유) → 제품 secondary action → 구분선 뒤 `원격 명령` 그룹
 
-DOM 순서와 시각 순서가 같습니다. 배지는 색뿐 아니라 텍스트로 축을 전달하고, 왼쪽 4px 띠와 바탕색은 **심각도**만 표현합니다(lifecycle은 배지 텍스트가 표현). `cleared`·`shelved`는 중립 바탕으로 물러납니다.
+DOM 순서와 시각 순서가 같습니다. 배지는 색뿐 아니라 텍스트로 축을 전달하고, 앞의 상태 아이콘(모양과 색)이 **심각도**를 표현하고 lifecycle은 배지 텍스트가 표현합니다. 틴트 바탕은 미확인(`active`) 사례에만 남아, 여러 건이 쌓여도 처리할 사례만 면으로 드러납니다. 나머지 lifecycle은 흰 바탕과 1px 구분선으로 물러나고, `cleared`·`shelved`는 아이콘도 중립 톤입니다.
 
 ## Contract
 
@@ -45,7 +45,7 @@ DOM 순서와 시각 순서가 같습니다. 배지는 색뿐 아니라 텍스�
 
 ## Visual-delta inventory
 
-- 바탕은 `statusToneStyle` surface, 왼쪽 띠는 같은 톤의 foreground입니다. `Banner`처럼 테두리 없는 틴트 표면이지만 `radius-lg`와 4px 띠로 목록 안에서 사례 경계를 만듭니다.
+- `Banner` 해부학을 따릅니다: 앞쪽 톤 아이콘(`statusToneStyle` icon·foreground), 테두리 없는 틴트 표면(미확인일 때만), `radius-lg`. 앞쪽 색 띠는 쓰지 않습니다. 틴트가 없는 사례는 1px `line-normal-normal` 외곽으로 목록 안 경계를 만듭니다.
 - 제목은 body1 bold(`EquipmentStatusCard` heading과 같음), 대상 줄은 label1, 기록·캡션은 caption1입니다. reference만 `--font-mono`입니다.
 - 확인 button은 `sm` 크기이며 critical이면 `danger`, 그 외 `primary`입니다. 원격 명령 그룹은 왼쪽 1px 구분선과 캡션 라벨로 분리됩니다.
 

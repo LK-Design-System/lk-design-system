@@ -77,7 +77,7 @@
 | --- | --- |
 | 명시 규칙 1 | 반복 문제: 긴급 알람이 뜨면 운영자는 (1) 무엇이 어디서 났는지, (2) 이미 누가 보고 있는지, (3) 내가 확인해도 되는지, (4) 확인과 로봇 재개가 별개인지를 몇 초 안에 판단해야 합니다. 궁릉 관제의 긴급 배너는 이 네 가지를 한 줄에 두지만 확인 상태가 브라우저 메모리에만 남아 새로고침이나 다른 관제 화면에서 사라집니다. 이 컴포넌트는 확인 기록이 없다는 사실도 표면에 드러내어 그런 공백이 숨지 않게 합니다. |
 | 명시 규칙 2 | remoteAction은 별도 labelled 그룹(data-slot="remote")에 들어갑니다. 확인이 원격 명령을 대신하지 않고, 원격 명령의 eligibility·lifecycle은 WF-03을 따릅니다. 확인 전에는 원격 명령을 막을지 여부도 제품 정책입니다. |
-| 명시 규칙 3 | 바탕은 statusToneStyle surface, 왼쪽 띠는 같은 톤의 foreground입니다. Banner처럼 테두리 없는 틴트 표면이지만 radius-lg와 4px 띠로 목록 안에서 사례 경계를 만듭니다. |
+| 명시 규칙 3 | Banner 해부학을 따릅니다: 앞쪽 톤 아이콘(statusToneStyle icon·foreground), 테두리 없는 틴트 표면(미확인일 때만), radius-lg. 앞쪽 색 띠는 쓰지 않습니다. 틴트가 없는 사례는 1px line-normal-normal 외곽으로 목록 안 경계를 만듭니다. |
 | 명시 규칙 4 | 확인 button은 sm 크기이며 critical이면 danger, 그 외 primary입니다. 원격 명령 그룹은 왼쪽 1px 구분선과 캡션 라벨로 분리됩니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
@@ -136,6 +136,7 @@
 - `--body1-size`
 - `--caption1-line`
 - `--caption1-size`
+- `--color-semantic-background-elevated-normal`
 - `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
 - `--color-semantic-label-strong`
