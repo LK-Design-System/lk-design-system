@@ -5,7 +5,7 @@
 | Type | Governance policy |
 | Status | Current |
 | Owner | Foundation owner |
-| Last reviewed | 2026-08-23 |
+| Last reviewed | 2026-09-25 |
 | Source | token 값: `tokens/source.json` · package interface: `packages/*/tokens/semantic-contract.json` |
 
 `tokens/source.json` is the source of truth for the base LK ROBOTICS token
@@ -142,6 +142,14 @@ Color usage rules:
   "선택된 대상"과 "정보 알림"이 겹칠 수 있어 분리 여부는 **열린 결정**이다. 결정 전까지
   한 화면에서 선택 강조와 info 상태를 같은 요소에 겹쳐 쓰지 않는다. 분리할 때는 관제
   제품(궁릉·대덕) 화면을 놓고 판단한다.
+- UI primary와 브랜드색의 관계: primary(`#3878B3`, HSL 209°)는 브랜드 LK Navy(`#05132B`, 218°)와
+  LK Accent(`#6BBBDD`, 198°) 사이의 파랑 계열에서 **색상각만** 따르고, 명도는 UI 대비 기준
+  (흰 글자 4.5:1, 페이지 위 글자 4.5:1)으로 따로 정한다. 네이비는 거의 검정이라 상호작용
+  색으로 쓰면 본문·비활성 요소와 구분되지 않는다. 브랜드 셸이 필요한 곳(`SideNav`
+  `appearance="brand"`)은 네이비 위에 흰색을 합성한 `navy-shell` 램프를 쓴다. 로고 색은
+  UI 토큰으로 대체하지 않는다([로고 표준 §6](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.0/docs/brand/LK_LOGO_STANDARD.md#6-색상과-배경)).
+  외부 고객 화면에서 브랜드 인상이 목표가 되면 primary를 Accent 쪽으로 옮길지 이 단락에서
+  다시 결정한다.
 - 흰 글자나 아이콘을 primary 채움 위에 올릴 때는 `--color-semantic-primary-fill`을 쓴다.
   dark `primary-normal`(`#5390C9`)은 흰색과 3.39:1이라 글자 기준에 못 미치므로,
   이 역할은 dark에서 `primary-heavy`(`blue-50`, 4.66:1)로 내려간다. 버튼·뱃지·칩의 채움 토큰도 이

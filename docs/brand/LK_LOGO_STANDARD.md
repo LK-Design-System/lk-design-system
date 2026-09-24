@@ -134,7 +134,7 @@ corporate square의 인쇄 최소 한 변은 `32mm`입니다. 이보다 작으�
 | LK Accent | `#6BBBDD` | `107, 187, 221` | 생성된 corporate 자산의 한글 법인명에만 사용 |
 | White | `#FFFFFF` | `255, 255, 255` | 네이비 배경의 reverse 심볼·워드마크, 밝은 containment 배경 |
 
-색상 source of truth는 construction manifest입니다. Theme token의 모드별 의미색과 로고 정본 색상을 혼동하지 않습니다. 특히 dark mode의 일반 `brand-ink` token 값은 로고 네이비 정본을 대체하지 않습니다.
+색상 source of truth는 construction manifest입니다. UI의 primary 파랑이 이 정본과 어떻게 이어지는지(색상각만 따르고 명도는 UI 대비로 따로 정함)는 [Token governance의 Color architecture](../TOKEN_GOVERNANCE.md#color-architecture)에 있습니다. Theme token의 모드별 의미색과 로고 정본 색상을 혼동하지 않습니다. 특히 dark mode의 일반 `brand-ink` token 값은 로고 네이비 정본을 대체하지 않습니다.
 
 ### 6.2 positive, reverse, monochrome
 
