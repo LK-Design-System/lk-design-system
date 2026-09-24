@@ -377,7 +377,7 @@ async function testFieldShared(page) {
   assert(pure.appended === 'x y', 'appendAriaReference does not duplicate existing references');
   assert(pure.disabledWins === 'var(--color-semantic-line-normal-neutral)', 'disabled outranks invalid in fieldBorderColor');
   assert(pure.invalidWins === 'var(--component-input-border-color-invalid)', 'invalid outranks focused in fieldBorderColor');
-  assert(pure.positive === 'var(--color-semantic-status-positive)', 'positive status maps to the positive token');
+  assert(pure.positive === 'var(--color-semantic-status-positive-foreground)', 'positive status maps to the positive foreground token (3:1 non-text contrast on light)');
   assert(pure.focused === 'var(--component-input-border-color-focus)', 'focused maps to the focus token');
   assert(pure.resting === 'var(--component-input-border-color)', 'the resting state maps to the base token');
   assert(pure.disabledBackground === 'var(--color-semantic-fill-normal)', 'disabled background token');

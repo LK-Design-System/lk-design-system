@@ -2,6 +2,40 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.2.10 - 2026-09-24
+
+Paired Robotics release: `0.1.0-rc.45`. This patch clears contrast failures and adds one optional
+action slot; no export, prop or token is removed.
+
+### Added
+
+- `Callout` optional `action`: one low-emphasis next step tied to the guidance, placed after title
+  and body. Omitting it renders exactly as before.
+- `Banner` puts title/body and action in one grid; below a 400px container the action wraps under
+  the body instead of squeezing it. DOM and focus order stay content → action → dismiss. New
+  `className` and `data-slot` hooks (root/icon/content/message/title/body/action/close).
+- `TextButton tone="inherit"` takes the parent surface's accessible foreground, matching
+  `Link tone="inherit"`.
+
+### Fixed
+
+- Dark primary-normal (#5390C9) gave white text 3.39:1 on primary and signal fills of `Button`,
+  `Fab` and `IconButton`. Those fills now resolve per theme through component tokens —
+  primary-normal in light, primary-heavy (#3775AF, 4.85:1) in dark — and also inside nested
+  `.theme-dark` scopes.
+- Light positive and cautionary indicators were under the 3:1 non-text minimum (2.47:1, 2.25:1).
+  `status-*-foreground` (light) now uses green-40 (3.90:1) and orange-39 (3.35:1), and dots, icons,
+  strokes and bar fills in Timeline, Progress, Meter, ConnectionBadge, BatteryGauge, LayerPanel,
+  field status, PropertyField, SecretField and ElevatorFleetOverview use the foreground role. Dark
+  mode is unchanged.
+
+### Changed
+
+- `lds-ui` agent skill: motion durations are named by token (`--dur-fast` / `--dur-base` /
+  `--dur-slow`) instead of fixed milliseconds, since the expression profile sets the values.
+- LDS3D conformance profile records the shipped `0.1.0-alpha.2` with current LDS pins and without
+  Robotics UI.
+
 ## 0.2.9 - 2026-09-17
 
 Paired Robotics release: `0.1.0-rc.44`. This patch adds one Core primitive; nothing existing

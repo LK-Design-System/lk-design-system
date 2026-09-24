@@ -79,12 +79,13 @@
 
 - 감사 커밋 4개(core·robotics·slides·motion)를 원격에 반영하고 CI·배포 완료까지 확인한다.
 - 3d 발견 5건을 3d의 진행 중 작업과 합쳐 반영하고, 3d CI를 초록으로 되돌린다.
-- **다음 짝 릴리스에 포함할 것**: `lds-ui` 스킬(`docs/agent-skills/lds-ui/SKILL.md` 모션 절)의
-  "fast 120ms / base 200ms / slow 320ms"를 토큰 이름(`--dur-fast` / `--dur-base` / `--dur-slow`)과
-  "값은 expression profile이 정한다"로 바꾼다. 2026-09-24에 반영했다가 되돌렸다 — 스킬은 core
-  문서 manifest에 투영되고, 그 manifest의 지문은 vendored Robotics 패키지가 릴리스 때 고정하므로,
-  core 버전이 그대로인 채 문서를 바꾸면 `check:type-surface`가 짝 Robotics 릴리스 전까지
-  실패한다. 스킬 문구 변경은 Core·Robotics 짝 릴리스와 함께 나간다.
+- **짝 릴리스로 반영함 (0.2.10 · Robotics rc.45)**: `lds-ui` 스킬(`docs/agent-skills/lds-ui/SKILL.md`
+  모션 절)의 "fast 120ms / base 200ms / slow 320ms"를 토큰 이름(`--dur-fast` / `--dur-base` /
+  `--dur-slow`)과 "값은 expression profile이 정한다"로 바꿨다. 2026-09-24에 한 번 반영했다가
+  되돌렸던 문구다 — 스킬은 core 문서 manifest에 투영되고, 그 manifest의 지문은 vendored Robotics
+  패키지가 릴리스 때 고정하므로, core 버전이 그대로인 채 문서를 바꾸면 `check:type-surface`가 짝
+  Robotics 릴리스 전까지 실패한다. `8a54ea5b`(WCAG 대비)가 생성 문서 `TOKEN_REFERENCE.md`를 바꿔
+  같은 실패를 다시 만들었으므로 두 변경을 함께 짝 릴리스로 내보낸다.
 - **종료 조건**: 다섯 repo의 `main` CI가 모두 초록이고 감사 발견 중 보류(pastel) 외 미처리 0.
 
 ### H1 — 강제 시점 앞당기기

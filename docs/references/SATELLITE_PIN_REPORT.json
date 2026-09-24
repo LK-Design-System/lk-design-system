@@ -1,31 +1,31 @@
 {
   "kind": "lds-satellite-pin-report",
   "generatedBy": "npm run report:satellite-pins",
-  "releaseVersion": "0.2.9",
+  "releaseVersion": "0.2.10",
   "satellites": [
     {
       "id": "robotics-ui",
       "repository": "LK-Design-System/lk-design-system-robotics",
       "axis": "domain-pack",
       "branch": "main",
-      "version": "0.1.0-rc.43",
+      "version": "0.1.0-rc.44",
       "pins": {
         "@lk-design-system/lds-core": [
           {
             "section": "peerDependencies",
-            "range": ">=0.2.7 <0.3.0"
+            "range": ">=0.2.8 <0.3.0"
           }
         ],
         "@lk-design-system/lds-product": [
           {
             "section": "peerDependencies",
-            "range": ">=0.2.7 <0.3.0"
+            "range": ">=0.2.8 <0.3.0"
           }
         ],
         "@lk-design-system/lds-theme": [
           {
             "section": "devDependencies",
-            "range": "0.2.7"
+            "range": "0.2.8"
           }
         ]
       },
@@ -109,21 +109,21 @@
         "@lk-design-system/lds-core": [
           {
             "section": "dependencies",
-            "range": "0.1.0-rc.4",
+            "range": "0.2.9",
             "workspace": "apps/docs"
           }
         ],
         "@lk-design-system/lds-product": [
           {
             "section": "dependencies",
-            "range": "0.1.0-rc.4",
+            "range": "0.2.9",
             "workspace": "apps/docs"
           }
         ],
         "@lk-design-system/lds-theme": [
           {
             "section": "dependencies",
-            "range": "0.1.0-rc.4",
+            "range": "0.2.9",
             "workspace": "apps/docs"
           }
         ]
