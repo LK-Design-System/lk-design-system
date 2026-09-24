@@ -172,6 +172,16 @@ Color usage rules:
   primary와 색상각이 같아(OKLCH 249°) 선택·정보 상태로 읽히고, `accent-*-red-orange`는
   cautionary(69°)와 negative(24°) 사이(47°)에 있어 상태로 읽힌다. 두 쌍은
   deprecated다(아래). 차트 계열 7은 같은 이유로 하늘색 램프(light-blue-30 / -70)를 쓴다.
+- **Inverse surfaces.** `inverse-background`·`inverse-label`은 모드에 따라 뒤집히지만(dark에서
+  흰 면·검은 글자), `inverse-label-*-soft`·`inverse-fill-*`·`inverse-line-*`·`inverse-icon-muted`는
+  두 모드 모두 흰색 알파다. 사진·영상 위처럼 늘 어두운 면에서 쓰기 위한 값이라서다. 그래서
+  한 표면에서 둘을 섞으면 dark에서 흰 바탕 위 흰 글자가 된다(2026-09: LogViewer WARN 1.92:1,
+  ERROR 2.90:1, DEBUG 거의 0). 로그 콘솔·툴팁·스낵바·사이트 푸터·이미지 레터박스처럼
+  **어두운 것이 관례인 표면**은 루트에 `data-theme="light"`를 걸어 두 모드 모두 어두운 면으로
+  고정한다. 그 하위는 light 모드와 똑같이 해석되므로 이미 검증된 조합이 그대로 쓰인다. 스크롤
+  영역이면 `color-scheme: dark`도 함께 준다. `LogViewer`, `Tooltip`, `Snackbar`, `Footer`,
+  `AnnotatedImage`가 이렇게 한다. 모드를 따라 뒤집혀야 하는 표면은 soft·fill·line 대신
+  `inverse-label`과 일반 semantic 역할만 쓴다.
 - Light and dark values are mandatory for every semantic color. Component
   color contracts are emitted in light, dark, and auto selectors so aliases
   resolve inside the correct theme scope.

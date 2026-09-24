@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "ce2d64dbdc7cec830443347fbaab824a407a25b8aa994bc2c17f86944c2b52f0",
+  "sourceFingerprint": "6b0a417689d81096044597a00baf7c3bf591e672e6ed1022918b3c115a32911a",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -6237,7 +6237,7 @@
         "--color-semantic-status-positive-signal"
       ],
       "externalReferences": [],
-      "promptSha256": "d70524ca9a13b10a3fd86e8664bfb7a0e7857b53b2e9937b60cb3267a8bfee34"
+      "promptSha256": "c60ce871bc15100ac9831a32bd14b3d56e126896008c8620ec7504e6b590677a"
     },
     {
       "id": "missing-value",
@@ -8157,7 +8157,7 @@
           "url": "https://floating-ui.com/docs/floatingarrow"
         }
       ],
-      "promptSha256": "b096ba4a5fe565981c20432df0523bbf71919afe244ef537876fa1ade68390c6"
+      "promptSha256": "174e4bcece7960a0a7fae717183cf0ef0439efb67535a66b4cb658a496c13f03"
     },
     {
       "id": "annotated-image",
@@ -24410,7 +24410,7 @@
         "--color-semantic-inverse-line-normal"
       ],
       "externalReferences": [],
-      "promptSha256": "93fcf273ef095d78eaba6b2f070ae48d4123410cacaefe8dc3d26812024568fb"
+      "promptSha256": "d434342eeb6b319801283570759c393cbb0528d35a69328affe9066816784846"
     },
     {
       "id": "language-switcher",
@@ -39632,7 +39632,9 @@
         "The bubble defaults to the common owner-document Portal, inherits the nearest explicit theme and dir, flips/clamps at viewport edges, and is removed from the DOM while closed. placement is deprecated; use position.",
         "둥근 본체와 포인터는 하나의 SVG path로 그립니다. 별도 clip-path 삼각형을 본체에 1px 겹치는 방식은 브라우저 줌·DPR·fractional transform에서 이음새가 드러나므로 사용하지 않습니다. Medium 포인터는 12×6px, Small은 10×5px로 유지해 36px 안팎의 Tooltip 높이와 비례시킵니다."
       ],
-      "contentGuidance": [],
+      "contentGuidance": [
+        "말풍선은 두 모드 모두 어두운 인버스 표면입니다. data-theme=\"light\" 범위로 inverse- 역할을 고정해, 다크에서도 보조 글자(inverse-label-alternative-soft)가 흰 바탕에 묻히지 않습니다(TOKENGOVERNANCE \"Inverse surfaces\")."
+      ],
       "accessibility": [
         "콘텐츠는 짧은 보조 설명으로 제한하고, 지속되는 주석에는 Bubble, 서식·동작이 있는 본문에는 Popover를 사용합니다. focusable한 단일 trigger가 ARIA prop을 DOM에 전달해야 합니다.",
         "hover와 focus가 같은 Tooltip을 열고 aria-describedby로 연결합니다. 포인터를 Tooltip 위로 옮겨도 유지되며, Escape는 trigger focus를 보존한 채 닫습니다. open · defaultOpen · onOpenChange로 상태를 제어할 수 있습니다.",
@@ -39780,7 +39782,7 @@
         "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "evidence",
-        "contentGuidance": "omitted-no-evidence",
+        "contentGuidance": "evidence",
         "accessibility": "evidence",
         "exceptions": "evidence",
         "related": "evidence",
@@ -72947,7 +72949,7 @@
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "서피스는 --color-semantic-inverse-background(라이트에서 #1B1C1E, 다크에선 페이지와 반전되는 인버스 서피스), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다."
+          "rule": "서피스는 --color-semantic-inverse-background, 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)입니다. 루트가 data-theme=\"light\"라 두 모드 모두 #1B1C1E 어두운 띠로 보입니다. 다크에서 인버스 서피스가 흰색으로 뒤집히면 고정 화이트 알파 글자가 사라지기 때문입니다(TOKENGOVERNANCE \"Inverse surfaces\")."
         },
         {
           "subject": "--body2-size",

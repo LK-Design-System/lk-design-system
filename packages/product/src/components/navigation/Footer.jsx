@@ -6,9 +6,9 @@ import { Icon } from '@lk-design-system/lds-core/components/icon/Icon';
  * The site footer: a navy band with a compact legal/info block — contact rows (tel · business reg.),
  * location rows (HQ · R&D · factory), and a copyright line. Defaults carry the
  * real LK company data, so a bare `<Footer />` produces the standard footer.
- * White-alpha text is fixed (not themed) so the band reads the same in
- * both themes; the surface uses `--color-semantic-inverse-background` so dark mode lifts it off
- * the page like the rest of the system.
+ * The band is a dark inverse surface in both themes: it renders under
+ * data-theme="light", so inverse-background stays dark and the fixed
+ * white-alpha text keeps its contrast (TOKEN_GOVERNANCE, "Inverse surfaces").
  * Extensions beyond the live site (all opt-in): `columns` link columns +
  * `brand` (marketing growth), `links` policy row, `compact` one-line app
  * footer, `backToTop` floating button.
@@ -101,7 +101,7 @@ export function Footer({
   );
 
   return (
-    <footer style={{ background: 'var(--color-semantic-inverse-background)', padding: '32px 0 40px', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
+    <footer data-theme="light" style={{ background: 'var(--color-semantic-inverse-background)', padding: '32px 0 40px', fontFamily: 'var(--font-sans)', ...style }} {...rest}>
       {backToTop && <BackToTopButton />}
       <div style={{ maxWidth, margin: '0 auto', padding: '0 32px', boxSizing: 'border-box' }}>
         {(brand != null || columns.length > 0) && (

@@ -21,3 +21,5 @@
   놓치기 때문입니다.
 - 가상화로 포커스를 잃지 않습니다 — 포커스가 있던 복사 버튼의 행이 뷰포트를 벗어나 DOM에서 제거되면 포커스를 `<body>`가 아니라 로그 영역으로 되돌립니다.
 - 레벨은 색상 단독이 아니라 `DEBUG`/`INFO`/`WARN`/`ERROR` 텍스트로도 구분되고, 필터 칩은 `aria-pressed`, 도구 그룹과 검색 입력은 각각 이름을 가집니다.
+
+- 로그 영역은 두 모드 모두 어두운 콘솔입니다. 루트가 `data-theme="light"`라 `inverse-background`와 흰 알파 글자가 다크에서도 뒤집히지 않고, 스크롤바는 `color-scheme: dark`를 따릅니다(TOKEN_GOVERNANCE "Inverse surfaces").

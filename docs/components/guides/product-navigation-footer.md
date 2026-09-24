@@ -41,7 +41,7 @@
 | 명시 규칙 1 | contact / locations — { label, value }[]. 라벨은 흰색 62%·700, 값은 45%. EN 페이지는 { label: 'Tel', value: '02-3159-2865' }처럼 번역해 전달. |
 | 명시 규칙 2 | copyright — 기본 Copyright ⓒ 2024 - 2026 LK ROBOTICS Inc. All rights reserved. |
 | 명시 규칙 3 | backToTop — 푸터와 함께 렌더하는 플로팅 버튼(스크롤 600px 후 표시, 부드러운 상단 이동). |
-| 명시 규칙 4 | 서피스는 --color-semantic-inverse-background(라이트에서 #1B1C1E, 다크에선 페이지와 반전되는 인버스 서피스), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다. |
+| 명시 규칙 4 | 서피스는 --color-semantic-inverse-background, 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)입니다. 루트가 data-theme="light"라 두 모드 모두 #1B1C1E 어두운 띠로 보입니다. 다크에서 인버스 서피스가 흰색으로 뒤집히면 고정 화이트 알파 글자가 사라지기 때문입니다(TOKENGOVERNANCE "Inverse surfaces"). |
 | --body2-size | 15px |
 
 ## Responsive

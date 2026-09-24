@@ -61,3 +61,5 @@
 - 제품 workflow 검토: **LK Web Viz, LK Control Full Daedeok, LK Portal 모두 not applicable**.
   이번 변경은 Tooltip의 내부 배경 geometry만 보정하며, 제품 route·데이터·상태·action·공개 API나
   조합 seam을 바꾸지 않으므로 제품 frontend 지원 여부를 새로 주장하지 않습니다.
+
+- 말풍선은 두 모드 모두 어두운 인버스 표면입니다. `data-theme="light"` 범위로 `inverse-*` 역할을 고정해, 다크에서도 보조 글자(`inverse-label-alternative-soft`)가 흰 바탕에 묻히지 않습니다(TOKEN_GOVERNANCE "Inverse surfaces").

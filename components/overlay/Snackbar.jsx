@@ -62,6 +62,9 @@ export function Snackbar({
       role={urgent ? "alert" : "status"}
       aria-live={urgent ? "assertive" : "polite"}
       data-tone={normalized}
+      // The inverse surface stays dark in both themes (see TOKEN_GOVERNANCE,
+      // "Inverse surfaces"); pinning the light scope keeps its white text roles.
+      data-theme="light"
       style={{
         display: "inline-flex",
         alignItems: hasDescription ? "flex-start" : "center",

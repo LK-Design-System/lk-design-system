@@ -364,6 +364,8 @@ export const Tooltip = React.forwardRef(function Tooltip({
         ref={bubbleRef}
         id={tooltipId}
         data-slot="bubble"
+        // Dark in both themes; the light scope pins the inverse roles (TOKEN_GOVERNANCE, "Inverse surfaces").
+        data-theme="light"
         className={partClassName(classNames, 'bubble') || undefined}
         role="tooltip"
         aria-hidden={visible ? false : undefined}

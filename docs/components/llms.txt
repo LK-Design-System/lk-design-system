@@ -2672,6 +2672,10 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 - The bubble defaults to the common owner-document Portal, inherits the nearest explicit theme and dir, flips/clamps at viewport edges, and is removed from the DOM while closed. placement is deprecated; use position.
 - 둥근 본체와 포인터는 하나의 SVG path로 그립니다. 별도 clip-path 삼각형을 본체에 1px 겹치는 방식은 브라우저 줌·DPR·fractional transform에서 이음새가 드러나므로 사용하지 않습니다. Medium 포인터는 12×6px, Small은 10×5px로 유지해 36px 안팎의 Tooltip 높이와 비례시킵니다.
 
+## Content and writing
+
+- 말풍선은 두 모드 모두 어두운 인버스 표면입니다. data-theme="light" 범위로 inverse- 역할을 고정해, 다크에서도 보조 글자(inverse-label-alternative-soft)가 흰 바탕에 묻히지 않습니다(TOKENGOVERNANCE "Inverse surfaces").
+
 ## Accessibility
 
 - 콘텐츠는 짧은 보조 설명으로 제한하고, 지속되는 주석에는 Bubble, 서식·동작이 있는 본문에는 Popover를 사용합니다. focusable한 단일 trigger가 ARIA prop을 DOM에 전달해야 합니다.
@@ -18505,7 +18509,7 @@ css
 | 명시 규칙 1 | contact / locations — { label, value }[]. 라벨은 흰색 62%·700, 값은 45%. EN 페이지는 { label: 'Tel', value: '02-3159-2865' }처럼 번역해 전달. |
 | 명시 규칙 2 | copyright — 기본 Copyright ⓒ 2024 - 2026 LK ROBOTICS Inc. All rights reserved. |
 | 명시 규칙 3 | backToTop — 푸터와 함께 렌더하는 플로팅 버튼(스크롤 600px 후 표시, 부드러운 상단 이동). |
-| 명시 규칙 4 | 서피스는 --color-semantic-inverse-background(라이트에서 #1B1C1E, 다크에선 페이지와 반전되는 인버스 서피스), 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)를 사용합니다. |
+| 명시 규칙 4 | 서피스는 --color-semantic-inverse-background, 텍스트는 고정 화이트 알파(0.62 / 0.45 / 0.38)입니다. 루트가 data-theme="light"라 두 모드 모두 #1B1C1E 어두운 띠로 보입니다. 다크에서 인버스 서피스가 흰색으로 뒤집히면 고정 화이트 알파 글자가 사라지기 때문입니다(TOKENGOVERNANCE "Inverse surfaces"). |
 | --body2-size | 15px |
 
 ## Responsive

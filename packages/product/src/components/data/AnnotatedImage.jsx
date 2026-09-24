@@ -181,6 +181,9 @@ export function AnnotatedImage({
       </style>
       <div
         ref={frameRef}
+        // The letterbox and overlay labels are a dark surface in both themes;
+        // the light scope pins the inverse roles (TOKEN_GOVERNANCE, "Inverse surfaces").
+        data-theme="light"
         style={{
           position: 'relative',
           width: '100%',
