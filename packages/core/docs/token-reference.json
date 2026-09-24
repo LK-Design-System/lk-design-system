@@ -927,7 +927,8 @@
             "$value": "#F7F7F8",
             "css": "--color-atomic-neutral-99"
           }
-        }
+        },
+        "$description": "Deprecated 2026-09: visually identical to cool-neutral (every channel within 2/255) and no semantic role draws only from it. Use the same step of cool-neutral. Removal: 0.3.0. See docs/TOKEN_GOVERNANCE.md."
       },
       "blue": {
         "label": "Blue",
@@ -2244,7 +2245,8 @@
           "light": "transparent",
           "dark": "transparent"
         },
-        "origin": "wds-structure-lk-retone"
+        "origin": "wds-structure-lk-retone",
+        "$description": "Deprecated 2026-09: transparent in both modes, so the name promises a color it never paints. Use accent-background-violet or accent-foreground-violet. Removal: 0.3.0."
       },
       "accent-cyan": {
         "$type": "color",
@@ -2253,7 +2255,8 @@
           "light": "transparent",
           "dark": "transparent"
         },
-        "origin": "wds-structure-lk-retone"
+        "origin": "wds-structure-lk-retone",
+        "$description": "Deprecated 2026-09: transparent in both modes, so the name promises a color it never paints. Use accent-background-cyan or accent-foreground-cyan. Removal: 0.3.0."
       },
       "brand-ink": {
         "$type": "color",

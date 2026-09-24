@@ -27,7 +27,7 @@ function useMissingNameWarning(shouldWarn, message) {
  * inline SVG as children. Matches Button's calm hover (minimal tone shift, no
  * lift).
  *
- * variant: soft (cool-gray) · solid (graphite) · signal (cyan-ink) ·
+ * variant: soft (cool-gray) · solid (graphite) · signal (primary azure fill) ·
  *          ghost (hairline) · on-dark (translucent white, for navy)
  */
 export function IconButton({

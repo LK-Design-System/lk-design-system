@@ -32,7 +32,7 @@ function useMissingNameWarning(shouldWarn, message) {
  * tone changes for low-emphasis variants. No animation, positional lift, or
  * press scale. `arrow` is deprecated and kept as a no-op for compatibility.
  *
- * variant: primary (LK azure — brand) · secondary (graphite) · signal (LK cyan-ink) ·
+ * variant: primary (LK azure — brand) · secondary (graphite) · signal (primary azure fill) ·
  *          dark (navy) · flat (cool-gray) · ghost (hairline) · on-dark (translucent, for navy sections)
  *          · danger (LDS safety extension; not a WDS parity axis)
  */
