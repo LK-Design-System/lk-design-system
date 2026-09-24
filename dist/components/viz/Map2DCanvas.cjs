@@ -1,9 +1,9 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkUE42UTC6cjs = require('../../chunk-UE42UTC6.cjs');
+var _chunkTZMWMK6Ecjs = require('../../chunk-TZMWMK6E.cjs');
 require('../../chunk-XZXJ7RYB.cjs');
-require('../../chunk-FNHGTQXD.cjs');
+require('../../chunk-2KP7XJ3U.cjs');
 require('../../chunk-DKANR6BI.cjs');
 require('../../chunk-LKGR27DI.cjs');
 require('../../chunk-SO26HRBS.cjs');
@@ -14,5 +14,5 @@ require('../../chunk-P65KUIKJ.cjs');
 require('../../chunk-3DMHJIWS.cjs');
 
 
-exports.Map2DCanvas = _chunkUE42UTC6cjs.Map2DCanvas;
+exports.Map2DCanvas = _chunkTZMWMK6Ecjs.Map2DCanvas;
 //# sourceMappingURL=Map2DCanvas.cjs.map

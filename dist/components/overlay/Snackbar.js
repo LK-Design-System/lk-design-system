@@ -1,7 +1,7 @@
 "use client";
 import {
   Snackbar
-} from "../../chunk-C6D5YDH2.js";
+} from "../../chunk-MA5KRB7Q.js";
 import "../../chunk-L2ZEGNVF.js";
 import "../../chunk-IKUN5X7H.js";
 export {

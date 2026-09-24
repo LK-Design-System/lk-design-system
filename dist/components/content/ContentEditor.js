@@ -1,7 +1,7 @@
 "use client";
 import {
   ContentEditor
-} from "../../chunk-N7WR3BXW.js";
+} from "../../chunk-XHTZCHHR.js";
 import "../../chunk-LSN3BTKD.js";
 import "../../chunk-IKUN5X7H.js";
 export {

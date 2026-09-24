@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkIXUUSEYDcjs = require('../../chunk-IXUUSEYD.cjs');
+var _chunkAN2WLZ36cjs = require('../../chunk-AN2WLZ36.cjs');
 
 
-exports.ContentBadge = _chunkIXUUSEYDcjs.ContentBadge;
+exports.ContentBadge = _chunkAN2WLZ36cjs.ContentBadge;
 //# sourceMappingURL=ContentBadge.cjs.map

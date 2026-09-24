@@ -1,9 +1,9 @@
 "use client";
 import {
   Map2DCanvas
-} from "../../chunk-M65UWEQO.js";
+} from "../../chunk-ZBM73OHW.js";
 import "../../chunk-ANN7KO3C.js";
-import "../../chunk-QF6WMSCR.js";
+import "../../chunk-2HZV2XXH.js";
 import "../../chunk-VSYEB7PE.js";
 import "../../chunk-VRAUQFVT.js";
 import "../../chunk-LW4BPLAH.js";

@@ -1,7 +1,7 @@
 "use client";
 import {
   AnnotatedImage
-} from "../../chunk-YOUF6TL5.js";
+} from "../../chunk-M74KD2VH.js";
 import "../../chunk-LCMOLARR.js";
 import "../../chunk-CRCBIV64.js";
 import "../../chunk-IKUN5X7H.js";
