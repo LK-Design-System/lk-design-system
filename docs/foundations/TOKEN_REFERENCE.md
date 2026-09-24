@@ -334,19 +334,19 @@
 | `primitive.colorRamps.light-blue.tokens.95` | color | `--color-atomic-light-blue-95` | `#E6F6FB` | — |
 | `primitive.colorRamps.light-blue.tokens.99` | color | `--color-atomic-light-blue-99` | `#F7FDFE` | — |
 | `primitive.colorRamps.lime.tokens.0` | color | `--color-atomic-lime-0` | `#000000` | — |
-| `primitive.colorRamps.lime.tokens.10` | color | `--color-atomic-lime-10` | `#132904` | — |
+| `primitive.colorRamps.lime.tokens.10` | color | `--color-atomic-lime-10` | `#17280D` | — |
 | `primitive.colorRamps.lime.tokens.100` | color | `--color-atomic-lime-100` | `#FFFFFF` | — |
-| `primitive.colorRamps.lime.tokens.20` | color | `--color-atomic-lime-20` | `#265108` | — |
-| `primitive.colorRamps.lime.tokens.30` | color | `--color-atomic-lime-30` | `#3B7C0C` | — |
-| `primitive.colorRamps.lime.tokens.37` | color | `--color-atomic-lime-37` | `#4B9D10` | — |
-| `primitive.colorRamps.lime.tokens.40` | color | `--color-atomic-lime-40` | `#51AC11` | — |
-| `primitive.colorRamps.lime.tokens.50` | color | `--color-atomic-lime-50` | `#63CE18` | — |
-| `primitive.colorRamps.lime.tokens.60` | color | `--color-atomic-lime-60` | `#87DB49` | — |
-| `primitive.colorRamps.lime.tokens.70` | color | `--color-atomic-lime-70` | `#AAE87D` | — |
-| `primitive.colorRamps.lime.tokens.80` | color | `--color-atomic-lime-80` | `#C3F0A3` | — |
-| `primitive.colorRamps.lime.tokens.90` | color | `--color-atomic-lime-90` | `#D9F7C4` | — |
-| `primitive.colorRamps.lime.tokens.95` | color | `--color-atomic-lime-95` | `#EDFCE2` | — |
-| `primitive.colorRamps.lime.tokens.99` | color | `--color-atomic-lime-99` | `#FAFEF6` | — |
+| `primitive.colorRamps.lime.tokens.20` | color | `--color-atomic-lime-20` | `#2F4F1E` | — |
+| `primitive.colorRamps.lime.tokens.30` | color | `--color-atomic-lime-30` | `#487830` | — |
+| `primitive.colorRamps.lime.tokens.37` | color | `--color-atomic-lime-37` | `#5C993F` | — |
+| `primitive.colorRamps.lime.tokens.40` | color | `--color-atomic-lime-40` | `#64A745` | — |
+| `primitive.colorRamps.lime.tokens.50` | color | `--color-atomic-lime-50` | `#7AC854` | — |
+| `primitive.colorRamps.lime.tokens.60` | color | `--color-atomic-lime-60` | `#96D66E` | — |
+| `primitive.colorRamps.lime.tokens.70` | color | `--color-atomic-lime-70` | `#B4E494` | — |
+| `primitive.colorRamps.lime.tokens.80` | color | `--color-atomic-lime-80` | `#CAECB2` | — |
+| `primitive.colorRamps.lime.tokens.90` | color | `--color-atomic-lime-90` | `#DDF4CE` | — |
+| `primitive.colorRamps.lime.tokens.95` | color | `--color-atomic-lime-95` | `#EFFBE7` | — |
+| `primitive.colorRamps.lime.tokens.99` | color | `--color-atomic-lime-99` | `#FBFEF7` | — |
 | `primitive.colorRamps.navyShell.tokens.18` | color | `--color-atomic-navy-shell-18` | `#1E2B40` | — |
 | `primitive.colorRamps.navyShell.tokens.20` | color | `--color-atomic-navy-shell-20` | `#232F44` | — |
 | `primitive.colorRamps.navyShell.tokens.24` | color | `--color-atomic-navy-shell-24` | `#2D394D` | — |
@@ -381,32 +381,32 @@
 | `primitive.colorRamps.orange.tokens.95` | color | `--color-atomic-orange-95` | `#FCF4E9` | — |
 | `primitive.colorRamps.orange.tokens.99` | color | `--color-atomic-orange-99` | `#FEFCF8` | — |
 | `primitive.colorRamps.pink.tokens.0` | color | `--color-atomic-pink-0` | `#000000` | — |
-| `primitive.colorRamps.pink.tokens.10` | color | `--color-atomic-pink-10` | `#3A0731` | — |
+| `primitive.colorRamps.pink.tokens.10` | color | `--color-atomic-pink-10` | `#360E2E` | — |
 | `primitive.colorRamps.pink.tokens.100` | color | `--color-atomic-pink-100` | `#FFFFFF` | — |
-| `primitive.colorRamps.pink.tokens.20` | color | `--color-atomic-pink-20` | `#6F105F` | — |
-| `primitive.colorRamps.pink.tokens.30` | color | `--color-atomic-pink-30` | `#A2258D` | — |
-| `primitive.colorRamps.pink.tokens.40` | color | `--color-atomic-pink-40` | `#C645B1` | — |
-| `primitive.colorRamps.pink.tokens.46` | color | `--color-atomic-pink-46` | `#DA58C5` | — |
-| `primitive.colorRamps.pink.tokens.50` | color | `--color-atomic-pink-50` | `#E764D1` | — |
-| `primitive.colorRamps.pink.tokens.60` | color | `--color-atomic-pink-60` | `#EE7EDB` | — |
-| `primitive.colorRamps.pink.tokens.70` | color | `--color-atomic-pink-70` | `#F59BE6` | — |
-| `primitive.colorRamps.pink.tokens.80` | color | `--color-atomic-pink-80` | `#F8BCEE` | — |
-| `primitive.colorRamps.pink.tokens.90` | color | `--color-atomic-pink-90` | `#FAD5F4` | — |
-| `primitive.colorRamps.pink.tokens.95` | color | `--color-atomic-pink-95` | `#FCEDFA` | — |
-| `primitive.colorRamps.pink.tokens.99` | color | `--color-atomic-pink-99` | `#FFFAFE` | — |
+| `primitive.colorRamps.pink.tokens.20` | color | `--color-atomic-pink-20` | `#691F5A` | — |
+| `primitive.colorRamps.pink.tokens.30` | color | `--color-atomic-pink-30` | `#993787` | — |
+| `primitive.colorRamps.pink.tokens.40` | color | `--color-atomic-pink-40` | `#BC54A9` | — |
+| `primitive.colorRamps.pink.tokens.46` | color | `--color-atomic-pink-46` | `#D066BD` | — |
+| `primitive.colorRamps.pink.tokens.50` | color | `--color-atomic-pink-50` | `#DC71C9` | — |
+| `primitive.colorRamps.pink.tokens.60` | color | `--color-atomic-pink-60` | `#E488D4` | — |
+| `primitive.colorRamps.pink.tokens.70` | color | `--color-atomic-pink-70` | `#EDA2E0` | — |
+| `primitive.colorRamps.pink.tokens.80` | color | `--color-atomic-pink-80` | `#F2C0E9` | — |
+| `primitive.colorRamps.pink.tokens.90` | color | `--color-atomic-pink-90` | `#F6D7F1` | — |
+| `primitive.colorRamps.pink.tokens.95` | color | `--color-atomic-pink-95` | `#FAEEF9` | — |
+| `primitive.colorRamps.pink.tokens.99` | color | `--color-atomic-pink-99` | `#FEFAFE` | — |
 | `primitive.colorRamps.purple.tokens.0` | color | `--color-atomic-purple-0` | `#000000` | — |
-| `primitive.colorRamps.purple.tokens.10` | color | `--color-atomic-purple-10` | `#27083F` | — |
+| `primitive.colorRamps.purple.tokens.10` | color | `--color-atomic-purple-10` | `#250F38` | — |
 | `primitive.colorRamps.purple.tokens.100` | color | `--color-atomic-purple-100` | `#FFFFFF` | — |
-| `primitive.colorRamps.purple.tokens.20` | color | `--color-atomic-purple-20` | `#561575` | — |
-| `primitive.colorRamps.purple.tokens.30` | color | `--color-atomic-purple-30` | `#822AAB` | — |
-| `primitive.colorRamps.purple.tokens.40` | color | `--color-atomic-purple-40` | `#A744D3` | — |
-| `primitive.colorRamps.purple.tokens.50` | color | `--color-atomic-purple-50` | `#C464F0` | — |
-| `primitive.colorRamps.purple.tokens.60` | color | `--color-atomic-purple-60` | `#CE7FF2` | — |
-| `primitive.colorRamps.purple.tokens.70` | color | `--color-atomic-purple-70` | `#D99AF5` | — |
-| `primitive.colorRamps.purple.tokens.80` | color | `--color-atomic-purple-80` | `#E5BCF8` | — |
-| `primitive.colorRamps.purple.tokens.90` | color | `--color-atomic-purple-90` | `#F0D7FB` | — |
-| `primitive.colorRamps.purple.tokens.95` | color | `--color-atomic-purple-95` | `#F8EEFD` | — |
-| `primitive.colorRamps.purple.tokens.99` | color | `--color-atomic-purple-99` | `#FEFBFF` | — |
+| `primitive.colorRamps.purple.tokens.20` | color | `--color-atomic-purple-20` | `#51236A` | — |
+| `primitive.colorRamps.purple.tokens.30` | color | `--color-atomic-purple-30` | `#7B3B9C` | — |
+| `primitive.colorRamps.purple.tokens.40` | color | `--color-atomic-purple-40` | `#9F55C2` | — |
+| `primitive.colorRamps.purple.tokens.50` | color | `--color-atomic-purple-50` | `#BB72DE` | — |
+| `primitive.colorRamps.purple.tokens.60` | color | `--color-atomic-purple-60` | `#C689E3` | — |
+| `primitive.colorRamps.purple.tokens.70` | color | `--color-atomic-purple-70` | `#D2A1E9` | — |
+| `primitive.colorRamps.purple.tokens.80` | color | `--color-atomic-purple-80` | `#E0C0F0` | — |
+| `primitive.colorRamps.purple.tokens.90` | color | `--color-atomic-purple-90` | `#EDD9F6` | — |
+| `primitive.colorRamps.purple.tokens.95` | color | `--color-atomic-purple-95` | `#F7EFFB` | — |
+| `primitive.colorRamps.purple.tokens.99` | color | `--color-atomic-purple-99` | `#FEFBFE` | — |
 | `primitive.colorRamps.red-orange.tokens.10` | color | `--color-atomic-red-orange-10` | `#261004` | — |
 | `primitive.colorRamps.red-orange.tokens.20` | color | `--color-atomic-red-orange-20` | `#542508` | — |
 | `primitive.colorRamps.red-orange.tokens.30` | color | `--color-atomic-red-orange-30` | `#8A3B0E` | — |
@@ -431,19 +431,19 @@
 | `primitive.colorRamps.red.tokens.95` | color | `--color-atomic-red-95` | `#FCEDED` | — |
 | `primitive.colorRamps.red.tokens.99` | color | `--color-atomic-red-99` | `#FFFAFA` | — |
 | `primitive.colorRamps.violet.tokens.0` | color | `--color-atomic-violet-0` | `#000000` | — |
-| `primitive.colorRamps.violet.tokens.10` | color | `--color-atomic-violet-10` | `#130841` | — |
+| `primitive.colorRamps.violet.tokens.10` | color | `--color-atomic-violet-10` | `#130E38` | — |
 | `primitive.colorRamps.violet.tokens.100` | color | `--color-atomic-violet-100` | `#FFFFFF` | — |
-| `primitive.colorRamps.violet.tokens.20` | color | `--color-atomic-violet-20` | `#29147F` | — |
-| `primitive.colorRamps.violet.tokens.30` | color | `--color-atomic-violet-30` | `#4125B3` | — |
-| `primitive.colorRamps.violet.tokens.40` | color | `--color-atomic-violet-40` | `#5333D3` | — |
-| `primitive.colorRamps.violet.tokens.45` | color | `--color-atomic-violet-45` | `#5E3FDB` | — |
-| `primitive.colorRamps.violet.tokens.50` | color | `--color-atomic-violet-50` | `#6748E1` | — |
-| `primitive.colorRamps.violet.tokens.60` | color | `--color-atomic-violet-60` | `#7E63E8` | — |
-| `primitive.colorRamps.violet.tokens.70` | color | `--color-atomic-violet-70` | `#9E89F0` | — |
-| `primitive.colorRamps.violet.tokens.80` | color | `--color-atomic-violet-80` | `#C0B1F7` | — |
-| `primitive.colorRamps.violet.tokens.90` | color | `--color-atomic-violet-90` | `#DBD4FA` | — |
-| `primitive.colorRamps.violet.tokens.95` | color | `--color-atomic-violet-95` | `#F0ECFC` | — |
-| `primitive.colorRamps.violet.tokens.99` | color | `--color-atomic-violet-99` | `#FBFAFF` | — |
+| `primitive.colorRamps.violet.tokens.20` | color | `--color-atomic-violet-20` | `#28216E` | — |
+| `primitive.colorRamps.violet.tokens.30` | color | `--color-atomic-violet-30` | `#40369C` | — |
+| `primitive.colorRamps.violet.tokens.40` | color | `--color-atomic-violet-40` | `#5244B9` | — |
+| `primitive.colorRamps.violet.tokens.45` | color | `--color-atomic-violet-45` | `#5D4EC1` | — |
+| `primitive.colorRamps.violet.tokens.50` | color | `--color-atomic-violet-50` | `#6656C7` | — |
+| `primitive.colorRamps.violet.tokens.60` | color | `--color-atomic-violet-60` | `#7D6CD1` | — |
+| `primitive.colorRamps.violet.tokens.70` | color | `--color-atomic-violet-70` | `#9D8FDE` | — |
+| `primitive.colorRamps.violet.tokens.80` | color | `--color-atomic-violet-80` | `#BFB4EA` | — |
+| `primitive.colorRamps.violet.tokens.90` | color | `--color-atomic-violet-90` | `#DBD5F3` | — |
+| `primitive.colorRamps.violet.tokens.95` | color | `--color-atomic-violet-95` | `#F0EDF9` | — |
+| `primitive.colorRamps.violet.tokens.99` | color | `--color-atomic-violet-99` | `#FBFAFE` | — |
 | `primitive.effect.decorateGradientMultipleBottom` | gradient | `--decorate-gradient-multiple-bottom` | `linear-gradient(0deg, var(--surface-raised) 0%, var(--fill-strong) 48%, transparent 100%)` | — |
 | `primitive.effect.decorateGradientMultipleLeft` | gradient | `--decorate-gradient-multiple-left` | `linear-gradient(90deg, var(--surface-raised) 0%, var(--fill-strong) 48%, transparent 100%)` | — |
 | `primitive.effect.decorateGradientMultipleRight` | gradient | `--decorate-gradient-multiple-right` | `linear-gradient(270deg, var(--surface-raised) 0%, var(--fill-strong) 48%, transparent 100%)` | — |
@@ -536,24 +536,24 @@
 | `semantic.border.subtle` | color | `--color-semantic-line-normal-normal` | `var(--color-semantic-line-normal-normal)` | — |
 | `semantic.colorRoles.accent-background-cyan` | color | `--color-semantic-accent-background-cyan` | `light: #16BDDA; dark: #5BCEE1` | — |
 | `semantic.colorRoles.accent-background-light-blue` | color | `--color-semantic-accent-background-light-blue` | `light: #7BA9D5; dark: #95BADD` | — |
-| `semantic.colorRoles.accent-background-lime` | color | `--color-semantic-accent-background-lime` | `light: #63CE18; dark: #87DB49` | — |
-| `semantic.colorRoles.accent-background-pink` | color | `--color-semantic-accent-background-pink` | `light: #E764D1; dark: #EE7EDB` | — |
-| `semantic.colorRoles.accent-background-purple` | color | `--color-semantic-accent-background-purple` | `light: #C464F0; dark: #CE7FF2` | — |
+| `semantic.colorRoles.accent-background-lime` | color | `--color-semantic-accent-background-lime` | `light: var(--color-atomic-lime-50); dark: var(--color-atomic-lime-60)` | — |
+| `semantic.colorRoles.accent-background-pink` | color | `--color-semantic-accent-background-pink` | `light: var(--color-atomic-pink-50); dark: var(--color-atomic-pink-60)` | — |
+| `semantic.colorRoles.accent-background-purple` | color | `--color-semantic-accent-background-purple` | `light: var(--color-atomic-purple-50); dark: var(--color-atomic-purple-60)` | — |
 | `semantic.colorRoles.accent-background-red-orange` | color | `--color-semantic-accent-background-red-orange` | `light: #EA7029; dark: #ED864A` | — |
-| `semantic.colorRoles.accent-background-violet` | color | `--color-semantic-accent-background-violet` | `light: #6748E1; dark: #7E63E8` | — |
+| `semantic.colorRoles.accent-background-violet` | color | `--color-semantic-accent-background-violet` | `light: var(--color-atomic-violet-50); dark: var(--color-atomic-violet-60)` | — |
 | `semantic.colorRoles.accent-blue-text` | color | `--color-semantic-accent-blue-text` | `light: #336CA1; dark: #B5D5F2` | — |
 | `semantic.colorRoles.accent-cyan` | color | `--color-semantic-accent-cyan` | `light: transparent; dark: transparent` | — |
 | `semantic.colorRoles.accent-foreground-blue` | color | `--color-semantic-accent-foreground-blue` | `light: #336CA1; dark: #639ACE` | — |
 | `semantic.colorRoles.accent-foreground-cyan` | color | `--color-semantic-accent-foreground-cyan` | `light: #1198AF; dark: #16BDDA` | — |
 | `semantic.colorRoles.accent-foreground-green` | color | `--color-semantic-accent-foreground-green` | `light: #0F953C; dark: #3FD270` | — |
 | `semantic.colorRoles.accent-foreground-light-blue` | color | `--color-semantic-accent-foreground-light-blue` | `light: #498AC6; dark: #7BA9D5` | — |
-| `semantic.colorRoles.accent-foreground-lime` | color | `--color-semantic-accent-foreground-lime` | `light: #4B9D10; dark: #63CE18` | — |
+| `semantic.colorRoles.accent-foreground-lime` | color | `--color-semantic-accent-foreground-lime` | `light: var(--color-atomic-lime-37); dark: var(--color-atomic-lime-50)` | — |
 | `semantic.colorRoles.accent-foreground-orange` | color | `--color-semantic-accent-foreground-orange` | `light: #C97A14; dark: #EB9C33` | — |
-| `semantic.colorRoles.accent-foreground-pink` | color | `--color-semantic-accent-foreground-pink` | `light: #DA58C5; dark: #EE7EDB` | — |
-| `semantic.colorRoles.accent-foreground-purple` | color | `--color-semantic-accent-foreground-purple` | `light: #A744D3; dark: #CE7FF2` | — |
+| `semantic.colorRoles.accent-foreground-pink` | color | `--color-semantic-accent-foreground-pink` | `light: var(--color-atomic-pink-46); dark: var(--color-atomic-pink-60)` | — |
+| `semantic.colorRoles.accent-foreground-purple` | color | `--color-semantic-accent-foreground-purple` | `light: var(--color-atomic-purple-40); dark: var(--color-atomic-purple-60)` | — |
 | `semantic.colorRoles.accent-foreground-red` | color | `--color-semantic-accent-foreground-red` | `light: #D63D3D; dark: #F16F6F` | — |
 | `semantic.colorRoles.accent-foreground-red-orange` | color | `--color-semantic-accent-foreground-red-orange` | `light: #E8661A; dark: #ED864A` | — |
-| `semantic.colorRoles.accent-foreground-violet` | color | `--color-semantic-accent-foreground-violet` | `light: #5E3FDB; dark: #9E89F0` | — |
+| `semantic.colorRoles.accent-foreground-violet` | color | `--color-semantic-accent-foreground-violet` | `light: var(--color-atomic-violet-45); dark: var(--color-atomic-violet-70)` | — |
 | `semantic.colorRoles.accent-violet` | color | `--color-semantic-accent-violet` | `light: transparent; dark: transparent` | — |
 | `semantic.colorRoles.background-band` | color | `--color-semantic-background-band` | `light: #F4F4F5; dark: #0E121F` | — |
 | `semantic.colorRoles.background-elevated-alternative` | color | `--color-semantic-background-elevated-alternative` | `light: #F7F7F8; dark: #141415` | — |

@@ -162,7 +162,7 @@
       },
       {
         "path": "docs/foundations/TOKEN_REFERENCE.md",
-        "sha256": "c21a11f9a4e36bff39c8d588801e5a2a5ebeaaa4add788af8bd23ea57d4e29c6"
+        "sha256": "50a06ed8c3992749a29b0a532858c5874ea1712b513c51f030c635d2a863ebd9"
       },
       {
         "path": "docs/foundations/typography.md",
@@ -226,7 +226,7 @@
       },
       {
         "path": "tokens/source.json",
-        "sha256": "7738462383d9d720966b34b39429665f23928b3f483472f195cb6d96f9550527"
+        "sha256": "3e037463e86975ba3c3572c2677f76acbab83e680bf869f82b3ba1afe7e2032c"
       }
     ]
   },
@@ -525,11 +525,11 @@
     },
     {
       "path": "foundations/TOKEN_REFERENCE.md",
-      "sha256": "c21a11f9a4e36bff39c8d588801e5a2a5ebeaaa4add788af8bd23ea57d4e29c6",
+      "sha256": "50a06ed8c3992749a29b0a532858c5874ea1712b513c51f030c635d2a863ebd9",
       "sources": [
         {
           "path": "docs/foundations/TOKEN_REFERENCE.md",
-          "sha256": "c21a11f9a4e36bff39c8d588801e5a2a5ebeaaa4add788af8bd23ea57d4e29c6"
+          "sha256": "50a06ed8c3992749a29b0a532858c5874ea1712b513c51f030c635d2a863ebd9"
         }
       ]
     },
@@ -645,11 +645,11 @@
     },
     {
       "path": "token-reference.json",
-      "sha256": "7738462383d9d720966b34b39429665f23928b3f483472f195cb6d96f9550527",
+      "sha256": "3e037463e86975ba3c3572c2677f76acbab83e680bf869f82b3ba1afe7e2032c",
       "sources": [
         {
           "path": "tokens/source.json",
-          "sha256": "7738462383d9d720966b34b39429665f23928b3f483472f195cb6d96f9550527"
+          "sha256": "3e037463e86975ba3c3572c2677f76acbab83e680bf869f82b3ba1afe7e2032c"
         }
       ]
     }

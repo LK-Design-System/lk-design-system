@@ -788,62 +788,62 @@
           },
           "10": {
             "$type": "color",
-            "$value": "#130841",
+            "$value": "#130E38",
             "css": "--color-atomic-violet-10"
           },
           "20": {
             "$type": "color",
-            "$value": "#29147F",
+            "$value": "#28216E",
             "css": "--color-atomic-violet-20"
           },
           "30": {
             "$type": "color",
-            "$value": "#4125B3",
+            "$value": "#40369C",
             "css": "--color-atomic-violet-30"
           },
           "40": {
             "$type": "color",
-            "$value": "#5333D3",
+            "$value": "#5244B9",
             "css": "--color-atomic-violet-40"
           },
           "45": {
             "$type": "color",
-            "$value": "#5E3FDB",
+            "$value": "#5D4EC1",
             "css": "--color-atomic-violet-45"
           },
           "50": {
             "$type": "color",
-            "$value": "#6748E1",
+            "$value": "#6656C7",
             "css": "--color-atomic-violet-50"
           },
           "60": {
             "$type": "color",
-            "$value": "#7E63E8",
+            "$value": "#7D6CD1",
             "css": "--color-atomic-violet-60"
           },
           "70": {
             "$type": "color",
-            "$value": "#9E89F0",
+            "$value": "#9D8FDE",
             "css": "--color-atomic-violet-70"
           },
           "80": {
             "$type": "color",
-            "$value": "#C0B1F7",
+            "$value": "#BFB4EA",
             "css": "--color-atomic-violet-80"
           },
           "90": {
             "$type": "color",
-            "$value": "#DBD4FA",
+            "$value": "#DBD5F3",
             "css": "--color-atomic-violet-90"
           },
           "95": {
             "$type": "color",
-            "$value": "#F0ECFC",
+            "$value": "#F0EDF9",
             "css": "--color-atomic-violet-95"
           },
           "99": {
             "$type": "color",
-            "$value": "#FBFAFF",
+            "$value": "#FBFAFE",
             "css": "--color-atomic-violet-99"
           },
           "100": {
@@ -851,7 +851,8 @@
             "$value": "#FFFFFF",
             "css": "--color-atomic-violet-100"
           }
-        }
+        },
+        "$description": "Chroma capped at 0.17 on step 50 (2026-09): a/b scaled by 0.775 in OKLab so L and H hold; accents stay below the status hues."
       },
       "neutral": {
         "label": "Neutral",
@@ -1149,62 +1150,62 @@
           },
           "10": {
             "$type": "color",
-            "$value": "#132904",
+            "$value": "#17280D",
             "css": "--color-atomic-lime-10"
           },
           "20": {
             "$type": "color",
-            "$value": "#265108",
+            "$value": "#2F4F1E",
             "css": "--color-atomic-lime-20"
           },
           "30": {
             "$type": "color",
-            "$value": "#3B7C0C",
+            "$value": "#487830",
             "css": "--color-atomic-lime-30"
           },
           "37": {
             "$type": "color",
-            "$value": "#4B9D10",
+            "$value": "#5C993F",
             "css": "--color-atomic-lime-37"
           },
           "40": {
             "$type": "color",
-            "$value": "#51AC11",
+            "$value": "#64A745",
             "css": "--color-atomic-lime-40"
           },
           "50": {
             "$type": "color",
-            "$value": "#63CE18",
+            "$value": "#7AC854",
             "css": "--color-atomic-lime-50"
           },
           "60": {
             "$type": "color",
-            "$value": "#87DB49",
+            "$value": "#96D66E",
             "css": "--color-atomic-lime-60"
           },
           "70": {
             "$type": "color",
-            "$value": "#AAE87D",
+            "$value": "#B4E494",
             "css": "--color-atomic-lime-70"
           },
           "80": {
             "$type": "color",
-            "$value": "#C3F0A3",
+            "$value": "#CAECB2",
             "css": "--color-atomic-lime-80"
           },
           "90": {
             "$type": "color",
-            "$value": "#D9F7C4",
+            "$value": "#DDF4CE",
             "css": "--color-atomic-lime-90"
           },
           "95": {
             "$type": "color",
-            "$value": "#EDFCE2",
+            "$value": "#EFFBE7",
             "css": "--color-atomic-lime-95"
           },
           "99": {
             "$type": "color",
-            "$value": "#FAFEF6",
+            "$value": "#FBFEF7",
             "css": "--color-atomic-lime-99"
           },
           "100": {
@@ -1212,7 +1213,8 @@
             "$value": "#FFFFFF",
             "css": "--color-atomic-lime-100"
           }
-        }
+        },
+        "$description": "Chroma capped at 0.17 on step 50 (2026-09): a/b scaled by 0.765 in OKLab so L and H hold; accents stay below the status hues."
       },
       "cyan": {
         "label": "Cyan",
@@ -1367,62 +1369,62 @@
           },
           "10": {
             "$type": "color",
-            "$value": "#3A0731",
+            "$value": "#360E2E",
             "css": "--color-atomic-pink-10"
           },
           "20": {
             "$type": "color",
-            "$value": "#6F105F",
+            "$value": "#691F5A",
             "css": "--color-atomic-pink-20"
           },
           "30": {
             "$type": "color",
-            "$value": "#A2258D",
+            "$value": "#993787",
             "css": "--color-atomic-pink-30"
           },
           "40": {
             "$type": "color",
-            "$value": "#C645B1",
+            "$value": "#BC54A9",
             "css": "--color-atomic-pink-40"
           },
           "46": {
             "$type": "color",
-            "$value": "#DA58C5",
+            "$value": "#D066BD",
             "css": "--color-atomic-pink-46"
           },
           "50": {
             "$type": "color",
-            "$value": "#E764D1",
+            "$value": "#DC71C9",
             "css": "--color-atomic-pink-50"
           },
           "60": {
             "$type": "color",
-            "$value": "#EE7EDB",
+            "$value": "#E488D4",
             "css": "--color-atomic-pink-60"
           },
           "70": {
             "$type": "color",
-            "$value": "#F59BE6",
+            "$value": "#EDA2E0",
             "css": "--color-atomic-pink-70"
           },
           "80": {
             "$type": "color",
-            "$value": "#F8BCEE",
+            "$value": "#F2C0E9",
             "css": "--color-atomic-pink-80"
           },
           "90": {
             "$type": "color",
-            "$value": "#FAD5F4",
+            "$value": "#F6D7F1",
             "css": "--color-atomic-pink-90"
           },
           "95": {
             "$type": "color",
-            "$value": "#FCEDFA",
+            "$value": "#FAEEF9",
             "css": "--color-atomic-pink-95"
           },
           "99": {
             "$type": "color",
-            "$value": "#FFFAFE",
+            "$value": "#FEFAFE",
             "css": "--color-atomic-pink-99"
           },
           "100": {
@@ -1430,7 +1432,8 @@
             "$value": "#FFFFFF",
             "css": "--color-atomic-pink-100"
           }
-        }
+        },
+        "$description": "Chroma capped at 0.17 on step 50 (2026-09): a/b scaled by 0.833 in OKLab so L and H hold; accents stay below the status hues."
       },
       "purple": {
         "label": "Purple",
@@ -1443,57 +1446,57 @@
           },
           "10": {
             "$type": "color",
-            "$value": "#27083F",
+            "$value": "#250F38",
             "css": "--color-atomic-purple-10"
           },
           "20": {
             "$type": "color",
-            "$value": "#561575",
+            "$value": "#51236A",
             "css": "--color-atomic-purple-20"
           },
           "30": {
             "$type": "color",
-            "$value": "#822AAB",
+            "$value": "#7B3B9C",
             "css": "--color-atomic-purple-30"
           },
           "40": {
             "$type": "color",
-            "$value": "#A744D3",
+            "$value": "#9F55C2",
             "css": "--color-atomic-purple-40"
           },
           "50": {
             "$type": "color",
-            "$value": "#C464F0",
+            "$value": "#BB72DE",
             "css": "--color-atomic-purple-50"
           },
           "60": {
             "$type": "color",
-            "$value": "#CE7FF2",
+            "$value": "#C689E3",
             "css": "--color-atomic-purple-60"
           },
           "70": {
             "$type": "color",
-            "$value": "#D99AF5",
+            "$value": "#D2A1E9",
             "css": "--color-atomic-purple-70"
           },
           "80": {
             "$type": "color",
-            "$value": "#E5BCF8",
+            "$value": "#E0C0F0",
             "css": "--color-atomic-purple-80"
           },
           "90": {
             "$type": "color",
-            "$value": "#F0D7FB",
+            "$value": "#EDD9F6",
             "css": "--color-atomic-purple-90"
           },
           "95": {
             "$type": "color",
-            "$value": "#F8EEFD",
+            "$value": "#F7EFFB",
             "css": "--color-atomic-purple-95"
           },
           "99": {
             "$type": "color",
-            "$value": "#FEFBFF",
+            "$value": "#FEFBFE",
             "css": "--color-atomic-purple-99"
           },
           "100": {
@@ -1501,7 +1504,8 @@
             "$value": "#FFFFFF",
             "css": "--color-atomic-purple-100"
           }
-        }
+        },
+        "$description": "Chroma capped at 0.17 on step 50 (2026-09): a/b scaled by 0.797 in OKLab so L and H hold; accents stay below the status hues."
       },
       "navyShell": {
         "label": "Brand Navy Shell",
@@ -1990,8 +1994,8 @@
         "$type": "color",
         "css": "--color-semantic-accent-background-lime",
         "modes": {
-          "light": "#63CE18",
-          "dark": "#87DB49"
+          "light": "var(--color-atomic-lime-50)",
+          "dark": "var(--color-atomic-lime-60)"
         },
         "origin": "wds-structure-lk-retone"
       },
@@ -2017,8 +2021,8 @@
         "$type": "color",
         "css": "--color-semantic-accent-background-violet",
         "modes": {
-          "light": "#6748E1",
-          "dark": "#7E63E8"
+          "light": "var(--color-atomic-violet-50)",
+          "dark": "var(--color-atomic-violet-60)"
         },
         "origin": "wds-structure-lk-retone"
       },
@@ -2026,8 +2030,8 @@
         "$type": "color",
         "css": "--color-semantic-accent-background-pink",
         "modes": {
-          "light": "#E764D1",
-          "dark": "#EE7EDB"
+          "light": "var(--color-atomic-pink-50)",
+          "dark": "var(--color-atomic-pink-60)"
         },
         "origin": "wds-structure-lk-retone"
       },
@@ -2098,8 +2102,8 @@
         "$type": "color",
         "css": "--color-semantic-accent-background-purple",
         "modes": {
-          "light": "#C464F0",
-          "dark": "#CE7FF2"
+          "light": "var(--color-atomic-purple-50)",
+          "dark": "var(--color-atomic-purple-60)"
         },
         "origin": "wds-structure-lk-retone"
       },
@@ -2107,8 +2111,8 @@
         "$type": "color",
         "css": "--color-semantic-accent-foreground-lime",
         "modes": {
-          "light": "#4B9D10",
-          "dark": "#63CE18"
+          "light": "var(--color-atomic-lime-37)",
+          "dark": "var(--color-atomic-lime-50)"
         },
         "origin": "wds-structure-lk-retone"
       },
@@ -2134,8 +2138,8 @@
         "$type": "color",
         "css": "--color-semantic-accent-foreground-violet",
         "modes": {
-          "light": "#5E3FDB",
-          "dark": "#9E89F0"
+          "light": "var(--color-atomic-violet-45)",
+          "dark": "var(--color-atomic-violet-70)"
         },
         "origin": "wds-structure-lk-retone"
       },
@@ -2143,8 +2147,8 @@
         "$type": "color",
         "css": "--color-semantic-accent-foreground-purple",
         "modes": {
-          "light": "#A744D3",
-          "dark": "#CE7FF2"
+          "light": "var(--color-atomic-purple-40)",
+          "dark": "var(--color-atomic-purple-60)"
         },
         "origin": "wds-structure-lk-retone"
       },
@@ -2152,8 +2156,8 @@
         "$type": "color",
         "css": "--color-semantic-accent-foreground-pink",
         "modes": {
-          "light": "#DA58C5",
-          "dark": "#EE7EDB"
+          "light": "var(--color-atomic-pink-46)",
+          "dark": "var(--color-atomic-pink-60)"
         },
         "origin": "wds-structure-lk-retone"
       },
