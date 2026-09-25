@@ -236,19 +236,19 @@
           "manifest": "apps/docs/package.json",
           "name": "@lk-design-system/lds-core",
           "section": "dependencies",
-          "version": "0.4.1"
+          "version": "0.4.2"
         },
         {
           "manifest": "apps/docs/package.json",
           "name": "@lk-design-system/lds-theme",
           "section": "dependencies",
-          "version": "0.4.1"
+          "version": "0.4.2"
         },
         {
           "manifest": "apps/docs/package.json",
           "name": "@lk-design-system/lds-product",
           "section": "dependencies",
-          "version": "0.4.1"
+          "version": "0.4.2"
         }
       ],
       "scanRoots": [
