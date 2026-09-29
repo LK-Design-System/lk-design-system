@@ -19,7 +19,7 @@ function normalizeIcon(icon, fallbackIcon) {
 
 /**
  * LK ROBOTICS — Callout
- * An emphasized note block with a tonal icon and soft, borderless surface.
+ * An emphasized note block with a tonal icon and soft surface and an optional tonal border.
  * For guidance, tips, and important standing notes in body content.
  *
  * Deliberately outranks Banner in the same tone: block padding instead of bar
@@ -28,9 +28,10 @@ function normalizeIcon(icon, fallbackIcon) {
  * reading column. The two used to differ by 2px, which made them look
  * interchangeable — the rank is now asserted in StatusFeedback.stories.jsx.
  */
-export function Callout({ tone = 'signal', title, headingLevel = false, children, action, icon, density, className, style, ...rest }) {
+export function Callout({ tone = 'signal', variant = 'soft', radius = 'default', title, headingLevel = false, children, action, icon, density, className, style, ...rest }) {
   const resolvedDensity = useResolvedDensity(density, 'comfortable');
   const compact = resolvedDensity === 'compact';
+  const bordered = variant === 'bordered';
   const navy = tone === 'navy';
   const normalizedTone = navy ? 'offline' : normalizeStatusTone(tone);
   const palette = navy
@@ -55,11 +56,13 @@ export function Callout({ tone = 'signal', title, headingLevel = false, children
         minWidth: 0,
         maxWidth: '100%',
         gap: compact ? 'var(--space-3)' : 'var(--space-4)',
-        padding: compact ? 'var(--space-3) var(--space-4)' : 'var(--space-5) var(--space-6)',
+        padding: bordered
+          ? (compact ? 'calc(var(--space-3) - 1px) calc(var(--space-4) - 1px)' : 'calc(var(--space-5) - 1px) calc(var(--space-6) - 1px)')
+          : (compact ? 'var(--space-3) var(--space-4)' : 'var(--space-5) var(--space-6)'),
         boxSizing: 'border-box',
         background: palette.surface,
-        border: 'none',
-        borderRadius: 'var(--radius-xl)',
+        border: bordered ? `1px solid color-mix(in srgb, ${palette.border} 35%, transparent)` : 'none',
+        borderRadius: radius === 'body' ? 'var(--radius-8)' : 'var(--radius-xl)',
         boxShadow: 'none',
         fontFamily: 'var(--font-sans)',
         ...style,

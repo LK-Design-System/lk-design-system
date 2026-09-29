@@ -2,6 +2,15 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.4.3 - 2026-09-29
+
+Paired Robotics release: `0.1.0-rc.53` (unchanged).
+
+### Added
+
+- Callout `variant="bordered"` adds a restrained tonal outline while keeping the existing tint and dimensions.
+- Callout and Blockquote `radius="body"` align compact reading surfaces to the existing 8px radius token.
+
 ## 0.4.2 - 2026-09-25
 
 Paired Robotics release: `0.1.0-rc.52`. Dark-mode fix for inverse surfaces, and the last satellite

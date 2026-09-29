@@ -21,10 +21,10 @@ import React from 'react';
  * ATTRIBUTE takes a URL, so that is exposed separately as `citeUrl`; the legacy
  * `cite` prop is still accepted as an alias for `attribution`.
  */
-export function Blockquote({ children, attribution, cite, citeUrl, style, ...rest }) {
+export function Blockquote({ children, attribution, cite, citeUrl, radius = 'default', style, ...rest }) {
   const source = attribution ?? cite;
   const quoteStyle = { fontSize: 'var(--headline2-size)', lineHeight: 1.7, letterSpacing: 0, color: 'var(--color-semantic-label-normal)', wordBreak: 'keep-all' };
-  const frameStyle = { margin: 0, padding: 'var(--space-3) var(--space-4)', background: 'var(--color-semantic-fill-alternative)', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-sans)', ...style };
+  const frameStyle = { margin: 0, padding: 'var(--space-3) var(--space-4)', background: 'var(--color-semantic-fill-alternative)', borderRadius: radius === 'body' ? 'var(--radius-8)' : 'var(--radius-sm)', fontFamily: 'var(--font-sans)', ...style };
 
   if (source == null) {
     return (

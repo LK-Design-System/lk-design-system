@@ -7,8 +7,10 @@ export interface BlockquoteProps extends Omit<React.HTMLAttributes<HTMLElement>,
   cite?: React.ReactNode;
   /** HTML `cite` 속성에 들어가는 출처 문서 URL. */
   citeUrl?: string;
+  /** 본문 박스는 body(8px), default는 기존 컴포넌트 모서리를 유지합니다. @default "default" */
+  radius?: 'default' | 'body';
   children?: React.ReactNode;
 }
 
-/** 시그널 잉크 좌측 룰 + 선택적 출처가 있는 인용(figure/figcaption). */
+/** 채움 표면과 선택적 출처가 있는 인용(figure/figcaption). */
 export function Blockquote(props: BlockquoteProps): React.JSX.Element;

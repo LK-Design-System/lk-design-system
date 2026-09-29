@@ -23,9 +23,10 @@ function normalizeIcon(icon, fallbackIcon) {
     style: { display: "block", ...icon.props.style }
   });
 }
-function Callout({ tone = "signal", title, headingLevel = false, children, action, icon, density, className, style, ...rest }) {
+function Callout({ tone = "signal", variant = "soft", radius = "default", title, headingLevel = false, children, action, icon, density, className, style, ...rest }) {
   const resolvedDensity = _chunkZAM5AMCOcjs.useResolvedDensity.call(void 0, density, "comfortable");
   const compact = resolvedDensity === "compact";
+  const bordered = variant === "bordered";
   const navy = tone === "navy";
   const normalizedTone = navy ? "offline" : _chunkMBKOVB2Kcjs.normalizeStatusTone.call(void 0, tone);
   const palette = navy ? {
@@ -49,11 +50,11 @@ function Callout({ tone = "signal", title, headingLevel = false, children, actio
         minWidth: 0,
         maxWidth: "100%",
         gap: compact ? "var(--space-3)" : "var(--space-4)",
-        padding: compact ? "var(--space-3) var(--space-4)" : "var(--space-5) var(--space-6)",
+        padding: bordered ? compact ? "calc(var(--space-3) - 1px) calc(var(--space-4) - 1px)" : "calc(var(--space-5) - 1px) calc(var(--space-6) - 1px)" : compact ? "var(--space-3) var(--space-4)" : "var(--space-5) var(--space-6)",
         boxSizing: "border-box",
         background: palette.surface,
-        border: "none",
-        borderRadius: "var(--radius-xl)",
+        border: bordered ? `1px solid color-mix(in srgb, ${palette.border} 35%, transparent)` : "none",
+        borderRadius: radius === "body" ? "var(--radius-8)" : "var(--radius-xl)",
         boxShadow: "none",
         fontFamily: "var(--font-sans)",
         ...style
@@ -100,4 +101,4 @@ function Callout({ tone = "signal", title, headingLevel = false, children, actio
 
 
 exports.Callout = Callout;
-//# sourceMappingURL=chunk-MB6GA2I7.cjs.map
+//# sourceMappingURL=chunk-PIKGGU2Z.cjs.map

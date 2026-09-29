@@ -1,6 +1,6 @@
 import React from 'react';
 import { within } from 'storybook/test';
-import { Banner, Callout, TextButton } from '../src/index.js';
+import { Banner, Blockquote, Callout, TextButton } from '../src/index.js';
 import { BannerCard as BannerCardStory } from './SelectionStatus.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -271,3 +271,44 @@ export const BannerSurfaceVariants = {
 };
 
 export const BannerCard = { ...BannerCardStory, name: 'Banner card parity', tags: ['!dev', 'visual-parity'] };
+
+export const CalloutVariants = {
+  name: '콜아웃 테두리',
+  parameters: storyDescription('배경으로 구분하는 기본형과 얇은 톤 테두리를 더한 변형입니다. 제목과 본문의 크기, 콘텐츠 위치는 같습니다.'),
+  render: () => (
+    <div style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 960 }}>
+      {['comfortable', 'compact'].map((density) => (
+        <section key={density} style={{ display: 'grid', gap: 'var(--space-3)' }}>
+          <h2 style={{ margin: 0, fontSize: 'var(--body1-size)' }}>{density === 'compact' ? '좁은 영역 · compact' : '본문 영역 · comfortable'}</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: 'var(--space-4)', maxWidth: density === 'compact' ? 640 : 960 }}>
+            {['soft', 'bordered'].map((variant) => (
+              <div key={variant} style={{ display: 'grid', gap: 'var(--space-3)' }}>
+                <h3 style={{ margin: 0, fontSize: 'var(--label1-size)' }}>{variant === 'soft' ? '기본형' : '테두리형'}</h3>
+                {['signal', 'positive', 'cautionary', 'negative', 'navy'].map((tone) => (
+                  <Callout key={tone} tone={tone} variant={variant} density={density} title="편집용 파일이 필요한 경우">요청문에 편집용 파일도 함께 만들어 달라고 적습니다.</Callout>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  ),
+};
+
+export const BodyCorners = {
+  name: '본문 박스 모서리',
+  parameters: storyDescription('같은 본문 열의 인용과 안내에는 radius="body"를 함께 지정합니다. 기본 모서리와 8px 본문 모서리를 비교합니다.'),
+  render: () => (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: 'var(--space-6)', maxWidth: 960 }}>
+      {['default', 'body'].map((radius) => (
+        <section key={radius} style={{ display: 'grid', alignContent: 'start', gap: 'var(--space-4)' }}>
+          <h2 style={{ margin: 0, fontSize: 'var(--body1-size)' }}>{radius === 'body' ? '본문 · 8px' : '기존 기본값'}</h2>
+          <Blockquote radius={radius}>확인한 시안대로 매뉴얼을 완성해 주세요.</Blockquote>
+          <Blockquote radius={radius} attribution="문서 작성자">내용과 화면을 함께 확인합니다.</Blockquote>
+          <Callout radius={radius} variant="bordered" density="compact" title="편집용 파일이 필요한 경우">요청문에 편집용 파일도 함께 만들어 달라고 적습니다.</Callout>
+        </section>
+      ))}
+    </div>
+  ),
+};

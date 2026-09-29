@@ -28,6 +28,7 @@
 | action | 안내와 직접 연결된 단일 저강조 다음 행동. |
 | closeLabel | 닫기 버튼의 접근성 레이블. @default "닫기" |
 | icon | tone별 기본 아이콘을 교체합니다. 생략하거나 null을 전달해도 기본 아이콘은 유지됩니다. |
+| radius | 본문 박스는 body(8px), default는 기존 컴포넌트 모서리를 유지합니다. @default "default" |
 
 ## Properties
 
@@ -41,10 +42,12 @@
 | `onClose` | `() = void` | No | 닫기 버튼 표시; 클릭 시 호출. |
 | `closeLabel` | `string` | No | 닫기 버튼의 접근성 레이블. @default "닫기" |
 | `tone` | `'signal' \| 'positive' \| 'cautionary' \| 'negative' \| 'navy'` | No |  |
+| `variant` | `'soft' \| 'bordered'` | No | soft는 tint 표면, bordered는 같은 표면에 1px 톤 테두리를 추가합니다. @default "soft" |
 | `title` | `React.ReactNode` | No |  |
 | `headingLevel` | `2 \| 3 \| 4 \| 5 \| 6 \| false` | No | 문서 구조에 맞는 제목 레벨. 기본 false는 기존 비-heading title을 유지합니다. @default false |
 | `density` | `'comfortable' \| 'compact'` | No | 내부 여백과 본문 행간. compact component scope를 상속하며 명시값이 우선합니다. |
 | `icon` | `React.ReactElement \| null` | No | tone별 기본 아이콘을 교체합니다. 생략하거나 null을 전달해도 기본 아이콘은 유지됩니다. |
+| `radius` | `'default' \| 'body'` | No | 본문 박스는 body(8px), default는 기존 컴포넌트 모서리를 유지합니다. @default "default" |
 | `children` | `React.ReactNode` | No |  |
 | `action` | `React.ReactNode` | No | 안내와 직접 연결된 단일 저강조 다음 행동. |
 
@@ -54,6 +57,7 @@
 | --- | --- |
 | tone | 톤. canonical은 signal · positive · cautionary · negative이며 info · success · warning · error는 canonicalise 이전 소비자를 위해 동결된 별칭입니다(같은 표면으로 정규화되며 새 코드에서는 쓰지 않습니다). 기본값은 canonical 표기입니다 — 이전 기본값 "info"는 같은 표면으로 정규화되던 별칭 표기였습니다. |
 | variant | 표면 배치. embedded는 부모 패널 내부의 edge-to-edge 상태 띠입니다. @default "standalone" |
+| variant | soft는 tint 표면, bordered는 같은 표면에 1px 톤 테두리를 추가합니다. @default "soft" |
 
 ## Behavior and interaction
 
@@ -126,6 +130,7 @@
 - `--label1-line`
 - `--label1-reading-line`
 - `--label1-size`
+- `--radius-8`
 - `--radius-lg`
 - `--radius-xl`
 - `--space-0-5`

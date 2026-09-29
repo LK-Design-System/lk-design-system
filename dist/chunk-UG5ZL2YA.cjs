@@ -3,10 +3,10 @@
 // components/content/Blockquote.jsx
 var _react = require('react'); var _react2 = _interopRequireDefault(_react);
 var _jsxruntime = require('react/jsx-runtime');
-function Blockquote({ children, attribution, cite, citeUrl, style, ...rest }) {
+function Blockquote({ children, attribution, cite, citeUrl, radius = "default", style, ...rest }) {
   const source = _nullishCoalesce(attribution, () => ( cite));
   const quoteStyle = { fontSize: "var(--headline2-size)", lineHeight: 1.7, letterSpacing: 0, color: "var(--color-semantic-label-normal)", wordBreak: "keep-all" };
-  const frameStyle = { margin: 0, padding: "var(--space-3) var(--space-4)", background: "var(--color-semantic-fill-alternative)", borderRadius: "var(--radius-sm)", fontFamily: "var(--font-sans)", ...style };
+  const frameStyle = { margin: 0, padding: "var(--space-3) var(--space-4)", background: "var(--color-semantic-fill-alternative)", borderRadius: radius === "body" ? "var(--radius-8)" : "var(--radius-sm)", fontFamily: "var(--font-sans)", ...style };
   if (source == null) {
     return /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "blockquote", { cite: citeUrl, style: frameStyle, ...rest, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { style: quoteStyle, children }) });
   }
@@ -22,4 +22,4 @@ function Blockquote({ children, attribution, cite, citeUrl, style, ...rest }) {
 
 
 exports.Blockquote = Blockquote;
-//# sourceMappingURL=chunk-XX5J7YKU.cjs.map
+//# sourceMappingURL=chunk-UG5ZL2YA.cjs.map
