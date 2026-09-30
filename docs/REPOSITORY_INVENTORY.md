@@ -14,10 +14,10 @@ Storybook의 732개 스토리 역할·공개 여부·소유 컴포넌트와 196�
 
 ## 패키지 범위
 
-- 워크스페이스 orchestrator: `@lk-design-system/lds-workspace@0.4.2` · `private: true`
-- Core: `@lk-design-system/lds-core@0.4.2` · source entry 94개 · named export 95개
-- Theme: `@lk-design-system/lds-theme@0.4.2` · source entry 4개 · named export 8개
-- Product: `@lk-design-system/lds-product@0.4.2` · source entry 123개 · named export 131개
+- 워크스페이스 orchestrator: `@lk-design-system/lds-workspace@0.4.3` · `private: true`
+- Core: `@lk-design-system/lds-core@0.4.3` · source entry 94개 · named export 95개
+- Theme: `@lk-design-system/lds-theme@0.4.3` · source entry 4개 · named export 8개
+- Product: `@lk-design-system/lds-product@0.4.3` · source entry 123개 · named export 131개
 - 로컬 owner-package canonical unique surface: source entry 212개 · named export 225개
 - Product deprecated compatibility projection: source entry 9개 · named export 9개
 - 외부 Robotics: `@lk-design-system/lds-robotics-ui@0.1.0-rc.53` · source entry 23개 · named export 54개
@@ -54,12 +54,12 @@ WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`
 
 - 현재 React component entry export: 212개
 - 공개 named export: 225개
-- Storybook 전체 story: 760개
-- Storybook public story: 525개
+- Storybook 전체 story: 762개
+- Storybook public story: 527개
 - Storybook hidden story: 235개
 - 숨김 visual parity story: 101개
-- visual inventory React story: 760개
-- 접근성 guard 검사 대상 implementation story: 760개
+- visual inventory React story: 762개
+- 접근성 guard 검사 대상 implementation story: 762개
 
 ## 생성 영역
 
