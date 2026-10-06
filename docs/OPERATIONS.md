@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Operations reference |
-| Status | Active (2026-08-23) |
+| Status | Active (2026-10-05) |
 | Owner | Design system owner · Frontend platform |
 | 범위 | 릴리스, 위성 관리, 정상 상태의 정의 |
 | 관련 | [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) (이 문서를 만든 계획) · [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) (구조 계약) |
@@ -18,13 +18,19 @@
 
 ```
 코어 워크스페이스 (이 저장소)          위성 (독립 저장소)
-  packages/core     토큰·기초           robotics-ui   도메인 팩 · 유일하게 성숙
-  packages/theme    LK 테마             slides-ui     도메인 팩 · 슬라이드 14종
-  packages/product  제품 공통 확장       motion        능력 레이어 · 영상 렌더
-                                        (slides-ui의 슬라이드는 14종이다 —
-                                         DeckViewer 등 상영 런타임은 별도)
-                                        3d            능력 레이어 · 선행 구축
+  packages/core     토큰·기초           robotics-ui   로봇 DOM·SVG·2D 도메인 팩
+  packages/theme    LK 테마             slides-ui     슬라이드·상영 런타임
+  packages/product  제품 공통 확장       motion        결정론적 영상 렌더
+                                        3d            공간·렌더러 확장
 ```
+
+Slides의 레이아웃과 상영 런타임은 별도이며, 목록과 개수는 해당 `catalogue.json`이 소유한다.
+시리즈별 검증과 남은 릴리스·제품 적용 경계는
+[`LDS_SERIES_COMPLETENESS_AUDIT.json`](references/quality/LDS_SERIES_COMPLETENESS_AUDIT.json)의 관측을 확인한다.
+2026-10-05에는 좁은 화면·테마 회귀 수정과 해당 검증을 마쳤고, IA의 변경된 20개 페이지와
+신규 2개 스토리 분류 판정도 사용자 승인으로 닫았다. `check:storybook-ia`는 200개 페이지·
+762개 스토리와 stale review 0개를 검증한다. 에이전트 점검 근거와 사용자 승인 기록은
+같은 JSON의 `informationArchitectureReview`에 따로 기록한다.
 
 **셋은 한 저장소에 있고 항상 같이 릴리스된다.** 서로를 정확히 핀하므로
 버전이 어긋나면 설치가 깨진다. 위성은 반대로 제각각 릴리스되고, 따로 죽을
@@ -34,6 +40,21 @@
 [`references/SATELLITE_PIN_REPORT.md`](references/SATELLITE_PIN_REPORT.md)에
 있다. 이 리포트는 손으로 쓰지 않는다 — `npm run report:satellite-pins`가
 위성 저장소를 읽어 생성한다.
+
+### 원격 상태와 push 전 확인
+
+`npm run health:repositories -- --output docs/references/quality/LDS_REPOSITORY_HEALTH.json`은
+다섯 저장소의 현재 remote-main SHA에 속한 CI/Pages와 제품의 실제 package 핀을 읽는다.
+조회 시점과 SHA가 다른 옛 green을 현재 성공으로 대체하지 않는다. 제품 핀 관측은 기존
+adoption approval이나 deployment를 승격하지 않는다.
+
+`node scripts/lds-maintenance.mjs install-hooks`는 현재 workspace의 다섯 LDS checkout에
+`.githooks/pre-push`를 설치한다. 기존 훅 설정/내용이 다르면 보존하고 중단한다. LDS 본체
+checkout이 자매 옆에 있어야 하며, 설치는 머신별 Git local config이므로 새 checkout마다
+실행한다. `npm run check:pre-push` 또는 `node scripts/lds-maintenance.mjs check --all`로
+push 없이 같은 검사를 실행한다. 기존 정적 검사만 재사용하며 전체 빌드·브라우저 sweep은 CI에 둔다.
+110초 예산을 넘거나 필수 검사가 실패하면 push를 차단한다. 설치/검사 성공은 원격 push·태그·
+패키지 발행에 대한 사용자의 행위별 승인을 대신하지 않는다.
 
 ## 2. 릴리스
 

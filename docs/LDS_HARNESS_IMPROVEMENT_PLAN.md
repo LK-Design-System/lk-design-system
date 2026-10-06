@@ -3,10 +3,10 @@
 | Field | Value |
 | --- | --- |
 | Type | Plan/Proposal |
-| Status | Active — H0 진행 중 |
+| Status | Active — H0 재검증 완료 · H1 부분 구현 |
 | Owner | Design system owner · Frontend platform |
 | Required approvers | Design system owner (강제 시점·역할 구조 변경) · 각 repo owner (해당 repo의 훅·CI 변경) |
-| Last reviewed | 2026-09-24 |
+| Last reviewed | 2026-10-05 |
 | Scope | LDS 저장소군 — core(`lk-design-system`), `lk-design-system-robotics`, `-3d`, `-slides`, `-motion`. `-console-pastel`은 보관 자산이라 범위 밖 |
 | Related | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) R7 · [`OPERATING_MODEL.md`](OPERATING_MODEL.md) · [`COMPONENT_WORKFLOW.md`](COMPONENT_WORKFLOW.md) · [`../AGENTS.md`](../AGENTS.md) |
 | Roadmap | R7 evidence와 운영 건강성의 하위 계획. 실행 순서와 우선순위는 로드맵이 소유한다 |
@@ -14,6 +14,27 @@
 이 문서는 LDS를 **DS 본체 · 계약 · 하네스**로 나눠 본 감사(2026-09-24)의 결론과, 하네스를
 다음 수준으로 올리기 위한 단계·종료 조건·지표를 소유한다. 감사 수치는 그 날짜의 관찰이며
 현재 값의 정본이 아니다.
+
+## 현재 재검증 — 2026-10-05
+
+원격 `main`의 exact SHA·필수 workflow·실제 제품 핀은
+[`LDS_REPOSITORY_HEALTH.json`](references/quality/LDS_REPOSITORY_HEALTH.json)이 소유한다.
+`node scripts/lds-maintenance.mjs health --output <관측 파일>`로 다시 조회한다. 옛 SHA의 green은
+현재 `main`의 성공으로 인정하지 않고, 누락·진행 중·실패를 각각 분리한다.
+
+| 단계 | 현재 판정 | 근거와 남은 종료 조건 |
+| --- | --- | --- |
+| H0 | 재검증 완료 | 다섯 main의 필수 검사와 Pages(해당 repo)가 모두 green. 3D README는 manifest를 가리키고, workflow pin 검사·8개 fixed group·`evidence:check`가 존재한다. 원감사의 "스킬 peer 범위"는 현행 3D tree에 해당 스킬이 없으므로 독립 유지 대상이 아니다; 실제 peer 범위는 package manifest가 소유한다. |
+| H1 | 부분 구현 | `lds-maintenance.mjs`가 CI를 조회하고 기존 정적 검사를 110초 예산·실패 즉시 중단으로 실행한다. `.githooks/pre-push`는 이 경로를 사용한다. 실패 알림의 실제 도착·주기 감시의 운영 증거는 별도이며 성공으로 간주하지 않는다. |
+| H2 | 미완료 | 선언별 검사·증거·사람 판단 배정의 전수 register가 없다. |
+| H3 | 미완료 | 독립 reviewer 산출물을 거친 변경의 종료 증거가 없다. |
+| H4 | 부분 구현 | 3D 재생성 evidence diff는 검사됐다. 덱 전체의 조합 일관성·다른 사각지대의 종료 증거는 별도다. |
+| H5 | 미완료 | 두 분기 연속 자체 감사 종료 증거가 없다. |
+
+이 관측은 기존 소비자 승인을 수정하지 않는다. 제품 `main`의 source나 package가 달라지면
+`different-source-not-reverified` 또는 `requires-reverification`으로 표시하고, 원 승인·배포 판정은
+보존한다. 최신 제품 적용은 Portal의 로봇 workspace 경계에서 다시 검증하며, Web Viz는
+maintenance-only reference, Robot Ops는 edge runtime/이전 frontend 채택의 provenance로 취급한다.
 
 ## 1. 세 층 모델
 

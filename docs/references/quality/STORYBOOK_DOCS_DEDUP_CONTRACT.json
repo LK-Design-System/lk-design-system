@@ -1,12 +1,12 @@
 {
   "version": 1,
   "expected": {
-    "stories": 760,
+    "stories": 762,
     "docs": 199,
-    "publicStories": 525,
+    "publicStories": 527,
     "hiddenStories": 235,
-    "storyIdsSha256": "1a85590e284af3cdc851103f65d4469739b365aaf879d804fe7a93d4fdb8e16e",
-    "visibilitySha256": "fe514e89abc4a35de36e284764338ac397d03f48198e96200697de4bb681d110"
+    "storyIdsSha256": "cb8ea83ca9fdb6a5f46d29a3915cc261f66bd3ad462fb36c15b3a8a9882d110a",
+    "visibilitySha256": "48def07f91bac1ae27ec84446fdeb9cf4233975ac15c57508d4cc0ca1427d8e1"
   },
   "allowedGuideOmissions": [],
   "canonicalDocs": [
@@ -44,5 +44,16 @@
       },
       "play": true
     }
-  ]
+  ],
+  "reviewedExtension": {
+    "observedAt": "2026-10-05",
+    "retainedStoryIds": 760,
+    "removedStoryIds": [],
+    "changedExistingVisibility": [],
+    "addedStoryIds": [
+      "lds-core-components-status-notices-and-callouts--body-corners",
+      "lds-core-components-status-notices-and-callouts--callout-variants"
+    ],
+    "reason": "Two existing Core Callout/Blockquote variant specimens introduced on main after the previous 760-story census. Their public role-prefixed names and purpose descriptions are reviewed separately."
+  }
 }

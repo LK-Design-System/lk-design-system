@@ -5,7 +5,7 @@
 | Type | Documentation index |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-08-23 |
+| Last reviewed | 2026-10-05 |
 
 이 문서는 `docs/`의 공식 탐색 진입점이다. 문서가 충돌하면 아래 source-of-truth 순서와 각 문서의 `Type`·`Status`를 기준으로 판단한다.
 
@@ -92,11 +92,13 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 | Document | Update source |
 | --- | --- |
 | [`LDS_ROADMAP.md`](LDS_ROADMAP.md) | 현재 고도화 우선순위, 의존 순서, owner와 종료 gate; release/consumer evidence 변경 시 검토 |
+| [`references/quality/LDS_REPOSITORY_HEALTH.json`](references/quality/LDS_REPOSITORY_HEALTH.json) | `npm run health:repositories` — 관측 시점의 remote-main CI와 제품 실제 핀; 역사적 adoption approval은 보존 |
+| [`references/quality/LDS_SERIES_COMPLETENESS_AUDIT.json`](references/quality/LDS_SERIES_COMPLETENESS_AUDIT.json) | 2026-10-05 시리즈별 source·릴리스·대표 wide/narrow 화면 판정과 로컬 수정 검증; 전체 시각 인증이나 제품 적용 승격은 아님 |
 | [`REPOSITORY_INVENTORY.md`](REPOSITORY_INVENTORY.md) | `npm run report:inventory`, `npm run check:inventory` |
 | [`VISUAL_PARITY_LEDGER.md`](VISUAL_PARITY_LEDGER.md) | WDS evidence와 visual parity guards |
 | [`DEPRECATIONS.md`](DEPRECATIONS.md) | generated: `npm run report:deprecations` |
 | [`PRODUCT_FRONTEND_COVERAGE.md`](PRODUCT_FRONTEND_COVERAGE.md) | product source pins와 `check:product-frontends` |
-| [`references/adoption/LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) | current Portal/Web Viz package pins와 package release·consumer stage·deployment의 독립 판정, evidence freshness; `npm run check:adoption-registry` |
+| [`references/adoption/LDS_CONSUMER_REGISTRY.json`](references/adoption/LDS_CONSUMER_REGISTRY.json) | 승인된 exact source/package의 historical promotion 근거와 독립 deployment 판정; 현행 main 핀 관측은 health snapshot과 비교하며 `npm run check:adoption-registry`로 원 근거 검증 |
 | [`references/architecture/DENSITY_COVERAGE_CONTRACT.json`](references/architecture/DENSITY_COVERAGE_CONTRACT.json) | 모든 public component의 density 분류와 profile-aware coverage; `npm run check:density` |
 | [`references/architecture/R3B_OWNER_API_DECISIONS.json`](references/architecture/R3B_OWNER_API_DECISIONS.json) | R3B `move-now | stay | defer` owner/API 결정과 `0.1.x` compatibility window; `npm run check:layers` |
 | [`references/visual/EXPRESSION_PROFILE_MATRIX.json`](references/visual/EXPRESSION_PROFILE_MATRIX.json) | `default|ops × light|dark × normal|320px × 4 stories` 32-capture visual evidence; `npm run check:expression-profile-visual` |

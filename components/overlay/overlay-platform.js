@@ -82,16 +82,21 @@ function inheritedPortalScope(anchor, runtime) {
   const hostTheme = themeHost?.getAttribute?.('data-theme');
   const hostProfile = profileHost?.getAttribute?.('data-lds-profile')
     ?? PROFILE_SCOPE_CLASSES.find((name) => profileHost?.classList?.contains(name))?.replace('lds-profile-', '');
-  const explicitTheme = themeHost && themeHost !== runtime.scopeTarget
+  // Provider cleanup temporarily removes its DOM scope before child layout
+  // effects run. An ancestor above that target is not a local override; retain
+  // the runtime choice while still honoring explicit scopes inside the target.
+  const isLocalScope = (host) => host && host !== runtime.scopeTarget
+    && (!runtime.scopeTarget || !host.contains?.(runtime.scopeTarget));
+  const explicitTheme = isLocalScope(themeHost)
     ? hostTheme
     : runtime.colorScheme ?? hostTheme;
-  const explicitProfile = profileHost && profileHost !== runtime.scopeTarget
+  const explicitProfile = isLocalScope(profileHost)
     ? hostProfile
     : runtime.profile ?? hostProfile;
-  const themeClass = themeHost && themeHost !== runtime.scopeTarget
+  const themeClass = isLocalScope(themeHost)
     ? THEME_SCOPE_CLASSES.find((name) => themeHost.classList?.contains(name))
     : undefined;
-  const profileClass = profileHost && profileHost !== runtime.scopeTarget
+  const profileClass = isLocalScope(profileHost)
     ? PROFILE_SCOPE_CLASSES.find((name) => profileHost.classList?.contains(name))
     : undefined;
   return {
@@ -99,7 +104,7 @@ function inheritedPortalScope(anchor, runtime) {
     themeClass,
     profile: explicitProfile || undefined,
     profileClass,
-    direction: directionHost && directionHost !== runtime.scopeTarget
+    direction: isLocalScope(directionHost)
       ? directionHost.getAttribute?.('dir')
       : runtime.direction ?? directionHost?.getAttribute?.('dir'),
   };

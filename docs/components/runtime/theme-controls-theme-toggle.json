@@ -103,8 +103,8 @@
       "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
     },
     {
-      "subject": "--color-semantic-label-alternative",
-      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+      "subject": "--color-semantic-label-neutral",
+      "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
     },
     {
       "subject": "--color-semantic-line-normal-normal",
@@ -112,7 +112,9 @@
     }
   ],
   "responsive": [],
-  "contentGuidance": [],
+  "contentGuidance": [
+    "미선택 항목도 실행 가능한 선택지이므로 SegmentedControl과 같은 label-neutral 전경을 사용합니다. 선택 항목은 기존 primary 전경과 elevated 배경으로 구분합니다. 테마를 중첩할 때 대상 표면에도 semantic 배경·전경을 적용하고, 열린 Portal의 Dark → Light → Dark 왕복과 RTL 상속을 함께 확인합니다."
+  ],
   "accessibility": [],
   "exceptions": [],
   "related": [
@@ -154,7 +156,7 @@
   "tokens": [
     "--color-semantic-background-elevated-normal",
     "--color-semantic-fill-normal",
-    "--color-semantic-label-alternative",
+    "--color-semantic-label-neutral",
     "--color-semantic-line-normal-normal",
     "--color-semantic-primary-normal",
     "--component-button-transition",
@@ -197,7 +199,7 @@
     "behavior": "evidence",
     "quantitativeRules": "evidence",
     "responsive": "omitted-no-evidence",
-    "contentGuidance": "omitted-no-evidence",
+    "contentGuidance": "evidence",
     "accessibility": "omitted-no-evidence",
     "exceptions": "omitted-no-evidence",
     "related": "evidence",

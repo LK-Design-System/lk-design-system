@@ -10,6 +10,7 @@
     "Callout"
   ],
   "supportingComponents": [
+    "Blockquote",
     "TextButton"
   ],
   "purpose": "시스템 변화와 선택적 행동을 알려야 할 때는 Banner가, 본문 맥락에 남는 절차·주의에는 Callout이 적합합니다. 짧게 사라지는 완료 피드백에는 이 패턴을 사용하지 말고 Toast 또는 Snackbar를 사용하세요.",
@@ -221,6 +222,10 @@
       "relationship": "같은 페이지가 소유"
     },
     {
+      "component": "Blockquote",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
       "component": "TextButton",
       "relationship": "대표 시나리오에서 조합"
     },
@@ -291,6 +296,16 @@
       {
         "id": "lds-core-components-status-notices-and-callouts--banner-surface-variants",
         "name": "변형·상태 · 독립형과 결합형 안내",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-core-components-status-notices-and-callouts--body-corners",
+        "name": "변형·상태 · 본문 박스 모서리",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-core-components-status-notices-and-callouts--callout-variants",
+        "name": "변형·상태 · 콜아웃 테두리",
         "role": "variants-states"
       }
     ],

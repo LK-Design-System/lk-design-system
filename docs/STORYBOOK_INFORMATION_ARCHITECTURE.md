@@ -5,17 +5,17 @@
 | Type | Stable contract and current audit summary |
 | Status | Current |
 | Owner | Storybook information-architecture owner |
-| Last reviewed | 2026-08-22 |
+| Last reviewed | 2026-10-05 census, agent recheck and human-approved IA classification |
 | Machine-readable source | `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json` |
 
-Current generated census (2026-09-17): 200개 페이지와 760개 스토리. The machine-readable audit is authoritative for public/hidden visibility and review status.
+Current generated census (2026-10-05): 200개 페이지와 762개 스토리. The machine-readable audit is authoritative for public/hidden visibility and review status.
 
-- 공개 스토리: 525개
+- 공개 스토리: 527개
 - 숨김 스토리: 235개
 - 숨김 visual parity: 101개
 - 숨김 internal contract: 130개
-- 검토 완료 페이지: 200/200개
-- 검토 완료 스토리: 760/760개
+- 검토 완료 페이지 200/200개, 스토리 762/762개
+- 현재 소스 해시와 일치하는 페이지 검토: 200/200개; stale review 0개
 
 ## Operations Dashboard pattern group
 
@@ -25,27 +25,27 @@ Current generated census (2026-09-17): 200개 페이지와 760개 스토리. The
 
 ## 현재 기준선
 
-2026-09-17 현재 소스에서 재생성한 정적 빌드 기준으로 200개 페이지와 760개 스토리가 있다. audience page 199개는 `keep`, expression-profile 전용 machine fixture 1개는 `hide`다.
+2026-10-05 현재 소스에서 재생성한 정적 빌드 기준으로 200개 페이지와 762개 스토리가 있다. audience page 199개는 `keep`, expression-profile 전용 machine fixture 1개는 `hide`다.
 
-- 공개 스토리: 525개
+- 공개 스토리: 527개
 - 숨김 스토리: 235개
 - 숨김 visual parity: 101개
 - 숨김 internal contract: 130개
-- 검토 완료 페이지 200/200개, 스토리 760/760개다. 페이지별 source hash와 신규 스토리 검토는 감사 원장에 남기며, `check:storybook-ia`가 소유권·공개 여부·이름·설명과 함께 회귀를 막는다.
-- Component 문서 시스템은 public component entry 208개와 named export 221개를 전수 추적하고, 177개 evidence-only 결정 가이드를 `docs/components/guides/*.md`와 `llms.txt`로 생성한다. Storybook의 Docs 탭에는 사용 판단 · Properties · Accessibility · Tokens만 렌더링한다. 전체 카탈로그와 플랫폼 현황은 Storybook 운영 화면이 아니라 생성 문서 `COMPONENT_REFERENCE.md`와 `PROGRESS_BOARD.md`가 소유한다.
-- 2026-07-26 Docs와 Canvas의 책임을 분리했다. Docs는 Storybook 제목·설명과 Foundation·Component 또는 Pattern의 결정 가이드만 싣고, `<DocsStory>`·`<Primary>`·`<Stories>`·`<Controls>`를 렌더링하지 않는다. 스토리 specimen, args, controls와 play lifecycle은 각 Canvas 엔트리에만 남는다. `check:docs-surface`는 생성된 Docs 경로를 전수 감사하고, 문장 hash 원장은 191개 primary story 설명을 검증한다.
+- 기존 760개 story id와 공개·숨김 여부는 모두 보존되었다. 추가된 `BodyCorners`와 `CalloutVariants`는 Notices and Callouts의 `variants-states` 공개 예제이며 역할 접두어와 목적 설명을 갖춘다. 사용자는 2026-10-05 변경된 20개 페이지의 owner·disposition 유지와 신규 2개 스토리의 공개 역할 판정안을 명시적으로 승인했다. 에이전트 점검 근거와 사용자 승인 기록은 [`LDS_SERIES_COMPLETENESS_AUDIT.json`](references/quality/LDS_SERIES_COMPLETENESS_AUDIT.json)의 `informationArchitectureReview`에 있으며, `check:storybook-ia`가 현재 200개 페이지·762개 스토리의 역할·분류와 source hash를 검증한다.
+- Component 문서 시스템은 public component entry 212개와 named export 225개를 전수 추적하고, 181개 evidence-only 결정 가이드를 `docs/components/guides/*.md`와 `llms.txt`로 생성한다. Storybook의 Docs 탭에는 사용 판단 · Properties · Accessibility · Tokens만 렌더링한다. 전체 카탈로그와 플랫폼 현황은 Storybook 운영 화면이 아니라 생성 문서 `COMPONENT_REFERENCE.md`와 `PROGRESS_BOARD.md`가 소유한다.
+- 2026-07-26 Docs와 Canvas의 책임을 분리했다. Docs는 Storybook 제목·설명과 Foundation·Component 또는 Pattern의 결정 가이드만 싣고, `<DocsStory>`·`<Primary>`·`<Stories>`·`<Controls>`를 렌더링하지 않는다. 스토리 specimen, args, controls와 play lifecycle은 각 Canvas 엔트리에만 남는다. `check:docs-surface`는 생성된 Docs 경로를 전수 감사하고, 문장 hash 원장은 195개 primary story 설명을 검증한다.
 - 시각 specimen이 없는 문서 전용 Foundation은 sidebar에서 Docs를 정식 진입점으로 사용한다. `Design Token`은 저장된 이전 Canvas URL도 Docs로 정규화하고, 첫 화면에서 `Primitive → Semantic → Component → Runtime projection` 계층과 상황별 선택 기준을 먼저 보여 준다. 숨김 CSF story는 Autodocs 생성과 검증만 담당하며 직접 iframe에서는 정식 Docs 링크를 제공한다. Storybook의 제품 온보딩 체크리스트는 LDS 탐색과 경쟁하므로 manager에서 비활성화한다. 이 결정은 Storybook의 [docs-only tag 계약](https://storybook.js.org/docs/writing-stories/tags#docs-only-stories)과 [onboarding feature 설정](https://storybook.js.org/docs/api/main-config/main-config-features)을 따른다.
-- 생성기의 generic fallback을 삭제하고 누락된 근거를 `omitted-no-evidence`로 드러냈다. 현재 177개 가이드의 평균 중복 prose는 2%, 60% 초과 페이지는 0개이며 `STORYBOOK_GUIDE_DEDUP_BASELINE.json`이 이 값을 lowering-only ratchet으로 고정한다. 토큰 값·API·property 설명은 prose 지표에서 제외하고 실제 정량 규칙은 포함한다. 같은 소유자의 별도 페이지는 문구를 복사하지 않고 Dashboard Shell → Dashboard Navigation, Brand Spinner → Core Spinner처럼 한 단계 canonical reference와 근거가 있는 local delta만 기록한다. Foundation 16페이지의 손으로 쓴 가이드는 페이지별 고유 원리·제약을 그대로 유지한다.
+- 생성기의 generic fallback을 삭제하고 누락된 근거를 `omitted-no-evidence`로 드러냈다. 현재 181개 가이드의 평균 중복 prose는 2%, 60% 초과 페이지는 0개이며 `STORYBOOK_GUIDE_DEDUP_BASELINE.json`이 이 값을 lowering-only ratchet으로 고정한다. 토큰 값·API·property 설명은 prose 지표에서 제외하고 실제 정량 규칙은 포함한다. 같은 소유자의 별도 페이지는 문구를 복사하지 않고 Dashboard Shell → Dashboard Navigation, Brand Spinner → Core Spinner처럼 한 단계 canonical reference와 근거가 있는 local delta만 기록한다. Foundation 16페이지의 손으로 쓴 가이드는 페이지별 고유 원리·제약을 그대로 유지한다.
 
-2026-07-26 검토에서는 운영용 `Overview`·`Progress Board`를 정적 문서로 옮기고 Loading을 교차 컴포넌트 패턴 Docs로 연결했다. 이후 현재 200개 페이지와 760개 스토리의 owner, role, visibility, disposition은 감사 원장을 따른다.
+2026-07-26 검토에서는 운영용 `Overview`·`Progress Board`를 정적 문서로 옮기고 Loading을 교차 컴포넌트 패턴 Docs로 연결했다. 이후 현재 200개 페이지와 762개 스토리의 owner, role, visibility, disposition과 재검토 상태는 감사 원장을 따른다.
 
-- 컴포넌트 설명이 있는 페이지: 191개
-- Canvas에서 안내 서문을 직접 보여 주는 페이지: 191개
-- 사용/비사용 판단 기준이 확인되는 페이지: 184개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
-- 목적 설명이 있는 공개 스토리: 525개
+- 컴포넌트 설명이 있는 페이지: 195개
+- Canvas에서 안내 서문을 직접 보여 주는 페이지: 195개
+- 사용/비사용 판단 기준이 확인되는 페이지: 188개(Foundation 페이지는 사용 판단 대신 원리·제약 계약을 적용할 수 있음)
+- 목적 설명이 있는 공개 스토리: 527개
 - Foundation: 16페이지, 22스토리(공개 17·숨김 5)
-- Core: 57페이지, 211스토리(공개 118·숨김 93)
-- Product: 117페이지, 488스토리(공개 362·숨김 126)
+- Core: 66페이지, 243스토리(공개 135·숨김 108)
+- Product: 113페이지, 488스토리(공개 369·숨김 119)
 - Theme: 4페이지, 8스토리(공개 5·숨김 3)
 - Other: 1페이지, 1스토리(공개 1·숨김 0)
 - 공개 스토리 표시명 계약은 감사 원장의 권고 변경과 함께 추적한다.
@@ -64,7 +64,7 @@ Current generated census (2026-09-17): 200개 페이지와 760개 스토리. The
 - 1개 병합 기각·keep 정정: `History Toolbar`
 - 공개 내부 계약을 `!dev`로 전환하고 Communication·VirtualKeypad의 실제 컴포넌트 회귀 표면을 정리했으며, R3A density fixture 2개를 더해 현재 visual parity는 97개다.
 
-최종 구조에서는 audience-facing 각 페이지가 독립 소유자를 가지므로 현재 census 판정은 `keep` 198개, `split` 0개, `merge` 0개, `hide` 1개다. `hide`는 Docs·public entry를 만들지 않는 expression-profile machine fixture다. 검토 완료 수와 stale source hash는 감사 원장의 현재 summary를 기준으로 하며, `check:storybook-ia`가 이 상태를 회귀 방지한다.
+최종 구조에서는 audience-facing 각 페이지가 독립 소유자를 가지므로 현재 census 판정은 `keep` 199개, `split` 0개, `merge` 0개, `hide` 1개다. `hide`는 Docs·public entry를 만들지 않는 expression-profile machine fixture다. 과거 판정과 현재 소스에 대한 재검토는 구분하며, 2026-10-05 사용자 승인으로 20개 stale source hash와 신규 2개 스토리의 IA 검토를 닫았다. 현재 stale review는 0개다.
 
 정정 근거는 다음과 같다.
 

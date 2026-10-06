@@ -65,7 +65,7 @@
 | [Badges and Tags](guides/core-components-status-badges-and-tags.md) | Core / Status | `Badge`, `PushBadge`, `Tag` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
 | [Empty State](guides/core-components-status-empty-state.md) | Core / Status | `EmptyState` | mapped | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Meter](guides/core-components-status-meter.md) | Core / Status | `Meter` | mapped | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
-| [Notices and Callouts](guides/core-components-status-notices-and-callouts.md) | Core / Status | `Banner`, `Callout` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
+| [Notices and Callouts](guides/core-components-status-notices-and-callouts.md) | Core / Status | `Banner`, `Callout` | mapped | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Notification](guides/core-components-status-notification.md) | Core / Status | `Notification` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Overlay Status Chip](guides/core-components-status-overlay-status-chip.md) | Core / Status | `OverlayStatusChip` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Progress](guides/core-components-status-progress.md) | Core / Status | `CircularProgress`, `ProgressBar` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |

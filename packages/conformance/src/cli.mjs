@@ -605,8 +605,13 @@ function contractDependencyDiagnostics(contract, profile, contractFile) {
     canonicalVersions.set(roboticsPackage.name, roboticsPackage.version);
   }
   const diagnostics = [];
-  const consumerReleasePins = profile === contract.profiles?.['robotics-ui'];
   for (const dependency of profile.packageDependencies) {
+    // Both satellite profiles may retain their verified immutable LDS release.
+    // Keep the Robotics package identity check in the 3D profile canonical;
+    // only LDS DOM package pins follow the consumer snapshot policy here.
+    const consumerReleasePins = profile === contract.profiles?.['robotics-ui']
+      || (profile === contract.profiles?.['lds3d-ui']
+        && contract.lds.packages.some((entry) => entry.name === dependency.name));
     const expectedVersion = canonicalVersions.get(dependency.name);
     if (!expectedVersion) {
       diagnostics.push(diagnostic('CONTRACT_DEPENDENCY_DRIFT', contractFile, `${dependency.name} has no canonical LDS package identity.`));

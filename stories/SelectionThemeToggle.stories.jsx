@@ -58,7 +58,13 @@ function ProviderContractFixture() {
     <main>
       <div ref={setPortalTarget} data-provider-portal-target />
       {portalTarget && (
-        <section id="provider-contract-target">
+        <section
+          id="provider-contract-target"
+          style={{
+            background: 'var(--color-semantic-background-normal-normal)',
+            color: 'var(--color-semantic-label-normal)',
+          }}
+        >
           <LdsProvider
             target="#provider-contract-target"
             defaultColorScheme="dark"
@@ -110,6 +116,14 @@ export const ProviderRuntimeContract = {
         throw new Error(
           `Provider runtime updates must propagate through the custom Portal target (theme=${portal?.dataset.theme ?? 'missing'}, dir=${portal?.getAttribute('dir') ?? 'missing'}).`,
         );
+      }
+    });
+    await userEvent.click(darkChoice);
+    await waitFor(() => {
+      const portal = portalTarget?.querySelector('[data-lds-overlay-portal]');
+      if (target.dataset.theme !== 'dark' || portal?.dataset.theme !== 'dark'
+        || portal.getAttribute('dir') !== 'rtl' || portal.classList.contains('theme-light')) {
+        throw new Error('The open overlay must follow a Light → Dark round trip without inheriting the outer Storybook scope.');
       }
     });
   },

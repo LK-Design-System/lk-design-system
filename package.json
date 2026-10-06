@@ -9,6 +9,9 @@
   ],
   "type": "module",
   "scripts": {
+    "health:repositories": "node scripts/lds-maintenance.mjs health",
+    "check:pre-push": "node scripts/lds-maintenance.mjs check",
+    "check:maintenance": "node --test scripts/lds-maintenance.test.mjs",
     "generate:brand": "node scripts/generate-brand-assets.mjs && node scripts/generate-product-lockups.mjs && node scripts/generate-brand-platform-assets.mjs",
     "generate:product-lockups": "node scripts/generate-product-lockups.mjs",
     "generate:brand-platforms": "node scripts/generate-brand-platform-assets.mjs",
@@ -69,7 +72,7 @@
     "check:workspace-consumer:windows": "node scripts/check-workspace-consumer-matrix.mjs --platform=windows --package-set=visual-artifacts/workspace-package-set --require-browser",
     "check:workspace-consumer:linux": "node scripts/check-workspace-consumer-matrix.mjs --platform=linux --package-set=visual-artifacts/workspace-package-set",
     "check": "node scripts/run-package-scripts.mjs check:fast check:storybook check:pack",
-    "check:storybook-ci": "node scripts/run-package-scripts.mjs build:storybook check:storybook-adoption check:component-styles-rendered check:nested-styles check:inventory check:tooltip-alignment check:storybook-public check:a11y check:visual-regression check:expression-profile-visual",
+    "check:storybook-ci": "node scripts/run-package-scripts.mjs build:storybook check:storybook-adoption check:component-styles-rendered check:nested-styles check:inventory check:storybook-ia check:tooltip-alignment check:storybook-public check:a11y check:visual-regression check:expression-profile-visual",
     "check:ci": "node scripts/run-package-scripts.mjs check:fast check:storybook-ci",
     "report:inventory": "node scripts/report-inventory.mjs",
     "report:storybook-ia": "node scripts/report-storybook-information-architecture.mjs --update",

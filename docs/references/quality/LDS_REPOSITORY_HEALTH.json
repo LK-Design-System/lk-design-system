@@ -1,0 +1,247 @@
+{
+  "kind": "lds-repository-health",
+  "schemaVersion": 1,
+  "observedAt": "2026-10-05T09:12:06.317Z",
+  "evidenceBoundary": "Exact remote-main workflow results and read-only package observations; no deployment or owner approval is inferred.",
+  "repositories": [
+    {
+      "repository": "LK-Design-System/lk-design-system",
+      "localHead": "ac537d879b122858b5c9f4dc0ff947b69d903359",
+      "remoteHead": "ac537d879b122858b5c9f4dc0ff947b69d903359",
+      "localBranch": "main",
+      "localDirty": true,
+      "sourceVersion": "0.4.3",
+      "publishedPackage": "lds-core",
+      "publishedVersion": "0.4.3",
+      "publishedAt": "2026-09-30T02:38:08Z",
+      "distribution": "registry",
+      "checks": [
+        {
+          "name": "CI",
+          "state": "passed",
+          "runId": 36658656367,
+          "url": "https://github.com/LK-Design-System/lk-design-system/actions/runs/36658656367",
+          "conclusion": "success"
+        },
+        {
+          "name": "Deploy Storybook to GitHub Pages",
+          "state": "passed",
+          "runId": 36658656311,
+          "url": "https://github.com/LK-Design-System/lk-design-system/actions/runs/36658656311",
+          "conclusion": "success"
+        }
+      ],
+      "stories": {
+        "total": 762,
+        "public": 527
+      }
+    },
+    {
+      "repository": "LK-Design-System/lk-design-system-robotics",
+      "localHead": "8533e8b79b0f19a8c6e537ee1ff9499625f5bf02",
+      "remoteHead": "8533e8b79b0f19a8c6e537ee1ff9499625f5bf02",
+      "localBranch": "main",
+      "localDirty": true,
+      "sourceVersion": "0.1.0-rc.53",
+      "publishedPackage": null,
+      "publishedVersion": null,
+      "publishedAt": null,
+      "distribution": "paired-vendored-tgz",
+      "checks": [
+        {
+          "name": "CI",
+          "state": "passed",
+          "runId": 36089408818,
+          "url": "https://github.com/LK-Design-System/lk-design-system-robotics/actions/runs/36089408818",
+          "conclusion": "success"
+        },
+        {
+          "name": "Release conformance gate",
+          "state": "passed",
+          "runId": 36091663628,
+          "url": "https://github.com/LK-Design-System/lk-design-system-robotics/actions/runs/36091663628",
+          "conclusion": "success"
+        },
+        {
+          "name": "Deploy Storybook to GitHub Pages",
+          "state": "passed",
+          "runId": 36089408823,
+          "url": "https://github.com/LK-Design-System/lk-design-system-robotics/actions/runs/36089408823",
+          "conclusion": "success"
+        }
+      ],
+      "stories": {
+        "total": 112,
+        "public": 79
+      }
+    },
+    {
+      "repository": "LK-Design-System/lk-design-system-3d",
+      "localHead": "d9bcf7104802c9d6f03ce1d793b4769408dd798f",
+      "remoteHead": "d9bcf7104802c9d6f03ce1d793b4769408dd798f",
+      "localBranch": "main",
+      "localDirty": true,
+      "sourceVersion": "0.1.0-alpha.2",
+      "publishedPackage": "lds-3d-core",
+      "publishedVersion": "0.1.0-alpha.2",
+      "publishedAt": "2026-08-16T08:50:10Z",
+      "distribution": "registry",
+      "checks": [
+        {
+          "name": "CI",
+          "state": "passed",
+          "runId": 36092176571,
+          "url": "https://github.com/LK-Design-System/lk-design-system-3d/actions/runs/36092176571",
+          "conclusion": "success"
+        },
+        {
+          "name": "Deploy Storybook to GitHub Pages",
+          "state": "passed",
+          "runId": 36092176744,
+          "url": "https://github.com/LK-Design-System/lk-design-system-3d/actions/runs/36092176744",
+          "conclusion": "success"
+        }
+      ],
+      "stories": {
+        "total": 42,
+        "public": 42
+      }
+    },
+    {
+      "repository": "LK-Design-System/lk-design-system-slides",
+      "localHead": "4d273c0445c9342a2755750e3cd73e5af3121e9b",
+      "remoteHead": "4d273c0445c9342a2755750e3cd73e5af3121e9b",
+      "localBranch": "main",
+      "localDirty": true,
+      "sourceVersion": "0.1.0-alpha.11",
+      "publishedPackage": "lds-slides-ui",
+      "publishedVersion": "0.1.0-alpha.11",
+      "publishedAt": "2026-08-17T11:55:57Z",
+      "distribution": "registry",
+      "checks": [
+        {
+          "name": "Deploy Storybook to GitHub Pages",
+          "state": "passed",
+          "runId": 36032449625,
+          "url": "https://github.com/LK-Design-System/lk-design-system-slides/actions/runs/36032449625",
+          "conclusion": "success"
+        }
+      ],
+      "stories": {
+        "total": 92,
+        "public": 92
+      }
+    },
+    {
+      "repository": "LK-Design-System/lk-design-system-motion",
+      "localHead": "7b5ca22b7b1ca03cf0ac6371c870d31a0ae57699",
+      "remoteHead": "7b5ca22b7b1ca03cf0ac6371c870d31a0ae57699",
+      "localBranch": "main",
+      "localDirty": true,
+      "sourceVersion": "0.1.0-alpha.5",
+      "publishedPackage": null,
+      "publishedVersion": null,
+      "publishedAt": null,
+      "distribution": "private-application",
+      "checks": [
+        {
+          "name": "check",
+          "state": "passed",
+          "runId": 35950544278,
+          "url": "https://github.com/LK-Design-System/lk-design-system-motion/actions/runs/35950544278",
+          "conclusion": "success"
+        }
+      ],
+      "stories": null
+    }
+  ],
+  "consumers": [
+    {
+      "id": "portal",
+      "repository": "LK-ROBOTICS-AX/lk_portal",
+      "currentSourceCommit": "937c1fc71e39b58d085c0b1b6dc89b0fcbaf172f",
+      "recordedSourceCommit": "949a1261e8f61842a42d07ca4b62c7ff71cc45da",
+      "packages": {
+        "@lk-design-system/lds-core": "0.2.9",
+        "@lk-design-system/lds-product": "0.2.9",
+        "@lk-design-system/lds-theme": "0.2.9"
+      },
+      "recordedStage": "workflow-verified",
+      "recordedDeployment": "not-attested",
+      "packageEvidence": "requires-reverification",
+      "sourceEvidence": "different-source-not-reverified",
+      "packageChanges": [
+        {
+          "name": "@lk-design-system/lds-core",
+          "recordedVersion": "0.1.0",
+          "currentVersion": "0.2.9"
+        },
+        {
+          "name": "@lk-design-system/lds-theme",
+          "recordedVersion": "0.1.0",
+          "currentVersion": "0.2.9"
+        },
+        {
+          "name": "@lk-design-system/lds-product",
+          "recordedVersion": "0.1.0",
+          "currentVersion": "0.2.9"
+        }
+      ],
+      "note": "Observed main pins do not promote workflow verification or deployment. Historical approvals are preserved."
+    },
+    {
+      "id": "web-viz",
+      "repository": "LK-ROBOTICS/lk_web_viz",
+      "currentSourceCommit": "56827116373ef02a239c375cc791a87febdc5f57",
+      "recordedSourceCommit": "8f493fd3475eb6c7516fdf7d3aca3265c2b7db87",
+      "packages": {
+        "@lk-design-system/lds-core": "0.1.0",
+        "@lk-design-system/lds-theme": "0.1.0",
+        "@lk-design-system/lds-product": "0.1.0",
+        "@lk-design-system/lds-robotics-ui": "0.1.0-rc.33",
+        "@lk-design-system/lds-3d-assets": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-core": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-markers": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-pointcloud": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-r3f": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-tf": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-three": "0.1.0-alpha.1",
+        "@lk-design-system/lds-motion": "0.1.0-alpha.2",
+        "@lk-design-system/lds-slides-ui": "0.1.0-alpha.1"
+      },
+      "recordedStage": "workflow-verified",
+      "recordedDeployment": "not-attested",
+      "packageEvidence": "same-package-pins",
+      "sourceEvidence": "different-source-not-reverified",
+      "packageChanges": [],
+      "note": "Observed main pins do not promote workflow verification or deployment. Historical approvals are preserved."
+    },
+    {
+      "id": "robot-ops",
+      "repository": "LK-ROBOTICS/lk_robot_ops",
+      "currentSourceCommit": "8efc279a98970117823e4c884cdd8a653ca9edff",
+      "recordedSourceCommit": "bb631914bd57763a37d0ad49f40c641ba872d1f2",
+      "packages": {
+        "@lk-design-system/lds-core": "0.1.0",
+        "@lk-design-system/lds-theme": "0.1.0",
+        "@lk-design-system/lds-product": "0.1.0",
+        "@lk-design-system/lds-robotics-ui": "0.1.0-rc.34",
+        "@lk-design-system/lds-3d-assets": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-core": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-markers": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-pointcloud": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-r3f": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-tf": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-three": "0.1.0-alpha.1",
+        "@lk-design-system/lds-motion": "0.1.0-alpha.2",
+        "@lk-design-system/lds-slides-ui": "0.1.0-alpha.1"
+      },
+      "recordedStage": "workflow-verified",
+      "recordedDeployment": "not-attested",
+      "packageEvidence": "same-package-pins",
+      "sourceEvidence": "different-source-not-reverified",
+      "packageChanges": [],
+      "note": "Observed main pins do not promote workflow verification or deployment. Historical approvals are preserved."
+    }
+  ]
+}

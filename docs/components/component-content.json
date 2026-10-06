@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "41e45340eeb873ae7937d4483c92e92c36df41052e50c227d90cfe9fb6e66986",
+  "sourceFingerprint": "f605a741682dc8413ab3c0fa8e15a92f01b2713af410d33d0a049c3b29f28646",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -31109,13 +31109,13 @@
         "--color-semantic-background-elevated-normal",
         "--shadow-xs",
         "--color-semantic-primary-normal",
-        "--color-semantic-label-alternative",
+        "--color-semantic-label-neutral",
         "--font-sans",
         "--fw-bold",
         "--component-button-transition"
       ],
       "externalReferences": [],
-      "promptSha256": "f2c385ff43ae2fa771c357b59f95c75caecf0390a6982d10f7ed1a40190f305f"
+      "promptSha256": "f4ddb8619386e93bb08b5c08b7e89af63f7bf1fa124d5035f82fb4111977294f"
     },
     {
       "id": "toggle-button",
@@ -51092,6 +51092,7 @@
         "Callout"
       ],
       "supportingComponents": [
+        "Blockquote",
         "TextButton"
       ],
       "purpose": "시스템 변화와 선택적 행동을 알려야 할 때는 Banner가, 본문 맥락에 남는 절차·주의에는 Callout이 적합합니다. 짧게 사라지는 완료 피드백에는 이 패턴을 사용하지 말고 Toast 또는 Snackbar를 사용하세요.",
@@ -51304,6 +51305,10 @@
           "relationship": "같은 페이지가 소유"
         },
         {
+          "component": "Blockquote",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
           "component": "TextButton",
           "relationship": "대표 시나리오에서 조합"
         },
@@ -51382,6 +51387,16 @@
           {
             "id": "lds-core-components-status-notices-and-callouts--banner-surface-variants",
             "name": "변형·상태 · 독립형과 결합형 안내",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-core-components-status-notices-and-callouts--body-corners",
+            "name": "변형·상태 · 본문 박스 모서리",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-core-components-status-notices-and-callouts--callout-variants",
+            "name": "변형·상태 · 콜아웃 테두리",
             "role": "variants-states"
           }
         ],
@@ -87652,8 +87667,8 @@
           "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
         },
         {
-          "subject": "--color-semantic-label-alternative",
-          "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
+          "subject": "--color-semantic-label-neutral",
+          "rule": "light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88)"
         },
         {
           "subject": "--color-semantic-line-normal-normal",
@@ -87661,7 +87676,9 @@
         }
       ],
       "responsive": [],
-      "contentGuidance": [],
+      "contentGuidance": [
+        "미선택 항목도 실행 가능한 선택지이므로 SegmentedControl과 같은 label-neutral 전경을 사용합니다. 선택 항목은 기존 primary 전경과 elevated 배경으로 구분합니다. 테마를 중첩할 때 대상 표면에도 semantic 배경·전경을 적용하고, 열린 Portal의 Dark → Light → Dark 왕복과 RTL 상속을 함께 확인합니다."
+      ],
       "accessibility": [],
       "exceptions": [],
       "related": [
@@ -87703,7 +87720,7 @@
       "tokens": [
         "--color-semantic-background-elevated-normal",
         "--color-semantic-fill-normal",
-        "--color-semantic-label-alternative",
+        "--color-semantic-label-neutral",
         "--color-semantic-line-normal-normal",
         "--color-semantic-primary-normal",
         "--component-button-transition",
@@ -87760,7 +87777,7 @@
         "behavior": "evidence",
         "quantitativeRules": "evidence",
         "responsive": "omitted-no-evidence",
-        "contentGuidance": "omitted-no-evidence",
+        "contentGuidance": "evidence",
         "accessibility": "omitted-no-evidence",
         "exceptions": "omitted-no-evidence",
         "related": "evidence",

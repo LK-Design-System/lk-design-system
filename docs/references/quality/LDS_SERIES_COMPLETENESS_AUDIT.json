@@ -1,0 +1,1877 @@
+{
+  "schemaVersion": 1,
+  "kind": "lds-series-completeness-audit",
+  "observedAt": "2026-10-05T10:51:15.086Z",
+  "status": "completed-scoped-audit",
+  "scope": {
+    "series": [
+      "core",
+      "theme",
+      "product",
+      "robotics",
+      "3d",
+      "slides",
+      "motion"
+    ],
+    "excluded": [
+      "Archived console-pastel",
+      "Product code changes",
+      "Remote push, tag, package publication and deployment"
+    ]
+  },
+  "evidenceBoundary": "This audit combines exact remote-main CI, scoped local checks and representative wide/narrow UI review. Remote green applies to the base SHA, not these unpublished local edits. It is not full visual parity, product adoption promotion, field performance or safety certification. IA classification was explicitly approved by the human user; the unchanged IA guard passed.",
+  "remoteHealth": {
+    "file": "docs/references/quality/LDS_REPOSITORY_HEALTH.json",
+    "observedAt": "2026-10-05T09:12:06.317Z",
+    "sha256": "ee10cb67bd76431f2fe5f4b420112a1534d122c9681dc4ab484a065181501b22",
+    "allRequiredWorkflowsPassed": true,
+    "repositories": [
+      {
+        "repository": "LK-Design-System/lk-design-system",
+        "remoteHead": "ac537d879b122858b5c9f4dc0ff947b69d903359",
+        "publishedVersion": "0.4.3",
+        "publishedAt": "2026-09-30T02:38:08Z",
+        "distribution": "registry",
+        "checks": [
+          {
+            "name": "CI",
+            "state": "passed",
+            "runId": 36658656367,
+            "url": "https://github.com/LK-Design-System/lk-design-system/actions/runs/36658656367",
+            "conclusion": "success"
+          },
+          {
+            "name": "Deploy Storybook to GitHub Pages",
+            "state": "passed",
+            "runId": 36658656311,
+            "url": "https://github.com/LK-Design-System/lk-design-system/actions/runs/36658656311",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "repository": "LK-Design-System/lk-design-system-robotics",
+        "remoteHead": "8533e8b79b0f19a8c6e537ee1ff9499625f5bf02",
+        "publishedVersion": null,
+        "publishedAt": null,
+        "distribution": "paired-vendored-tgz",
+        "checks": [
+          {
+            "name": "CI",
+            "state": "passed",
+            "runId": 36089408818,
+            "url": "https://github.com/LK-Design-System/lk-design-system-robotics/actions/runs/36089408818",
+            "conclusion": "success"
+          },
+          {
+            "name": "Release conformance gate",
+            "state": "passed",
+            "runId": 36091663628,
+            "url": "https://github.com/LK-Design-System/lk-design-system-robotics/actions/runs/36091663628",
+            "conclusion": "success"
+          },
+          {
+            "name": "Deploy Storybook to GitHub Pages",
+            "state": "passed",
+            "runId": 36089408823,
+            "url": "https://github.com/LK-Design-System/lk-design-system-robotics/actions/runs/36089408823",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "repository": "LK-Design-System/lk-design-system-3d",
+        "remoteHead": "d9bcf7104802c9d6f03ce1d793b4769408dd798f",
+        "publishedVersion": "0.1.0-alpha.2",
+        "publishedAt": "2026-08-16T08:50:10Z",
+        "distribution": "registry",
+        "checks": [
+          {
+            "name": "CI",
+            "state": "passed",
+            "runId": 36092176571,
+            "url": "https://github.com/LK-Design-System/lk-design-system-3d/actions/runs/36092176571",
+            "conclusion": "success"
+          },
+          {
+            "name": "Deploy Storybook to GitHub Pages",
+            "state": "passed",
+            "runId": 36092176744,
+            "url": "https://github.com/LK-Design-System/lk-design-system-3d/actions/runs/36092176744",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "repository": "LK-Design-System/lk-design-system-slides",
+        "remoteHead": "4d273c0445c9342a2755750e3cd73e5af3121e9b",
+        "publishedVersion": "0.1.0-alpha.11",
+        "publishedAt": "2026-08-17T11:55:57Z",
+        "distribution": "registry",
+        "checks": [
+          {
+            "name": "Deploy Storybook to GitHub Pages",
+            "state": "passed",
+            "runId": 36032449625,
+            "url": "https://github.com/LK-Design-System/lk-design-system-slides/actions/runs/36032449625",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "repository": "LK-Design-System/lk-design-system-motion",
+        "remoteHead": "7b5ca22b7b1ca03cf0ac6371c870d31a0ae57699",
+        "publishedVersion": null,
+        "publishedAt": null,
+        "distribution": "private-application",
+        "checks": [
+          {
+            "name": "check",
+            "state": "passed",
+            "runId": 35950544278,
+            "url": "https://github.com/LK-Design-System/lk-design-system-motion/actions/runs/35950544278",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  "workingTrees": [
+    {
+      "repository": "LK-Design-System/lk-design-system",
+      "workspacePath": "shared/lk-design-system",
+      "baseCommit": "ac537d879b122858b5c9f4dc0ff947b69d903359",
+      "branch": "main",
+      "dirty": true,
+      "fileSha256": {
+        "components/overlay/overlay-platform.js": "cbb4349ec982f4f1eea09b4a302dc1aae0b4e46b20a9ca678d20878fe6822063",
+        "components/selection/ThemeToggle.jsx": "93c8cf2738e1ac7edd8f2528d2fce581669e22b92af5d4002421c3b38abfbda8",
+        "components/selection/ThemeToggle.prompt.md": "f4ddb8619386e93bb08b5c08b7e89af63f7bf1fa124d5035f82fb4111977294f",
+        "stories/SelectionThemeToggle.stories.jsx": "777ee2f21fc74a183aa5f1a211ede30f29c110657279944ea508d420e0b99f47",
+        "packages/core/src/components/overlay/overlay-platform.js": "cbb4349ec982f4f1eea09b4a302dc1aae0b4e46b20a9ca678d20878fe6822063",
+        "packages/theme/src/components/selection/ThemeToggle.jsx": "de2f68ea662a3c0eef76e611b4033e67716ddf0743e3bb494712c68ffb060a70",
+        "packages/conformance/src/cli.mjs": "3e1773549fec68bf8dcebbe77c0e3e6b197e2b4ff12e701c36fdf2b11b2ae67f",
+        "packages/conformance/fixtures/lds3d-cases.json": "b5faa584872406efd0b6c196ddb17b31dc3fbf3e1bc9f720138d455b6927db35",
+        "scripts/lds-maintenance.mjs": "35a01a35b790017286bde234c7601533e52bdc424489268217f43a3c2e448d36",
+        "scripts/lds-maintenance.test.mjs": "f78647c6a2dfc6a6a45b67f3d32eefe1a0bad9fb2b8a35e8ba553ff9964d72f8",
+        ".githooks/pre-push": "5797277a0a595a518794475bd835a5bcede56ce447f9abfc8d239bd118f5fe44",
+        "docs/README.md": "793daccbe0763fbaf42e5205885287df242778c4f390413e57f3d8493d92e100",
+        "docs/OPERATIONS.md": "a5f03f0b07bf0ad50a0778e4ec4562b618e202e4e2b03db3cabe624c3ad2e5b3",
+        "docs/LDS_ROADMAP.md": "b2b3b14ac0fdc5fd2b1f135092f0cbe19a9b92eb1b52f95d129fd8b0588484ca",
+        "docs/LDS_HARNESS_IMPROVEMENT_PLAN.md": "587c304b973d1d876d1c132e97cf199dea7bfe24eb819f2964ff196e88e940cb",
+        "package.json": "c82f2f7f178ac594ef8769a35b3c257d01cbbb46db985c387899516fd694d28c",
+        "stories/StatusFeedback.stories.jsx": "8ecb2af03fe254e09e75e0f85039f936f36ebcd1c4f6343f08f80f2a71edcd23",
+        "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md": "72f39a9338fef1b84e0fa2159e357468d3ca3187653ee3d3496bfd0a76cfe018",
+        "docs/references/quality/STORYBOOK_DOCS_DEDUP_CONTRACT.json": "083cf15ff09cdd71eb32ead8ea46b5ff2f3175631e66b66e1dfc811979a63106",
+        "docs/references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json": "ccd2743101fff37ae029c88358e638e53ce8acb076d5bf17e00069beef97ba4d",
+        "docs/components/component-content.json": "a45d6807ca0925d7c3b9ac3b4eaf217fd32f2c1de53cb330bf01967329e7e485",
+        "docs/components/component-guide-runtime.json": "c90ab2162faa5801a0fc8c19b680c7e8b1b3a9ec2f762cb0e106b9a6806eee90",
+        "docs/components/guides/theme-controls-theme-toggle.md": "69f99c4add949a3080f623d178eb8b3c8e2c2a36d41f75babfce239e4f005d35",
+        "docs/components/guides/core-components-status-notices-and-callouts.md": "1a927105c6ccb780115a34f5c86e434b39bb38f4e725b743a61210b7f8a61df2",
+        "docs/components/runtime/theme-controls-theme-toggle.json": "32be8f571a948c195c8ce8ba4437323e9f942eb6c6d3c91f4de06b865360749e",
+        "docs/components/runtime/core-components-status-notices-and-callouts.json": "a6bbdecc2ef206ea8edcf3979fa0615ec87ab336d997f5e03c515a3da94f61d0",
+        "docs/components/llms.txt": "bc64000f8fc306dd72f2a89a0222c64284f2b5fc0fa0150eef1a1b855532e2c8"
+      }
+    },
+    {
+      "repository": "LK-Design-System/lk-design-system-robotics",
+      "workspacePath": "shared/lk-design-system-robotics",
+      "baseCommit": "8533e8b79b0f19a8c6e537ee1ff9499625f5bf02",
+      "branch": "main",
+      "dirty": true,
+      "fileSha256": {
+        "stories/RoboticsManualControlSession.stories.jsx": "3fd0257bf231f9e42b60e38d94c4508b93085e3c26782864eda74775c0e808d7",
+        ".githooks/pre-push": "5797277a0a595a518794475bd835a5bcede56ce447f9abfc8d239bd118f5fe44"
+      }
+    },
+    {
+      "repository": "LK-Design-System/lk-design-system-3d",
+      "workspacePath": "shared/lk-design-system-3d",
+      "baseCommit": "d9bcf7104802c9d6f03ce1d793b4769408dd798f",
+      "branch": "main",
+      "dirty": true,
+      "fileSha256": {
+        "apps/docs/src/primitives.stories.tsx": "791deb7e983d2e1596639dc69371c9a4d7ef1cfe974a199b855f17f97dbffa45",
+        "apps/docs/src/visual-alpha-ui.tsx": "c62d416de7b9d3e198141bf07e3f54b86bd13e609c0f2283fa28530d811c2de1",
+        "scripts/verify-visual-alpha-runtime.mjs": "b5b70a414b29771f744d1324c363e3d6b701d187e05560ba2a874205721c3bbc",
+        "docs/GUNGNEUNG_3D_GAP_PLAN.md": "1b23debbc111fc85d368b1e622b4fbb6820f006dd5de80ff70810fb8b23bde2d",
+        ".changeset/scene-extension-follow-labels.md": "b2953303107bd2668ae50e1d68bc5695c3e9e44aae9fc1abd6f2f41a18ef746d",
+        "evidence/visual-alpha/runtime-qa/report.json": "5e00341f77adc3919082420d0181d10679977ea656d40af0f251e5a9163f18a4",
+        ".githooks/pre-push": "5797277a0a595a518794475bd835a5bcede56ce447f9abfc8d239bd118f5fe44"
+      }
+    },
+    {
+      "repository": "LK-Design-System/lk-design-system-slides",
+      "workspacePath": "shared/lk-design-system-slides",
+      "baseCommit": "4d273c0445c9342a2755750e3cd73e5af3121e9b",
+      "branch": "main",
+      "dirty": true,
+      "fileSha256": {
+        "src/components/slides/DeckViewer.jsx": "9af748f41cfe63688b05a39383a5da4da7f47f0d17a6d3895a95ccb7207c7905",
+        ".githooks/pre-push": "5797277a0a595a518794475bd835a5bcede56ce447f9abfc8d239bd118f5fe44"
+      }
+    },
+    {
+      "repository": "LK-Design-System/lk-design-system-motion",
+      "workspacePath": "shared/lk-design-system-motion",
+      "baseCommit": "7b5ca22b7b1ca03cf0ac6371c870d31a0ae57699",
+      "branch": "main",
+      "dirty": true,
+      "fileSha256": {
+        "src/preview/main.tsx": "99b23230af819dcebdd361a91c32ded07b5ba0eacd57ffa1f1f98a281d8408ed",
+        ".githooks/pre-push": "5797277a0a595a518794475bd835a5bcede56ce447f9abfc8d239bd118f5fe44"
+      }
+    }
+  ],
+  "inventories": {
+    "lk-design-system": {
+      "stories": 762,
+      "publicStories": 527,
+      "docs": 199
+    },
+    "lk-design-system-robotics": {
+      "stories": 112,
+      "publicStories": 79,
+      "docs": 26
+    },
+    "lk-design-system-3d": {
+      "stories": 42,
+      "publicStories": 42,
+      "docs": 0
+    },
+    "lk-design-system-slides": {
+      "stories": 92,
+      "publicStories": 92,
+      "docs": 43
+    }
+  },
+  "series": [
+    {
+      "id": "core",
+      "repository": "LK-Design-System/lk-design-system",
+      "verdict": "stable-base",
+      "version": "0.4.3",
+      "inventory": {
+        "componentModules": 94,
+        "codeExports": 95,
+        "stories": 265
+      },
+      "implemented": [
+        "Foundations, DOM controls and reusable interaction contracts",
+        "Core/Theme semantic provider boundary and public owner/API contracts"
+      ],
+      "reviewed": [
+        "Button sizes/states and Enter activation at 320px",
+        "Overlay/Tooltip scope, Portal, focus and keyboard contracts"
+      ],
+      "fixed": [
+        "provider-portal-round-trip",
+        "lds3d-verified-release-pins"
+      ],
+      "remaining": [
+        "Local overlay/conformance fixes need a subsequent release.",
+        "Current product sources must be reverified independently of the first stable adoption record."
+      ]
+    },
+    {
+      "id": "theme",
+      "repository": "LK-Design-System/lk-design-system",
+      "verdict": "stable-base-with-repaired-runtime-and-contrast",
+      "version": "0.4.3",
+      "inventory": {
+        "componentModules": 4,
+        "codeExports": 8,
+        "stories": 8
+      },
+      "implemented": [
+        "Light/dark/auto, default/ops profiles, brand assets and Provider runtime"
+      ],
+      "reviewed": [
+        "Light→Dark round trip with an already open custom-target Portal",
+        "RTL propagation and meaningful foreground/background at 1280px and 320px"
+      ],
+      "fixed": [
+        "provider-portal-round-trip",
+        "theme-toggle-dark-contrast"
+      ],
+      "remaining": [
+        "Local fixes are not included in the already published 0.4.3 artifact.",
+        "Full theme/profile visual parity was not rerun in this representative audit."
+      ]
+    },
+    {
+      "id": "product",
+      "repository": "LK-Design-System/lk-design-system",
+      "verdict": "stable-base-consumer-reverification-needed",
+      "version": "0.4.3",
+      "inventory": {
+        "componentModulesIncludingCompatibility": 123,
+        "canonicalModules": 114,
+        "compatibilityModules": 9,
+        "codeExports": 131,
+        "stories": 488
+      },
+      "implemented": [
+        "Reusable navigation, data collections, editors, viewer chrome and dashboard surfaces"
+      ],
+      "reviewed": [
+        "Docked SideNav at 320px",
+        "DataGrid pinned identity, row selection and expanded details in its authored 320px fixture"
+      ],
+      "fixed": [],
+      "remaining": [
+        "Portal main currently vendors 0.2.9; its current source does not inherit the historical 0.1.0 workflow approval.",
+        "Routes, row filtering, data transport and complete screens remain product-owned."
+      ]
+    },
+    {
+      "id": "robotics",
+      "repository": "LK-Design-System/lk-design-system-robotics",
+      "verdict": "release-candidate-operational-ui",
+      "version": "0.1.0-rc.53",
+      "distribution": "paired-vendored-tgz",
+      "inventory": {
+        "componentModules": 23,
+        "codeExports": 54,
+        "storyModules": 26,
+        "stories": 112
+      },
+      "implemented": [
+        "O1/O2 presentation and interaction contracts",
+        "Fleet overview first increment: 10/100 robot density, cards, rows and selection",
+        "Manual-control authority/link/stale/stop-failure presentation"
+      ],
+      "reviewed": [
+        "100-robot summary/card density at wide and 320px widths",
+        "Three narrow compound manual-control states and visible stop/retry actions"
+      ],
+      "fixed": [
+        "robotics-narrow-fixture"
+      ],
+      "remaining": [
+        "O3 requires product evidence for persisted acknowledgement actor, time, reason and authority.",
+        "Later fleet replay/triage/command/traffic work remains conditional.",
+        "Certified O4 HMI is outside current support; UI guards are not safety certification."
+      ]
+    },
+    {
+      "id": "3d",
+      "repository": "LK-Design-System/lk-design-system-3d",
+      "verdict": "alpha-capabilities-implemented-release-gap",
+      "version": "0.1.0-alpha.2",
+      "inventory": {
+        "fixedReleasePackages": 8,
+        "stories": 42
+      },
+      "implemented": [
+        "Core calculations and renderer bindings for constrained/follow cameras, screen labels, layer status, context recovery, pose freshness, paths, theme and spatial grid",
+        "Actual GLB/WebGL operational, diagnostic and asset-catalog compositions"
+      ],
+      "reviewed": [
+        "AMR metadata with the public stacked DescriptionList at wide and 320px widths",
+        "Camera changes, hover/selection, empty/loading/error/retry, renderer recovery, goal/path and responsive composition"
+      ],
+      "fixed": [
+        "3d-description-list-overflow",
+        "3d-runtime-package-evidence"
+      ],
+      "remaining": [
+        "September source extensions are ahead of the August alpha.2 artifacts; a patch changeset records the pending release.",
+        "Verified documentation baseline remains Core/Theme/Product 0.4.2; dependency pins and workflows were not upgraded.",
+        "React 18/R3F 8 products need an explicit binding compatibility or product-upgrade decision; pure core functions can be evaluated first.",
+        "Runtime verification uses software WebGL; physical GPU/field performance remains unverified."
+      ]
+    },
+    {
+      "id": "slides",
+      "repository": "LK-Design-System/lk-design-system-slides",
+      "verdict": "alpha-layout-and-runtime-verified-release-gap",
+      "version": "0.1.0-alpha.11",
+      "inventory": {
+        "layouts": 17,
+        "primitives": 2,
+        "deckComponents": 3,
+        "editorialComponents": 13,
+        "stories": 92,
+        "eligiblePlayStories": 91
+      },
+      "implemented": [
+        "Slide layouts, editorial primitives, deck navigation, print and content/overflow/figure gates"
+      ],
+      "reviewed": [
+        "DeckViewer wide and 320px navigation, overview, counter and progress wrapping"
+      ],
+      "fixed": [
+        "slides-narrow-chrome"
+      ],
+      "remaining": [
+        "Current main DeckViewer differs from the already published alpha.11 artifact; the new local fix also awaits release.",
+        "Whole-deck composition consistency is a separate review beyond per-story play checks."
+      ],
+      "publishedSourceComparison": {
+        "normalization": "LF",
+        "mainDeckViewerSha256": "58acb01f132634b055ac8af5bb7b7ec42a6c58f348ed97f694ae71e6c06a2a8b",
+        "motionVendoredAlpha11DeckViewerSha256": "fb2d3cf9dcfa038c488eabe7d2ca5bcaa1525cd5b3a92c4a38168ac044fb263c"
+      }
+    },
+    {
+      "id": "motion",
+      "repository": "LK-Design-System/lk-design-system-motion",
+      "verdict": "alpha-deterministic-engine-preview-repaired",
+      "version": "0.1.0-alpha.5",
+      "distribution": "private-application",
+      "inventory": {
+        "storybook": false,
+        "previewPort": 6011,
+        "copiedSlidesExportsChecked": 19
+      },
+      "implemented": [
+        "Deterministic frame seeking and video rendering, CLI, RenderHost and SlideStage"
+      ],
+      "reviewed": [
+        "Preview at 1280px and 320px",
+        "Named composition/frame inputs, composition reset, play/pause and frame 119/120 seeking"
+      ],
+      "fixed": [
+        "motion-preview-controls"
+      ],
+      "remaining": [
+        "Vendored Core/Theme/Product rc.69.28 and Slides alpha.11 are older baselines.",
+        "Copied Slides export names/shapes pass the current guard; inherited props are not covered by the old catalogue.",
+        "CSS/WAAPI seeking, long-composition parallel rendering and reusable motion patterns remain conditional work."
+      ]
+    }
+  ],
+  "closedGaps": [
+    {
+      "id": "provider-portal-round-trip",
+      "owner": "core-overlay/theme-runtime",
+      "fix": "Ignore theme/profile/direction ancestors above the configured Provider target during scope cleanup; retain actual local overrides.",
+      "regression": "ProviderRuntimeContract now asserts an open Portal follows Dark→Light→Dark and RTL."
+    },
+    {
+      "id": "theme-toggle-dark-contrast",
+      "owner": "theme",
+      "fix": "Actionable unselected choices use the existing SegmentedControl label-neutral convention; the nested theme fixture applies semantic background/foreground.",
+      "validation": "48 stories and 13 Docs guides pass the Axe guard, including the new dark end state."
+    },
+    {
+      "id": "lds3d-verified-release-pins",
+      "owner": "core-conformance",
+      "fix": "Allow verified immutable Core/Theme/Product release pins in the 3D consumer profile, consistent with the style-contract policy; preserve exact package/lock identity checks.",
+      "regression": "Positive retained-release fixture and negative package/lock version fixtures; existing Robotics canonical-drift rejection retained."
+    },
+    {
+      "id": "robotics-narrow-fixture",
+      "owner": "robotics-stories",
+      "fix": "Fullscreen layout removes the authored fixture padding overflow; add width/no-overflow assertions while preserving the three compound states."
+    },
+    {
+      "id": "3d-description-list-overflow",
+      "owner": "3d-docs",
+      "fix": "Use the public one-column stacked DescriptionList for long AMR metadata and shared review evidence."
+    },
+    {
+      "id": "3d-runtime-package-evidence",
+      "owner": "3d-evidence",
+      "fix": "Replace hardcoded Core 0.1.0 metadata with the imported package version; compare rendered, installed and declared versions.",
+      "validation": {
+        "declaredCoreVersion": "0.4.2",
+        "installedCoreVersion": "0.4.2",
+        "renderedCoreVersion": "0.4.2"
+      }
+    },
+    {
+      "id": "slides-narrow-chrome",
+      "owner": "slides-deck-runtime",
+      "fix": "Keep navigation labels on one line and wrap progress/counter with the existing deck chrome."
+    },
+    {
+      "id": "motion-preview-controls",
+      "owner": "motion-preview",
+      "fix": "Apply semantic background/foreground, wrap controls and provide accessible composition/frame names; deterministic renderer unchanged."
+    },
+    {
+      "id": "maintenance-observation-and-hooks",
+      "owner": "lds-operations",
+      "fix": "Read exact-head workflows and current consumer pins; install existing-check pre-push hooks with fail-fast behavior, bounded execution and preservation of unknown hooks.",
+      "limit": "Failure notification delivery and ongoing operational monitoring are not attested."
+    },
+    {
+      "id": "stale-progress-documentation",
+      "owner": "lds-docs",
+      "fix": "Update the existing roadmap, operations and harness status; distinguish first-stable closure, current local work, publication and product evidence."
+    },
+    {
+      "id": "storybook-census-and-variation-names",
+      "owner": "core-storybook",
+      "fix": "Synchronize 762 stories/199 Docs in the exact-ID contract, preserve all 760 preexisting IDs/visibility, give the two existing variation stories role-prefixed Korean names, and correct stale prose counts.",
+      "limitation": "The previously pending 20 page and two story IA classification reviews were explicitly approved by the human user; the unchanged IA check now passes. Independent H3 review and release/product evidence remain separate."
+    },
+    {
+      "id": "storybook-ia-human-review-closure",
+      "owner": "core-storybook",
+      "fix": "Record explicit human approval of the 20 page classification decisions and two public variants-states stories; retain the original source-review requirements and preserve prior hashes/rationale in the series audit.",
+      "validation": {
+        "pages": 200,
+        "stories": 762,
+        "staleReviewedPages": 0,
+        "status": "passed"
+      }
+    }
+  ],
+  "localVerification": {
+    "core": {
+      "buildAndContracts": {
+        "passed": true,
+        "finishedAt": "2026-10-05T17:16:25.2168259+09:00",
+        "stages": [
+          {
+            "name": "build:workspaces",
+            "exitCode": 0
+          },
+          {
+            "name": "check:semantic-provider",
+            "exitCode": 0
+          },
+          {
+            "name": "check:expression-profile",
+            "exitCode": 0
+          },
+          {
+            "name": "build:storybook",
+            "exitCode": 0
+          },
+          {
+            "name": "scoped-theme-overlay-a11y",
+            "exitCode": 0
+          }
+        ],
+        "startedAt": "2026-10-05T17:14:38.5413947+09:00",
+        "elapsedSeconds": 106.6784337
+      },
+      "accessibility": {
+        "generatedAt": "2026-10-05T09:02:51.321Z",
+        "checkedStories": 53,
+        "axeCheckedStories": 53,
+        "playFunctionStories": 30,
+        "undersizedTargets": 0,
+        "failures": [],
+        "consoleErrors": [],
+        "docsChecked": 14,
+        "filter": "LDS Theme/|LDS Core/Components/Overlay/|LDS Core/Components/Content/Tooltip|Notices and Callouts",
+        "run": {
+          "exitCode": 0,
+          "finishedAt": "2026-10-05T18:02:51.3768906+09:00",
+          "elapsedSeconds": 62.9246167,
+          "startedAt": "2026-10-05T18:01:48.4525714+09:00",
+          "passed": true,
+          "pattern": "LDS Theme/|LDS Core/Components/Overlay/|LDS Core/Components/Content/Tooltip|Notices and Callouts"
+        }
+      },
+      "conformance": {
+        "command": "npm run check:conformance",
+        "status": "passed",
+        "evidence": "Observed successful command exit in this audit; includes 3D, Robotics and adoption fixtures."
+      },
+      "typecheck": {
+        "command": "npm run check:types",
+        "status": "passed"
+      },
+      "finalStorybookBuild": {
+        "elapsedSeconds": 42.006128,
+        "stages": [
+          {
+            "name": "build:storybook",
+            "exitCode": 0
+          },
+          {
+            "name": "notices-doc-surface-a11y",
+            "exitCode": 0
+          }
+        ],
+        "startedAt": "2026-10-05T18:13:03.9083930+09:00",
+        "finishedAt": "2026-10-05T18:13:45.9143713+09:00",
+        "exitCode": 0,
+        "passed": true
+      },
+      "documentation": {
+        "status": "passed",
+        "inventory": {
+          "status": "passed",
+          "componentEntries": 212,
+          "namedExports": 225,
+          "stories": 762
+        },
+        "adoptionFiles": {
+          "status": "passed",
+          "files": 66
+        },
+        "generatedComponentDocs": {
+          "status": "passed",
+          "guideCount": 181
+        },
+        "primaryDescriptionReview": {
+          "status": "passed",
+          "checked": 195
+        },
+        "finalChecks": [
+          {
+            "exitCode": 0,
+            "name": "generate-component-docs"
+          },
+          {
+            "exitCode": 0,
+            "name": "project-package-docs"
+          },
+          {
+            "exitCode": 0,
+            "name": "generated-component-docs"
+          },
+          {
+            "exitCode": 0,
+            "name": "projected-package-docs"
+          },
+          {
+            "exitCode": 0,
+            "name": "check:docs"
+          }
+        ],
+        "checkedAt": "2026-10-05T10:51:15.086Z"
+      },
+      "legacyBuild": {
+        "command": "npm run build:legacy",
+        "status": "passed",
+        "evidence": "Successful command observed in this audit; generated root dist is retained."
+      },
+      "finalDocumentSurface": {
+        "run": {
+          "elapsedSeconds": 42.006128,
+          "stages": [
+            {
+              "name": "build:storybook",
+              "exitCode": 0
+            },
+            {
+              "name": "notices-doc-surface-a11y",
+              "exitCode": 0
+            }
+          ],
+          "startedAt": "2026-10-05T18:13:03.9083930+09:00",
+          "finishedAt": "2026-10-05T18:13:45.9143713+09:00",
+          "exitCode": 0,
+          "passed": true
+        },
+        "accessibility": {
+          "generatedAt": "2026-10-05T09:13:45.847Z",
+          "checkedStories": 5,
+          "axeCheckedStories": 5,
+          "playFunctionStories": 2,
+          "undersizedTargets": 0,
+          "failures": [],
+          "consoleErrors": [],
+          "docsChecked": 1,
+          "filter": "Notices and Callouts"
+        },
+        "evidenceBoundary": "Rebuilt final static assets after generated guide synchronization; rechecked only the changed guide and its five implementation stories. The earlier 53-story/14-Docs run remains separately recorded."
+      },
+      "sourceMirrors": {
+        "status": "passed",
+        "pairs": [
+          [
+            "components/overlay/overlay-platform.js",
+            "packages/core/src/components/overlay/overlay-platform.js"
+          ],
+          [
+            "components/selection/ThemeToggle.jsx",
+            "packages/theme/src/components/selection/ThemeToggle.jsx"
+          ]
+        ],
+        "themeImportProjection": {
+          "from": "../icon/Icon.jsx",
+          "to": "@lk-design-system/lds-core/components/icon/Icon",
+          "reason": "The Theme workspace imports the public Core deep entry instead of a relative aggregate source."
+        }
+      },
+      "informationArchitecture": {
+        "command": "npm run check:storybook-ia",
+        "status": "passed",
+        "checkedAt": "2026-10-05T10:51:15.086Z",
+        "pages": 200,
+        "stories": 762,
+        "staleReviewedPages": 0,
+        "patternGuides": 1,
+        "primaryDescriptions": 195
+      },
+      "approvalFollowup": {
+        "scope": "IA ledger and documentation only",
+        "renderEvidence": "Previously recorded source rendering/accessibility checks retained; implementation and story rendering code unchanged in this approval followup."
+      }
+    },
+    "robotics": {
+      "run": {
+        "exitCode": 0,
+        "elapsedSeconds": 59.8428636,
+        "outcome": "passed",
+        "gate": "check:storybook:local"
+      },
+      "commands": [
+        "npm run check:local",
+        "npm run check:storybook:local"
+      ],
+      "play": {
+        "checked": 112,
+        "passed": 112,
+        "knownFailures": 0
+      }
+    },
+    "scene3d": {
+      "run": {
+        "passed": true,
+        "finishedAt": "2026-10-05T17:19:36.9504840+09:00",
+        "stages": [
+          {
+            "name": "build-storybook",
+            "exitCode": 0
+          },
+          {
+            "name": "visual-alpha:runtime-qa",
+            "exitCode": 0
+          },
+          {
+            "name": "evidence:check",
+            "exitCode": 0
+          }
+        ],
+        "startedAt": "2026-10-05T17:18:26.6654158+09:00",
+        "elapsedSeconds": 70.28806829999999
+      },
+      "report": "shared/lk-design-system-3d/evidence/visual-alpha/runtime-qa/report.json",
+      "reportSha256": "5e00341f77adc3919082420d0181d10679977ea656d40af0f251e5a9163f18a4",
+      "checks": {
+        "actualWebGlCanvas": true,
+        "actualGlbAssets": true,
+        "currentLdsPackageVersion": true,
+        "actualLdsComposition": true,
+        "ldsPageComposition": true,
+        "responsiveComposition": true,
+        "headlessRendererBoundary": true,
+        "noLegacyCustomChrome": true,
+        "operationalProfile": true,
+        "diagnosticProfile": true,
+        "diagnosticInspector": true,
+        "assetCatalogComposition": true,
+        "ldsInspectorSelectionSync": true,
+        "hoverPicking": true,
+        "goalPathDirectManipulation": true,
+        "cameraPresetsChangeRender": true,
+        "loadingErrorEmptyRetry": true,
+        "noFoundationSvgSubstitution": true,
+        "renderingBudget": true
+      },
+      "packageEvidence": {
+        "declaredCoreVersion": "0.4.2",
+        "installedCoreVersion": "0.4.2",
+        "renderedCoreVersion": "0.4.2"
+      },
+      "rendererBoundary": "Software WebGL runtime verification, not physical GPU/field performance."
+    },
+    "slides": {
+      "commands": [
+        "npm run build:storybook",
+        "node scripts/check-story-play.mjs",
+        "node scripts/check-style-ownership.mjs",
+        "node scripts/generate-catalogue.mjs --check",
+        "node scripts/check-skill-shipping.mjs"
+      ],
+      "status": "passed",
+      "play": {
+        "checked": 91,
+        "passed": 91,
+        "knownFailures": 0
+      },
+      "evidence": "Observed successful command exits in this audit. Direct navigation to hash #2 starts at a different position than the default play fixture; clean-hash automated plays passed."
+    },
+    "motion": {
+      "commands": [
+        "npm run check:types",
+        "npm run check:determinism -- TitleDemo 45"
+      ],
+      "status": "passed",
+      "deterministicFrame": {
+        "composition": "TitleDemo",
+        "frame": 45,
+        "runs": 2,
+        "sha256Prefix": "560c61ad38771277",
+        "result": "identical"
+      }
+    },
+    "fullLocalRepositorySweeps": "not-rerun; exact baseline CI reused, edited source and failure paths verified locally",
+    "whitespace": {
+      "status": "passed",
+      "repositories": 5
+    }
+  },
+  "visualReview": {
+    "source": "visual-artifacts/series-audit-2026-10-05/visual-checks.json",
+    "localOnly": true,
+    "artifactSha256": "431ce38ef1776842c81b933118c9fe28ab9dc50df8fd60f22edeb27dcf7f6f33",
+    "count": 33,
+    "captures": [
+      {
+        "name": "product-navigation-narrow",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-product-navigation-side-nav--docked-surface&viewMode=story",
+        "note": "320px expanded docked navigation",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "height": 800,
+          "width": 320
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/product-navigation-narrow.png",
+        "sha256": "eae2eb3dec29a6a05be8915ce0f11e790e825c37ad56da3fd9670e0dd43bc0c4"
+      },
+      {
+        "name": "core-buttons-wide",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-core-components-action-button--sizes-and-states&viewMode=story",
+        "note": "Sizes, variants, loading and disabled states at 1280px after Storybook load",
+        "viewport": {
+          "height": 800,
+          "width": 1280
+        },
+        "document": {
+          "height": 800,
+          "width": 1280
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/core-buttons-wide.png",
+        "sha256": "4eff7dba53ca6dfba0d13e8cb4c6afcbcf0dc616eaf8f7a6dcceb4763fceeb14"
+      },
+      {
+        "name": "core-button-interaction-narrow",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-core-components-action-button--interaction-contract&viewMode=story",
+        "note": "320px에서 실제 저장 버튼 Enter 활성화로 실행 횟수 1 확인. loading/disabled 버튼 구분 및 가로 스크롤 없음.",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "clientWidth": 320,
+          "scrollHeight": 800,
+          "scrollWidth": 320
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/core-button-interaction-narrow.png",
+        "sha256": "cae8f352a0d441ec67b0e9b440c74a9a54ae258e0d61cbb5ffba032fb146bbba"
+      },
+      {
+        "name": "theme-toggle-narrow",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-theme-controls-theme-toggle--theme-toggle-pattern&viewMode=story",
+        "note": "320px ThemeToggle light/dark preview Control selection only; target=null and persist=false do not theme the surrounding page.",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "height": 800,
+          "width": 320
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/theme-toggle-narrow.png",
+        "sha256": "35687c33efc805e09e71c7f619689248227b63d50daeff6938a08b9ccbeda2d9"
+      },
+      {
+        "name": "theme-toggle-wide",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-theme-controls-theme-toggle--theme-toggle-pattern&viewMode=story",
+        "note": "Dark radio selection, focus and both appearance presentations Control selection only; target=null and persist=false do not theme the surrounding page.",
+        "viewport": {
+          "height": 800,
+          "width": 1280
+        },
+        "document": {
+          "height": 800,
+          "width": 1280
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/theme-toggle-wide.png",
+        "sha256": "6be5c2ea8695449819e411cd82962a6282ec4d4d89bda844161e10b6c9c9e1e4"
+      },
+      {
+        "name": "product-grid-wide",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-product-data-collections-data-grid--narrow-pinned-columns&viewMode=story",
+        "note": "NarrowPinnedColumns fixture remains 320px inside a 1280px Storybook host; pinned identity and internal scrolling reviewed.",
+        "viewport": {
+          "height": 800,
+          "width": 1280
+        },
+        "document": {
+          "height": 800,
+          "width": 1280
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/product-grid-wide.png",
+        "sha256": "19e27718c3900b640f864b76b3885e372508c4756c2050a6e330c1de85cbd1f8"
+      },
+      {
+        "name": "product-grid-narrow",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-product-data-collections-data-grid--narrow-pinned-columns&viewMode=story",
+        "note": "320px search input, selected row and expanded details; fixture keeps external row filtering product-owned",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "height": 800,
+          "width": 320
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/product-grid-narrow.png",
+        "sha256": "6157b9e3075f2466d4d16e9df91f12607c97e6edb25d6f3e9494131624f686b3"
+      },
+      {
+        "name": "robotics-fleet-wide",
+        "url": "http://127.0.0.1:6008/iframe.html?id=lds-robotics-fleet-overview--hundred-robot-density&viewMode=story",
+        "note": "1280px 100-robot summary/card density. Map/list selection synchronization was not exercised in this fixture.",
+        "viewport": {
+          "height": 800,
+          "width": 1280
+        },
+        "document": {
+          "height": 800,
+          "width": 1280
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/robotics-fleet-wide.png",
+        "sha256": "a72a1c0c575007b9fc6b4bc3a2b1856859fde500e2a2768819f24352c411b9b1"
+      },
+      {
+        "name": "robotics-fleet-narrow",
+        "url": "http://127.0.0.1:6008/iframe.html?id=lds-robotics-fleet-overview--hundred-robot-density&viewMode=story",
+        "note": "320px 100-robot summary wraps and vertically scrollable cards remain within viewport",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "height": 800,
+          "width": 320
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/robotics-fleet-narrow.png",
+        "sha256": "9161b186a766e5ac255ed0e9995a393385f9988c361f088d9ec18d287be3cd3a"
+      },
+      {
+        "name": "robotics-manual-control-wide",
+        "url": "http://127.0.0.1:6008/iframe.html?id=lds-robotics-control-manual-control-session--authorized-session&viewMode=story",
+        "note": "Authorized session begins disarmed with explicit authority/link checks",
+        "viewport": {
+          "height": 800,
+          "width": 1280
+        },
+        "document": {
+          "height": 832,
+          "width": 1265
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/robotics-manual-control-wide.png",
+        "sha256": "ca513d7be2dfae80b3bed3b8a6224dc8b45f5a9dac43adaeea958f1e6c9667c2"
+      },
+      {
+        "name": "robotics-manual-control-narrow-before",
+        "url": "http://127.0.0.1:6008/iframe.html?id=lds-robotics-control-manual-control-session--narrow-compound-states&viewMode=story",
+        "note": "Reproduced overflow at 320px before fixing the authored fixture",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "height": 1717,
+          "width": 384
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/robotics-manual-control-narrow-before.png",
+        "sha256": "658634a556a831b5e25042714a2dca029479a20017e5a8d2cf3dd5bb04d6b8a7"
+      },
+      {
+        "name": "robotics-manual-control-narrow-after",
+        "url": "http://127.0.0.1:6008/iframe.html?id=lds-robotics-control-manual-control-session--narrow-compound-states&viewMode=story",
+        "note": "320px에서 연결 stale·수동 제어 활성·정지 요청 실패의 3개 복합 상태를 확인. 정지/재시도 동작이 잘리지 않고 전체 문서 가로 스크롤 없음.",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "clientWidth": 305,
+          "scrollHeight": 1749,
+          "scrollWidth": 305
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/robotics-manual-control-narrow-after.png",
+        "sha256": "290cf4c398bd040e3f4a33924f23c4938a01915d0fd3ff8253d9af6e968e1bcc"
+      },
+      {
+        "name": "3d-amr-wide",
+        "url": "http://127.0.0.1:6007/iframe.html?id=lds-3d-primitives-amr-robot--overview&viewMode=story",
+        "note": "3D robot mesh and DOM inspector on desktop",
+        "viewport": {
+          "height": 800,
+          "width": 1280
+        },
+        "document": {
+          "height": 3193,
+          "width": 1265
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/3d-amr-wide.png",
+        "sha256": "c9a9d3d4e7dc707d1e81204bec3dda8a0ae110ce8d6459164455109ea329926a"
+      },
+      {
+        "name": "3d-operational-wide",
+        "url": "http://127.0.0.1:6007/iframe.html?id=visual-alpha--operational-neutral&viewMode=story",
+        "note": "Operational LDS DOM composition plus WebGL state/selection",
+        "viewport": {
+          "height": 800,
+          "width": 1280
+        },
+        "document": {
+          "height": 800,
+          "width": 1280
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/3d-operational-wide.png",
+        "sha256": "4a4395661e744b55a399dcf3420ac15c00e7b3ea29e0e5f968462899a5015d75"
+      },
+      {
+        "name": "3d-operational-top-cleared",
+        "url": "http://127.0.0.1:6007/iframe.html?id=visual-alpha--operational-neutral&viewMode=story",
+        "note": "Top camera readout switches to 상단; clearing selection produces the empty inspector",
+        "viewport": {
+          "height": 800,
+          "width": 1280
+        },
+        "document": {
+          "height": 800,
+          "width": 1280
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/3d-operational-top-cleared.png",
+        "sha256": "b1b0f0209743c49889ad22418cf96d76aacadbb9da336775cfe38bf4a595e3e8"
+      },
+      {
+        "name": "slides-viewer-wide",
+        "url": "http://127.0.0.1:6009/iframe.html?id=deck-viewer--default&viewMode=story#2",
+        "note": "Slides deck viewer at desktop; runtime chrome remains independent of slide layout",
+        "viewport": {
+          "height": 800,
+          "width": 1280
+        },
+        "document": {
+          "height": 800,
+          "width": 1280
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/slides-viewer-wide.png",
+        "sha256": "983f9a5637e419e0cac6cc621c775c62c65d369a730d36c2d8aade313c1480e2"
+      },
+      {
+        "name": "slides-viewer-narrow",
+        "url": "http://127.0.0.1:6009/iframe.html?id=deck-viewer--default&viewMode=story#3",
+        "note": "320px deck overview and navigation; slides scale as a presentation medium",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "height": 827,
+          "width": 305
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/slides-viewer-narrow.png",
+        "sha256": "665abf1f8e9b61340dd956f8c77a887a0f347c996169c5c26d8f3040cb43a489"
+      },
+      {
+        "name": "motion-preview-wide",
+        "url": "http://127.0.0.1:6011/",
+        "note": "TitleDemo paused preview with frame scrubber",
+        "viewport": {
+          "height": 800,
+          "width": 1280
+        },
+        "document": {
+          "height": 800,
+          "width": 1280
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/motion-preview-wide.png",
+        "sha256": "19ce5e04b2ffee66d9365241c2248d0884b596a6f51eb769f127489e4da3d2b2"
+      },
+      {
+        "name": "motion-title-end-frame",
+        "url": "http://127.0.0.1:6011/",
+        "note": "TitleDemo frame 119 renders the final title; seeking changes the frame/time readout",
+        "viewport": {
+          "height": 800,
+          "width": 1280
+        },
+        "document": {
+          "height": 800,
+          "width": 1280
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/motion-title-end-frame.png",
+        "sha256": "236af251166b51c0126af819e2c0747c5b88a5b155af93ff59a679e3496fb95a"
+      },
+      {
+        "name": "motion-preview-narrow",
+        "url": "http://127.0.0.1:6011/",
+        "note": "DeckDemo at 320px; frame controls and preview viewport",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "height": 800,
+          "width": 540
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/motion-preview-narrow.png",
+        "sha256": "3923511e9249b45450f4149a4983ae95af763250021ae531dc707af00ca8e29c"
+      },
+      {
+        "name": "motion-preview-narrow-after",
+        "url": "http://127.0.0.1:6011/",
+        "note": "320px에서 컴포지션·재생·프레임 탐색·시간 표기가 모두 보이고 가로 스크롤 없음. TitleDemo 119/120 프레임.",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "clientWidth": 320,
+          "scrollHeight": 800,
+          "scrollWidth": 320
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/motion-preview-narrow-after.png",
+        "sha256": "1b3e901b07845b80d2fb3207094a49e5b68f973e743d9be80117774b7a8ffc91"
+      },
+      {
+        "name": "slides-viewer-narrow-after",
+        "url": "http://127.0.0.1:6009/iframe.html?id=deck-viewer--default&viewMode=story#2",
+        "note": "320px에서 이전·다음·개요·전체화면 버튼은 한 줄 글자를 유지하고 진행률은 다음 줄로 배치. 가로 스크롤 없음.",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "clientWidth": 320,
+          "scrollHeight": 800,
+          "scrollWidth": 320
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/slides-viewer-narrow-after.png",
+        "sha256": "c1c28e8af7c0b74725e0945a49e1a03a2e44a6158fc4a0abd99f3a67991bfb1d"
+      },
+      {
+        "name": "3d-amr-narrow-after",
+        "url": "http://127.0.0.1:6007/iframe.html?id=lds-3d-primitives-amr-robot--overview&viewMode=story",
+        "note": "320px AMR 상태·위치 신뢰도·실제 Tron GLB와 메타데이터. 공개 DescriptionList stacked로 전체 문서 가로 스크롤 제거.",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "clientWidth": 305,
+          "scrollHeight": 3955,
+          "scrollWidth": 305
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/3d-amr-narrow-after.png",
+        "sha256": "1de2efe9b790f5501e1a286e7ff970de3c5fcf9d7e8173a20c6a32ba21e1f3e9"
+      },
+      {
+        "name": "3d-amr-wide-after",
+        "url": "http://127.0.0.1:6007/iframe.html?id=lds-3d-primitives-amr-robot--overview&viewMode=story",
+        "note": "1280px AMR 메타데이터와 공유 검토 근거의 세로형 읽기 순서. 실제 WebGL 장면 유지.",
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        },
+        "document": {
+          "clientWidth": 1265,
+          "scrollHeight": 3571,
+          "scrollWidth": 1265
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/3d-amr-wide-after.png",
+        "sha256": "c34d7fa8249e00959f50db41ff6320c0ad52a5c8bd7d827dd88b07e77fa23737"
+      },
+      {
+        "name": "slides-viewer-wide-after",
+        "url": "http://127.0.0.1:6009/iframe.html?id=deck-viewer--default&viewMode=story#2",
+        "note": "1280px 탐색 버튼과 진행률/페이지 표기. 거버닝 미기재는 의도된 콘텐츠 검토 fixture.",
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        },
+        "document": {
+          "clientWidth": 1265,
+          "scrollHeight": 790,
+          "scrollWidth": 1265
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/slides-viewer-wide-after.png",
+        "sha256": "1f02dd2d6a00b74046cd2fb97e7ee5c9b2ee942d8f1ca5d073f2492804bf7448"
+      },
+      {
+        "name": "motion-preview-wide-after",
+        "url": "http://127.0.0.1:6011/",
+        "note": "1280px TitleDemo 최종 프레임, 읽을 수 있는 프레임/시간 표기 및 이름 있는 재생·탐색 컨트롤.",
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        },
+        "document": {
+          "clientWidth": 1280,
+          "scrollHeight": 720,
+          "scrollWidth": 1280
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/motion-preview-wide-after.png",
+        "sha256": "2c355c2a5242873bee8d670f6043f7674a8b9be90c018f3f2d3b15cf18581ff1"
+      },
+      {
+        "name": "theme-provider-narrow-before",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-theme-controls-theme-toggle--provider-runtime-contract&viewMode=story",
+        "note": "Before fix: configured target/runtime were Dark/RTL but the open Portal retained Light after a Light→Dark round trip.",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "clientWidth": 320,
+          "scrollHeight": 800,
+          "scrollWidth": 320
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/theme-provider-narrow.png",
+        "sha256": "c891bc5b1ae44bc4c6e538a122d25bb5018e67a358fee446c5265fdc2ff05dae"
+      },
+      {
+        "name": "theme-provider-narrow-after",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-theme-controls-theme-toggle--provider-runtime-contract&viewMode=story",
+        "note": "최종 320px Dark Provider: label-neutral 선택지, 열린 Dark Portal, RTL 유지. 48개 스토리/13개 문서 Axe guard와 왕복 회귀 play 통과.",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "clientWidth": 320,
+          "scrollHeight": 800,
+          "scrollWidth": 320
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/theme-provider-narrow-after.png",
+        "sha256": "90cef383e19fef9f568f08f4d0e0db859c47ec7a24d2576f910d812038f0691e"
+      },
+      {
+        "name": "theme-provider-wide-after",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-theme-controls-theme-toggle--provider-runtime-contract&viewMode=story",
+        "note": "1280px Dark Provider의 미선택 항목에 SegmentedControl과 같은 label-neutral 적용. Portal과 RTL 왕복 회귀 play 완료.",
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        },
+        "document": {
+          "clientWidth": 1280,
+          "scrollHeight": 720,
+          "scrollWidth": 1280
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/theme-provider-wide-after.png",
+        "sha256": "ef5de6c8fa21fb33cfa6c43cd54a0543bfe234427389e6139eeb0e0c05e31c75"
+      },
+      {
+        "name": "core-body-corners-wide",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-core-components-status-notices-and-callouts--body-corners&viewMode=story",
+        "note": "Existing default and authored 8px body corners preserve the same Callout content and hierarchy; IA variation role confirmed.",
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        },
+        "document": {
+          "clientWidth": 1280,
+          "scrollHeight": 720,
+          "scrollWidth": 1280
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/core-body-corners-wide.png",
+        "sha256": "6668cdba1388129f371b133e841d774805a6df2e7982048037c851a0c9f4fb01"
+      },
+      {
+        "name": "core-body-corners-narrow",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-core-components-status-notices-and-callouts--body-corners&viewMode=story",
+        "note": "320px rendered audit of the existing body-corner comparison; no design-axis changes.",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "clientWidth": 320,
+          "scrollHeight": 800,
+          "scrollWidth": 320
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/core-body-corners-narrow.png",
+        "sha256": "3cef7beadb8c2a62afe17e04557c9dbdd1303eceac9b848dbe4e9e47638d4f22"
+      },
+      {
+        "name": "core-callout-variants-narrow",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-core-components-status-notices-and-callouts--callout-variants&viewMode=story",
+        "note": "320px long-content comparison retains default/bordered variants and comfortable/compact density; content continues vertically.",
+        "viewport": {
+          "height": 800,
+          "width": 320
+        },
+        "document": {
+          "clientWidth": 305,
+          "scrollHeight": 2545,
+          "scrollWidth": 305
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/core-callout-variants-narrow.png",
+        "sha256": "902de5205efb59cbf5644ab9598bf9c9e04f88bb6644a256af076a235c3affae"
+      },
+      {
+        "name": "core-callout-variants-wide",
+        "url": "http://127.0.0.1:6006/iframe.html?id=lds-core-components-status-notices-and-callouts--callout-variants&viewMode=story",
+        "note": "1280px variant/density comparison; unchanged owner, same long-content structure.",
+        "viewport": {
+          "height": 720,
+          "width": 1280
+        },
+        "document": {
+          "clientWidth": 1265,
+          "scrollHeight": 1238,
+          "scrollWidth": 1265
+        },
+        "screenshot": "visual-artifacts/series-audit-2026-10-05/core-callout-variants-wide.png",
+        "sha256": "70f5aa0a6b7c19e3207028d9544a927f5a1f46ec49ee39d7649ed9657d3f9796"
+      }
+    ]
+  },
+  "consumerObservations": [
+    {
+      "id": "portal",
+      "repository": "LK-ROBOTICS-AX/lk_portal",
+      "currentSourceCommit": "937c1fc71e39b58d085c0b1b6dc89b0fcbaf172f",
+      "recordedSourceCommit": "949a1261e8f61842a42d07ca4b62c7ff71cc45da",
+      "packages": {
+        "@lk-design-system/lds-core": "0.2.9",
+        "@lk-design-system/lds-product": "0.2.9",
+        "@lk-design-system/lds-theme": "0.2.9"
+      },
+      "recordedStage": "workflow-verified",
+      "recordedDeployment": "not-attested",
+      "packageEvidence": "requires-reverification",
+      "sourceEvidence": "different-source-not-reverified",
+      "packageChanges": [
+        {
+          "name": "@lk-design-system/lds-core",
+          "recordedVersion": "0.1.0",
+          "currentVersion": "0.2.9"
+        },
+        {
+          "name": "@lk-design-system/lds-theme",
+          "recordedVersion": "0.1.0",
+          "currentVersion": "0.2.9"
+        },
+        {
+          "name": "@lk-design-system/lds-product",
+          "recordedVersion": "0.1.0",
+          "currentVersion": "0.2.9"
+        }
+      ],
+      "note": "Observed main pins do not promote workflow verification or deployment. Historical approvals are preserved.",
+      "currentRole": "Active governed Portal and robot workspace"
+    },
+    {
+      "id": "web-viz",
+      "repository": "LK-ROBOTICS/lk_web_viz",
+      "currentSourceCommit": "56827116373ef02a239c375cc791a87febdc5f57",
+      "recordedSourceCommit": "8f493fd3475eb6c7516fdf7d3aca3265c2b7db87",
+      "packages": {
+        "@lk-design-system/lds-core": "0.1.0",
+        "@lk-design-system/lds-theme": "0.1.0",
+        "@lk-design-system/lds-product": "0.1.0",
+        "@lk-design-system/lds-robotics-ui": "0.1.0-rc.33",
+        "@lk-design-system/lds-3d-assets": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-core": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-markers": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-pointcloud": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-r3f": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-tf": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-three": "0.1.0-alpha.1",
+        "@lk-design-system/lds-motion": "0.1.0-alpha.2",
+        "@lk-design-system/lds-slides-ui": "0.1.0-alpha.1"
+      },
+      "recordedStage": "workflow-verified",
+      "recordedDeployment": "not-attested",
+      "packageEvidence": "same-package-pins",
+      "sourceEvidence": "different-source-not-reverified",
+      "packageChanges": [],
+      "note": "Observed main pins do not promote workflow verification or deployment. Historical approvals are preserved.",
+      "currentRole": "Maintenance-only reference"
+    },
+    {
+      "id": "robot-ops",
+      "repository": "LK-ROBOTICS/lk_robot_ops",
+      "currentSourceCommit": "8efc279a98970117823e4c884cdd8a653ca9edff",
+      "recordedSourceCommit": "bb631914bd57763a37d0ad49f40c641ba872d1f2",
+      "packages": {
+        "@lk-design-system/lds-core": "0.1.0",
+        "@lk-design-system/lds-theme": "0.1.0",
+        "@lk-design-system/lds-product": "0.1.0",
+        "@lk-design-system/lds-robotics-ui": "0.1.0-rc.34",
+        "@lk-design-system/lds-3d-assets": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-core": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-markers": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-pointcloud": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-r3f": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-tf": "0.1.0-alpha.1",
+        "@lk-design-system/lds-3d-three": "0.1.0-alpha.1",
+        "@lk-design-system/lds-motion": "0.1.0-alpha.2",
+        "@lk-design-system/lds-slides-ui": "0.1.0-alpha.1"
+      },
+      "recordedStage": "workflow-verified",
+      "recordedDeployment": "not-attested",
+      "packageEvidence": "same-package-pins",
+      "sourceEvidence": "different-source-not-reverified",
+      "packageChanges": [],
+      "note": "Observed main pins do not promote workflow verification or deployment. Historical approvals are preserved.",
+      "currentRole": "LK Robot Runtime; historical frontend package provenance"
+    }
+  ],
+  "nextWork": [
+    {
+      "priority": 1,
+      "owner": "LDS release owner",
+      "scope": "Prepare subsequent releases for the local Core/Theme fixes, existing 3D extensions and current Slides source; keep package identity and paired evidence explicit.",
+      "status": "pending-release-actions"
+    },
+    {
+      "priority": 2,
+      "owner": "Portal/product owner",
+      "scope": "Reverify current Portal robot-workspace workflows against its actual 0.2.9 vendored pins before an adoption or deployment promotion.",
+      "status": "product-evidence-required"
+    },
+    {
+      "priority": 3,
+      "owner": "3D/product owners",
+      "scope": "Decide R3F 8 compatibility or product stack upgrade before introducing renderer bindings; evaluate pure core functions first.",
+      "status": "owner-decision-required"
+    },
+    {
+      "priority": 4,
+      "owner": "LDS operations",
+      "scope": "H1 notification-delivery evidence, H2 declaration register, H3 independent review evidence, H4 whole-composition blind spots and H5 recurring audit closure.",
+      "status": "partial-and-open-harness-work"
+    }
+  ],
+  "preserved": [
+    "Historical LDS_CONSUMER_REGISTRY approvals and deployment status",
+    "3D Core/Theme/Product 0.4.2 manifest, lockfile and workflow pins",
+    "Product repository code and settings"
+  ],
+  "informationArchitectureReview": {
+    "status": "approved-and-verified",
+    "agentReview": {
+      "reviewer": "Codex",
+      "reviewedAt": "2026-10-05T09:09:30.882Z",
+      "method": "Built-index/AST comparison, manual source and recorded change inspection, plus 1280px/320px renders for both new comparison stories",
+      "limitation": "This agent review does not replace the human review required by the IA contract or H3 independent reviewer evidence."
+    },
+    "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
+    "instruction": "새 스토리를 추가하거나 title, tags, 소유 컴포넌트를 변경하면 원장을 갱신한 뒤 새 역할과 페이지 판정을 사람이 검토한다.",
+    "ledger": "docs/references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json",
+    "ledgerSha256": "ccd2743101fff37ae029c88358e638e53ce8acb076d5bf17e00069beef97ba4d",
+    "summary": {
+      "pages": 200,
+      "stories": 762,
+      "publicStories": 527,
+      "hiddenStories": 235,
+      "componentDescriptions": 195,
+      "pagesWithVisibleCanvasIntroduction": 195,
+      "pagesWithDecisionGuidance": 188,
+      "describedPublicStories": 527,
+      "reviewedPages": 200,
+      "reviewedStories": 762,
+      "staleReviewedPages": 0,
+      "recommendedVisibilityChanges": 0,
+      "roles": {
+        "foundation-reference": 20,
+        "overview": 183,
+        "usage": 42,
+        "variants-states": 116,
+        "interaction": 57,
+        "responsive": 84,
+        "scenario": 29,
+        "visual-parity": 101,
+        "internal-contract": 130
+      },
+      "dispositions": {
+        "keep": 199,
+        "merge": 0,
+        "split": 0,
+        "hide": 1
+      },
+      "layers": {
+        "Core": {
+          "pages": 66,
+          "stories": 243,
+          "public": 135,
+          "hidden": 108,
+          "guideReadyPages": 66
+        },
+        "Foundation": {
+          "pages": 16,
+          "stories": 22,
+          "public": 17,
+          "hidden": 5,
+          "guideReadyPages": 12
+        },
+        "Product": {
+          "pages": 113,
+          "stories": 488,
+          "public": 369,
+          "hidden": 119,
+          "guideReadyPages": 112
+        },
+        "Theme": {
+          "pages": 4,
+          "stories": 8,
+          "public": 5,
+          "hidden": 3,
+          "guideReadyPages": 4
+        },
+        "Other": {
+          "pages": 1,
+          "stories": 1,
+          "public": 1,
+          "hidden": 0,
+          "guideReadyPages": 1
+        }
+      }
+    },
+    "currentHumanReviewedPages": 200,
+    "preservedExistingStories": 760,
+    "existingVisibilityChanges": 0,
+    "removedStoryIds": [],
+    "proposedDecision": "Retain the existing owner/disposition/public visibility for the 20 changed pages. Accept both added Notices and Callouts stories as public variants-states with their Korean role-prefixed names.",
+    "changedPages": [
+      {
+        "title": "LDS Core/Components/Layout/Grid and Columns",
+        "source": "./stories/LayoutGrid.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "Grid",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-07-25",
+        "previousHumanReviewedSourceSha256": "c76cea5b65f593ec8675994c61acfc94bf3acea01292a2f27ba56e29ee0a8f2a",
+        "currentSourceSha256": "77f1f795d71a68bc07a2b3af452b787bd45673b96f6afe67468f20b82f557e79",
+        "agentFinding": "Primary heavy color reference now uses primary ink strong; layout owner and public roles remain Grid/Columns.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "77f1f795d71a68bc07a2b3af452b787bd45673b96f6afe67468f20b82f557e79"
+      },
+      {
+        "title": "LDS Core/Components/Selection and Input/Select",
+        "source": "./stories/FormSelect.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "Select",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-08-02",
+        "previousHumanReviewedSourceSha256": "c5e6bc1884c4b2d69267452e3484e872432aec58445f909bb597893908263935",
+        "currentSourceSha256": "58d01a78294ae81151ab2b5ebb2b8bd9ff55f67186f0bb137d60fdfe2d60424f",
+        "agentFinding": "Existing popup/option radius assertions follow the current 10px/6px density contract; Select ownership and role remain.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "58d01a78294ae81151ab2b5ebb2b8bd9ff55f67186f0bb137d60fdfe2d60424f"
+      },
+      {
+        "title": "LDS Core/Components/Status/Notices and Callouts",
+        "source": "./stories/StatusFeedback.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "Banner",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-09-23",
+        "previousHumanReviewedSourceSha256": "e78321d7cc28859aae8442322488a8d85009e5c1974042221e08427215aac262",
+        "currentSourceSha256": "8ecb2af03fe254e09e75e0f85039f936f36ebcd1c4f6343f08f80f2a71edcd23",
+        "agentFinding": "Standing Callout actions use native TextButton with CTA before dismiss; no live announcement for standing content. Existing 320px compounds remain. Two border/body-corner comparisons belong to variants-states on this page.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "8ecb2af03fe254e09e75e0f85039f936f36ebcd1c4f6343f08f80f2a71edcd23"
+      },
+      {
+        "title": "LDS Core/Foundation/Iconography",
+        "source": "./stories/Iconography.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "Foundation:Iconography",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-07-25",
+        "previousHumanReviewedSourceSha256": "24bb3c091281990a8b53bdb6f9936f84209187391ce429210301cdd905a3d1de",
+        "currentSourceSha256": "6d18665a29addbae4e10a9056712b2ca3163df6996613b1f74ee05b3440c6009",
+        "agentFinding": "Status color samples use foreground tokens; the Foundation subject and reference role remain.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "6d18665a29addbae4e10a9056712b2ca3163df6996613b1f74ee05b3440c6009"
+      },
+      {
+        "title": "LDS Product/Communication/Message Composer",
+        "source": "./stories/CommunicationMessageComposer.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "MessageComposer",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-08-22",
+        "previousHumanReviewedSourceSha256": "52fe4e70eae3b866c67e721d0372d40c1b002d33e6e6388a28ef58337a9a772f",
+        "currentSourceSha256": "5e9226d8384b68ea0cbb62a5c65e86a605b02309b7433beafccf385369acb28b",
+        "agentFinding": "Compact radius assertions follow current composer/action 12px/8px geometry; composer ownership and contracts remain.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "5e9226d8384b68ea0cbb62a5c65e86a605b02309b7433beafccf385369acb28b"
+      },
+      {
+        "title": "LDS Product/Data/Collections/Data Grid",
+        "source": "./stories/DataGrid.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "DataGrid",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-08-22",
+        "previousHumanReviewedSourceSha256": "40052d846be2179a50269052144067be3701bcbb768573c41807decd2253cb51",
+        "currentSourceSha256": "7a84e75c9503a0e9f978f9bb9fb4669b124d269c596652d22532c90d522a1e65",
+        "agentFinding": "Status labels use foreground tokens; pinned identity, selection and detail composition remain owned by DataGrid.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "7a84e75c9503a0e9f978f9bb9fb4669b124d269c596652d22532c90d522a1e65"
+      },
+      {
+        "title": "LDS Product/Data/Collections/Table",
+        "source": "./stories/DataTable.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "Table",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-09-17",
+        "previousHumanReviewedSourceSha256": "2330ed4be4e6d9f2c257dd11e684b26dfd9521ae8dccebff11b588bc2cc407e9",
+        "currentSourceSha256": "0970ef9f9aa6b37fe0f60a6a49ed090253c6ea036ad5c0debefc7877f39f3368",
+        "agentFinding": "Status text uses foreground tokens; Table ownership, data reading order and public roles remain.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "0970ef9f9aa6b37fe0f60a6a49ed090253c6ea036ad5c0debefc7877f39f3368"
+      },
+      {
+        "title": "LDS Product/Data/Collections/Tree",
+        "source": "./stories/DataTree.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "Tree",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-08-01",
+        "previousHumanReviewedSourceSha256": "1069911b70e0dc9ce305ed9e0b90e8a3e7908749a76b31fef4ec158c09bf3d2e",
+        "currentSourceSha256": "650010afaf0f14c06ba683a2381a368b7abcbe1ae95aa2196684e5f02254da11",
+        "agentFinding": "Status text uses foreground tokens; Tree ownership and keyboard contract remain.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "650010afaf0f14c06ba683a2381a368b7abcbe1ae95aa2196684e5f02254da11"
+      },
+      {
+        "title": "LDS Product/Data/Visualization/Donut Chart",
+        "source": "./stories/DataDonutChart.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "DonutChart",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-07-25",
+        "previousHumanReviewedSourceSha256": "25603819c02c69c53c671fc973697711de806b72e480e2c420b3ebf59edb094b",
+        "currentSourceSha256": "2089863d409149efb2dd6eb7451f775d8387b990ae8bed8402a2880dd2b23058",
+        "agentFinding": "Status text uses foreground tokens; DonutChart ownership and chart role remain.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "2089863d409149efb2dd6eb7451f775d8387b990ae8bed8402a2880dd2b23058"
+      },
+      {
+        "title": "LDS Product/Data/Visualization/Legend",
+        "source": "./stories/DataLegend.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "Legend",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-07-25",
+        "previousHumanReviewedSourceSha256": "9f6faf0ea32dd2bad7be0af808ccf769212e338a43eef643544198967d96ac98",
+        "currentSourceSha256": "097a5cddd0f1aab8167a21be32f31fffd0b9d9feb35cb0ccc9593ef10e816659",
+        "agentFinding": "Status labels use foreground tokens; Legend owns the meaning/key contract.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "097a5cddd0f1aab8167a21be32f31fffd0b9d9feb35cb0ccc9593ef10e816659"
+      },
+      {
+        "title": "LDS Product/Data/Visualization/Line Chart",
+        "source": "./stories/DataLineChart.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "LineChart",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-09-17",
+        "previousHumanReviewedSourceSha256": "b68e65ccd0708b1a3e823244ffbcf61088f6d43087f609bb6140a2133edca92c",
+        "currentSourceSha256": "b1e6bb0c430b8f463d57f813aedf125764df57aa5229b6d8b259a2a3eb152d7e",
+        "agentFinding": "Status text uses foreground tokens; LineChart owns the chart contract.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "b1e6bb0c430b8f463d57f813aedf125764df57aa5229b6d8b259a2a3eb152d7e"
+      },
+      {
+        "title": "LDS Product/Layout/Dock Panel",
+        "source": "./stories/LayoutDockPanel.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "DockPanel",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-07-30",
+        "previousHumanReviewedSourceSha256": "c6d37aa3e6f3141b4e55a2d2e9865980bd346d0aefa90ce28ef3967eb4652c89",
+        "currentSourceSha256": "3b1b903b15d6f050ee7eb439bc49fc0db227d4fd1a467547b17f465720ec473d",
+        "agentFinding": "Status marker uses foreground tokens; DockPanel continues to own dock/resize behavior.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "3b1b903b15d6f050ee7eb439bc49fc0db227d4fd1a467547b17f465720ec473d"
+      },
+      {
+        "title": "LDS Product/Navigation/Language Switcher",
+        "source": "./stories/NavigationLanguageSwitcher.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "LanguageSwitcher",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-08-02",
+        "previousHumanReviewedSourceSha256": "cc2ece707af22d3626d894707beda922c7817aa23809f1dfb4b58666e8d7f173",
+        "currentSourceSha256": "a07d63b6566c623c50dda3bb7bbef3473ad99336c06ab6ce8f0f241dd6a37749",
+        "agentFinding": "Existing popup/option radius assertions follow current 10px/6px density; LanguageSwitcher ownership remains.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "a07d63b6566c623c50dda3bb7bbef3473ad99336c06ab6ce8f0f241dd6a37749"
+      },
+      {
+        "title": "LDS Product/Navigation/Side Nav",
+        "source": "./stories/NavigationSideNav.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "SideNav",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-09-08",
+        "previousHumanReviewedSourceSha256": "c3ae577b036fb93e6cf1c6c24c660488bbc5f03fc172cd51c10d9dfad4362bb9",
+        "currentSourceSha256": "883859da0a3df5be2e3df9addbcc26ccb7178cf91014dd838d7fa61328ed1d75",
+        "agentFinding": "Brand Lockup is adaptive in the authored navigation surface; the page still owns SideNav, without adding a logo home.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "883859da0a3df5be2e3df9addbcc26ccb7178cf91014dd838d7fa61328ed1d75"
+      },
+      {
+        "title": "LDS Product/Navigation/Top Bar",
+        "source": "./stories/Navigation.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "TopBar",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-08-23",
+        "previousHumanReviewedSourceSha256": "42954e80776a95b4c67a95b67791ae865cac01c78430671020fbd2a31fd86071",
+        "currentSourceSha256": "389949d89fcd96ad655192c935338139b56a275f7b2d9ca046a597d6a0c8003b",
+        "agentFinding": "Brand Lockup is adaptive and popup radius assertion follows 10px density; the page still owns TopBar.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "389949d89fcd96ad655192c935338139b56a275f7b2d9ca046a597d6a0c8003b"
+      },
+      {
+        "title": "LDS Product/Operations Dashboard/Dashboard Shell",
+        "source": "./stories/LayoutDashboardShell.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "DashboardShell",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-09-08",
+        "previousHumanReviewedSourceSha256": "1b854cccfe581978b5288d05db43039991197250513c1329f9ba37609c1d5c7c",
+        "currentSourceSha256": "23fad3e647dd257cb4db1d0c3bf1fec26a0f81c47d530309ade08bec309de535",
+        "agentFinding": "Brand Lockup is adaptive in the shell; reusable dashboard composition ownership remains.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "23fad3e647dd257cb4db1d0c3bf1fec26a0f81c47d530309ade08bec309de535"
+      },
+      {
+        "title": "LDS Product/Selection and Input/Color Swatch",
+        "source": "./stories/SelectionColorSwatch.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "ColorSwatch",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-07-25",
+        "previousHumanReviewedSourceSha256": "294081e404b9a1a287059c22aa1df06d242dce1736961be5f7d0be87ff39c0c0",
+        "currentSourceSha256": "d2c7b05f10266d940c2844acb3e3aea6136b628d206177219dc745e2d9ef2708",
+        "agentFinding": "Status swatches use signal tokens and accent samples use canonical cyan/pink; ColorSwatch owns color selection.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "d2c7b05f10266d940c2844acb3e3aea6136b628d206177219dc745e2d9ef2708"
+      },
+      {
+        "title": "LDS Product/Selection and Input/Secret Field",
+        "source": "./stories/FormSecretField.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "SecretField",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-07-25",
+        "previousHumanReviewedSourceSha256": "82fe77c9070a3b9f0fc08a77ebcbdc5b71798615a20fcaf5e2b130adbbb2a651",
+        "currentSourceSha256": "a2b3e6d4e8188d467f132ef2e3cb7c7d152ae2ca072bb7d77cf65deb9cbd052f",
+        "agentFinding": "Copy-result feedback uses foreground tokens; SecretField owns secret visibility/copy behavior.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "a2b3e6d4e8188d467f132ef2e3cb7c7d152ae2ca072bb7d77cf65deb9cbd052f"
+      },
+      {
+        "title": "LDS Theme/Brand/LK ROBOTICS Logo",
+        "source": "./stories/Brand.stories.jsx",
+        "sourceDependencies": [
+          {
+            "path": "stories/Brand.shared.jsx",
+            "sha256": "5c409d2cc5e1453596373a3ccefc2a0dbe8d651b56a5196dbb6cbfc5d6620026"
+          }
+        ],
+        "primaryOwner": "Lockup",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-08-22",
+        "previousHumanReviewedSourceSha256": "4264a71072f72b6572fa7903ab1154d944465f6f602f780d38f9e8dfc7929e1c",
+        "currentSourceSha256": "45f2fdd780eecb1dcfa50e468adf5710bfd9275bd8b6c55879c444e920b7dde1",
+        "agentFinding": "Explicit Brand.shared.jsx dependency is included in the source hash. Its misuse marker uses negative foreground; geometry/asset approval and platform delivery claims are not promoted.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "45f2fdd780eecb1dcfa50e468adf5710bfd9275bd8b6c55879c444e920b7dde1"
+      },
+      {
+        "title": "LDS Theme/Controls/Theme Toggle",
+        "source": "./stories/SelectionThemeToggle.stories.jsx",
+        "sourceDependencies": [],
+        "primaryOwner": "ThemeToggle",
+        "proposedDisposition": "keep",
+        "previousHumanReviewDate": "2026-08-02",
+        "previousHumanReviewedSourceSha256": "c64249496478f5834e770da83148c9d1d25aef4aea546b8b382a89f98f8446a9",
+        "currentSourceSha256": "777ee2f21fc74a183aa5f1a211ede30f29c110657279944ea508d420e0b99f47",
+        "agentFinding": "Configured target carries semantic background/foreground and the open Portal is asserted through a Light-to-Dark round trip including RTL; this remains a hidden runtime contract.",
+        "humanReviewStatus": "approved",
+        "approvedSourceSha256": "777ee2f21fc74a183aa5f1a211ede30f29c110657279944ea508d420e0b99f47"
+      }
+    ],
+    "newStories": [
+      {
+        "id": "lds-core-components-status-notices-and-callouts--body-corners",
+        "name": "변형·상태 · 본문 박스 모서리",
+        "ownerPage": "LDS Core/Components/Status/Notices and Callouts",
+        "proposedRole": "variants-states",
+        "proposedVisibility": "public",
+        "reviewStatus": "reviewed",
+        "source": "stories/StatusFeedback.stories.jsx",
+        "renderEvidence": [
+          "visual-artifacts/series-audit-2026-10-05/core-body-corners-wide.png",
+          "visual-artifacts/series-audit-2026-10-05/core-body-corners-narrow.png",
+          "visual-artifacts/series-audit-2026-10-05/core-callout-variants-wide.png",
+          "visual-artifacts/series-audit-2026-10-05/core-callout-variants-narrow.png"
+        ]
+      },
+      {
+        "id": "lds-core-components-status-notices-and-callouts--callout-variants",
+        "name": "변형·상태 · 콜아웃 테두리",
+        "ownerPage": "LDS Core/Components/Status/Notices and Callouts",
+        "proposedRole": "variants-states",
+        "proposedVisibility": "public",
+        "reviewStatus": "reviewed",
+        "source": "stories/StatusFeedback.stories.jsx",
+        "renderEvidence": [
+          "visual-artifacts/series-audit-2026-10-05/core-body-corners-wide.png",
+          "visual-artifacts/series-audit-2026-10-05/core-body-corners-narrow.png",
+          "visual-artifacts/series-audit-2026-10-05/core-callout-variants-wide.png",
+          "visual-artifacts/series-audit-2026-10-05/core-callout-variants-narrow.png"
+        ]
+      }
+    ],
+    "guard": {
+      "command": "npm run check:storybook-ia",
+      "status": "passed",
+      "primaryDescriptionReview": {
+        "status": "passed",
+        "checked": 195
+      },
+      "patternGuides": {
+        "status": "passed",
+        "checked": 1
+      },
+      "previousObservation": {
+        "status": "failed-human-review-pending",
+        "error": "Every story must have a completed human review.",
+        "additionalCondition": "20 previously reviewed page hashes changed. Neither prior hashes nor pending status were overwritten."
+      },
+      "checkedAt": "2026-10-05T10:51:15.086Z",
+      "evidence": "Successful npm run check:storybook-ia exit: 200 pages / 762 stories current, one Pattern guide and 195 primary descriptions validated."
+    },
+    "humanApproval": {
+      "reviewer": "human-user",
+      "recordedAt": "2026-10-05T10:47:08.120Z",
+      "userMessage": "승인",
+      "source": "Explicit user reply to the IA classification proposal in this chat",
+      "approvedProposal": "Retain the existing owner/disposition/public visibility for the 20 changed pages. Accept both added Notices and Callouts stories as public variants-states with their Korean role-prefixed names.",
+      "approvedProposalLedgerSha256": "a537a6e7eba98dde8eeedb3e346b4fee41624af835bb9c99668cb10f2adc25e5",
+      "approvedPages": 20,
+      "approvedNewStories": 2,
+      "scope": "IA page ownership/disposition and new story role/visibility only"
+    },
+    "preApprovalSummary": {
+      "reviewedPages": 200,
+      "reviewedStories": 760,
+      "staleReviewedPages": 20
+    },
+    "acceptedDecision": "Retain the existing owner/disposition/public visibility for the 20 changed pages. Accept both added Notices and Callouts stories as public variants-states with their Korean role-prefixed names."
+  }
+}

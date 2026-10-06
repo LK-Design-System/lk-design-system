@@ -273,7 +273,7 @@ export const BannerSurfaceVariants = {
 export const BannerCard = { ...BannerCardStory, name: 'Banner card parity', tags: ['!dev', 'visual-parity'] };
 
 export const CalloutVariants = {
-  name: '콜아웃 테두리',
+  name: '변형·상태 · 콜아웃 테두리',
   parameters: storyDescription('배경으로 구분하는 기본형과 얇은 톤 테두리를 더한 변형입니다. 제목과 본문의 크기, 콘텐츠 위치는 같습니다.'),
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--space-6)', maxWidth: 960 }}>
@@ -297,7 +297,7 @@ export const CalloutVariants = {
 };
 
 export const BodyCorners = {
-  name: '본문 박스 모서리',
+  name: '변형·상태 · 본문 박스 모서리',
   parameters: storyDescription('같은 본문 열의 인용과 안내에는 radius="body"를 함께 지정합니다. 기본 모서리와 8px 본문 모서리를 비교합니다.'),
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: 'var(--space-6)', maxWidth: 960 }}>

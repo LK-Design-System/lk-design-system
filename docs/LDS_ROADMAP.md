@@ -5,7 +5,7 @@
 | Type | Roadmap |
 | Status | Current |
 | Owner | Design system owner · Frontend platform · 해당 Product/Robotics owner |
-| Last reviewed | 2026-08-23 |
+| Last reviewed | 2026-10-05 |
 | Planning baseline | LDS `0.1.0` · `lds-v0.1.0` · `085ba9e72522dfe628a2d39d00583d0bb8d756d4`; Robotics UI `0.1.0-rc.33` · `v0.1.0-rc.33` · `bf7965ee05cd926722cefc7e60d6ddd5560c3c8a` |
 | Review cadence | release candidate 변경 · consumer evidence 변경 · 2027-01 lifecycle review |
 | Current-state sources | current source와 package manifest · owner authority · consumer promotion registry · Robotics readiness · generated satellite pin report |
@@ -59,14 +59,17 @@ source와 machine-readable evidence가, 정책은 [`OPERATING_MODEL.md`](OPERATI
 
 R3A·R3B의 stable 차단 결정, R4 첫 stable 승격과 R4.1 source-level 계층 계약 closure는
 닫혔다. R4.1은 이미 발행된 `0.1.0` package identity나 consumer/deployment 상태를 바꾸지
-않고 다음 release에 들어갈 source와 machine gate를 정리한 후속이다. 현재 package source
-candidate identity는 `0.1.1`이며 tag·registry publish·consumer 재검증은 아직 없다.
+않고 다음 release에 들어갈 source와 machine gate를 정리한 후속이다. 당시 source candidate는
+`0.1.1`이었다. 현재 package·발행·원격 CI·제품 핀은
+[`LDS_REPOSITORY_HEALTH.json`](references/quality/LDS_REPOSITORY_HEALTH.json)의 관측 시점과 exact SHA를
+확인한다. 첫 stable의 승인 기록을 이후 package나 제품 source의 검증으로 확대하지 않는다.
 
 2026-08-23 R7의 유한한 비-Storybook evidence adapter 결정도 닫혔다. Adoption contract v2는
 built Storybook exact story ID와 deterministic production-preview workflow artifact를 동등한
 hard-trigger evidence 선택지로 받는다. 후자는 clean source identity, production build,
 workflow smoke, accessibility, theme×viewport run 안의 ready/non-ready state, spec·runner·CI
-hash를 검증한다. 따라서 현재 무조건부 release-train open problem은 0이다.
+hash를 검증한다. 이 first-stable adapter 결정의 유한 후속은 종료했다. 현행 운영·하네스의
+열린 문제는 R7/H1–H5와 시리즈별 관측에서 따로 판단한다.
 
 R1에서 닫힌 문제와 재검증 진입점은 다음과 같다.
 
@@ -75,7 +78,13 @@ R1에서 닫힌 문제와 재검증 진입점은 다음과 같다.
 | 현재 owner authority 충돌 | [`OWNER_AUTHORITY_CONTRACT.json`](references/architecture/OWNER_AUTHORITY_CONTRACT.json)과 `check:layers`: 현재 module/export, token source, 196 canonical Storybook page와 10 domain boundary exact-set one-owner 검증 |
 | RC-only registry와 선언적 stage | registry/attestation schema v2, [`CONSUMER_ADOPTION_PROMOTION_CONTRACT.md`](references/adoption/CONSUMER_ADOPTION_PROMOTION_CONTRACT.md), `check:adoption-registry`와 양성·음성 contract tests |
 | 대표 제품 adoption 승인 | Portal source `949a1261...`/stable approval evidence `b4879566`, Web Viz source `8f493fd3...`/stable approval evidence `30197094`; 두 registry entry 모두 stable `workflow-verified`, deployment는 `not-attested` |
-| Storybook IA·inventory currentness | IA 196/196 page·732/732 story review, stale 0; generated inventory와 `check:storybook-ia`, `check:inventory`, `check:docs` |
+| Storybook IA·inventory currentness | R1 종료 당시 IA 196/196 page·732/732 story review, stale 0; 현행 census와 재검토 상태는 아래 current-state 관측을 적용 |
+
+2026-10-05 현재 census는 200 page·762 story이며, 과거 사람 검토 뒤 변경된 20 page와
+신규 2 story의 IA 분류 판정은 사용자 승인으로 닫았다. 인벤토리와 역할·표시명은 동기화했으며,
+페이지 owner와 `keep` 유지·두 스토리의 `variants-states` 공개 판정 근거와 승인 기록은
+[`LDS_SERIES_COMPLETENESS_AUDIT.json`](references/quality/LDS_SERIES_COMPLETENESS_AUDIT.json)에 있다.
+`check:storybook-ia`는 current source 기준 200 page·762 story와 stale review 0개를 검증한다.
 
 R4 release closure는 LDS `0.1.0` (`lds-v0.1.0`,
 `085ba9e72522dfe628a2d39d00583d0bb8d756d4`)과 Robotics UI `0.1.0-rc.33`
@@ -121,7 +130,8 @@ R7 evidence/operations health (Continuous)
 
 R1 계약 구현과 paired LDS/Robotics release, R2 대표 제품 adoption 승격, R3A 밀도 계약,
 R3B owner/API 결정, R4 첫 stable 승격과 R4.1 계층 계약 closure를 완료했다. 현재 무조건부
-release-train backlog는 없다. R5 O3는 LDS 쪽 표시·상호작용 계약을 2026-09-09에 닫았지만
+첫 stable의 release-train backlog는 닫혔다. 이후의 현재 실행 과제는 아래 R7 관측 항목을 따른다.
+R5 O3는 LDS 쪽 표시·상호작용 계약을 2026-09-09에 닫았지만
 제품의 영속 acknowledgement evidence가 없으면 계속 미지원이고, R6는
 2027-01 정기 심사, R7은 매 release 반복 작업이다.
 
@@ -195,8 +205,9 @@ R1–R4가 소유한다.
 - Registry와 attestation은 schema v2로 분리됐고 package `stable`, consumer
   `workflow-verified`, product `deployed`를 서로 독립적으로 표현한다. 38개 contract test가
   stage, 날짜 순서, source commit, product-owner 승인과 release artifact 경로를 검사한다.
-- Storybook IA audit는 196 page와 732 story를 모두 current source로 재검토해 stale row가
-  0이며 repository inventory와 generated component docs도 같은 source에 맞춰졌다.
+- R1 종료 당시 Storybook IA audit는 196 page와 732 story를 해당 source로 재검토해 stale row가
+  0이었으며 repository inventory와 generated component docs도 같은 source에 맞춰졌다.
+  이 과거 closure를 현재 200 page·762 story의 승인으로 확대하지 않는다.
 - 종료 검사는 `check:layers`, `check:adoption-registry`, registry contract test,
   `check:storybook-ia`, `check:inventory`, `check:components`, `check:docs`가 소유한다.
 - 위 구현 검사와 paired release gate가 모두 통과했다. LDS stable `0.1.0`과 Robotics UI
@@ -613,7 +624,7 @@ commit/release, pin 격차 기간, CI·문서 유지 비용을 같은 snapshot�
 
 | 문서 | 분류 | 현재 disposition | Roadmap 연결 |
 | --- | --- | --- | --- |
-| [`LDS_HARNESS_IMPROVEMENT_PLAN.md`](LDS_HARNESS_IMPROVEMENT_PLAN.md) | active plan | H0 진행 중 — 감사 발견 정리, 이후 강제 시점·선언의 검사화·역할 분리·사각지대·자체 점검 | R7 |
+| [`LDS_HARNESS_IMPROVEMENT_PLAN.md`](LDS_HARNESS_IMPROVEMENT_PLAN.md) | active plan | H0 재검증 완료, H1 부분 구현; 자동 통보의 실제 도착·H2–H5 종료 증거는 별도 | R7 |
 | [`LAYER_ARCHITECTURE_REFORM_PLAN.md`](LAYER_ARCHITECTURE_REFORM_PLAN.md) | completed implementation record | R0–R4.1 완료; provider/private import/family·Storybook·Robotics·LDS3D exact-set 결정은 durable 계약과 machine gate로 승격 | 없음 |
 | [`EXPRESSION_PROFILE_PROPOSAL.md`](EXPRESSION_PROFILE_PROPOSAL.md) | adopted implementation record | `default | ops` 1차 구현 완료 | R3A |
 | [`UI_LIBRARY_REFINEMENT_PLAN.md`](UI_LIBRARY_REFINEMENT_PLAN.md) | completed implementation record | source/type/story/overlay 계약 완료; 제품 증거는 registry가 소유 | R2 |

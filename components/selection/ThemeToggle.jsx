@@ -86,7 +86,7 @@ export function ThemeToggle({
               border: 'none', borderRadius: 'var(--radius-pill)', cursor: 'pointer',
               background: on ? 'var(--color-semantic-background-elevated-normal)' : 'transparent',
               boxShadow: on ? 'var(--shadow-xs)' : 'none',
-              color: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-alternative)',
+              color: on ? 'var(--color-semantic-primary-normal)' : 'var(--color-semantic-label-neutral)',
               fontFamily: 'var(--font-sans)', fontSize: fs, fontWeight: 'var(--fw-bold)', letterSpacing: 0,
               transition: 'var(--component-button-transition)',
             }}

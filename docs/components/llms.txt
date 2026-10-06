@@ -7896,6 +7896,7 @@ const firstFieldRef = useRef(null);
 | Component | Relationship |
 | --- | --- |
 | `Callout` | 같은 페이지가 소유 |
+| `Blockquote` | 대표 시나리오에서 조합 |
 | `TextButton` | 대표 시나리오에서 조합 |
 | `EmptyState` | 대표 시나리오에서 조합 |
 | `Skeleton` | 대표 시나리오에서 조합 |
@@ -25526,8 +25527,12 @@ LK mark는 그대로 두고 제품명을 Montserrat SemiBold 600 outline으로 �
 | --- | --- |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
 | --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
-| --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
+| --color-semantic-label-neutral | light: rgba(46, 47, 51, 0.88); dark: rgba(194, 196, 200, 0.88) |
 | --color-semantic-line-normal-normal | light: rgba(112, 115, 124, 0.22); dark: rgba(112, 115, 124, 0.32) |
+
+## Content and writing
+
+- 미선택 항목도 실행 가능한 선택지이므로 SegmentedControl과 같은 label-neutral 전경을 사용합니다. 선택 항목은 기존 primary 전경과 elevated 배경으로 구분합니다. 테마를 중첩할 때 대상 표면에도 semantic 배경·전경을 적용하고, 열린 Portal의 Dark → Light → Dark 왕복과 RTL 상속을 함께 확인합니다.
 
 ## Related components
 
@@ -25559,7 +25564,7 @@ LK mark는 그대로 두고 제품명을 Montserrat SemiBold 600 outline으로 �
 
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-fill-normal`
-- `--color-semantic-label-alternative`
+- `--color-semantic-label-neutral`
 - `--color-semantic-line-normal-normal`
 - `--color-semantic-primary-normal`
 - `--component-button-transition`

@@ -1,14 +1,14 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkATPIQOVEcjs = require('../../chunk-ATPIQOVE.cjs');
-require('../../chunk-SWDYDQDR.cjs');
-require('../../chunk-ZVWV2EZG.cjs');
+var _chunkA7CEW5QRcjs = require('../../chunk-A7CEW5QR.cjs');
+require('../../chunk-WESPBUC7.cjs');
+require('../../chunk-J7EDA4ZV.cjs');
 require('../../chunk-ZAM5AMCO.cjs');
 require('../../chunk-LRPJVRUD.cjs');
-require('../../chunk-XGKLO45T.cjs');
+require('../../chunk-LDLBJ2M3.cjs');
 require('../../chunk-7OXVB7WX.cjs');
 
 
-exports.PrimaryDetail = _chunkATPIQOVEcjs.PrimaryDetail;
+exports.PrimaryDetail = _chunkA7CEW5QRcjs.PrimaryDetail;
 //# sourceMappingURL=PrimaryDetail.cjs.map

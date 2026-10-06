@@ -13,3 +13,5 @@
 ```
 
 애플리케이션에서 theme·direction·Portal 정책을 함께 구동할 때는 `LdsProvider`를 runtime의 단일 소유자로 두고 `useLdsRuntime()`의 `colorScheme`/`setColorScheme`를 이 control에 연결합니다. 이 경우 `ThemeToggle target={null} persist={false}`로 중복 DOM mutation과 storage write를 막습니다. CSS-only 소비자는 기존처럼 Provider 없이 사용할 수 있습니다.
+
+미선택 항목도 실행 가능한 선택지이므로 `SegmentedControl`과 같은 `label-neutral` 전경을 사용합니다. 선택 항목은 기존 primary 전경과 elevated 배경으로 구분합니다. 테마를 중첩할 때 대상 표면에도 semantic 배경·전경을 적용하고, 열린 Portal의 Dark → Light → Dark 왕복과 RTL 상속을 함께 확인합니다.

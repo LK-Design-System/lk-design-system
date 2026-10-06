@@ -97,6 +97,7 @@
 | Component | Relationship |
 | --- | --- |
 | `Callout` | 같은 페이지가 소유 |
+| `Blockquote` | 대표 시나리오에서 조합 |
 | `TextButton` | 대표 시나리오에서 조합 |
 | `EmptyState` | 대표 시나리오에서 조합 |
 | `Skeleton` | 대표 시나리오에서 조합 |
