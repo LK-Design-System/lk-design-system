@@ -1,12 +1,12 @@
-# LK ROBOTICS 로고 브랜드 표준 v2.0
+# LK ROBOTICS 로고 브랜드 표준 v3.0
 
 | Field | Value |
 | --- | --- |
 | Type | Brand policy and construction standard |
 | Status | Current |
 | Owner | Brand owner · Design system owner |
-| Last reviewed | 2026-08-11 |
-| Standard version | 2.0.0 |
+| Last reviewed | 2026-10-08 |
+| Standard version | 3.0.0 |
 | Construction source | [`../../assets/brand/lk-logo-construction.json`](../../assets/brand/lk-logo-construction.json) |
 | Governance record | [`lk-logo-governance.json`](lk-logo-governance.json) |
 
@@ -57,7 +57,8 @@ v2.0은 커스텀 LK 심볼의 geometry v1.0을 그대로 동결하고, 고정 P
 
 | 요소 | 규칙 |
 | --- | --- |
-| `ROBOTICS` | 대문자 `ROBOTICS`; Montserrat ExtraBold 800 v7.222; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지 |
+| `ROBOTICS` (stacked·official·tile·corporate·master) | 대문자 `ROBOTICS`; Montserrat ExtraBold 800 v7.222; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지 |
+| `ROBOTICS` (inline·banner) | 같은 문자열·규칙; Montserrat Bold 700 v7.222. 세로형보다 한 단계 가벼운 weight로 가로 배치에서 심볼과의 무게 균형을 맞춘다 |
 | 승인 제품명 | 현재 `CONSOLE`·`PORTAL`; Montserrat SemiBold 600 v7.222; 대문자; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지; registry 밖 이름 금지. 고정 Portal과 registry Portal은 같은 정본 path 사용 |
 | 법인명 | NFC `주식회사 엘케이로보틱스`; Noto Sans KR ExtraBold `wght=800` v2.004-H2; 기본 kerning; 글자 사이 `0.105em`; 마지막 글자 뒤 tracking 없음; 수평·수직 scale `1`; 수동 glyph 수정 금지 |
 | 배포 | 모든 wordmark·제품명·법인명은 SVG outline path; `<text>` 금지; 런타임 글꼴 의존성 없음 |
@@ -69,7 +70,7 @@ v2.0은 커스텀 LK 심볼의 geometry v1.0을 그대로 동결하고, 고정 P
 | 조합 | v2.0 규칙 |
 | --- | --- |
 | stacked | `ROBOTICS` 명목 cap height `0.25X`; 심볼 보이는 폭의 `0.2배` 간격; 가로 중앙 정렬 |
-| inline | `ROBOTICS` 보이는 높이 `1X`; 심볼 보이는 폭의 `0.2배` 간격; 보이는 bounds 기준 세로 정렬 |
+| inline | `ROBOTICS` 보이는 높이 `1X`; 심볼 보이는 폭의 `0.25배` 간격; 보이는 bounds 기준 세로 정렬 |
 | ProductLockup | 승인 제품명 보이는 높이 `1X`; 심볼 보이는 폭의 `0.35배` 간격(약 `0.378616X`, **`0.35X`가 아님**); 보이는 bounds 기준 세로 정렬 |
 | corporate | 법인명 보이는 폭 `1.9X`; 상단 로크업과 `0.21X` 간격; 상단 로크업 보이는 중심축에 중앙 정렬 |
 | banner | inline 조합을 사용하고 사방 `0.5X` 보호 여백을 자산 안에 포함 |
@@ -120,7 +121,7 @@ v2.0은 커스텀 LK 심볼의 geometry v1.0을 그대로 동결하고, 고정 P
 | corporate square | `160px` | `192px` 이상 | 정사각형 한 변 |
 | favicon tile | `16px` | 환경이 지원하는 더 큰 크기 | 정사각형 한 변; 일반 mark와 별도 계약 |
 
-최소 높이를 유지하려면 반응형 슬롯 너비도 mark `21.431318`, inline `156.324048`, stacked `82.612990`, banner `137.019722` 이상의 같은 플랫폼 논리 단위로 확보합니다. ProductLockup은 선택 registry 결과의 intrinsic width를 그대로 확보합니다. 슬롯이 더 좁으면 비균일 축소하거나 overflow시키지 말고, inline·stacked는 mark로, ProductLockup은 `compact`로 전환하거나 레이아웃을 넓힙니다.
+최소 높이를 유지하려면 반응형 슬롯 너비도 mark `21.431318`, inline `156.254307`, stacked `82.612990`, banner `136.963949` 이상의 같은 플랫폼 논리 단위로 확보합니다. ProductLockup은 선택 registry 결과의 intrinsic width를 그대로 확보합니다. 슬롯이 더 좁으면 비균일 축소하거나 overflow시키지 말고, inline·stacked는 mark로, ProductLockup은 `compact`로 전환하거나 레이아웃을 넓힙니다.
 
 corporate square의 인쇄 최소 한 변은 `32mm`입니다. 이보다 작으면 법인명을 축소하지 말고 법인명 없는 official 또는 매체에 맞는 기본 조합으로 바꿉니다. mark·inline·stacked·banner·official의 인쇄 최소 크기는 현재 물리 교정으로 승인된 값이 없으므로 디지털 px 값을 mm로 환산해 공식 인쇄 최소치라고 주장하지 않습니다.
 
@@ -293,6 +294,13 @@ construction manifest, governance 원문과 build-time 글꼴은 저장소 루�
 9. 이전 자산을 조용히 덮어쓰지 않습니다. Git/release 이력에서 회수 가능하게 하고 외부 수신자에게 교체 기한을 알립니다.
 
 승인자 개인 이름·일자·proof가 저장소에 기록되지 않았다면 “승인됨”으로 추정하지 않습니다. [`lk-logo-governance.json`](lk-logo-governance.json)의 빈 `approvalRecords`는 그런 승인을 가공해 넣지 않았다는 의미입니다.
+
+### 14.3 변경 기록
+
+| Standard | constructionVersion | 일자 | 결정 | 근거 |
+| --- | --- | --- | --- | --- |
+| 3.0.0 | 6 | 2026-10-08 | 가로형(inline·banner)의 `ROBOTICS` 워드마크를 Montserrat Bold 700 v7.222로 변경하고 심볼과의 간격을 심볼 보이는 폭의 0.2배에서 0.25배로 넓힘. 세로형(stacked·official·tile·corporate·master)은 ExtraBold 800과 0.2배 간격 유지. 심볼 geometry v1.0, 보이는 bounds 정렬, 기본 커닝, 자간 0 유지. | 가로형에서 LK 심볼 대비 워드마크가 지나치게 무겁다는 design-system owner(jinhyuk2me) 판단. 같은 구성 규칙으로 800·700·600·500·400을 48px·20px·navy·white에서 비교해 700을 선택했고, 700 기준 간격 0.10~0.35배 비교에서 0.25배를 선택했다. 세로형은 심볼 아래 작은 cap height(0.25X)로 놓이므로 800을 유지한다. O 세로획 82%, 워드마크 폭 99%. Bold는 RIBBI 스타일이라 name ID 1이 `Montserrat`, name ID 2가 `Bold`이며 생성기는 full name으로 스타일을 검증한다. 최소 슬롯 폭 stacked `82.612990`, inline `156.254307`, banner `136.963949`. |
+| 2.0.0 | 5 | 2026-08-11 | 고정 Portal 정본과 ProductLockup registry를 SemiBold 600으로 분리. | [`LK_PRODUCT_LOCKUP_STANDARD.md`](LK_PRODUCT_LOCKUP_STANDARD.md) |
 
 ## 15. 검수 체크리스트
 

@@ -8,7 +8,13 @@ export interface LkRoboticsPath extends LkLogoPath {
 }
 
 export const LK_PATHS: readonly Readonly<LkLogoPath>[];
+export interface LkRoboticsInlinePath {
+  readonly letter: string;
+  readonly d: string;
+}
+
 export const ROBOTICS_PATHS: readonly Readonly<LkRoboticsPath>[];
+export const ROBOTICS_INLINE_PATHS: readonly Readonly<LkRoboticsInlinePath>[];
 export const ROBOTICS_INLINE_TRANSFORM: string;
 
 export const LK_LOGO_VIEWBOX: Readonly<{

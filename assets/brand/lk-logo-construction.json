@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "constructionVersion": 5,
+  "constructionVersion": 6,
   "brand": "LK ROBOTICS",
   "symbol": {
     "name": "LK",
@@ -52,7 +52,37 @@
     "letterSpacing": 0,
     "horizontalScale": 1,
     "verticalScale": 1,
-    "manualGlyphEdits": false
+    "manualGlyphEdits": false,
+    "appliesTo": [
+      "stacked",
+      "official",
+      "tile",
+      "corporate",
+      "master"
+    ]
+  },
+  "inlineWordmark": {
+    "text": "ROBOTICS",
+    "case": "uppercase",
+    "family": "Montserrat",
+    "style": "Bold",
+    "weight": 700,
+    "fontVersion": "7.222",
+    "fontFile": "vendor/montserrat-v7.222/Montserrat-Bold.ttf",
+    "fontSha256": "4E6D93BC38122C371ACB8DC0DBEFBF2649C235191E1BE136BB5720546D719808",
+    "fontSource": "https://raw.githubusercontent.com/JulietaUla/Montserrat/5dae7a4ef9c0bf9fe48dc54fd1076eefaa0a8c7e/fonts/ttf/Montserrat-Bold.ttf",
+    "license": "SIL Open Font License 1.1",
+    "licenseFile": "vendor/montserrat-v7.222/OFL.txt",
+    "licenseSha256": "41F82BB4D24B304F30F7136BC47ABDD083782E4265C984160F5649D1E78EA49C",
+    "kerning": "font-default",
+    "letterSpacing": 0,
+    "horizontalScale": 1,
+    "verticalScale": 1,
+    "manualGlyphEdits": false,
+    "appliesTo": [
+      "inline",
+      "banner"
+    ]
   },
   "productWordmarks": {
     "portal": {
@@ -119,7 +149,7 @@
     },
     "inline": {
       "visibleWordmarkHeightToX": 1,
-      "gapToMarkWidth": 0.2,
+      "gapToMarkWidth": 0.25,
       "verticalAlignment": "visible-bounds",
       "minimumRenderedHeightPx": 20
     },

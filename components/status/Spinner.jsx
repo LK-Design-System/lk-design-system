@@ -1,21 +1,22 @@
 import React from 'react';
-import { LK_LOGO_COLORS, LK_LOGO_VIEWBOX, LK_PATHS, ROBOTICS_INLINE_SCALE, ROBOTICS_INLINE_TRANSFORM, ROBOTICS_PATHS } from '../brand/lk-logo-paths.js';
+import { LK_LOGO_COLORS, LK_LOGO_VIEWBOX, LK_PATHS, ROBOTICS_INLINE_PATHS, ROBOTICS_INLINE_SCALE, ROBOTICS_INLINE_TRANSFORM } from '../brand/lk-logo-paths.js';
 
-const BRAND_LETTER_COUNT = LK_PATHS.length + ROBOTICS_PATHS.length;
+const BRAND_LETTER_COUNT = LK_PATHS.length + ROBOTICS_INLINE_PATHS.length;
 const brandDelay = (order) => (BRAND_LETTER_COUNT > 1 ? (order / (BRAND_LETTER_COUNT - 1)) * 0.55 : 0).toFixed(3);
-// The animated paths sit inside per-glyph matrix groups from the official
-// export, so a translateY runs in that group's local units: LK glyphs in a
-// Y-flipped ±4/3 matrix, ROBOTICS glyphs in their own glyph matrix inside the
-// inline wrapper. Both amplitudes therefore derive from the signed Y scale of
-// the group the path actually animates in — otherwise the ROBOTICS letters
-// move by amplitude×(wrapper×glyph) ≈ 0.05px and the wave reads as frozen.
+// The animated paths sit inside matrix groups from the official export, so a
+// translateY runs in that group's local units: LK glyphs in a Y-flipped ±4/3
+// matrix, inline ROBOTICS glyphs (raw font units) inside the inline wrapper
+// whose absolute scale is ROBOTICS_INLINE_SCALE. Both amplitudes therefore
+// derive from the Y scale of the group the path actually animates in —
+// otherwise the ROBOTICS letters move by amplitude×scale ≈ 0.05px and the wave
+// reads as frozen.
 const matrixScaleY = (transform) => Number(transform.match(/matrix\(\s*[-0-9.]+[ ,]+[-0-9.]+[ ,]+[-0-9.]+[ ,]+([-0-9.]+)/)[1]);
 // Preserves the legacy Brand Spinner's ~3.2px on-screen travel at its default
 // 22px height under the official SVG coordinate system.
 const BRAND_WAVE_AMPLITUDE = 7;
 const ROBOTICS_WAVE_AMPLITUDE = (
   (BRAND_WAVE_AMPLITUDE * matrixScaleY(LK_PATHS[0].transform))
-  / (ROBOTICS_INLINE_SCALE * matrixScaleY(ROBOTICS_PATHS[0].transform))
+  / ROBOTICS_INLINE_SCALE
 ).toFixed(6);
 
 function useKeyframes(id, css) {
@@ -56,10 +57,8 @@ export function Spinner({ size, thickness, color = 'var(--color-semantic-primary
             </g>
           ))}
           <g transform={ROBOTICS_INLINE_TRANSFORM}>
-            {ROBOTICS_PATHS.map((path, i) => (
-              <g key={`ro${i}`} transform={path.transform}>
-                <path data-wave d={path.d} style={{ animation: `lk-brand-wave-robo 1.15s ease-in-out ${brandDelay(LK_PATHS.length + i)}s infinite` }} />
-              </g>
+            {ROBOTICS_INLINE_PATHS.map((path, i) => (
+              <path key={`ro${i}`} data-wave d={path.d} style={{ animation: `lk-brand-wave-robo 1.15s ease-in-out ${brandDelay(LK_PATHS.length + i)}s infinite` }} />
             ))}
           </g>
         </g>

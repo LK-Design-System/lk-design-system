@@ -4,6 +4,7 @@ import {
   LK_LOGO_USAGE,
   LK_LOGO_VIEWBOX as VIEWBOX,
   LK_PATHS,
+  ROBOTICS_INLINE_PATHS,
   ROBOTICS_INLINE_TRANSFORM,
   ROBOTICS_PATHS,
 } from '@lk-design-system/lds-core/brand-authoring';
@@ -81,8 +82,8 @@ export function Lockup({ variant = 'inline', tone = 'ink', adaptive = false, col
         ))}
         {resolvedVariant === 'inline' && (
           <g transform={ROBOTICS_INLINE_TRANSFORM}>
-            {ROBOTICS_PATHS.map((path, index) => (
-              <path key={`${path.letter}-${index}`} d={path.d} transform={path.transform} />
+            {ROBOTICS_INLINE_PATHS.map((path, index) => (
+              <path key={`${path.letter}-${index}`} d={path.d} />
             ))}
           </g>
         )}

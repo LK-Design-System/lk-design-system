@@ -45,7 +45,7 @@ SOFTWARE.
 
 ## Montserrat
 
-The outlined `ROBOTICS` wordmark is generated from Montserrat ExtraBold 800.
+The outlined `ROBOTICS` wordmark is generated from Montserrat ExtraBold 800 (stacked, square and corporate outputs) and Bold 700 (inline and banner outputs).
 The canonical fixed `PORTAL` product name and parent-brand-first `ProductLockup`
 product names are generated from Montserrat SemiBold 600. Both fonts are Version
 7.222 static fonts obtained from the official Montserrat v7.222 release. The

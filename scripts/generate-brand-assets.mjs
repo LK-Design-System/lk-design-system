@@ -15,7 +15,9 @@ const manifestPath = path.join(root, 'assets/brand/lk-logo-construction.json');
 const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
 const portalWordmark = manifest.productWordmarks.portal;
 const productLockupWordmark = manifest.productLockupWordmark;
+const inlineWordmark = manifest.inlineWordmark;
 const fontBuffer = await readFile(path.join(root, manifest.wordmark.fontFile));
+const inlineFontBuffer = await readFile(path.join(root, inlineWordmark.fontFile));
 const portalFontBuffer = await readFile(path.join(root, portalWordmark.fontFile));
 const corporateFontBuffer = await readFile(path.join(root, manifest.corporateName.fontFile));
 const licenseBuffer = await readFile(path.join(root, manifest.wordmark.licenseFile));
@@ -23,7 +25,7 @@ const portalLicenseBuffer = await readFile(path.join(root, portalWordmark.licens
 const corporateLicenseBuffer = await readFile(path.join(root, manifest.corporateName.licenseFile));
 
 assertEqual(manifest.schemaVersion, 1, 'manifest schema version');
-assertEqual(manifest.constructionVersion, 5, 'logo construction version');
+assertEqual(manifest.constructionVersion, 6, 'logo construction version');
 assertEqual(manifest.symbol.geometryVersion, LK_MARK_GEOMETRY_VERSION, 'LK symbol geometry version');
 assertEqual(
   geometrySha256({ paths: LK_MARK_PATHS, bounds: LOGO_GEOMETRY.markBounds }),
@@ -33,6 +35,7 @@ assertEqual(
 validateMarkBounds(LK_MARK_PATHS, LOGO_GEOMETRY.markBounds);
 const markConstructionMetrics = deriveMarkConstructionMetrics(LK_MARK_PATHS, LOGO_GEOMETRY.markBounds);
 assertEqual(fileSha256(fontBuffer), manifest.wordmark.fontSha256, 'wordmark font SHA-256');
+assertEqual(fileSha256(inlineFontBuffer), inlineWordmark.fontSha256, 'inline wordmark font SHA-256');
 assertEqual(fileSha256(portalFontBuffer), portalWordmark.fontSha256, 'portal wordmark font SHA-256');
 assertEqual(fileSha256(licenseBuffer), manifest.wordmark.licenseSha256, 'wordmark license SHA-256');
 assertEqual(fileSha256(portalLicenseBuffer), portalWordmark.licenseSha256, 'portal wordmark license SHA-256');
@@ -45,7 +48,23 @@ assertEqual(manifest.wordmark.letterSpacing, 0, 'letter spacing');
 assertEqual(manifest.wordmark.horizontalScale, 1, 'horizontal scale');
 assertEqual(manifest.wordmark.verticalScale, 1, 'vertical scale');
 assertEqual(manifest.wordmark.manualGlyphEdits, false, 'manual glyph edits');
-/* 승인 Portal 워드마크. 회사 ROBOTICS의 800 조형과 분리하고, 제품 로크업
+/* 가로형(inline·banner) 전용 ROBOTICS. 세로형의 ExtraBold 800 조형은 유지하고
+   가로형에서만 심볼과의 무게 균형을 위해 한 단계 가벼운 Bold 700을 쓴다. 문자열·
+   커닝·자간·스케일 규칙은 세로형과 같다. */
+assertEqual(inlineWordmark.text, manifest.wordmark.text, 'inline wordmark text');
+assertEqual(inlineWordmark.case, 'uppercase', 'inline wordmark case');
+assertEqual(inlineWordmark.family, manifest.wordmark.family, 'inline wordmark font family');
+assertEqual(inlineWordmark.fontVersion, manifest.wordmark.fontVersion, 'inline wordmark font version');
+assertEqual(inlineWordmark.licenseFile, manifest.wordmark.licenseFile, 'inline wordmark license file');
+assertEqual(inlineWordmark.licenseSha256, manifest.wordmark.licenseSha256, 'inline wordmark license SHA-256');
+assertEqual(inlineWordmark.kerning, 'font-default', 'inline wordmark kerning rule');
+assertEqual(inlineWordmark.letterSpacing, 0, 'inline wordmark letter spacing');
+assertEqual(inlineWordmark.horizontalScale, 1, 'inline wordmark horizontal scale');
+assertEqual(inlineWordmark.verticalScale, 1, 'inline wordmark vertical scale');
+assertEqual(inlineWordmark.manualGlyphEdits, false, 'inline wordmark manual glyph edits');
+assertArrayEqual(inlineWordmark.appliesTo, ['inline', 'banner'], 'inline wordmark variants');
+assertArrayEqual(manifest.wordmark.appliesTo, ['stacked', 'official', 'tile', 'corporate', 'master'], 'wordmark variants');
+/* 승인 Portal 워드마크. 회사 ROBOTICS의 700 조형과 분리하고, 제품 로크업
    registry와 같은 600 제작 규칙에 고정한다. */
 assertEqual(portalWordmark.text, 'PORTAL', 'portal wordmark text');
 assertEqual(portalWordmark.case, 'uppercase', 'portal wordmark case');
@@ -91,6 +110,7 @@ const portalFontArrayBuffer = portalFontBuffer.buffer.slice(
   portalFontBuffer.byteOffset + portalFontBuffer.byteLength,
 );
 const portalFont = opentype.parse(portalFontArrayBuffer);
+const inlineFont = opentype.parse(inlineFontBuffer.buffer.slice(inlineFontBuffer.byteOffset, inlineFontBuffer.byteOffset + inlineFontBuffer.byteLength));
 const fontFamily = font.names.fontFamily?.en;
 const fontFullName = font.names.fullName?.en;
 const fontVersion = font.names.version?.en?.replace(/^Version\s+/i, '');
@@ -102,6 +122,12 @@ assertEqual(fontFullName, `${manifest.wordmark.family} ${manifest.wordmark.style
 assertEqual(fontVersion, manifest.wordmark.fontVersion, 'font version metadata');
 assertEqual(weightClass, manifest.wordmark.weight, 'font weight metadata');
 if (!Number.isFinite(capHeight) || capHeight <= 0) throw new Error('Pinned font has no usable OS/2 cap height.');
+/* RIBBI 스타일(Bold)은 name ID 1이 family만 담고 style은 name ID 2(full name)로 간다. */
+assertEqual(inlineFont.names.fontFamily?.en, inlineWordmark.family, 'inline font family metadata');
+assertEqual(inlineFont.names.fullName?.en, `${inlineWordmark.family} ${inlineWordmark.style}`, 'inline font full-name metadata');
+assertEqual(inlineFont.names.version?.en?.replace(/^Version\s+/i, ''), inlineWordmark.fontVersion, 'inline font version metadata');
+assertEqual(inlineFont.tables.os2?.usWeightClass, inlineWordmark.weight, 'inline font weight metadata');
+assertEqual(inlineFont.unitsPerEm, font.unitsPerEm, 'inline font units per em');
 
 assertEqual(portalFont.names.fontFamily?.en, `${portalWordmark.family} ${portalWordmark.style}`, 'portal font family metadata');
 assertEqual(portalFont.names.fullName?.en, `${portalWordmark.family} ${portalWordmark.style}`, 'portal font full-name metadata');
@@ -164,6 +190,40 @@ assertArrayEqual(
   [sourceBoundsRaw.x1, sourceBoundsRaw.y1, sourceBoundsRaw.x2, sourceBoundsRaw.y2],
   [70, -714, 5522, 14],
   'wordmark ink bounds',
+);
+
+const inlineGlyphRows = [];
+const inlineFinalAdvance = inlineFont.forEachGlyph(
+  wordmarkText,
+  0,
+  0,
+  inlineFont.unitsPerEm,
+  { kerning: true },
+  (glyph, x, y, fontSize) => {
+    inlineGlyphRows.push({
+      letter: letters[inlineGlyphRows.length],
+      glyphId: glyph.index,
+      origin: x,
+      d: glyph.getPath(x, y, fontSize).toPathData(3),
+    });
+  },
+);
+assertEqual(inlineGlyphRows.length, letters.length, 'inline glyph count');
+assertArrayEqual(inlineGlyphRows.map((row) => row.letter), letters, 'inline glyph sequence');
+assertArrayEqual(inlineGlyphRows.map((row) => row.glyphId), [172, 134, 32, 134, 194, 88, 33, 180], 'inline glyph IDs');
+assertArrayEqual(inlineGlyphRows.map((row) => row.origin), [0, 735, 1579, 2344, 3178, 3796, 4124, 4853], 'inline kerning-aware glyph origins');
+assertEqual(inlineFinalAdvance, 5491, 'inline kerning-aware word advance');
+const inlineSourceBoundsRaw = inlineFont.getPath(wordmarkText, 0, 0, inlineFont.unitsPerEm, { kerning: true }).getBoundingBox();
+const inlineSourceBounds = Object.freeze({
+  x: inlineSourceBoundsRaw.x1,
+  y: inlineSourceBoundsRaw.y1,
+  width: inlineSourceBoundsRaw.x2 - inlineSourceBoundsRaw.x1,
+  height: inlineSourceBoundsRaw.y2 - inlineSourceBoundsRaw.y1,
+});
+assertArrayEqual(
+  [inlineSourceBoundsRaw.x1, inlineSourceBoundsRaw.y1, inlineSourceBoundsRaw.x2, inlineSourceBoundsRaw.y2],
+  [83, -712, 5463, 12],
+  'inline wordmark ink bounds',
 );
 
 const portalText = portalWordmark.text;
@@ -292,18 +352,19 @@ const stackedTransform = matrix(
   stackedBounds.y - sourceBounds.y * stackedScale,
 );
 
-const inlineScaleAbsolute = (markBounds.height * layout.inline.visibleWordmarkHeightToX) / sourceBounds.height;
-const inlineScale = inlineScaleAbsolute / stackedScale;
+/* 가로형은 자체 글꼴(inlineWordmark)의 원본 글리프를 쓰므로 stacked 변환에 이어
+   붙지 않고 글꼴 단위에서 직접 배치한다. ROBOTICS_INLINE_SCALE은 그 절대 배율이다. */
+const inlineScale = (markBounds.height * layout.inline.visibleWordmarkHeightToX) / inlineSourceBounds.height;
 const inlineBounds = Object.freeze({
   x: markBounds.x + markBounds.width + markBounds.width * layout.inline.gapToMarkWidth,
   y: markBounds.y,
-  width: sourceBounds.width * inlineScaleAbsolute,
-  height: sourceBounds.height * inlineScaleAbsolute,
+  width: inlineSourceBounds.width * inlineScale,
+  height: inlineSourceBounds.height * inlineScale,
 });
 const inlineTransform = matrix(
   inlineScale,
-  inlineBounds.x - stackedBounds.x * inlineScale,
-  inlineBounds.y - stackedBounds.y * inlineScale,
+  inlineBounds.x - inlineSourceBounds.x * inlineScale,
+  inlineBounds.y - inlineSourceBounds.y * inlineScale,
 );
 
 /* 제품형 로크업. `inline`과 같은 구성(워드마크 보이는 높이 = 1X, 보이는 bounds
@@ -345,9 +406,9 @@ const minimumRequiredSlotWidthPx = Object.freeze({
 });
 assertNumberClose(minimumRequiredSlotWidthPx.mark, 21.431318, 'mark minimum required slot width');
 assertNumberClose(minimumRequiredSlotWidthPx.stacked, 82.61299, 'stacked minimum required slot width');
-assertNumberClose(minimumRequiredSlotWidthPx.inline, 156.324048, 'inline minimum required slot width');
+assertNumberClose(minimumRequiredSlotWidthPx.inline, 156.254307, 'inline minimum required slot width');
 assertNumberClose(minimumRequiredSlotWidthPx.portal, 127.772713, 'portal minimum required slot width');
-assertNumberClose(minimumRequiredSlotWidthPx.banner, 137.019722, 'banner minimum required slot width');
+assertNumberClose(minimumRequiredSlotWidthPx.banner, 136.963949, 'banner minimum required slot width');
 const visibleMarkHeightAtMinimumRenderedHeight =
   layout.mark.minimumRenderedHeightPx * markBounds.height / markViewBox.height;
 if (visibleMarkHeightAtMinimumRenderedHeight < layout.mark.minimumVisibleArtworkHeightPx) {
@@ -404,6 +465,7 @@ const generatedWordmarkPaths = glyphRows.map((row) => ({
   d: row.d,
   transform: stackedTransform,
 }));
+const generatedInlineWordmarkPaths = inlineGlyphRows.map((row) => ({ letter: row.letter, d: row.d }));
 
 assertEqual(layout.corporate.visibleWidthToX, 1.9, 'corporate-name visible width');
 assertEqual(layout.corporate.gapFromLockupToX, 0.21, 'corporate-name gap');
@@ -460,6 +522,7 @@ assertNumberArrayClose(
 const outputs = new Map();
 outputs.set('components/brand/lk-logo-paths.js', renderRuntimeModule({
   generatedWordmarkPaths,
+  generatedInlineWordmarkPaths,
   inlineScale,
   inlineTransform,
   markViewBox,
@@ -617,7 +680,7 @@ outputs.set('assets/brand/lk-logo-master.svg', renderSvg({
    않는 별도 글리프 세트라, 기존 출력 전부가 "PORTAL이 0개"임을 명시적으로
    주장해야 제품 워드마크가 회사 자산으로 새는 것을 막는다. */
 const outputContracts = new Map([
-  ['components/brand/lk-logo-paths.js', { kind: 'runtime', markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
+  ['components/brand/lk-logo-paths.js', { kind: 'runtime', markInstances: 1, wordmarkInstances: 1, inlineWordmarkInstances: 1, corporateInstances: 0 }],
   ['components/brand/lk-portal-lockup-paths.js', { kind: 'runtime-portal', markInstances: 0, wordmarkInstances: 0, corporateInstances: 0, portalInstances: 1 }],
   ['assets/brand/lk-logo-portal-navy.svg', { kind: 'svg', viewBox: portalViewBox, pathBounds: portalArtworkBounds, markInstances: 1, wordmarkInstances: 0, corporateInstances: 0, portalInstances: 1 }],
   ['assets/brand/lk-logo-portal-white.svg', { kind: 'svg', viewBox: portalViewBox, pathBounds: portalArtworkBounds, markInstances: 1, wordmarkInstances: 0, corporateInstances: 0, portalInstances: 1 }],
@@ -626,10 +689,10 @@ const outputContracts = new Map([
   ['assets/brand/lk-favicon.svg', { kind: 'svg', viewBox: faviconViewBox, pathBounds: faviconMarkBounds, markInstances: 1, wordmarkInstances: 0, corporateInstances: 0 }],
   ['assets/brand/lk-logo-navy.svg', { kind: 'svg', viewBox: stackedViewBox, pathBounds: stackedArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
   ['assets/brand/lk-logo-white.svg', { kind: 'svg', viewBox: stackedViewBox, pathBounds: stackedArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
-  ['assets/brand/lk-logo-inline-navy.svg', { kind: 'svg', viewBox: inlineViewBox, pathBounds: inlineArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
-  ['assets/brand/lk-logo-inline-white.svg', { kind: 'svg', viewBox: inlineViewBox, pathBounds: inlineArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
-  ['assets/brand/lk-logo-banner-navy.svg', { kind: 'svg', viewBox: bannerViewBox, pathBounds: inlineArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
-  ['assets/brand/lk-logo-banner-light.svg', { kind: 'svg', viewBox: bannerViewBox, pathBounds: inlineArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-inline-navy.svg', { kind: 'svg', viewBox: inlineViewBox, pathBounds: inlineArtworkBounds, markInstances: 1, wordmarkInstances: 0, inlineWordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-inline-white.svg', { kind: 'svg', viewBox: inlineViewBox, pathBounds: inlineArtworkBounds, markInstances: 1, wordmarkInstances: 0, inlineWordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-banner-navy.svg', { kind: 'svg', viewBox: bannerViewBox, pathBounds: inlineArtworkBounds, markInstances: 1, wordmarkInstances: 0, inlineWordmarkInstances: 1, corporateInstances: 0 }],
+  ['assets/brand/lk-logo-banner-light.svg', { kind: 'svg', viewBox: bannerViewBox, pathBounds: inlineArtworkBounds, markInstances: 1, wordmarkInstances: 0, inlineWordmarkInstances: 1, corporateInstances: 0 }],
   ['assets/brand/lk-logo-official.svg', { kind: 'svg', viewBox: LOGO_GEOMETRY.standardSquare, pathBounds: stackedArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
   ['assets/brand/lk-logo-official-light.svg', { kind: 'svg', viewBox: LOGO_GEOMETRY.standardSquare, pathBounds: stackedArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
   ['assets/brand/lk-logo-tile-navy.svg', { kind: 'svg', viewBox: LOGO_GEOMETRY.standardSquare, pathBounds: stackedArtworkBounds, markInstances: 1, wordmarkInstances: 1, corporateInstances: 0 }],
@@ -714,6 +777,7 @@ export const PORTAL_MINIMUM_RENDERED_HEIGHT_PX = ${layout.portal.minimumRendered
 
 function renderRuntimeModule({
   generatedWordmarkPaths: wordmarkPaths,
+  generatedInlineWordmarkPaths: inlineWordmarkPaths,
   inlineScale: wordmarkInlineScale,
   inlineTransform: wordmarkInlineTransform,
   markViewBox: markBox,
@@ -728,6 +792,12 @@ function renderRuntimeModule({
     `    transform: ${JSON.stringify(row.transform)},`,
     '  },',
   ].join('\n')).join('\n');
+  const inlineWordmarkRows = inlineWordmarkPaths.map((row) => [
+    '  {',
+    `    letter: ${JSON.stringify(row.letter)},`,
+    `    d: ${JSON.stringify(row.d)},`,
+    '  },',
+  ].join('\n')).join('\n');
   const wordmarkRows = wordmarkPaths.map((row) => [
     '  {',
     `    letter: ${JSON.stringify(row.letter)},`,
@@ -739,10 +809,13 @@ function renderRuntimeModule({
   return `/**
  * Generated by scripts/generate-brand-assets.mjs. Do not edit by hand.
  *
- * LK is custom vector geometry. ROBOTICS is outlined from the pinned static
- * Montserrat ExtraBold 800 v${manifest.wordmark.fontVersion} font with default kerning,
- * zero added letter spacing, uniform scaling, and no glyph edits.
- * Font SHA-256: ${manifest.wordmark.fontSha256}
+ * LK is custom vector geometry. ROBOTICS is outlined from pinned static
+ * Montserrat v${manifest.wordmark.fontVersion} fonts with default kerning, zero added letter
+ * spacing, uniform scaling, and no glyph edits: the stacked/square/corporate
+ * wordmark (ROBOTICS_PATHS) from ${manifest.wordmark.style} ${manifest.wordmark.weight} and the inline/banner
+ * wordmark (ROBOTICS_INLINE_PATHS) from ${inlineWordmark.style} ${inlineWordmark.weight}.
+ * Font SHA-256: ${manifest.wordmark.fontSha256} (${manifest.wordmark.style})
+ * Font SHA-256: ${inlineWordmark.fontSha256} (${inlineWordmark.style})
  */
 export const LK_PATHS = Object.freeze([
 ${markRows}
@@ -792,8 +865,14 @@ export const ROBOTICS_PATHS = Object.freeze([
 ${wordmarkRows}
 ]);
 
-// Inline construction: the wordmark's visible height equals the LK symbol's
-// visible height, with a gap equal to 20% of the symbol's visible width.
+// Inline construction: ROBOTICS_INLINE_PATHS are raw ${inlineWordmark.style} ${inlineWordmark.weight} glyphs in
+// font units. ROBOTICS_INLINE_TRANSFORM places them so the wordmark's visible
+// height equals the LK symbol's visible height, with a gap equal to
+// ${layout.inline.gapToMarkWidth * 100}% of the symbol's visible width. ROBOTICS_INLINE_SCALE is that
+// transform's absolute scale.
+export const ROBOTICS_INLINE_PATHS = Object.freeze([
+${inlineWordmarkRows}
+]);
 export const ROBOTICS_INLINE_SCALE = ${formatNumber(wordmarkInlineScale)};
 export const ROBOTICS_INLINE_TRANSFORM = ${JSON.stringify(wordmarkInlineTransform)};
 
@@ -888,7 +967,7 @@ function renderInline(fill, indent = 1) {
   return [
     renderMark(fill, indent),
     `${spaces}<g transform="${inlineTransform}">`,
-    renderWordmark(fill, indent + 1),
+    generatedInlineWordmarkPaths.map((row) => renderPath(row, fill, indent + 1)).join('\n'),
     `${spaces}</g>`,
   ].join('\n');
 }
@@ -1010,6 +1089,7 @@ function validateProductionOutput(relativePath, content, contract) {
   assertNoRuntimeFontDependency(relativePath, content);
   assertPathInstances(relativePath, content, LK_MARK_PATHS, contract.markInstances, 'LK mark');
   assertPathInstances(relativePath, content, generatedWordmarkPaths, contract.wordmarkInstances, 'wordmark');
+  assertPathInstances(relativePath, content, generatedInlineWordmarkPaths, contract.inlineWordmarkInstances ?? 0, 'inline wordmark');
   assertPathInstances(relativePath, content, generatedCorporatePaths, contract.corporateInstances, 'corporate name');
   assertPathInstances(relativePath, content, generatedPortalPaths, contract.portalInstances ?? 0, 'portal wordmark');
 
@@ -1041,6 +1121,7 @@ function validateProductionOutput(relativePath, content, contract) {
   const expectedPathCount =
     LK_MARK_PATHS.length * contract.markInstances
     + generatedWordmarkPaths.length * contract.wordmarkInstances
+    + generatedInlineWordmarkPaths.length * (contract.inlineWordmarkInstances ?? 0)
     + generatedCorporatePaths.length * contract.corporateInstances
     + generatedPortalPaths.length * (contract.portalInstances ?? 0);
   assertEqual(actualPathCount, expectedPathCount, `${relativePath} path count`);
@@ -1124,6 +1205,7 @@ function validateBrandPolicyDocumentation(content, governance, minimumSlotWidth)
   const requiredFragments = [
     `\`${formatNumber(expectedConstructionContract.visibleMarkWidthToX, 16)}X : 1X\``,
     `${manifest.wordmark.family} ${manifest.wordmark.style} ${manifest.wordmark.weight} v${manifest.wordmark.fontVersion}`,
+    `${inlineWordmark.family} ${inlineWordmark.style} ${inlineWordmark.weight} v${inlineWordmark.fontVersion}`,
     `${manifest.corporateName.family} ${manifest.corporateName.style} \`wght=${manifest.corporateName.weight}\` v${manifest.corporateName.releaseVersion}`,
     `최소 \`${layout.safeArea.minimumClearSpaceToX}X\``,
     `최소 \`${layout.safeArea.coBrandClearSpaceToX}X\``,

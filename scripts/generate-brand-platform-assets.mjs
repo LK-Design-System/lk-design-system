@@ -40,7 +40,7 @@ assert(
   constructionManifest.output?.constructionManifestDistribution === 'repository-root-only',
   `${constructionManifestPath} distribution must remain repository-root-only.`,
 );
-assert(governance.standard?.version === '2.0.0', `${governancePath} standard version drifted.`);
+assert(governance.standard?.version === '3.0.0', `${governancePath} standard version drifted.`);
 assert(governance.standard?.status === 'current-repository-standard', `${governancePath} standard status drifted.`);
 assert(
   governance.minimumSizeStatus?.status === 'repository-policy-pending-human-optical-approval',
@@ -165,8 +165,8 @@ for (const [family, sourcePath] of [
 }
 assert(familyContracts.mark.minimumRequiredSlotWidth.value === 21.431318, 'mark minimum slot width drifted.');
 assert(familyContracts.stacked.minimumRequiredSlotWidth.value === 82.61299, 'stacked minimum slot width drifted.');
-assert(familyContracts.inline.minimumRequiredSlotWidth.value === 156.324048, 'inline minimum slot width drifted.');
-assert(familyContracts.banner.minimumRequiredSlotWidth.value === 137.019722, 'banner minimum slot width drifted.');
+assert(familyContracts.inline.minimumRequiredSlotWidth.value === 156.254307, 'inline minimum slot width drifted.');
+assert(familyContracts.banner.minimumRequiredSlotWidth.value === 136.963949, 'banner minimum slot width drifted.');
 for (const contract of Object.values(familyContracts)) Object.freeze(contract);
 
 const platformLogicalUnits = Object.freeze({

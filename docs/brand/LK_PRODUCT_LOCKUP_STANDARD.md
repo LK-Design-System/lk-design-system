@@ -112,7 +112,7 @@ compact가 홈 링크라면 hover/focus 사용자가 제품명을 확인해야 �
 - LK mark 옆에 Montserrat 또는 UI font의 live text를 붙여 새 제품 로크업 만들기
 - registry에 없는 `Web Viz`, `Control`, 고객명, 지점명, 환경명 등을 우회 렌더링하기
 - `LK | CONSOLE`, slash, dot, badge로 로크업 내부를 분할하기
-- 제품마다 mark·gap·font·weight·case·appearance를 바꾸거나 제품명만 ExtraBold 800으로 되돌리기
+- 제품마다 mark·gap·font·weight·case·appearance를 바꾸거나 제품명만 ExtraBold 800이나 Bold 700으로 되돌리기
 - full을 좁은 슬롯에서 찌그러뜨리거나 compact 계약 밖에서 임의 crop·wrap·ellipsis하기
 - 페이지 제목, workspace, 버전, `DEV`·`STG`, beta, 상태, 슬로건을 제품명 outline에 합치기
 - ProductLockup을 기능 icon, 반복 pattern, watermark로 사용하기
@@ -177,7 +177,7 @@ registry 등록은 LDS 코드 변경이 아니라 **브랜드 승인**에서 시
 
 ## 10. 근거와 의도적 적용
 
-- [Montserrat v7.222 공식 릴리스](https://github.com/JulietaUla/Montserrat/releases/tag/v7.222)는 pinned build-time wordmark source입니다. 회사 `ROBOTICS`는 ExtraBold 800을, 고정 Portal과 ProductLockup 승인 제품명은 SemiBold 600을 사용합니다. 배포 결과는 outline이므로 소비자 runtime에 글꼴을 요구하지 않습니다.
+- [Montserrat v7.222 공식 릴리스](https://github.com/JulietaUla/Montserrat/releases/tag/v7.222)는 pinned build-time wordmark source입니다. 회사 `ROBOTICS`는 ExtraBold 800(세로형)과 Bold 700(가로형)을, 고정 Portal과 ProductLockup 승인 제품명은 SemiBold 600을 사용합니다. 배포 결과는 outline이므로 소비자 runtime에 글꼴을 요구하지 않습니다.
 - [Atlassian logos](https://atlassian.design/foundations/logos)는 제품 식별과 고정 attribution 자산을 구분하고 승인 로고의 임의 합성을 금지합니다. LDS는 자유 조합 대신 닫힌 outline registry를 선택했습니다.
 - [W3C functional images](https://www.w3.org/WAI/tutorials/images/functional/)와 [WCAG Technique H2](https://www.w3.org/WAI/WCAG22/Techniques/html/H2)는 이미지 링크의 목적 이름과 중복 대체 텍스트 회피 근거입니다.
 - [Apple HIG Design principles](https://developer.apple.com/design/human-interface-guidelines/design-principles)는 맥락을 보존하고 콘텐츠·컨트롤을 일관되고 예측 가능한 위치에 두며 자연스러운 애니메이션으로 전환을 이해시키라고 설명합니다. LDS는 LK mark를 고정하고 제품명 영역만 reveal하는 방식으로 적용합니다.

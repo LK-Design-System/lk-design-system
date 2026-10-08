@@ -3,18 +3,18 @@
   "contractVersion": 1,
   "generatedBy": "scripts/generate-brand-platform-assets.mjs",
   "brandStandard": {
-    "version": "2.0.0",
+    "version": "3.0.0",
     "status": "current-repository-standard",
-    "governanceSha256": "e0fb546e42a43fd53a5f8532f9de71fb6a98dd88e3c9d78a81527e6d2b79108f",
+    "governanceSha256": "316d47cddcec1842987970bf36efa70ba05f7738e41517b415afe495b09274fa",
     "minimumSizePolicy": {
       "status": "repository-policy-pending-human-optical-approval",
       "humanOpticalApproval": false,
       "approvalRecord": null
     }
   },
-  "sourceAssetSetSha256": "f7bc6532ba993b0fda69bf77c322099703aa37006b094051b34d5d3cf3644f5f",
-  "sourceConstructionVersion": 5,
-  "sourceConstructionManifestSha256": "476ad9ef3804d67c3bc082a76ec19a8e9481216d246a189b5c1ecf316c77488b",
+  "sourceAssetSetSha256": "1569b176cfbaa2ee321e18df30b2de02a56a56c9ef0d177ce4c781b655d16c34",
+  "sourceConstructionVersion": 6,
+  "sourceConstructionManifestSha256": "c83bf9fce046bf28d4a5967679b0f85faa31f90e801391a78d701758d0af0d2f",
   "delivery": {
     "type": "xcode-asset-catalog",
     "moduleName": "consumer-defined",
@@ -104,9 +104,9 @@
       "imagesetName": "LKLogoInlineNavy",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-inline-navy.svg",
-      "sourceSha256": "1789fa9df782cf1fbc93f57167b174672741c515b9936696c6ce59f2cc87c287",
+      "sourceSha256": "27a8d205b1b60b60ad72e3826bf0e2b3bf9d54c8515df3393b8fc4233ff480b1",
       "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoInlineNavy.imageset/lk-logo-inline-navy.svg",
-      "copiedSvgSha256": "1789fa9df782cf1fbc93f57167b174672741c515b9936696c6ce59f2cc87c287",
+      "copiedSvgSha256": "27a8d205b1b60b60ad72e3826bf0e2b3bf9d54c8515df3393b8fc4233ff480b1",
       "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
       "minimumRendered": {
         "axis": "rendered-height",
@@ -115,7 +115,7 @@
       },
       "minimumRequiredSlotWidth": {
         "axis": "slot-width",
-        "value": 156.324048,
+        "value": 156.254307,
         "unit": "pt"
       }
     },
@@ -124,9 +124,9 @@
       "imagesetName": "LKLogoInlineWhite",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-inline-white.svg",
-      "sourceSha256": "2584a5ac9b27cc603a19f66bef631e0059ab5c219314310371710fae42df10a0",
+      "sourceSha256": "f9f556302dd735b7941de7e66362724bbf9d19637444015fd0390c45405c7ca8",
       "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoInlineWhite.imageset/lk-logo-inline-white.svg",
-      "copiedSvgSha256": "2584a5ac9b27cc603a19f66bef631e0059ab5c219314310371710fae42df10a0",
+      "copiedSvgSha256": "f9f556302dd735b7941de7e66362724bbf9d19637444015fd0390c45405c7ca8",
       "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
       "minimumRendered": {
         "axis": "rendered-height",
@@ -135,7 +135,7 @@
       },
       "minimumRequiredSlotWidth": {
         "axis": "slot-width",
-        "value": 156.324048,
+        "value": 156.254307,
         "unit": "pt"
       }
     },
@@ -184,9 +184,9 @@
       "imagesetName": "LKLogoBannerNavy",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-banner-navy.svg",
-      "sourceSha256": "e56b1830065ec9ac6d5079493aef43a32a7287c350c2da7e60967ce9f78f0f1e",
+      "sourceSha256": "cfe68a71d733595e2cb0fad53ff0a3624fb56da154abfba31daf6207a0385f03",
       "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoBannerNavy.imageset/lk-logo-banner-navy.svg",
-      "copiedSvgSha256": "e56b1830065ec9ac6d5079493aef43a32a7287c350c2da7e60967ce9f78f0f1e",
+      "copiedSvgSha256": "cfe68a71d733595e2cb0fad53ff0a3624fb56da154abfba31daf6207a0385f03",
       "clearSpaceApplication": "embedded-in-source-asset",
       "minimumRendered": {
         "axis": "rendered-height",
@@ -195,7 +195,7 @@
       },
       "minimumRequiredSlotWidth": {
         "axis": "slot-width",
-        "value": 137.019722,
+        "value": 136.963949,
         "unit": "pt"
       }
     },
@@ -204,9 +204,9 @@
       "imagesetName": "LKLogoBannerLight",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-banner-light.svg",
-      "sourceSha256": "2e4b1ecdc20803653fb75c227aae2036c6d811820fb157dceb20a447e55f06b3",
+      "sourceSha256": "0608dc6522bc05338112877b065acfeba8b86480fd71c16f5fbe8bd32950be8c",
       "copiedSvgPath": "assets/brand/platforms/ios/LKBrandAssets.xcassets/LKLogoBannerLight.imageset/lk-logo-banner-light.svg",
-      "copiedSvgSha256": "2e4b1ecdc20803653fb75c227aae2036c6d811820fb157dceb20a447e55f06b3",
+      "copiedSvgSha256": "0608dc6522bc05338112877b065acfeba8b86480fd71c16f5fbe8bd32950be8c",
       "clearSpaceApplication": "embedded-in-source-asset",
       "minimumRendered": {
         "axis": "rendered-height",
@@ -215,7 +215,7 @@
       },
       "minimumRequiredSlotWidth": {
         "axis": "slot-width",
-        "value": 137.019722,
+        "value": 136.963949,
         "unit": "pt"
       }
     },
