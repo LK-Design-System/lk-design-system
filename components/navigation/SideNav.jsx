@@ -460,7 +460,7 @@ export const SideNav = React.forwardRef(function SideNav({
               <div data-sidenav-motion="swap" data-state={col ? 'compact' : 'expanded'} style={{ animation: swapAnimation }}>
                 {col
                   ? <div data-slot="heading" className={partClassName(classNames, 'heading') || undefined} aria-hidden="true" style={{ height: 1, flexShrink: 0, background: appearanceTokens.divider, margin: i === 0 ? '2px 12px 6px' : '10px 12px 6px', ...partStyle(styles, 'heading') }} />
-                  : <div data-slot="heading" className={partClassName(classNames, 'heading') || undefined} style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--caption2-size)', fontWeight: 'var(--fw-bold)', letterSpacing: '1px', textTransform: 'uppercase', color: appearanceTokens.subtleForeground, padding: i === 0 ? '4px 12px 6px' : '14px 12px 6px', ...partStyle(styles, 'heading') }}>{o.heading}</div>}
+                  : <div data-slot="heading" className={partClassName(classNames, 'heading') || undefined} style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)', fontWeight: 'var(--fw-medium)', letterSpacing: 0, color: appearanceTokens.subtleForeground, padding: i === 0 ? '4px 12px 6px' : '14px 12px 6px', ...partStyle(styles, 'heading') }}>{o.heading}</div>}
               </div>
             </li>
           );

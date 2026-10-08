@@ -19168,6 +19168,7 @@ css
 
 - SideNav prompt contract: `components/navigation/SideNav.prompt.md`
 - Storybook implementation evidence: `stories/NavigationSideNav.stories.jsx`
+- [Fluent 2 Nav](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
 - [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/)
 - [Carbon UI shell left panel style](https://carbondesignsystem.com/components/UI-shell-left-panel/style/)
 - [Fluent Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
@@ -19175,7 +19176,6 @@ css
 - [Carbon UI shell left panel accessibility](https://preview.carbondesignsystem.com/building-blocks/core/components/ui-shell-left-panel/accessibility)
 - [Atlassian navigation system layout](https://atlassian.design/components/navigation-system/layout/examples)
 - [shadcn/ui Sidebar](https://ui.shadcn.com/docs/components/base/sidebar)
-- [WAI-ARIA landmark regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
 
 
 ---

@@ -50,7 +50,7 @@ token보다 우선합니다.
   동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.
 - 내비게이션 disabled 표면은 wrapper opacity `0.45`를 공통 문법으로 사용합니다. 개별 자식의
   색 토큰을 다시 바꿔 이중으로 흐리게 만들지 않습니다.
-- 타입 스케일 정합: 섹션 헤딩 10.5px → `--caption2-size`(11px, 스케일 하한; 대문자 letterSpacing 1px 유지), 자식 항목 13.5px → `--label2-size`(13px)로 스냅했습니다. 14px 부모 항목보다 1px 아래 위계는 그대로 유지됩니다.
+- 섹션 헤딩은 모든 외형에서 입력한 대로의 문장형 `--label2-size`(13px)·`--label2-line`·`--fw-medium`·자간 `0`이며 색은 각 외형의 subtle 잉크(default·neutral `label-alternative` 5.07~5.19:1, brand `navy-shell-65` 7.48:1)입니다. 이전의 11px bold 대문자·자간 1px은 한국어 제목에서 대문자 변환이 의미가 없고 자간이 음절 간격을 벌려 어색했습니다(2026-10-09 owner 승인 L-N5, 모든 SideNav 화면의 섹션 제목 모양이 바뀜). [Fluent 2 Nav](https://fluent2.microsoft.design/components/web/react/core/nav/usage)의 sentence-style capitalization과 shadcn `SidebarGroupLabel`(대문자 변환 없는 작은 medium 라벨, 2차 근거)을 따릅니다. 타이포는 색 역할이 아니므로 appearance에 묶지 않습니다. padding(첫 제목 `4px 12px 6px`, 이후 `14px 12px 6px`)과 접힌 레일의 hairline은 그대로이며, 자식 항목은 `--label2-size`(13px), 14px 부모 항목보다 1px 아래 위계를 유지합니다.
 
 ### 내부 시각 차이 점검
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "9f0296bac7679b5f47e60ce3059629b2b15ad6349777f8d2fa669550db3b1519",
+  "sourceFingerprint": "1e5dd16189f0c1fbaff11e7862c9b272e1974ec7d9d0f2bbf0109c296afdd246",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -25535,15 +25535,19 @@
         "--_lds-side-nav-pressed-foreground",
         "--_lds-side-nav-focus-indicator",
         "--space-1-5",
+        "--label2-size",
+        "--label2-line",
         "--lds-side-nav-child-item-height",
         "--component-side-nav-child-item-height",
         "--component-side-nav-child-item-padding-y",
         "--space-4-5",
-        "--label2-size",
-        "--label2-line",
         "--shadow-lg"
       ],
       "externalReferences": [
+        {
+          "label": "Fluent 2 Nav",
+          "url": "https://fluent2.microsoft.design/components/web/react/core/nav/usage"
+        },
         {
           "label": "Carbon UI shell usage",
           "url": "https://carbondesignsystem.com/components/UI-shell-header/usage/"
@@ -25613,10 +25617,6 @@
           "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/system-color"
         },
         {
-          "label": "Fluent 2 Nav",
-          "url": "https://fluent2.microsoft.design/components/web/react/core/nav/usage"
-        },
-        {
           "label": "shadcn/ui Sidebar",
           "url": "https://ui.shadcn.com/docs/components/sidebar"
         },
@@ -25637,7 +25637,7 @@
           "url": "https://grafana.com/developers/saga/patterns/navigation/"
         }
       ],
-      "promptSha256": "f961fd3c14e90c66662cc8de536d602c1e30e0153b2573da8af90379610dd15d"
+      "promptSha256": "520e4a92508b2f1a99fd7a0a86338d8f9a686ff2d93414f2f62b38a9798fb21b"
     },
     {
       "id": "steps",
@@ -74348,6 +74348,10 @@
           "path": "stories/NavigationSideNav.stories.jsx"
         },
         {
+          "label": "Fluent 2 Nav",
+          "url": "https://fluent2.microsoft.design/components/web/react/core/nav/usage"
+        },
+        {
           "label": "Carbon UI shell usage",
           "url": "https://carbondesignsystem.com/components/UI-shell-header/usage/"
         },
@@ -74374,10 +74378,6 @@
         {
           "label": "shadcn/ui Sidebar",
           "url": "https://ui.shadcn.com/docs/components/base/sidebar"
-        },
-        {
-          "label": "WAI-ARIA landmark regions",
-          "url": "https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/"
         }
       ],
       "canonicalGuide": null,
