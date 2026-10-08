@@ -29,7 +29,8 @@ archive/reference인 Console Pastel은 재활성화하거나 새 발행 경로�
 | 검증 artifact 제품 배포 | 해당 제품의 승인된 대상·절차 | 패키지 push/발행 승인과 별개 |
 
 `ci.yml`과 Pages의 기존 GitHub-hosted Windows/Linux 경로는 OS별 증거를 제공한다.
-Manual의 `lk-authoring-output`은 별도 등록 경로다. 이 정책은 이들을 임의로 중단하거나
+Manual 원격 main에는 CI/발행 workflow가 없다. 다른 checkout의 미커밋
+`lk-authoring-output` 초안을 현행 원격 등록으로 취급하지 않는다. 이 정책은 이들을 임의로 중단하거나
 Linux server04로 이미 이관됐다고 주장할 근거가 아니다. 공개 저장소의 표준 hosted
 runner는 무료다. 기존 job의 이관·새 VM·runner 등록은 별도 승인과 자격검증이 필요하다.
 
