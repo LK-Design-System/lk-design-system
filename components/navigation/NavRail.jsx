@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * LK ROBOTICS — NavRail
  * A vertical icon+label navigation rail (desktop side nav). The active item
- * takes the cyan wash + signal ink. Pass `items` as `{ value, label, icon }`.
+ * takes the primary tint surface + label-normal ink and bold weight. Pass `items` as `{ value, label, icon }`.
  * Controlled (`value`) or uncontrolled (`defaultValue`).
  */
 export function NavRail({ items = [], value, defaultValue, onChange, renderLink, style, ...rest }) {

@@ -10,7 +10,7 @@ Classification: **LK Product Extension**. 동등한 중요도의 평면형 주�
 ]} />
 ```
 
-- **items** — `{ value, label, ariaLabel?, icon, href?, disabled? }`. `href`가 있으면 native anchor, 없으면 기존 선택 button입니다. **value / defaultValue / onChange**. 활성은 시안 워시 + 시그널 잉크. 모바일에는 `BottomNav`를 쓰세요.
+- **items** — `{ value, label, ariaLabel?, icon, href?, disabled? }`. `href`가 있으면 native anchor, 없으면 기존 선택 button입니다. **value / defaultValue / onChange**. 활성은 primary 틴트 면(`--color-semantic-primary-surface-strong`, hover는 `-normal`) + `label-normal` 잉크와 굵기입니다(코드 기준으로 정정, 2026-10-09; 이전 문구 「시안 워시 + 시그널 잉크」는 구현과 달랐습니다). 모바일에는 `BottomNav`를 쓰세요.
 - **renderLink** — router 통합 시 `renderLink={(item, { href, ...props }) => <RouterLink to={href} {...props} />}`로 native anchor만 치환합니다.
 - 긴 label은 68px 레일 안에서 한 줄 ellipsis로 줄이고 `title`/`ariaLabel`로 전체 이름을 유지합니다. 아이콘은 장식으로 처리합니다.
 - 레일 외곽은 `fit-content`라 Grid/Flex 자식으로 배치해도 남는 가로 공간까지 카드 표면이 늘어나지 않습니다.

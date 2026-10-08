@@ -235,6 +235,13 @@ export const ATOMIC = {
       93
     ]
   },
+  "navy-wash": {
+    "label": "Navy Wash",
+    "steps": [
+      6,
+      98
+    ]
+  },
   "primary-blue": {
     "label": "Primary Blue",
     "steps": [
@@ -430,7 +437,7 @@ export const STATUS_FAMILIES = {
 };
 export const COLOR_SYSTEM_META = {
   "source": "tokens/source.json",
-  "atomicTokens": 176,
+  "atomicTokens": 178,
   "semanticTokens": 118,
-  "componentTokens": 112
+  "componentTokens": 127
 };

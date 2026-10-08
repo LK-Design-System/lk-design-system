@@ -1424,6 +1424,22 @@
           }
         }
       },
+      "navy-wash": {
+        "label": "Navy Wash",
+        "source": "LDS SideNav neutral appearance (owner decision L-N1 = C, 2026-10-09) — a light surface leaning slightly toward the brand navy hue (216°, 1.055:1 against white body) and its dark counterpart; step 6 promotes the former raw dark literal of background-band",
+        "tokens": {
+          "6": {
+            "$type": "color",
+            "$value": "#0E121F",
+            "css": "--color-atomic-navy-wash-6"
+          },
+          "98": {
+            "$type": "color",
+            "$value": "#F7F9FC",
+            "css": "--color-atomic-navy-wash-98"
+          }
+        }
+      },
       "primary-blue": {
         "label": "Primary Blue",
         "source": "LK Theme approved primary anchors, 2026-10-08; ordinal steps, not a perceptually generated ramp",
@@ -2319,7 +2335,7 @@
         "css": "--color-semantic-background-band",
         "modes": {
           "light": "#F4F4F5",
-          "dark": "#0E121F"
+          "dark": "var(--color-atomic-navy-wash-6)"
         },
         "origin": "lds-extension",
         "group": "background"
@@ -4155,6 +4171,121 @@
           "$value": "var(--color-atomic-navy-shell-68)",
           "generated": true,
           "ref": "primitive.colorRamps.navyShell.tokens.68"
+        },
+        "neutralSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-surface",
+          "$value": "var(--color-atomic-navy-wash-98)",
+          "modes": {
+            "light": "var(--color-atomic-navy-wash-98)",
+            "dark": "var(--color-atomic-navy-wash-6)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.navy-wash.tokens.98"
+        },
+        "neutralDivider": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-divider",
+          "$value": "var(--color-semantic-line-solid-normal)",
+          "generated": true
+        },
+        "neutralForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-foreground",
+          "$value": "var(--color-semantic-label-normal)",
+          "generated": true
+        },
+        "neutralMutedForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-muted-foreground",
+          "$value": "var(--color-semantic-label-alternative)",
+          "generated": true
+        },
+        "neutralSubtleForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-subtle-foreground",
+          "$value": "var(--color-semantic-label-alternative)",
+          "generated": true
+        },
+        "neutralHoverForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-hover-foreground",
+          "$value": "var(--color-semantic-label-neutral)",
+          "generated": true
+        },
+        "neutralActiveForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-active-foreground",
+          "$value": "var(--color-semantic-label-normal)",
+          "generated": true
+        },
+        "neutralHoverSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-hover-surface",
+          "$value": "var(--color-atomic-cool-neutral-97)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-97)",
+            "dark": "var(--color-atomic-cool-neutral-17)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.97"
+        },
+        "neutralActiveSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-active-surface",
+          "$value": "var(--color-atomic-cool-neutral-96)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-96)",
+            "dark": "var(--color-atomic-cool-neutral-20)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.96"
+        },
+        "neutralActiveHoverSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-active-hover-surface",
+          "$value": "var(--color-atomic-cool-neutral-95)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-95)",
+            "dark": "var(--color-atomic-cool-neutral-22)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.95"
+        },
+        "neutralPressedSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-pressed-surface",
+          "$value": "var(--color-atomic-cool-neutral-95)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-95)",
+            "dark": "var(--color-atomic-cool-neutral-22)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.95"
+        },
+        "neutralBadgeSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-badge-surface",
+          "$value": "var(--color-semantic-fill-strong)",
+          "generated": true
+        },
+        "neutralBadgeForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-badge-foreground",
+          "$value": "var(--color-semantic-label-neutral)",
+          "generated": true
+        },
+        "neutralBadgeDot": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-badge-dot",
+          "$value": "var(--color-semantic-label-alternative)",
+          "generated": true
+        },
+        "neutralFocusIndicator": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-focus-indicator",
+          "$value": "var(--color-semantic-focus-indicator)",
+          "generated": true
         }
       }
     },

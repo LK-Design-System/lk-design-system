@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Component color contracts — 112 tokens (GENERATED — do not hand-edit)
+   LK ROBOTICS — Component color contracts — 127 tokens (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -114,6 +114,21 @@
   --component-side-nav-brand-badge-foreground: var(--color-atomic-navy-shell-65);
   --component-side-nav-brand-badge-active-surface: var(--color-atomic-navy-shell-24);
   --component-side-nav-brand-focus-indicator: var(--color-atomic-navy-shell-68);
+  --component-side-nav-neutral-surface: var(--color-atomic-navy-wash-98);
+  --component-side-nav-neutral-divider: var(--color-semantic-line-solid-normal);
+  --component-side-nav-neutral-foreground: var(--color-semantic-label-normal);
+  --component-side-nav-neutral-muted-foreground: var(--color-semantic-label-alternative);
+  --component-side-nav-neutral-subtle-foreground: var(--color-semantic-label-alternative);
+  --component-side-nav-neutral-hover-foreground: var(--color-semantic-label-neutral);
+  --component-side-nav-neutral-active-foreground: var(--color-semantic-label-normal);
+  --component-side-nav-neutral-hover-surface: var(--color-atomic-cool-neutral-97);
+  --component-side-nav-neutral-active-surface: var(--color-atomic-cool-neutral-96);
+  --component-side-nav-neutral-active-hover-surface: var(--color-atomic-cool-neutral-95);
+  --component-side-nav-neutral-pressed-surface: var(--color-atomic-cool-neutral-95);
+  --component-side-nav-neutral-badge-surface: var(--color-semantic-fill-strong);
+  --component-side-nav-neutral-badge-foreground: var(--color-semantic-label-neutral);
+  --component-side-nav-neutral-badge-dot: var(--color-semantic-label-alternative);
+  --component-side-nav-neutral-focus-indicator: var(--color-semantic-focus-indicator);
   --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
   --component-dialog-scrim: var(--color-semantic-material-dimmer);
   --component-transient-feedback-bg: color-mix(in srgb, var(--color-semantic-inverse-background) 72%, transparent);
@@ -229,6 +244,21 @@
   --component-side-nav-brand-badge-foreground: var(--color-atomic-navy-shell-65);
   --component-side-nav-brand-badge-active-surface: var(--color-atomic-navy-shell-24);
   --component-side-nav-brand-focus-indicator: var(--color-atomic-navy-shell-68);
+  --component-side-nav-neutral-surface: var(--color-atomic-navy-wash-6);
+  --component-side-nav-neutral-divider: var(--color-semantic-line-solid-normal);
+  --component-side-nav-neutral-foreground: var(--color-semantic-label-normal);
+  --component-side-nav-neutral-muted-foreground: var(--color-semantic-label-alternative);
+  --component-side-nav-neutral-subtle-foreground: var(--color-semantic-label-alternative);
+  --component-side-nav-neutral-hover-foreground: var(--color-semantic-label-neutral);
+  --component-side-nav-neutral-active-foreground: var(--color-semantic-label-normal);
+  --component-side-nav-neutral-hover-surface: var(--color-atomic-cool-neutral-17);
+  --component-side-nav-neutral-active-surface: var(--color-atomic-cool-neutral-20);
+  --component-side-nav-neutral-active-hover-surface: var(--color-atomic-cool-neutral-22);
+  --component-side-nav-neutral-pressed-surface: var(--color-atomic-cool-neutral-22);
+  --component-side-nav-neutral-badge-surface: var(--color-semantic-fill-strong);
+  --component-side-nav-neutral-badge-foreground: var(--color-semantic-label-neutral);
+  --component-side-nav-neutral-badge-dot: var(--color-semantic-label-alternative);
+  --component-side-nav-neutral-focus-indicator: var(--color-semantic-focus-indicator);
   --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
   --component-dialog-scrim: var(--color-semantic-material-dimmer);
   --component-transient-feedback-bg: color-mix(in srgb, var(--color-semantic-inverse-background) 72%, transparent);
@@ -345,6 +375,21 @@
     --component-side-nav-brand-badge-foreground: var(--color-atomic-navy-shell-65);
     --component-side-nav-brand-badge-active-surface: var(--color-atomic-navy-shell-24);
     --component-side-nav-brand-focus-indicator: var(--color-atomic-navy-shell-68);
+    --component-side-nav-neutral-surface: var(--color-atomic-navy-wash-6);
+    --component-side-nav-neutral-divider: var(--color-semantic-line-solid-normal);
+    --component-side-nav-neutral-foreground: var(--color-semantic-label-normal);
+    --component-side-nav-neutral-muted-foreground: var(--color-semantic-label-alternative);
+    --component-side-nav-neutral-subtle-foreground: var(--color-semantic-label-alternative);
+    --component-side-nav-neutral-hover-foreground: var(--color-semantic-label-neutral);
+    --component-side-nav-neutral-active-foreground: var(--color-semantic-label-normal);
+    --component-side-nav-neutral-hover-surface: var(--color-atomic-cool-neutral-17);
+    --component-side-nav-neutral-active-surface: var(--color-atomic-cool-neutral-20);
+    --component-side-nav-neutral-active-hover-surface: var(--color-atomic-cool-neutral-22);
+    --component-side-nav-neutral-pressed-surface: var(--color-atomic-cool-neutral-22);
+    --component-side-nav-neutral-badge-surface: var(--color-semantic-fill-strong);
+    --component-side-nav-neutral-badge-foreground: var(--color-semantic-label-neutral);
+    --component-side-nav-neutral-badge-dot: var(--color-semantic-label-alternative);
+    --component-side-nav-neutral-focus-indicator: var(--color-semantic-focus-indicator);
     --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
     --component-dialog-scrim: var(--color-semantic-material-dimmer);
     --component-transient-feedback-bg: color-mix(in srgb, var(--color-semantic-inverse-background) 72%, transparent);

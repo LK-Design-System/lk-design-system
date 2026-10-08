@@ -34349,19 +34349,19 @@
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "긴 label은 68px 레일 안에서 한 줄 ellipsis로 줄이고 title/ariaLabel로 전체 이름을 유지합니다. 아이콘은 장식으로 처리합니다."
+          "rule": "items — { value, label, ariaLabel?, icon, href?, disabled? }. href가 있으면 native anchor, 없으면 기존 선택 button입니다. value / defaultValue / onChange. 활성은 primary 틴트 면(--color-semantic-primary-surface-strong, hover는 -normal) + label-normal 잉크와 굵기입니다(코드 기준으로 정정, 2026-10-09; 이전 문구 「시안 워시 + 시그널 잉크」는 구현과 달랐습니다)."
         },
         {
           "subject": "명시 규칙 2",
-          "rule": "BottomNav와 동일한 icon+caption, primary ink, aria-current=\"page\"를 사용하고 control 면적만 세로 68×60과 가로 균등 분할로 달라집니다. 이 차이는 orientation과 pointer target 배치에 따른 기능 차이입니다."
+          "rule": "긴 label은 68px 레일 안에서 한 줄 ellipsis로 줄이고 title/ariaLabel로 전체 이름을 유지합니다. 아이콘은 장식으로 처리합니다."
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "SideNav의 섹션 heading, 계층 indent, badge, disclosure, panel shadow는 쓰지 않습니다. 평면 목적지 3–5개만 보여주기 때문입니다."
+          "rule": "BottomNav와 동일한 icon+caption, primary ink, aria-current=\"page\"를 사용하고 control 면적만 세로 68×60과 가로 균등 분할로 달라집니다. 이 차이는 orientation과 pointer target 배치에 따른 기능 차이입니다."
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "Classification: LK Product Extension. 동등한 중요도의 평면형 주요 목적지 3–5개에 사용하고, 같은 목적지 집합의 모바일 표현은 BottomNav로 전환합니다. 계층형 SideNav와 동시에 주 탐색으로 사용하지 않습니다."
+          "rule": "SideNav의 섹션 heading, 계층 indent, badge, disclosure, panel shadow는 쓰지 않습니다. 평면 목적지 3–5개만 보여주기 때문입니다."
         },
         {
           "subject": "--caption2-size",
@@ -34369,9 +34369,9 @@
         }
       ],
       "responsive": [
-        "items — { value, label, ariaLabel?, icon, href?, disabled? }. href가 있으면 native anchor, 없으면 기존 선택 button입니다. value / defaultValue / onChange. 활성은 시안 워시 + 시그널 잉크. 모바일에는 BottomNav를 쓰세요.",
         "Fluent Nav usage — 주 목적지는 실제 link로 제공하고 짧고 스캔 가능한 이름을 사용하며 좁은 화면에서는 다른 표면으로 전환합니다.",
-        "NavRail — 세로 아이콘+라벨 내비게이션 레일(데스크톱 사이드 내비)."
+        "NavRail — 세로 아이콘+라벨 내비게이션 레일(데스크톱 사이드 내비).",
+        "Classification: LK Product Extension. 동등한 중요도의 평면형 주요 목적지 3–5개에 사용하고, 같은 목적지 집합의 모바일 표현은 BottomNav로 전환합니다. 계층형 SideNav와 동시에 주 탐색으로 사용하지 않습니다."
       ],
       "contentGuidance": [],
       "accessibility": [
@@ -35973,9 +35973,9 @@
       ],
       "avoidWhen": [
         "접힌 레일의 점은 실제 badge만 뜻합니다. 활성 자손은 부모 아이콘의 강한 잉크로만 표시해 동일한 점이 상태와 현재 위치를 동시에 뜻하지 않게 합니다.",
+        "neutral은 default와 행 geometry·끝 구분선·포커스·굵기가 같고, 표면(navy-wash)·상시 선택 채움·label-normal 선택 잉크·무채색 배지·접힌 proxy 타일만 다릅니다. 상시 채움은 ListCell selectedPresentation=\"tint\"와 DropdownMenu 현재 항목의 기존 무채색 문법을 SideNav로 옮긴 것이며 행 하나 크기라 넓은 wash 우려에 해당하지 않습니다.",
         "Carbon UI shell left panel style — sub-menu item은 상위 link/sub-menu보다 추가로 들여쓰고 hover와 selected를 별도 상태로 정의합니다. LDS도 하위 목적지의 hover 표면과 라벨을 --space-3만큼 함께 inset해 계층을 분리하되, Carbon의 4px interactive border는 채택하지 않습니다.",
-        "Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. category 아이콘이 없을 때도 subitem을 명확히 들여쓰라는 원칙을 적용해 LDS는 자식 아이콘 유무와 무관하게 같은 라벨 시작선을 보장합니다. 축소 가능 내비게이션의 상태는 명시적 토글로 설명하고 hover peek는 선택 기능으로 제한합니다.",
-        "Carbon UI shell left panel accessibility — rail은 hover나 focus에서 펼쳐져도 같은 링크·서브메뉴 keyboard model을 유지합니다. 이 동작을 LDS에 적용할 때는 동일 DOM뿐 아니라 44px hit target과 세로 위치도 유지해, 포인터와 키보드 사용자가 확장 중 움직이는 목적지를 다시 추적하지 않게 합니다."
+        "Fluent Nav usage — 목적지는 link, category는 펼침/접힘이며 category 자체는 이동하지 않습니다. category 아이콘이 없을 때도 subitem을 명확히 들여쓰라는 원칙을 적용해 LDS는 자식 아이콘 유무와 무관하게 같은 라벨 시작선을 보장합니다. 축소 가능 내비게이션의 상태는 명시적 토글로 설명하고 hover peek는 선택 기능으로 제한합니다."
       ],
       "anatomy": [
         {
@@ -36073,9 +36073,9 @@
         },
         {
           "name": "appearance",
-          "type": "'default' | 'brand'",
+          "type": "'default' | 'brand' | 'neutral'",
           "required": false,
-          "description": "색상 외형. default는 현재 theme semantic 색을 그대로 사용하고, brand는 밝은 작업면과 대비되는 평면 브랜드 네이비 셸을 사용합니다. 배치 형태는 surface가 별도로 소유합니다. @default 'default'",
+          "description": "색상 외형. default는 현재 theme semantic 색을 그대로 사용하고 현재 목적지를 accent 잉크·굵기로 표시합니다. brand는 밝은 작업면과 대비되는 평면 브랜드 네이비 셸이며 현재 목적지에 채움 + 흰 굵은 글자를 둡니다. neutral은 테마를 따르는 밝은(다크에서는 어두운) 무채색 셸이며 현재 목적지를 무채색 채움 + label-normal + 굵기로 표시합니다. 내비게이션 안에 강조색이 없고 파랑은 키보드 focus에만 남습니다. 배치 형태는 surface가 별도로 소유합니다. @default 'default'",
           "owner": "SideNavProps"
         },
         {
@@ -36315,6 +36315,21 @@
         "--component-side-nav-item-height",
         "--component-side-nav-item-padding-x",
         "--component-side-nav-item-padding-y",
+        "--component-side-nav-neutral-active-foreground",
+        "--component-side-nav-neutral-active-hover-surface",
+        "--component-side-nav-neutral-active-surface",
+        "--component-side-nav-neutral-badge-dot",
+        "--component-side-nav-neutral-badge-foreground",
+        "--component-side-nav-neutral-badge-surface",
+        "--component-side-nav-neutral-divider",
+        "--component-side-nav-neutral-focus-indicator",
+        "--component-side-nav-neutral-foreground",
+        "--component-side-nav-neutral-hover-foreground",
+        "--component-side-nav-neutral-hover-surface",
+        "--component-side-nav-neutral-muted-foreground",
+        "--component-side-nav-neutral-pressed-surface",
+        "--component-side-nav-neutral-subtle-foreground",
+        "--component-side-nav-neutral-surface",
         "--component-side-nav-padding",
         "--dur-base",
         "--dur-fast",

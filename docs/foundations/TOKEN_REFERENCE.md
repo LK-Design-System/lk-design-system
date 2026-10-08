@@ -176,6 +176,7 @@
 | `component.menu.tokens.paddingY` | dimension | `--component-menu-padding-y` | `var(--component-menu-padding-y)` | — |
 | `component.menu.tokens.radius` | dimension | `--component-menu-radius` | `var(--component-menu-radius)` | — |
 | `component.menu.tokens.scrollbarGap` | dimension | `--component-menu-scrollbar-gap` | `var(--component-menu-scrollbar-gap)` | — |
+| `component.messageComposer.tokens.borderFocus` | color | `--component-message-composer-border-focus` | `var(--color-atomic-cool-neutral-60)` | — |
 | `component.mobileSystemBars.tokens.foreground` | color | `--component-system-bars-fg` | `var(--color-semantic-label-strong)` | — |
 | `component.mobileSystemBars.tokens.homeHeight` | dimension | `--component-system-bars-home-height` | `var(--component-system-bars-home-height)` | — |
 | `component.mobileSystemBars.tokens.homeWidth` | dimension | `--component-system-bars-home-width` | `var(--component-system-bars-home-width)` | — |
@@ -202,6 +203,21 @@
 | `component.sideNav.tokens.itemHeight` | dimension | `--component-side-nav-item-height` | `var(--component-side-nav-item-height)` | — |
 | `component.sideNav.tokens.itemPaddingX` | dimension | `--component-side-nav-item-padding-x` | `var(--component-side-nav-item-padding-x)` | — |
 | `component.sideNav.tokens.itemPaddingY` | dimension | `--component-side-nav-item-padding-y` | `var(--component-side-nav-item-padding-y)` | — |
+| `component.sideNav.tokens.neutralActiveForeground` | color | `--component-side-nav-neutral-active-foreground` | `var(--color-semantic-label-normal)` | — |
+| `component.sideNav.tokens.neutralActiveHoverSurface` | color | `--component-side-nav-neutral-active-hover-surface` | `var(--color-atomic-cool-neutral-95)` | — |
+| `component.sideNav.tokens.neutralActiveSurface` | color | `--component-side-nav-neutral-active-surface` | `var(--color-atomic-cool-neutral-96)` | — |
+| `component.sideNav.tokens.neutralBadgeDot` | color | `--component-side-nav-neutral-badge-dot` | `var(--color-semantic-label-alternative)` | — |
+| `component.sideNav.tokens.neutralBadgeForeground` | color | `--component-side-nav-neutral-badge-foreground` | `var(--color-semantic-label-neutral)` | — |
+| `component.sideNav.tokens.neutralBadgeSurface` | color | `--component-side-nav-neutral-badge-surface` | `var(--color-semantic-fill-strong)` | — |
+| `component.sideNav.tokens.neutralDivider` | color | `--component-side-nav-neutral-divider` | `var(--color-semantic-line-solid-normal)` | — |
+| `component.sideNav.tokens.neutralFocusIndicator` | color | `--component-side-nav-neutral-focus-indicator` | `var(--color-semantic-focus-indicator)` | — |
+| `component.sideNav.tokens.neutralForeground` | color | `--component-side-nav-neutral-foreground` | `var(--color-semantic-label-normal)` | — |
+| `component.sideNav.tokens.neutralHoverForeground` | color | `--component-side-nav-neutral-hover-foreground` | `var(--color-semantic-label-neutral)` | — |
+| `component.sideNav.tokens.neutralHoverSurface` | color | `--component-side-nav-neutral-hover-surface` | `var(--color-atomic-cool-neutral-97)` | — |
+| `component.sideNav.tokens.neutralMutedForeground` | color | `--component-side-nav-neutral-muted-foreground` | `var(--color-semantic-label-alternative)` | — |
+| `component.sideNav.tokens.neutralPressedSurface` | color | `--component-side-nav-neutral-pressed-surface` | `var(--color-atomic-cool-neutral-95)` | — |
+| `component.sideNav.tokens.neutralSubtleForeground` | color | `--component-side-nav-neutral-subtle-foreground` | `var(--color-semantic-label-alternative)` | — |
+| `component.sideNav.tokens.neutralSurface` | color | `--component-side-nav-neutral-surface` | `var(--color-atomic-navy-wash-98)` | — |
 | `component.sideNav.tokens.padding` | dimension | `--component-side-nav-padding` | `var(--component-side-nav-padding)` | — |
 | `component.statusBadge.tokens.cautionaryIndicator` | color | `--component-status-badge-cautionary-indicator` | `var(--color-semantic-status-cautionary-foreground)` | — |
 | `component.statusBadge.tokens.criticalIndicator` | color | `--component-status-badge-critical-indicator` | `var(--color-semantic-status-negative-foreground)` | — |
@@ -328,6 +344,8 @@
 | `primitive.colorRamps.lime.tokens.90` | color | `--color-atomic-lime-90` | `#DDF4CE` | — |
 | `primitive.colorRamps.lime.tokens.95` | color | `--color-atomic-lime-95` | `#EFFBE7` | — |
 | `primitive.colorRamps.lime.tokens.99` | color | `--color-atomic-lime-99` | `#FBFEF7` | — |
+| `primitive.colorRamps.navy-wash.tokens.6` | color | `--color-atomic-navy-wash-6` | `#0E121F` | — |
+| `primitive.colorRamps.navy-wash.tokens.98` | color | `--color-atomic-navy-wash-98` | `#F7F9FC` | — |
 | `primitive.colorRamps.navyShell.tokens.18` | color | `--color-atomic-navy-shell-18` | `#1E2B40` | — |
 | `primitive.colorRamps.navyShell.tokens.20` | color | `--color-atomic-navy-shell-20` | `#232F44` | — |
 | `primitive.colorRamps.navyShell.tokens.24` | color | `--color-atomic-navy-shell-24` | `#2D394D` | — |
@@ -519,7 +537,7 @@
 | `semantic.colorRoles.accent-foreground-red` | color | `--color-semantic-accent-foreground-red` | `light: #D63D3D; dark: #F16F6F` | — |
 | `semantic.colorRoles.accent-foreground-red-orange` | color | `--color-semantic-accent-foreground-red-orange` | `light: #E8661A; dark: #ED864A` | — |
 | `semantic.colorRoles.accent-foreground-violet` | color | `--color-semantic-accent-foreground-violet` | `light: var(--color-atomic-violet-45); dark: var(--color-atomic-violet-70)` | — |
-| `semantic.colorRoles.background-band` | color | `--color-semantic-background-band` | `light: #F4F4F5; dark: #0E121F` | — |
+| `semantic.colorRoles.background-band` | color | `--color-semantic-background-band` | `light: #F4F4F5; dark: var(--color-atomic-navy-wash-6)` | — |
 | `semantic.colorRoles.background-elevated-alternative` | color | `--color-semantic-background-elevated-alternative` | `light: #F7F7F8; dark: #141415` | — |
 | `semantic.colorRoles.background-elevated-normal` | color | `--color-semantic-background-elevated-normal` | `light: #FFFFFF; dark: #212225` | — |
 | `semantic.colorRoles.background-normal-alternative` | color | `--color-semantic-background-normal-alternative` | `light: #F7F7F8; dark: #0F0F10` | — |

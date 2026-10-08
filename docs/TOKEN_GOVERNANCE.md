@@ -189,7 +189,7 @@ Color usage rules:
   `border-left`/`border-inline-start`, 두꺼운 왼쪽 테두리, `inset Npx 0 0` 줄무늬가 모두
   해당한다. 상태와 선택은 그 역할을 이미 가진 형제 컴포넌트의 방식으로 전달한다:
   공지·사례는 `Banner`의 앞쪽 톤 아이콘과 틴트 면, 짧은 상태 표면은 `StatusBadge`의
-  톤 면과 글자, 목록·목차의 현재 항목은 `SideNav`의 선택 글자색과 굵기. 1px 회색
+  톤 면과 글자, 목록·목차의 현재 항목은 `SideNav`의 선택 글자색 또는 무채색 행 채움과 굵기(neutral 외형). 1px 회색
   구분선은 해당하지 않는다. `npm run check:no-leading-bars`가 이를 막는다.
 - 색상각이 의미 있는 색과 겹치는 강조색은 두지 않는다. `accent-*-light-blue`는
   primary와 색상각이 같아(OKLCH 249°) 선택·정보 상태로 읽히고, `accent-*-red-orange`는

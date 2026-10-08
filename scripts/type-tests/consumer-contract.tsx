@@ -165,7 +165,8 @@ export const companyEndorsedProductLockupContract: React.ReactElement = (
 export const invalidCompanyCompactContract: React.ReactElement = <ProductLockup product="portal" endorsement="company" compact />;
 // @ts-expect-error Only registry keys with an approved company form accept endorsement="company".
 export const invalidCompanyProductContract: React.ReactElement = <ProductLockup product="console" endorsement="company" />;
-// @ts-expect-error SideNav appearance only accepts the default or steel palette bundle.
+export const neutralSideNavAppearanceContract: React.ReactElement = <SideNav aria-label="중립 외형" items={[]} surface="docked" appearance="neutral" />;
+// @ts-expect-error SideNav appearance only accepts the default, brand, or neutral palette bundle.
 export const invalidSideNavAppearanceContract: React.ReactElement = <SideNav aria-label="잘못된 외형" items={[]} appearance="midnight" />;
 const temporaryNavigationTriggerRef = React.createRef<HTMLButtonElement>();
 export const dashboardTemporaryNavigationContract: React.ReactElement = (

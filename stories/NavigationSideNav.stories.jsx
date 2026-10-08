@@ -1224,3 +1224,242 @@ export const SurfaceRefContract = {
     }
   },
 };
+
+const neutralNavigationItems = [
+  { heading: '질문' },
+  { value: 'ask', label: '새 질문', icon: <Icon name="plus" size={18} /> },
+  { value: 'history', label: '최근 대화', icon: <Icon name="document" size={18} />, badge: 12 },
+  { heading: '작업' },
+  {
+    value: 'catalog',
+    label: '카탈로그',
+    icon: <Icon name="layers" size={18} />,
+    children: [
+      { value: 'catalog-projects', label: '프로젝트', badge: 4 },
+      { value: 'catalog-models', label: 'Model registry and evaluation runs' },
+    ],
+  },
+  { value: 'knowledge', label: '지식 베이스와 운영 문서, 장비 점검 로그 검색 결과 모음', icon: <Icon name="document" size={18} /> },
+  { value: 'admin', label: '관리', icon: <Icon name="setting" size={18} />, disabled: true },
+];
+
+function NeutralSideNavShell({ theme, testId, initialValue = 'ask', width = 256, collapsed = false }) {
+  const [value, setValue] = React.useState(initialValue);
+  return (
+    <div
+      data-theme={theme}
+      data-testid={`${testId}-shell`}
+      style={{
+        display: 'grid',
+        gridTemplateColumns: `${collapsed ? 64 : width}px minmax(0, 1fr)`,
+        height: 520,
+        overflow: 'hidden',
+        border: '1px solid var(--color-semantic-line-solid-normal)',
+        borderRadius: 'var(--radius-xl)',
+        background: 'var(--color-semantic-background-normal-normal)',
+      }}
+    >
+      <SideNav
+        data-testid={testId}
+        aria-label={theme === 'dark' ? '중립 외형 다크 탐색' : '중립 외형 라이트 탐색'}
+        items={neutralNavigationItems}
+        value={value}
+        onChange={setValue}
+        surface="docked"
+        appearance="neutral"
+        collapsed={collapsed}
+        width={width}
+        collapsedWidth={64}
+        brandAlign="start"
+        // The dark theme needs the adaptive lockup on its LK Navy plate. That plate's
+        // 0.5X padding does not fit a 64px rail, so the dark rail shows no brand.
+        header={theme === 'dark' ? (collapsed ? undefined : <Lockup variant="inline" adaptive height={20} />) : <Lockup variant="inline" tone="ink" height={20} />}
+        headerCollapsed={theme === 'dark' ? undefined : <Lockup variant="mark" tone="ink" height={20} />}
+        footer={({ collapsed: footerCollapsed }) => (
+          <UserMenu name="운영자" detail="LK Portal" status="online" collapsed={footerCollapsed} items={accountItems} />
+        )}
+        style={{ height: '100%' }}
+      />
+      <section aria-label="본문" style={{ minWidth: 0, padding: 'var(--space-6)', background: 'var(--color-semantic-background-normal-normal)', color: 'var(--color-semantic-label-normal)', fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)' }}>
+        흰 본문과 셸이 한 면으로 녹지 않도록 셸은 네이비 쪽으로 아주 약간 기운 밝은 면과 1px 구분선을 씁니다.
+      </section>
+    </div>
+  );
+}
+
+function expectNeutralRowState(row, expected, message) {
+  const style = getComputedStyle(row);
+  if (style.backgroundColor !== expected.background || style.color !== expected.color) {
+    throw new Error(`${message} (background ${style.backgroundColor} / ${expected.background}, color ${style.color} / ${expected.color})`);
+  }
+}
+
+export const NeutralDockedSurface = {
+  name: '변형·상태 · 중립 밝은 외형',
+  parameters: storyDescription(
+    'appearance="neutral"은 테마를 따르는 무채색 셸입니다. 현재 목적지는 무채색 채움, 가장 진한 label, 굵기로 표시하고 내비게이션 안에 강조색을 두지 않습니다. 파랑은 키보드 포커스에만 남고 배지도 무채색입니다. 라이트와 다크를 같은 항목과 같은 선택으로 나란히 둡니다.',
+  ),
+  render: () => (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 520px), 1fr))', gap: 'var(--space-4)', width: 'min(100%, 1120px)' }}>
+      <NeutralSideNavShell theme="light" testId="neutral-light" />
+      <NeutralSideNavShell theme="dark" testId="neutral-dark" />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    for (const testId of ['neutral-light', 'neutral-dark']) {
+      const nav = canvasElement.querySelector(`[data-testid="${testId}"]`);
+      const active = nav?.querySelector('[data-sidenav-value="ask"]');
+      const rest = nav?.querySelector('[data-sidenav-value="knowledge"]');
+      const badgeRow = nav?.querySelector('[data-sidenav-value="history"]');
+      const badge = badgeRow?.querySelector('[data-slot="badge"]');
+      if (!nav || !active || !rest || !badge) throw new Error(`The ${testId} neutral fixture is incomplete.`);
+      const token = (property, name) => resolveCssColor(active, property, `var(${name})`);
+      if (nav.dataset.appearance !== 'neutral' || nav.querySelectorAll('[aria-current="page"]').length !== 1 || active.getAttribute('aria-current') !== 'page') {
+        throw new Error('The neutral appearance must keep exactly one aria-current leaf.');
+      }
+      if (getComputedStyle(nav).backgroundColor !== token('backgroundColor', '--component-side-nav-neutral-surface')) {
+        throw new Error('The neutral shell must use the navy-wash surface, not the white body.');
+      }
+      expectNeutralRowState(active, {
+        background: token('backgroundColor', '--component-side-nav-neutral-active-surface'),
+        color: token('color', '--component-side-nav-neutral-foreground'),
+      }, 'The current leaf must carry the achromatic fill and label-normal ink');
+      if (Number(getComputedStyle(active.querySelector('[data-slot="label"]')).fontWeight) < 700) {
+        throw new Error('Weight is the required non-colour selected cue in the neutral appearance.');
+      }
+      expectNeutralRowState(rest, {
+        background: resolveCssColor(rest, 'backgroundColor', 'transparent'),
+        color: token('color', '--component-side-nav-neutral-muted-foreground'),
+      }, 'A rest destination must stay fill-free with the muted ink');
+      const badgeStyle = getComputedStyle(badge);
+      if (badgeStyle.backgroundColor !== token('backgroundColor', '--component-side-nav-neutral-badge-surface')
+        || badgeStyle.color !== token('color', '--component-side-nav-neutral-badge-foreground')) {
+        throw new Error('Neutral badges must be achromatic.');
+      }
+      // Resolve tokens before waitFor: resolveCssColor mutates the DOM, which
+      // would retrigger waitFor's MutationObserver on every attempt.
+      const hoverState = {
+        background: token('backgroundColor', '--component-side-nav-neutral-hover-surface'),
+        color: token('color', '--component-side-nav-neutral-hover-foreground'),
+      };
+      await userEvent.hover(rest);
+      await waitFor(() => expectNeutralRowState(rest, hoverState, 'Hover must step the surface below the selected fill and lift the ink to label-neutral'));
+      await userEvent.unhover(rest);
+    }
+    const styleText = canvasElement.querySelector('[data-testid="neutral-light"] style')?.textContent || '';
+    if (!styleText.includes('color:var(--_lds-side-nav-pressed-foreground)') || !styleText.includes('SelectedItem')) {
+      throw new Error('Keyboard :active must swap the ink and forced colors must map the current leaf to the system selection colours.');
+    }
+  },
+};
+
+export const AppearanceComparison = {
+  name: '변형·상태 · 외형 비교',
+  parameters: storyDescription(
+    'default, brand, neutral을 같은 항목과 같은 현재 목적지로 나란히 둡니다. 외형은 색 역할만 바꾸고 행 높이, 간격, 아이콘 위치, 굵기와 aria-current 의미는 같습니다.',
+  ),
+  render: () => (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(224px, 1fr))', gap: 'var(--space-4)', width: 'min(100%, 760px)' }}>
+      {['default', 'brand', 'neutral'].map((appearance) => (
+        <SideNav
+          key={appearance}
+          data-testid={`appearance-${appearance}`}
+          aria-label={`${appearance} 외형 비교 탐색`}
+          items={neutralNavigationItems}
+          defaultValue="catalog-projects"
+          surface="docked"
+          appearance={appearance}
+          width={224}
+          brandAlign="start"
+          header={<Lockup variant="inline" tone={appearance === 'brand' ? 'white' : 'ink'} height={20} />}
+          style={{ height: 460 }}
+        />
+      ))}
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const rows = ['default', 'brand', 'neutral'].map((appearance) => {
+      const nav = canvasElement.querySelector(`[data-testid="appearance-${appearance}"]`);
+      const active = nav?.querySelector('[aria-current="page"]');
+      if (!nav || nav.dataset.appearance !== appearance || !active || active.dataset.sidenavValue !== 'catalog-projects') {
+        throw new Error(`The ${appearance} comparison must share the same current destination.`);
+      }
+      return active.getBoundingClientRect();
+    });
+    if (rows.some((rect) => Math.abs(rect.height - rows[0].height) > 0.5 || Math.abs(rect.top - rows[0].top) > 0.5)) {
+      throw new Error('Appearance must not change row geometry.');
+    }
+  },
+};
+
+export const NeutralCollapsedRail = {
+  name: '변형·상태 · 중립 접힌 레일',
+  parameters: storyDescription(
+    '접힌 64px 레일에는 굵기 단서가 남지 않으므로 neutral은 활성 자손을 가진 부모 아이콘 타일에 선택 채움을 둡니다. aria-current는 숨은 실제 leaf에 남고, 점은 실제 배지만 뜻합니다.',
+  ),
+  render: () => (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: 'var(--space-4)', width: 'min(100%, 680px)' }}>
+      <NeutralSideNavShell theme="light" testId="neutral-rail-light" initialValue="catalog-projects" collapsed />
+      <NeutralSideNavShell theme="dark" testId="neutral-rail-dark" initialValue="catalog-projects" collapsed />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    for (const testId of ['neutral-rail-light', 'neutral-rail-dark']) {
+      const nav = canvasElement.querySelector(`[data-testid="${testId}"]`);
+      const parent = nav?.querySelector('[data-sidenav-value="catalog"]:not([data-sidenav-parent])');
+      const leaf = nav?.querySelector('[data-sidenav-value="catalog-projects"]');
+      const dot = nav?.querySelector('[data-sidenav-value="history"] [data-sidenav-motion="badge-dot"]');
+      if (!nav || !parent || !leaf || !dot || nav.dataset.state !== 'collapsed') throw new Error(`The ${testId} rail fixture is incomplete.`);
+      if (leaf.getAttribute('aria-current') !== 'page' || parent.hasAttribute('aria-current') || parent.dataset.state !== 'active-descendant') {
+        throw new Error('The hidden leaf keeps aria-current while the parent shows only a visual proxy.');
+      }
+      expectNeutralRowState(parent, {
+        background: resolveCssColor(parent, 'backgroundColor', 'var(--component-side-nav-neutral-active-surface)'),
+        color: resolveCssColor(parent, 'color', 'var(--component-side-nav-neutral-active-foreground)'),
+      }, 'The collapsed proxy must fill its icon tile');
+      if (getComputedStyle(dot).backgroundColor !== resolveCssColor(dot, 'backgroundColor', 'var(--component-side-nav-neutral-badge-dot)')) {
+        throw new Error('The rail badge dot must use the neutral dot ink.');
+      }
+    }
+  },
+};
+
+export const NeutralNarrow = {
+  name: '반응형 · 중립 외형 좁은 폭',
+  parameters: storyDescription(
+    '좁은 화면의 임시 서랍처럼 부모 폭 320px과 390px에 neutral SideNav를 100% 폭으로 둡니다. 긴 한국어·영어 라벨은 말줄임으로 한 줄을 지키고 가로 스크롤을 만들지 않습니다.',
+  ),
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)', alignItems: 'flex-start' }}>
+      {[320, 390].map((width) => (
+        <div key={width} data-testid={`neutral-narrow-${width}`} style={{ width, height: 480, border: '1px solid var(--color-semantic-line-solid-normal)', overflow: 'hidden' }}>
+          <SideNav
+            aria-label={`${width}px 중립 탐색`}
+            items={neutralNavigationItems}
+            defaultValue="catalog-models"
+            surface="docked"
+            appearance="neutral"
+            width="100%"
+            brandAlign="start"
+            header={<Lockup variant="inline" tone="ink" height={20} />}
+            style={{ height: '100%' }}
+          />
+        </div>
+      ))}
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    for (const width of [320, 390]) {
+      const host = canvasElement.querySelector(`[data-testid="neutral-narrow-${width}"]`);
+      const nav = host?.querySelector('nav');
+      const label = nav?.querySelector('[data-sidenav-value="knowledge"] [data-slot="label"]');
+      if (!host || !nav || !label) throw new Error('The narrow neutral fixture is incomplete.');
+      if (nav.scrollWidth > nav.clientWidth + 1 || Math.abs(nav.getBoundingClientRect().width - host.clientWidth) > 1) {
+        throw new Error('The neutral SideNav must fill a narrow drawer without horizontal overflow.');
+      }
+      if (getComputedStyle(label).textOverflow !== 'ellipsis' || label.scrollWidth <= label.clientWidth) {
+        throw new Error('A long destination label must truncate on one line in a narrow drawer.');
+      }
+    }
+  },
+};

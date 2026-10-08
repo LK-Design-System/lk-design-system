@@ -3,7 +3,8 @@ import path from 'node:path';
 
 // LDS does not mark rows, cards, chips or callouts with a colored bar on the
 // leading edge. Status is carried by the sibling that owns it: Banner's tonal
-// icon, StatusBadge's tonal surface, SideNav's selected text. A 1px hairline
+// icon, StatusBadge's tonal surface, SideNav's selected text or achromatic row
+// fill with weight (neutral appearance). A 1px hairline
 // divider is fine; a 2px-or-wider leading border or inset stripe is not.
 // See docs/TOKEN_GOVERNANCE.md "Color usage rules".
 
