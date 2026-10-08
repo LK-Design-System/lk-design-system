@@ -112,13 +112,19 @@ test('published package verification rejects a release-channel mismatch before r
 
 test('release workflow publishes all packages and isolates retryable registry verification', async () => {
   const workflow = await readFile(path.join(repositoryRoot, '.github', 'workflows', 'release-packages.yml'), 'utf8');
-  assert.match(workflow, /version\.Contains\('-'\).*'rc'.*'latest'/s);
+  assert.match(workflow, /release_npm_tag=latest[\s\S]*"\$version" == \*-\*[\s\S]*release_npm_tag=rc/);
+  assert.equal((workflow.match(/runs-on: \[self-hosted, linux, x64, lk-lds-release-linux-x64\]/g) ?? []).length, 2);
+  assert.doesNotMatch(workflow, /windows-latest|shell: pwsh/);
+  assert.match(workflow, /github\.ref == 'refs\/heads\/main'/);
+  assert.match(workflow, /git merge-base --is-ancestor HEAD origin\/main/);
+  assert.match(workflow, /GITHUB_REF_NAME="\$RELEASE_TAG" npm run check:release-immutability -- --tag/);
   assert.match(
     workflow,
     /Verify tag and package-set identity[\s\S]*node scripts\/update-release-pins\.mjs --check --require-current-canonical-snapshot[\s\S]*Verify package versions are unpublished[\s\S]*Run release gate[\s\S]*Publish package set in dependency order/,
   );
-  assert.equal((workflow.match(/npm publish \.\/packages\/(?:core|theme|product) --tag \$env:RELEASE_NPM_TAG --ignore-scripts/g) ?? []).length, 3);
-  assert.match(workflow, /verify-published:\s*\n\s+needs: publish/);
+  assert.deepEqual([...workflow.matchAll(/npm publish \.\/packages\/(core|theme|product) --tag "\$RELEASE_NPM_TAG" --ignore-scripts/g)].map((match) => match[1]), ['core', 'theme', 'product']);
+  assert.match(workflow, /Publish package set in dependency order[\s\S]*NODE_AUTH_TOKEN: \$\{\{ github\.token \}\}/);
+  assert.match(workflow, /verify-published:[\s\S]*needs: publish/);
   assert.match(workflow, /RELEASE_NPM_TAG: \$\{\{ needs\.publish\.outputs\.npm_tag \}\}/);
   assert.match(workflow, /LDS_PUBLISHED_RELEASE_ATTEMPTS: 30/);
   assert.match(workflow, /LDS_PUBLISHED_RELEASE_RETRY_DELAY_MS: 5000/);
