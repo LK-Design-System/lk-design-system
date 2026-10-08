@@ -3,9 +3,9 @@
   "contractVersion": 1,
   "generatedBy": "scripts/generate-brand-platform-assets.mjs",
   "brandStandard": {
-    "version": "3.0.0",
+    "version": "4.0.0",
     "status": "current-repository-standard",
-    "governanceSha256": "316d47cddcec1842987970bf36efa70ba05f7738e41517b415afe495b09274fa",
+    "governanceSha256": "a01d5462cb53d7ebdad7be3fd48d6864b7ae5e207f2df92d4f8fd43270dffc2b",
     "minimumSizePolicy": {
       "status": "repository-policy-pending-human-optical-approval",
       "humanOpticalApproval": false,
@@ -16,18 +16,18 @@
     "constructionManifest": {
       "path": "assets/brand/lk-logo-construction.json",
       "schemaVersion": 1,
-      "constructionVersion": 6,
-      "sha256": "c83bf9fce046bf28d4a5967679b0f85faa31f90e801391a78d701758d0af0d2f",
+      "constructionVersion": 7,
+      "sha256": "a724467bb870ff8b023f283c5a0272dc4b1f433da908546c081c02d365131f63",
       "distribution": "repository-root-only",
       "resolvableInPackage": false
     },
     "governance": {
       "path": "docs/brand/lk-logo-governance.json",
-      "sha256": "316d47cddcec1842987970bf36efa70ba05f7738e41517b415afe495b09274fa",
+      "sha256": "a01d5462cb53d7ebdad7be3fd48d6864b7ae5e207f2df92d4f8fd43270dffc2b",
       "distribution": "repository-docs-only",
       "resolvableInPackage": false
     },
-    "assetSetSha256": "1569b176cfbaa2ee321e18df30b2de02a56a56c9ef0d177ce4c781b655d16c34",
+    "assetSetSha256": "a7e27f267848c9b507459be01a9b2578a0c57f274cc11ad768b2a4d264858b73",
     "assets": [
       {
         "id": "mark-navy",
@@ -289,8 +289,8 @@
         "tone": "navy",
         "usage": "general-brand-asset",
         "path": "assets/brand/lk-logo-official-corporate.svg",
-        "sha256": "4f79ce7fddb226d8e360a2eeabf4b8b7f7a6a607a75efcf24179d570a4099cef",
-        "byteLength": 11110,
+        "sha256": "5af4895517f905112c9da99323a4e01f1b27c959fa237052618b3228cab43fb6",
+        "byteLength": 11185,
         "title": "LK ROBOTICS corporate logo — 주식회사 엘케이로보틱스",
         "viewBox": {
           "x": 77.0213,
@@ -316,8 +316,8 @@
         "tone": "light",
         "usage": "general-brand-asset",
         "path": "assets/brand/lk-logo-official-corporate-light.svg",
-        "sha256": "990bcb6d3acb5686d54e85877fd93332f8a5515214b6640529ac1bf5c78e3749",
-        "byteLength": 11130,
+        "sha256": "1962bb1ac13a38e597771d02ee9de7b510f39844eed4ee1f62ae004ef1877e40",
+        "byteLength": 11205,
         "title": "LK ROBOTICS corporate logo on light background — 주식회사 엘케이로보틱스",
         "viewBox": {
           "x": 77.0213,

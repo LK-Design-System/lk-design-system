@@ -16,7 +16,7 @@
       "console",
       "portal"
     ],
-    "constructionVersion": 6,
+    "constructionVersion": 7,
     "productLockupConstructionVersion": 2,
     "geometryVersion": "1.0",
     "smallUseVariantApproved": false
@@ -151,7 +151,7 @@
         "collapsedMode": "compact",
         "collapsedVariant": "mark",
         "renderedHeightPx": 20,
-        "packageAction": "Upgrade @lk-design-system/lds-theme from the pinned rc.23 artifact to a release containing ProductLockup constructionVersion 2, brand constructionVersion 6, and geometryVersion 1.0.",
+        "packageAction": "Upgrade @lk-design-system/lds-theme from the pinned rc.23 artifact to a release containing ProductLockup constructionVersion 2, brand constructionVersion 7, and geometryVersion 1.0.",
         "lockupNameDecision": "The portal key and fixed Portal variant resolve to the same approved parent-brand-first SemiBold outlined paths; neither API accepts arbitrary product-name text."
       },
       "sourceEvidence": [

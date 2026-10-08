@@ -1,6 +1,6 @@
 # Lockup
 
-LK ROBOTICS의 공식 로고 컴포넌트입니다. `LK`는 geometry v1.0으로 동결한 커스텀 벡터 심볼이고, `ROBOTICS`는 Montserrat v7.222에서 생성한 아웃라인으로, 세로형(stacked·사각·기업형)은 ExtraBold 800, 가로형(inline·banner)은 Bold 700입니다. 기업 표기형의 `주식회사 엘케이로보틱스`는 Noto Sans KR ExtraBold 800 v2.004-H2에서 생성합니다. 제품에서는 공식 SVG, `Lockup` 또는 승인 registry의 `ProductLockup`만 사용하며 워드마크·제품명·법인명을 텍스트로 다시 조판하지 않습니다.
+LK ROBOTICS의 공식 로고 컴포넌트입니다. `LK`는 geometry v1.0으로 동결한 커스텀 벡터 심볼이고, `ROBOTICS`는 Montserrat v7.222에서 생성한 아웃라인으로, 세로형(stacked·사각·기업형)은 ExtraBold 800, 가로형(inline·banner)은 Bold 700입니다. 기업 표기형의 `주식회사 엘케이로보틱스`는 UI 타이포그래피와 같은 Pretendard ExtraBold 800 v1.3.9에서 생성합니다. 제품에서는 공식 SVG, `Lockup` 또는 승인 registry의 `ProductLockup`만 사용하며 워드마크·제품명·법인명을 텍스트로 다시 조판하지 않습니다.
 
 ## 정본과 작도 검증
 
@@ -15,9 +15,9 @@ LK ROBOTICS의 공식 로고 컴포넌트입니다. `LK`는 geometry v1.0으로 
 - `ROBOTICS`(세로형): 대문자, Montserrat ExtraBold 정적 weight 800 Version 7.222, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지
 - `ROBOTICS`(가로형 inline·banner): 대문자, Montserrat Bold 정적 weight 700 Version 7.222, 심볼 보이는 폭의 `0.25배` 간격, 글꼴 기본 커닝, 추가 자간 0, 가로·세로 비율 1:1, 글리프 수동 수정 금지
 - `PORTAL`(고정 제품 워드마크): Montserrat SemiBold 600이며 `ProductLockup product="portal"`과 동일한 정본 path를 사용합니다. 배치는 보이는 높이 `1X`에 **심볼 보이는 폭의 `0.35배`** 간격이며, `inline`의 심볼 보이는 폭 `0.2배`보다 넓은 이유는 20px 렌더에서 더 좁은 간격일 때 K의 사선과 P가 붙어 한 단어로 읽히기 때문입니다. 이 값은 `0.35X`가 아닙니다.
-- `주식회사 엘케이로보틱스`: NFC, Noto Sans KR ExtraBold `wght=800` Version 2.004-H2, 글꼴 기본 커닝, 글자 사이 `0.105em`, 마지막 글자 뒤 자간 없음, 가로·세로 비율 1:1, 글리프 수동 수정 금지
+- `주식회사 엘케이로보틱스`: NFC, Pretendard ExtraBold 800 Version 1.309(UI 타이포그래피와 같은 글꼴), 글꼴 기본 커닝, 글자 사이 `0.105em`, 마지막 글자 뒤 자간 없음, 가로·세로 비율 1:1, 글리프 수동 수정 금지
 - 법인명 배치: 보이는 폭 `1.90X`, 상단 로크업과 간격 `0.21X`, 상단 로크업의 보이는 중심축에 가운데 정렬
-- 배포 결과는 `<text>`와 런타임 폰트가 없는 SVG path입니다. Montserrat와 Noto Sans KR은 build-time 생성 재료이며 UI 본문 글꼴이 아닙니다.
+- 배포 결과는 `<text>`와 런타임 폰트가 없는 SVG path입니다. Montserrat는 build-time 생성 재료이며 UI 본문 글꼴이 아닙니다. 법인명의 Pretendard는 UI 글꼴과 같은 바이트를 쓰지만 로고에서는 outline으로만 배포합니다.
 
 ## 변형 선택과 저장소 정책 최소 크기 (광학 승인 대기)
 
@@ -79,4 +79,4 @@ favicon tile은 iOS AppIcon이나 Android adaptive icon이 아닙니다. 두 앱
 
 이 manifest들은 deterministic 전달 입력과 hash를 기록할 뿐입니다. Figma live sync, 실제 업로드, 디자이너 승인이나 제품 저장소 적용을 증명하지 않습니다. 특히 iOS AppIcon과 Android adaptive icon은 현재 제공하지 않습니다.
 
-글꼴 출처는 [Montserrat v7.222 공식 릴리스](https://github.com/JulietaUla/Montserrat/releases/tag/v7.222)와 [Noto Sans KR 공식 Google Fonts 소스](https://github.com/google/fonts/tree/4efc2774c63917927efe769ca845def6bd6debae/ofl/notosanskr)이며, 모두 SIL OFL 1.1을 따릅니다. 전체 브랜드 운영 규정은 `docs/brand/LK_LOGO_STANDARD.md`를 따릅니다.
+글꼴 출처는 [Montserrat v7.222 공식 릴리스](https://github.com/JulietaUla/Montserrat/releases/tag/v7.222)와 [Pretendard v1.3.9 공식 릴리스](https://github.com/orioncactus/pretendard/releases/tag/v1.3.9)이며, 모두 SIL OFL 1.1을 따릅니다. 전체 브랜드 운영 규정은 `docs/brand/LK_LOGO_STANDARD.md`를 따릅니다.

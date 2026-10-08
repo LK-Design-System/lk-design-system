@@ -68,16 +68,16 @@ LDS embeds unmodified Pretendard v1.3.9 webfonts for interface typography.
 - License: SIL Open Font License 1.1
 - Full license: `assets/fonts/Pretendard-LICENSE.txt`
 
-## Noto Sans KR
+## Pretendard (corporate descriptor outline)
 
 The outlined `주식회사 엘케이로보틱스` corporate descriptor is generated
-from the unmodified Noto Sans KR variable TTF at the named ExtraBold
-`wght=800` instance, with `0.105em` tracking and uniform scaling. The pinned
-font is retained as a build-time source only; production logo SVGs contain
-paths and do not load Noto Sans KR at runtime.
+from the unmodified Pretendard ExtraBold 800 static WOFF2 (Version 1.309),
+the same file the UI typography loads, with `0.105em` tracking and uniform
+scaling. The pinned copy is retained as a build-time source only; production
+logo SVGs contain paths and do not load the font at runtime.
 
-- Upstream project: https://github.com/notofonts/noto-cjk
-- Pinned Google Fonts source commit: `4efc2774c63917927efe769ca845def6bd6debae`
-- Copyright: Copyright 2014-2021 Adobe, with Reserved Font Name `Source`
+- Upstream project: https://github.com/orioncactus/pretendard
+- Pinned release: https://github.com/orioncactus/pretendard/releases/tag/v1.3.9
+- Copyright: Copyright (c) 2021, Kil Hyung-jin, with Reserved Font Name Pretendard
 - License: SIL Open Font License 1.1
-- Full license: `vendor/noto-sans-kr-v2.004-h2/OFL.txt`
+- Full license: `vendor/pretendard-v1.309/OFL.txt`

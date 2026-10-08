@@ -25,7 +25,7 @@ const portalLicenseBuffer = await readFile(path.join(root, portalWordmark.licens
 const corporateLicenseBuffer = await readFile(path.join(root, manifest.corporateName.licenseFile));
 
 assertEqual(manifest.schemaVersion, 1, 'manifest schema version');
-assertEqual(manifest.constructionVersion, 6, 'logo construction version');
+assertEqual(manifest.constructionVersion, 7, 'logo construction version');
 assertEqual(manifest.symbol.geometryVersion, LK_MARK_GEOMETRY_VERSION, 'LK symbol geometry version');
 assertEqual(
   geometrySha256({ paths: LK_MARK_PATHS, bounds: LOGO_GEOMETRY.markBounds }),
@@ -134,23 +134,21 @@ assertEqual(portalFont.names.fullName?.en, `${portalWordmark.family} ${portalWor
 assertEqual(portalFont.names.version?.en?.replace(/^Version\s+/i, ''), portalWordmark.fontVersion, 'portal font version metadata');
 assertEqual(portalFont.tables.os2?.usWeightClass, portalWordmark.weight, 'portal font weight metadata');
 
-assertEqual(manifest.corporateName.fontFormat, 'variable-ttf', 'corporate-name font format');
-assertEqual(manifest.corporateName.variation.wght, manifest.corporateName.weight, 'corporate-name weight variation');
-const corporateBaseFont = fontkit.create(corporateFontBuffer);
-assertEqual(corporateBaseFont.familyName, `${manifest.corporateName.family} Thin`, 'corporate-name default family metadata');
-assertEqual(corporateBaseFont.fullName, `${manifest.corporateName.family} Thin`, 'corporate-name default full-name metadata');
-assertEqual(corporateBaseFont.postscriptName, 'NotoSansKR-Thin', 'corporate-name default PostScript metadata');
-assertEqual(corporateBaseFont.version, manifest.corporateName.fontVersionMetadata, 'corporate-name font version metadata');
-assertEqual(corporateBaseFont.unitsPerEm, 1000, 'corporate-name font units per em');
-assertEqual(corporateBaseFont.variationAxes?.wght?.min, 100, 'corporate-name minimum weight');
-assertEqual(corporateBaseFont.variationAxes?.wght?.default, 100, 'corporate-name default weight');
-assertEqual(corporateBaseFont.variationAxes?.wght?.max, 900, 'corporate-name maximum weight');
-assertEqual(
-  corporateBaseFont.namedVariations?.[manifest.corporateName.style]?.wght,
-  manifest.corporateName.weight,
-  'corporate-name named variation weight',
-);
-const corporateFont = corporateBaseFont.getVariation(manifest.corporateName.variation);
+/* 법인명은 UI 타이포그래피와 같은 Pretendard 정적 woff2를 쓴다. 브랜드 소스는
+   vendor/에 따로 핀하되, assets/fonts의 UI 글꼴과 바이트가 같아야 한다 — UI 글꼴을
+   올리면 로고 소스도 같이 결정해 올리라는 뜻이다. */
+assertEqual(manifest.corporateName.fontFormat, 'static-woff2', 'corporate-name font format');
+const uiTypographyFontBuffer = await readFile(path.join(root, manifest.corporateName.uiTypographyFile));
+assertEqual(fileSha256(uiTypographyFontBuffer), manifest.corporateName.fontSha256, 'corporate-name font matches the UI typography font');
+const corporateFont = fontkit.create(corporateFontBuffer);
+assertEqual(corporateFont.familyName, `${manifest.corporateName.family} ${manifest.corporateName.style}`, 'corporate-name family metadata');
+assertEqual(corporateFont.fullName, `${manifest.corporateName.family} ${manifest.corporateName.style}`, 'corporate-name full-name metadata');
+assertEqual(corporateFont.postscriptName, `${manifest.corporateName.family}-${manifest.corporateName.style}`, 'corporate-name PostScript metadata');
+assertEqual(corporateFont.version, manifest.corporateName.fontVersionMetadata, 'corporate-name font version metadata');
+assertEqual(corporateFont.version.replace(/^Version\s+/i, ''), manifest.corporateName.fontVersion, 'corporate-name font version');
+assertEqual(corporateFont['OS/2']?.usWeightClass, manifest.corporateName.weight, 'corporate-name weight metadata');
+assertEqual(corporateFont.unitsPerEm, 2048, 'corporate-name font units per em');
+assertEqual(Object.keys(corporateFont.variationAxes ?? {}).length, 0, 'corporate-name font is static');
 
 const wordmarkText = manifest.wordmark.text;
 const letters = [...wordmarkText];
@@ -302,10 +300,10 @@ for (let index = 0; index < corporateGlyphs.length; index += 1) {
 
 assertEqual(corporateGlyphRows.length, corporateLetters.length, 'corporate-name glyph count');
 assertArrayEqual(corporateGlyphRows.map((row) => row.letter), corporateLetters, 'corporate-name glyph sequence');
-assertArrayEqual(corporateGlyphRows.map((row) => row.glyphId), [17736, 16169, 21208, 15608, 22586, 16932, 19276, 17344, 13480, 14656, 20285, 16112], 'corporate-name glyph IDs');
-assertNumberArrayClose(corporateGlyphRows.map((row) => row.origin), [0, 1025, 2050, 3075, 4100, 4485, 5510, 6535, 7560, 8585, 9610, 10635], 'tracked corporate-name glyph origins');
+assertArrayEqual(corporateGlyphRows.map((row) => row.glyphId), [8956, 7389, 12428, 6828, 2, 8152, 10496, 8564, 4700, 5876, 11505, 7332], 'corporate-name glyph IDs');
+assertNumberArrayClose(corporateGlyphRows.map((row) => row.origin), [0, 1985.04, 3970.08, 5955.12, 7940.16, 8613.2, 10598.24, 12583.28, 14568.32, 16553.36, 18538.4, 20523.44], 'tracked corporate-name glyph origins');
 assertArrayEqual(corporateKerning, Array(corporateGlyphs.length).fill(0), 'corporate-name kerning adjustments');
-assertNumberClose(corporateAdvance, 11555, 'tracked corporate-name advance');
+assertNumberClose(corporateAdvance, 22293.44, 'tracked corporate-name advance');
 
 const corporateSourceBounds = boundsFromOpenTypeRows(corporateGlyphRows);
 assertNumberArrayClose(
@@ -315,7 +313,7 @@ assertNumberArrayClose(
     corporateSourceBounds.x + corporateSourceBounds.width,
     corporateSourceBounds.y + corporateSourceBounds.height,
   ],
-  [39, -842, 11517, 94],
+  [48, -1644, 22249.44, 196],
   'corporate-name ink bounds',
 );
 
@@ -514,7 +512,7 @@ assertNumberArrayClose(
     corporateTargetBounds.x + corporateTargetBounds.width,
     corporateTargetBounds.y + corporateTargetBounds.height,
   ],
-  [103.223875, 238.559309459961, 209.933195, 247.261167233092],
+  [103.223875, 238.559309459961, 209.933195, 247.403122420023],
   'positioned corporate-name bounds',
   0.0001,
 );
@@ -1206,7 +1204,7 @@ function validateBrandPolicyDocumentation(content, governance, minimumSlotWidth)
     `\`${formatNumber(expectedConstructionContract.visibleMarkWidthToX, 16)}X : 1X\``,
     `${manifest.wordmark.family} ${manifest.wordmark.style} ${manifest.wordmark.weight} v${manifest.wordmark.fontVersion}`,
     `${inlineWordmark.family} ${inlineWordmark.style} ${inlineWordmark.weight} v${inlineWordmark.fontVersion}`,
-    `${manifest.corporateName.family} ${manifest.corporateName.style} \`wght=${manifest.corporateName.weight}\` v${manifest.corporateName.releaseVersion}`,
+    `${manifest.corporateName.family} ${manifest.corporateName.style} ${manifest.corporateName.weight} v${manifest.corporateName.releaseVersion}`,
     `최소 \`${layout.safeArea.minimumClearSpaceToX}X\``,
     `최소 \`${layout.safeArea.coBrandClearSpaceToX}X\``,
     `| mark | \`${layout.mark.minimumRenderedHeightPx}px\``,

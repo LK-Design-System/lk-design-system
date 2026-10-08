@@ -45,19 +45,19 @@ LDS interface typography uses unmodified Pretendard v1.3.9 webfonts.
 - Full license: `assets/fonts/Pretendard-LICENSE.txt`
 - Full notice: [`../../THIRD_PARTY_NOTICES.md`](../../THIRD_PARTY_NOTICES.md)
 
-## Noto Sans KR (Adobe and the Noto project)
+## Pretendard (corporate descriptor outline)
 
 The approved Korean corporate descriptor outline is generated from the
-unmodified Noto Sans KR Version 2.004-H2 variable TTF at the named ExtraBold
-`wght=800` instance, with `0.105em` tracking and uniform scaling.
+unmodified Pretendard ExtraBold 800 static WOFF2 (Version 1.309, the same
+file the UI typography loads), with `0.105em` tracking and uniform scaling.
 
-- Source: https://raw.githubusercontent.com/google/fonts/4efc2774c63917927efe769ca845def6bd6debae/ofl/notosanskr/NotoSansKR%5Bwght%5D.ttf
+- Source: https://github.com/orioncactus/pretendard/releases/tag/v1.3.9
 - License: SIL Open Font License 1.1
-- Copyright: Copyright 2014-2021 Adobe, with Reserved Font Name `Source`
-- Pinned font and license: `vendor/noto-sans-kr-v2.004-h2/`
+- Copyright: Copyright (c) 2021, Kil Hyung-jin, with Reserved Font Name Pretendard
+- Pinned font and license: `vendor/pretendard-v1.309/` (byte-identical to `assets/fonts/Pretendard-ExtraBold.woff2`)
 - Full notice: [`../../THIRD_PARTY_NOTICES.md`](../../THIRD_PARTY_NOTICES.md)
 
-The variable TTF is a build-time brand source. Corporate logo SVGs contain
+The vendored WOFF2 is a build-time brand source. Corporate logo SVGs contain
 outlined paths and have no runtime font dependency.
 
 ## Material Symbols (Google)

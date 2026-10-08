@@ -6,6 +6,7 @@ All notable package-facing changes are recorded here. The package follows semant
 
 ### Changed
 
+- 기업 표기형의 `주식회사 엘케이로보틱스`를 Noto Sans KR ExtraBold `wght=800` v2.004-H2에서 UI 타이포그래피와 같은 **Pretendard ExtraBold 800** v1.3.9로 바꿨습니다(로고 표준 4.0.0, constructionVersion 7). 자간 0.105em, 보이는 폭 1.9X, 0.21X 간격, 중앙 정렬은 그대로이고 글자 높이는 0.155X에서 0.157X로 사실상 같습니다. 로고와 UI의 한국어 글꼴을 하나로 통일하기 위한 결정이며, 생성기는 가변 TTF·fontkit 인스턴스 경로 대신 정적 woff2를 핀하고 `vendor/pretendard-v1.309` 사본과 `assets/fonts/Pretendard-ExtraBold.woff2`의 SHA-256 일치를 검증합니다. `vendor/noto-sans-kr-v2.004-h2`는 제거합니다. 기업 표기형 SVG 2종·master·플랫폼 자산이 재생성됩니다.
 - 가로형(inline·banner) 회사 워드마크 `ROBOTICS`를 Montserrat **Bold 700** v7.222로 바꾸고 심볼과의 간격을 심볼 보이는 폭의 0.2배에서 0.25배로 넓혔습니다(로고 표준 3.0.0, constructionVersion 6). 가로형에서 LK 심볼 대비 워드마크가 지나치게 무거워 보인다는 판단에 따른 결정이며, 세로형(stacked·official·tile·corporate·master)은 ExtraBold 800과 0.2배 간격을 유지하고 Portal 0.35배도 그대로입니다. 가로형 O 세로획은 기존 대비 82%, 워드마크 폭은 99%입니다. `lk-logo-paths.js`가 가로형 전용 `ROBOTICS_INLINE_PATHS`(글꼴 단위 원본 글리프)를 새로 내보내고, `ROBOTICS_INLINE_TRANSFORM`·`ROBOTICS_INLINE_SCALE`은 stacked 변환에 상대적인 값에서 그 글리프를 직접 배치하는 절대 변환·배율로 바뀝니다. `ROBOTICS_PATHS`는 세로형 그대로입니다. 가로형 SVG 4종·플랫폼 자산이 재생성되고 최소 슬롯 폭이 inline `156.254307`, banner `136.963949`로 바뀝니다. `vendor/montserrat-v7.222`에 Bold 바이너리를 추가로 핀합니다. Portal·ProductLockup의 SemiBold 600 제품명은 변경 없습니다.
 
 ## 0.4.5 - 2026-10-08

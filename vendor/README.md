@@ -30,7 +30,8 @@ checks in one change.
 build time to generate the outlined LK ROBOTICS wordmark. Its README records
 the pinned upstream release, hashes, and replacement policy.
 
-`noto-sans-kr-v2.004-h2/` contains the exact unmodified OFL-licensed variable
-TTF used only at build time to generate the outlined Korean corporate
-descriptor. Its README records the pinned source, hashes, `wght=800` instance,
-tracking rule, and replacement policy.
+`pretendard-v1.309/` contains the exact OFL-licensed static WOFF2 used only at
+build time to generate the outlined Korean corporate descriptor. It is
+byte-identical to the UI typography font in `assets/fonts/`, and the brand
+generator enforces that equality. Its README records the pinned release,
+hashes, tracking rule, and replacement policy.

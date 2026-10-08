@@ -49,10 +49,10 @@ Pretendard is Copyright (c) 2021, Kil Hyung-jin and is licensed under the SIL
 Open Font License 1.1. The full license is included at
 `assets/fonts/Pretendard-LICENSE.txt`.
 
-## Noto Sans KR
+## Pretendard (corporate-logo outlines)
 
-The corporate-logo outlines in this package were generated from Noto Sans KR
-Version 2.004-H2 at the ExtraBold `wght=800` instance (Copyright 2014-2021
-Adobe), licensed under the SIL Open Font License 1.1. No Noto font binary or
-runtime dependency is included; pinned source and license provenance are kept
-in the root LK Design System repository.
+The corporate-logo outlines in this package were generated from Pretendard
+ExtraBold 800 Version 1.309 (Copyright (c) 2021, Kil Hyung-jin), the same
+font the UI typography loads, licensed under the SIL Open Font License 1.1.
+The outlines add no runtime dependency; pinned source and license provenance
+are kept in the root LK Design System repository.
