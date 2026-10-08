@@ -2,6 +2,16 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.4.4 - 2026-10-08
+
+Paired Robotics release: `0.1.0-rc.53` (unchanged).
+
+### Changed
+
+- Adopt the approved Primary blue family: light primary `#2463D4`, dark ink `#79A5F2`, and dark filled actions `#2260CE`.
+- Align selection, focus, information, and chart accents with the same semantic family while preserving the brand and existing public Blue anchors.
+- Document and enforce state contrast, including dark pressed filled actions.
+
 ## 0.4.3 - 2026-09-29
 
 Paired Robotics release: `0.1.0-rc.53` (unchanged).

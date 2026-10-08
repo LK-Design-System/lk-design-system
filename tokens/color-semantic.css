@@ -6,7 +6,7 @@
    ========================================================================== */
 :root, [data-theme="light"], .theme-light {
   --color-semantic-static-white: #FFFFFF;
-  --color-semantic-primary-normal: var(--color-atomic-blue-50);
+  --color-semantic-primary-normal: var(--color-atomic-primary-blue-50);
   --color-semantic-background-normal-normal: #FFFFFF;
   --color-semantic-fill-strong: rgba(112, 115, 124, 0.16);
   --color-semantic-label-normal: #171718;
@@ -17,11 +17,11 @@
   --color-semantic-line-normal-alternative: rgba(112, 115, 124, 0.08);
   --color-semantic-inverse-background: #1B1C1E;
   --color-semantic-inverse-label: #FFFFFF;
-  --color-semantic-primary-strong: #336CA1;
-  --color-semantic-primary-heavy: #2D6090;
+  --color-semantic-primary-strong: var(--color-atomic-primary-blue-40);
+  --color-semantic-primary-heavy: var(--color-atomic-primary-blue-30);
   --color-semantic-primary-fill: var(--color-semantic-primary-normal);
-  --color-semantic-primary-ink: var(--color-atomic-blue-45);
-  --color-semantic-primary-ink-strong: var(--color-atomic-blue-40);
+  --color-semantic-primary-ink: var(--color-atomic-primary-blue-40);
+  --color-semantic-primary-ink-strong: var(--color-atomic-primary-blue-30);
   --color-semantic-label-neutral: rgba(46, 47, 51, 0.88);
   --color-semantic-label-alternative: rgba(55, 56, 60, 0.74);
   --color-semantic-label-assistive: rgba(55, 56, 60, 0.28);
@@ -63,7 +63,7 @@
   --color-semantic-accent-foreground-red: #D63D3D;
   --color-semantic-accent-foreground-orange: #C97A14;
   --color-semantic-accent-foreground-green: #0F953C;
-  --color-semantic-accent-foreground-blue: #336CA1;
+  --color-semantic-accent-foreground-blue: var(--color-atomic-blue-45);
   --color-semantic-material-background-onbackground: #1A1B1E;
   --color-semantic-material-outline-outline: #73767E;
   --color-semantic-background-transparent-normal: rgba(255, 255, 255, 0.08);
@@ -80,12 +80,12 @@
   --color-semantic-primary-surface-normal: color-mix(in srgb, var(--color-semantic-primary-normal) 10%, transparent);
   --color-semantic-primary-surface-strong: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent);
   --color-semantic-focus-ring: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent);
-  --color-semantic-focus-indicator: #2F6FB0;
+  --color-semantic-focus-indicator: var(--color-atomic-primary-blue-50);
   --color-semantic-status-info: var(--color-semantic-primary-normal);
   --color-semantic-status-info-foreground: var(--color-semantic-primary-normal);
   --color-semantic-status-info-surface: color-mix(in srgb, var(--color-semantic-primary-normal) 12%, transparent);
   --color-semantic-status-info-border: color-mix(in srgb, var(--color-semantic-primary-normal) 36%, var(--color-semantic-line-normal-normal));
-  --color-semantic-status-info-text: #2D6090;
+  --color-semantic-status-info-text: var(--color-atomic-primary-blue-30);
   --color-semantic-status-positive-surface: color-mix(in srgb, var(--color-semantic-status-positive-signal) 14%, transparent);
   --color-semantic-status-positive-foreground: var(--color-atomic-green-40);
   --color-semantic-status-positive-border: color-mix(in srgb, var(--color-semantic-status-positive-signal) 38%, var(--color-semantic-line-normal-normal));
@@ -103,7 +103,7 @@
   --color-semantic-status-neutral-surface: var(--color-semantic-fill-normal);
   --color-semantic-status-neutral-border: var(--color-semantic-line-normal-neutral);
   --color-semantic-status-neutral-text: var(--color-semantic-label-neutral);
-  --color-semantic-accent-blue-text: #336CA1;
+  --color-semantic-accent-blue-text: var(--color-atomic-blue-45);
   --color-semantic-inverse-label-strong-soft: rgba(255, 255, 255, 0.92);
   --color-semantic-inverse-label-neutral-soft: rgba(255, 255, 255, 0.62);
   --color-semantic-inverse-label-alternative-soft: rgba(255, 255, 255, 0.50);
@@ -127,7 +127,7 @@
 
 [data-theme="dark"], .theme-dark {
   --color-semantic-static-white: #FFFFFF;
-  --color-semantic-primary-normal: #5390C9;
+  --color-semantic-primary-normal: var(--color-atomic-primary-blue-70);
   --color-semantic-background-normal-normal: #1B1C1E;
   --color-semantic-fill-strong: rgba(112, 115, 124, 0.28);
   --color-semantic-label-normal: #F7F7F7;
@@ -138,11 +138,11 @@
   --color-semantic-line-normal-alternative: rgba(112, 115, 124, 0.22);
   --color-semantic-inverse-background: #FFFFFF;
   --color-semantic-inverse-label: #171719;
-  --color-semantic-primary-strong: #3C80BF;
-  --color-semantic-primary-heavy: var(--color-atomic-blue-50);
+  --color-semantic-primary-strong: var(--color-atomic-primary-blue-60);
+  --color-semantic-primary-heavy: var(--color-atomic-primary-blue-45);
   --color-semantic-primary-fill: var(--color-semantic-primary-heavy);
-  --color-semantic-primary-ink: var(--color-semantic-primary-normal);
-  --color-semantic-primary-ink-strong: var(--color-semantic-accent-blue-text);
+  --color-semantic-primary-ink: var(--color-atomic-primary-blue-70);
+  --color-semantic-primary-ink-strong: var(--color-atomic-primary-blue-80);
   --color-semantic-label-neutral: rgba(194, 196, 200, 0.88);
   --color-semantic-label-alternative: rgba(174, 176, 182, 0.74);
   --color-semantic-label-assistive: rgba(174, 176, 182, 0.28);
@@ -201,12 +201,12 @@
   --color-semantic-primary-surface-normal: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent);
   --color-semantic-primary-surface-strong: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent);
   --color-semantic-focus-ring: color-mix(in srgb, var(--color-semantic-primary-normal) 40%, transparent);
-  --color-semantic-focus-indicator: #7FB0DE;
+  --color-semantic-focus-indicator: var(--color-atomic-primary-blue-80);
   --color-semantic-status-info: var(--color-semantic-primary-normal);
   --color-semantic-status-info-foreground: var(--color-semantic-primary-normal);
   --color-semantic-status-info-surface: color-mix(in srgb, var(--color-semantic-primary-normal) 16%, transparent);
   --color-semantic-status-info-border: color-mix(in srgb, var(--color-semantic-primary-normal) 42%, var(--color-semantic-line-normal-normal));
-  --color-semantic-status-info-text: #8CC8F5;
+  --color-semantic-status-info-text: var(--color-atomic-primary-blue-80);
   --color-semantic-status-positive-surface: color-mix(in srgb, var(--color-semantic-status-positive-signal) 18%, transparent);
   --color-semantic-status-positive-foreground: var(--color-semantic-status-positive-signal);
   --color-semantic-status-positive-border: color-mix(in srgb, var(--color-semantic-status-positive-signal) 44%, var(--color-semantic-line-normal-normal));
@@ -249,7 +249,7 @@
 @media (prefers-color-scheme: dark) {
   [data-theme="auto"], .theme-auto {
     --color-semantic-static-white: #FFFFFF;
-    --color-semantic-primary-normal: #5390C9;
+    --color-semantic-primary-normal: var(--color-atomic-primary-blue-70);
     --color-semantic-background-normal-normal: #1B1C1E;
     --color-semantic-fill-strong: rgba(112, 115, 124, 0.28);
     --color-semantic-label-normal: #F7F7F7;
@@ -260,11 +260,11 @@
     --color-semantic-line-normal-alternative: rgba(112, 115, 124, 0.22);
     --color-semantic-inverse-background: #FFFFFF;
     --color-semantic-inverse-label: #171719;
-    --color-semantic-primary-strong: #3C80BF;
-    --color-semantic-primary-heavy: var(--color-atomic-blue-50);
+    --color-semantic-primary-strong: var(--color-atomic-primary-blue-60);
+    --color-semantic-primary-heavy: var(--color-atomic-primary-blue-45);
     --color-semantic-primary-fill: var(--color-semantic-primary-heavy);
-    --color-semantic-primary-ink: var(--color-semantic-primary-normal);
-    --color-semantic-primary-ink-strong: var(--color-semantic-accent-blue-text);
+    --color-semantic-primary-ink: var(--color-atomic-primary-blue-70);
+    --color-semantic-primary-ink-strong: var(--color-atomic-primary-blue-80);
     --color-semantic-label-neutral: rgba(194, 196, 200, 0.88);
     --color-semantic-label-alternative: rgba(174, 176, 182, 0.74);
     --color-semantic-label-assistive: rgba(174, 176, 182, 0.28);
@@ -323,12 +323,12 @@
     --color-semantic-primary-surface-normal: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent);
     --color-semantic-primary-surface-strong: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent);
     --color-semantic-focus-ring: color-mix(in srgb, var(--color-semantic-primary-normal) 40%, transparent);
-    --color-semantic-focus-indicator: #7FB0DE;
+    --color-semantic-focus-indicator: var(--color-atomic-primary-blue-80);
     --color-semantic-status-info: var(--color-semantic-primary-normal);
     --color-semantic-status-info-foreground: var(--color-semantic-primary-normal);
     --color-semantic-status-info-surface: color-mix(in srgb, var(--color-semantic-primary-normal) 16%, transparent);
     --color-semantic-status-info-border: color-mix(in srgb, var(--color-semantic-primary-normal) 42%, var(--color-semantic-line-normal-normal));
-    --color-semantic-status-info-text: #8CC8F5;
+    --color-semantic-status-info-text: var(--color-atomic-primary-blue-80);
     --color-semantic-status-positive-surface: color-mix(in srgb, var(--color-semantic-status-positive-signal) 18%, transparent);
     --color-semantic-status-positive-foreground: var(--color-semantic-status-positive-signal);
     --color-semantic-status-positive-border: color-mix(in srgb, var(--color-semantic-status-positive-signal) 44%, var(--color-semantic-line-normal-normal));

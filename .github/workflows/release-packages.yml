@@ -1,9 +1,6 @@
 name: Release immutable package set
 
 on:
-  push:
-    tags:
-      - 'lds-v*'
   workflow_dispatch:
     inputs:
       release_tag:
@@ -17,7 +14,8 @@ permissions:
 
 jobs:
   publish:
-    runs-on: windows-latest
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.repository == 'LK-Design-System/lk-design-system'
+    runs-on: [self-hosted, linux, x64, lk-lds-release-linux-x64]
     outputs:
       npm_tag: ${{ steps.release_channel.outputs.npm_tag }}
     env:
@@ -29,6 +27,17 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ inputs.release_tag || github.ref }}
+
+      - name: Verify canonical dispatch and immutable source
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          RUNNER_ENVIRONMENT: ${{ runner.environment }}
+        run: |
+          test "$RUNNER_ENVIRONMENT" = self-hosted
+          [[ "$RELEASE_TAG" =~ ^lds-v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]
+          test "$(git rev-parse HEAD)" = "$(git rev-parse "$RELEASE_TAG^{commit}")"
+          git merge-base --is-ancestor HEAD origin/main
 
       - name: Setup canonical Node and GitHub Packages
         uses: actions/setup-node@v6.4.0
@@ -44,6 +53,8 @@ jobs:
         run: npm exec -- playwright install chromium
 
       - name: Verify tag and package-set identity
+        env:
+          GITHUB_REF_NAME: ${{ inputs.release_tag }}
         run: npm run check:release-immutability -- --tag
 
       - name: Verify current canonical Robotics snapshot
@@ -57,24 +68,28 @@ jobs:
 
       - name: Select npm release channel
         id: release_channel
-        shell: pwsh
+        shell: bash
         run: |
-          $version = node -p "require('./package.json').version"
-          $releaseNpmTag = if ($version.Contains('-')) { 'rc' } else { 'latest' }
-          "RELEASE_NPM_TAG=$releaseNpmTag" >> $env:GITHUB_ENV
-          "npm_tag=$releaseNpmTag" >> $env:GITHUB_OUTPUT
-          Write-Output "Publishing $version with npm dist-tag $releaseNpmTag."
+          version=$(node -p "require('./package.json').version")
+          release_npm_tag=latest
+          if [[ "$version" == *-* ]]; then release_npm_tag=rc; fi
+          echo "RELEASE_NPM_TAG=$release_npm_tag" >> "$GITHUB_ENV"
+          echo "npm_tag=$release_npm_tag" >> "$GITHUB_OUTPUT"
+          echo "Publishing $version with npm dist-tag $release_npm_tag."
 
       - name: Publish package set in dependency order
-        shell: pwsh
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+        shell: bash
         run: |
-          npm publish ./packages/core --tag $env:RELEASE_NPM_TAG --ignore-scripts
-          npm publish ./packages/theme --tag $env:RELEASE_NPM_TAG --ignore-scripts
-          npm publish ./packages/product --tag $env:RELEASE_NPM_TAG --ignore-scripts
+          npm publish ./packages/core --tag "$RELEASE_NPM_TAG" --ignore-scripts
+          npm publish ./packages/theme --tag "$RELEASE_NPM_TAG" --ignore-scripts
+          npm publish ./packages/product --tag "$RELEASE_NPM_TAG" --ignore-scripts
 
   verify-published:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && github.repository == 'LK-Design-System/lk-design-system'
     needs: publish
-    runs-on: windows-latest
+    runs-on: [self-hosted, linux, x64, lk-lds-release-linux-x64]
     permissions:
       contents: read
       packages: read

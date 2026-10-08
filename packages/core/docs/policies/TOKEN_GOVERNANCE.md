@@ -12,7 +12,7 @@
 contract. Figma Variables, Storybook examples, React components, and
 AI-generated UI must all resolve back to this contract. Theme expression
 profiles are the one additive runtime projection: their scope and whitelist
-live in [`EXPRESSION_PROFILE_CONTRACT.json`](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.3/docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json),
+live in [`EXPRESSION_PROFILE_CONTRACT.json`](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.4/docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json),
 and values are limited to `tokens/profiles.css` under the Theme package.
 
 Package별 `tokens/semantic-contract.json`은 runtime source에서 산출·검사하는 semantic
@@ -142,26 +142,49 @@ Color usage rules:
   "선택된 대상"과 "정보 알림"이 겹칠 수 있어 분리 여부는 **열린 결정**이다. 결정 전까지
   한 화면에서 선택 강조와 info 상태를 같은 요소에 겹쳐 쓰지 않는다. 분리할 때는 관제
   제품(궁릉·대덕) 화면을 놓고 판단한다.
-- UI primary와 브랜드색의 관계: primary(`#3878B3`, HSL 209°)는 브랜드 LK Navy(`#05132B`, 218°)와
-  LK Accent(`#6BBBDD`, 198°) 사이의 파랑 계열에서 **색상각만** 따르고, 명도는 UI 대비 기준
-  (흰 글자 4.5:1, 페이지 위 글자 4.5:1)으로 따로 정한다. 네이비는 거의 검정이라 상호작용
-  색으로 쓰면 본문·비활성 요소와 구분되지 않는다. 브랜드 셸이 필요한 곳(`SideNav`
-  `appearance="brand"`)은 네이비 위에 흰색을 합성한 `navy-shell` 램프를 쓴다. 로고 색은
-  UI 토큰으로 대체하지 않는다([로고 표준 §6](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.3/docs/brand/LK_LOGO_STANDARD.md#6-색상과-배경)).
-  외부 고객 화면에서 브랜드 인상이 목표가 되면 primary를 Accent 쪽으로 옮길지 이 단락에서
-  다시 결정한다.
+- UI primary와 브랜드색의 관계: 2026-10-08 비교 데모의 후보 계열을 사용자가 승인했다.
+  이는 **LK Theme Override**의 색상 결정이다. Primary 중심색은 `#2463D4`이며,
+  LK Navy(`#05132B`)와 LK Accent(`#6BBBDD`) 및 기존 atomic Blue는 유지한다.
+  이전 primary의 브랜드 중간 색상각 제약을 풀고 주요 행동·선택을 더 선명하게 표현한다.
+  브랜드 셸과 로고는 그대로 전용 역할을 사용한다([로고 표준 §6](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.4/docs/brand/LK_LOGO_STANDARD.md#6-색상과-배경)).
+- 승인된 의미 역할은 다음과 같다. `primary-blue`의 7개 atomic anchor는 아래 역할에
+  필요한 정확한 값이며, 숫자 단계는 순서 식별자다. 데모의 보간된 14단계 견본을
+  지각적으로 균등한 canonical palette로 승격한 것이 아니다.
+
+  | 역할 | Light | Dark |
+  | --- | --- | --- |
+  | primary-normal | `#2463D4` | `#79A5F2` |
+  | primary-strong | `#2059BF` | `#558CE9` |
+  | primary-heavy | `#1D4FAA` | `#2260CE` |
+  | primary-fill | primary-normal | primary-heavy |
+  | primary-ink | `#2059BF` | `#79A5F2` |
+  | primary-ink-strong | `#1D4FAA` | `#A0BEF6` |
+  | focus-indicator | `#2463D4` | `#A0BEF6` |
+  | status-info-text | `#1D4FAA` | `#A0BEF6` |
+
+- 호환 보존 예외: `--color-atomic-blue-40`은 이번에 새로 추가한 dead token이 아니라,
+  Primary 의미 역할이 새 계열로 이동하기 전부터 공개된 기존 Blue 팔레트 단계다.
+  내부 소비처가 사라져도 이 공개 anchor를 삭제하면 외부 palette 소비 계약이 깨진다.
+  따라서 `TOKEN_HYGIENE_BASELINE.json`의 `unusedTokens`에 이 **한 항목만** 보존한다.
+  신규 미사용 token이나 다른 debt 허용을 확장하지 않으며 검사 규칙은 유지한다.
 - 흰 글자나 아이콘을 primary 채움 위에 올릴 때는 `--color-semantic-primary-fill`을 쓴다.
-  dark `primary-normal`(`#5390C9`)은 흰색과 3.39:1이라 글자 기준에 못 미치므로,
-  이 역할은 dark에서 `primary-heavy`(`blue-50`, 4.66:1)로 내려간다. 버튼·뱃지·칩의 채움 토큰도 이
-  역할을 가리킨다. 흰 내용이 없는 채움(Slider·Switch 트랙, 진행 막대)은
-  `primary-normal`을 그대로 쓴다.
-- `primary-strong`·`primary-heavy`는 **채움 단계**(hover·pressed 채움, dark의
-  `primary-fill`)다. 두 모드 모두 점점 어두워지므로 dark 바탕 위 글자로 쓰면 강할수록
-  대비가 떨어진다(dark 페이지 기준 normal 5.04 → strong 4.09 → heavy 3.51:1). primary
-  색상의 글자·링크·1px 강조 테두리는 `--color-semantic-primary-ink`(light `blue-45`
-  5.53:1, dark `primary-normal` 5.04:1)를, 틴트 면 위에서 더 도드라져야 하는 라벨은
-  `--color-semantic-primary-ink-strong`(light는 더 어둡게, dark는 더 밝게)을 쓴다.
-  `ink` 계열은 모드와 관계없이 강할수록 대비가 오른다.
+  light는 `#2463D4`(흰색 대비 5.51:1), dark는 `#2260CE`(5.78:1)다.
+  승인 데모의 dark 채움 `#2463D4`는 기존 pressed 혼합 후 4.44:1에 머물러,
+  dark 채움만 보정해 pressed 4.62:1을 확보한다. dark의 밝은 primary-normal은
+  흰 글자를 위한 채움색이 아니다. 버튼·뱃지·칩의 채움 토큰은 fill을 가리키고,
+  흰 내용이 없는 Slider·Switch 트랙과 진행 막대는 primary-normal을 쓴다.
+- `primary-strong`·`primary-heavy`는 채움 단계이며, 글자·링크·강조 테두리는
+  `primary-ink` 계열을 쓴다. ink-strong은 light에서 더 어둡고 dark에서 더 밝다.
+  실제 Button hover·pressed는 기존 96:4 / 88:12 label 혼합 규칙을 유지한다.
+  primary 틴트·선택·포커스 링·info 표면과 차트 첫 계열은 기존 의존 규칙으로 새 값에서
+  파생한다. 성공·주의·오류, 브랜드, accent, 차트 계열 2–8은 이번 결정 범위 밖이다.
+- 내부 비교 대상으로 Button·Input·Checkbox·Switch·Badge·Banner·Tabs와 차트 역할을
+  밝은/어두운 화면에서 검토했다. 새 component anatomy나 상태 축은 추가하지 않는다.
+  [WCAG 텍스트 대비](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)의
+  일반 텍스트 4.5:1 기준을 실제 foreground/surface 쌍으로 검사하며,
+  [Carbon의 color guidance](https://www.carbondesignsystem.com/building-blocks/foundations/color/guidelines)를
+  따라 역할 이름과 theme별 값의 분리를 유지한다. Carbon palette를 복사하지 않고 승인된
+  LDS anchor를 사용한다. 새 raw semantic hex 대신 atomic alias로 저작한다.
 - 행·카드·칩·알람·callout의 앞쪽(leading edge)에 색 띠를 두지 않는다. 2px 이상의
   `border-left`/`border-inline-start`, 두꺼운 왼쪽 테두리, `inset Npx 0 0` 줄무늬가 모두
   해당한다. 상태와 선택은 그 역할을 이미 가진 형제 컴포넌트의 방식으로 전달한다:

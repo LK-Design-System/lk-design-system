@@ -361,6 +361,13 @@
 | `primitive.colorRamps.pink.tokens.90` | color | `--color-atomic-pink-90` | `#F6D7F1` | — |
 | `primitive.colorRamps.pink.tokens.95` | color | `--color-atomic-pink-95` | `#FAEEF9` | — |
 | `primitive.colorRamps.pink.tokens.99` | color | `--color-atomic-pink-99` | `#FEFAFE` | — |
+| `primitive.colorRamps.primary-blue.tokens.30` | color | `--color-atomic-primary-blue-30` | `#1D4FAA` | — |
+| `primitive.colorRamps.primary-blue.tokens.40` | color | `--color-atomic-primary-blue-40` | `#2059BF` | — |
+| `primitive.colorRamps.primary-blue.tokens.45` | color | `--color-atomic-primary-blue-45` | `#2260CE` | — |
+| `primitive.colorRamps.primary-blue.tokens.50` | color | `--color-atomic-primary-blue-50` | `#2463D4` | — |
+| `primitive.colorRamps.primary-blue.tokens.60` | color | `--color-atomic-primary-blue-60` | `#558CE9` | — |
+| `primitive.colorRamps.primary-blue.tokens.70` | color | `--color-atomic-primary-blue-70` | `#79A5F2` | — |
+| `primitive.colorRamps.primary-blue.tokens.80` | color | `--color-atomic-primary-blue-80` | `#A0BEF6` | — |
 | `primitive.colorRamps.purple.tokens.0` | color | `--color-atomic-purple-0` | `#000000` | — |
 | `primitive.colorRamps.purple.tokens.10` | color | `--color-atomic-purple-10` | `#250F38` | — |
 | `primitive.colorRamps.purple.tokens.100` | color | `--color-atomic-purple-100` | `#FFFFFF` | — |
@@ -500,8 +507,8 @@
 | `semantic.colorRoles.accent-background-purple` | color | `--color-semantic-accent-background-purple` | `light: var(--color-atomic-purple-50); dark: var(--color-atomic-purple-60)` | — |
 | `semantic.colorRoles.accent-background-red-orange` | color | `--color-semantic-accent-background-red-orange` | `light: #EA7029; dark: #ED864A` | — |
 | `semantic.colorRoles.accent-background-violet` | color | `--color-semantic-accent-background-violet` | `light: var(--color-atomic-violet-50); dark: var(--color-atomic-violet-60)` | — |
-| `semantic.colorRoles.accent-blue-text` | color | `--color-semantic-accent-blue-text` | `light: #336CA1; dark: #B5D5F2` | — |
-| `semantic.colorRoles.accent-foreground-blue` | color | `--color-semantic-accent-foreground-blue` | `light: #336CA1; dark: #639ACE` | — |
+| `semantic.colorRoles.accent-blue-text` | color | `--color-semantic-accent-blue-text` | `light: var(--color-atomic-blue-45); dark: #B5D5F2` | — |
+| `semantic.colorRoles.accent-foreground-blue` | color | `--color-semantic-accent-foreground-blue` | `light: var(--color-atomic-blue-45); dark: #639ACE` | — |
 | `semantic.colorRoles.accent-foreground-cyan` | color | `--color-semantic-accent-foreground-cyan` | `light: var(--color-atomic-cyan-40); dark: var(--color-atomic-cyan-50)` | — |
 | `semantic.colorRoles.accent-foreground-green` | color | `--color-semantic-accent-foreground-green` | `light: #0F953C; dark: #3FD270` | — |
 | `semantic.colorRoles.accent-foreground-light-blue` | color | `--color-semantic-accent-foreground-light-blue` | `light: #498AC6; dark: var(--color-atomic-blue-70)` | — |
@@ -536,7 +543,7 @@
 | `semantic.colorRoles.fill-alternative` | color | `--color-semantic-fill-alternative` | `light: rgba(112, 115, 124, 0.05); dark: rgba(112, 115, 124, 0.12)` | — |
 | `semantic.colorRoles.fill-normal` | color | `--color-semantic-fill-normal` | `light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)` | — |
 | `semantic.colorRoles.fill-strong` | color | `--color-semantic-fill-strong` | `light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28)` | — |
-| `semantic.colorRoles.focus-indicator` | color | `--color-semantic-focus-indicator` | `light: #2F6FB0; dark: #7FB0DE` | — |
+| `semantic.colorRoles.focus-indicator` | color | `--color-semantic-focus-indicator` | `light: var(--color-atomic-primary-blue-50); dark: var(--color-atomic-primary-blue-80)` | — |
 | `semantic.colorRoles.focus-ring` | color | `--color-semantic-focus-ring` | `light: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent); dark: color-mix(in srgb, var(--color-semantic-primary-normal) 40%, transparent)` | — |
 | `semantic.colorRoles.interaction-disable` | color | `--color-semantic-interaction-disable` | `light: #F4F4F5; dark: #2E2F33` | — |
 | `semantic.colorRoles.interaction-inactive` | color | `--color-semantic-interaction-inactive` | `light: #989BA2; dark: #5A5C63` | — |
@@ -572,11 +579,11 @@
 | `semantic.colorRoles.material-dimmer` | color | `--color-semantic-material-dimmer` | `light: rgba(23, 23, 25, 0.52); dark: rgba(23, 23, 25, 0.74)` | — |
 | `semantic.colorRoles.material-outline-outline` | color | `--color-semantic-material-outline-outline` | `light: #73767E; dark: #8E9199` | — |
 | `semantic.colorRoles.primary-fill` | color | `--color-semantic-primary-fill` | `light: var(--color-semantic-primary-normal); dark: var(--color-semantic-primary-heavy)` | — |
-| `semantic.colorRoles.primary-heavy` | color | `--color-semantic-primary-heavy` | `light: #2D6090; dark: var(--color-atomic-blue-50)` | — |
-| `semantic.colorRoles.primary-ink` | color | `--color-semantic-primary-ink` | `light: var(--color-atomic-blue-45); dark: var(--color-semantic-primary-normal)` | — |
-| `semantic.colorRoles.primary-ink-strong` | color | `--color-semantic-primary-ink-strong` | `light: var(--color-atomic-blue-40); dark: var(--color-semantic-accent-blue-text)` | — |
-| `semantic.colorRoles.primary-normal` | color | `--color-semantic-primary-normal` | `light: var(--color-atomic-blue-50); dark: #5390C9` | — |
-| `semantic.colorRoles.primary-strong` | color | `--color-semantic-primary-strong` | `light: #336CA1; dark: #3C80BF` | — |
+| `semantic.colorRoles.primary-heavy` | color | `--color-semantic-primary-heavy` | `light: var(--color-atomic-primary-blue-30); dark: var(--color-atomic-primary-blue-45)` | — |
+| `semantic.colorRoles.primary-ink` | color | `--color-semantic-primary-ink` | `light: var(--color-atomic-primary-blue-40); dark: var(--color-atomic-primary-blue-70)` | — |
+| `semantic.colorRoles.primary-ink-strong` | color | `--color-semantic-primary-ink-strong` | `light: var(--color-atomic-primary-blue-30); dark: var(--color-atomic-primary-blue-80)` | — |
+| `semantic.colorRoles.primary-normal` | color | `--color-semantic-primary-normal` | `light: var(--color-atomic-primary-blue-50); dark: var(--color-atomic-primary-blue-70)` | — |
+| `semantic.colorRoles.primary-strong` | color | `--color-semantic-primary-strong` | `light: var(--color-atomic-primary-blue-40); dark: var(--color-atomic-primary-blue-60)` | — |
 | `semantic.colorRoles.primary-surface-normal` | color | `--color-semantic-primary-surface-normal` | `light: color-mix(in srgb, var(--color-semantic-primary-normal) 10%, transparent); dark: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent)` | — |
 | `semantic.colorRoles.primary-surface-strong` | color | `--color-semantic-primary-surface-strong` | `light: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent); dark: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent)` | — |
 | `semantic.colorRoles.secondary-normal` | color | `--color-semantic-secondary-normal` | `light: #2C3547; dark: #2C3547` | — |
@@ -593,7 +600,7 @@
 | `semantic.colorRoles.status-info-border` | color | `--color-semantic-status-info-border` | `light: color-mix(in srgb, var(--color-semantic-primary-normal) 36%, var(--color-semantic-line-normal-normal)); dark: color-mix(in srgb, var(--color-semantic-primary-normal) 42%, var(--color-semantic-line-normal-normal))` | — |
 | `semantic.colorRoles.status-info-foreground` | color | `--color-semantic-status-info-foreground` | `light: var(--color-semantic-primary-normal); dark: var(--color-semantic-primary-normal)` | — |
 | `semantic.colorRoles.status-info-surface` | color | `--color-semantic-status-info-surface` | `light: color-mix(in srgb, var(--color-semantic-primary-normal) 12%, transparent); dark: color-mix(in srgb, var(--color-semantic-primary-normal) 16%, transparent)` | — |
-| `semantic.colorRoles.status-info-text` | color | `--color-semantic-status-info-text` | `light: #2D6090; dark: #8CC8F5` | — |
+| `semantic.colorRoles.status-info-text` | color | `--color-semantic-status-info-text` | `light: var(--color-atomic-primary-blue-30); dark: var(--color-atomic-primary-blue-80)` | — |
 | `semantic.colorRoles.status-negative` | color | `--color-semantic-status-negative` | `light: var(--color-semantic-status-negative-signal); dark: var(--color-semantic-status-negative-signal)` | — |
 | `semantic.colorRoles.status-negative-border` | color | `--color-semantic-status-negative-border` | `light: color-mix(in srgb, var(--color-semantic-status-negative-signal) 38%, var(--color-semantic-line-normal-normal)); dark: color-mix(in srgb, var(--color-semantic-status-negative-signal) 44%, var(--color-semantic-line-normal-normal))` | — |
 | `semantic.colorRoles.status-negative-fill` | color | `--color-semantic-status-negative-fill` | `light: var(--color-atomic-red-30); dark: var(--color-atomic-red-30)` | — |
