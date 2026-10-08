@@ -66,6 +66,7 @@ DashboardGrid는 동급인 요약 카드의 최소 폭과 간격만 관리합니
 | `DockPanel` | 대표 시나리오에서 조합 |
 | `PageHeader` | 대표 시나리오에서 조합 |
 | `PrimaryDetail` | 대표 시나리오에서 조합 |
+| `ShellPanel` | 대표 시나리오에서 조합 |
 
 ## Examples
 

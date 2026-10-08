@@ -228,7 +228,7 @@ export const BottomNavCard = {
 };
 
 export const DockedNeutralRail = {
-  name: '변형·상태 · docked 영역 레일',
+  name: '변형·상태 · 고정 영역 레일',
   parameters: storyDescription(
     'surface="docked"는 DashboardShell topology="rail-panel"의 전체 높이 영역 레일입니다. 폭 64px, 항목 56px, 캡션 상시, 위에 로고 홈 링크, 아래에 계정 슬롯을 둡니다. appearance="neutral"은 SideNav neutral과 같은 무채색 선택(채움 + 가장 진한 글자 + 굵기)입니다. 캡션이 말줄임되면 hover와 focus에서 DS Tooltip으로 전체 이름을 보입니다.',
   ),

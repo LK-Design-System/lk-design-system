@@ -18,6 +18,7 @@
     "IconButton",
     "Lockup",
     "MetricCard",
+    "NavRail",
     "PageHeader",
     "RefreshControl",
     "SideNav",
@@ -62,9 +63,29 @@
         "role": "variants-states"
       },
       {
+        "id": "lds-product-layout-dashboard-shell--rail-panel",
+        "name": "변형·상태 · 레일과 맥락 패널",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-layout-dashboard-shell--rail-panel-dark",
+        "name": "변형·상태 · 레일과 패널 다크",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-layout-dashboard-shell--rail-panel-no-panel",
+        "name": "변형·상태 · 패널 없는 영역",
+        "role": "variants-states"
+      },
+      {
         "id": "lds-product-layout-dashboard-shell--header-first",
         "name": "변형·상태 · 헤더 우선",
         "role": "variants-states"
+      },
+      {
+        "id": "lds-product-layout-dashboard-shell--rail-panel-collapse",
+        "name": "상호작용 · 패널 접기와 펼치기",
+        "role": "interaction"
       },
       {
         "id": "lds-product-layout-dashboard-shell--narrow-320",
@@ -72,8 +93,23 @@
         "role": "responsive"
       },
       {
+        "id": "lds-product-layout-dashboard-shell--rail-panel-overlay",
+        "name": "반응형 · 768~1023px 덮는 패널",
+        "role": "responsive"
+      },
+      {
         "id": "lds-product-layout-dashboard-shell--temporary-navigation",
         "name": "반응형 · 계층형 임시 탐색",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-product-layout-dashboard-shell--rail-panel-max-items",
+        "name": "반응형 · 레일 항목 7개와 600px 높이",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-product-layout-dashboard-shell--rail-panel-narrow",
+        "name": "반응형 · 좁은 화면 드로어 하나",
         "role": "responsive"
       },
       {

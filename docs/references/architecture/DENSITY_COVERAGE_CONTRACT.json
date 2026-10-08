@@ -9,19 +9,19 @@
   },
   "source": {
     "componentRegistry": "docs/components/component-content.json",
-    "componentRegistryFingerprint": "9ea38a3592cb07d59a1b9f62c075bec0102751520b05047738e4f834284f211f",
+    "componentRegistryFingerprint": "6cbb78e474ab0e0f6935226ab7e2311eaf2d5bf947c159545da7e7e87fd93b02",
     "expressionProfileContract": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
     "expressionProfileContractFingerprint": "88c3fd6a5eb8fb61896af87aa266ab3bf93cae9195c7b6eefd911d566c0a1b5c"
   },
   "summary": {
-    "entryCount": 212,
+    "entryCount": 214,
     "categoryCounts": {
       "profile-token-automatic": 7,
       "explicit-size-density": 93,
-      "fixed": 97,
+      "fixed": 99,
       "not-applicable": 15
     },
-    "profileAwareEntries": 97
+    "profileAwareEntries": 99
   },
   "entries": [
     {
@@ -390,6 +390,22 @@
       "profileAware": false,
       "explicitAxes": [],
       "profileTokens": [],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "conversation-list",
+      "title": "ConversationList",
+      "source": "components/communication/ConversationList.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast"
+      ],
       "owner": "LDS Product owner",
       "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
       "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
@@ -1974,6 +1990,7 @@
       "profileAware": true,
       "explicitAxes": [],
       "profileTokens": [
+        "--dur-base",
         "--dur-fast",
         "--shadow-md"
       ],
@@ -2080,6 +2097,22 @@
       "owner": "LDS Core owner",
       "rationale": "범용 layout primitive는 제품이 전달한 관계와 배치를 표현하며 component-level density policy를 소유하지 않는다.",
       "reviewTrigger": "공개 계약이 component-owned visual geometry 또는 interactive target을 직접 소유하도록 바뀔 때",
+      "nextReview": "2026-11-22"
+    },
+    {
+      "id": "shell-panel",
+      "title": "ShellPanel",
+      "source": "components/layout/ShellPanel.jsx",
+      "ownerLayer": "product",
+      "category": "fixed",
+      "profileAware": true,
+      "explicitAxes": [],
+      "profileTokens": [
+        "--dur-fast"
+      ],
+      "owner": "LDS Product owner",
+      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
+      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
       "nextReview": "2026-11-22"
     },
     {

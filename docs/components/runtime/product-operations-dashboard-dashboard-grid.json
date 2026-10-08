@@ -107,6 +107,10 @@
     {
       "component": "PrimaryDetail",
       "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "ShellPanel",
+      "relationship": "대표 시나리오에서 조합"
     }
   ],
   "examples": [

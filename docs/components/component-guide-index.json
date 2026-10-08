@@ -284,6 +284,10 @@
     "slug": "product-action-split-button"
   },
   {
+    "storybookTitle": "LDS Product/Communication/Conversation List",
+    "slug": "product-communication-conversation-list"
+  },
+  {
     "storybookTitle": "LDS Product/Communication/Message",
     "slug": "product-communication-message"
   },
@@ -506,6 +510,10 @@
   {
     "storybookTitle": "LDS Product/Layout/Primary Detail",
     "slug": "product-layout-primary-detail"
+  },
+  {
+    "storybookTitle": "LDS Product/Layout/Shell Panel",
+    "slug": "product-layout-shell-panel"
   },
   {
     "storybookTitle": "LDS Product/Navigation/Adaptive Navigation",

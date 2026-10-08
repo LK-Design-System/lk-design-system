@@ -128,6 +128,7 @@
 | `Chip` | 대표 시나리오에서 조합 |
 | `Icon` | 대표 시나리오에서 조합 |
 | `IconButton` | 대표 시나리오에서 조합 |
+| `ConversationList` | 대표 시나리오에서 조합 |
 | `ConversationMessage` | 대표 시나리오에서 조합 |
 | `MessageFeed` | 대표 시나리오에서 조합 |
 

@@ -1,0 +1,327 @@
+{
+  "slug": "product-communication-conversation-list",
+  "title": "Conversation List",
+  "storybookTitle": "LDS Product/Communication/Conversation List",
+  "layer": "Product",
+  "family": "Communication",
+  "primaryOwner": "ConversationList",
+  "ownerComponents": [
+    "ConversationList"
+  ],
+  "supportingComponents": [],
+  "purpose": "날짜 묶음 제목 아래 대화 링크 행이 있고, 행마다 「더 보기」 메뉴 버튼이 링크의 형제로 붙습니다. 상호작용이 중첩되지 않습니다. 현재 대화는 aria-current, 무채색 채움, 굵기로 표시합니다.",
+  "useWhen": [
+    "ConversationList — 사람이 만든 대화·세션 목록을 날짜 묶음, 링크 행, 형제 「더 보기」 메뉴, 현재 항목 표시로 보여 주는 탐색 목록."
+  ],
+  "avoidWhen": [],
+  "anatomy": [
+    {
+      "part": "renderLink",
+      "rule": "링크를 router link로 치환하는 렌더 훅."
+    },
+    {
+      "part": "itemActions",
+      "rule": "행의 형제 「더 보기」 메뉴 항목(예: 이름 바꾸기, 구분선, 삭제). 비우면 행 동작이 없습니다."
+    },
+    {
+      "part": "onItemAction",
+      "rule": "메뉴 항목 실행 요청. 확인 대화상자와 실제 실행은 제품이 소유합니다."
+    },
+    {
+      "part": "moreLabel",
+      "rule": "「더 보기」 버튼 이름. @default (item) = ${item.title} 더 보기"
+    },
+    {
+      "part": "error",
+      "rule": "오류 설명. 항목이 없으면 축약 ResourceState로 보입니다."
+    },
+    {
+      "part": "aria-label",
+      "rule": "nav 이름. ShellPanel 안에서는 생략하면 패널 제목을 aria-labelledby로 씁니다."
+    }
+  ],
+  "properties": [
+    {
+      "name": "groups",
+      "type": "ConversationListGroup[]",
+      "required": true,
+      "description": "",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "currentId",
+      "type": "string",
+      "required": false,
+      "description": "현재 대화 id. 해당 링크가 aria-current=\"page\", 무채색 채움, 굵기를 받습니다.",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "renderLink",
+      "type": "(item: ConversationListItem, props: React.AnchorHTMLAttributes) = React.ReactElement",
+      "required": false,
+      "description": "링크를 router link로 치환하는 렌더 훅.",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "itemActions",
+      "type": "ConversationListAction[] | ((item: ConversationListItem) = ConversationListAction[])",
+      "required": false,
+      "description": "행의 형제 「더 보기」 메뉴 항목(예: 이름 바꾸기, 구분선, 삭제). 비우면 행 동작이 없습니다.",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "onItemAction",
+      "type": "(actionId: string, item: ConversationListItem) = void",
+      "required": false,
+      "description": "메뉴 항목 실행 요청. 확인 대화상자와 실제 실행은 제품이 소유합니다.",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "moreLabel",
+      "type": "(item: ConversationListItem) = string",
+      "required": false,
+      "description": "「더 보기」 버튼 이름. @default (item) = ${item.title} 더 보기",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "headingLevel",
+      "type": "1 | 2 | 3 | 4 | 5 | 6",
+      "required": false,
+      "description": "묶음 제목 heading 단계. @default 3",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "required": false,
+      "description": "첫 로딩. 항목이 없으면 Skeleton 행을 보입니다. @default false",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "error",
+      "type": "React.ReactNode | boolean",
+      "required": false,
+      "description": "오류 설명. 항목이 없으면 축약 ResourceState로 보입니다.",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "onRetry",
+      "type": "() = void",
+      "required": false,
+      "description": "",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "retryLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "hasMore",
+      "type": "boolean",
+      "required": false,
+      "description": "목록 끝 「더 불러오기」 노출 여부. 무한 스크롤은 쓰지 않습니다. @default false",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "onLoadMore",
+      "type": "() = void",
+      "required": false,
+      "description": "",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "loadingMore",
+      "type": "boolean",
+      "required": false,
+      "description": "",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "loadMoreLabel",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "required": false,
+      "description": "nav 이름. ShellPanel 안에서는 생략하면 패널 제목을 aria-labelledby로 씁니다.",
+      "owner": "ConversationListProps"
+    },
+    {
+      "name": "aria-labelledby",
+      "type": "string",
+      "required": false,
+      "description": "",
+      "owner": "ConversationListProps"
+    }
+  ],
+  "states": [
+    {
+      "state": "loading",
+      "rule": "첫 로딩. 항목이 없으면 Skeleton 행을 보입니다. @default false"
+    },
+    {
+      "state": "error",
+      "rule": "오류 설명. 항목이 없으면 축약 ResourceState로 보입니다."
+    }
+  ],
+  "behavior": [
+    "키보드: Tab 순서는 링크 → 더 보기 → 다음 링크입니다. 행 사이 방향키 이동(roving)은 v1에 넣지 않았습니다(L-S7b).",
+    "ListCell selectedPresentation=\"tint\"의 「지금 열린 항목」 무채색 문법을 계승하되, 단계는 SideNav neutral과 같은 opaque cool-neutral 단계를 써서 ShellPanel·NavRail과 한 셸로 읽히게 했습니다.",
+    "Fluent 2 Nav usage — hover나 focus에서만 보이는 동작도 늘 DOM에 있어야 하고 컨텍스트 메뉴로도 제공합니다. 「더 보기」를 늘 렌더하고 opacity로만 숨기는 근거입니다.",
+    "(제품 참고, 권위 근거 아님) ChatGPT·Claude 대화 목록 — 날짜 묶음, 링크 행, hover 시 행 동작. 아이콘 전용 동작 노출 방식만 참고했습니다.",
+    "Classification: LK Product Extension · Communication. MessageFeed·ConversationMessage와 같은 계열이며 ShellPanel의 스크롤 구역에 두는 것이 기본입니다. 데이터, 라우트, 날짜 계산과 지역화, 이름 바꾸기·삭제 실행은 제품이 소유합니다."
+  ],
+  "quantitativeRules": [
+    {
+      "subject": "명시 규칙 1",
+      "rule": "묶음 제목은 headingLevel(기본 3)이며 SideNav 섹션 제목과 같은 문장형 13px medium, subtle 잉크입니다. 묶음 계산과 문구는 제품이 넘깁니다."
+    },
+    {
+      "subject": "명시 규칙 2",
+      "rule": "행 높이 36px(--component-conversation-list-row-height, SideNav 자식 행과 같음), 한 줄 제목과 말줄임. 전체 제목은 링크의 접근 이름에 남고 title 툴팁은 두지 않습니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "hover와 현재 항목은 행 전체(링크 + 버튼)에 무채색 채움을 주며 li가 :hover, [data-current]로 소유합니다. 현재 항목은 aria-current=\"page\", cool-neutral-96 채움, label-normal, 굵기입니다. 채움 대비가 낮아(1.23:1) 굵기를 비색상 단서로 함께 씁니다(WCAG 1.4.1). forced-colors에서는 현재 링크가 SelectedItem을 받습니다."
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "「더 보기」는 늘 DOM에 있고 포인터 hover 환경에서는 행 hover, focus-within, 현재 행, 메뉴 열림일 때만 보입니다. @media (hover: none)에서는 늘 보입니다. 버튼 이름은 {제목} 더 보기, 조작 영역은 24px 이상입니다."
+    },
+    {
+      "subject": "--component-conversation-list-active-hover-surface",
+      "rule": "var(--color-atomic-cool-neutral-95)"
+    }
+  ],
+  "responsive": [],
+  "contentGuidance": [
+    "groups, currentId, headingLevel — 묶음과 현재 대화, 묶음 제목 단계.",
+    "itemActions, onItemAction, moreLabel — 행 메뉴 항목(배열 또는 항목별 함수), 실행 요청, 「더 보기」 버튼 이름(기본 {제목} 더 보기).",
+    "loading, error, onRetry, retryLabel, emptyLabel — 첫 로딩·오류·빈 목록 상태.",
+    "상태: 첫 loading은 Skeleton 행과 aria-busy, 빈 목록은 한 줄 문장(emptyLabel), error는 축약 ResourceState와 선택 onRetry, 목록 끝은 hasMore + onLoadMore의 「더 불러오기」 TextButton입니다. 무한 스크롤은 쓰지 않습니다."
+  ],
+  "accessibility": [
+    "링크와 「더 보기」 버튼은 형제입니다. ListCell처럼 role=\"button\" 행 안에 trailing 버튼을 넣는 중첩 상호작용을 만들지 않습니다(axe nested-interactive).",
+    "ShellPanel 안에서는 nav 이름을 생략하면 패널 제목을 aria-labelledby로 씁니다. 단독 사용은 aria-label을 줍니다.",
+    "renderLink — 링크를 router link로 치환합니다. DS가 만든 aria-current, class, href를 그대로 넘깁니다.",
+    "hasMore, onLoadMore, loadingMore, loadMoreLabel — 목록 끝 「더 불러오기」. loadingMore 동안 버튼을 비활성화하고 목록을 aria-busy로 둡니다.",
+    "aria-label, aria-labelledby — nav 이름. ShellPanel 안에서는 생략하면 패널 제목을 씁니다."
+  ],
+  "exceptions": [],
+  "related": [
+    {
+      "component": "ConversationMessage",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "MessageComposer",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "MessageFeed",
+      "relationship": "대표 시나리오에서 조합"
+    }
+  ],
+  "examples": [
+    {
+      "label": "기본 조합",
+      "code": "<ConversationList\n  groups={[{ id: 'today', label: '오늘', items: [{ id: 'c1', title: '장비 점검 로그 요약', href: '/chat/c1' }] }]}\n  currentId={conversationId}\n  itemActions={[{ id: 'rename', label: '이름 바꾸기' }, { id: 'divider', divider: true }, { id: 'delete', label: '삭제', danger: true }]}\n  onItemAction={(actionId, item) => (actionId === 'delete' ? confirmDelete(item) : openRename(item))}\n  hasMore={hasNextPage}\n  onLoadMore={fetchNextPage}\n/>"
+    },
+    {
+      "label": "추가 조합 2",
+      "code": "nav[aria-labelledby=panel-title]\n  > section[aria-labelledby=g-today]\n    > h3#g-today 「오늘」\n    > ul[role=list]\n      > li[data-current]\n        > a[href][aria-current]\n        + button[aria-haspopup=menu] 「{제목} 더 보기」"
+    }
+  ],
+  "tokens": [
+    "--component-conversation-list-active-hover-surface",
+    "--component-conversation-list-active-surface",
+    "--component-conversation-list-focus-indicator",
+    "--component-conversation-list-foreground",
+    "--component-conversation-list-group-foreground",
+    "--component-conversation-list-hover-foreground",
+    "--component-conversation-list-hover-surface",
+    "--component-conversation-list-muted-foreground",
+    "--component-conversation-list-pressed-surface",
+    "--component-conversation-list-row-height",
+    "--dur-fast",
+    "--ease-out",
+    "--font-sans",
+    "--fw-bold",
+    "--fw-medium",
+    "--label1-line",
+    "--label1-size",
+    "--label2-line",
+    "--label2-size",
+    "--radius-lg",
+    "--space-0-5",
+    "--space-1",
+    "--space-2",
+    "--space-3"
+  ],
+  "apiLinks": [],
+  "migration": [],
+  "platformStatus": {
+    "figma": "not-tracked",
+    "react": "implemented",
+    "ios": "not-tracked",
+    "android": "not-tracked"
+  },
+  "storybook": {
+    "importPath": "./stories/CommunicationConversationList.stories.jsx",
+    "entryStoryId": "lds-product-communication-conversation-list--overview",
+    "publicStories": [
+      {
+        "id": "lds-product-communication-conversation-list--overview",
+        "name": "개요",
+        "role": "overview"
+      },
+      {
+        "id": "lds-product-communication-conversation-list--states",
+        "name": "변형·상태 · 로딩, 빈 목록, 오류, 더 불러오기",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-communication-conversation-list--narrow-touch",
+        "name": "반응형 · 좁은 폭과 터치",
+        "role": "responsive"
+      }
+    ],
+    "hiddenEvidence": 0
+  },
+  "sources": [],
+  "canonicalGuide": null,
+  "guideDeltaFields": [],
+  "sectionStatus": {
+    "purpose": "evidence",
+    "useWhen": "evidence",
+    "avoidWhen": "omitted-no-evidence",
+    "anatomy": "evidence",
+    "properties": "evidence",
+    "states": "evidence",
+    "behavior": "evidence",
+    "quantitativeRules": "evidence",
+    "responsive": "omitted-no-evidence",
+    "contentGuidance": "evidence",
+    "accessibility": "evidence",
+    "exceptions": "omitted-no-evidence",
+    "related": "evidence",
+    "examples": "evidence",
+    "tokens": "evidence",
+    "apiLinks": "evidence",
+    "migration": "omitted-no-evidence"
+  }
+}

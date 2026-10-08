@@ -13,12 +13,22 @@
     "Icon"
   ],
   "purpose": "데스크톱 레일과 모바일 하단에서 같은 35개 최상위 목적지를 유지할 때 적합합니다. 깊은 계층에는 Side Nav를, 페이지 안 섹션 이동에는 Anchor를 사용하세요.",
-  "useWhen": [],
+  "useWhen": [
+    "SideNav의 섹션 heading, 계층 indent, badge, disclosure, panel shadow는 쓰지 않습니다. 평면 목적지 3–5개만 보여주기 때문입니다."
+  ],
   "avoidWhen": [],
   "anatomy": [
     {
       "part": "renderLink",
       "rule": "href 항목을 router link로 치환하는 렌더 훅. 기본은 native anchor입니다."
+    },
+    {
+      "part": "header",
+      "rule": "docked 레일 맨 위의 로고 슬롯(예: Lockup variant=\"mark\" 홈 링크). 메뉴 토글을 두지 않습니다."
+    },
+    {
+      "part": "footer",
+      "rule": "docked 레일 맨 아래의 계정 슬롯(예: UserMenu collapsed)."
     }
   ],
   "properties": [
@@ -91,9 +101,49 @@
       "required": false,
       "description": "href 항목을 router link로 치환하는 렌더 훅. 기본은 native anchor입니다.",
       "owner": "NavRailProps"
+    },
+    {
+      "name": "surface",
+      "type": "'floating' | 'docked' | 'drawer'",
+      "required": false,
+      "description": "배치 표면. floating(기본)은 기존 68×60 항목의 카드형 레일입니다. docked는 DashboardShell topology=\"rail-panel\"의 전체 높이 영역 레일(폭 64, 항목 56×56, 캡션 상시, 끝 구분선, 카드 chrome 없음)이며 header·footer 슬롯을 받습니다. drawer는 같은 항목을 rail-panel 좁은 화면 드로어의 가로 행으로 그립니다. @default \"floating\"",
+      "owner": "NavRailProps"
+    },
+    {
+      "name": "appearance",
+      "type": "'default' | 'neutral'",
+      "required": false,
+      "description": "색 역할. neutral은 SideNav neutral과 같은 무채색 선택(채움 + label-normal + 굵기)입니다. @default \"default\"",
+      "owner": "NavRailProps"
+    },
+    {
+      "name": "header",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "docked 레일 맨 위의 로고 슬롯(예: Lockup variant=\"mark\" 홈 링크). 메뉴 토글을 두지 않습니다.",
+      "owner": "NavRailProps"
+    },
+    {
+      "name": "footer",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "docked 레일 맨 아래의 계정 슬롯(예: UserMenu collapsed).",
+      "owner": "NavRailProps"
+    },
+    {
+      "name": "getItemCurrent",
+      "type": "(item: NavRailItem, state: { active: boolean }) = 'page' | 'true' | undefined",
+      "required": false,
+      "description": "항목의 aria-current 값을 제품 라우트로 정합니다. 영역 첫 화면은 'page', 영역 안 다른 화면은 'true'를 반환합니다. 생략하면 선택 항목이 'page'입니다.",
+      "owner": "NavRailProps"
     }
   ],
-  "states": [],
+  "states": [
+    {
+      "state": "getItemCurrent",
+      "rule": "항목의 aria-current 값을 제품 라우트로 정합니다. 영역 첫 화면은 'page', 영역 안 다른 화면은 'true'를 반환합니다. 생략하면 선택 항목이 'page'입니다."
+    }
+  ],
   "behavior": [],
   "quantitativeRules": [
     {
@@ -102,28 +152,35 @@
     },
     {
       "subject": "명시 규칙 2",
-      "rule": "긴 label은 68px 레일 안에서 한 줄 ellipsis로 줄이고 title/ariaLabel로 전체 이름을 유지합니다. 아이콘은 장식으로 처리합니다."
+      "rule": "surface — floating(기본)은 기존 68×60 카드형 레일입니다. docked는 DashboardShell topology=\"rail-panel\"의 전체 높이 영역 레일입니다: 폭 64px(--component-nav-rail-docked-width, SideNav 접힌 레일과 같음), 항목 56×56(아이콘 20 + 간격 4 + 캡션 14 + 상하 9), 항목 간격 4px, 위아래 8px, 위 header(로고 홈 링크, 56px 블록)와 아래 footer(UserMenu collapsed, 56px 블록), 끝 구분선 1px, 카드…"
     },
     {
       "subject": "명시 규칙 3",
-      "rule": "BottomNav와 동일한 icon+caption, primary ink, aria-current=\"page\"를 사용하고 control 면적만 세로 68×60과 가로 균등 분할로 달라집니다. 이 차이는 orientation과 pointer target 배치에 따른 기능 차이입니다."
+      "rule": "appearance — default는 primary 틴트 선택, neutral은 SideNav neutral과 같은 무채색 선택(--component-nav-rail-neutral-, SideNav neutral 토큰과 같은 atomic 값: 채움 cool-neutral-96 + label-normal + 굵기)입니다. rail-panel 셸은 neutral을 씁니다. floating의 기존 틴트는 호환을 위해 유지합니다(L-S3b)."
     },
     {
       "subject": "명시 규칙 4",
-      "rule": "SideNav의 섹션 heading, 계층 indent, badge, disclosure, panel shadow는 쓰지 않습니다. 평면 목적지 3–5개만 보여주기 때문입니다."
+      "rule": "docked 캡션 — 캡션은 늘 보입니다(레이블 표시 축을 두지 않음, L-S3). 말줄임이 생긴 캡션만 DS Tooltip(hover와 focus)으로 전체 이름을 보이고 native title은 쓰지 않습니다. Material 기본 auto(4개 이상이면 선택 항목만 라벨)와 의도적으로 다르며, 한국어 영역 이름의 발견성 때문입니다."
     },
     {
-      "subject": "--caption2-size",
-      "rule": "11px"
+      "subject": "--caption2-line",
+      "rule": "14px"
     }
   ],
   "responsive": [
     "Fluent Nav usage — 주 목적지는 실제 link로 제공하고 짧고 스캔 가능한 이름을 사용하며 좁은 화면에서는 다른 표면으로 전환합니다.",
     "NavRail — 세로 아이콘+라벨 내비게이션 레일(데스크톱 사이드 내비).",
-    "Classification: LK Product Extension. 동등한 중요도의 평면형 주요 목적지 3–5개에 사용하고, 같은 목적지 집합의 모바일 표현은 BottomNav로 전환합니다. 계층형 SideNav와 동시에 주 탐색으로 사용하지 않습니다."
+    "Classification: LK Product Extension. 동등한 중요도의 평면형 주요 목적지 3–5개에 사용하고, 같은 목적지 집합의 모바일 표현은 BottomNav로 전환합니다. 같은 목적지 층을 NavRail과 계층형 SideNav로 중복해 주 탐색으로 쓰지 않습니다. DashboardShell topology=\"rail-panel\"에서는 docked NavRail이 영역(1층)을, ShellPanel 안의 목록이 영역 안 목록(2층)을 맡으므로 함께 씁니다."
   ],
-  "contentGuidance": [],
+  "contentGuidance": [
+    "긴 label은 68px 레일 안에서 한 줄 ellipsis로 줄이고 title/ariaLabel로 전체 이름을 유지합니다. 아이콘은 장식으로 처리합니다.",
+    "Material Components NavigationRail — 접힌 레일은 앱 목적지 3–7개이고 위에 로고나 FAB를 header로 고정할 수 있습니다. docked 레일 상한 7과 로고 header의 근거입니다. 라벨 기본값 auto는 따르지 않습니다(위 docked 캡션)."
+  ],
   "accessibility": [
+    "항목 수와 높이 — docked는 영역 3–7개입니다. 8개 이상이면 개발 경고를 냅니다. 높이 예산은 로고 56 + 위 8 + N×56 + (N−1)×4 + 아래 8 + 계정 56이며, 문서 높이 600px(1280×720 화면)에서 7개가 스크롤 없이 들어가야 합니다(RailPanelMaxItems story가 검사). 그보다 낮은 창이나 확대에서만 목록이 스크롤바 없이 wheel·keyboard로 스크롤됩니다(WCAG 1.4.10, collapsed-navigation-rail 스크롤바 예외 재사용, L-S8).",
+    "getItemCurrent — 제품 라우트로 aria-current를 정합니다. 영역 첫 화면은 'page', 영역 안 다른 화면은 'true'입니다. 생략하면 선택 항목이 'page'입니다. 레일 항목은 영역 첫 화면으로 가는 진짜 링크이며, 이동 없이 패널만 바꾸는 클릭은 두지 않습니다.",
+    "BottomNav와 동일한 icon+caption, primary ink, aria-current=\"page\"를 사용하고 control 면적만 세로 68×60과 가로 균등 분할로 달라집니다. 이 차이는 orientation과 pointer target 배치에 따른 기능 차이입니다.",
+    "docked는 floating과 같은 icon+caption 해부, aria-current, 링크·버튼 동일 시각을 유지하고, 폭·항목 크기·카드 chrome 제거·끝 구분선·neutral 선택만 다릅니다. 전체 높이 셸 열이 되므로 카드 테두리를 없애고 SideNav docked와 같은 끝 구분선을 씁니다. 포커스는 SideNav처럼 항목 안쪽(outline-offset: -2px)에 그려 목록 가장자리에서 잘리지 않습니다.",
     "WAI-ARIA landmark regions — landmark와 aria-current=\"page\"를 유지합니다. nav의 기본 aria-label은 '주 탐색'이며 소비자가 전달한 aria-label이 우선합니다."
   ],
   "exceptions": [],
@@ -168,22 +225,49 @@
     }
   ],
   "tokens": [
+    "--_lds-nav-rail-focus-indicator",
+    "--_lds-nav-rail-pressed-foreground",
+    "--_lds-nav-rail-pressed-surface",
+    "--caption2-line",
     "--caption2-size",
     "--color-semantic-background-elevated-normal",
+    "--color-semantic-focus-indicator",
     "--color-semantic-label-alternative",
     "--color-semantic-label-normal",
     "--color-semantic-line-solid-normal",
     "--color-semantic-primary-surface-normal",
     "--color-semantic-primary-surface-strong",
+    "--component-nav-rail-docked-item-gap",
+    "--component-nav-rail-docked-item-size",
+    "--component-nav-rail-docked-padding-block",
+    "--component-nav-rail-docked-slot-height",
+    "--component-nav-rail-docked-width",
+    "--component-nav-rail-neutral-active-hover-surface",
+    "--component-nav-rail-neutral-active-surface",
+    "--component-nav-rail-neutral-divider",
+    "--component-nav-rail-neutral-focus-indicator",
+    "--component-nav-rail-neutral-foreground",
+    "--component-nav-rail-neutral-hover-foreground",
+    "--component-nav-rail-neutral-hover-surface",
+    "--component-nav-rail-neutral-muted-foreground",
+    "--component-nav-rail-neutral-pressed-surface",
+    "--component-nav-rail-neutral-surface",
+    "--control-h-md",
     "--dur-fast",
     "--ease-out",
     "--font-sans",
     "--fw-bold",
     "--fw-medium",
+    "--label1-line",
+    "--label1-size",
     "--radius-lg",
     "--radius-xl",
+    "--space-0-5",
+    "--space-1",
     "--space-1-5",
-    "--space-2-5"
+    "--space-2",
+    "--space-2-5",
+    "--space-3"
   ],
   "apiLinks": [],
   "migration": [],
@@ -203,6 +287,11 @@
         "role": "overview"
       },
       {
+        "id": "lds-product-navigation-adaptive-navigation--docked-neutral-rail",
+        "name": "변형·상태 · 고정 영역 레일",
+        "role": "variants-states"
+      },
+      {
         "id": "lds-product-navigation-adaptive-navigation--compact-navigation",
         "name": "반응형 · 데스크톱 레일과 모바일 하단 탐색",
         "role": "responsive"
@@ -215,15 +304,15 @@
   "guideDeltaFields": [],
   "sectionStatus": {
     "purpose": "evidence",
-    "useWhen": "omitted-no-evidence",
+    "useWhen": "evidence",
     "avoidWhen": "omitted-no-evidence",
     "anatomy": "evidence",
     "properties": "evidence",
-    "states": "omitted-no-evidence",
+    "states": "evidence",
     "behavior": "omitted-no-evidence",
     "quantitativeRules": "evidence",
     "responsive": "evidence",
-    "contentGuidance": "omitted-no-evidence",
+    "contentGuidance": "evidence",
     "accessibility": "evidence",
     "exceptions": "omitted-no-evidence",
     "related": "evidence",

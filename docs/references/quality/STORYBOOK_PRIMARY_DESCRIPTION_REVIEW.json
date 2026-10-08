@@ -1613,6 +1613,30 @@
       ]
     },
     {
+      "pageTitle": "LDS Product/Communication/Conversation List",
+      "importPath": "./stories/CommunicationConversationList.stories.jsx",
+      "storyId": "lds-product-communication-conversation-list--overview",
+      "exportName": "Overview",
+      "descriptionHash": "c86fc88e09fb9e4ba885d29d655f88ab6b296bd08bc3cb53ffcf824a9a4a8472",
+      "sentences": [
+        {
+          "hash": "b45b12559bb90a244721b5e8829265220e062e9c606835f071a9ed1f9c232ce7",
+          "text": "대화 12개를 오늘·어제·지난 7일·지난 30일로 묶었습니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "fc5e796a8f9292bd18a4143a1e586b59c20bac8a917e7355ace05326e6b8cc54",
+          "text": "행 높이는 36px이고 긴 제목은 한 줄로 말줄임합니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "bdaf7ebbf3ab0247690f240c6e8acf7881620d7114c4021bbf6682596e23fb64",
+          "text": "「더 보기」는 늘 DOM에 있고, 마우스 환경에서는 행에 hover·focus가 있거나 현재 행일 때만 보입니다.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Product/Communication/Message",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
       "storyId": "lds-product-communication-message--message-overview",
@@ -2687,6 +2711,30 @@
         {
           "hash": "2a65335c5983f94d3b25dcecd0ed0338da32b387985d894844d4ff4a37b45616",
           "text": "선택 변경이 detail region에 즉시 반영되고 닫은 뒤 선택 항목으로 초점이 돌아오는지 확인하세요.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
+      "pageTitle": "LDS Product/Layout/Shell Panel",
+      "importPath": "./stories/LayoutShellPanel.stories.jsx",
+      "storyId": "lds-product-layout-shell-panel--overview",
+      "exportName": "Overview",
+      "descriptionHash": "20b507857ed6b238cc472fb7fe6e7bb89ed2c6b64247fad0a2180d8cf01afaf7",
+      "sentences": [
+        {
+          "hash": "7e098d67cac67c10d5f685044cb08c489f3b32f0f29d7e6f89407fdd3c01b316",
+          "text": "질문 패널입니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "450c8027e942e2effe219380bcaf379665f1323d366dcd2e6b050e67685341a1",
+          "text": "머리에 제목과 검색 동작, 그 아래 새 질문 행, 그리고 대화 40개가 든 스크롤 구역 하나가 있습니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "8ac966f1d2836f23fde7b18c81d6c28e2b4568dc6ec96aae6856b06a65ef3286",
+          "text": "스크롤 구역이 스크롤될 때만 위쪽 경계선이 보입니다.",
           "decision": "retained-in-canvas"
         }
       ]

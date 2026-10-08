@@ -73,6 +73,7 @@
 | `DashboardShell` | 대표 시나리오에서 조합 |
 | `PageHeader` | 대표 시나리오에서 조합 |
 | `PrimaryDetail` | 대표 시나리오에서 조합 |
+| `ShellPanel` | 대표 시나리오에서 조합 |
 
 ## Examples
 

@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "40ede03f1ff2b4cc9bf236c81624146147856fbd05cd21b413a6e845a212fc79",
+    "storybookIndexSha256": "1e67bb1513cd705f6119e6185ff08ca620bdcd74415202df84e28ee9b20d6957",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -61,31 +61,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 200,
-    "stories": 762,
-    "publicStories": 527,
-    "hiddenStories": 235,
-    "componentDescriptions": 195,
-    "pagesWithVisibleCanvasIntroduction": 195,
-    "pagesWithDecisionGuidance": 188,
-    "describedPublicStories": 527,
-    "reviewedPages": 200,
-    "reviewedStories": 762,
+    "pages": 202,
+    "stories": 783,
+    "publicStories": 547,
+    "hiddenStories": 236,
+    "componentDescriptions": 197,
+    "pagesWithVisibleCanvasIntroduction": 197,
+    "pagesWithDecisionGuidance": 190,
+    "describedPublicStories": 547,
+    "reviewedPages": 202,
+    "reviewedStories": 783,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
-      "overview": 183,
+      "overview": 185,
       "usage": 42,
-      "variants-states": 116,
-      "interaction": 57,
-      "responsive": 84,
+      "variants-states": 126,
+      "interaction": 59,
+      "responsive": 90,
       "scenario": 29,
-      "visual-parity": 101,
+      "visual-parity": 102,
       "internal-contract": 130
     },
     "dispositions": {
-      "keep": 199,
+      "keep": 201,
       "merge": 0,
       "split": 0,
       "hide": 1
@@ -106,16 +106,16 @@
         "guideReadyPages": 12
       },
       "Product": {
-        "pages": 113,
-        "stories": 488,
-        "public": 369,
-        "hidden": 119,
-        "guideReadyPages": 112
+        "pages": 115,
+        "stories": 507,
+        "public": 387,
+        "hidden": 120,
+        "guideReadyPages": 114
       },
       "Theme": {
         "pages": 4,
-        "stories": 8,
-        "public": 5,
+        "stories": 10,
+        "public": 7,
         "hidden": 3,
         "guideReadyPages": 4
       },
@@ -9932,6 +9932,111 @@
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
+      "title": "LDS Product/Communication/Conversation List",
+      "layer": "Product",
+      "family": "Communication",
+      "importPath": "./stories/CommunicationConversationList.stories.jsx",
+      "sourceSha256": "21adea5a6bfcac8e941d401e1c547bb020073fa8ac15061c0d51b0416c8a49c3",
+      "primaryOwner": "ConversationList",
+      "ownerComponents": [
+        "ConversationList"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 3,
+        "hidden": 0
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-communication-conversation-list--overview",
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-10-09",
+      "reviewedSourceSha256": "21adea5a6bfcac8e941d401e1c547bb020073fa8ac15061c0d51b0416c8a49c3",
+      "stories": [
+        {
+          "id": "lds-product-communication-conversation-list--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConversationList"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
+          "id": "lds-product-communication-conversation-list--states",
+          "name": "변형·상태 · 로딩, 빈 목록, 오류, 더 불러오기",
+          "exportName": "States",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConversationList"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
+          "id": "lds-product-communication-conversation-list--narrow-touch",
+          "name": "반응형 · 좁은 폭과 터치",
+          "exportName": "NarrowTouch",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConversationList"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        }
+      ]
+    },
+    {
       "title": "LDS Product/Communication/Message",
       "layer": "Product",
       "family": "Communication",
@@ -10459,7 +10564,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageComposer.stories.jsx",
-      "sourceSha256": "5e9226d8384b68ea0cbb62a5c65e86a605b02309b7433beafccf385369acb28b",
+      "sourceSha256": "3249f01ad9d7b5d602b0a5320b0d147a6f3e232620fe34afd8f532c2fda63665",
       "primaryOwner": "MessageComposer",
       "ownerComponents": [
         "MessageComposer"
@@ -10487,8 +10592,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-05",
-      "reviewedSourceSha256": "5e9226d8384b68ea0cbb62a5c65e86a605b02309b7433beafccf385369acb28b",
+      "reviewedAt": "2026-10-09",
+      "reviewedSourceSha256": "3249f01ad9d7b5d602b0a5320b0d147a6f3e232620fe34afd8f532c2fda63665",
       "stories": [
         {
           "id": "lds-product-communication-message-composer--message-composer-overview",
@@ -18367,11 +18472,150 @@
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
     },
     {
+      "title": "LDS Product/Layout/Shell Panel",
+      "layer": "Product",
+      "family": "Layout",
+      "importPath": "./stories/LayoutShellPanel.stories.jsx",
+      "sourceSha256": "5a0f534d44dc6c0685b0a8e5fd2934c00d2f393765e1a22db80f719c82088cf2",
+      "primaryOwner": "ShellPanel",
+      "ownerComponents": [
+        "ShellPanel"
+      ],
+      "supportingComponents": [
+        "Icon",
+        "IconButton"
+      ],
+      "visibility": {
+        "public": 3,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-layout-shell-panel--overview",
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-10-09",
+      "reviewedSourceSha256": "5a0f534d44dc6c0685b0a8e5fd2934c00d2f393765e1a22db80f719c82088cf2",
+      "stories": [
+        {
+          "id": "lds-product-layout-shell-panel--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ShellPanel"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
+          "id": "lds-product-layout-shell-panel--primary-action-current",
+          "name": "변형·상태 · 새 질문 화면",
+          "exportName": "PrimaryActionCurrent",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ShellPanel"
+          ],
+          "supportingComponents": [
+            "Icon"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
+          "id": "lds-product-layout-shell-panel--header-actions",
+          "name": "상호작용 · 머리 동작과 키보드 순서",
+          "exportName": "HeaderActions",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ShellPanel"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "IconButton"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
+          "id": "lds-product-layout-shell-panel--wide-panel-contract",
+          "name": "맥락 패널 288px 계약",
+          "exportName": "WidePanelContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ShellPanel"
+          ],
+          "supportingComponents": [
+            "Icon"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        }
+      ]
+    },
+    {
       "title": "LDS Product/Navigation/Adaptive Navigation",
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationAdaptive.stories.jsx",
-      "sourceSha256": "eb650e3013463fedd8d63732844f4cadf43e204f238419c5418f80c982b61f8b",
+      "sourceSha256": "37b9d336b5e1b560f349fdd2a1ca15290d2f0ddd5a08f6b10b3578d0cbb4d651",
       "primaryOwner": "NavRail",
       "ownerComponents": [
         "BottomNav",
@@ -18381,13 +18625,13 @@
         "Icon"
       ],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 3
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-navigation-adaptive-navigation--native-destinations",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -18397,8 +18641,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "eb650e3013463fedd8d63732844f4cadf43e204f238419c5418f80c982b61f8b",
+      "reviewedAt": "2026-10-09",
+      "reviewedSourceSha256": "37b9d336b5e1b560f349fdd2a1ca15290d2f0ddd5a08f6b10b3578d0cbb4d651",
       "stories": [
         {
           "id": "lds-product-navigation-adaptive-navigation--native-destinations",
@@ -18424,6 +18668,32 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-navigation-adaptive-navigation--docked-neutral-rail",
+          "name": "변형·상태 · 고정 영역 레일",
+          "exportName": "DockedNeutralRail",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "NavRail"
+          ],
+          "supportingComponents": [
+            "Icon"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
         },
         {
           "id": "lds-product-navigation-adaptive-navigation--compact-navigation",
@@ -19201,7 +19471,7 @@
       "layer": "Product",
       "family": "Navigation",
       "importPath": "./stories/NavigationSideNav.stories.jsx",
-      "sourceSha256": "883859da0a3df5be2e3df9addbcc26ccb7178cf91014dd838d7fa61328ed1d75",
+      "sourceSha256": "f665188dfee23cd74b58c2588591bf50f9cebe5d1a6ae6667656380fb56c107f",
       "primaryOwner": "SideNav",
       "ownerComponents": [
         "SideNav"
@@ -19212,13 +19482,13 @@
         "UserMenu"
       ],
       "visibility": {
-        "public": 10,
+        "public": 14,
         "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-navigation-side-nav--link-destinations",
-        "describedPublicStories": 10,
+        "describedPublicStories": 14,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -19228,8 +19498,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-05",
-      "reviewedSourceSha256": "883859da0a3df5be2e3df9addbcc26ccb7178cf91014dd838d7fa61328ed1d75",
+      "reviewedAt": "2026-10-09",
+      "reviewedSourceSha256": "f665188dfee23cd74b58c2588591bf50f9cebe5d1a6ae6667656380fb56c107f",
       "stories": [
         {
           "id": "lds-product-navigation-side-nav--link-destinations",
@@ -19310,6 +19580,32 @@
           "reviewNote": "2026-07-22 verified the docked 252px/64px collapse contract, boundary control geometry, focus retention, and accessible state linkage."
         },
         {
+          "id": "lds-product-navigation-side-nav--appearance-comparison",
+          "name": "변형·상태 · 외형 비교",
+          "exportName": "AppearanceComparison",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SideNav"
+          ],
+          "supportingComponents": [
+            "Lockup"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
           "id": "lds-product-navigation-side-nav--docked-collapsed",
           "name": "변형·상태 · 접힌 아이콘 레일",
           "exportName": "DockedCollapsed",
@@ -19336,6 +19632,60 @@
             "UserMenu"
           ],
           "reviewNote": "2026-07-22 verified the static 64px icon rail, selected parent state, and fully contained collapse control."
+        },
+        {
+          "id": "lds-product-navigation-side-nav--neutral-docked-surface",
+          "name": "변형·상태 · 중립 밝은 외형",
+          "exportName": "NeutralDockedSurface",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SideNav"
+          ],
+          "supportingComponents": [
+            "Lockup",
+            "UserMenu"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
+          "id": "lds-product-navigation-side-nav--neutral-collapsed-rail",
+          "name": "변형·상태 · 중립 접힌 레일",
+          "exportName": "NeutralCollapsedRail",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SideNav"
+          ],
+          "supportingComponents": [
+            "Lockup",
+            "UserMenu"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
         },
         {
           "id": "lds-product-navigation-side-nav--overlay-peek",
@@ -19469,6 +19819,32 @@
             "Lockup"
           ],
           "reviewNote": "2026-08-02 source and built-browser review confirmed autoExpandActiveGroup=false preserves a closed active group until the user opens it, then exposes the active child with aria-current."
+        },
+        {
+          "id": "lds-product-navigation-side-nav--neutral-narrow",
+          "name": "반응형 · 중립 외형 좁은 폭",
+          "exportName": "NeutralNarrow",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SideNav"
+          ],
+          "supportingComponents": [
+            "Lockup"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
         },
         {
           "id": "lds-product-navigation-side-nav--single-open-groups",
@@ -20218,7 +20594,7 @@
       "layer": "Product",
       "family": "Operations Dashboard",
       "importPath": "./stories/LayoutDashboardShell.stories.jsx",
-      "sourceSha256": "23fad3e647dd257cb4db1d0c3bf1fec26a0f81c47d530309ade08bec309de535",
+      "sourceSha256": "2228bb8ffa25114a583a3b2949e5db427c54ffa5dc8df60fc0116d17b99b147b",
       "primaryOwner": "DashboardShell",
       "ownerComponents": [
         "DashboardShell"
@@ -20233,6 +20609,7 @@
         "IconButton",
         "Lockup",
         "MetricCard",
+        "NavRail",
         "PageHeader",
         "RefreshControl",
         "SideNav",
@@ -20240,13 +20617,13 @@
         "UserMenu"
       ],
       "visibility": {
-        "public": 6,
+        "public": 13,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-layout-dashboard-shell--normal-width",
-        "describedPublicStories": 6,
+        "describedPublicStories": 13,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -20256,8 +20633,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-05",
-      "reviewedSourceSha256": "23fad3e647dd257cb4db1d0c3bf1fec26a0f81c47d530309ade08bec309de535",
+      "reviewedAt": "2026-10-09",
+      "reviewedSourceSha256": "2228bb8ffa25114a583a3b2949e5db427c54ffa5dc8df60fc0116d17b99b147b",
       "stories": [
         {
           "id": "lds-product-layout-dashboard-shell--normal-width",
@@ -20338,6 +20715,99 @@
           "reviewNote": "2026-07-22 verified dark-surface token coverage and the docked sidebar collapse control against the visual baseline."
         },
         {
+          "id": "lds-product-layout-dashboard-shell--rail-panel",
+          "name": "변형·상태 · 레일과 맥락 패널",
+          "exportName": "RailPanel",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DashboardShell"
+          ],
+          "supportingComponents": [
+            "Container",
+            "Icon",
+            "IconButton",
+            "NavRail",
+            "PageHeader",
+            "TopBar"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
+          "id": "lds-product-layout-dashboard-shell--rail-panel-dark",
+          "name": "변형·상태 · 레일과 패널 다크",
+          "exportName": "RailPanelDark",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DashboardShell"
+          ],
+          "supportingComponents": [
+            "Container",
+            "Icon",
+            "IconButton",
+            "NavRail",
+            "PageHeader",
+            "TopBar"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
+          "id": "lds-product-layout-dashboard-shell--rail-panel-no-panel",
+          "name": "변형·상태 · 패널 없는 영역",
+          "exportName": "RailPanelNoPanel",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DashboardShell"
+          ],
+          "supportingComponents": [
+            "Container",
+            "Icon",
+            "IconButton",
+            "NavRail",
+            "PageHeader",
+            "TopBar"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
           "id": "lds-product-layout-dashboard-shell--header-first",
           "name": "변형·상태 · 헤더 우선",
           "exportName": "HeaderFirst",
@@ -20374,6 +20844,37 @@
             "TopBar",
             "UserMenu"
           ]
+        },
+        {
+          "id": "lds-product-layout-dashboard-shell--rail-panel-collapse",
+          "name": "상호작용 · 패널 접기와 펼치기",
+          "exportName": "RailPanelCollapse",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DashboardShell"
+          ],
+          "supportingComponents": [
+            "Container",
+            "Icon",
+            "IconButton",
+            "NavRail",
+            "PageHeader",
+            "TopBar"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
         },
         {
           "id": "lds-product-layout-dashboard-shell--narrow-320",
@@ -20415,6 +20916,37 @@
           "reviewNote": "2026-07-22 verified the 320px fallback navigation, long-label behavior, and absence of a redundant SideNav collapse control."
         },
         {
+          "id": "lds-product-layout-dashboard-shell--rail-panel-overlay",
+          "name": "반응형 · 768~1023px 덮는 패널",
+          "exportName": "RailPanelOverlay",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DashboardShell"
+          ],
+          "supportingComponents": [
+            "Container",
+            "Icon",
+            "IconButton",
+            "NavRail",
+            "PageHeader",
+            "TopBar"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
           "id": "lds-product-layout-dashboard-shell--temporary-navigation",
           "name": "반응형 · 계층형 임시 탐색",
           "exportName": "TemporaryNavigation",
@@ -20451,6 +20983,68 @@
             "UserMenu"
           ],
           "reviewNote": "2026-08-02 source and built-browser review at 390px confirmed modal semantics, inert background, body scroll lock, Escape focus restoration, route-to-main focus transfer, zero edge gap, and no horizontal overflow."
+        },
+        {
+          "id": "lds-product-layout-dashboard-shell--rail-panel-max-items",
+          "name": "반응형 · 레일 항목 7개와 600px 높이",
+          "exportName": "RailPanelMaxItems",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DashboardShell"
+          ],
+          "supportingComponents": [
+            "Container",
+            "Icon",
+            "IconButton",
+            "NavRail",
+            "PageHeader",
+            "TopBar"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
+          "id": "lds-product-layout-dashboard-shell--rail-panel-narrow",
+          "name": "반응형 · 좁은 화면 드로어 하나",
+          "exportName": "RailPanelNarrow",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DashboardShell"
+          ],
+          "supportingComponents": [
+            "Container",
+            "Icon",
+            "IconButton",
+            "NavRail",
+            "PageHeader",
+            "TopBar"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
         },
         {
           "id": "lds-product-layout-dashboard-shell--auto-navigation-fallback",
@@ -25827,7 +26421,7 @@
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/BrandProductLockup.stories.jsx",
-      "sourceSha256": "095b85aa80791640327359e29f21cedbe1212ffa7f3a018ff7ffe187a5277fb4",
+      "sourceSha256": "1169e6ca9dbd879fd01c8b99ba15bcbca76781642791d37bbf6e4c9d7dda9711",
       "primaryOwner": "ProductLockup",
       "ownerComponents": [
         "ProductLockup"
@@ -25837,13 +26431,13 @@
         "Lockup"
       ],
       "visibility": {
-        "public": 2,
+        "public": 4,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-theme-brand-product-lockup--product-lockup-standard",
-        "describedPublicStories": 2,
+        "describedPublicStories": 4,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -25853,8 +26447,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-22",
-      "reviewedSourceSha256": "095b85aa80791640327359e29f21cedbe1212ffa7f3a018ff7ffe187a5277fb4",
+      "reviewedAt": "2026-10-09",
+      "reviewedSourceSha256": "1169e6ca9dbd879fd01c8b99ba15bcbca76781642791d37bbf6e4c9d7dda9711",
       "stories": [
         {
           "id": "lds-theme-brand-product-lockup--product-lockup-standard",
@@ -25882,6 +26476,32 @@
           ]
         },
         {
+          "id": "lds-theme-brand-product-lockup--company-endorsed",
+          "name": "변형·상태 · 회사 보증 형",
+          "exportName": "CompanyEndorsed",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ProductLockup"
+          ],
+          "supportingComponents": [
+            "Lockup"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
           "id": "lds-theme-brand-product-lockup--narrow-compact",
           "name": "반응형 · 좁은 영역의 제품명 전환",
           "exportName": "NarrowCompact",
@@ -25905,6 +26525,32 @@
           "supportingComponents": [
             "Button"
           ]
+        },
+        {
+          "id": "lds-theme-brand-product-lockup--company-endorsed-narrow",
+          "name": "반응형 · 회사 보증 형의 좁은 슬롯",
+          "exportName": "CompanyEndorsedNarrow",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ProductLockup"
+          ],
+          "supportingComponents": [
+            "Lockup"
+          ],
+          "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
         }
       ],
       "reviewNote": "2026-08-11 re-reviewed the canonical-convergence source and rendered story: fixed `Lockup variant=portal` and registry `ProductLockup product=portal` share all six SemiBold 600 paths, transform, viewBox, 20px width, role, and accessible name. Console, positive/reverse, full/compact specimens pass the focused Axe and play guards, and the targeted visual baseline was inspected and refreshed."

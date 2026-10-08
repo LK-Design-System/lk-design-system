@@ -439,8 +439,23 @@
         "role": "variants-states"
       },
       {
+        "id": "lds-product-navigation-side-nav--appearance-comparison",
+        "name": "변형·상태 · 외형 비교",
+        "role": "variants-states"
+      },
+      {
         "id": "lds-product-navigation-side-nav--docked-collapsed",
         "name": "변형·상태 · 접힌 아이콘 레일",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-navigation-side-nav--neutral-docked-surface",
+        "name": "변형·상태 · 중립 밝은 외형",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-navigation-side-nav--neutral-collapsed-rail",
+        "name": "변형·상태 · 중립 접힌 레일",
         "role": "variants-states"
       },
       {
@@ -467,6 +482,11 @@
         "id": "lds-product-navigation-side-nav--manual-active-group-expansion",
         "name": "상호작용 · 활성 표시와 그룹 열림 분리",
         "role": "interaction"
+      },
+      {
+        "id": "lds-product-navigation-side-nav--neutral-narrow",
+        "name": "반응형 · 중립 외형 좁은 폭",
+        "role": "responsive"
       },
       {
         "id": "lds-product-navigation-side-nav--single-open-groups",

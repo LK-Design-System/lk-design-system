@@ -119,6 +119,7 @@
 | `ConversationMessage` | 대표 시나리오에서 조합 |
 | `Divider` | 대표 시나리오에서 조합 |
 | `Spinner` | 대표 시나리오에서 조합 |
+| `ConversationList` | 대표 시나리오에서 조합 |
 | `MessageComposer` | 대표 시나리오에서 조합 |
 
 ## Examples

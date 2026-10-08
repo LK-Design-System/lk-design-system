@@ -79,6 +79,7 @@
 | [Social Login](guides/product-action-social-login.md) | Product / Action | `SocialButton` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Speed Dial](guides/product-action-speed-dial.md) | Product / Action | `SpeedDial` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Split Button](guides/product-action-split-button.md) | Product / Action | `SplitButton` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
+| [Conversation List](guides/product-communication-conversation-list.md) | Product / Communication | `ConversationList` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Message](guides/product-communication-message.md) | Product / Communication | `ConversationMessage` | not-tracked | implemented | not-tracked | not-tracked | 12 public / 5 hidden |
 | [Message Composer](guides/product-communication-message-composer.md) | Product / Communication | `MessageComposer` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
 | [Message Feed](guides/product-communication-message-feed.md) | Product / Communication | `MessageFeed` | not-tracked | implemented | not-tracked | not-tracked | 8 public / 1 hidden |
@@ -135,20 +136,21 @@
 | [Dock Panel](guides/product-layout-dock-panel.md) | Product / Layout | `DockPanel` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 1 hidden |
 | [Page Header](guides/product-layout-page-header.md) | Product / Layout | `PageHeader` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Primary Detail](guides/product-layout-primary-detail.md) | Product / Layout | `PrimaryDetail` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Adaptive Navigation](guides/product-navigation-adaptive-navigation.md) | Product / Navigation | `BottomNav`, `NavRail` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 3 hidden |
+| [Shell Panel](guides/product-layout-shell-panel.md) | Product / Layout | `ShellPanel` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
+| [Adaptive Navigation](guides/product-navigation-adaptive-navigation.md) | Product / Navigation | `BottomNav`, `NavRail` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 3 hidden |
 | [Anchor](guides/product-navigation-anchor.md) | Product / Navigation | `Anchor` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Breadcrumb](guides/product-navigation-breadcrumb.md) | Product / Navigation | `Breadcrumb` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Dashboard Navigation](guides/product-navigation-dashboard-navigation.md) | Product / Navigation | `DashboardShell` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
 | [Footer](guides/product-navigation-footer.md) | Product / Navigation | `Footer` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Language Switcher](guides/product-navigation-language-switcher.md) | Product / Navigation | `LanguageSwitcher` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Menubar](guides/product-navigation-menubar.md) | Product / Navigation | `Menubar` | mapped | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
-| [Side Nav](guides/product-navigation-side-nav.md) | Product / Navigation | `SideNav` | not-tracked | implemented | not-tracked | not-tracked | 10 public / 2 hidden |
+| [Side Nav](guides/product-navigation-side-nav.md) | Product / Navigation | `SideNav` | not-tracked | implemented | not-tracked | not-tracked | 14 public / 2 hidden |
 | [Steps](guides/product-navigation-steps.md) | Product / Navigation | `Steps` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Top Bar](guides/product-navigation-top-bar.md) | Product / Navigation | `TopBar` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
 | [User Menu](guides/product-navigation-user-menu.md) | Product / Navigation | `UserMenu` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Wizard](guides/product-navigation-wizard.md) | Product / Navigation | `Wizard` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
 | [Dashboard Grid](guides/product-operations-dashboard-dashboard-grid.md) | Product / Operations Dashboard | `DashboardGrid` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
-| [Dashboard Shell](guides/product-operations-dashboard-dashboard-shell.md) | Product / Operations Dashboard | `DashboardShell` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 0 hidden |
+| [Dashboard Shell](guides/product-operations-dashboard-dashboard-shell.md) | Product / Operations Dashboard | `DashboardShell` | not-tracked | implemented | not-tracked | not-tracked | 13 public / 0 hidden |
 | [Command Palette](guides/product-overlay-command-palette.md) | Product / Overlay | `CommandPalette` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
 | [Drawer](guides/product-overlay-drawer.md) | Product / Overlay | `Drawer` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Hover Card](guides/product-overlay-hover-card.md) | Product / Overlay | `HoverCard` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
@@ -186,6 +188,6 @@
 | [Video Stream](guides/product-viewer-video-stream.md) | Product / Viewer | `VideoStreamTile` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
 | [Viewer Frame](guides/product-viewer-viewer-frame.md) | Product / Viewer | `ViewerFrame` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 0 hidden |
 | [LK ROBOTICS Logo](guides/theme-brand-lk-robotics-logo.md) | Theme / Brand | `Lockup` | import-contract | implemented | asset-contract | asset-contract | 1 public / 1 hidden |
-| [Product Lockup](guides/theme-brand-product-lockup.md) | Theme / Brand | `ProductLockup` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
+| [Product Lockup](guides/theme-brand-product-lockup.md) | Theme / Brand | `ProductLockup` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
 | [Theme Toggle](guides/theme-controls-theme-toggle.md) | Theme / Controls | `ThemeToggle` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Brand Spinner](guides/theme-status-brand-spinner.md) | Theme / Status | `Theme:Brand Spinner` | mapped | implemented | not-tracked | not-tracked | 1 public / 0 hidden |

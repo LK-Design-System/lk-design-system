@@ -184,8 +184,18 @@
         "role": "overview"
       },
       {
+        "id": "lds-theme-brand-product-lockup--company-endorsed",
+        "name": "변형·상태 · 회사 보증 형",
+        "role": "variants-states"
+      },
+      {
         "id": "lds-theme-brand-product-lockup--narrow-compact",
         "name": "반응형 · 좁은 영역의 제품명 전환",
+        "role": "responsive"
+      },
+      {
+        "id": "lds-theme-brand-product-lockup--company-endorsed-narrow",
+        "name": "반응형 · 회사 보증 형의 좁은 슬롯",
         "role": "responsive"
       }
     ],

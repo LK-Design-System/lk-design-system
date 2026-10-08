@@ -871,7 +871,7 @@ export const RailPanelMaxItems = {
 };
 
 export const RailPanelOverlay = {
-  name: '반응형 · 768~1023px 패널 overlay',
+  name: '반응형 · 768~1023px 덮는 패널',
   parameters: storyDescription(
     '768~1023px에서는 패널이 본문을 밀지 않고 덮는 overlay로 열립니다. 이 범위에 들어오면 패널은 접힌 상태로 시작하고, 열면 덮는 쪽에만 그림자를 두며 Escape로 닫혀 focus가 토글로 돌아갑니다. 이 예시는 panelMode="overlay"로 상태를 고정합니다.',
   ),
