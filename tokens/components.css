@@ -452,6 +452,24 @@
     transition: none !important;
   }
 }
+
+/* MessageComposer owns focus on its shell (neutral focus-within border). The
+   inner textarea must not draw a second rectangle inside the shared shell, so
+   it is exempt from the global :focus-visible ring (tokens/focus.css). Slot and
+   send/stop buttons keep the global ring. */
+[data-composer-shell] [data-composer-input]:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+}
+
+/* Forced colors drop the border colour step, so the shell carries a system
+   focus outline instead. */
+@media (forced-colors: active) {
+  [data-composer-shell][data-focused="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}
 /* End product-only component rules. */
 
 /* Component aliases declared at :root otherwise keep their light computed

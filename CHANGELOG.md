@@ -2,6 +2,12 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## Unreleased
+
+### Fixed
+
+- `MessageComposer`의 포커스 표시를 하나로 줄였습니다. 안쪽 textarea가 전역 `:focus-visible` 사각 링(`!important`)에 걸려 shell 안에 2px primary 사각형을 그리고, shell이 primary border와 4px `focus-ring` halo를 함께 그려 클릭만 해도 세 겹이 보였습니다. 이제 shell border만 새 component token `--component-message-composer-border-focus`(`cool-neutral-60`, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고 halo와 두께 변화는 없습니다. textarea는 product 규칙으로 전역 링에서 제외되며, slot과 send/stop 버튼의 2px 링은 그대로입니다. forced-colors에서는 focused shell이 `Highlight` outline을 그립니다.
+
 ## 0.4.6 - 2026-10-08
 
 Paired Robotics release: `0.1.0-rc.53` (unchanged).

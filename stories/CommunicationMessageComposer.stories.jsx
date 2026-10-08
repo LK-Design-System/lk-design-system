@@ -216,6 +216,32 @@ function VoiceAction() {
   );
 }
 
+// One focus indicator: the shell's neutral border step. The inner textarea draws
+// no outline of its own and the shell adds no halo (MessageComposer.prompt.md).
+async function expectNeutralShellFocus(shell, input, idleShadow) {
+  // Resolve the token once, outside waitFor: a probe inserted inside the
+  // callback would itself trigger waitFor's MutationObserver on every run.
+  const probe = document.createElement('span');
+  probe.style.color = 'var(--component-message-composer-border-focus)';
+  shell.appendChild(probe);
+  const expected = getComputedStyle(probe).color;
+  probe.remove();
+  await waitFor(() => {
+    if (shell.dataset.focused !== 'true') throw new Error('Textarea focus must activate the shared shell focus state.');
+    const inputStyle = getComputedStyle(input);
+    if (inputStyle.outlineStyle !== 'none' && (Number.parseFloat(inputStyle.outlineWidth) || 0) > 0) {
+      throw new Error('The composer textarea must not draw its own focus outline inside the shared shell.');
+    }
+    const shellStyle = getComputedStyle(shell);
+    if (shellStyle.boxShadow !== idleShadow) {
+      throw new Error('The focused composer shell must keep its idle elevation without a focus halo.');
+    }
+    if (shellStyle.borderTopColor !== expected) {
+      throw new Error(`The focused composer shell must use the neutral focus border (${expected}), got ${shellStyle.borderTopColor}.`);
+    }
+  });
+}
+
 function ComposerFixture({
   initialValue = '',
   value: controlledValue,
@@ -327,10 +353,9 @@ export const MessageComposerOverview = {
         throw new Error('Composer actions must retain an operable control target.');
       }
     }
+    const idleShadow = getComputedStyle(shell).boxShadow;
     await userEvent.click(textarea);
-    await waitFor(() => {
-      if (shell.dataset.focused !== 'true') throw new Error('Textarea focus must activate the shared shell focus state.');
-    });
+    await expectNeutralShellFocus(shell, textarea, idleShadow);
     const send = primary.querySelector('button[type="submit"]');
     if (!send || send.disabled) throw new Error('A non-empty controlled draft must enable the send action.');
   },
@@ -421,7 +446,9 @@ export const CompactDensity = {
         if (overlaps) throw new Error('Compact MessageComposer actions must not overlap.');
       }
     }
+    const idleShadow = getComputedStyle(shell).boxShadow;
     input.focus();
+    await expectNeutralShellFocus(shell, input, idleShadow);
     await userEvent.tab();
     await userEvent.tab();
     await userEvent.tab();
@@ -601,6 +628,9 @@ export const DarkTheme = {
     if (fixture.scrollWidth > fixture.clientWidth + 1 || input.scrollWidth > input.clientWidth + 1) {
       throw new Error('The dark composer must not create horizontal overflow.');
     }
+    const idleShadow = style.boxShadow;
+    await userEvent.click(input);
+    await expectNeutralShellFocus(shell, input, idleShadow);
   },
 };
 

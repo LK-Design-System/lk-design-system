@@ -57,7 +57,7 @@
 | 확인한 sibling | 계승한 규칙 | MessageComposer 결정 |
 | --- | --- | --- |
 | `Textarea` | label/helper, text input token, focus, disabled/read-only | controlled autosize textarea를 composer shell 안에 두고 Core API를 변경하지 않음 |
-| input tokens | field border/fill, focus ring, semantic dark mode | 하나의 elevated rounded shell에 적용 |
+| input tokens | field border/fill, semantic dark mode | 하나의 elevated rounded shell에 적용. focus는 input의 primary border·halo 대신 shell의 중립 border 한 단계(`--component-message-composer-border-focus`)로 표시 |
 | `Button` / `IconButton` | named action, focus footprint, disabled | utility와 send/stop의 실제 control로 조합 |
 | `FileUploadQueue` | 파일별 upload/conversion status | `attachments` slot에서 조합하고 composer가 queue lifecycle을 소유하지 않음 |
 | `ConversationMessage` | response lifecycle presentation | composer는 message article이나 live region 안에 중첩하지 않음 |
@@ -66,6 +66,7 @@
 ### one-shell hierarchy
 
 - attachment preview, textarea와 하단 action band는 하나의 border, radius, fill과 focus-within state를 공유합니다. composer 바깥에 별도 footer card를 추가하지 않습니다.
+- focus 표시는 shell 하나가 소유합니다. textarea에 focus가 있으면 shell border만 중립 회색 `--component-message-composer-border-focus`(`cool-neutral-60`, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고, primary 색 border·`focus-ring` halo·두께 변화는 없습니다(2026-10-09 owner 결정, Claude·ChatGPT 작성창처럼 작성 중에는 caret이 입력 위치를 알립니다). 안쪽 textarea는 전역 `:focus-visible` 사각 링에서 제외되어(`tokens/components.css`의 product 규칙) shell 안에 두 번째 사각형을 그리지 않습니다. leading/trailing slot과 send/stop button은 전역 2px focus ring을 그대로 유지합니다. forced-colors에서는 border 색 단계가 사라지므로 focused shell이 `outline: 2px solid Highlight`를 그립니다. WCAG 2.4.7은 shell border와 caret으로, 1.4.11은 border 3:1 이상으로 충족합니다.
 - textarea는 `comfortable`의 48px 또는 `compact`의 40px 한 줄 높이에서 시작해 `minRows`/`maxRows` 범위에서 커지고 최대 높이 뒤에는 내부 scrolling을 사용합니다.
 - utility와 primary action은 multiline input의 하단 action band에 정렬합니다. exact pixel보다 LDS control size와 focus token을 따릅니다.
 - 320px에서는 textarea가 먼저 전체 draft 폭을 확보하고 하단 action band가 wrap합니다. action을 숨기거나 action 수 때문에 입력 열을 축소하지 않으며, slot content도 자체 wrapping/overflow policy를 제공해야 합니다.

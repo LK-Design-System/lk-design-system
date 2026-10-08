@@ -3985,6 +3985,19 @@
         }
       }
     },
+    "messageComposer": {
+      "component": "components/communication/MessageComposer.jsx",
+      "tokens": {
+        "borderFocus": {
+          "$type": "color",
+          "css": "--component-message-composer-border-focus",
+          "$value": "var(--color-atomic-cool-neutral-60)",
+          "ref": "primitive.colorRamps.cool-neutral.tokens.60",
+          "$description": "MessageComposer focus-within shell border. A neutral step at least 3:1 against the elevated shell in both themes (light 3.45:1 on #FFFFFF, dark 4.61:1 on #212225); the shell owns focus, so there is no halo and no inner textarea outline.",
+          "generated": true
+        }
+      }
+    },
     "lockup": {
       "component": "components/brand/Lockup.jsx",
       "tokens": {

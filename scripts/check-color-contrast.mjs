@@ -69,6 +69,7 @@ const pairs = [
   ['message role badge', '--color-semantic-accent-blue-text', '--color-semantic-primary-surface-normal', 4.5],
   ['message system chip', '--color-semantic-label-neutral', '--color-semantic-fill-normal', 4.5],
   ['message agent bubble', '--color-semantic-label-normal', '--color-semantic-fill-strong', 4.5],
+  ['message composer focus border on shell', '--component-message-composer-border-focus', '--color-semantic-background-elevated-normal', 3],
 ];
 
 function parseColor(value) {

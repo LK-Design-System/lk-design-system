@@ -89,9 +89,9 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | composition session과 KeyboardEvent.isComposing을 함께 확인하고 legacy IME keyCode 229도 방어해 한글·일본어·중국어 확정 Enter가 submit으로 이어지지 않게 합니다. 조합 확정 직후에는 같은 keydown을 제출 동작으로 재사용하지 않습니다. |
-| 명시 규칙 2 | textarea는 comfortable의 48px 또는 compact의 40px 한 줄 높이에서 시작해 minRows/maxRows 범위에서 커지고 최대 높이 뒤에는 내부 scrolling을 사용합니다. |
-| 명시 규칙 3 | 320px에서는 textarea가 먼저 전체 draft 폭을 확보하고 하단 action band가 wrap합니다. action을 숨기거나 action 수 때문에 입력 열을 축소하지 않으며, slot content도 자체 wrapping/overflow policy를 제공해야 합니다. |
-| 명시 규칙 4 | density와 관계없이 내장 send/stop action은 32×32px을 유지합니다. slot consumer도 실제 button/link target을 최소 24×24 CSS px로 구성해야 하며, composer는 작은 target을 만들기 위해 action을 축소하지 않습니다. |
+| 명시 규칙 2 | focus 표시는 shell 하나가 소유합니다. textarea에 focus가 있으면 shell border만 중립 회색 --component-message-composer-border-focus(cool-neutral-60, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고, primary 색 border·focus-ring halo·두께 변화는 없습니다(2026-10-09 owner 결정, Claude·ChatGPT 작성창처럼 작성 중에는 caret이 입력 위치를 알립니다). |
+| 명시 규칙 3 | textarea는 comfortable의 48px 또는 compact의 40px 한 줄 높이에서 시작해 minRows/maxRows 범위에서 커지고 최대 높이 뒤에는 내부 scrolling을 사용합니다. |
+| 명시 규칙 4 | 320px에서는 textarea가 먼저 전체 draft 폭을 확보하고 하단 action band가 wrap합니다. action을 숨기거나 action 수 때문에 입력 열을 축소하지 않으며, slot content도 자체 wrapping/overflow policy를 제공해야 합니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
@@ -161,7 +161,6 @@
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-background-normal-alternative`
 - `--color-semantic-fill-normal`
-- `--color-semantic-focus-ring`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-disable`
 - `--color-semantic-label-neutral`
@@ -172,6 +171,7 @@
 - `--component-input-border-width`
 - `--component-input-font-size`
 - `--component-input-letter-spacing`
+- `--component-message-composer-border-focus`
 - `--dur-base`
 - `--ease-out`
 - `--font-sans`

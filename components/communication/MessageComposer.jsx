@@ -347,14 +347,15 @@ export function MessageComposer({
             : readOnly
               ? 'var(--color-semantic-background-normal-alternative)'
               : 'var(--color-semantic-background-elevated-normal)',
+          // The shell owns focus: a neutral border step only. No halo, no accent
+          // colour and no inner textarea outline (tokens/components.css exempts
+          // [data-composer-input] from the global ring); the caret signals typing.
           border: `var(--component-input-border-width) solid ${focused && !disabled
-            ? 'var(--color-semantic-primary-normal)'
+            ? 'var(--component-message-composer-border-focus)'
             : 'var(--color-semantic-line-normal-normal)'}`,
           borderRadius: 'var(--radius-xl)',
-          boxShadow: focused && !disabled
-            ? '0 0 0 var(--space-1) var(--color-semantic-focus-ring)'
-            : 'var(--shadow-sm)',
-          transition: 'border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)',
+          boxShadow: 'var(--shadow-sm)',
+          transition: 'border-color var(--dur-base) var(--ease-out)',
         }}
       >
         {attachments != null && (
