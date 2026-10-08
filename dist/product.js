@@ -270,7 +270,7 @@ import {
 } from "./chunk-UB4GTRKR.js";
 import {
   AnnotatedImage
-} from "./chunk-3XPCGMQG.js";
+} from "./chunk-UL6NTA45.js";
 import {
   BarChart
 } from "./chunk-2OB5MGJ4.js";

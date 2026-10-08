@@ -22,8 +22,9 @@ var ANNOTATION_TONE = {
   danger: "var(--color-semantic-status-negative-signal)",
   neutral: "var(--color-semantic-label-neutral)"
 };
+var INVERSE_LABEL_TONES = /* @__PURE__ */ new Set(["signal", "neutral"]);
 function toneLabelColor(tone) {
-  return tone === "neutral" ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-static-black)";
+  return INVERSE_LABEL_TONES.has(tone) ? "var(--color-semantic-inverse-label)" : "var(--color-semantic-static-black)";
 }
 function fraction(value) {
   return Math.max(0, Math.min(1, Number(value) || 0));
@@ -286,4 +287,4 @@ function AnnotatedImage({
 export {
   AnnotatedImage
 };
-//# sourceMappingURL=chunk-3XPCGMQG.js.map
+//# sourceMappingURL=chunk-UL6NTA45.js.map
