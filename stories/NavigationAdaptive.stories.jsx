@@ -226,3 +226,46 @@ export const BottomNavCard = {
     );
   },
 };
+
+export const DockedNeutralRail = {
+  name: '변형·상태 · docked 영역 레일',
+  parameters: storyDescription(
+    'surface="docked"는 DashboardShell topology="rail-panel"의 전체 높이 영역 레일입니다. 폭 64px, 항목 56px, 캡션 상시, 위에 로고 홈 링크, 아래에 계정 슬롯을 둡니다. appearance="neutral"은 SideNav neutral과 같은 무채색 선택(채움 + 가장 진한 글자 + 굵기)입니다. 캡션이 말줄임되면 hover와 focus에서 DS Tooltip으로 전체 이름을 보입니다.',
+  ),
+  render: () => (
+    <div style={{ display: 'flex', height: 520, border: '1px solid var(--color-semantic-line-solid-normal)' }}>
+      <NavRail
+        data-testid="docked-rail"
+        aria-label="주요 영역"
+        surface="docked"
+        appearance="neutral"
+        items={destinations.slice(0, 4)}
+        defaultValue="summary"
+        header={<a href="#home" aria-label="홈" onClick={preventNavigation} style={{ display: 'inline-flex' }}><Icon name="home" size={22} aria-hidden="true" /></a>}
+        footer={<span data-testid="docked-rail-footer" aria-hidden="true" style={{ width: 32, height: 32, borderRadius: 'var(--radius-pill)', background: 'var(--color-semantic-fill-strong)' }} />}
+      />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const rail = canvasElement.querySelector('[data-testid="docked-rail"]');
+    const current = rail?.querySelector('[aria-current="page"]');
+    const long = rail?.querySelector('[data-nav-rail-value="resources"]');
+    if (!rail || !current || !long) throw new Error('The docked rail fixture is incomplete.');
+    if (rail.dataset.surface !== 'docked' || rail.dataset.appearance !== 'neutral' || Math.abs(rail.getBoundingClientRect().width - 64) > 1) {
+      throw new Error('The docked rail is 64px wide with the neutral appearance.');
+    }
+    const rect = current.getBoundingClientRect();
+    if (Math.abs(rect.width - 56) > 1 || Math.abs(rect.height - 56) > 1 || current.hasAttribute('title')) {
+      throw new Error('Docked items are 56px squares and use the DS Tooltip instead of a native title.');
+    }
+    if (Number(getComputedStyle(current.querySelector('[data-slot="label"]')).fontWeight) < 700) throw new Error('Selection keeps the bold cue.');
+    long.focus();
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    const tooltip = canvasElement.ownerDocument.querySelector('[role="tooltip"]');
+    if (!tooltip || !tooltip.textContent.includes('리소스와 원격 점검 상태')) throw new Error('A truncated caption reveals the full name on focus.');
+    current.focus();
+    if (rail.querySelector('[data-slot="list"]').scrollHeight > rail.querySelector('[data-slot="list"]').clientHeight + 1) {
+      throw new Error('A short docked list does not scroll.');
+    }
+  },
+};

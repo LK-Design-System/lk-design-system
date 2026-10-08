@@ -525,14 +525,16 @@
         "stories/LayoutDashboardShell.stories.jsx",
         "stories/LayoutDockPanel.stories.jsx",
         "stories/LayoutPageHeader.stories.jsx",
-        "stories/LayoutPrimaryDetail.stories.jsx"
+        "stories/LayoutPrimaryDetail.stories.jsx",
+        "stories/LayoutShellPanel.stories.jsx"
       ],
       "exports": [
         "DashboardGrid",
         "DashboardShell",
         "DockPanel",
         "PageHeader",
-        "PrimaryDetail"
+        "PrimaryDetail",
+        "ShellPanel"
       ]
     },
     {
@@ -705,11 +707,13 @@
       "ownerLayer": "product",
       "provenance": "product-extension",
       "storyEvidence": [
+        "stories/CommunicationConversationList.stories.jsx",
         "stories/CommunicationMessage.stories.jsx",
         "stories/CommunicationMessageComposer.stories.jsx",
         "stories/CommunicationMessageFeed.stories.jsx"
       ],
       "exports": [
+        "ConversationList",
         "ConversationMessage",
         "MessageComposer",
         "MessageFeed"
@@ -1036,6 +1040,10 @@
     },
     {
       "path": "components/viz/_viewerOverlaySurface.js",
+      "ownerLayer": "product"
+    },
+    {
+      "path": "components/layout/shell-panel-context.js",
       "ownerLayer": "product"
     }
   ]

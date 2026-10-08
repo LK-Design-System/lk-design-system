@@ -187,6 +187,21 @@
   --component-side-nav-item-padding-x: var(--space-3);
   --component-side-nav-child-item-height: 36px;
   --component-side-nav-child-item-padding-y: var(--space-2);
+  /* Docked NavRail for DashboardShell topology="rail-panel": 64px matches the
+     SideNav collapsed rail, 56px items fit icon 20 + gap 4 + caption 14 + 9/9,
+     and the 56px slots match TopBar and the SideNav brand band. */
+  --component-nav-rail-docked-width: 64px;
+  --component-nav-rail-docked-item-size: 56px;
+  --component-nav-rail-docked-item-gap: var(--space-1);
+  --component-nav-rail-docked-padding-block: var(--space-2);
+  --component-nav-rail-docked-slot-height: 56px;
+  /* ShellPanel (rail-panel contextual panel) and ConversationList rows. The
+     240px panel matches the SideNav default width; rows match the SideNav
+     36px child row. */
+  --component-shell-panel-width: 240px;
+  --component-shell-panel-header-height: 56px;
+  --component-shell-panel-row-height: 40px;
+  --component-conversation-list-row-height: 36px;
   --component-toolbar-gap: var(--space-1-5);
   --component-toolbar-padding: var(--space-1-5);
   --component-drawer-header-padding-comfortable: var(--space-5) var(--space-6);

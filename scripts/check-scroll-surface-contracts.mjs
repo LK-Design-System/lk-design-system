@@ -56,6 +56,11 @@ const allowedHiddenFiles = new Map([
   ['components/navigation/SideNav.jsx', [
     'data-scrollbar-exception="collapsed-navigation-rail"',
   ]],
+  // The docked rail of DashboardShell topology="rail-panel" only scrolls below
+  // the 600px document-height budget (WCAG 1.4.10 reflow, owner decision L-S8).
+  ['components/navigation/NavRail.jsx', [
+    'data-scrollbar-exception="collapsed-navigation-rail"',
+  ]],
   ['components/navigation/TopBar.jsx', [
     'data-scrollbar-exception="single-row-global-navigation"',
     'data-scrollbar-exception="single-row-global-actions"',

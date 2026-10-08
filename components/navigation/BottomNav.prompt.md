@@ -1,6 +1,6 @@
 **BottomNav** — 모바일 하단 탭 바(아이콘 + 라벨). 활성 탭은 시그널 잉크를 띱니다.
 
-Classification: **LK Product Extension**. 동등한 중요도의 평면형 주요 목적지 3–5개에 사용하며, 같은 목적지 집합을 데스크톱 `NavRail`과 반응형으로 전환할 수 있습니다. `SideNav`와 동시에 주 탐색으로 사용하지 않습니다.
+Classification: **LK Product Extension**. 동등한 중요도의 평면형 주요 목적지 3–5개에 사용하며, 같은 목적지 집합을 데스크톱 `NavRail`과 반응형으로 전환할 수 있습니다. 같은 목적지 층을 `SideNav`와 중복해 주 탐색으로 쓰지 않습니다. `DashboardShell topology="rail-panel"`의 좁은 화면은 BottomNav 대신 레일 항목과 패널을 합친 드로어 하나를 씁니다.
 
 ```jsx
 <BottomNav defaultValue="home" onChange={setTab} items={[

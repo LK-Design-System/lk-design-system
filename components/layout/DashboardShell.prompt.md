@@ -25,7 +25,7 @@ Classification: **LK Product Extension · Operations Dashboard**. 루트 `DESIGN
 </DashboardShell>
 ```
 
-- 의미·키보드 순서는 **본문 건너뛰기 → header/banner → 넓은 주 탐색 → main → 좁은 주 탐색**입니다. CSS로 숨겨진 탐색 슬롯은 접근성 트리에서도 제외됩니다.
+- 의미·키보드 순서는 **본문 건너뛰기 → header/banner → 넓은 주 탐색 → main → 좁은 주 탐색**입니다(`rail-panel`은 아래 절의 순서). CSS로 숨겨진 탐색 슬롯은 접근성 트리에서도 제외됩니다.
 - **header**는 자체 `header`/banner landmark를 소유해야 하며 LDS에서는 `TopBar`를 사용합니다. 셸이 다시 `<header>`로 감싸지 않아 중첩 landmark를 만들지 않습니다.
 - **navigation**과 **narrowNavigation**은 자체 `<nav>`를 소유하는 `SideNav`/`NavRail`과 `BottomNav`를 전달합니다. 소비자가 이름을 주지 않으면 셸이 `주 탐색`을 제공합니다.
 - 목적지가 네 개를 넘거나 disclosure 계층을 유지해야 하는 좁은 화면은 **temporaryNavigation**에 `SideNav`를 전달합니다. 제품이 trigger와 `temporaryNavigationOpen` 상태·라우트 선택을 소유하고, 셸은 기존 `Drawer` 엔진으로 스크림, Tab containment, Escape, 초점 복원, body scroll lock을 제공합니다. 열려 있는 동안 skip link·header·wide navigation·main·bottom navigation은 `inert`입니다.
@@ -36,6 +36,18 @@ Classification: **LK Product Extension · Operations Dashboard**. 루트 `DESIGN
 - **topology** — 기본 `header-first`는 전폭 header 아래에 navigation과 main을 둬 기존 소비자와 Web Viz·Control 계열 셸을 유지합니다. `side-first`는 넓은 화면에서 navigation을 전체 높이 첫 열에, utility header와 main을 둘째 열에 둡니다. 좁은 화면에서는 두 토폴로지 모두 같은 단일 열·하단 탐색 계약으로 수렴합니다.
 - `main`은 하나만 렌더링하고 `tabIndex={-1}`과 안정적인 id를 가져 skip link의 실제 focus 목적지가 됩니다. `mainLabel`은 같은 문서에 여러 셸이 있는 검증 fixture에서만 명시합니다.
 - 좁은 탐색 래퍼는 하단 safe area를 적용합니다. `BottomNav` 자체는 고정 위치나 safe area를 소유하지 않습니다.
+
+### `topology="rail-panel"` — 레일 + 맥락 패널
+
+- `navigation`에 `NavRail surface="docked" appearance="neutral"`(영역 3–7개, 로고 `header`, 계정 `footer`)을, `panel`에 `ShellPanel`(제목, 동작 최대 2개, 주 동작 행, 스크롤 구역 하나)을 넘깁니다. 레일 64px과 패널 240px이 전체 높이 두 열이 되고, header와 main은 셋째 열입니다. 셸은 고정 높이(`100dvh`, `style`로 덮을 수 있음)이며 **레일과 패널은 스크롤되지 않고 main이 스크롤 컨테이너**입니다. main은 실제로 넘칠 때만 tab 순서에 들어갑니다(`ScrollArea`와 같은 WCAG 2.1.1 계약).
+- 의미·키보드 순서는 시각 순서를 따라 **건너뛰기 → 레일 → 패널 → header → main**입니다(L-S6). 건너뛰기 링크가 첫 정지점입니다. 레일 nav는 제품이 붙인 `aria-label`, 패널 안 nav는 패널 제목 `aria-labelledby`이며 둘이 같으면 개발 경고를 냅니다. 패널 자체는 랜드마크가 아닙니다.
+- 패널은 **긴 목록을 가진 영역에만** 넘깁니다(P1, L-S4). 하위 목적지가 2–4개인 영역은 `panel`을 생략하고 본문 머리의 경로 탭을 씁니다. 레일 → 패널 → 탭을 넘는 깊이는 금지합니다. 영역을 바꾸면 본문 폭이 패널 폭만큼 바뀌지만 레일 위치는 고정입니다.
+- 접기 토글은 header 시작의 제품 버튼 하나입니다(「패널 접기」/「패널 펼치기」, `aria-expanded`, `aria-controls={panelId}`). `panelOpen`/`onPanelOpenChange`로 제어하고, 접힌 패널은 폭 0·`inert`·`aria-hidden`입니다. 패널 안 focus가 있는 채로 접히면 `panelReturnFocusRef`로 돌아갑니다. 폭 전환은 `--dur-base`, reduced-motion에서 즉시입니다. 사용자별 저장은 제품 소유입니다.
+- 768–1023px(`panelMode="auto"`)에서는 패널이 본문을 밀지 않고 덮는 overlay입니다. overlay는 본문 행에만 놓여 상단 바와 패널 토글을 가리지 않습니다. 이 범위에 들어오면 열린 패널을 `onPanelOpenChange(false)`로 닫아 접힌 상태로 시작하고, 열면 덮는 쪽에만 그림자를 두며 Escape로 닫혀 focus가 토글로 돌아갑니다(L-S9). 검증에서는 `panelMode="inline"|"overlay"`로 고정합니다.
+- 768px 미만(`layout`이 narrow로 해석될 때)에는 레일과 패널을 렌더하지 않고 **드로어 하나**로 합칩니다. `temporaryNavigation`을 따로 넘기지 않으면 셸이 같은 레일 항목을 `NavRail surface="drawer"` 가로 행으로, 그 아래 현재 영역의 패널(스크롤 구역 하나)을, 마지막에 레일 `footer`(계정)를 그립니다. 제품은 항목을 한 번만 넘기고 trigger와 `temporaryNavigationOpen`을 소유합니다. 기존 Drawer 엔진의 스크림·Tab 가둠·Escape·focus 복원을 그대로 씁니다.
+- 공존 규칙: 같은 목적지 층을 NavRail과 SideNav로 중복하지 않는다는 원칙은 유지됩니다. rail-panel은 레일(영역)과 패널(영역 안 목록)이 다른 층이라 허용합니다.
+- 외부 근거: [Material NavigationRail](https://github.com/material-components/material-components-android/blob/master/docs/components/NavigationRail.md)(3–7개, 로고 header)·[NavigationDrawer](https://github.com/material-components/material-components-android/blob/master/docs/components/NavigationDrawer.md)(모바일 modal 드로어), [Fluent 2 Nav](https://fluent2.microsoft.design/components/web/react/core/nav/usage)(아이콘 전용 배치 미지원, 640px 이하 overlay), [Carbon UI shell left panel](https://carbondesignsystem.com/components/UI-shell-left-panel/usage/)(보조 항목 5개 초과 시 패널, 세 단계 금지), [Atlassian navigation system layout](https://atlassian.design/components/navigation-system/layout/usage)(슬롯 순서가 Tab·낭독 순서, 1024px 이하 panel overlay), [WAI-ARIA APG landmarks](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/). 제품 참고(근거 아님): ChatGPT 레일 + 대화 패널. 아이콘 전용 레일은 따르지 않았습니다.
+- 의도적 제외: 레일 펼침(Material expanded rail, SideNav와 중복), 패널 너비 조절, 패널 안 디스클로저 그룹, 레일 배지 숫자, 레일 안 FAB, 아이콘 전용 레일, 방향키 roving.
 
 ### 내부 시각 차이 점검
 
@@ -71,6 +83,7 @@ Classification: **LK Product Extension · Operations Dashboard**. 루트 `DESIGN
 
 - **LK Web Viz** `a984def117c05acd213f494cbb8a42e990595505` — 고정 frontend의 dashboard는 로고 TopBar, 연결 상태, 로봇 카드와 메뉴 launcher를 사용합니다. `header-first`와 Card/Status 조합은 supported by composition이며 SideNav·KPI·표·차트는 이 화면에 not applicable입니다.
 - **LK Control Full Daedeok** `93802fc2aa5d29f930380ae58d51dcb68322b5e7` — 고정 header, docked/temporary drawer, monitoring·status·chart·table은 supported by composition입니다. temporary navigation의 modal coordination은 셸 계약으로 지원하며 지도·영상·telemetry truth·위험 action lifecycle은 제품이 소유합니다.
+- **rail-panel**(2026-10-09 확인): **LK Portal** `ops/lk-portal` `dev` `438c131e`(작업 트리 미커밋 셸 변경 있음) — 질문 영역 대화 목록이 주 사례이며 새 계약으로 지원 예정(미적용). 대화 URL, 셸 목록 상태, 이름 바꾸기 API, 목록 커서는 Portal gap입니다. **LK Control Full Daedeok** `d8c215fd` — 사용자 소유 긴 목록이 없고 현장 관제는 지도·영상 폭이 우선이라 not applicable(기존 SideNav 계약으로 충분). **LK Web Viz** 로컬 `7e535341`(main 아님, unverified pin) — 가로 상단 launcher라 not applicable.
 - **LK Portal** `e5ee99d5062170e26abe63d9105c2b8a024ce710` — 실제 logo가 있는 고정 SideNav와 프로젝트/attention collection은 `side-first`와 DashboardGrid/DataGrid 조합으로 supported by composition입니다. 계층형 narrow navigation은 temporary navigation으로 지원하며 route·권한·query·저장은 제품이 소유합니다.
 - 세 고정 소스에서 공통 KPI 요구는 확인되지 않았습니다. DashboardShell은 MetricCard-first 화면을 규정하지 않고 제품이 중요도를 정한 실제 컴포넌트 조합만 수용합니다.
 

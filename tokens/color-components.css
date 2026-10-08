@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Component color contracts — 127 tokens (GENERATED — do not hand-edit)
+   LK ROBOTICS — Component color contracts — 154 tokens (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -98,6 +98,15 @@
   --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
   --component-badge-negative-fg: var(--color-semantic-status-negative-text);
   --component-message-composer-border-focus: var(--color-atomic-cool-neutral-60);
+  --component-conversation-list-foreground: var(--color-semantic-label-normal);
+  --component-conversation-list-muted-foreground: var(--color-semantic-label-alternative);
+  --component-conversation-list-hover-foreground: var(--color-semantic-label-neutral);
+  --component-conversation-list-group-foreground: var(--color-semantic-label-alternative);
+  --component-conversation-list-hover-surface: var(--color-atomic-cool-neutral-97);
+  --component-conversation-list-active-surface: var(--color-atomic-cool-neutral-96);
+  --component-conversation-list-active-hover-surface: var(--color-atomic-cool-neutral-95);
+  --component-conversation-list-pressed-surface: var(--color-atomic-cool-neutral-95);
+  --component-conversation-list-focus-indicator: var(--color-semantic-focus-indicator);
   --component-lockup-auto-fill: var(--color-semantic-brand-surface);
   --component-side-nav-brand-surface: var(--color-semantic-brand-surface);
   --component-side-nav-brand-hover-surface: var(--color-atomic-navy-shell-18);
@@ -129,6 +138,24 @@
   --component-side-nav-neutral-badge-foreground: var(--color-semantic-label-neutral);
   --component-side-nav-neutral-badge-dot: var(--color-semantic-label-alternative);
   --component-side-nav-neutral-focus-indicator: var(--color-semantic-focus-indicator);
+  --component-nav-rail-neutral-surface: var(--color-atomic-navy-wash-98);
+  --component-nav-rail-neutral-divider: var(--color-semantic-line-solid-normal);
+  --component-nav-rail-neutral-foreground: var(--color-semantic-label-normal);
+  --component-nav-rail-neutral-muted-foreground: var(--color-semantic-label-alternative);
+  --component-nav-rail-neutral-hover-foreground: var(--color-semantic-label-neutral);
+  --component-nav-rail-neutral-hover-surface: var(--color-atomic-cool-neutral-97);
+  --component-nav-rail-neutral-active-surface: var(--color-atomic-cool-neutral-96);
+  --component-nav-rail-neutral-active-hover-surface: var(--color-atomic-cool-neutral-95);
+  --component-nav-rail-neutral-pressed-surface: var(--color-atomic-cool-neutral-95);
+  --component-nav-rail-neutral-focus-indicator: var(--color-semantic-focus-indicator);
+  --component-shell-panel-surface: var(--color-atomic-navy-wash-98);
+  --component-shell-panel-divider: var(--color-semantic-line-solid-normal);
+  --component-shell-panel-foreground: var(--color-semantic-label-normal);
+  --component-shell-panel-hover-foreground: var(--color-semantic-label-neutral);
+  --component-shell-panel-hover-surface: var(--color-atomic-cool-neutral-97);
+  --component-shell-panel-active-surface: var(--color-atomic-cool-neutral-96);
+  --component-shell-panel-active-hover-surface: var(--color-atomic-cool-neutral-95);
+  --component-shell-panel-pressed-surface: var(--color-atomic-cool-neutral-95);
   --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
   --component-dialog-scrim: var(--color-semantic-material-dimmer);
   --component-transient-feedback-bg: color-mix(in srgb, var(--color-semantic-inverse-background) 72%, transparent);
@@ -228,6 +255,15 @@
   --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
   --component-badge-negative-fg: var(--color-semantic-status-negative-text);
   --component-message-composer-border-focus: var(--color-atomic-cool-neutral-60);
+  --component-conversation-list-foreground: var(--color-semantic-label-normal);
+  --component-conversation-list-muted-foreground: var(--color-semantic-label-alternative);
+  --component-conversation-list-hover-foreground: var(--color-semantic-label-neutral);
+  --component-conversation-list-group-foreground: var(--color-semantic-label-alternative);
+  --component-conversation-list-hover-surface: var(--color-atomic-cool-neutral-17);
+  --component-conversation-list-active-surface: var(--color-atomic-cool-neutral-20);
+  --component-conversation-list-active-hover-surface: var(--color-atomic-cool-neutral-22);
+  --component-conversation-list-pressed-surface: var(--color-atomic-cool-neutral-22);
+  --component-conversation-list-focus-indicator: var(--color-semantic-focus-indicator);
   --component-lockup-auto-fill: var(--color-semantic-static-white);
   --component-side-nav-brand-surface: var(--color-semantic-brand-surface);
   --component-side-nav-brand-hover-surface: var(--color-atomic-navy-shell-18);
@@ -259,6 +295,24 @@
   --component-side-nav-neutral-badge-foreground: var(--color-semantic-label-neutral);
   --component-side-nav-neutral-badge-dot: var(--color-semantic-label-alternative);
   --component-side-nav-neutral-focus-indicator: var(--color-semantic-focus-indicator);
+  --component-nav-rail-neutral-surface: var(--color-atomic-navy-wash-6);
+  --component-nav-rail-neutral-divider: var(--color-semantic-line-solid-normal);
+  --component-nav-rail-neutral-foreground: var(--color-semantic-label-normal);
+  --component-nav-rail-neutral-muted-foreground: var(--color-semantic-label-alternative);
+  --component-nav-rail-neutral-hover-foreground: var(--color-semantic-label-neutral);
+  --component-nav-rail-neutral-hover-surface: var(--color-atomic-cool-neutral-17);
+  --component-nav-rail-neutral-active-surface: var(--color-atomic-cool-neutral-20);
+  --component-nav-rail-neutral-active-hover-surface: var(--color-atomic-cool-neutral-22);
+  --component-nav-rail-neutral-pressed-surface: var(--color-atomic-cool-neutral-22);
+  --component-nav-rail-neutral-focus-indicator: var(--color-semantic-focus-indicator);
+  --component-shell-panel-surface: var(--color-atomic-navy-wash-6);
+  --component-shell-panel-divider: var(--color-semantic-line-solid-normal);
+  --component-shell-panel-foreground: var(--color-semantic-label-normal);
+  --component-shell-panel-hover-foreground: var(--color-semantic-label-neutral);
+  --component-shell-panel-hover-surface: var(--color-atomic-cool-neutral-17);
+  --component-shell-panel-active-surface: var(--color-atomic-cool-neutral-20);
+  --component-shell-panel-active-hover-surface: var(--color-atomic-cool-neutral-22);
+  --component-shell-panel-pressed-surface: var(--color-atomic-cool-neutral-22);
   --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
   --component-dialog-scrim: var(--color-semantic-material-dimmer);
   --component-transient-feedback-bg: color-mix(in srgb, var(--color-semantic-inverse-background) 72%, transparent);
@@ -359,6 +413,15 @@
     --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
     --component-badge-negative-fg: var(--color-semantic-status-negative-text);
     --component-message-composer-border-focus: var(--color-atomic-cool-neutral-60);
+    --component-conversation-list-foreground: var(--color-semantic-label-normal);
+    --component-conversation-list-muted-foreground: var(--color-semantic-label-alternative);
+    --component-conversation-list-hover-foreground: var(--color-semantic-label-neutral);
+    --component-conversation-list-group-foreground: var(--color-semantic-label-alternative);
+    --component-conversation-list-hover-surface: var(--color-atomic-cool-neutral-17);
+    --component-conversation-list-active-surface: var(--color-atomic-cool-neutral-20);
+    --component-conversation-list-active-hover-surface: var(--color-atomic-cool-neutral-22);
+    --component-conversation-list-pressed-surface: var(--color-atomic-cool-neutral-22);
+    --component-conversation-list-focus-indicator: var(--color-semantic-focus-indicator);
     --component-lockup-auto-fill: var(--color-semantic-static-white);
     --component-side-nav-brand-surface: var(--color-semantic-brand-surface);
     --component-side-nav-brand-hover-surface: var(--color-atomic-navy-shell-18);
@@ -390,6 +453,24 @@
     --component-side-nav-neutral-badge-foreground: var(--color-semantic-label-neutral);
     --component-side-nav-neutral-badge-dot: var(--color-semantic-label-alternative);
     --component-side-nav-neutral-focus-indicator: var(--color-semantic-focus-indicator);
+    --component-nav-rail-neutral-surface: var(--color-atomic-navy-wash-6);
+    --component-nav-rail-neutral-divider: var(--color-semantic-line-solid-normal);
+    --component-nav-rail-neutral-foreground: var(--color-semantic-label-normal);
+    --component-nav-rail-neutral-muted-foreground: var(--color-semantic-label-alternative);
+    --component-nav-rail-neutral-hover-foreground: var(--color-semantic-label-neutral);
+    --component-nav-rail-neutral-hover-surface: var(--color-atomic-cool-neutral-17);
+    --component-nav-rail-neutral-active-surface: var(--color-atomic-cool-neutral-20);
+    --component-nav-rail-neutral-active-hover-surface: var(--color-atomic-cool-neutral-22);
+    --component-nav-rail-neutral-pressed-surface: var(--color-atomic-cool-neutral-22);
+    --component-nav-rail-neutral-focus-indicator: var(--color-semantic-focus-indicator);
+    --component-shell-panel-surface: var(--color-atomic-navy-wash-6);
+    --component-shell-panel-divider: var(--color-semantic-line-solid-normal);
+    --component-shell-panel-foreground: var(--color-semantic-label-normal);
+    --component-shell-panel-hover-foreground: var(--color-semantic-label-neutral);
+    --component-shell-panel-hover-surface: var(--color-atomic-cool-neutral-17);
+    --component-shell-panel-active-surface: var(--color-atomic-cool-neutral-20);
+    --component-shell-panel-active-hover-surface: var(--color-atomic-cool-neutral-22);
+    --component-shell-panel-pressed-surface: var(--color-atomic-cool-neutral-22);
     --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
     --component-dialog-scrim: var(--color-semantic-material-dimmer);
     --component-transient-feedback-bg: color-mix(in srgb, var(--color-semantic-inverse-background) 72%, transparent);
