@@ -1,5 +1,14 @@
 # LK 디자인 시스템 코어
 
+## CI·릴리스 실행 위치
+
+다른 PC의 clone은 실행 호스트 변경 승인이 아니다. 개발 PC는 편집·미리보기·빠른 검사,
+패키지 발행은 server04의 자격검증된 LDS 전용 격리 VM으로 구분한다.
+기존 Windows/Linux CI·Pages는 현행 workflow를 유지하며 exact-SHA 결과를 재사용한다.
+전체 검증의 local fallback이나 자동 VM/runner 등록은 금지한다.
+본체·Robotics·Slides·Motion·3D·Manual 공통 경계와 발행 전 점검은
+[실행 호스트 정책](docs/OPERATIONS.md#execution-host-policy)을 따른다.
+
 ## License and attribution
 
 LDS is based on **Montage, the Wanted Design System by Wantedlab**, and adapts

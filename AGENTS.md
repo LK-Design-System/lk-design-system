@@ -114,11 +114,21 @@
 - Shared token *value* changes shift visuals across the entire design system and are design-owner decisions. Propose the change with the affected surfaces and contrast/measurement evidence, and wait for approval; do not bundle it silently into an unrelated fix.
 - When the user approves an escalation, keep the escalated work in its own commit(s) with the measurement that justified it, so the original scoped fix remains reviewable on its own.
 
+## CI And Release Execution Boundary (MANDATORY)
+
+- A checkout opened on another PC does not transfer CI, packaging, publishing, or deployment authority to that PC. Developer hosts perform source edits, local Storybook UI review, and narrowly scoped fast checks only.
+- Before release work, read [the execution-host policy](docs/OPERATIONS.md#execution-host-policy). Package release checks and publishing run only in the separate, qualified LDS Linux x64 KVM guest on `server04`, using the selected-repository/canonical-main workflow runner with label `lk-lds-release-linux-x64` and name `lk-lds-release-server04-*`. The server04 host itself, Portal's guest/runner, host Docker socket, production credentials, volumes, and networks must not be reused.
+- Use `node scripts/dispatch-package-release.mjs --preflight <existing-lds-tag>` for read-only availability/source checks; after explicit publish approval, use the same command without `--preflight`. If the dedicated runner is absent, offline, busy, or has the wrong host identity, report `release_environment_unavailable` and stop. Never create/register a VM/runner, install a local release toolchain, publish from the developer PC, or fall back to another host without separate owner authorization.
+- Automatic `ci.yml` and Storybook Pages currently retain their canonical GitHub-hosted Windows/Linux jobs. This is an explicit existing workflow boundary, not permission to run full CI on the current PC, and not evidence that all CI has migrated to server04. Preserve the Windows generated-artifact/visual baseline authority until a separately qualified CI migration changes it.
+- Reuse exact-SHA automatic CI/Pages results. Do not duplicate them with local `check:fast`, `check:ci`, full Storybook/visual/pack sweeps, or another dispatch. Despite its name, `check:fast` includes a build and is a full gate; developer fast checks are the targeted checks/pre-push checks described below.
+- When another PC has a stale or dirty checkout, inspect remote main and use an isolated clean candidate; preserve existing work. Do not reset, switch, overwrite, or regenerate somebody else's checkout to match CI.
+- Repository edits and a push do not authorize a package tag, publish, deployment, server modification, or runner provisioning. Monitor an authorized long-running workflow through completion and report failures without substituting a local build.
+
 ## Verification Cadence
 
 - During implementation, use the smallest relevant targeted checks for the files and contracts being changed, such as the affected Storybook story/play function, focused accessibility check, component test, type check, or package build.
 - Do not rerun repository-wide builds, the full Storybook accessibility sweep, the complete visual-smoke capture, or `npm run check` after every incremental edit.
-- Batch related edits and run the appropriate full verification suite once at the final checkpoint before handoff. Run it earlier only when the user explicitly asks, a shared foundation change cannot be validated safely with targeted checks, or a failure indicates broader repository impact.
+- Batch related edits and use the appropriate exact-SHA CI result at the final checkpoint. Escalate to the full suite only for a documented broad-impact condition, and run it in the designated CI/release environment; do not interpret handoff as permission for a developer-host full build.
 - When a full-suite failure is being fixed, iterate with the specific failing check first; rerun the full suite only after the focused check passes and the work is ready for final verification.
 
 ## Markdown Documentation Changes

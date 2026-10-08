@@ -22,6 +22,15 @@ jobs:
       NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}
 
     steps:
+      - name: Verify server04 release runner identity
+        shell: bash
+        env:
+          RUNNER_ENVIRONMENT: ${{ runner.environment }}
+          RELEASE_RUNNER_NAME: ${{ runner.name }}
+        run: |
+          test "$RUNNER_ENVIRONMENT" = self-hosted
+          [[ "$RELEASE_RUNNER_NAME" == lk-lds-release-server04-* ]]
+
       - name: Checkout tagged source
         uses: actions/checkout@v7.0.0
         with:
@@ -100,6 +109,15 @@ jobs:
       LDS_PUBLISHED_RELEASE_RETRY_DELAY_MS: 5000
 
     steps:
+      - name: Verify server04 release runner identity
+        shell: bash
+        env:
+          RUNNER_ENVIRONMENT: ${{ runner.environment }}
+          RELEASE_RUNNER_NAME: ${{ runner.name }}
+        run: |
+          test "$RUNNER_ENVIRONMENT" = self-hosted
+          [[ "$RELEASE_RUNNER_NAME" == lk-lds-release-server04-* ]]
+
       - name: Checkout tagged source
         uses: actions/checkout@v7.0.0
         with:

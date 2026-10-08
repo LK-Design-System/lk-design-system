@@ -5,6 +5,7 @@ import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
+import { dispatchPackageRelease, selectReleaseRunner } from './dispatch-package-release.mjs';
 import { expectedDistTagForVersion, verifyPublishedRelease } from './check-published-release.mjs';
 
 const scriptRoot = path.dirname(fileURLToPath(import.meta.url));
@@ -129,4 +130,58 @@ test('release workflow publishes all packages and isolates retryable registry ve
   assert.match(workflow, /LDS_PUBLISHED_RELEASE_ATTEMPTS: 30/);
   assert.match(workflow, /LDS_PUBLISHED_RELEASE_RETRY_DELAY_MS: 5000/);
   assert.match(workflow, /verify-published:[\s\S]*npm run check:published-release/);
+});
+
+const qualifiedRunner = {
+  name: 'lk-lds-release-server04-test', status: 'online', busy: false,
+  labels: ['self-hosted', 'Linux', 'X64', 'lk-lds-release-linux-x64'].map(name => ({ name })),
+};
+
+test('release preflight refuses missing, offline, busy, ambiguous and foreign-host runners', () => {
+  for (const runners of [[], [qualifiedRunner, qualifiedRunner],
+    [{ ...qualifiedRunner, status: 'offline' }], [{ ...qualifiedRunner, busy: true }],
+    [{ ...qualifiedRunner, name: 'lk-lds-release-laptop' }],
+    [{ ...qualifiedRunner, labels: qualifiedRunner.labels.filter(item => item.name !== 'Linux') }]]) {
+    assert.throws(() => selectReleaseRunner(runners), /release_environment_unavailable/);
+  }
+  assert.equal(selectReleaseRunner([qualifiedRunner]).name, qualifiedRunner.name);
+});
+
+function releaseApi(runners, comparison = 'ahead') {
+  const calls = [];
+  return { calls, run(args) {
+    calls.push(args);
+    if (args[0] === 'workflow') return '';
+    if (args[1].includes('/commits/')) return JSON.stringify({ sha: 'a'.repeat(40) });
+    if (args[1].includes('/compare/')) return JSON.stringify({ status: comparison });
+    return JSON.stringify([{ runners }]);
+  } };
+}
+
+test('readonly preflight never dispatches; publish uses canonical main and exact tag', () => {
+  const readonly = releaseApi([qualifiedRunner]);
+  assert.equal(dispatchPackageRelease(['--preflight', 'lds-v1.2.3'], readonly).mode, 'preflight');
+  assert.equal(readonly.calls.some(args => args[0] === 'workflow'), false);
+  const publish = releaseApi([qualifiedRunner]);
+  dispatchPackageRelease(['lds-v1.2.3'], publish);
+  assert.deepEqual(publish.calls.at(-1), ['workflow', 'run', 'release-packages.yml', '--repo',
+    'LK-Design-System/lk-design-system', '--ref', 'main', '-f', 'release_tag=lds-v1.2.3']);
+});
+
+test('unavailable runner or divergent source cannot enqueue a release', () => {
+  for (const api of [releaseApi([]), releaseApi([qualifiedRunner], 'diverged')]) {
+    assert.throws(() => dispatchPackageRelease(['lds-v1.2.3'], api), /unavailable/);
+    assert.equal(api.calls.some(args => args[0] === 'workflow'), false);
+  }
+  const api = releaseApi([qualifiedRunner]);
+  assert.throws(() => dispatchPackageRelease(['main'], api), /usage/);
+  assert.equal(api.calls.length, 0);
+});
+
+test('both release jobs reject a foreign runner before checkout', async () => {
+  const workflow = await readFile(path.join(repositoryRoot, '.github/workflows/release-packages.yml'), 'utf8');
+  assert.equal((workflow.match(/Verify server04 release runner identity/g) ?? []).length, 2);
+  for (const job of workflow.split('    steps:').slice(1)) {
+    assert.ok(job.indexOf('lk-lds-release-server04-*') < job.indexOf('Checkout tagged source'));
+  }
 });

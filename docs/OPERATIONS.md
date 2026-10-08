@@ -14,6 +14,42 @@
 
 ---
 
+## Execution host policy
+
+이 정책은 LDS 본체와 Robotics·Slides·Motion·3D·Manual의 패키지 릴리스에 공통이다.
+각 저장소의 `AGENTS.md`·`CLAUDE.md`와 README에도 단독 clone용 진입점을 둔다.
+archive/reference인 Console Pastel은 재활성화하거나 새 발행 경로를 만들지 않는다.
+
+| 작업 | 실행 위치 | 경계 |
+| --- | --- | --- |
+| 소스 편집·미리보기·변경 범위 빠른 검사 | 개발 PC | checkout 위치는 실행 권한이 아니다 |
+| 기존 자동 CI·Pages·Windows/Linux 회귀 | 각 저장소의 기존 canonical workflow/등록 runner | exact SHA 증거 재사용; 이관 완료로 표시하지 않는다 |
+| 패키지 전체 release gate·pack·발행 | server04의 승인·자격검증된 LDS 격리 VM | 호스트 직접 build 금지; 저장소별 등록/디스크/credential 경계 |
+| Portal image·서명 release | 별도 server04 Portal 격리 VM | LDS VM/runner와 재사용하지 않는다 |
+| 검증 artifact 제품 배포 | 해당 제품의 승인된 대상·절차 | 패키지 push/발행 승인과 별개 |
+
+`ci.yml`과 Pages의 기존 GitHub-hosted Windows/Linux 경로는 OS별 증거를 제공한다.
+Manual의 `lk-authoring-output`은 별도 등록 경로다. 이 정책은 이들을 임의로 중단하거나
+Linux server04로 이미 이관됐다고 주장할 근거가 아니다. 공개 저장소의 표준 hosted
+runner는 무료다. 기존 job의 이관·새 VM·runner 등록은 별도 승인과 자격검증이 필요하다.
+
+본체 발행은 `lk-lds-release-linux-x64` label과 `lk-lds-release-server04-*` 이름을
+가진 승인된 isolated runner만 사용한다. 이름/label은 운영 계약 확인이며 물리 호스트의
+보안 증명이 아니다. 최초 qualification과 SSH host identity/등록 provenance도 확인한다.
+발행 전에 `node scripts/dispatch-package-release.mjs --preflight <existing-lds-tag>`로
+remote tag·main ancestry와 online/idle 등록을 조회한다. 없거나 다른 host identity거나
+busy/offline이면 `release_environment_unavailable`로 중단한다. dispatch를 쌓아 두거나
+현재 PC·aipc1·노트북·server02로 fallback하지 않는다. 기본 설정이 빠졌다고 local VM,
+runner, credential 복사를 생성하지 않는다.
+
+아래 릴리스 레시피의 build·pack·전체 검사 명령은 이 지정 릴리스 환경에서만 실행한다.
+운영자 PC는 조회·검토·승인된 dispatch를 수행할 수 있다. `check:fast`는 이름과 달리
+build를 포함한 전체 gate다. 로컬에는 `check:pre-push`와 변경 범위 검사를 사용하고,
+동일 SHA의 자동 CI가 green이면 전체 검사나 수동 dispatch를 중복하지 않는다.
+요청한 Manual 문서의 개별 HTML/PDF 출력·레이아웃 QA는 릴리스 build와 구분한다.
+태그 push·발행·배포·서버 변경에는 각각 해당 행위를 지목한 승인이 필요하다.
+장시간 workflow는 종료까지 감시하며 credential과 보호 로그 원문은 출력하지 않는다.
+
 ## 1. 지금 무엇이 있나
 
 ```
@@ -283,8 +319,8 @@ npm run report:satellite-pins
 #    빠뜨리지 않는다. 작업트리의 무관한 untracked 파일은 포함하지 않는다.
 git add <검토한 release 파일들>
 
-# 8. 검사.
-npm run check:fast
+# 8. 개발 PC에서는 빠른 정적 검사만 한다. 전체 check:fast는 CI/릴리스 VM에서 실행한다.
+npm run check:pre-push
 
 # 9. LDS candidate를 commit/push하고 exact SHA의 CI·Pages를 확인한다.
 #    이어서 Robotics release gate를 그 LDS SHA로 dispatch한다. 실행 결과의
@@ -379,10 +415,9 @@ git push origin refs/tags/lds-v<새 LDS 버전>
 #     그 태그로 dispatch한다. --ref는 반드시 main이다 — 두 job 모두
 #     `github.ref == 'refs/heads/main'`일 때만 돈다.
 git ls-remote --tags origin refs/tags/lds-v<새 LDS 버전>
-gh workflow run release-packages.yml \
-  --repo LK-Design-System/lk-design-system \
-  --ref main \
-  -f release_tag=lds-v<새 LDS 버전>
+node scripts/dispatch-package-release.mjs --preflight lds-v<새 LDS 버전>
+# 발행 행위 승인 후, 같은 검사를 다시 통과해야 main workflow를 dispatch한다.
+node scripts/dispatch-package-release.mjs lds-v<새 LDS 버전>
 ```
 
 ### 2.5 릴리스 이후
@@ -397,9 +432,10 @@ checkout한다. `publish` job은 dispatch·태그 동일성(태그 commit이 `or
 세 패키지의 정확한 버전·integrity·선택된 dist-tag를 확인한다. 발행은 성공하고 이 검증
 job만 일시 실패했다면 GitHub의 **Re-run failed jobs**로 검증만 다시 실행한다.
 
-두 job은 self-hosted `lk-lds-release-linux-x64` 러너에서만 돈다. 그 라벨의 러너가
-온라인이 아니면 run은 실패하지 않고 `queued`로 멈춰 있으므로, dispatch 뒤 run이
-`in_progress`로 넘어가는지 먼저 본다. 발행까지 정상이면 수 분 안에 끝난다.
+두 job은 server04의 자격검증된 self-hosted `lk-lds-release-linux-x64` 러너에서만 돈다.
+위 preflight로 dispatch 전에 online/idle과 이름을 확인한다. unavailable이면 dispatch하지
+않는다. 조회 뒤 상태가 바뀌어 queued가 되면 등록 상태를 다시 확인하고 보고한다.
+새 runner나 local fallback을 만들지 않는다. 시작한 workflow는 종료까지 감시한다.
 
 dispatch run의 `headSha`는 dispatch 시점의 `main` SHA이며 태그 SHA와 다를 수 있다.
 발행된 source가 태그와 같은지는 `publish` job의 `Verify canonical dispatch and immutable
@@ -560,15 +596,15 @@ npm run <실패한 검사 이름>
 
 | 명령 | 하는 일 |
 | --- | --- |
-| `npm run check:fast` | 상시 검사 스위트. **커밋 전 기준이자 release workflow의 검증 본체** |
-| `npm run check` | check:fast + Storybook + pack. 넓게 확인하고 싶을 때 |
+| `npm run check:fast` | build 포함 전체 스위트. **지정 CI/release VM에서 실행** |
+| `npm run check` | check:fast + Storybook + pack. 문서화된 전체 검증 조건과 실행 환경 필요 |
 | `node scripts/update-release-pins.mjs --check --require-current-canonical-snapshot` | publish 전용 gate. 현재 Core 채택 입력 지문과 published Robotics observation의 지문 일치를 요구 |
 | `npm run storybook:dev` | 로컬 Storybook (6006). 색 재생성 없이 뜬다 |
 | `npm run report:inventory` | 컴포넌트·스토리 수 (손으로 센 숫자를 믿지 않는다) |
 | `npm run update:release-pins` | 릴리스 파생값 31곳 재계산 |
 | `npm run report:satellite-pins` | 위성 핀 리포트 생성 (네트워크 필요) |
 
-**커밋 전 상시 게이트는 `check:fast`다.** immutable tag에서 package publish로 넘어가는
+**개발 PC의 커밋 전 경로는 변경 범위 검사와 `check:pre-push`다.** immutable tag에서 package publish로 넘어가는
 release workflow는 tag/package-set identity, release-only current Robotics snapshot,
 unpublished version 확인을 먼저 통과한 뒤 `check:fast`를 실행한다. 다른 문서에
 `check:ops-release`나 전체 `check` 하나만 릴리스 게이트로 적혀 있다면 낡은 것이다.
@@ -578,8 +614,8 @@ unpublished version 확인을 먼저 통과한 뒤 `check:fast`를 실행한다.
 기록되고 리포트 생성 자체는 성공한다 — 릴리스가 막히지 않는다. 다만
 `unreachable`이 남은 채로 릴리스했다면 다음에 그 위성을 확인한다.
 
-검사는 작업 중에는 관련된 것만 돌리고, 넘기기 전에 한 번 전체를 돌린다.
-매 수정마다 전체를 돌리지 않는다.
+작업 중에는 관련된 것만 검사한다. 넘기기 전에는 exact-SHA 자동 CI 증거를 확인한다.
+동일 후보의 전체 검사를 로컬에서 반복하지 않는다.
 
 ## 6. 위성 문서
 
