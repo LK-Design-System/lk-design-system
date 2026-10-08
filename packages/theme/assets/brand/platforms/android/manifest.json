@@ -3,18 +3,18 @@
   "contractVersion": 1,
   "generatedBy": "scripts/generate-brand-platform-assets.mjs",
   "brandStandard": {
-    "version": "2.0.0",
+    "version": "3.0.0",
     "status": "current-repository-standard",
-    "governanceSha256": "e0fb546e42a43fd53a5f8532f9de71fb6a98dd88e3c9d78a81527e6d2b79108f",
+    "governanceSha256": "6e87143d71ad4817a5838dd21cc09115ac69ce716ac3f08dd165345223273c2b",
     "minimumSizePolicy": {
       "status": "repository-policy-pending-human-optical-approval",
       "humanOpticalApproval": false,
       "approvalRecord": null
     }
   },
-  "sourceAssetSetSha256": "f7bc6532ba993b0fda69bf77c322099703aa37006b094051b34d5d3cf3644f5f",
-  "sourceConstructionVersion": 5,
-  "sourceConstructionManifestSha256": "476ad9ef3804d67c3bc082a76ec19a8e9481216d246a189b5c1ecf316c77488b",
+  "sourceAssetSetSha256": "67c54349afdd733d7492c34276d7a56b1b8134049b241f452436027b6e34043e",
+  "sourceConstructionVersion": 6,
+  "sourceConstructionManifestSha256": "2321d96ae3d4ed5a984ff785be8eff48c6399209b00ff2a07f83dea4a59f4282",
   "delivery": {
     "type": "android-resources",
     "vectorFormat": "VectorDrawable",
@@ -112,11 +112,11 @@
       "resourceName": "lk_brand_logo_inline_navy",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-inline-navy.svg",
-      "sourceSha256": "1789fa9df782cf1fbc93f57167b174672741c515b9936696c6ce59f2cc87c287",
+      "sourceSha256": "a7369ccaa88a2865d34402f9c68d8200618124d0198532c16ccf275ec10577ed",
       "vectorDrawablePath": "assets/brand/platforms/android/res/drawable/lk_brand_logo_inline_navy.xml",
-      "vectorDrawableSha256": "9d3723a64c614c1236e835a80a6076a10bf679e9bbe7250740a288bfa01e84b7",
+      "vectorDrawableSha256": "72a003eac3f4d574d9126778a8c03647e9ce035f2b6e6ee0e152b4b051275dfb",
       "intrinsicSize": {
-        "widthDp": 156.324048,
+        "widthDp": 156.254307,
         "heightDp": 20
       },
       "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
@@ -127,7 +127,7 @@
       },
       "minimumRequiredSlotWidth": {
         "axis": "slot-width",
-        "value": 156.324048,
+        "value": 156.254307,
         "unit": "dp"
       }
     },
@@ -136,11 +136,11 @@
       "resourceName": "lk_brand_logo_inline_white",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-inline-white.svg",
-      "sourceSha256": "2584a5ac9b27cc603a19f66bef631e0059ab5c219314310371710fae42df10a0",
+      "sourceSha256": "dd21f71c165b482e26206e62ee15d6bdb9d1f69125667087f9e7407a3b03e562",
       "vectorDrawablePath": "assets/brand/platforms/android/res/drawable/lk_brand_logo_inline_white.xml",
-      "vectorDrawableSha256": "269738b687a49f1282eac7073e54d3f288ad2505c5ea8719f3b42cde00cf3000",
+      "vectorDrawableSha256": "162d55568c92754e86fc068c8e6e9e2965abbffd3fd35cef7d51f8e485763bc2",
       "intrinsicSize": {
-        "widthDp": 156.324048,
+        "widthDp": 156.254307,
         "heightDp": 20
       },
       "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
@@ -151,7 +151,7 @@
       },
       "minimumRequiredSlotWidth": {
         "axis": "slot-width",
-        "value": 156.324048,
+        "value": 156.254307,
         "unit": "dp"
       }
     },
@@ -160,11 +160,11 @@
       "resourceName": "lk_brand_logo_stacked_navy",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-navy.svg",
-      "sourceSha256": "8c920d45563187d5cad9ea4dd5f05eff27e3bacf3e41dd4525262ef9f4a5d5b7",
+      "sourceSha256": "6500b9a0b743c64044bd3d9609d9930a16df547e1ddc817c6f7ec73f7994b067",
       "vectorDrawablePath": "assets/brand/platforms/android/res/drawable/lk_brand_logo_stacked_navy.xml",
-      "vectorDrawableSha256": "d77d7d44fb7f724e971a481cb6511c78c0b90b8a6064741e9e508b454b72e083",
+      "vectorDrawableSha256": "491aa8c49786d0ea2e24ad378e3d4b96b3da2314d4ef74484571e5d0568f3fe3",
       "intrinsicSize": {
-        "widthDp": 82.61299,
+        "widthDp": 81.668433,
         "heightDp": 64
       },
       "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
@@ -175,7 +175,7 @@
       },
       "minimumRequiredSlotWidth": {
         "axis": "slot-width",
-        "value": 82.61299,
+        "value": 81.668433,
         "unit": "dp"
       }
     },
@@ -184,11 +184,11 @@
       "resourceName": "lk_brand_logo_stacked_white",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-white.svg",
-      "sourceSha256": "9637f8e642b95f38cfa0ed4270ff4a4d9af1b23d950295e634cdb82856cc04ce",
+      "sourceSha256": "d6bb79f5558121e686cb641e5e243bd12334cfe96c60ef223c61a7ee6ebfdc36",
       "vectorDrawablePath": "assets/brand/platforms/android/res/drawable/lk_brand_logo_stacked_white.xml",
-      "vectorDrawableSha256": "6928d5ad66488383facd06afd6d5e871330f8652f9854fb94362a14b6b9e58cb",
+      "vectorDrawableSha256": "91379d48b2a302b111e1d7e7febb617adae47b93d7236aab89e2e0f705bb7fe7",
       "intrinsicSize": {
-        "widthDp": 82.61299,
+        "widthDp": 81.668433,
         "heightDp": 64
       },
       "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
@@ -199,7 +199,7 @@
       },
       "minimumRequiredSlotWidth": {
         "axis": "slot-width",
-        "value": 82.61299,
+        "value": 81.668433,
         "unit": "dp"
       }
     },
@@ -208,11 +208,11 @@
       "resourceName": "lk_brand_logo_banner_navy",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-banner-navy.svg",
-      "sourceSha256": "e56b1830065ec9ac6d5079493aef43a32a7287c350c2da7e60967ce9f78f0f1e",
+      "sourceSha256": "66c176f329150979dd36489ce145106ddbfdc832dce620ab0c606c6efa5bd299",
       "vectorDrawablePath": "assets/brand/platforms/android/res/drawable/lk_brand_logo_banner_navy.xml",
-      "vectorDrawableSha256": "472ce70d880b504993ee0203ebad1312170642f49cd54aca3f2c5bf3a24d3aca",
+      "vectorDrawableSha256": "e5de6adcfdb62f6f033394d1b23cdf017f3b69f175e578066a42e0463ae260e5",
       "intrinsicSize": {
-        "widthDp": 137.019722,
+        "widthDp": 136.963949,
         "heightDp": 28
       },
       "clearSpaceApplication": "embedded-in-source-asset",
@@ -223,7 +223,7 @@
       },
       "minimumRequiredSlotWidth": {
         "axis": "slot-width",
-        "value": 137.019722,
+        "value": 136.963949,
         "unit": "dp"
       }
     },
@@ -232,11 +232,11 @@
       "resourceName": "lk_brand_logo_banner_light",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-banner-light.svg",
-      "sourceSha256": "2e4b1ecdc20803653fb75c227aae2036c6d811820fb157dceb20a447e55f06b3",
+      "sourceSha256": "d68452cc4bc5e8a68bc660719f6e1f1a0077a6ffa138eaa169bd1d1fe28ee3e1",
       "vectorDrawablePath": "assets/brand/platforms/android/res/drawable/lk_brand_logo_banner_light.xml",
-      "vectorDrawableSha256": "ac0ab545b9d85d36612940af7c47d888a43a4e821b562b5c386faf52f769349b",
+      "vectorDrawableSha256": "5ffc6540d9ade768c266d80392c360de3db86787993de7270cec989122d644d7",
       "intrinsicSize": {
-        "widthDp": 137.019722,
+        "widthDp": 136.963949,
         "heightDp": 28
       },
       "clearSpaceApplication": "embedded-in-source-asset",
@@ -247,7 +247,7 @@
       },
       "minimumRequiredSlotWidth": {
         "axis": "slot-width",
-        "value": 137.019722,
+        "value": 136.963949,
         "unit": "dp"
       }
     },
@@ -256,9 +256,9 @@
       "resourceName": "lk_brand_logo_square_navy",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-official.svg",
-      "sourceSha256": "5f7e84b108fc915be8a911c4f994d63126fd7ff631e227973696de65293eaf91",
+      "sourceSha256": "d6cd14381cb47ad80fca6027b0a8c5095be03932518dbbebe42519b5b553e137",
       "vectorDrawablePath": "assets/brand/platforms/android/res/drawable/lk_brand_logo_square_navy.xml",
-      "vectorDrawableSha256": "831ac3a8c17f8fd9ee15e87405225b505c20bf4200c784b12d433754ce49b8a7",
+      "vectorDrawableSha256": "737bf73b32733a2c9df9d1f1f33eaaff59647e1c4a48fb377a41b46cab7c0f9d",
       "intrinsicSize": {
         "widthDp": 96,
         "heightDp": 96
@@ -280,9 +280,9 @@
       "resourceName": "lk_brand_logo_square_light",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-official-light.svg",
-      "sourceSha256": "83c12ab87c31a25d660a2a88d774642388ee4e46a75624025e32f649becc07df",
+      "sourceSha256": "81cd602f4cb7faf90d815b61f73ceb4a0626976542831d1f77cdafb5c5c67e66",
       "vectorDrawablePath": "assets/brand/platforms/android/res/drawable/lk_brand_logo_square_light.xml",
-      "vectorDrawableSha256": "73f659a01490a27d709d438799cb474f5fcc39f34d0742afff239f1897f05553",
+      "vectorDrawableSha256": "3be70871a1880c70c05ec8a975bd60dd11d8ac376569f96b010f11c133fec999",
       "intrinsicSize": {
         "widthDp": 96,
         "heightDp": 96
@@ -304,9 +304,9 @@
       "resourceName": "lk_brand_logo_corporate_square_navy",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-official-corporate.svg",
-      "sourceSha256": "4f79ce7fddb226d8e360a2eeabf4b8b7f7a6a607a75efcf24179d570a4099cef",
+      "sourceSha256": "07981a1c9c6b426f0283a908ae9b91026d51e5fb189e448bfaa7368a96cf491b",
       "vectorDrawablePath": "assets/brand/platforms/android/res/drawable/lk_brand_logo_corporate_square_navy.xml",
-      "vectorDrawableSha256": "b8cd705e35eff8939caebc54cfe5b3bff1fc9f49f72eaca98d11d10e099a0fef",
+      "vectorDrawableSha256": "184340be33a925b19f786e43f138fd2bb6dc655e1160019483b2a16446a00144",
       "intrinsicSize": {
         "widthDp": 192,
         "heightDp": 192
@@ -328,9 +328,9 @@
       "resourceName": "lk_brand_logo_corporate_square_light",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-official-corporate-light.svg",
-      "sourceSha256": "990bcb6d3acb5686d54e85877fd93332f8a5515214b6640529ac1bf5c78e3749",
+      "sourceSha256": "4fe17474ee6e7050d907a9c0b9a998af270034187439a2f078bd175bed36de85",
       "vectorDrawablePath": "assets/brand/platforms/android/res/drawable/lk_brand_logo_corporate_square_light.xml",
-      "vectorDrawableSha256": "32724a7d903b9b64f2401353e595b17400f7e9b1f9417b4c162610323d6a18fb",
+      "vectorDrawableSha256": "acde917c127b96238083fd1bed3c938a4e6a9e81d1202f0b8049cf5f268106fe",
       "intrinsicSize": {
         "widthDp": 192,
         "heightDp": 192

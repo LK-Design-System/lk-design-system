@@ -33,7 +33,7 @@ const VIEWBOX_METRICS = Object.freeze(Object.fromEntries(
 /**
  * LK ROBOTICS — Lockup
  * Self-contained SVG generated from the regulated brand construction. LK is
- * custom vector geometry; ROBOTICS is outlined from pinned Montserrat ExtraBold
+ * custom vector geometry; ROBOTICS is outlined from pinned Montserrat Bold
  * 800 and the canonical fixed PORTAL from pinned Montserrat SemiBold 600 v7.222.
  * ProductLockup's Portal registry entry uses the same paths. No runtime font is required.
  * `tone`: 'ink'/'brand' = official #05132B · 'white' · compatibility currentColor.

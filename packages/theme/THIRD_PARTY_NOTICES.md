@@ -34,7 +34,7 @@ SOFTWARE.
 ## Montserrat
 
 The outlined `ROBOTICS` wordmark in this package was generated from Montserrat
-ExtraBold 800. The canonical fixed `PORTAL` and parent-brand-first
+Bold 700. The canonical fixed `PORTAL` and parent-brand-first
 `ProductLockup` product names were generated from Montserrat SemiBold 600.
 Both are Version 7.222 (Copyright 2011 The Montserrat Project Authors), licensed
 under the SIL Open Font License 1.1. No font binary or runtime font dependency

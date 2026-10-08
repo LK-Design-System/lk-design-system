@@ -828,7 +828,7 @@ export const LKRoboticsLogo = {
           LK ROBOTICS 로고
         </h2>
         <p style={{ margin: 0, maxWidth: 720, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-          커스텀 LK 심볼, Montserrat ExtraBold 800 워드마크, Noto Sans KR ExtraBold 800 한글 법인명을 하나의 제작 규정으로 정리했습니다. 공식 사각 조합은
+          커스텀 LK 심볼, Montserrat Bold 700 워드마크, Noto Sans KR ExtraBold 800 한글 법인명을 하나의 제작 규정으로 정리했습니다. 공식 사각 조합은
           색·비율·배치를 고정한 네이비·화이트 바탕 자산 중 하나를 사용하고, 제품 UI용 mark·stacked·inline도 같은 생성 원본을 사용합니다.
         </p>
       </header>
@@ -837,7 +837,7 @@ export const LKRoboticsLogo = {
         <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
           <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 22 }}>워드마크 · 법인명 제작 규정</h2>
           <p style={{ margin: 0, maxWidth: 760, color: 'var(--color-semantic-label-neutral)', lineHeight: 1.7 }}>
-            <strong>ROBOTICS는 Montserrat ExtraBold 800, Version 7.222로 고정합니다.</strong> 대문자, 글꼴 기본 커닝,
+            <strong>ROBOTICS는 Montserrat Bold 700, Version 7.222로 고정합니다.</strong> 대문자, 글꼴 기본 커닝,
             추가 자간 0, 가로·세로 동일 비율을 사용하며 글리프 윤곽을 임의로 수정하지 않습니다. 배포 결과물은 모두 path라
             서비스에서 Montserrat를 로드하지 않습니다.
           </p>
@@ -851,7 +851,7 @@ export const LKRoboticsLogo = {
           <li><strong>LK:</strong> 고정 geometry v1.0의 path·transform·visible bounds·hash를 정본으로 유지</li>
           <li><strong>ROBOTICS:</strong> 고정 TTF의 SHA-256을 검증한 뒤 아웃라인 생성</li>
           <li><strong>한글 법인명:</strong> 고정 가변 TTF의 SHA-256과 <code>wght=800</code> 인스턴스를 검증한 뒤 0.105em 자간으로 아웃라인 생성</li>
-          <li><strong>배치:</strong> inline은 심볼과 워드마크의 보이는 높이를 같게 하고, 간격은 심볼 보이는 폭의 20%</li>
+          <li><strong>배치:</strong> inline은 심볼과 워드마크의 보이는 높이를 같게 하고, 간격은 심볼 보이는 폭의 25%</li>
           <li><strong>사용:</strong> 공식 SVG 또는 <code>Lockup</code>만 사용하고 텍스트로 재조판하지 않음</li>
           <li><strong>정본:</strong> <code>assets/brand/lk-logo-construction.json</code> · 생성: <code>npm run generate:brand</code></li>
         </ul>

@@ -2,6 +2,12 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## Unreleased
+
+### Changed
+
+- 회사 워드마크 `ROBOTICS`를 Montserrat ExtraBold 800에서 **Bold 700** v7.222로 바꿨습니다(로고 표준 3.0.0, constructionVersion 6). 가로형에서 LK 심볼 대비 워드마크가 지나치게 무거워 보인다는 판단에 따른 결정이며, 심볼·정렬·커닝 규칙은 그대로이고, 가로형(inline·banner)의 심볼–워드마크 간격은 심볼 보이는 폭의 0.2배에서 0.25배로 넓혔습니다(stacked 0.2배, Portal 0.35배 유지). O 세로획은 현행 대비 82%, 워드마크 폭은 99%입니다. 생성 SVG 15종·`lk-logo-paths.js`·플랫폼 자산이 재생성되고 최소 슬롯 폭이 stacked `81.668433`, inline `156.254307`, banner `136.963949`로 바뀝니다. `vendor/montserrat-v7.222`는 Bold 바이너리를 핀하고 ExtraBold 바이너리를 제거합니다. Portal·ProductLockup의 SemiBold 600 제품명은 변경 없습니다.
+
 ## 0.4.3 - 2026-09-29
 
 Paired Robotics release: `0.1.0-rc.53` (unchanged).

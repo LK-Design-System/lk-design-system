@@ -13,7 +13,7 @@ const meta = {
       eyebrow: 'Theme / Brand',
       title: 'LK ROBOTICS 로고는 geometry v1.0과 고정된 글꼴·배치 규정에서 생성합니다',
       description:
-        'LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat ExtraBold 800 v7.222, 한글 법인명은 Noto Sans KR ExtraBold 800 v2.004-H2에서 아웃라인으로 생성합니다. construction grid, variant 저장소 정책 최소 크기, 0.5X/1X 여백, 배경·오용·플랫폼 전달 규칙을 함께 확인합니다.',
+        'LK는 고정된 geometry v1.0을 유지하고 ROBOTICS는 Montserrat Bold 700 v7.222, 한글 법인명은 Noto Sans KR ExtraBold 800 v2.004-H2에서 아웃라인으로 생성합니다. construction grid, variant 저장소 정책 최소 크기, 0.5X/1X 여백, 배경·오용·플랫폼 전달 규칙을 함께 확인합니다.',
       decisionGuidance: {
         useWhen: '회사 식별, 제품 내 브랜드 진입점, 법인명 표기처럼 LK ROBOTICS 정체성을 공식 자산으로 전달할 때 용도와 슬롯에 맞는 variant를 선택합니다.',
         avoidWhen: '기능 아이콘, 반복 장식, 임의 재조판·비균일 변형, 정책 최소보다 작은 슬롯, 승인되지 않은 app icon이나 공동 브랜딩 조합에는 사용하지 않습니다.',

@@ -17,5 +17,5 @@ export interface LockupProps extends Omit<React.SVGProps<SVGSVGElement>, 'color'
   decorative?: boolean;
 }
 
-/** 규정된 커스텀 LK 심볼, Montserrat ExtraBold 800 기업 워드마크, SemiBold 600 Portal 정본. 일반 제품 셸은 ProductLockup을 사용합니다. width/viewBox/style override는 호환용이며 브랜드 규격 사용에서는 금지합니다. */
+/** 규정된 커스텀 LK 심볼, Montserrat Bold 700 기업 워드마크, SemiBold 600 Portal 정본. 일반 제품 셸은 ProductLockup을 사용합니다. width/viewBox/style override는 호환용이며 브랜드 규격 사용에서는 금지합니다. */
 export function Lockup(props: LockupProps): React.JSX.Element;

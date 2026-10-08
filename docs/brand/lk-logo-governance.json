@@ -3,9 +3,9 @@
   "recordType": "lk-logo-governance",
   "standard": {
     "id": "lk-robotics-logo",
-    "version": "2.0.0",
+    "version": "3.0.0",
     "status": "current-repository-standard",
-    "effectiveDate": "2026-08-11",
+    "effectiveDate": "2026-10-08",
     "scope": "repository brand assets, LK Design System runtime, and documented distribution workflow",
     "doesNotAssert": [
       "trademark-registration-status",
@@ -85,7 +85,7 @@
     "approvalRecord": null
   },
   "constructionContract": {
-    "constructionVersion": 5,
+    "constructionVersion": 6,
     "geometryVersion": "1.0",
     "visibleMarkWidthToX": 1.0817599905987594,
     "clearSpace": {
@@ -105,9 +105,9 @@
     },
     "minimumSlotLogicalUnits": {
       "markWidth": 21.431318,
-      "stackedWidth": 82.61299,
-      "inlineWidth": 156.324048,
-      "bannerWidth": 137.019722
+      "stackedWidth": 81.668433,
+      "inlineWidth": 156.254307,
+      "bannerWidth": 136.963949
     }
   },
   "printColorStatus": {
