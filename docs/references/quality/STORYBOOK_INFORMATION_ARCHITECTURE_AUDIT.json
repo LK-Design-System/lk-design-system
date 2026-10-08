@@ -25741,11 +25741,11 @@
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/Brand.stories.jsx",
-      "sourceSha256": "45f2fdd780eecb1dcfa50e468adf5710bfd9275bd8b6c55879c444e920b7dde1",
+      "sourceSha256": "4c26ed9bde4c5459ce5aa2673b1b946493657a3cca12da9da497bdbf14f956e5",
       "sourceDependencies": [
         {
           "path": "stories/Brand.shared.jsx",
-          "sha256": "5c409d2cc5e1453596373a3ccefc2a0dbe8d651b56a5196dbb6cbfc5d6620026"
+          "sha256": "d487d0f75ce1d6cb4a1229f026b0a22d181b69d59bbf2b6bf32d048e9384c841"
         }
       ],
       "primaryOwner": "Lockup",
@@ -25770,8 +25770,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Theme override or brand surface; keep this page and document allowed and disallowed use.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-05",
-      "reviewedSourceSha256": "45f2fdd780eecb1dcfa50e468adf5710bfd9275bd8b6c55879c444e920b7dde1",
+      "reviewedAt": "2026-10-08",
+      "reviewedSourceSha256": "4c26ed9bde4c5459ce5aa2673b1b946493657a3cca12da9da497bdbf14f956e5",
       "stories": [
         {
           "id": "lds-theme-brand-lk-robotics-logo--lk-robotics-logo",
@@ -25820,7 +25820,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation.\\n\\n2026-08-11 source and rendered visual re-review confirmed the fixed Portal examples use the parent-brand-first SemiBold 600 canonical without changing LK geometry, role, story visibility, or public API. The page-wide Axe run still reports the pre-existing 12px red misuse-label contrast defect outside the Portal examples; ProductLockup's focused Axe contract is clean.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\\n\\n2026-08-05 source and built-index re-review completed for the release-branch consolidation. Ownership, role, visibility, and rendered Storybook entry were checked against the current implementation.\\n\\n2026-08-11 source and rendered visual re-review confirmed the fixed Portal examples use the parent-brand-first SemiBold 600 canonical without changing LK geometry, role, story visibility, or public API. The page-wide Axe run still reports the pre-existing 12px red misuse-label contrast defect outside the Portal examples; ProductLockup's focused Axe contract is clean.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement. 2026-10-08: 가로형(inline·banner) ROBOTICS를 Bold 700, 간격 0.25배로 바꾸고 세로형은 ExtraBold 800을 유지하는 결정에 맞춰 설명 문장을 갱신한 뒤 다시 검토했다. 페이지·스토리 구성은 그대로다."
     },
     {
       "title": "LDS Theme/Brand/Product Lockup",
