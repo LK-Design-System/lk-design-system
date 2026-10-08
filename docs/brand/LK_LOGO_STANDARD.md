@@ -1,16 +1,16 @@
-# LK ROBOTICS 로고 브랜드 표준 v4.0
+# LK ROBOTICS 로고 브랜드 표준 v4.1
 
 | Field | Value |
 | --- | --- |
 | Type | Brand policy and construction standard |
 | Status | Current |
 | Owner | Brand owner · Design system owner |
-| Last reviewed | 2026-10-08 |
-| Standard version | 4.0.0 |
+| Last reviewed | 2026-10-09 |
+| Standard version | 4.1.0 |
 | Construction source | [`../../assets/brand/lk-logo-construction.json`](../../assets/brand/lk-logo-construction.json) |
 | Governance record | [`lk-logo-governance.json`](lk-logo-governance.json) |
 
-이 표준은 현재 저장소에서 LK ROBOTICS 로고를 선택·배치·검수·배포하는 기준입니다. 로고의 법적 등록 여부를 주장하거나 외부 사용 권한을 자동으로 부여하지는 않습니다. 법인·상표·파트너 맥락의 공개 사용은 [외부 사용과 승인](#외부-사용과-승인)을 별도로 통과해야 합니다. 제품 UI 셸의 모브랜드 우선 `LK mark + 제품명` outline은 별도 [`LK 제품 로크업 표준`](LK_PRODUCT_LOCKUP_STANDARD.md)의 승인 registry를 따르며, 임의 문자열을 runtime font로 조판하지 않습니다.
+이 표준은 현재 저장소에서 LK ROBOTICS 로고를 선택·배치·검수·배포하는 기준입니다. 로고의 법적 등록 여부를 주장하거나 외부 사용 권한을 자동으로 부여하지는 않습니다. 법인·상표·파트너 맥락의 공개 사용은 [외부 사용과 승인](#외부-사용과-승인)을 별도로 통과해야 합니다. 제품 UI 셸의 모브랜드 우선 `LK mark + 제품명` outline은 별도 [`LK 제품 로크업 표준`](LK_PRODUCT_LOCKUP_STANDARD.md)의 승인 registry를 따르며, 임의 문자열을 runtime font로 조판하지 않습니다. 회사 inline 로크업 뒤에 승인 제품명을 붙이는 회사 보증 형도 같은 registry가 소유합니다.
 
 ## 1. v2.0 정본과 권위
 
@@ -59,7 +59,7 @@ v2.0은 커스텀 LK 심볼의 geometry v1.0을 그대로 동결하고, 고정 P
 | --- | --- |
 | `ROBOTICS` (stacked·official·tile·corporate·master) | 대문자 `ROBOTICS`; Montserrat ExtraBold 800 v7.222; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지 |
 | `ROBOTICS` (inline·banner) | 같은 문자열·규칙; Montserrat Bold 700 v7.222. 세로형보다 한 단계 가벼운 weight로 가로 배치에서 심볼과의 무게 균형을 맞춘다 |
-| 승인 제품명 | 현재 `CONSOLE`·`PORTAL`; Montserrat SemiBold 600 v7.222; 대문자; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지; registry 밖 이름 금지. 고정 Portal과 registry Portal은 같은 정본 path 사용 |
+| 승인 제품명 | 현재 mark 형 `CONSOLE`·`PORTAL`, 회사 보증 형 `Portal`; Montserrat SemiBold 600 v7.222; mark 형은 대문자, 회사 보증 형은 canonical 대소문자; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지; registry 밖 이름 금지. 고정 Portal과 registry Portal은 같은 정본 path 사용 |
 | 법인명 | NFC `주식회사 엘케이로보틱스`; Pretendard ExtraBold 800 v1.3.9(UI 타이포그래피와 같은 글꼴·같은 바이트); 기본 kerning; 글자 사이 `0.105em`; 마지막 글자 뒤 tracking 없음; 수평·수직 scale `1`; 수동 glyph 수정 금지 |
 | 배포 | 모든 wordmark·제품명·법인명은 SVG outline path; `<text>` 금지; 런타임 글꼴 의존성 없음 |
 
@@ -72,6 +72,7 @@ v2.0은 커스텀 LK 심볼의 geometry v1.0을 그대로 동결하고, 고정 P
 | stacked | `ROBOTICS` 명목 cap height `0.25X`; 심볼 보이는 폭의 `0.2배` 간격; 가로 중앙 정렬 |
 | inline | `ROBOTICS` 보이는 높이 `1X`; 심볼 보이는 폭의 `0.25배` 간격; 보이는 bounds 기준 세로 정렬 |
 | ProductLockup | 승인 제품명 보이는 높이 `1X`; 심볼 보이는 폭의 `0.35배` 간격(약 `0.378616X`, **`0.35X`가 아님**); 보이는 bounds 기준 세로 정렬 |
+| ProductLockup 회사 보증 형 | 회사 inline 조합 + 제품명 cap height = `ROBOTICS` cap height(`0.966851X`), baseline 공유, `ROBOTICS` 잉크 끝에서 심볼 보이는 폭의 `0.35배` 간격 |
 | corporate | 법인명 보이는 폭 `1.9X`; 상단 로크업과 `0.21X` 간격; 상단 로크업 보이는 중심축에 중앙 정렬 |
 | banner | inline 조합을 사용하고 사방 `0.5X` 보호 여백을 자산 안에 포함 |
 
@@ -83,6 +84,7 @@ v2.0은 커스텀 LK 심볼의 geometry v1.0을 그대로 동결하고, 고정 P
 | inline | Top bar, Side navigation, 가로 헤더, 제한된 세로 공간 | 정사각형 중심 구성, 법인명 필수 문서 | `lk-logo-inline-navy.svg`, `lk-logo-inline-white.svg`, `Lockup variant="inline"` |
 | portal fixed lockup | 기존 Portal 통합 또는 고정 Portal 정본이 필요한 표면 | 다른 제품명, 신규 registry 확장, 자유 텍스트 slot | `Lockup variant="portal"` |
 | registered product lockup | Console·Portal의 TopBar·SideNav 제품 식별 | Web Viz·Control(승인 대기), 임의 제품명, 고객·환경·상태 문자열 | `ProductLockup product="console"` / `product="portal"` |
+| company-endorsed product lockup | Portal 시작 화면·로그인 등 넓은 첫인상 표면 | 내비게이션 rail·TopBar, 미등록 제품, mark 형과 같은 화면 | `ProductLockup product="portal" endorsement="company"`, `lk-lockup-company-portal-navy.svg`, `lk-lockup-company-portal-white.svg` |
 | stacked | 세로 중심 구성, 정사각형에 가까운 브랜드 영역 | 낮은 높이의 탐색 바 | `lk-logo-navy.svg`, `lk-logo-white.svg`, `Lockup variant="stacked"` |
 | official square | 프로필, 일반 회사 식별, 고정된 정사각형 표면 | 법인명 표기가 필요한 공식 서류 | `lk-logo-official.svg`, `lk-logo-official-light.svg` |
 | corporate square | 회사 소개, 법인 식별, 대외 문서에서 법인명이 필요한 경우 | 최소 크기를 확보할 수 없는 UI | `lk-logo-official-corporate.svg`, `lk-logo-official-corporate-light.svg` |
@@ -95,10 +97,10 @@ v2.0은 커스텀 LK 심볼의 geometry v1.0을 그대로 동결하고, 고정 P
 
 ## 4. 보호 여백
 
-- 투명 mark·inline·stacked·portal fixed lockup·registered product lockup: 전체 보이는 로고 bounds의 상·하·좌·우에 최소 `0.5X`
+- 투명 mark·inline·stacked·portal fixed lockup·registered product lockup·company-endorsed product lockup: 전체 보이는 로고 bounds의 상·하·좌·우에 최소 `0.5X`
 - 공동 브랜딩: LK 로고의 보이는 bounds와 파트너 로고·구분선·문자 사이에 최소 `1X`
 - banner: 생성 자산이 사방 `0.5X`를 포함합니다. 자산을 crop하면 보호 여백도 제거되므로 금지합니다.
-- 투명 mark·inline·stacked·portal fixed lockup·registered product lockup: SVG의 tight `viewBox` padding은 렌더링 안전 여유일 뿐 브랜드 보호 여백이 아닙니다. 배치 컨테이너에서 별도로 확보합니다.
+- 투명 mark·inline·stacked·portal fixed lockup·registered product lockup·company-endorsed product lockup: SVG의 tight `viewBox` padding은 렌더링 안전 여유일 뿐 브랜드 보호 여백이 아닙니다. 배치 컨테이너에서 별도로 확보합니다.
 - official·corporate·tile·favicon: 배경 사각형과 내부 padding을 그대로 유지하고 crop하지 않습니다. 내부 심볼을 기준으로 `0.5X`를 다시 더하는 계약은 아니며, 주변 콘텐츠와의 외부 간격은 완성된 containment canvas 경계부터 사용 매체의 레이아웃 규칙을 적용합니다.
 
 여백 안에는 제목, 버튼, 테두리, 사진의 강한 모서리, 다른 로고, 워터마크를 넣지 않습니다. 배경색 자체와 전체 표면을 채우는 균일한 색상은 여백 침범으로 보지 않습니다.
@@ -115,6 +117,7 @@ v2.0은 커스텀 LK 심볼의 geometry v1.0을 그대로 동결하고, 고정 P
 | inline | `20px` | 기본 `28px` 이상 | 전체 SVG 렌더 높이 |
 | portal fixed lockup | `20px` | 기본 `28px` 이상 | 승인된 전체 `LK Portal` SVG 렌더 높이 |
 | registered product lockup | `20px` | `ProductLockup` 기본값 `28px` | 전체 SVG 렌더 높이; 좁은 rail은 `compact`로 명시 전환 |
+| company-endorsed product lockup | `20px` | `28px` 이상 | 전체 SVG 렌더 높이. 최소 슬롯 폭 `233.923423`(Portal); compact 없음 |
 | stacked | `64px` | 기본 `64px` 이상 | 전체 SVG 렌더 높이 |
 | banner | `28px` | 사용 표면에 맞춰 확대 | 전체 banner SVG 렌더 높이; crop 금지 |
 | official square / tile | `64px` | `96px` 이상 | 정사각형 한 변 |
@@ -185,7 +188,7 @@ CMYK/Pantone을 추가하려면 최소한 출력 공정, ICC profile, 용지·�
 | `LK`를 폰트로 재조판 | 커스텀 심볼과 다른 형태가 됨 | 정본 path 사용 |
 | `ROBOTICS` 또는 법인명 재입력 | pinned font·kerning·tracking·outline이 달라짐 | 생성 SVG 사용 |
 | 워드마크 크기·간격·중심 이동 | 조합 비율이 깨짐 | 적합한 공식 variant 선택 |
-| 심볼과 워드마크 분리·재결합 | 승인되지 않은 lockup 생성 | mark 또는 완성된 lockup 중 하나 사용 |
+| 심볼과 워드마크 분리·재결합 | 승인되지 않은 lockup 생성 | mark 또는 완성된 lockup 중 하나, 또는 승인된 회사 보증 형 사용 |
 | 임의 색·그라디언트·사진 mask | 정본 색상과 실루엣이 사라짐 | positive/reverse/containment 자산 사용 |
 | outline, shadow, glow, bevel, 3D | 승인되지 않은 효과로 형태가 달라짐 | 효과 없는 원본 사용 |
 | 투명도 변경 | 대비와 정본 색이 불안정해짐 | 100% opacity 유지 |
@@ -239,7 +242,7 @@ CMYK/Pantone을 추가하려면 최소한 출력 공정, ICC profile, 용지·�
 | --- | --- | --- |
 | SVG | 공식 원본 형식 | outline path와 `preserveAspectRatio` 유지; path 직접 편집 금지 |
 | React `Lockup` | 제품 UI 공식 runtime | 승인 variant와 색상 정책 사용; `height`가 최소 크기 이상인지 확인 |
-| React `ProductLockup` | 제품 UI 로크업 runtime | `console`·`portal` registry의 SemiBold 600 승인 SVG outline만 렌더; 기본 28px·최소 20px, positive/reverse, full/compact; raw text·runtime font 금지 |
+| React `ProductLockup` | 제품 UI 로크업 runtime | `console`·`portal` registry의 SemiBold 600 승인 SVG outline만 렌더; `endorsement` mark/company(회사 보증 형은 `portal`만, compact 없음); 기본 28px·최소 20px, positive/reverse, full/compact; raw text·runtime font 금지 |
 | PNG | 필요 시 파생 export | 승인 SVG에서 최종 픽셀 크기와 `1x/2x`로 내보내고 재압축·재확대 체인을 만들지 않음 |
 | PDF / EPS | 현재 공식 생성물 없음 | 인쇄업체가 요구하면 승인 SVG에서 곡선을 보존해 제작하고 proof 승인 전에는 새 정본으로 취급하지 않음 |
 | 폰트 포함 파일 | 배포 불필요 | wordmark와 법인명은 outline이므로 logo 사용을 위해 폰트를 설치·동봉하지 않음 |
@@ -267,7 +270,7 @@ construction manifest, governance 원문과 build-time 글꼴은 저장소 루�
 | --- | --- | --- |
 | LK Web Viz | `migration-required` | registry는 `registry-name-approval-pending`이므로 `ProductLockup` 미지원; 로컬 gradient PNG migration과 회사 `Lockup` 적용은 별도 수행 |
 | LK Control Full Daedeok | `migration-required` | registry는 `registry-name-approval-pending`이므로 `ProductLockup` 미지원; 로그인 로컬 asset은 승인 회사 `Lockup` 자산으로 교체 |
-| LK Portal | `contract-compatible-upgrade-required` | 고정 `Lockup variant="portal"`과 `ProductLockup product="portal"`은 같은 SemiBold 600 정본; 제품은 이를 포함한 LDS release로 upgrade |
+| LK Portal | `contract-compatible-upgrade-required` | 시작 화면(홈 hero)·로그인은 `ProductLockup product="portal" endorsement="company"`(「LK ROBOTICS Portal」), 셸 브랜드 슬롯(SideNav 머리·모바일 TopBar·Drawer)은 회사 `Lockup variant="inline"`, 접힌 rail은 `Lockup variant="mark"`; mark 형 「LK PORTAL」은 공개 API로 유지하되 Portal 셸에서 회사 보증 형과 함께 쓰지 않음. 제품은 이를 포함한 LDS release로 upgrade |
 
 이 판정은 audit에 pin된 revision의 증거입니다. 제품의 최신 상태를 자동으로 보증하지 않으므로 migration 완료를 주장하려면 source pin과 asset checksum을 다시 갱신합니다.
 
@@ -299,6 +302,7 @@ construction manifest, governance 원문과 build-time 글꼴은 저장소 루�
 
 | Standard | constructionVersion | 일자 | 결정 | 근거 |
 | --- | --- | --- | --- | --- |
+| 4.1.0 | 7 | 2026-10-09 | 회사 보증 형 제품 로크업 family 추가(Portal 「LK ROBOTICS Portal」, product lockup constructionVersion 3). 회사 inline 단위·기존 variant·mark 형 출력 변경 없음. | owner 승인(2026-10-09, coordinator 전달). **TODO(owner): [`lk-logo-governance.json`](lk-logo-governance.json) `approvalRecords`에 승인자 이름·일자를 owner가 직접 기재해야 합니다.** 기재 전에는 14.2의 규칙대로 이 행을 승인 기록으로 보지 않습니다. 근거와 작도는 [`LK_PRODUCT_LOCKUP_STANDARD.md`](LK_PRODUCT_LOCKUP_STANDARD.md) 3.1. |
 | 4.0.0 | 7 | 2026-10-08 | 법인명 `주식회사 엘케이로보틱스` 글꼴을 Noto Sans KR ExtraBold `wght=800` v2.004-H2에서 UI 타이포그래피와 같은 Pretendard ExtraBold 800 v1.3.9로 변경. 자간 0.105em, 보이는 폭 1.9X, 0.21X 간격, 중앙 정렬 유지. | 로고와 UI의 한국어 글꼴을 하나로 통일하자는 design-system owner(jinhyuk2me) 결정. Noto 800·Pretendard 800(자간 0.105/0.06em)·Pretendard 700을 192·160·96px 기업 표기형에서 비교해 Pretendard 800 + 자간 0.105em을 선택했다. 글자 높이 0.155X→0.157X로 사실상 동일. 가변 TTF·fontkit 인스턴스 경로를 제거하고 정적 woff2를 핀하며, 생성기가 vendor 사본과 `assets/fonts`의 UI 글꼴 SHA 일치를 검증한다. |
 | 3.0.0 | 6 | 2026-10-08 | 가로형(inline·banner)의 `ROBOTICS` 워드마크를 Montserrat Bold 700 v7.222로 변경하고 심볼과의 간격을 심볼 보이는 폭의 0.2배에서 0.25배로 넓힘. 세로형(stacked·official·tile·corporate·master)은 ExtraBold 800과 0.2배 간격 유지. 심볼 geometry v1.0, 보이는 bounds 정렬, 기본 커닝, 자간 0 유지. | 가로형에서 LK 심볼 대비 워드마크가 지나치게 무겁다는 design-system owner(jinhyuk2me) 판단. 같은 구성 규칙으로 800·700·600·500·400을 48px·20px·navy·white에서 비교해 700을 선택했고, 700 기준 간격 0.10~0.35배 비교에서 0.25배를 선택했다. 세로형은 심볼 아래 작은 cap height(0.25X)로 놓이므로 800을 유지한다. O 세로획 82%, 워드마크 폭 99%. Bold는 RIBBI 스타일이라 name ID 1이 `Montserrat`, name ID 2가 `Bold`이며 생성기는 full name으로 스타일을 검증한다. 최소 슬롯 폭 stacked `82.612990`, inline `156.254307`, banner `136.963949`. |
 | 2.0.0 | 5 | 2026-08-11 | 고정 Portal 정본과 ProductLockup registry를 SemiBold 600으로 분리. | [`LK_PRODUCT_LOCKUP_STANDARD.md`](LK_PRODUCT_LOCKUP_STANDARD.md) |

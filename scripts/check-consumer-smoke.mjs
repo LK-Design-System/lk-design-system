@@ -186,6 +186,7 @@ function App() {
         <Card>
           <h1 style={{ marginTop: 0 }}>LK 디자인 시스템 소비 앱 스모크</h1>
           <p>패키지명 import, styles.css export, React 컴포넌트 조합이 소비 앱 번들에서 동작해야 합니다.</p>
+          <ProductLockup data-testid="company-lockup" product="portal" endorsement="company" />
           <Button>운영 화면 열기</Button>
           <Button variant="secondary">보조 동작</Button>
           <ComponentDensityScope density="compact">
@@ -249,6 +250,11 @@ async function main() {
     assert((await facadeProbe.getAttribute('data-panel-position')) === 'absolute', 'Packed platform style facade did not resolve.');
     assert((await facadeProbe.getAttribute('data-semantic-contracts')) === '3', 'Packed semantic contract files or metadata did not resolve.');
     assert((await facadeProbe.innerText()) === '100%', 'Packed component-authoring facade did not resolve.');
+    const companyLockup = page.getByTestId('company-lockup');
+    assert((await companyLockup.getAttribute('role')) === 'img', 'Packed company-endorsed ProductLockup must render one image.');
+    assert((await companyLockup.getAttribute('aria-label')) === 'LK ROBOTICS Portal', 'Packed company-endorsed ProductLockup must be named like its visible text.');
+    assert((await companyLockup.getAttribute('data-product-lockup-endorsement')) === 'company', 'Packed ProductLockup did not resolve the company-endorsed form.');
+    assert((await companyLockup.locator('text').count()) === 0, 'Packed company-endorsed ProductLockup must not render SVG text.');
   } finally {
     await browser.close();
     server.close();

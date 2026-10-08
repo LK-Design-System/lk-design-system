@@ -3,9 +3,9 @@
   "contractVersion": 1,
   "generatedBy": "scripts/generate-brand-platform-assets.mjs",
   "brandStandard": {
-    "version": "4.0.0",
+    "version": "4.1.0",
     "status": "current-repository-standard",
-    "governanceSha256": "a01d5462cb53d7ebdad7be3fd48d6864b7ae5e207f2df92d4f8fd43270dffc2b",
+    "governanceSha256": "7b2918d535df9f5bc486f1b27645e4ccb630a78ef63233f8854dc75af7b5d5a3",
     "minimumSizePolicy": {
       "status": "repository-policy-pending-human-optical-approval",
       "humanOpticalApproval": false,
@@ -23,7 +23,7 @@
     },
     "governance": {
       "path": "docs/brand/lk-logo-governance.json",
-      "sha256": "a01d5462cb53d7ebdad7be3fd48d6864b7ae5e207f2df92d4f8fd43270dffc2b",
+      "sha256": "7b2918d535df9f5bc486f1b27645e4ccb630a78ef63233f8854dc75af7b5d5a3",
       "distribution": "repository-docs-only",
       "resolvableInPackage": false
     },

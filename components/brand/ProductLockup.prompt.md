@@ -8,6 +8,7 @@ TopBar·SideNav에서 `LK + 제품명`을 **LK 모브랜드 우선 로고 문법
 - 회사 식별 `LK ROBOTICS`와 고정 `LK Portal` 정본은 `Lockup`을 유지합니다. 고정 Portal은 registry Portal과 같은 조형입니다.
 - `product`는 현재 `console`과 `portal`만 승인되어 있습니다. Web Viz·Control은 공식 짧은 제품명 승인과 registry 등록 전까지 임의 조판하지 않습니다.
 - 법인·파트너·마케팅용 새로운 공식 자산 export는 별도 브랜드 승인 절차가 필요합니다.
+- 홈 hero·로그인처럼 넓은 첫인상 표면에서 회사가 앞서는 「LK ROBOTICS Portal」이 필요하면 `endorsement="company"`(회사 보증 형)를 씁니다. 현재 `portal`만 승인되어 있습니다. 같은 화면에 mark 형과 회사 보증 형을 함께 두지 않고, 셸의 좁은 브랜드 슬롯(SideNav 머리·TopBar·Drawer)은 회사 `Lockup variant="inline"`, 접힌 rail은 `Lockup variant="mark"`를 씁니다.
 
 ## 모브랜드 우선 작도
 
@@ -25,6 +26,30 @@ TopBar·SideNav에서 `LK + 제품명`을 **LK 모브랜드 우선 로고 문법
 <ProductLockup product="console" compact />
 ```
 
+## 회사 보증 형 (`endorsement="company"`)
+
+회사 inline 로크업(`LK` + Montserrat Bold 700 `ROBOTICS`)을 바꾸지 않고, 그 뒤에 승인 제품명을 **canonical 대소문자**(예: `Portal`) Montserrat SemiBold 600 outline으로 붙인 회사 보증 형입니다. 2026-10-09 owner가 family 추가와 「Portal」 표기를 승인했습니다(제품 로크업 표준 1.4.0, 로고 표준 4.1.0, registry constructionVersion 3).
+
+- 회사 단위: `Lockup variant="inline"`과 같은 `ROBOTICS_INLINE_PATHS`·`ROBOTICS_INLINE_TRANSFORM`. 생성기가 같은 helper(`scripts/brand/inline-construction.mjs`)로 다시 계산해 동일성을 검증합니다.
+- 제품명 크기: 대문자 높이 = `ROBOTICS` 대문자 높이(`0.966851X`). 두 글꼴 모두 cap 700/UPM 1000이라 배율이 inline과 같습니다. 소문자 `l`의 어센더는 cap보다 `0.041X` 솟지만 inline 세로 프레임(padding 4) 안에 듭니다. 잉크 높이로 배율을 정하지 않습니다.
+- baseline: `ROBOTICS`와 공유합니다.
+- 간격: `ROBOTICS` 잉크 끝에서 제품명 잉크 시작까지 LK mark 보이는 폭의 `0.35`배(`0.378616X`). LK–ROBOTICS 간격(`0.25`배)보다 넓어 회사 단위와 제품명이 구분됩니다.
+- 세로 프레임: inline과 같은 viewBox 높이라 같은 `height`에서 X가 같습니다. Portal 결과는 `viewBox 342.60933 149.18987 750.459089 64.1628`, 제품명 transform `matrix(0.077573 0 0 0.077573 853.8673 208.421795)`입니다.
+- 크기: 기본 `28px`, 최소 `20px`(20px에서 최소 슬롯 폭 `233.923423px`). 시작 화면은 28px 이상을 권장합니다.
+- 축소: `preserveAspectRatio="xMidYMid meet"`와 `max-width:100%; height:auto`로 비례 축소만 합니다. crop·wrap·말줄임·compact가 없고, `compact`를 함께 넘기면 TypeError입니다. 슬롯이 최소 폭보다 좁으면 셸이 회사 `Lockup inline`이나 `mark`로 전환합니다.
+- 색: positive 전체 `#05132B`, reverse 전체 `#FFFFFF`. 제품명만 다른 색으로 두지 않습니다.
+- 접근성: 기본 이름은 보이는 글과 같은 `LK ROBOTICS {label}`입니다. 링크 안에서는 `decorative`로 두고 링크가 `LK ROBOTICS Portal 홈`처럼 목적지를 포함한 이름을 가집니다. `h1` 안에서는 장식으로 숨기지 않거나 heading 이름을 보이는 글과 같게 둡니다.
+- motion: 없음. 호스트 등장 motion을 로고에 걸지 않습니다.
+- 루트 자산 `assets/brand/lk-lockup-company-portal-{navy,white}.svg`를 함께 생성합니다. platform manifest에는 넣지 않습니다.
+- 한글 제품명(「포털」)은 Montserrat에 글리프가 없어 이번 범위가 아닙니다. 등록하려면 Pretendard SemiBold를 pin하는 별도 개정이 필요합니다.
+
+```jsx
+<ProductLockup product="portal" endorsement="company" height={32} />
+<ProductLockup product="portal" endorsement="company" appearance="reverse" />
+```
+
+외부 근거: [Atlassian logos](https://atlassian.design/foundations/logos)의 property logo(회사 logomark·wordmark 뒤 property 이름, 「회사 + 이름」 alt, 호출부 조합 금지. 이름만 neutral 색으로 두는 방식은 LK 승인 색 밖이라 채택하지 않음), [Red Hat product logos](https://www.redhat.com/en/about/brand/standards/product-logos)·[universal logos](https://www.redhat.com/en/about/brand/standards/universal-logos)(회사 로고 먼저·full 제품명, custom text lockup 금지), [GOV.UK brand hierarchy](https://brand.design-system.service.gov.uk/logo-system/brand-hierarchy)(wordmark와 이름 사이 간격을 wordmark 자체 기하로 정의 → mark 폭 `0.35`배 재사용), [W3C Images of text](https://www.w3.org/WAI/tutorials/images/textual/)(logo 대체 텍스트 = 보이는 글).
+
 ## 반응형과 조합
 
 full lockup을 줄바꿈·말줄임·비균등 축소하지 않습니다. 폭이 부족하면 제품 셸이 자신의 breakpoint에서 `compact`로 전환합니다. SideNav rail은 compact, expanded SideNav와 일반 TopBar는 full이 기본입니다. 링크·route·click·breakpoint·tooltip은 제품 셸이 소유합니다.
@@ -37,7 +62,7 @@ full lockup을 줄바꿈·말줄임·비균등 축소하지 않습니다. 폭이
 </a>
 ```
 
-독립 사용은 하나의 `role="img"`와 registry label 기반 이름 `LK Console` 또는 `LK Portal`을 제공합니다. `compact`도 같은 이름을 유지합니다. 이름을 소유한 링크·버튼 안에서는 `decorative`로 중복 낭독을 막습니다.
+독립 사용은 하나의 `role="img"`와 registry label 기반 이름 `LK Console` 또는 `LK Portal`(회사 보증 형은 `LK ROBOTICS Portal`)을 제공합니다. `compact`도 같은 이름을 유지합니다. 이름을 소유한 링크·버튼 안에서는 `decorative`로 중복 낭독을 막습니다.
 
 ## Registry와 승인
 

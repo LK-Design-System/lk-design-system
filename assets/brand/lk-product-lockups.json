@@ -1,7 +1,22 @@
 {
   "schemaVersion": 1,
-  "constructionVersion": 2,
-  "description": "Approved parent-brand-first LK product-shell lockup registry. Typography comes from lk-logo-construction.json#productLockupWordmark and geometry from layout.productLockup; the Portal entry is synchronized with the canonical fixed Portal asset.",
+  "constructionVersion": 3,
+  "description": "Approved parent-brand-first LK product-shell lockup registry. Typography comes from lk-logo-construction.json#productLockupWordmark and geometry from layout.productLockup; the Portal entry is synchronized with the canonical fixed Portal asset. A product may also register a company-endorsed form (company inline lockup + canonical-case product name) under `company`, laid out by `companyLockup`.",
+  "companyLockup": {
+    "companyUnit": "lockup-inline",
+    "productNameFont": "lk-logo-construction.json#productLockupWordmark",
+    "case": "canonical-label",
+    "latinPattern": "^[A-Z][A-Za-z]*(?: [A-Z][A-Za-z]*)*$",
+    "capHeightToRoboticsCapHeight": 1,
+    "baseline": "robotics-inline-baseline",
+    "gapToMarkWidth": 0.35,
+    "gapMeasurement": "robotics-ink-right-to-name-ink-left",
+    "verticalFrame": "inline-padded-mark-frame",
+    "defaultRenderedHeightPx": 28,
+    "minimumRenderedHeightPx": 20,
+    "appearances": ["positive", "reverse"],
+    "compact": false
+  },
   "products": {
     "console": {
       "label": "Console",
@@ -23,6 +38,16 @@
         "origins": [0, 726, 1568, 2289, 2856, 3605],
         "sourceBounds": [94, -710, 4195, 10],
         "finalAdvance": 4204
+      },
+      "company": {
+        "status": "approved",
+        "wordmark": "Portal",
+        "expected": {
+          "glyphIds": [169, 538, 576, 598, 406, 515],
+          "origins": [0, 714, 1359, 1794, 2218, 2825],
+          "sourceBounds": [94, -742, 3032, 7],
+          "finalAdvance": 3114
+        }
       }
     }
   }

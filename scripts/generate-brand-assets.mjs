@@ -8,6 +8,7 @@ import {
   LK_MARK_PATHS,
   LOGO_GEOMETRY,
 } from './brand/lk-logo-source.mjs';
+import { INLINE_WORDMARK_EXPECTED, layoutInlineWordmark } from './brand/inline-construction.mjs';
 
 const root = process.cwd();
 const checkOnly = process.argv.includes('--check');
@@ -190,37 +191,25 @@ assertArrayEqual(
   'wordmark ink bounds',
 );
 
-const inlineGlyphRows = [];
-const inlineFinalAdvance = inlineFont.forEachGlyph(
-  wordmarkText,
-  0,
-  0,
-  inlineFont.unitsPerEm,
-  { kerning: true },
-  (glyph, x, y, fontSize) => {
-    inlineGlyphRows.push({
-      letter: letters[inlineGlyphRows.length],
-      glyphId: glyph.index,
-      origin: x,
-      d: glyph.getPath(x, y, fontSize).toPathData(3),
-    });
-  },
-);
+/* 가로형 ROBOTICS 배치는 scripts/brand/inline-construction.mjs가 소유한다. 회사 보증
+   제품 로크업 생성기도 같은 helper로 회사 단위를 다시 계산해 동일성을 검증한다. */
+const inlineConstruction = layoutInlineWordmark({
+  font: inlineFont,
+  text: wordmarkText,
+  markBounds: LOGO_GEOMETRY.markBounds,
+  visibleWordmarkHeightToX: manifest.layout.inline.visibleWordmarkHeightToX,
+  gapToMarkWidth: manifest.layout.inline.gapToMarkWidth,
+});
+const inlineGlyphRows = inlineConstruction.glyphRows;
+const inlineFinalAdvance = inlineConstruction.finalAdvance;
 assertEqual(inlineGlyphRows.length, letters.length, 'inline glyph count');
 assertArrayEqual(inlineGlyphRows.map((row) => row.letter), letters, 'inline glyph sequence');
-assertArrayEqual(inlineGlyphRows.map((row) => row.glyphId), [172, 134, 32, 134, 194, 88, 33, 180], 'inline glyph IDs');
-assertArrayEqual(inlineGlyphRows.map((row) => row.origin), [0, 735, 1579, 2344, 3178, 3796, 4124, 4853], 'inline kerning-aware glyph origins');
-assertEqual(inlineFinalAdvance, 5491, 'inline kerning-aware word advance');
-const inlineSourceBoundsRaw = inlineFont.getPath(wordmarkText, 0, 0, inlineFont.unitsPerEm, { kerning: true }).getBoundingBox();
-const inlineSourceBounds = Object.freeze({
-  x: inlineSourceBoundsRaw.x1,
-  y: inlineSourceBoundsRaw.y1,
-  width: inlineSourceBoundsRaw.x2 - inlineSourceBoundsRaw.x1,
-  height: inlineSourceBoundsRaw.y2 - inlineSourceBoundsRaw.y1,
-});
+assertArrayEqual(inlineGlyphRows.map((row) => row.glyphId), INLINE_WORDMARK_EXPECTED.glyphIds, 'inline glyph IDs');
+assertArrayEqual(inlineGlyphRows.map((row) => row.origin), INLINE_WORDMARK_EXPECTED.origins, 'inline kerning-aware glyph origins');
+assertEqual(inlineFinalAdvance, INLINE_WORDMARK_EXPECTED.finalAdvance, 'inline kerning-aware word advance');
 assertArrayEqual(
-  [inlineSourceBoundsRaw.x1, inlineSourceBoundsRaw.y1, inlineSourceBoundsRaw.x2, inlineSourceBoundsRaw.y2],
-  [83, -712, 5463, 12],
+  inlineConstruction.sourceBoundsArray,
+  INLINE_WORDMARK_EXPECTED.sourceBounds,
   'inline wordmark ink bounds',
 );
 
@@ -352,18 +341,9 @@ const stackedTransform = matrix(
 
 /* 가로형은 자체 글꼴(inlineWordmark)의 원본 글리프를 쓰므로 stacked 변환에 이어
    붙지 않고 글꼴 단위에서 직접 배치한다. ROBOTICS_INLINE_SCALE은 그 절대 배율이다. */
-const inlineScale = (markBounds.height * layout.inline.visibleWordmarkHeightToX) / inlineSourceBounds.height;
-const inlineBounds = Object.freeze({
-  x: markBounds.x + markBounds.width + markBounds.width * layout.inline.gapToMarkWidth,
-  y: markBounds.y,
-  width: inlineSourceBounds.width * inlineScale,
-  height: inlineSourceBounds.height * inlineScale,
-});
-const inlineTransform = matrix(
-  inlineScale,
-  inlineBounds.x - inlineSourceBounds.x * inlineScale,
-  inlineBounds.y - inlineSourceBounds.y * inlineScale,
-);
+const inlineScale = inlineConstruction.scale;
+const inlineBounds = inlineConstruction.bounds;
+const inlineTransform = matrix(inlineScale, inlineConstruction.translateX, inlineConstruction.translateY);
 
 /* 제품형 로크업. `inline`과 같은 구성(워드마크 보이는 높이 = 1X, 보이는 bounds
    기준 세로 정렬)이되 간격만 0.35X다. `inline`이 stacked 변환에 이어 붙는 것과
@@ -701,8 +681,10 @@ const outputContracts = new Map([
 ]);
 
 assertArrayEqual([...outputs.keys()], [...outputContracts.keys()], 'generated brand output inventory');
+// Company-endorsed product lockups (lk-lockup-company-*.svg) are owned and
+// verified by generate-product-lockups.mjs, which reads the product registry.
 const repositoryBrandSvgPaths = (await readdir(path.join(root, 'assets/brand')))
-  .filter((name) => name.endsWith('.svg'))
+  .filter((name) => name.endsWith('.svg') && !name.startsWith('lk-lockup-company-'))
   .map((name) => `assets/brand/${name}`)
   .sort();
 const generatedBrandSvgPaths = [...outputContracts.entries()]

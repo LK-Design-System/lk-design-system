@@ -49,7 +49,7 @@ import {
   TextButton,
   Tooltip,
 } from '@lk-design-system/lds-core';
-import { LdsProvider, ThemeToggle } from '@lk-design-system/lds-theme';
+import { LdsProvider, ProductLockup, ThemeToggle } from '@lk-design-system/lds-theme';
 import {
   ConversationMessage,
   MessageFeed,
@@ -158,6 +158,13 @@ export const sideNavChildIconContract: React.ReactElement = (
     }]}
   />
 );
+export const companyEndorsedProductLockupContract: React.ReactElement = (
+  <ProductLockup product="portal" endorsement="company" appearance="reverse" height={32} />
+);
+// @ts-expect-error The company-endorsed lockup has no compact mode.
+export const invalidCompanyCompactContract: React.ReactElement = <ProductLockup product="portal" endorsement="company" compact />;
+// @ts-expect-error Only registry keys with an approved company form accept endorsement="company".
+export const invalidCompanyProductContract: React.ReactElement = <ProductLockup product="console" endorsement="company" />;
 // @ts-expect-error SideNav appearance only accepts the default or steel palette bundle.
 export const invalidSideNavAppearanceContract: React.ReactElement = <SideNav aria-label="잘못된 외형" items={[]} appearance="midnight" />;
 const temporaryNavigationTriggerRef = React.createRef<HTMLButtonElement>();

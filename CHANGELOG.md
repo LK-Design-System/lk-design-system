@@ -4,6 +4,10 @@ All notable package-facing changes are recorded here. The package follows semant
 
 ## Unreleased
 
+### Added
+
+- `ProductLockup`에 `endorsement` 축을 추가했습니다. 기본 `"mark"`는 기존 「LK PORTAL」·「LK CONSOLE」과 출력이 같습니다. `"company"`는 회사 inline 로크업(LK + Montserrat Bold 700 `ROBOTICS`) 뒤에 승인 제품명을 canonical 대소문자 Montserrat SemiBold 600 outline으로 붙인 회사 보증 형이며, 현재 `product="portal"`(「LK ROBOTICS Portal」)만 승인되어 있습니다(제품 로크업 표준 1.4.0, 로고 표준 4.1.0, product lockup constructionVersion 3). 제품명 cap height는 `ROBOTICS`와 같고 baseline을 공유하며, `ROBOTICS` 잉크 끝에서 LK 심볼 보이는 폭의 0.35배(약 0.378616X) 간격을 둡니다. viewBox 높이는 inline과 같아 같은 `height`에서 X가 같습니다. 기본 28px·최소 20px(최소 슬롯 폭 233.923423px), positive/reverse, 비례 축소만 지원하고 compact는 지원하지 않습니다(`compact`와 함께 쓰면 TypeError). 기본 접근성 이름은 `LK ROBOTICS Portal`입니다. 루트 자산 `lk-lockup-company-portal-navy.svg`·`-white.svg`를 추가했습니다(platform manifest에는 포함하지 않음). 생성기는 회사 단위를 `scripts/brand/inline-construction.mjs`로 다시 계산해 `ROBOTICS_INLINE_*`와 같은지 검증합니다. 회사 로고 construction(constructionVersion 7), 기존 SVG, mark 형 출력은 바뀌지 않으며 platform manifest는 표준 version과 governance SHA만 바뀝니다. 승인 기록은 owner가 `lk-logo-governance.json` `approvalRecords`에 직접 남겨야 합니다.
+
 ### Fixed
 
 - `MessageComposer`의 포커스 표시를 하나로 줄였습니다. 안쪽 textarea가 전역 `:focus-visible` 사각 링(`!important`)에 걸려 shell 안에 2px primary 사각형을 그리고, shell이 primary border와 4px `focus-ring` halo를 함께 그려 클릭만 해도 세 겹이 보였습니다. 이제 shell border만 새 component token `--component-message-composer-border-focus`(`cool-neutral-60`, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고 halo와 두께 변화는 없습니다. textarea는 product 규칙으로 전역 링에서 제외되며, slot과 send/stop 버튼의 2px 링은 그대로입니다. forced-colors에서는 focused shell이 `Highlight` outline을 그립니다.

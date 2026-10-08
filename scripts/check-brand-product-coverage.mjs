@@ -65,6 +65,14 @@ assert(
   JSON.stringify(productLockupModule.PRODUCT_LOCKUP_KEYS) === JSON.stringify(audit.standard.approvedProductKeys),
   'Brand audit approvedProductKeys must match the runtime ProductLockup registry.',
 );
+assert(
+  JSON.stringify(audit.standard.approvedCompanyLockupKeys) === JSON.stringify(['portal']),
+  'Only the portal key has an owner-approved company-endorsed ProductLockup form.',
+);
+assert(
+  JSON.stringify(productLockupModule.PRODUCT_LOCKUP_COMPANY_KEYS) === JSON.stringify(audit.standard.approvedCompanyLockupKeys),
+  'Brand audit approvedCompanyLockupKeys must match the runtime company-endorsed registry.',
+);
 
 for (const boundary of ['designSystemOwns', 'productOwns']) {
   const values = audit.ownershipBoundary?.[boundary];
@@ -143,6 +151,17 @@ assert(portalReplacement.assetKind === 'parent-brand-first-outlined-lockup', 'LK
 assert(portalReplacement.collapsedMode === 'compact', 'LK Portal must use ProductLockup compact mode in collapsed navigation.');
 assert(portalReplacement.collapsedVariant === 'mark', 'LK Portal collapsed navigation must use the approved mark.');
 assert(portalReplacement.renderedHeightPx >= construction.layout.mark.minimumRenderedHeightPx, 'LK Portal mark usage must meet the rendered mark minimum.');
+const portalCompany = portalReplacement.companyLockup;
+assert(portalCompany?.endorsement === 'company', 'LK Portal must record its company-endorsed lockup allocation.');
+assert(JSON.stringify(portalCompany.surfaces) === JSON.stringify(['home-hero', 'login']), 'LK Portal uses the company-endorsed lockup only on the home hero and sign-in.');
+assert(portalCompany.shellBrandSlotVariant === 'inline', 'LK Portal shell brand slots must use the company inline Lockup, not a second product mark.');
+assert(portalCompany.collapsedRailVariant === 'mark', 'LK Portal collapsed rail must use the approved mark.');
+assert(
+  portalCompany.minimumRequiredSlotWidthPx === productLockupModule.PRODUCT_LOCKUP_REGISTRY.portal.company.minimumRequiredSlotWidthPx,
+  'LK Portal company-endorsed minimum slot width must match the generated registry.',
+);
+assertNonEmptyString(portalCompany.decision, 'portal.replacement.companyLockup.decision');
+assert(documentation.includes('endorsement="company"'), `${documentationPath} must document the Portal company-endorsed allocation.`);
 assert(documentation.includes('npm run check:brand-products'), `${documentationPath} must document the brand product audit check.`);
 
 console.log(`Validated product brand asset audit: ${audit.reviews.length} products, geometry v${audit.standard.geometryVersion}.`);

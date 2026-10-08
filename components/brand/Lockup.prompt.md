@@ -59,6 +59,8 @@ favicon tile은 iOS AppIcon이나 Android adaptive icon이 아닙니다. 두 앱
 
 `variant="portal"`은 SemiBold 600으로 갱신한 LK Portal 고정 정본이며 `ProductLockup product="portal"`과 path·transform·viewBox가 같습니다. 기존 통합은 공개 `Lockup` API를 유지하고, 일반 제품 셸은 승인 registry의 `ProductLockup`을 사용합니다. 현재 `product` key는 `console | portal`만 지원합니다. 두 컴포넌트 모두 일반 제품명 slot이 아니므로 mark 옆에 live text를 직접 조판하거나 registry에 없는 이름을 우회 렌더링하지 않습니다. Web Viz와 Control은 canonical name과 outline 승인 전까지 미지원입니다. 자세한 기준은 [`LK_PRODUCT_LOCKUP_STANDARD.md`](../../docs/brand/LK_PRODUCT_LOCKUP_STANDARD.md)를 따릅니다.
 
+LK Portal 시작 화면(홈 hero·로그인)의 「LK ROBOTICS Portal」은 `ProductLockup product="portal" endorsement="company"`(회사 보증 형)입니다. 그 회사 단위는 이 컴포넌트의 `variant="inline"`과 path·transform·세로 프레임이 같습니다. Portal 셸의 좁은 브랜드 슬롯(SideNav 머리·모바일 TopBar·Drawer)은 `variant="inline"`, 접힌 rail은 `variant="mark"`를 쓰고, `variant="portal"`(「LK PORTAL」)은 Portal 셸에서 회사 보증 형과 함께 쓰지 않습니다.
+
 ## 색상과 배경
 
 - **Positive:** 흰색 또는 밝고 단순한 단색 배경에는 공식 네이비 `tone="ink"`를 사용합니다.
