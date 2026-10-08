@@ -5,17 +5,17 @@
   "brandStandard": {
     "version": "3.0.0",
     "status": "current-repository-standard",
-    "governanceSha256": "6e87143d71ad4817a5838dd21cc09115ac69ce716ac3f08dd165345223273c2b",
+    "governanceSha256": "316d47cddcec1842987970bf36efa70ba05f7738e41517b415afe495b09274fa",
     "minimumSizePolicy": {
       "status": "repository-policy-pending-human-optical-approval",
       "humanOpticalApproval": false,
       "approvalRecord": null
     }
   },
-  "sourceAssetSetSha256": "67c54349afdd733d7492c34276d7a56b1b8134049b241f452436027b6e34043e",
+  "sourceAssetSetSha256": "1569b176cfbaa2ee321e18df30b2de02a56a56c9ef0d177ce4c781b655d16c34",
   "sourceConstructionVersion": 6,
-  "sourceConstructionManifestSha256": "2321d96ae3d4ed5a984ff785be8eff48c6399209b00ff2a07f83dea4a59f4282",
-  "cacheKey": "lk-brand-c6-67c54349afdd733d",
+  "sourceConstructionManifestSha256": "c83bf9fce046bf28d4a5967679b0f85faa31f90e801391a78d701758d0af0d2f",
+  "cacheKey": "lk-brand-c6-1569b176cfbaa2ee",
   "delivery": {
     "type": "canonical-repository-svg",
     "assetsCopied": false,
@@ -118,9 +118,9 @@
       "tone": "navy",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-inline-navy.svg",
-      "sha256": "a7369ccaa88a2865d34402f9c68d8200618124d0198532c16ccf275ec10577ed",
-      "integrity": "sha256-pzacyqiKKGXTRAL5xo2CAGGBJNAZhTLBbM8nXsEFd+0=",
-      "byteLength": 4530,
+      "sha256": "27a8d205b1b60b60ad72e3826bf0e2b3bf9d54c8515df3393b8fc4233ff480b1",
+      "integrity": "sha256-J6jSBbG2C2CtcuOCa/Dis7+dVMhRXfM5O4/EIz/0gLE=",
+      "byteLength": 4016,
       "viewBox": {
         "x": 342.60933,
         "y": 149.18987,
@@ -145,9 +145,9 @@
       "tone": "white",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-inline-white.svg",
-      "sha256": "dd21f71c165b482e26206e62ee15d6bdb9d1f69125667087f9e7407a3b03e562",
-      "integrity": "sha256-3SH3HBZbSC4mIG5i7hXWvbnR9pElZnCH+edAejsD5WI=",
-      "byteLength": 4530,
+      "sha256": "f9f556302dd735b7941de7e66362724bbf9d19637444015fd0390c45405c7ca8",
+      "integrity": "sha256-+fVWMC3XNbeUHefmY2JyS7+dGWN0RAFf0DkMRUBcfKg=",
+      "byteLength": 4016,
       "viewBox": {
         "x": 342.60933,
         "y": 149.18987,
@@ -172,14 +172,14 @@
       "tone": "navy",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-navy.svg",
-      "sha256": "6500b9a0b743c64044bd3d9609d9930a16df547e1ddc817c6f7ec73f7994b067",
-      "integrity": "sha256-ZQC5oLdDxkBEvT2WCdmTChbfVH4d3IF8b37HP3mUsGc=",
-      "byteLength": 4439,
+      "sha256": "8c920d45563187d5cad9ea4dd5f05eff27e3bacf3e41dd4525262ef9f4a5d5b7",
+      "integrity": "sha256-jJINRVYxh9XK2epN1fBe/yfjus8+Qd1FJSYu+fSl1bc=",
+      "byteLength": 4277,
       "viewBox": {
-        "x": 319.030261,
+        "x": 318.308168,
         "y": 149.18987,
-        "width": 115.912809,
-        "height": 90.835829
+        "width": 117.356995,
+        "height": 90.916062
       },
       "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
       "minimumRendered": {
@@ -189,7 +189,7 @@
       },
       "minimumRequiredSlotWidth": {
         "axis": "slot-width",
-        "value": 81.668433,
+        "value": 82.61299,
         "unit": "css-px"
       }
     },
@@ -199,14 +199,14 @@
       "tone": "white",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-white.svg",
-      "sha256": "d6bb79f5558121e686cb641e5e243bd12334cfe96c60ef223c61a7ee6ebfdc36",
-      "integrity": "sha256-1rt59VWBIeaGy2QeXiQ70SM0z+lsYO8iPGGn7m6/3DY=",
-      "byteLength": 4439,
+      "sha256": "9637f8e642b95f38cfa0ed4270ff4a4d9af1b23d950295e634cdb82856cc04ce",
+      "integrity": "sha256-ljf45kK5XzjPoO1CcP9KTZrxsj2VApXmNM24KFbMBM4=",
+      "byteLength": 4277,
       "viewBox": {
-        "x": 319.030261,
+        "x": 318.308168,
         "y": 149.18987,
-        "width": 115.912809,
-        "height": 90.835829
+        "width": 117.356995,
+        "height": 90.916062
       },
       "clearSpaceApplication": "external-required-from-visible-artwork-bounds",
       "minimumRendered": {
@@ -216,7 +216,7 @@
       },
       "minimumRequiredSlotWidth": {
         "axis": "slot-width",
-        "value": 81.668433,
+        "value": 82.61299,
         "unit": "css-px"
       }
     },
@@ -226,9 +226,9 @@
       "tone": "navy",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-banner-navy.svg",
-      "sha256": "66c176f329150979dd36489ce145106ddbfdc832dce620ab0c606c6efa5bd299",
-      "integrity": "sha256-ZsF28ykVCXndNkic4UUQbdv9yDLc5iCrDGBsbvpb0pk=",
-      "byteLength": 4627,
+      "sha256": "cfe68a71d733595e2cb0fad53ff0a3624fb56da154abfba31daf6207a0385f03",
+      "integrity": "sha256-z+aKcdczWV4ssPrVP/CjYk+1baFUq/ujHa9iB6A4XwM=",
+      "byteLength": 4113,
       "viewBox": {
         "x": 318.52793,
         "y": 125.10847,
@@ -253,9 +253,9 @@
       "tone": "light",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-banner-light.svg",
-      "sha256": "d68452cc4bc5e8a68bc660719f6e1f1a0077a6ffa138eaa169bd1d1fe28ee3e1",
-      "integrity": "sha256-1oRSzEvF6KaLxmBxn24fGgB3pv+hOOqhab0dH+KO4+E=",
-      "byteLength": 4628,
+      "sha256": "0608dc6522bc05338112877b065acfeba8b86480fd71c16f5fbe8bd32950be8c",
+      "integrity": "sha256-BgjcZSK8BTOBEod7BlrP66i4ZID9ccFvX76L0ylQvow=",
+      "byteLength": 4114,
       "viewBox": {
         "x": 318.52793,
         "y": 125.10847,
@@ -280,9 +280,9 @@
       "tone": "navy",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-official.svg",
-      "sha256": "d6cd14381cb47ad80fca6027b0a8c5095be03932518dbbebe42519b5b553e137",
-      "integrity": "sha256-1s0UOBy0etgPymAnsKjFCVvgOTJRjbvr5CUZtbVT4Tc=",
-      "byteLength": 4504,
+      "sha256": "5f7e84b108fc915be8a911c4f994d63126fd7ff631e227973696de65293eaf91",
+      "integrity": "sha256-X36EsQj8kVvoqRHE+ZTWMSb9f/Yx4ieXNpbeZSk+r5E=",
+      "byteLength": 4342,
       "viewBox": {
         "x": 297.4293,
         "y": 114.3693,
@@ -307,9 +307,9 @@
       "tone": "light",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-official-light.svg",
-      "sha256": "81cd602f4cb7faf90d815b61f73ceb4a0626976542831d1f77cdafb5c5c67e66",
-      "integrity": "sha256-gc1gL0y3+vkNgVth9zzrSgYml2VCgx0fd82vtcXGfmY=",
-      "byteLength": 4524,
+      "sha256": "83c12ab87c31a25d660a2a88d774642388ee4e46a75624025e32f649becc07df",
+      "integrity": "sha256-g8EquHwxol1mCiqI13RkI4juTkanViQCXjL2Sb7MB98=",
+      "byteLength": 4362,
       "viewBox": {
         "x": 297.4293,
         "y": 114.3693,
@@ -334,9 +334,9 @@
       "tone": "navy",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-official-corporate.svg",
-      "sha256": "07981a1c9c6b426f0283a908ae9b91026d51e5fb189e448bfaa7368a96cf491b",
-      "integrity": "sha256-B5gaHJxrQm8Cg6kIrpuRAm1R5fsYnkSL+qc2ipbPSRs=",
-      "byteLength": 11272,
+      "sha256": "4f79ce7fddb226d8e360a2eeabf4b8b7f7a6a607a75efcf24179d570a4099cef",
+      "integrity": "sha256-T3nOf92yJtjjYKLuq/S4t/empgenXvzyQXnVcKQJnO8=",
+      "byteLength": 11110,
       "viewBox": {
         "x": 77.0213,
         "y": 114.3693,
@@ -361,9 +361,9 @@
       "tone": "light",
       "usage": "general-brand-asset",
       "sourcePath": "assets/brand/lk-logo-official-corporate-light.svg",
-      "sha256": "4fe17474ee6e7050d907a9c0b9a998af270034187439a2f078bd175bed36de85",
-      "integrity": "sha256-T+F0dO5ucFDZB6nAuamYrycANBh0OaLweL0XW+023oU=",
-      "byteLength": 11292,
+      "sha256": "990bcb6d3acb5686d54e85877fd93332f8a5515214b6640529ac1bf5c78e3749",
+      "integrity": "sha256-mQvLbTrLVobVToWHf9kzMvilUVIUtmQFKawb9ceON0k=",
+      "byteLength": 11130,
       "viewBox": {
         "x": 77.0213,
         "y": 114.3693,

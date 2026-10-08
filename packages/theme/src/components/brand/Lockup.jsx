@@ -4,6 +4,7 @@ import {
   LK_LOGO_USAGE,
   LK_LOGO_VIEWBOX as VIEWBOX,
   LK_PATHS,
+  ROBOTICS_INLINE_PATHS,
   ROBOTICS_INLINE_TRANSFORM,
   ROBOTICS_PATHS,
 } from '@lk-design-system/lds-core/brand-authoring';
@@ -33,7 +34,7 @@ const VIEWBOX_METRICS = Object.freeze(Object.fromEntries(
 /**
  * LK ROBOTICS — Lockup
  * Self-contained SVG generated from the regulated brand construction. LK is
- * custom vector geometry; ROBOTICS is outlined from pinned Montserrat Bold
+ * custom vector geometry; ROBOTICS is outlined from pinned Montserrat ExtraBold
  * 800 and the canonical fixed PORTAL from pinned Montserrat SemiBold 600 v7.222.
  * ProductLockup's Portal registry entry uses the same paths. No runtime font is required.
  * `tone`: 'ink'/'brand' = official #05132B · 'white' · compatibility currentColor.
@@ -81,8 +82,8 @@ export function Lockup({ variant = 'inline', tone = 'ink', adaptive = false, col
         ))}
         {resolvedVariant === 'inline' && (
           <g transform={ROBOTICS_INLINE_TRANSFORM}>
-            {ROBOTICS_PATHS.map((path, index) => (
-              <path key={`${path.letter}-${index}`} d={path.d} transform={path.transform} />
+            {ROBOTICS_INLINE_PATHS.map((path, index) => (
+              <path key={`${path.letter}-${index}`} d={path.d} />
             ))}
           </g>
         )}

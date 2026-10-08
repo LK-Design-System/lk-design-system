@@ -164,7 +164,7 @@ for (const [family, sourcePath] of [
   };
 }
 assert(familyContracts.mark.minimumRequiredSlotWidth.value === 21.431318, 'mark minimum slot width drifted.');
-assert(familyContracts.stacked.minimumRequiredSlotWidth.value === 81.668433, 'stacked minimum slot width drifted.');
+assert(familyContracts.stacked.minimumRequiredSlotWidth.value === 82.61299, 'stacked minimum slot width drifted.');
 assert(familyContracts.inline.minimumRequiredSlotWidth.value === 156.254307, 'inline minimum slot width drifted.');
 assert(familyContracts.banner.minimumRequiredSlotWidth.value === 136.963949, 'banner minimum slot width drifted.');
 for (const contract of Object.values(familyContracts)) Object.freeze(contract);
