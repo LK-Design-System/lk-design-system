@@ -12,7 +12,7 @@
 contract. Figma Variables, Storybook examples, React components, and
 AI-generated UI must all resolve back to this contract. Theme expression
 profiles are the one additive runtime projection: their scope and whitelist
-live in [`EXPRESSION_PROFILE_CONTRACT.json`](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.5/docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json),
+live in [`EXPRESSION_PROFILE_CONTRACT.json`](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.6/docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json),
 and values are limited to `tokens/profiles.css` under the Theme package.
 
 Package별 `tokens/semantic-contract.json`은 runtime source에서 산출·검사하는 semantic
@@ -146,7 +146,7 @@ Color usage rules:
   이는 **LK Theme Override**의 색상 결정이다. Primary 중심색은 `#2463D4`이며,
   LK Navy(`#05132B`)와 LK Accent(`#6BBBDD`) 및 기존 atomic Blue는 유지한다.
   이전 primary의 브랜드 중간 색상각 제약을 풀고 주요 행동·선택을 더 선명하게 표현한다.
-  브랜드 셸과 로고는 그대로 전용 역할을 사용한다([로고 표준 §6](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.5/docs/brand/LK_LOGO_STANDARD.md#6-색상과-배경)).
+  브랜드 셸과 로고는 그대로 전용 역할을 사용한다([로고 표준 §6](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.6/docs/brand/LK_LOGO_STANDARD.md#6-색상과-배경)).
 - 승인된 의미 역할은 다음과 같다. `primary-blue`의 7개 atomic anchor는 아래 역할에
   필요한 정확한 값이며, 숫자 단계는 순서 식별자다. 데모의 보간된 14단계 견본을
   지각적으로 균등한 canonical palette로 승격한 것이 아니다.
