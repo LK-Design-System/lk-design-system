@@ -159,6 +159,7 @@
 
 - `--_lds-side-nav-focus-indicator`
 - `--_lds-side-nav-motion-offset`
+- `--_lds-side-nav-pressed-foreground`
 - `--_lds-side-nav-pressed-surface`
 - `--caption2-size`
 - `--color-semantic-accent-blue-text`
@@ -167,6 +168,7 @@
 - `--color-semantic-fill-strong`
 - `--color-semantic-focus-indicator`
 - `--color-semantic-label-alternative`
+- `--color-semantic-label-neutral`
 - `--color-semantic-label-normal`
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-primary-normal`

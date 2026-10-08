@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "422fb067d199c229781960722feb6de0c33a14e901c509f9f436ef35dde4821d",
+  "sourceFingerprint": "dd31fef42ce9e9efaa0f2cd8a54fd50bc872a80d5ad14045514ab259db872b8a",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -25469,6 +25469,7 @@
         "--color-semantic-line-solid-normal",
         "--color-semantic-label-normal",
         "--color-semantic-label-alternative",
+        "--color-semantic-label-neutral",
         "--color-semantic-accent-blue-text",
         "--color-semantic-fill-normal",
         "--color-semantic-fill-strong",
@@ -25516,6 +25517,7 @@
         "--lds-side-nav-padding",
         "--component-side-nav-padding",
         "--_lds-side-nav-pressed-surface",
+        "--_lds-side-nav-pressed-foreground",
         "--_lds-side-nav-focus-indicator",
         "--space-1-5",
         "--lds-side-nav-child-item-height",
@@ -25596,7 +25598,7 @@
           "url": "https://grafana.com/developers/saga/patterns/navigation/"
         }
       ],
-      "promptSha256": "81c99e14c709e14b7eafe7ed1e7ab14657766a1135093c08c6bca0be79dce8ad"
+      "promptSha256": "f0b39057536fb695955c1c0e7096b4f1c06f41dd4eeda1da302e98da42067ba6"
     },
     {
       "id": "steps",
@@ -74146,6 +74148,7 @@
       "tokens": [
         "--_lds-side-nav-focus-indicator",
         "--_lds-side-nav-motion-offset",
+        "--_lds-side-nav-pressed-foreground",
         "--_lds-side-nav-pressed-surface",
         "--caption2-size",
         "--color-semantic-accent-blue-text",
@@ -74154,6 +74157,7 @@
         "--color-semantic-fill-strong",
         "--color-semantic-focus-indicator",
         "--color-semantic-label-alternative",
+        "--color-semantic-label-neutral",
         "--color-semantic-label-normal",
         "--color-semantic-line-solid-normal",
         "--color-semantic-primary-normal",

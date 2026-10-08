@@ -27,7 +27,10 @@ const SIDE_NAV_APPEARANCES = {
     foreground: 'var(--color-semantic-label-normal)',
     mutedForeground: 'var(--color-semantic-label-alternative)',
     subtleForeground: 'var(--color-semantic-label-alternative)',
-    hoverForeground: 'var(--color-semantic-label-alternative)',
+    // Hover/pressed ink steps up one role from the rest ink. Keeping
+    // label-alternative here measured 3.90:1 on the dark hover fill and 3.68:1
+    // on the dark pressed fill; label-neutral clears AA on both (5.92 / 5.54).
+    hoverForeground: 'var(--color-semantic-label-neutral)',
     activeForeground: 'var(--color-semantic-accent-blue-text)',
     activeProxyForeground: 'var(--color-semantic-accent-blue-text)',
     hoverSurface: 'var(--color-semantic-fill-normal)',
@@ -282,6 +285,10 @@ export const SideNav = React.forwardRef(function SideNav({
     color: active
       ? appearanceTokens.activeForeground
       : hovered && !disabled ? appearanceTokens.hoverForeground : appearanceTokens.mutedForeground,
+    // A keyboard press (:active without hover) swaps only the surface in CSS, so
+    // the pressed ink travels with each row: the hover ink for a rest row, the
+    // selected ink for the current row.
+    '--_lds-side-nav-pressed-foreground': active ? appearanceTokens.activeForeground : appearanceTokens.hoverForeground,
     transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), column-gap var(--dur-base) var(--ease-out)', ...extra, ...partStyle(styles, 'item'),
   });
   const labelSpan = (active, children) => (
@@ -388,7 +395,7 @@ export const SideNav = React.forwardRef(function SideNav({
   const sideNavStyles = `
     @keyframes lk-sidenav-expanded-content-enter{from{opacity:0;transform:translateX(var(--_lds-side-nav-motion-offset))}to{opacity:1;transform:translateX(0)}}
     @keyframes lk-sidenav-compact-content-enter{from{opacity:0}to{opacity:1}}
-    [data-sidenav-value]:active:not(:disabled){background:var(--_lds-side-nav-pressed-surface)!important}
+    [data-sidenav-value]:active:not(:disabled){background:var(--_lds-side-nav-pressed-surface)!important;color:var(--_lds-side-nav-pressed-foreground)!important}
     [data-sidenav-value]:focus-visible{outline-color:var(--_lds-side-nav-focus-indicator)!important;outline-offset:-2px!important}
     [data-collapsed="true"] .lk-sidenav__scroll::-webkit-scrollbar{display:none}
     .lk-sidenav__surface:dir(rtl){--_lds-side-nav-motion-offset:var(--space-1)}
@@ -442,7 +449,10 @@ export const SideNav = React.forwardRef(function SideNav({
               <li key={o.value} style={LIST_ITEM_STYLE}>
                 <RailItemTooltip label={accessibleLabel} collapsed={col} enabled={!overlay}>
                   <button type="button" data-slot="item" data-sidenav-motion="item" data-state={childActive ? 'active-descendant' : 'inactive'} data-disabled={o.disabled ? 'true' : undefined} className={partClassName(classNames, 'item', o.className) || undefined} data-sidenav-value={o.value} aria-label={col || o.ariaLabel ? accessibleLabel : undefined} aria-expanded={col ? undefined : isOpen} disabled={o.disabled} onClick={onParent} title={col ? undefined : accessibleLabel} {...hoverProps(o.value)}
-                    style={row(false, o.disabled, { color: collapsedActiveProxy ? appearanceTokens.activeProxyForeground : childActive ? appearanceTokens.foreground : appearanceTokens.mutedForeground }, hovKey === o.value)}>
+                    style={row(false, o.disabled, {
+                      color: collapsedActiveProxy ? appearanceTokens.activeProxyForeground : childActive ? appearanceTokens.foreground : appearanceTokens.mutedForeground,
+                      '--_lds-side-nav-pressed-foreground': collapsedActiveProxy ? appearanceTokens.activeProxyForeground : childActive ? appearanceTokens.foreground : appearanceTokens.hoverForeground,
+                    }, hovKey === o.value)}>
                     {o.icon != null && <span data-slot="icon" className={partClassName(classNames, 'icon') || undefined} aria-hidden="true" style={{ flexShrink: 0, display: 'inline-flex', ...partStyle(styles, 'icon') }}>{o.icon}</span>}
                     {expandedContent(
                       <React.Fragment>

@@ -10,6 +10,7 @@ All notable package-facing changes are recorded here. The package follows semant
 
 ### Fixed
 
+- `SideNav` `default`의 비선택 행 hover·pressed 글자를 `label-alternative`에서 `label-neutral`로 한 단계 올렸습니다. 다크에서 hover 3.90:1, pressed 3.68:1로 AA에 못 미쳤고 지금은 5.92 / 5.54:1입니다(라이트 hover 글자도 4.99에서 8.47:1로 진해집니다). 공용 semantic 값은 바꾸지 않았고 SideNav 내부 역할 매핑만 바꿨습니다. 키보드 Space로 누른 `:active` 상태가 배경만 바꾸고 rest 글자를 남기던 문제도 고쳐 모든 외형에서 글자색이 함께 바뀝니다. `check:color-contrast`에 default·brand hover/pressed 글자 쌍을 추가하고 중복된 brand 쌍 2개를 정리했습니다.
 - `MessageComposer`의 포커스 표시를 하나로 줄였습니다. 안쪽 textarea가 전역 `:focus-visible` 사각 링(`!important`)에 걸려 shell 안에 2px primary 사각형을 그리고, shell이 primary border와 4px `focus-ring` halo를 함께 그려 클릭만 해도 세 겹이 보였습니다. 이제 shell border만 새 component token `--component-message-composer-border-focus`(`cool-neutral-60`, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고 halo와 두께 변화는 없습니다. textarea는 product 규칙으로 전역 링에서 제외되며, slot과 send/stop 버튼의 2px 링은 그대로입니다. forced-colors에서는 focused shell이 `Highlight` outline을 그립니다.
 
 ## 0.4.6 - 2026-10-08
