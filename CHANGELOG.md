@@ -2,7 +2,7 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
-## 0.4.4 - 2026-10-08
+## 0.4.5 - 2026-10-08
 
 Paired Robotics release: `0.1.0-rc.53` (unchanged).
 

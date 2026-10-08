@@ -149,7 +149,7 @@
     },
     {
       "subject": "--color-semantic-accent-foreground-blue",
-      "rule": "light: #336CA1; dark: #639ACE"
+      "rule": "light: var(--color-atomic-blue-45); dark: #639ACE"
     }
   ],
   "responsive": [],

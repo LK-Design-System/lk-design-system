@@ -49,7 +49,7 @@
 | 명시 규칙 2 | max — 숫자(또는 숫자 문자열) children의 오버플로 클램프. 기본 99이며 초과 시 "99+"로 표시합니다. max={null}이면 클램프하지 않고, 텍스트 라벨("점검" 등)은 영향을 받지 않습니다. PushBadge의 max와 같은 규칙입니다. |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --caption2-size | 11px |
-| --color-semantic-accent-foreground-blue | light: #336CA1; dark: #639ACE |
+| --color-semantic-accent-foreground-blue | light: var(--color-atomic-blue-45); dark: #639ACE |
 
 ## Content and writing
 

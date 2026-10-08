@@ -40,7 +40,7 @@
 | --- | --- |
 | --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
-| --color-semantic-accent-foreground-blue | light: #336CA1; dark: #639ACE |
+| --color-semantic-accent-foreground-blue | light: var(--color-atomic-blue-45); dark: #639ACE |
 | --color-semantic-accent-foreground-red | light: #D63D3D; dark: #F16F6F |
 
 ## Accessibility

@@ -147,7 +147,7 @@
     },
     {
       "subject": "--color-semantic-focus-indicator",
-      "rule": "light: #2F6FB0; dark: #7FB0DE"
+      "rule": "light: var(--color-atomic-primary-blue-50); dark: var(--color-atomic-primary-blue-80)"
     }
   ],
   "responsive": [],
