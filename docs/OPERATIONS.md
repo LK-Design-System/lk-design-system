@@ -43,6 +43,14 @@ busy/offline이면 `release_environment_unavailable`로 중단한다. dispatch�
 현재 PC·aipc1·노트북·server02로 fallback하지 않는다. 기본 설정이 빠졌다고 local VM,
 runner, credential 복사를 생성하지 않는다.
 
+runner를 등록하거나 고칠 때 custom label은 정확히 `lk-lds-release-linux-x64` 하나다.
+준비용 label을 따로 두는 절차는 없다. label이 다르면 runner가 online·idle이어도 job이
+배정되지 않고 run이 `queued`로 남는다. 2026-10-08 0.4.6 발행 run이 등록 시 잘못 들어간
+`lk-lds-ready-linux-x64` 때문에 이렇게 멈췄다. 그 run은 dispatch 시점(`b7b78905`)
+workflow로 돌았으므로 runner 이름 검사 단계가 없었다. label을 바꾼 뒤에는 guest의 runner
+서비스를 재시작해야 한다. 실행 중인 runner는 예전 label로 대기를 이어간다. label 변경과
+재시작은 server04 guest 변경이므로 각각 승인받는다.
+
 아래 릴리스 레시피의 build·pack·전체 검사 명령은 이 지정 릴리스 환경에서만 실행한다.
 운영자 PC는 조회·검토·승인된 dispatch를 수행할 수 있다. `check:fast`는 이름과 달리
 build를 포함한 전체 gate다. 로컬에는 `check:pre-push`와 변경 범위 검사를 사용하고,
