@@ -61,7 +61,7 @@
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --caption2-size | 11px |
 | --color-semantic-background-normal-alternative | light: #F7F7F8; dark: #0F0F10 |
-| --color-semantic-focus-indicator | light: #2F6FB0; dark: #7FB0DE |
+| --color-semantic-focus-indicator | light: var(--color-atomic-primary-blue-50); dark: var(--color-atomic-primary-blue-80) |
 
 ## Content and writing
 

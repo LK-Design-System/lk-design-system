@@ -53,7 +53,7 @@
   "quantitativeRules": [
     {
       "subject": "--color-semantic-accent-blue-text",
-      "rule": "light: #336CA1; dark: #B5D5F2"
+      "rule": "light: var(--color-atomic-blue-45); dark: #B5D5F2"
     },
     {
       "subject": "--color-semantic-label-alternative",

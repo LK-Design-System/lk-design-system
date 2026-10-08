@@ -85,7 +85,7 @@
     },
     {
       "subject": "--color-semantic-primary-normal",
-      "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
+      "rule": "light: var(--color-atomic-primary-blue-50); dark: var(--color-atomic-primary-blue-70)"
     },
     {
       "subject": "--color-semantic-primary-surface-strong",

@@ -39,7 +39,7 @@
 
 | Subject | Rule |
 | --- | --- |
-| --color-semantic-accent-blue-text | light: #336CA1; dark: #B5D5F2 |
+| --color-semantic-accent-blue-text | light: var(--color-atomic-blue-45); dark: #B5D5F2 |
 | --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
 | --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
 | --fw-bold | 700 |

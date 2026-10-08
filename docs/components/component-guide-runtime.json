@@ -1110,7 +1110,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
+          "rule": "light: var(--color-atomic-primary-blue-50); dark: var(--color-atomic-primary-blue-70)"
         },
         {
           "subject": "--fw-semibold",
@@ -9868,7 +9868,7 @@
         },
         {
           "subject": "--color-semantic-accent-foreground-blue",
-          "rule": "light: #336CA1; dark: #639ACE"
+          "rule": "light: var(--color-atomic-blue-45); dark: #639ACE"
         },
         {
           "subject": "--color-semantic-accent-foreground-red",
@@ -14777,7 +14777,7 @@
         },
         {
           "subject": "--color-semantic-accent-foreground-blue",
-          "rule": "light: #336CA1; dark: #639ACE"
+          "rule": "light: var(--color-atomic-blue-45); dark: #639ACE"
         }
       ],
       "responsive": [],
@@ -16199,7 +16199,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
+          "rule": "light: var(--color-atomic-primary-blue-50); dark: var(--color-atomic-primary-blue-70)"
         }
       ],
       "responsive": [],
@@ -16571,7 +16571,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
+          "rule": "light: var(--color-atomic-primary-blue-50); dark: var(--color-atomic-primary-blue-70)"
         },
         {
           "subject": "--label1-size",
@@ -17119,7 +17119,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
+          "rule": "light: var(--color-atomic-primary-blue-50); dark: var(--color-atomic-primary-blue-70)"
         }
       ],
       "responsive": [],
@@ -17507,7 +17507,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
+          "rule": "light: var(--color-atomic-primary-blue-50); dark: var(--color-atomic-primary-blue-70)"
         },
         {
           "subject": "--color-semantic-primary-surface-strong",
@@ -25579,7 +25579,7 @@
         },
         {
           "subject": "--color-semantic-focus-indicator",
-          "rule": "light: #2F6FB0; dark: #7FB0DE"
+          "rule": "light: var(--color-atomic-primary-blue-50); dark: var(--color-atomic-primary-blue-80)"
         }
       ],
       "responsive": [],
@@ -31114,7 +31114,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
+          "rule": "light: var(--color-atomic-primary-blue-50); dark: var(--color-atomic-primary-blue-70)"
         },
         {
           "subject": "--fw-medium",
@@ -34539,7 +34539,7 @@
       "quantitativeRules": [
         {
           "subject": "--color-semantic-accent-blue-text",
-          "rule": "light: #336CA1; dark: #B5D5F2"
+          "rule": "light: var(--color-atomic-blue-45); dark: #B5D5F2"
         },
         {
           "subject": "--color-semantic-label-alternative",
@@ -44268,7 +44268,7 @@
         },
         {
           "subject": "--color-semantic-primary-normal",
-          "rule": "light: var(--color-atomic-blue-50); dark: #5390C9"
+          "rule": "light: var(--color-atomic-primary-blue-50); dark: var(--color-atomic-primary-blue-70)"
         }
       ],
       "responsive": [],
