@@ -6,7 +6,12 @@ const css = (await Promise.all([
   'tokens/color-semantic.css',
   'tokens/color-components.css',
   'tokens/components.css',
-].map((file) => readFile(file, 'utf8')))).join('\n');
+].map((file) => readFile(file, 'utf8')))).join('\n') + `
+/* Button transient states retain the Core 96:4 hover / 88:12 pressed mix. */
+:root, .theme-light, .theme-dark {
+  --contrast-button-primary-hover: color-mix(in srgb, var(--component-button-primary-bg) 96%, var(--color-semantic-label-normal));
+  --contrast-button-primary-pressed: color-mix(in srgb, var(--component-button-primary-bg) 88%, var(--color-semantic-label-normal));
+}`;
 
 const pairs = [
   ['status info text', '--color-semantic-status-info-text', '--color-semantic-status-info-surface', 4.5],
@@ -39,6 +44,8 @@ const pairs = [
   ['primary ink on alternative', '--color-semantic-primary-ink', '--color-semantic-background-normal-alternative', 4.5],
   ['primary ink on elevated', '--color-semantic-primary-ink', '--color-semantic-background-elevated-normal', 4.5],
   ['primary ink strong on primary tint', '--color-semantic-primary-ink-strong', '--color-semantic-primary-surface-normal', 4.5, '--color-semantic-background-normal-normal'],
+  ['button primary hover', '--component-button-primary-fg', '--contrast-button-primary-hover', 4.5],
+  ['button primary pressed', '--component-button-primary-fg', '--contrast-button-primary-pressed', 4.5],
   ['button primary', '--component-button-primary-fg', '--component-button-primary-bg', 4.5],
   ['button signal', '--component-button-signal-fg', '--component-button-signal-bg', 4.5],
   ['primary fill with white content', '--color-semantic-static-white', '--color-semantic-primary-fill', 4.5],

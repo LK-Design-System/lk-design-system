@@ -5,7 +5,7 @@
   "role": "provider",
   "package": {
     "name": "@lk-design-system/lds-theme",
-    "version": "0.4.3"
+    "version": "0.4.4"
   },
   "requiresSemanticContractVersion": "1",
   "providesSemanticContractVersion": "1",
@@ -167,6 +167,13 @@
     "--color-atomic-pink-90",
     "--color-atomic-pink-95",
     "--color-atomic-pink-99",
+    "--color-atomic-primary-blue-30",
+    "--color-atomic-primary-blue-40",
+    "--color-atomic-primary-blue-45",
+    "--color-atomic-primary-blue-50",
+    "--color-atomic-primary-blue-60",
+    "--color-atomic-primary-blue-70",
+    "--color-atomic-primary-blue-80",
     "--color-atomic-purple-0",
     "--color-atomic-purple-10",
     "--color-atomic-purple-100",

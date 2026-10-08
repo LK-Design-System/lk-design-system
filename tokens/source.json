@@ -1423,6 +1423,47 @@
             "css": "--color-atomic-navy-shell-93"
           }
         }
+      },
+      "primary-blue": {
+        "label": "Primary Blue",
+        "source": "LK Theme approved primary anchors, 2026-10-08; ordinal steps, not a perceptually generated ramp",
+        "tokens": {
+          "30": {
+            "$type": "color",
+            "$value": "#1D4FAA",
+            "css": "--color-atomic-primary-blue-30"
+          },
+          "40": {
+            "$type": "color",
+            "$value": "#2059BF",
+            "css": "--color-atomic-primary-blue-40"
+          },
+          "45": {
+            "$type": "color",
+            "$value": "#2260CE",
+            "css": "--color-atomic-primary-blue-45"
+          },
+          "50": {
+            "$type": "color",
+            "$value": "#2463D4",
+            "css": "--color-atomic-primary-blue-50"
+          },
+          "60": {
+            "$type": "color",
+            "$value": "#558CE9",
+            "css": "--color-atomic-primary-blue-60"
+          },
+          "70": {
+            "$type": "color",
+            "$value": "#79A5F2",
+            "css": "--color-atomic-primary-blue-70"
+          },
+          "80": {
+            "$type": "color",
+            "$value": "#A0BEF6",
+            "css": "--color-atomic-primary-blue-80"
+          }
+        }
       }
     }
   },
@@ -1616,10 +1657,10 @@
         "$type": "color",
         "css": "--color-semantic-primary-normal",
         "modes": {
-          "light": "var(--color-atomic-blue-50)",
-          "dark": "#5390C9"
+          "light": "var(--color-atomic-primary-blue-50)",
+          "dark": "var(--color-atomic-primary-blue-70)"
         },
-        "origin": "wds-structure-lk-retone"
+        "origin": "lk-approved-primary-2026-10-08"
       },
       "background-normal-normal": {
         "$type": "color",
@@ -1715,20 +1756,20 @@
         "$type": "color",
         "css": "--color-semantic-primary-strong",
         "modes": {
-          "light": "#336CA1",
-          "dark": "#3C80BF"
+          "light": "var(--color-atomic-primary-blue-40)",
+          "dark": "var(--color-atomic-primary-blue-60)"
         },
-        "origin": "wds-structure-lk-retone",
+        "origin": "lk-approved-primary-2026-10-08",
         "$description": "Primary hover fill. Fill step only (hover and pressed fills, and fills carrying white content via primary-fill). In dark it is darker than primary-normal, so as text it loses contrast; use primary-ink or primary-ink-strong for text and borders."
       },
       "primary-heavy": {
         "$type": "color",
         "css": "--color-semantic-primary-heavy",
         "modes": {
-          "light": "#2D6090",
-          "dark": "var(--color-atomic-blue-50)"
+          "light": "var(--color-atomic-primary-blue-30)",
+          "dark": "var(--color-atomic-primary-blue-45)"
         },
-        "origin": "wds-structure-lk-retone",
+        "origin": "lk-approved-primary-2026-10-08",
         "$description": "Primary pressed fill, and the dark primary-fill. Fill step only (hover and pressed fills, and fills carrying white content via primary-fill). In dark it is darker than primary-normal, so as text it loses contrast; use primary-ink or primary-ink-strong for text and borders."
       },
       "primary-fill": {
@@ -1740,27 +1781,27 @@
         },
         "origin": "lds-extension",
         "group": "primary",
-        "$description": "Primary surface that carries static-white text or icons. Dark primary-normal gives white 3.39:1, so dark steps down to primary-heavy (4.85:1)."
+        "$description": "Primary surface carrying static-white text or icons. Light #2463D4 gives 5.51:1. Dark #2260CE through primary-heavy gives 5.78:1 base and 4.62:1 pressed after the existing 88:12 normal-label mix; independent from brighter primary ink."
       },
       "primary-ink": {
         "$type": "color",
         "css": "--color-semantic-primary-ink",
         "modes": {
-          "light": "var(--color-atomic-blue-45)",
-          "dark": "var(--color-semantic-primary-normal)"
+          "light": "var(--color-atomic-primary-blue-40)",
+          "dark": "var(--color-atomic-primary-blue-70)"
         },
-        "origin": "lds-extension",
+        "origin": "lk-approved-primary-2026-10-08",
         "group": "primary",
-        "$description": "Primary-hue text, link and 1px emphasis border on page or elevated surfaces. Light blue-45 keeps 5.53:1 on white and 4.5:1+ on the alternative background, where primary-normal falls to 4.35:1; dark primary-normal keeps 5.04:1 on the page and 4.70:1 elevated."
+        "$description": "Approved Primary Blue text, links and emphasis borders. Light #2059BF and dark #79A5F2 are separate from the white-content fill; validate page, alternative and elevated surface contrast."
       },
       "primary-ink-strong": {
         "$type": "color",
         "css": "--color-semantic-primary-ink-strong",
         "modes": {
-          "light": "var(--color-atomic-blue-40)",
-          "dark": "var(--color-semantic-accent-blue-text)"
+          "light": "var(--color-atomic-primary-blue-30)",
+          "dark": "var(--color-atomic-primary-blue-80)"
         },
-        "origin": "lds-extension",
+        "origin": "lk-approved-primary-2026-10-08",
         "group": "primary",
         "$description": "Stronger primary-hue text for a label that must stand out on a tinted primary surface. It gets darker in light and lighter in dark, so strong always means more contrast."
       },
@@ -2152,7 +2193,7 @@
         "$type": "color",
         "css": "--color-semantic-accent-foreground-blue",
         "modes": {
-          "light": "#336CA1",
+          "light": "var(--color-atomic-blue-45)",
           "dark": "#639ACE"
         },
         "origin": "wds-structure-lk-retone"
@@ -2317,10 +2358,10 @@
         "$type": "color",
         "css": "--color-semantic-focus-indicator",
         "modes": {
-          "light": "#2F6FB0",
-          "dark": "#7FB0DE"
+          "light": "var(--color-atomic-primary-blue-50)",
+          "dark": "var(--color-atomic-primary-blue-80)"
         },
-        "origin": "lds-extension",
+        "origin": "lk-approved-primary-2026-10-08",
         "group": "interaction",
         "$description": "Keyboard focus outline color with at least 3:1 contrast on the supported light and dark surfaces."
       },
@@ -2368,10 +2409,10 @@
         "$type": "color",
         "css": "--color-semantic-status-info-text",
         "modes": {
-          "light": "#2D6090",
-          "dark": "#8CC8F5"
+          "light": "var(--color-atomic-primary-blue-30)",
+          "dark": "var(--color-atomic-primary-blue-80)"
         },
-        "origin": "lds-extension",
+        "origin": "lk-approved-primary-2026-10-08",
         "group": "status"
       },
       "status-positive-surface": {
@@ -2552,7 +2593,7 @@
         "$type": "color",
         "css": "--color-semantic-accent-blue-text",
         "modes": {
-          "light": "#336CA1",
+          "light": "var(--color-atomic-blue-45)",
           "dark": "#B5D5F2"
         },
         "origin": "lds-extension",
