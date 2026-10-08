@@ -23,16 +23,21 @@ archive/reference인 Console Pastel은 재활성화하거나 새 발행 경로�
 | 작업 | 실행 위치 | 경계 |
 | --- | --- | --- |
 | 소스 편집·미리보기·변경 범위 빠른 검사 | 개발 PC | checkout 위치는 실행 권한이 아니다 |
-| 기존 자동 CI·Pages·Windows/Linux 회귀 | 각 저장소의 기존 canonical workflow/등록 runner | exact SHA 증거 재사용; 이관 완료로 표시하지 않는다 |
+| 자동 CI·Pages·정본 생성물 export | GitHub-hosted runner(정본 Linux `ubuntu-latest`, Windows는 package 소비 검사) | exact SHA 증거 재사용; 공개 저장소라 무료 |
 | 패키지 전체 release gate·pack·발행 | server04의 승인·자격검증된 LDS 격리 VM | 호스트 직접 build 금지; 저장소별 등록/디스크/credential 경계 |
 | Portal image·서명 release | 별도 server04 Portal 격리 VM | LDS VM/runner와 재사용하지 않는다 |
 | 검증 artifact 제품 배포 | 해당 제품의 승인된 대상·절차 | 패키지 push/발행 승인과 별개 |
 
-`ci.yml`과 Pages의 기존 GitHub-hosted Windows/Linux 경로는 OS별 증거를 제공한다.
-Manual 원격 main에는 CI/발행 workflow가 없다. 다른 checkout의 미커밋
-`lk-authoring-output` 초안을 현행 원격 등록으로 취급하지 않는다. 이 정책은 이들을 임의로 중단하거나
-Linux server04로 이미 이관됐다고 주장할 근거가 아니다. 공개 저장소의 표준 hosted
-runner는 무료다. 기존 job의 이관·새 VM·runner 등록은 별도 승인과 자격검증이 필요하다.
+2026-10-09부터 생성물(`dist`, 생성 소스)과 visual baseline의 정본 플랫폼은 Linux다.
+`ci.yml`의 `design-system` job과 Pages build는 `ubuntu-latest`에서 돌고, release gate의
+server04 guest도 Linux라 같은 bytes를 재현한다. 정본 생성물은 `ci.yml`의
+`workflow_dispatch(export_dist=true)`·`(export_visual_baseline=true)` 산출물로만 갱신한다.
+Windows 개발 PC의 build 결과는 sourcemap 등이 달라 정본이 아니다. Windows는 Linux가 만든
+package set을 소비하는 `workspace-consumer-windows` job으로 검증한다.
+공개 저장소의 표준 hosted runner는 무료라 평소 CI를 server04로 옮기지 않는다. server04는
+발행 전용이다. Manual 원격 main에는 CI/발행 workflow가 없다. 다른 checkout의 미커밋
+`lk-authoring-output` 초안을 현행 원격 등록으로 취급하지 않는다. 새 VM·runner 등록은
+별도 승인과 자격검증이 필요하다.
 
 본체 발행은 `lk-lds-release-linux-x64` label과 `lk-lds-release-server04-*` 이름을
 가진 승인된 isolated runner만 사용한다. 이름/label은 운영 계약 확인이며 물리 호스트의

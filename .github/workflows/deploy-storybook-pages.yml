@@ -19,7 +19,7 @@ concurrency:
 jobs:
   build:
     name: Build Storybook
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}
 

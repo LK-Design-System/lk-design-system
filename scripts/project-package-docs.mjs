@@ -153,7 +153,7 @@ async function inventory(directory) {
   const files = await walkFiles(directory);
   const rows = [];
   let bytes = 0;
-  for (const file of files.sort((a, b) => a.localeCompare(b))) {
+  for (const file of files.sort((a, b) => a.localeCompare(b, 'en'))) {
     const contents = await readFile(file);
     const relative = posixPath(path.relative(directory, file));
     bytes += contents.byteLength;
@@ -403,7 +403,7 @@ async function makePackageProjection(definition, canonicalInputs) {
   const selectedFoundationTexts = [];
   for (const [sourcePath, targetPath] of [...sourceToTarget.entries()]
     .filter(([sourcePath]) => sourcePath.startsWith(`${canonical.foundationRoot}/`))
-    .sort((left, right) => left[1].localeCompare(right[1]))) {
+    .sort((left, right) => left[1].localeCompare(right[1], 'en'))) {
     const projected = await projectFile(sourcePath, targetPath);
     if (selectedFoundationSlugs.some((slug) => sourcePath.endsWith(`/${slug}.md`))) {
       selectedFoundationTexts.push(projected);
@@ -491,14 +491,14 @@ async function makePackageProjection(definition, canonicalInputs) {
       repository: 'LK-Design-System/lk-design-system',
       ref: sourceRef,
       documents: [...generatedSources.entries()]
-        .sort(([left], [right]) => left.localeCompare(right))
+        .sort(([left], [right]) => left.localeCompare(right, 'en'))
         .map(([sourcePath, digest]) => ({ path: sourcePath, sha256: digest })),
     },
     resources: {
       tokens: tokenInventory,
       assets: assetInventory,
     },
-    documents: records.sort((left, right) => left.path.localeCompare(right.path)),
+    documents: records.sort((left, right) => left.path.localeCompare(right.path, 'en')),
   };
   outputs.set('docs/manifest.json', Buffer.from(`${JSON.stringify(docsManifest, null, 2)}\n`));
   return outputs;

@@ -96,7 +96,7 @@ for (const [layer, packageDir] of Object.entries(layers)) {
     await copyHelpers(src, base, layer, new Set());
     await rewriteImports(target, layer, base);
   }
-  for (const [rel, names] of [...files].sort(([a], [b]) => a.localeCompare(b))) {
+  for (const [rel, names] of [...files].sort(([a], [b]) => a.localeCompare(b, 'en'))) {
     const src = path.join(root, 'components', rel.replace(/^components[\\/]/, ''));
     const targetRel = rel.replace(/^components[\\/]/, '');
     const target = path.join(base, 'src', 'components', targetRel);

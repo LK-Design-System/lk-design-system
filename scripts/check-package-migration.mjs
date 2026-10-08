@@ -1000,8 +1000,8 @@ function workflowJobSource(ciSource, jobId) {
 }
 
 function validateCurrentPackageCi(packageJson, ciSource) {
-  const windowsJob = workflowJobSource(ciSource, 'design-system');
-  const linuxJob = workflowJobSource(ciSource, 'workspace-consumer-linux');
+  const linuxJob = workflowJobSource(ciSource, 'design-system');
+  const windowsJob = workflowJobSource(ciSource, 'workspace-consumer-windows');
   const packageSetPath = 'visual-artifacts/workspace-package-set';
 
   assert(ciSource.includes('packages: read'), 'CI must grant read access to GitHub Packages.');
@@ -1025,12 +1025,12 @@ function validateCurrentPackageCi(packageJson, ciSource) {
   );
   assert(
     packageJson.scripts?.['check:workspace-consumer:windows'] ===
-      `node scripts/check-workspace-consumer-matrix.mjs --platform=windows --package-set=${packageSetPath} --require-browser`,
+      `node scripts/check-workspace-consumer-matrix.mjs --platform=windows --package-set=${packageSetPath}`,
     'Windows workspace consumer command drift.',
   );
   assert(
     packageJson.scripts?.['check:workspace-consumer:linux'] ===
-      `node scripts/check-workspace-consumer-matrix.mjs --platform=linux --package-set=${packageSetPath}`,
+      `node scripts/check-workspace-consumer-matrix.mjs --platform=linux --package-set=${packageSetPath} --require-browser`,
     'Linux workspace consumer command drift.',
   );
   assert(
@@ -1044,45 +1044,33 @@ function validateCurrentPackageCi(packageJson, ciSource) {
     'Package migration checks must run both historical and current CI contracts.',
   );
 
-  assert(windowsJob.includes('runs-on: windows-latest'), 'Current package set must be produced on Windows.');
-  assert(windowsJob.includes('NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}'), 'Windows package checks must authenticate to GitHub Packages.');
-  assert(windowsJob.includes('node-version: 22.17.1'), 'Windows package checks must pin Node 22.17.1.');
-  assert(windowsJob.includes("Expected npm 10.9.2."), 'Windows package checks must verify npm 10.9.2.');
-  assert(windowsJob.includes('run: npm run check:ci'), 'Windows CI must run the current source and Storybook checks.');
-  assert(
-    windowsJob.includes('run: npm run check:pack:ci'),
-    'Windows CI must preserve the verified workspace package set and its locked external Robotics dependency.',
-  );
-  assert(
-    windowsJob.includes('run: npm run check:workspace-consumer:windows'),
-    'Windows CI must run React 18/19, SSR, Vite, tree-shaking, and browser checks on the package set.',
-  );
-  assert(windowsJob.includes('name: workspace-package-set-windows'), 'Windows CI must upload the verified package set.');
-  assert(windowsJob.includes(`${packageSetPath}/package-set.json`), 'Windows CI must upload the package-set manifest.');
-  assert(windowsJob.includes(`${packageSetPath}/tarballs/*.tgz`), 'Windows CI must upload all workspace tarballs.');
-
-  assert(linuxJob.includes('needs: design-system'), 'Linux consumption must wait for the Windows package set.');
-  assert(linuxJob.includes('runs-on: ubuntu-latest'), 'Linux package consumption must run on Ubuntu.');
+  assert(linuxJob.includes('runs-on: ubuntu-latest'), 'Current package set must be produced on Linux.');
   assert(linuxJob.includes('NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}'), 'Linux package checks must authenticate to GitHub Packages.');
   assert(linuxJob.includes('node-version: 22.17.1'), 'Linux package checks must pin Node 22.17.1.');
-  assert(linuxJob.includes("test \"$(npm --version)\" = '10.9.2'"), 'Linux package checks must verify npm 10.9.2.');
-  assert(linuxJob.includes('uses: actions/download-artifact@v5'), 'Linux CI must download the Windows package set.');
-  assert(linuxJob.includes('name: workspace-package-set-windows'), 'Linux CI must consume the uploaded Windows package set.');
+  assert(linuxJob.includes("Expected npm 10.9.2."), 'Linux package checks must verify npm 10.9.2.');
+  assert(linuxJob.includes('run: npm run check:ci'), 'Linux CI must run the current source and Storybook checks.');
   assert(
-    linuxJob.indexOf('uses: actions/download-artifact@v5') < linuxJob.indexOf('npm ci --prefix scripts/fixtures/workspace-consumer-toolchain'),
-    'Linux CI must download the verified package set before preparing its isolated verifier toolchain.',
-  );
-  assert(
-    linuxJob.includes('npm ci --prefix scripts/fixtures/workspace-consumer-toolchain --ignore-scripts --no-audit --no-fund'),
-    'Linux CI must install only the lockfile-pinned public consumer-verifier toolchain.',
-  );
-  assert(
-    linuxJob.includes('ln -s "$PWD/scripts/fixtures/workspace-consumer-toolchain/node_modules" node_modules'),
-    'Linux CI must expose only the isolated verifier toolchain to the repository script.',
+    linuxJob.includes('run: npm run check:pack:ci'),
+    'Linux CI must preserve the verified workspace package set and its locked external Robotics dependency.',
   );
   assert(
     linuxJob.includes('run: npm run check:workspace-consumer:linux'),
-    'Linux CI must consume the exact verified Windows package set.',
+    'Linux CI must run React 18/19, SSR, Vite, tree-shaking, and browser checks on the package set.',
+  );
+  assert(linuxJob.includes('name: workspace-package-set-linux'), 'Linux CI must upload the verified package set.');
+  assert(linuxJob.includes(`${packageSetPath}/package-set.json`), 'Linux CI must upload the package-set manifest.');
+  assert(linuxJob.includes(`${packageSetPath}/tarballs/*.tgz`), 'Linux CI must upload all workspace tarballs.');
+
+  assert(windowsJob.includes('needs: design-system'), 'Windows consumption must wait for the Linux package set.');
+  assert(windowsJob.includes('runs-on: windows-latest'), 'Windows package consumption must run on Windows.');
+  assert(windowsJob.includes('NODE_AUTH_TOKEN: ${{ secrets.LK_PACKAGES_READ_TOKEN || github.token }}'), 'Windows package checks must authenticate to GitHub Packages.');
+  assert(windowsJob.includes('node-version: 22.17.1'), 'Windows package checks must pin Node 22.17.1.');
+  assert(windowsJob.includes("Expected npm 10.9.2."), 'Windows package checks must verify npm 10.9.2.');
+  assert(windowsJob.includes('uses: actions/download-artifact@v5'), 'Windows CI must download the Linux package set.');
+  assert(windowsJob.includes('name: workspace-package-set-linux'), 'Windows CI must consume the uploaded Linux package set.');
+  assert(
+    windowsJob.includes('run: npm run check:workspace-consumer:windows'),
+    'Windows CI must consume the exact verified Linux package set.',
   );
 }
 
@@ -2350,7 +2338,7 @@ async function main() {
     if (failures.length > 0) {
       throw new Error(`LDS current package CI contract failed:\n- ${failures.join('\n- ')}`);
     }
-    console.log('LDS current package CI contract verified: one hashed Windows package set is consumed on Windows and Linux.');
+    console.log('LDS current package CI contract verified: one hashed Linux package set is consumed on Linux and Windows.');
     return;
   }
 

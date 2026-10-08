@@ -42,8 +42,9 @@ dirty count, push 여부는 해당 시점의 historical snapshot이며 현재 �
   medium 20건, low 7건은 수정했고 medium 3건·low 3건은 근거를 남겨 수락했다.
 - 여섯 pinned product source는 현재 LDS import가 0이므로 “migration 완료”가 아니라
   `not-adopted`다. 공용 package의 release readiness와 제품별 adoption은 별도 판정한다.
-- 생성 `dist`의 canonical platform은 Windows다. Linux 작업 후 `check:generated`가
-  sourcemap 차이를 보고하면 CI의 `workflow_dispatch(export_dist=true)` 산출물을 사용한다.
+- 생성 `dist`의 canonical platform은 2026-10-09부터 Linux다. Windows 작업 후
+  `check:generated`가 sourcemap 차이를 보고하면 CI의 `workflow_dispatch(export_dist=true)`
+  산출물을 사용한다.
 - LDS3D는 독립 형제 저장소로 유지하며, renderer package는 LDS에 의존하지 않는다.
 
 ## Current evidence
@@ -63,7 +64,7 @@ dirty count, push 여부는 해당 시점의 historical snapshot이며 현재 �
 
 ## Verification commands
 
-```powershell
+```bash
 npm run build
 npm run build:storybook
 npm run check:storybook-ia
@@ -71,18 +72,19 @@ npm run check:inventory
 npm run check:ci
 npm run check:audit
 npm run check:pack:ci
-npm run check:workspace-consumer:windows
+npm run check:workspace-consumer:linux
 ```
 
-Linux에서는 같은 Windows package set을 `npm run check:workspace-consumer:linux`로
-소비한다. push 뒤 GitHub Actions의 Windows design-system job과 Linux consumer job이
-모두 green인지 확인하고, `git fetch --prune origin` 뒤 ahead/behind 0/0을 확인한다.
+위 전체 명령은 Linux CI가 실행한다. Windows는 같은 Linux package set을
+`npm run check:workspace-consumer:windows`로 소비한다. push 뒤 GitHub Actions의 Linux
+design-system job과 Windows consumer job이 모두 green인지 확인하고,
+`git fetch --prune origin` 뒤 ahead/behind 0/0을 확인한다.
 
 ## Remaining release work
 
-1. 현재 변경을 Windows canonical generated artifact와 동기화한다.
+1. 현재 변경을 Linux canonical generated artifact와 동기화한다.
 2. Node 22.17.1/npm 10.9.2에서 local gates를 통과시킨다.
-3. `main`에 push한 동일 revision의 Windows/Linux CI와 원격 parity를 확인한다.
+3. `main`에 push한 동일 revision의 Linux/Windows CI와 원격 parity를 확인한다.
 4. compatibility facade 종료는 Wave 5 조건(실제 consumer adoption, 지원 기간,
    breaking release note)을 충족할 때만 별도 수행한다.
 
