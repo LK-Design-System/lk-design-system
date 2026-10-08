@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | Type | Operations reference |
-| Status | Active (2026-10-05) |
+| Status | Active (2026-10-09) |
 | Owner | Design system owner · Frontend platform |
 | 범위 | 릴리스, 위성 관리, 정상 상태의 정의 |
 | 관련 | [`OPERATIONS_COST_REDUCTION_PLAN.md`](OPERATIONS_COST_REDUCTION_PLAN.md) (이 문서를 만든 계획) · [`SYSTEM_PARTITION_REFORM_PLAN.md`](SYSTEM_PARTITION_REFORM_PLAN.md) (구조 계약) |
@@ -212,6 +212,14 @@ release identity를 옮기지 않는다. 실패를 고쳤다면 Robotics 버전�
 실행하며 PowerShell에 그대로 붙여넣지 않는다. `<...>` placeholder를 실제 절대 경로·버전·
 run ID로 바꾸기 전에는 명령을 실행하지 않는다.
 
+**Robotics가 바뀌지 않는 릴리스**(§2.1의 두 경우가 아님)는 Robotics 단계를 건너뛴다.
+0.4.3~0.4.6이 이 경우였고 `0.1.0-rc.53`을 그대로 썼다.
+
+- 1·2는 vendored tgz를 바꾸지 않고 `--robotics`에 **현재** robotics 버전을 준다.
+- 4(Robotics commit/push)와 5-1(어댑터 픽스처)을 건너뛴다. 픽스처의 네 값이 그대로다.
+- 5의 CHANGELOG에는 ``Paired Robotics release: `0.1.0-rc.53` (unchanged).``처럼 현재 버전에 `(unchanged)`를 붙여 적는다.
+- 9에서 Robotics CI·Pages 확인, Robotics release gate, Robotics tag를 건너뛰고 LDS만 진행한다.
+
 ```bash
 # 1. 새 tgz를 vendor/에 넣고 옛 tgz를 제거한 뒤 1차를 돌린다. 이 1차는
 #    package.json 경로와 version identity만 새 tgz로 바꾼다. 설치본이 아직
@@ -281,12 +289,14 @@ npm run check:fast
 # 9. LDS candidate를 commit/push하고 exact SHA의 CI·Pages를 확인한다.
 #    이어서 Robotics release gate를 그 LDS SHA로 dispatch한다. 실행 결과의
 #    Robotics head SHA와 입력 LDS SHA가 두 candidate와 정확히 같은지 확인한 뒤
-#    Robotics tag, LDS tag 순으로 각각 하나씩 민다.
+#    Robotics tag, LDS tag 순으로 각각 하나씩 민다. 태그 push는 발행을 시작하지
+#    않는다 — 마지막에 release-packages를 그 LDS 태그로 직접 dispatch한다(§2.5).
+#    Robotics가 바뀌지 않는 릴리스는 이 단계의 Robotics 부분을 건너뛴다(위 목록).
 #
 #    `--tags`를 쓰지 않는다. 그것은 로컬의 **모든** 태그를 밀기 때문에,
-#    원격에 없던 옛 태그까지 함께 올라가 릴리스 워크플로를 여러 개 띄운다
-#    (2026-08-16에 실제로 rc.62가 딸려 올라가 실패 런을 하나 만들었다).
-#    이번에 만든 태그 하나만 이름으로 민다.
+#    원격에 없던 옛 태그까지 immutable release identity로 함께 올라간다
+#    (2026-08-16에 실제로 rc.62가 딸려 올라갔다. 당시는 태그 push가 발행을
+#    시작했으므로 실패 런까지 하나 만들었다). 이번에 만든 태그 하나만 이름으로 민다.
 git commit -m "release: <새 LDS 버전>"
 git push origin main
 
@@ -364,22 +374,56 @@ git push origin refs/tags/v<새 robotics 버전>
 cd <LDS 체크아웃>
 git tag lds-v<새 LDS 버전> "$lds_sha"
 git push origin refs/tags/lds-v<새 LDS 버전>
+
+# 10. 원격에 올라간 태그가 $lds_sha를 가리키는지 확인한 뒤 release-packages를
+#     그 태그로 dispatch한다. --ref는 반드시 main이다 — 두 job 모두
+#     `github.ref == 'refs/heads/main'`일 때만 돈다.
+git ls-remote --tags origin refs/tags/lds-v<새 LDS 버전>
+gh workflow run release-packages.yml \
+  --repo LK-Design-System/lk-design-system \
+  --ref main \
+  -f release_tag=lds-v<새 LDS 버전>
 ```
 
 ### 2.5 릴리스 이후
 
-태그를 밀면 `release-packages.yml`의 `publish` job이 게이트
-(`check:release-immutability --tag` → current published Robotics snapshot →
-패키지 부재 확인 → `check:fast`)를
-돌고 core/theme/product를 GitHub Packages에 퍼블리시한다. 이어지는
-`verify-published` job은 레지스트리 전파를 별도로 재시도하며 세 패키지의
-정확한 버전·integrity·선택된 dist-tag를 확인한다. 발행은 성공하고 이 검증
+**태그 push만으로는 아무것도 발행되지 않는다.** `release-packages.yml`은
+`workflow_dispatch`만 받으며, 필수 입력 `release_tag`에 이미 원격에 있는 immutable
+LDS 태그를 받는다(§2.4의 10). 워크플로 정의는 `main`의 것을 쓰고 source는 그 태그를
+checkout한다. `publish` job은 dispatch·태그 동일성(태그 commit이 `origin/main`의
+조상인지) → `check:release-immutability --tag` → current published Robotics snapshot →
+패키지 부재 확인 → `check:fast` 게이트를 돌고 core/theme/product를 GitHub Packages에
+퍼블리시한다. 이어지는 `verify-published` job은 레지스트리 전파를 별도로 재시도하며
+세 패키지의 정확한 버전·integrity·선택된 dist-tag를 확인한다. 발행은 성공하고 이 검증
 job만 일시 실패했다면 GitHub의 **Re-run failed jobs**로 검증만 다시 실행한다.
+
+두 job은 self-hosted `lk-lds-release-linux-x64` 러너에서만 돈다. 그 라벨의 러너가
+온라인이 아니면 run은 실패하지 않고 `queued`로 멈춰 있으므로, dispatch 뒤 run이
+`in_progress`로 넘어가는지 먼저 본다. 발행까지 정상이면 수 분 안에 끝난다.
+
+dispatch run의 `headSha`는 dispatch 시점의 `main` SHA이며 태그 SHA와 다를 수 있다.
+발행된 source가 태그와 같은지는 `publish` job의 `Verify canonical dispatch and immutable
+source` 단계가 확인한다.
 
 확인:
 
 ```bash
-gh run list --workflow=release-packages.yml --limit 1
+# dispatch 직후 방금 만든 run을 찾는다.
+gh run list \
+  --repo LK-Design-System/lk-design-system \
+  --workflow release-packages.yml \
+  --event workflow_dispatch \
+  --json databaseId,status,conclusion,createdAt,url \
+  --limit 3
+
+# publish와 verify-published가 둘 다 success여야 한다.
+gh run watch <RELEASE_PACKAGES_RUN_ID> \
+  --repo LK-Design-System/lk-design-system --exit-status
+gh run view <RELEASE_PACKAGES_RUN_ID> \
+  --repo LK-Design-System/lk-design-system \
+  --json status,conclusion,url,jobs \
+  --jq '{status,conclusion,url,jobs:[.jobs[]|{name,conclusion}]}'
+
 npm view @lk-design-system/lds-core@<새 LDS 버전> version   # NODE_AUTH_TOKEN 필요
 npm run check:published-release                            # 정확한 tag checkout에서 실행
 ```
@@ -398,6 +442,9 @@ consumer adoption, product deployment는 서로 독립이며 deployment evidence
 
 **실패하면 태그를 옮기지 않는다.** 고친 뒤 버전을 올려 다시 릴리스한다 —
 같은 버전이 서로 다른 커밋을 가리키는 것을 막는 것이 이 게이트의 목적이다.
+다만 태그된 source가 아니라 러너·워크플로 쪽이 원인이고 아직 아무 패키지도 발행되지
+않았다면, 원인을 `main`에서 고친 뒤 같은 태그로 다시 dispatch한다. 패키지 부재 확인
+단계가 이미 발행된 버전의 재발행을 막는다.
 패키지가 하나라도 이미 발행된 상태에서는 전체 workflow를 다시 실행하지 말고,
 세 패키지의 실제 상태와 dist-tag를 먼저 감사한다.
 
