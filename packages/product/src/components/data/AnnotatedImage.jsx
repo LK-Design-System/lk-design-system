@@ -15,9 +15,12 @@ const ANNOTATION_TONE = {
 };
 
 // Text on a solid tone fill. The status hues stay mid-bright in both themes, where static black
-// keeps AA contrast; neutral flips light/dark per theme, so it follows the inverse label instead.
+// keeps AA contrast (≥6.1:1). The primary `signal` fill is deep blue in light (#2463D4, black only
+// 3.81:1) and pale blue in dark (#79A5F2, white only 2.48:1), and neutral flips light/dark per
+// theme, so both follow the inverse label, which is white in light and near-black in dark.
+const INVERSE_LABEL_TONES = new Set(['signal', 'neutral']);
 function toneLabelColor(tone) {
-  return tone === 'neutral'
+  return INVERSE_LABEL_TONES.has(tone)
     ? 'var(--color-semantic-inverse-label)'
     : 'var(--color-semantic-static-black)';
 }

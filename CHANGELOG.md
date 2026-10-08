@@ -4,6 +4,10 @@ All notable package-facing changes are recorded here. The package follows semant
 
 ## Unreleased
 
+### Fixed
+
+- `AnnotatedImage`의 primary `signal` 톤 영역 라벨 글자색을 static black에서 inverse label(라이트 흰색·다크 근검정)로 바꿨습니다. 0.4.5 색상 릴리스로 primary가 라이트 `#2463D4`·다크 `#79A5F2`가 되면서 검정 글자 대비가 라이트에서 3.81:1로 떨어져 `check:a11y`가 실패했습니다. 바꾼 뒤 라이트 5.51:1, 다크 7.9:1이며 status 톤은 그대로 검정(≥6.1:1)입니다.
+
 ### Changed
 
 - 기업 표기형의 `주식회사 엘케이로보틱스`를 Noto Sans KR ExtraBold `wght=800` v2.004-H2에서 UI 타이포그래피와 같은 **Pretendard ExtraBold 800** v1.3.9로 바꿨습니다(로고 표준 4.0.0, constructionVersion 7). 자간 0.105em, 보이는 폭 1.9X, 0.21X 간격, 중앙 정렬은 그대로이고 글자 높이는 0.155X에서 0.157X로 사실상 같습니다. 로고와 UI의 한국어 글꼴을 하나로 통일하기 위한 결정이며, 생성기는 가변 TTF·fontkit 인스턴스 경로 대신 정적 woff2를 핀하고 `vendor/pretendard-v1.309` 사본과 `assets/fonts/Pretendard-ExtraBold.woff2`의 SHA-256 일치를 검증합니다. `vendor/noto-sans-kr-v2.004-h2`는 제거합니다. 기업 표기형 SVG 2종·master·플랫폼 자산이 재생성됩니다.

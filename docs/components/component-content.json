@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "41c4f493e3752866a48cda1b64e0c42ee8bfe7be1da724c189ed698c555e336a",
+  "sourceFingerprint": "1a162b02821613beb4bbe6114fe948291cc5a7a762dee155e196664b03c904e1",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -8416,7 +8416,7 @@
           "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/How_to/Add_a_hit_map_on_top_of_an_image"
         }
       ],
-      "promptSha256": "ff47730fa940a4c884a024bc46ab472b8d18ce6e36a8eaaf3127806be468456d"
+      "promptSha256": "eda26dbae288353dac5c8abddee83d99261d8372f57ef9d968a6fab931f520e8"
     },
     {
       "id": "bar-chart",
