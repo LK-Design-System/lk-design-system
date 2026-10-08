@@ -28,9 +28,10 @@ async function assertPackageBrandProjection(packageName) {
   const placementSvgs = (await readdir(path.join(assetsRoot, 'brand')))
     .filter((name) => name.endsWith('.svg') && name !== 'lk-logo-master.svg')
     .sort();
-  // 15 company assets + 2 LK Portal product lockups (navy/white).
-  if (placementSvgs.length !== 17) {
-    throw new Error(`Expected 17 placement-ready brand SVGs, received ${placementSvgs.length}.`);
+  // 15 company assets + 2 LK Portal product lockups + 2 company-endorsed
+  // LK ROBOTICS Portal lockups (navy/white each).
+  if (placementSvgs.length !== 19) {
+    throw new Error(`Expected 19 placement-ready brand SVGs, received ${placementSvgs.length}.`);
   }
   for (const fileName of placementSvgs) await access(path.join(packageBrandRoot, fileName));
   await access(path.join(packageBrandRoot, 'platforms', 'manifest.json'));
