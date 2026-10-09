@@ -59,11 +59,11 @@ v2.0은 커스텀 LK 심볼의 geometry v1.0을 그대로 동결하고, 고정 P
 | --- | --- |
 | `ROBOTICS` (stacked·official·tile·corporate·master) | 대문자 `ROBOTICS`; Montserrat ExtraBold 800 v7.222; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지 |
 | `ROBOTICS` (inline·banner) | 같은 문자열·규칙; Montserrat Bold 700 v7.222. 세로형보다 한 단계 가벼운 weight로 가로 배치에서 심볼과의 무게 균형을 맞춘다 |
-| 승인 제품명 | 현재 mark 형 `CONSOLE`·`PORTAL`, 회사 보증 형 `Portal`; Montserrat SemiBold 600 v7.222; mark 형은 대문자, 회사 보증 형은 canonical 대소문자; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지; registry 밖 이름 금지. 고정 Portal과 registry Portal은 같은 정본 path 사용 |
+| 승인 제품명 | 현재 mark 형 `CONSOLE`·`PORTAL`, 회사 보증 형 `Portal`; mark 형은 Montserrat SemiBold 600 v7.222 대문자, 회사 보증 형은 Pretendard SemiBold 600 v1.3.9(UI 타이포그래피와 같은 바이트) canonical 대소문자; 기본 kerning; 추가 자간 `0`; 수평·수직 scale `1`; 수동 glyph 수정 금지; registry 밖 이름 금지. 고정 Portal과 registry Portal은 같은 정본 path 사용 |
 | 법인명 | NFC `주식회사 엘케이로보틱스`; Pretendard ExtraBold 800 v1.3.9(UI 타이포그래피와 같은 글꼴·같은 바이트); 기본 kerning; 글자 사이 `0.105em`; 마지막 글자 뒤 tracking 없음; 수평·수직 scale `1`; 수동 glyph 수정 금지 |
 | 배포 | 모든 wordmark·제품명·법인명은 SVG outline path; `<text>` 금지; 런타임 글꼴 의존성 없음 |
 
-폰트 파일·라이선스·SHA-256은 construction manifest에 고정되어 있습니다. Montserrat는 로고를 생성하기 위한 build-time 재료이며 제품 본문 글꼴을 이것으로 바꾸라는 의미가 아닙니다. 법인명의 Pretendard는 UI 타이포그래피(`assets/fonts/Pretendard-ExtraBold.woff2`)와 바이트가 같아야 하며, 생성기가 이를 검증하므로 UI 글꼴을 올릴 때는 로고 소스도 같은 결정으로 함께 올립니다.
+폰트 파일·라이선스·SHA-256은 construction manifest에 고정되어 있습니다. Montserrat는 로고를 생성하기 위한 build-time 재료이며 제품 본문 글꼴을 이것으로 바꾸라는 의미가 아닙니다. 법인명과 회사 보증 형 제품명의 Pretendard는 각각 UI 타이포그래피(`assets/fonts/Pretendard-ExtraBold.woff2`, `assets/fonts/Pretendard-SemiBold.woff2`)와 바이트가 같아야 하며, 생성기가 이를 검증하므로 UI 글꼴을 올릴 때는 로고 소스도 같은 결정으로 함께 올립니다.
 
 ### 2.4 조합 비율
 
@@ -117,7 +117,7 @@ v2.0은 커스텀 LK 심볼의 geometry v1.0을 그대로 동결하고, 고정 P
 | inline | `20px` | 기본 `28px` 이상 | 전체 SVG 렌더 높이 |
 | portal fixed lockup | `20px` | 기본 `28px` 이상 | 승인된 전체 `LK Portal` SVG 렌더 높이 |
 | registered product lockup | `20px` | `ProductLockup` 기본값 `28px` | 전체 SVG 렌더 높이; 좁은 rail은 `compact`로 명시 전환 |
-| company-endorsed product lockup | `20px` | `28px` 이상 | 전체 SVG 렌더 높이. 최소 슬롯 폭 `233.923423`(Portal); compact 없음 |
+| company-endorsed product lockup | `20px` | `28px` 이상 | 전체 SVG 렌더 높이. 최소 슬롯 폭 `225.758921`(Portal); compact 없음 |
 | stacked | `64px` | 기본 `64px` 이상 | 전체 SVG 렌더 높이 |
 | banner | `28px` | 사용 표면에 맞춰 확대 | 전체 banner SVG 렌더 높이; crop 금지 |
 | official square / tile | `64px` | `96px` 이상 | 정사각형 한 변 |
@@ -242,7 +242,7 @@ CMYK/Pantone을 추가하려면 최소한 출력 공정, ICC profile, 용지·�
 | --- | --- | --- |
 | SVG | 공식 원본 형식 | outline path와 `preserveAspectRatio` 유지; path 직접 편집 금지 |
 | React `Lockup` | 제품 UI 공식 runtime | 승인 variant와 색상 정책 사용; `height`가 최소 크기 이상인지 확인 |
-| React `ProductLockup` | 제품 UI 로크업 runtime | `console`·`portal` registry의 SemiBold 600 승인 SVG outline만 렌더; `endorsement` mark/company(회사 보증 형은 `portal`만, compact 없음); 기본 28px·최소 20px, positive/reverse, full/compact; raw text·runtime font 금지 |
+| React `ProductLockup` | 제품 UI 로크업 runtime | `console`·`portal` registry의 SemiBold 600 승인 SVG outline만 렌더(mark 형 Montserrat, 회사 보증 형 Pretendard); `endorsement` mark/company(회사 보증 형은 `portal`만, compact 없음); 기본 28px·최소 20px, positive/reverse, full/compact; raw text·runtime font 금지 |
 | PNG | 필요 시 파생 export | 승인 SVG에서 최종 픽셀 크기와 `1x/2x`로 내보내고 재압축·재확대 체인을 만들지 않음 |
 | PDF / EPS | 현재 공식 생성물 없음 | 인쇄업체가 요구하면 승인 SVG에서 곡선을 보존해 제작하고 proof 승인 전에는 새 정본으로 취급하지 않음 |
 | 폰트 포함 파일 | 배포 불필요 | wordmark와 법인명은 outline이므로 logo 사용을 위해 폰트를 설치·동봉하지 않음 |
@@ -302,7 +302,7 @@ construction manifest, governance 원문과 build-time 글꼴은 저장소 루�
 
 | Standard | constructionVersion | 일자 | 결정 | 근거 |
 | --- | --- | --- | --- | --- |
-| 4.1.0 | 7 | 2026-10-09 | 회사 보증 형 제품 로크업 family 추가(Portal 「LK ROBOTICS Portal」, product lockup constructionVersion 3). 회사 inline 단위·기존 variant·mark 형 출력 변경 없음. | owner 승인(2026-10-09, coordinator 전달). **TODO(owner): [`lk-logo-governance.json`](lk-logo-governance.json) `approvalRecords`에 승인자 이름·일자를 owner가 직접 기재해야 합니다.** 기재 전에는 14.2의 규칙대로 이 행을 승인 기록으로 보지 않습니다. 근거와 작도는 [`LK_PRODUCT_LOCKUP_STANDARD.md`](LK_PRODUCT_LOCKUP_STANDARD.md) 3.1. |
+| 4.1.0 | 7 | 2026-10-09 | 회사 보증 형 제품 로크업 family 추가(Portal 「LK ROBOTICS Portal」, product lockup constructionVersion 3). 제품명은 Pretendard SemiBold 600 v1.3.9 outline(owner 결정 2026-10-09, 첫 안의 Montserrat SemiBold 600에서 release 전 변경). 회사 inline 단위·기존 variant·mark 형 출력 변경 없음. | owner 승인(2026-10-09, coordinator 전달). **TODO(owner): [`lk-logo-governance.json`](lk-logo-governance.json) `approvalRecords`에 승인자 이름·일자를 owner가 직접 기재해야 합니다.** 기재 전에는 14.2의 규칙대로 이 행을 승인 기록으로 보지 않습니다. 근거와 작도는 [`LK_PRODUCT_LOCKUP_STANDARD.md`](LK_PRODUCT_LOCKUP_STANDARD.md) 3.1. |
 | 4.0.0 | 7 | 2026-10-08 | 법인명 `주식회사 엘케이로보틱스` 글꼴을 Noto Sans KR ExtraBold `wght=800` v2.004-H2에서 UI 타이포그래피와 같은 Pretendard ExtraBold 800 v1.3.9로 변경. 자간 0.105em, 보이는 폭 1.9X, 0.21X 간격, 중앙 정렬 유지. | 로고와 UI의 한국어 글꼴을 하나로 통일하자는 design-system owner(jinhyuk2me) 결정. Noto 800·Pretendard 800(자간 0.105/0.06em)·Pretendard 700을 192·160·96px 기업 표기형에서 비교해 Pretendard 800 + 자간 0.105em을 선택했다. 글자 높이 0.155X→0.157X로 사실상 동일. 가변 TTF·fontkit 인스턴스 경로를 제거하고 정적 woff2를 핀하며, 생성기가 vendor 사본과 `assets/fonts`의 UI 글꼴 SHA 일치를 검증한다. |
 | 3.0.0 | 6 | 2026-10-08 | 가로형(inline·banner)의 `ROBOTICS` 워드마크를 Montserrat Bold 700 v7.222로 변경하고 심볼과의 간격을 심볼 보이는 폭의 0.2배에서 0.25배로 넓힘. 세로형(stacked·official·tile·corporate·master)은 ExtraBold 800과 0.2배 간격 유지. 심볼 geometry v1.0, 보이는 bounds 정렬, 기본 커닝, 자간 0 유지. | 가로형에서 LK 심볼 대비 워드마크가 지나치게 무겁다는 design-system owner(jinhyuk2me) 판단. 같은 구성 규칙으로 800·700·600·500·400을 48px·20px·navy·white에서 비교해 700을 선택했고, 700 기준 간격 0.10~0.35배 비교에서 0.25배를 선택했다. 세로형은 심볼 아래 작은 cap height(0.25X)로 놓이므로 800을 유지한다. O 세로획 82%, 워드마크 폭 99%. Bold는 RIBBI 스타일이라 name ID 1이 `Montserrat`, name ID 2가 `Bold`이며 생성기는 full name으로 스타일을 검증한다. 최소 슬롯 폭 stacked `82.612990`, inline `156.254307`, banner `136.963949`. |
 | 2.0.0 | 5 | 2026-08-11 | 고정 Portal 정본과 ProductLockup registry를 SemiBold 600으로 분리. | [`LK_PRODUCT_LOCKUP_STANDARD.md`](LK_PRODUCT_LOCKUP_STANDARD.md) |

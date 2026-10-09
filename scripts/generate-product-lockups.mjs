@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import * as fontkit from 'fontkit';
 import opentype from 'opentype.js';
 import { INLINE_WORDMARK_EXPECTED, layoutInlineWordmark } from './brand/inline-construction.mjs';
 import { LK_MARK_PATHS, LOGO_GEOMETRY } from './brand/lk-logo-source.mjs';
@@ -59,7 +60,33 @@ assertEqual(layout.minimumRenderedHeightPx, 20, 'minimum rendered height');
    the published ROBOTICS_INLINE_* runtime constants exactly. */
 const companyLayout = registry.companyLockup;
 assertEqual(companyLayout.companyUnit, 'lockup-inline', 'company lockup unit');
-assertEqual(companyLayout.productNameFont, 'lk-logo-construction.json#productLockupWordmark', 'company lockup product-name font');
+/* The company form's product name uses the LDS UI typography font, outlined at
+   build time like the Pretendard corporate name: the vendor pin must be the same
+   bytes as the UI font so a UI-font upgrade forces an explicit logo revision. */
+const companyFontSpec = companyLayout.productNameFont;
+assertEqual(companyFontSpec.family, 'Pretendard', 'company lockup product-name family');
+assertEqual(companyFontSpec.style, 'SemiBold', 'company lockup product-name style');
+assertEqual(companyFontSpec.weight, 600, 'company lockup product-name weight');
+assertEqual(companyFontSpec.fontFormat, 'static-woff2', 'company lockup product-name font format');
+assertEqual(companyFontSpec.engine, 'fontkit@2.0.4', 'company lockup product-name layout engine');
+assertEqual(companyFontSpec.kerning, 'font-default', 'company lockup product-name kerning');
+assertEqual(companyFontSpec.letterSpacing, 0, 'company lockup product-name letter spacing');
+assertEqual(companyFontSpec.horizontalScale, 1, 'company lockup product-name horizontal scale');
+assertEqual(companyFontSpec.verticalScale, 1, 'company lockup product-name vertical scale');
+assertEqual(companyFontSpec.manualGlyphEdits, false, 'company lockup product-name manual glyph edits');
+const fontkitPackage = JSON.parse(await readFile(path.join(root, 'node_modules/fontkit/package.json'), 'utf8'));
+assertEqual(`fontkit@${fontkitPackage.version}`, companyFontSpec.engine, 'installed fontkit version');
+const companyFontBuffer = await readFile(path.join(root, companyFontSpec.fontFile));
+assertEqual(fileSha256(companyFontBuffer), companyFontSpec.fontSha256, 'company lockup product-name font SHA-256');
+assertEqual(fileSha256(await readFile(path.join(root, companyFontSpec.uiTypographyFile))), companyFontSpec.fontSha256, 'company lockup product-name font matches the UI typography font');
+assertEqual(fileSha256(await readFile(path.join(root, companyFontSpec.licenseFile))), companyFontSpec.licenseSha256, 'company lockup product-name license SHA-256');
+const companyFont = fontkit.create(companyFontBuffer);
+assertEqual(companyFont.familyName, `${companyFontSpec.family} ${companyFontSpec.style}`, 'company lockup product-name family metadata');
+assertEqual(companyFont.postscriptName, `${companyFontSpec.family}-${companyFontSpec.style}`, 'company lockup product-name PostScript metadata');
+assertEqual(companyFont.version, companyFontSpec.fontVersionMetadata, 'company lockup product-name font version metadata');
+assertEqual(companyFont.version.replace(/^Version\s+/i, ''), companyFontSpec.fontVersion, 'company lockup product-name font version');
+assertEqual(companyFont['OS/2']?.usWeightClass, companyFontSpec.weight, 'company lockup product-name weight metadata');
+assertEqual(Object.keys(companyFont.variationAxes ?? {}).length, 0, 'company lockup product-name font is static');
 assertEqual(companyLayout.case, 'canonical-label', 'company lockup case');
 assertEqual(companyLayout.latinPattern, '^[A-Z][A-Za-z]*(?: [A-Z][A-Za-z]*)*$', 'company lockup Latin pattern');
 assertEqual(companyLayout.capHeightToRoboticsCapHeight, 1, 'company lockup cap-height ratio');
@@ -97,7 +124,7 @@ assertArrayEqual(
   'company unit paths match Lockup inline ROBOTICS_INLINE_PATHS',
 );
 const roboticsCapHeight = inlineFont.tables.os2?.sCapHeight;
-const productNameCapHeight = font.tables.os2?.sCapHeight;
+const productNameCapHeight = companyFont.capHeight;
 if (!(roboticsCapHeight > 0) || !(productNameCapHeight > 0)) throw new Error('Pinned fonts need a usable OS/2 cap height.');
 
 const rows = Object.entries(registry.products).map(([key, product]) => buildProduct(key, product));
@@ -213,25 +240,39 @@ function buildCompanyForm(key, product) {
     throw new Error(`${key} company-endorsed wordmark must be canonical-case ASCII words. A Hangul name needs a separate approved revision that pins Pretendard SemiBold through fontkit; do not compose it from live text.`);
   }
 
-  const letters = [...company.wordmark].filter((letter) => letter !== ' ');
+  for (const character of company.wordmark) {
+    if (!companyFont.hasGlyphForCodePoint(character.codePointAt(0))) {
+      throw new Error(`${key} company-endorsed wordmark character ${JSON.stringify(character)} is missing from the pinned product-name font.`);
+    }
+  }
+  const letters = [...company.wordmark];
+  const run = companyFont.layout(company.wordmark, companyFontSpec.layoutFeatures);
+  assertArrayEqual(Object.keys(run.features ?? {}).sort(), companyFontSpec.appliedFeatures, `${key} company-endorsed applied layout features`);
+  assertEqual(run.glyphs.length, letters.length, `${key} company-endorsed glyph count`);
   const paths = [];
   const glyphIds = [];
   const origins = [];
-  const finalAdvance = font.forEachGlyph(
-    company.wordmark,
-    0,
-    0,
-    font.unitsPerEm,
-    { kerning: true },
-    (glyph, x, y, fontSize) => {
-      if (glyph.index === 0) throw new Error(`${key} company-endorsed wordmark maps a character to .notdef.`);
-      glyphIds.push(glyph.index);
-      origins.push(x);
-      const d = glyph.getPath(x, y, fontSize).toPathData(3);
-      if (d) paths.push({ letter: letters[paths.length], d });
-    },
-  );
-  const sourceBoundsRaw = font.getPath(company.wordmark, 0, 0, font.unitsPerEm, { kerning: true }).getBoundingBox();
+  const glyphBounds = [];
+  let finalAdvance = 0;
+  run.glyphs.forEach((glyph, index) => {
+    if (glyph.id === 0) throw new Error(`${key} company-endorsed wordmark maps a character to .notdef.`);
+    const position = run.positions[index];
+    const origin = finalAdvance + position.xOffset;
+    const glyphPath = glyph.path.scale(1, -1).translate(origin, -position.yOffset);
+    glyphIds.push(glyph.id);
+    origins.push(origin);
+    if (glyphPath.commands.length) {
+      paths.push({ letter: letters[index], d: serializeFontkitPath(glyphPath.toSVG()) });
+      glyphBounds.push(glyphPath.bbox);
+    }
+    finalAdvance += position.xAdvance;
+  });
+  const sourceBoundsRaw = {
+    x1: Math.min(...glyphBounds.map((box) => box.minX)),
+    y1: Math.min(...glyphBounds.map((box) => box.minY)),
+    x2: Math.max(...glyphBounds.map((box) => box.maxX)),
+    y2: Math.max(...glyphBounds.map((box) => box.maxY)),
+  };
   const sourceBoundsArray = [sourceBoundsRaw.x1, sourceBoundsRaw.y1, sourceBoundsRaw.x2, sourceBoundsRaw.y2];
   assertArrayEqual(glyphIds, company.expected.glyphIds, `${key} company-endorsed glyph IDs`);
   assertArrayEqual(origins, company.expected.origins, `${key} company-endorsed kerning-aware origins`);
@@ -341,9 +382,11 @@ function renderModule(products) {
   return `/**
  * Generated by scripts/generate-product-lockups.mjs. Do not edit by hand.
  *
- * Approved product wordmarks are outlined from pinned Montserrat SemiBold 600
- * v${productWordmark.fontVersion}. Runtime output has no font or SVG text dependency.
- * Font SHA-256: ${productWordmark.fontSha256}
+ * Mark-form product wordmarks are outlined from pinned Montserrat SemiBold 600
+ * v${productWordmark.fontVersion}; company-endorsed product names are outlined from
+ * pinned ${companyFontSpec.family} ${companyFontSpec.style} ${companyFontSpec.weight} v${companyFontSpec.releaseVersion}.
+ * Runtime output has no font or SVG text dependency.
+ * Font SHA-256: ${productWordmark.fontSha256} (mark form), ${companyFontSpec.fontSha256} (company form)
  */
 ${localPathBlocks}
 
@@ -383,6 +426,10 @@ function formatViewBox(box) {
 function formatNumber(value, precision = 6) {
   const rounded = Number(value.toFixed(precision));
   return Object.is(rounded, -0) ? '0' : String(rounded);
+}
+
+function serializeFontkitPath(value, precision = 3) {
+  return value.replace(/-?(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?/gi, (token) => formatNumber(Number(token), precision));
 }
 
 function fileSha256(buffer) {

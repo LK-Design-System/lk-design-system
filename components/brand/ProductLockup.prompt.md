@@ -28,14 +28,15 @@ TopBar·SideNav에서 `LK + 제품명`을 **LK 모브랜드 우선 로고 문법
 
 ## 회사 보증 형 (`endorsement="company"`)
 
-회사 inline 로크업(`LK` + Montserrat Bold 700 `ROBOTICS`)을 바꾸지 않고, 그 뒤에 승인 제품명을 **canonical 대소문자**(예: `Portal`) Montserrat SemiBold 600 outline으로 붙인 회사 보증 형입니다. 2026-10-09 owner가 family 추가와 「Portal」 표기를 승인했습니다(제품 로크업 표준 1.4.0, 로고 표준 4.1.0, registry constructionVersion 3).
+회사 inline 로크업(`LK` + Montserrat Bold 700 `ROBOTICS`)을 바꾸지 않고, 그 뒤에 승인 제품명을 **canonical 대소문자**(예: `Portal`) Pretendard SemiBold 600 v1.3.9 outline으로 붙인 회사 보증 형입니다. 제품명 글꼴은 LDS UI 타이포그래피와 같은 Pretendard이며(owner 결정 2026-10-09), mark 형(「LK PORTAL」)은 Montserrat SemiBold 600 그대로입니다. 2026-10-09 owner가 family 추가와 「Portal」 표기를 승인했습니다(제품 로크업 표준 1.4.0, 로고 표준 4.1.0, registry constructionVersion 3).
 
 - 회사 단위: `Lockup variant="inline"`과 같은 `ROBOTICS_INLINE_PATHS`·`ROBOTICS_INLINE_TRANSFORM`. 생성기가 같은 helper(`scripts/brand/inline-construction.mjs`)로 다시 계산해 동일성을 검증합니다.
-- 제품명 크기: 대문자 높이 = `ROBOTICS` 대문자 높이(`0.966851X`). 두 글꼴 모두 cap 700/UPM 1000이라 배율이 inline과 같습니다. 소문자 `l`의 어센더는 cap보다 `0.041X` 솟지만 inline 세로 프레임(padding 4) 안에 듭니다. 잉크 높이로 배율을 정하지 않습니다.
+- 제품명 원본: `vendor/pretendard-v1.309/Pretendard-SemiBold.woff2`(UI 글꼴 `assets/fonts/Pretendard-SemiBold.woff2`와 같은 바이트). 생성기는 fontkit `layout(text, { kern: true })`로 배치하고 `.notdef`·누락 글리프를 거부하며 golden glyph id·origin·잉크 bounds·advance를 검증합니다.
+- 제품명 크기: 대문자 높이 = `ROBOTICS` 대문자 높이(`0.966851X`). 배율은 두 글꼴의 OS/2 cap height(Montserrat 700/UPM 1000, Pretendard 1448/UPM 2048)로 맞춥니다. Pretendard의 소문자 `l`은 cap과 같은 높이라 inline 세로 프레임(padding 4) 안에 듭니다. 잉크 높이로 배율을 정하지 않습니다.
 - baseline: `ROBOTICS`와 공유합니다.
 - 간격: `ROBOTICS` 잉크 끝에서 제품명 잉크 시작까지 LK mark 보이는 폭의 `0.35`배(`0.378616X`). LK–ROBOTICS 간격(`0.25`배)보다 넓어 회사 단위와 제품명이 구분됩니다.
-- 세로 프레임: inline과 같은 viewBox 높이라 같은 `height`에서 X가 같습니다. Portal 결과는 `viewBox 342.60933 149.18987 750.459089 64.1628`, 제품명 transform `matrix(0.077573 0 0 0.077573 853.8673 208.421795)`입니다.
-- 크기: 기본 `28px`, 최소 `20px`(20px에서 최소 슬롯 폭 `233.923423px`). 시작 화면은 28px 이상을 권장합니다.
+- 세로 프레임: inline과 같은 viewBox 높이라 같은 `height`에서 X가 같습니다. Portal 결과는 `viewBox 342.60933 149.18987 724.266225 64.1628`, 제품명 transform `matrix(0.037501 0 0 0.037501 856.134058 208.421795)`입니다.
+- 크기: 기본 `28px`, 최소 `20px`(20px에서 최소 슬롯 폭 `225.758921px`). 시작 화면은 28px 이상을 권장합니다.
 - 축소: `preserveAspectRatio="xMidYMid meet"`와 `max-width:100%; height:auto`로 비례 축소만 합니다. crop·wrap·말줄임·compact가 없고, `compact`를 함께 넘기면 TypeError입니다. 슬롯이 최소 폭보다 좁으면 셸이 회사 `Lockup inline`이나 `mark`로 전환합니다.
 - 색: positive 전체 `#05132B`, reverse 전체 `#FFFFFF`. 제품명만 다른 색으로 두지 않습니다.
 - 접근성: 기본 이름은 보이는 글과 같은 `LK ROBOTICS {label}`입니다. 링크 안에서는 `decorative`로 두고 링크가 `LK ROBOTICS Portal 홈`처럼 목적지를 포함한 이름을 가집니다. `h1` 안에서는 장식으로 숨기지 않거나 heading 이름을 보이는 글과 같게 둡니다.

@@ -27,7 +27,8 @@ function approvedKeyList(keys) {
  * stronger parent-brand signal.
  *
  * `endorsement="company"`: the company inline lockup (LK + Bold 700 ROBOTICS,
- * unchanged) followed by the approved canonical-case product name, for wide
+ * unchanged) followed by the approved canonical-case product name outlined from
+ * pinned Pretendard SemiBold 600 (the LDS UI typography font), for wide
  * first-impression surfaces such as a home hero or sign-in. Only registry
  * entries with an approved `company` form render; there is no compact mode.
  *

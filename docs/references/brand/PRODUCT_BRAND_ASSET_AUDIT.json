@@ -161,7 +161,7 @@
           "surfaces": ["home-hero", "login"],
           "shellBrandSlotVariant": "inline",
           "collapsedRailVariant": "mark",
-          "minimumRequiredSlotWidthPx": 233.923423,
+          "minimumRequiredSlotWidthPx": 225.758921,
           "decision": "Owner-approved on 2026-10-09: the home hero and sign-in use ProductLockup endorsement=company (LK ROBOTICS Portal); the SideNav header, mobile TopBar and Drawer use the company Lockup inline; the collapsed rail uses Lockup mark; the mark form LK PORTAL is not shown in the Portal shell next to the company-endorsed form. The sourceRevision pin is re-taken after Portal adopts the release."
         }
       },
