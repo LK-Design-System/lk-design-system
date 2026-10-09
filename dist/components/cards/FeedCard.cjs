@@ -1,13 +1,13 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkKKRQETW7cjs = require('../../chunk-KKRQETW7.cjs');
+var _chunkTGEXQN4Jcjs = require('../../chunk-TGEXQN4J.cjs');
 require('../../chunk-Z32QW7YE.cjs');
 require('../../chunk-PAR24VMU.cjs');
-require('../../chunk-OAQNNGUQ.cjs');
-require('../../chunk-RPMS4CCK.cjs');
 require('../../chunk-4RSJTSP6.cjs');
 require('../../chunk-3XL4WPBW.cjs');
+require('../../chunk-OAQNNGUQ.cjs');
+require('../../chunk-RPMS4CCK.cjs');
 require('../../chunk-IPHGQTAP.cjs');
 require('../../chunk-VO2W7AXD.cjs');
 require('../../chunk-677EM4M2.cjs');
@@ -20,5 +20,5 @@ require('../../chunk-7OXVB7WX.cjs');
 require('../../chunk-SNHGXUVK.cjs');
 
 
-exports.FeedCard = _chunkKKRQETW7cjs.FeedCard;
+exports.FeedCard = _chunkTGEXQN4Jcjs.FeedCard;
 //# sourceMappingURL=FeedCard.cjs.map

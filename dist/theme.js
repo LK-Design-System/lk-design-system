@@ -16,7 +16,7 @@ import {
 } from "./chunk-XCWIAZA7.js";
 import {
   ProductLockup
-} from "./chunk-IVAKFLCS.js";
+} from "./chunk-JEKL2ODJ.js";
 import "./chunk-ZBZWQDG3.js";
 export {
   LdsColorSchemeScript,

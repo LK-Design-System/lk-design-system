@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "count": 41,
+  "count": 42,
   "maxDiffRatio": 0.01,
   "captures": [
     {
@@ -38,6 +38,18 @@
       "reducedMotion": "no-preference",
       "bytes": 55029,
       "sha256": "72c90e71521e77cd284bb6d2e8808254bc613647b07876496b80f901a5a9f214"
+    },
+    {
+      "name": "theme-product-lockup-company",
+      "id": "lds-theme-brand-product-lockup--company-endorsed",
+      "query": {},
+      "viewport": {
+        "width": 980,
+        "height": 680
+      },
+      "reducedMotion": "no-preference",
+      "bytes": 61903,
+      "sha256": "86ed8d4aad89f82ed8ddd83f51c3d1a15aed40ded144668853f0146a9762de28"
     },
     {
       "name": "theme-brand-spinner-reduced-motion",
@@ -392,8 +404,8 @@
         "height": 620
       },
       "reducedMotion": "no-preference",
-      "bytes": 25886,
-      "sha256": "88697abd599642c7310f00d2157107018798e62c952aec4d20b514b0837447a7"
+      "bytes": 25973,
+      "sha256": "a59cc7bbb3b8b725b83b3a9748c9c05a0b048eadf8c55912a211fa060531e7d7"
     },
     {
       "name": "product-sidenav-docked-collapsed",
@@ -454,8 +466,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 112660,
-      "sha256": "72a0e86f54006f019f2e856bfe085c203794ac2e5582692f2c275fa96adea3e4"
+      "bytes": 112817,
+      "sha256": "1cd9da39e9c8f50d5f1a1ee4a312e2c9dc1268f584453d5168be8af14c06a496"
     },
     {
       "name": "product-dashboard-shell-dark",
@@ -466,8 +478,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 76457,
-      "sha256": "2bcd1631ba5e7775b8e89edc34d9c6aaa186d4efe93ebc8d8075eb09c7d9ff12"
+      "bytes": 76548,
+      "sha256": "ca4a408a1fd3b923647711184db706fd7436b3f1ffeb895330514d9e9ddf2bfe"
     },
     {
       "name": "product-navigation-dashboard-fixed",
@@ -478,8 +490,8 @@
         "height": 820
       },
       "reducedMotion": "no-preference",
-      "bytes": 53317,
-      "sha256": "99b2ec96951734450980857102e4bd0d3458d98e500201aa82dbf896f290abbb"
+      "bytes": 53391,
+      "sha256": "dfbb6a6404a1f2868f94aee8c91a3ed176160d961a9b26c043bb3a1cba74c7aa"
     },
     {
       "name": "product-navigation-dashboard-overlay-rail",

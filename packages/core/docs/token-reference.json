@@ -1424,6 +1424,22 @@
           }
         }
       },
+      "navy-wash": {
+        "label": "Navy Wash",
+        "source": "LDS SideNav neutral appearance (owner decision L-N1 = C, 2026-10-09) — a light surface leaning slightly toward the brand navy hue (216°, 1.055:1 against white body) and its dark counterpart; step 6 promotes the former raw dark literal of background-band",
+        "tokens": {
+          "6": {
+            "$type": "color",
+            "$value": "#0E121F",
+            "css": "--color-atomic-navy-wash-6"
+          },
+          "98": {
+            "$type": "color",
+            "$value": "#F7F9FC",
+            "css": "--color-atomic-navy-wash-98"
+          }
+        }
+      },
       "primary-blue": {
         "label": "Primary Blue",
         "source": "LK Theme approved primary anchors, 2026-10-08; ordinal steps, not a perceptually generated ramp",
@@ -2319,7 +2335,7 @@
         "css": "--color-semantic-background-band",
         "modes": {
           "light": "#F4F4F5",
-          "dark": "#0E121F"
+          "dark": "var(--color-atomic-navy-wash-6)"
         },
         "origin": "lds-extension",
         "group": "background"
@@ -3985,6 +4001,113 @@
         }
       }
     },
+    "messageComposer": {
+      "component": "components/communication/MessageComposer.jsx",
+      "tokens": {
+        "borderFocus": {
+          "$type": "color",
+          "css": "--component-message-composer-border-focus",
+          "$value": "var(--color-atomic-cool-neutral-60)",
+          "ref": "primitive.colorRamps.cool-neutral.tokens.60",
+          "$description": "MessageComposer focus-within shell border. A neutral step at least 3:1 against the elevated shell in both themes (light 3.45:1 on #FFFFFF, dark 4.61:1 on #212225); the shell owns focus, so there is no halo and no inner textarea outline.",
+          "generated": true
+        }
+      }
+    },
+    "conversationList": {
+      "component": "components/communication/ConversationList.jsx",
+      "tokens": {
+        "rowHeight": {
+          "$type": "dimension",
+          "$value": "var(--component-conversation-list-row-height)",
+          "css": "--component-conversation-list-row-height",
+          "source": "rail-panel shell spec (owner-approved L-S1..L-S12, 2026-10-09)"
+        },
+        "foreground": {
+          "$type": "color",
+          "css": "--component-conversation-list-foreground",
+          "$value": "var(--color-semantic-label-normal)",
+          "generated": true,
+          "$description": "Same role as --component-side-nav-neutral-foreground (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "mutedForeground": {
+          "$type": "color",
+          "css": "--component-conversation-list-muted-foreground",
+          "$value": "var(--color-semantic-label-alternative)",
+          "generated": true,
+          "$description": "Same role as --component-side-nav-neutral-muted-foreground (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "hoverForeground": {
+          "$type": "color",
+          "css": "--component-conversation-list-hover-foreground",
+          "$value": "var(--color-semantic-label-neutral)",
+          "generated": true,
+          "$description": "Same role as --component-side-nav-neutral-hover-foreground (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "groupForeground": {
+          "$type": "color",
+          "css": "--component-conversation-list-group-foreground",
+          "$value": "var(--color-semantic-label-alternative)",
+          "generated": true,
+          "$description": "Same role as --component-side-nav-neutral-subtle-foreground (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "hoverSurface": {
+          "$type": "color",
+          "css": "--component-conversation-list-hover-surface",
+          "$value": "var(--color-atomic-cool-neutral-97)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-97)",
+            "dark": "var(--color-atomic-cool-neutral-17)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.97",
+          "$description": "Same role as --component-side-nav-neutral-hover-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "activeSurface": {
+          "$type": "color",
+          "css": "--component-conversation-list-active-surface",
+          "$value": "var(--color-atomic-cool-neutral-96)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-96)",
+            "dark": "var(--color-atomic-cool-neutral-20)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.96",
+          "$description": "Same role as --component-side-nav-neutral-active-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "activeHoverSurface": {
+          "$type": "color",
+          "css": "--component-conversation-list-active-hover-surface",
+          "$value": "var(--color-atomic-cool-neutral-95)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-95)",
+            "dark": "var(--color-atomic-cool-neutral-22)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.95",
+          "$description": "Same role as --component-side-nav-neutral-active-hover-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "pressedSurface": {
+          "$type": "color",
+          "css": "--component-conversation-list-pressed-surface",
+          "$value": "var(--color-atomic-cool-neutral-95)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-95)",
+            "dark": "var(--color-atomic-cool-neutral-22)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.95",
+          "$description": "Same role as --component-side-nav-neutral-pressed-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "focusIndicator": {
+          "$type": "color",
+          "css": "--component-conversation-list-focus-indicator",
+          "$value": "var(--color-semantic-focus-indicator)",
+          "generated": true,
+          "$description": "Same role as --component-side-nav-neutral-focus-indicator (SideNav neutral), so the rail-panel shell reads as one light shell."
+        }
+      }
+    },
     "lockup": {
       "component": "components/brand/Lockup.jsx",
       "tokens": {
@@ -4142,6 +4265,355 @@
           "$value": "var(--color-atomic-navy-shell-68)",
           "generated": true,
           "ref": "primitive.colorRamps.navyShell.tokens.68"
+        },
+        "neutralSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-surface",
+          "$value": "var(--color-atomic-navy-wash-98)",
+          "modes": {
+            "light": "var(--color-atomic-navy-wash-98)",
+            "dark": "var(--color-atomic-navy-wash-6)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.navy-wash.tokens.98"
+        },
+        "neutralDivider": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-divider",
+          "$value": "var(--color-semantic-line-solid-normal)",
+          "generated": true
+        },
+        "neutralForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-foreground",
+          "$value": "var(--color-semantic-label-normal)",
+          "generated": true
+        },
+        "neutralMutedForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-muted-foreground",
+          "$value": "var(--color-semantic-label-alternative)",
+          "generated": true
+        },
+        "neutralSubtleForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-subtle-foreground",
+          "$value": "var(--color-semantic-label-alternative)",
+          "generated": true
+        },
+        "neutralHoverForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-hover-foreground",
+          "$value": "var(--color-semantic-label-neutral)",
+          "generated": true
+        },
+        "neutralActiveForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-active-foreground",
+          "$value": "var(--color-semantic-label-normal)",
+          "generated": true
+        },
+        "neutralHoverSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-hover-surface",
+          "$value": "var(--color-atomic-cool-neutral-97)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-97)",
+            "dark": "var(--color-atomic-cool-neutral-17)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.97"
+        },
+        "neutralActiveSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-active-surface",
+          "$value": "var(--color-atomic-cool-neutral-96)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-96)",
+            "dark": "var(--color-atomic-cool-neutral-20)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.96"
+        },
+        "neutralActiveHoverSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-active-hover-surface",
+          "$value": "var(--color-atomic-cool-neutral-95)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-95)",
+            "dark": "var(--color-atomic-cool-neutral-22)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.95"
+        },
+        "neutralPressedSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-pressed-surface",
+          "$value": "var(--color-atomic-cool-neutral-95)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-95)",
+            "dark": "var(--color-atomic-cool-neutral-22)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.95"
+        },
+        "neutralBadgeSurface": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-badge-surface",
+          "$value": "var(--color-semantic-fill-strong)",
+          "generated": true
+        },
+        "neutralBadgeForeground": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-badge-foreground",
+          "$value": "var(--color-semantic-label-neutral)",
+          "generated": true
+        },
+        "neutralBadgeDot": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-badge-dot",
+          "$value": "var(--color-semantic-label-alternative)",
+          "generated": true
+        },
+        "neutralFocusIndicator": {
+          "$type": "color",
+          "css": "--component-side-nav-neutral-focus-indicator",
+          "$value": "var(--color-semantic-focus-indicator)",
+          "generated": true
+        }
+      }
+    },
+    "navRail": {
+      "component": "components/navigation/NavRail.jsx",
+      "tokens": {
+        "dockedWidth": {
+          "$type": "dimension",
+          "$value": "var(--component-nav-rail-docked-width)",
+          "css": "--component-nav-rail-docked-width",
+          "source": "rail-panel shell spec (owner-approved L-S1..L-S12, 2026-10-09)"
+        },
+        "dockedItemSize": {
+          "$type": "dimension",
+          "$value": "var(--component-nav-rail-docked-item-size)",
+          "css": "--component-nav-rail-docked-item-size",
+          "source": "rail-panel shell spec (owner-approved L-S1..L-S12, 2026-10-09)"
+        },
+        "dockedItemGap": {
+          "$type": "dimension",
+          "$value": "var(--component-nav-rail-docked-item-gap)",
+          "css": "--component-nav-rail-docked-item-gap",
+          "source": "rail-panel shell spec (owner-approved L-S1..L-S12, 2026-10-09)"
+        },
+        "dockedPaddingBlock": {
+          "$type": "dimension",
+          "$value": "var(--component-nav-rail-docked-padding-block)",
+          "css": "--component-nav-rail-docked-padding-block",
+          "source": "rail-panel shell spec (owner-approved L-S1..L-S12, 2026-10-09)"
+        },
+        "dockedSlotHeight": {
+          "$type": "dimension",
+          "$value": "var(--component-nav-rail-docked-slot-height)",
+          "css": "--component-nav-rail-docked-slot-height",
+          "source": "rail-panel shell spec (owner-approved L-S1..L-S12, 2026-10-09)"
+        },
+        "neutralSurface": {
+          "$type": "color",
+          "css": "--component-nav-rail-neutral-surface",
+          "$value": "var(--color-atomic-navy-wash-98)",
+          "modes": {
+            "light": "var(--color-atomic-navy-wash-98)",
+            "dark": "var(--color-atomic-navy-wash-6)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.navy-wash.tokens.98",
+          "$description": "Same role as --component-side-nav-neutral-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "neutralDivider": {
+          "$type": "color",
+          "css": "--component-nav-rail-neutral-divider",
+          "$value": "var(--color-semantic-line-solid-normal)",
+          "generated": true,
+          "$description": "Same role as --component-side-nav-neutral-divider (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "neutralForeground": {
+          "$type": "color",
+          "css": "--component-nav-rail-neutral-foreground",
+          "$value": "var(--color-semantic-label-normal)",
+          "generated": true,
+          "$description": "Same role as --component-side-nav-neutral-foreground (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "neutralMutedForeground": {
+          "$type": "color",
+          "css": "--component-nav-rail-neutral-muted-foreground",
+          "$value": "var(--color-semantic-label-alternative)",
+          "generated": true,
+          "$description": "Same role as --component-side-nav-neutral-muted-foreground (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "neutralHoverForeground": {
+          "$type": "color",
+          "css": "--component-nav-rail-neutral-hover-foreground",
+          "$value": "var(--color-semantic-label-neutral)",
+          "generated": true,
+          "$description": "Same role as --component-side-nav-neutral-hover-foreground (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "neutralHoverSurface": {
+          "$type": "color",
+          "css": "--component-nav-rail-neutral-hover-surface",
+          "$value": "var(--color-atomic-cool-neutral-97)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-97)",
+            "dark": "var(--color-atomic-cool-neutral-17)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.97",
+          "$description": "Same role as --component-side-nav-neutral-hover-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "neutralActiveSurface": {
+          "$type": "color",
+          "css": "--component-nav-rail-neutral-active-surface",
+          "$value": "var(--color-atomic-cool-neutral-96)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-96)",
+            "dark": "var(--color-atomic-cool-neutral-20)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.96",
+          "$description": "Same role as --component-side-nav-neutral-active-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "neutralActiveHoverSurface": {
+          "$type": "color",
+          "css": "--component-nav-rail-neutral-active-hover-surface",
+          "$value": "var(--color-atomic-cool-neutral-95)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-95)",
+            "dark": "var(--color-atomic-cool-neutral-22)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.95",
+          "$description": "Same role as --component-side-nav-neutral-active-hover-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "neutralPressedSurface": {
+          "$type": "color",
+          "css": "--component-nav-rail-neutral-pressed-surface",
+          "$value": "var(--color-atomic-cool-neutral-95)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-95)",
+            "dark": "var(--color-atomic-cool-neutral-22)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.95",
+          "$description": "Same role as --component-side-nav-neutral-pressed-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "neutralFocusIndicator": {
+          "$type": "color",
+          "css": "--component-nav-rail-neutral-focus-indicator",
+          "$value": "var(--color-semantic-focus-indicator)",
+          "generated": true,
+          "$description": "Same role as --component-side-nav-neutral-focus-indicator (SideNav neutral), so the rail-panel shell reads as one light shell."
+        }
+      }
+    },
+    "shellPanel": {
+      "component": "components/layout/ShellPanel.jsx",
+      "tokens": {
+        "width": {
+          "$type": "dimension",
+          "$value": "var(--component-shell-panel-width)",
+          "css": "--component-shell-panel-width",
+          "source": "rail-panel shell spec (owner-approved L-S1..L-S12, 2026-10-09)"
+        },
+        "headerHeight": {
+          "$type": "dimension",
+          "$value": "var(--component-shell-panel-header-height)",
+          "css": "--component-shell-panel-header-height",
+          "source": "rail-panel shell spec (owner-approved L-S1..L-S12, 2026-10-09)"
+        },
+        "rowHeight": {
+          "$type": "dimension",
+          "$value": "var(--component-shell-panel-row-height)",
+          "css": "--component-shell-panel-row-height",
+          "source": "rail-panel shell spec (owner-approved L-S1..L-S12, 2026-10-09)"
+        },
+        "surface": {
+          "$type": "color",
+          "css": "--component-shell-panel-surface",
+          "$value": "var(--color-atomic-navy-wash-98)",
+          "modes": {
+            "light": "var(--color-atomic-navy-wash-98)",
+            "dark": "var(--color-atomic-navy-wash-6)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.navy-wash.tokens.98",
+          "$description": "Same role as --component-side-nav-neutral-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "divider": {
+          "$type": "color",
+          "css": "--component-shell-panel-divider",
+          "$value": "var(--color-semantic-line-solid-normal)",
+          "generated": true,
+          "$description": "Same role as --component-side-nav-neutral-divider (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "foreground": {
+          "$type": "color",
+          "css": "--component-shell-panel-foreground",
+          "$value": "var(--color-semantic-label-normal)",
+          "generated": true,
+          "$description": "Same role as --component-side-nav-neutral-foreground (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "hoverForeground": {
+          "$type": "color",
+          "css": "--component-shell-panel-hover-foreground",
+          "$value": "var(--color-semantic-label-neutral)",
+          "generated": true,
+          "$description": "Same role as --component-side-nav-neutral-hover-foreground (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "hoverSurface": {
+          "$type": "color",
+          "css": "--component-shell-panel-hover-surface",
+          "$value": "var(--color-atomic-cool-neutral-97)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-97)",
+            "dark": "var(--color-atomic-cool-neutral-17)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.97",
+          "$description": "Same role as --component-side-nav-neutral-hover-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "activeSurface": {
+          "$type": "color",
+          "css": "--component-shell-panel-active-surface",
+          "$value": "var(--color-atomic-cool-neutral-96)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-96)",
+            "dark": "var(--color-atomic-cool-neutral-20)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.96",
+          "$description": "Same role as --component-side-nav-neutral-active-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "activeHoverSurface": {
+          "$type": "color",
+          "css": "--component-shell-panel-active-hover-surface",
+          "$value": "var(--color-atomic-cool-neutral-95)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-95)",
+            "dark": "var(--color-atomic-cool-neutral-22)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.95",
+          "$description": "Same role as --component-side-nav-neutral-active-hover-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+        },
+        "pressedSurface": {
+          "$type": "color",
+          "css": "--component-shell-panel-pressed-surface",
+          "$value": "var(--color-atomic-cool-neutral-95)",
+          "modes": {
+            "light": "var(--color-atomic-cool-neutral-95)",
+            "dark": "var(--color-atomic-cool-neutral-22)"
+          },
+          "generated": true,
+          "ref": "primitive.colorRamps.cool-neutral.tokens.95",
+          "$description": "Same role as --component-side-nav-neutral-pressed-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
         }
       }
     },

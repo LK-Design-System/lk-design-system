@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "lds-expression-profile-visual-matrix",
-  "generatedAt": "2026-10-08",
+  "generatedAt": "2026-10-09",
   "matrix": {
     "profiles": [
       "default",
@@ -994,7 +994,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--default--light--normal.png",
-      "sha256": "611b9cbcbd7e7454459196581099da5cd4f94e6eefdc3f6e94c6b96d039ca394"
+      "sha256": "68574537fb2da1a6f05dfa4d9d4c0f5975c2e4af0ffab7cc9e256cb4f63a9a4b"
     },
     {
       "name": "navigation-overlay--ops--light--normal",
@@ -1026,7 +1026,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--ops--light--normal.png",
-      "sha256": "16dafbdd47d11915b6518e2a7415cab59d6de411937a0021815e60f43c46c7d0"
+      "sha256": "7fab297f25d1b3d6ad61eaae49e32828d14d0375c515a0f7952061f96ca00e0c"
     },
     {
       "name": "navigation-overlay--default--light--320",
@@ -1058,7 +1058,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--default--light--320.png",
-      "sha256": "4f3ba156bba487375628d80f505ce7cee7382b468d951d67ca4d40cfcebfc66c"
+      "sha256": "e9524aa2b3f480186a84bba247cf058757803ca5c43f95a19eb647025082e983"
     },
     {
       "name": "navigation-overlay--ops--light--320",
@@ -1090,7 +1090,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--ops--light--320.png",
-      "sha256": "2aa10a082e48a044e261aaf37751c796801bce7f984b2c8b927f470074b64932"
+      "sha256": "bbe05034ea15fd1ab334a8d2fcbd50908eab4c2981a2f48eafc129675fe45c2e"
     },
     {
       "name": "navigation-overlay--default--dark--normal",
@@ -1122,7 +1122,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--default--dark--normal.png",
-      "sha256": "9451d9f327d8a1bb7ddb7692d234971f1be0e44d845fe8d8c86442441fc7c8e0"
+      "sha256": "973159bf6fe8b7ab7efa48e970ebf30cf2190c9875f3c077516598895fb7a328"
     },
     {
       "name": "navigation-overlay--ops--dark--normal",
@@ -1154,7 +1154,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--ops--dark--normal.png",
-      "sha256": "3914d5d1ce3c970a484d00b6afa25a2181e192e34201e57f7d024d8a0a0f066c"
+      "sha256": "36bff2878d3e8d04c3ae3c3c104c701f92a5e10cb7f886acc1cc2ef0298bce52"
     },
     {
       "name": "navigation-overlay--default--dark--320",
@@ -1186,7 +1186,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--default--dark--320.png",
-      "sha256": "564b57fc55ec69964a1424227f6d245879b0362e49dbd5cd162367d49952e8f8"
+      "sha256": "e2025467afea35d744d462bbea89b6265aa6d8ae6f47e184d151c569fd929fd2"
     },
     {
       "name": "navigation-overlay--ops--dark--320",
@@ -1218,7 +1218,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--ops--dark--320.png",
-      "sha256": "62ea29182314193be21db1327fc49378b12496da5cbac403f112046cf4f87a32"
+      "sha256": "91e936ca6937ca4e20ffba635b678505ddc11a93a57141382451c6c6c1d65405"
     }
   ]
 }

@@ -34,8 +34,25 @@ export interface DashboardShellProps extends Omit<React.HTMLAttributes<HTMLDivEl
   children?: React.ReactNode;
   /** auto는 768px 미만에서 좁은 구성을 사용합니다. @default "auto" */
   layout?: 'auto' | 'wide' | 'narrow';
-  /** header-first는 전폭 header 아래에 탐색을 두고, side-first는 넓은 화면에서 탐색을 전체 높이의 첫 열에 둡니다. @default "header-first" */
-  topology?: 'header-first' | 'side-first';
+  /**
+   * header-first는 전폭 header 아래에 탐색을 두고, side-first는 넓은 화면에서 탐색을 전체 높이의 첫 열에 둡니다.
+   * rail-panel은 `navigation`의 docked `NavRail`(영역)과 `panel`의 `ShellPanel`(영역 안 긴 목록)을 전체 높이의 두 열로 두는
+   * 고정 높이 앱 셸이며 main이 스크롤 컨테이너입니다. 좁은 화면에서는 레일 항목과 패널을 드로어 하나로 합칩니다.
+   * @default "header-first"
+   */
+  topology?: 'header-first' | 'side-first' | 'rail-panel';
+  /** rail-panel의 맥락 패널 슬롯(`ShellPanel`). 긴 목록을 가진 영역에만 넘기고, 하위 목적지 2–4개뿐인 영역은 생략해 본문 탭을 씁니다. */
+  panel?: React.ReactNode;
+  /** 패널 펼침 상태. 토글은 header 시작의 제품 소유 버튼 하나이며 `aria-expanded`·`aria-controls={panelId}`를 둡니다. @default true */
+  panelOpen?: boolean;
+  /** 패널 접힘 요청. overlay 범위에서 Escape를 누르거나 768–1023px 범위로 들어가면 `false`로 호출됩니다. */
+  onPanelOpenChange?: (open: boolean) => void;
+  /** 패널 영역 id. 토글의 `aria-controls`와 연결합니다. 생략하면 내부 id를 생성합니다. */
+  panelId?: string;
+  /** 패널 배치. `auto`는 768–1023px에서 본문을 덮는 overlay, 그 이상에서 inline입니다. 검증에서는 `inline`/`overlay`로 고정합니다. @default "auto" */
+  panelMode?: 'auto' | 'inline' | 'overlay';
+  /** 패널 안에 focus가 있는 채로 접히거나 overlay에서 Escape로 닫힐 때 focus를 돌려줄 토글. */
+  panelReturnFocusRef?: React.RefObject<HTMLElement | null>;
   /** main landmark id. 생략하면 인스턴스별 id를 생성합니다. */
   mainId?: string;
   /** main landmark의 접근 가능한 이름. */
