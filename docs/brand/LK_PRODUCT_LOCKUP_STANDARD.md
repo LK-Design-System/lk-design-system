@@ -10,7 +10,7 @@
 | Registry source | [`../../assets/brand/lk-product-lockups.json`](../../assets/brand/lk-product-lockups.json) |
 | Runtime | [`../../components/brand/ProductLockup.jsx`](../../components/brand/ProductLockup.jsx) |
 
-이 표준은 LK Portal에서 사용하던 **대문자·1X·간격 리듬**을 계승하면서, LK mark가 제품명보다 먼저 읽히는 모브랜드 우선 위계를 적용합니다. `ProductLockup`은 임의 문자열을 조판하는 컴포넌트가 아니라, 제품별로 검증된 SVG outline만 제공하는 승인 registry입니다. 따라서 제품 UI가 Montserrat·Pretendard를 로고용으로 설치하거나 제품명을 runtime `<text>`로 그리지 않습니다.
+이 표준은 LK Portal에서 사용하던 **대문자·1X·간격 리듬**을 계승하면서, LK mark가 제품명보다 먼저 읽히는 모브랜드 우선 위계를 적용합니다. `ProductLockup`은 임의 문자열을 조판하는 컴포넌트가 아니라, 제품별로 검증된 SVG outline만 제공하는 승인 registry입니다. 따라서 제품 UI가 Montserrat를 설치하거나 제품명을 runtime `<text>`로 그리지 않습니다.
 
 제품 로크업은 두 형태가 있습니다. **mark 형**(`LK` mark + 대문자 제품명, 예: 「LK PORTAL」)은 제품 셸의 좁은 브랜드 슬롯에 씁니다. **회사 보증 형**(회사 inline 워드마크 `LK ROBOTICS` + 제품명, 예: 「LK ROBOTICS Portal」)은 시작 화면처럼 넓은 첫인상 표면에 씁니다. 두 형태 모두 같은 승인 registry의 outline만 렌더하며 호출부에서 조합하지 않습니다.
 
@@ -21,7 +21,7 @@
 | 회사 `Lockup` | 승인된 LK mark·`LK ROBOTICS`·법인명 SVG/path | 회사·법인 식별, 마케팅, 파트너, 외부 배포 | 회사 logo construction·version·hash·승인 절차 |
 | `Lockup variant="portal"` | SemiBold 600 `LK Portal` 고정 SVG/path | 기존 통합과 고정 Portal 정본 | public API와 Portal 정본 생성 규칙 |
 | `ProductLockup` | LK mark + registry에 승인된 SemiBold 600 제품명 outline | TopBar·SideNav 등 제품 셸의 모브랜드 우선 식별 | 제품 lockup registry·outline·hash·승인 절차 |
-| `ProductLockup endorsement="company"` | 회사 inline 로크업(`LK` + Bold 700 `ROBOTICS`, 변경 없음) + registry에 승인된 Pretendard SemiBold 600 제품명 outline(canonical label 대소문자) | 홈 hero·로그인 등 넓은 첫인상 표면의 회사 보증 제품 식별 | 같은 registry의 `company` 항목·outline·hash·승인 절차 |
+| `ProductLockup endorsement="company"` | 회사 inline 로크업(`LK` + Bold 700 `ROBOTICS`, 변경 없음) + registry에 승인된 SemiBold 600 제품명 outline(canonical label 대소문자) | 홈 hero·로그인 등 넓은 첫인상 표면의 회사 보증 제품 식별 | 같은 registry의 `company` 항목·outline·hash·승인 절차 |
 
 일반 제품 셸은 `ProductLockup`을 사용합니다. 기존 통합을 위한 `Lockup variant="portal"` 공개 API는 유지하되, 그 고정 Portal 정본도 SemiBold 600으로 갱신해 `ProductLockup product="portal"`과 path·transform·viewBox를 동기화합니다. 두 API 모두 font text를 LK mark 옆에 즉석으로 붙이는 자유 조합이 아닙니다.
 
@@ -61,17 +61,17 @@ public API는 `product: "console" | "portal"`의 닫힌 union만 허용하며, `
 | 항목 | 표준 |
 | --- | --- |
 | 회사 단위 | 회사 `Lockup variant="inline"`과 같은 path·transform(LK mark + Montserrat Bold 700 `ROBOTICS`). 재작도·재배치 금지 |
-| 제품명 원본 | LDS UI 타이포그래피와 같은 **Pretendard SemiBold 600 v1.3.9**(`vendor/pretendard-v1.309/Pretendard-SemiBold.woff2`, `assets/fonts/Pretendard-SemiBold.woff2`와 같은 바이트). fontkit `layout(text, { kern: true })`, 기본 kerning, 추가 자간 `0`, 비례 1:1, glyph 수정 금지. mark 형 제품명(Montserrat SemiBold 600)과는 다른 글꼴입니다 |
+| 제품명 원본 | mark 형과 같은 Montserrat SemiBold 600 v7.222, 기본 kerning, 추가 자간 `0` |
 | 표기 | canonical name과 같은 대소문자(예: `Portal`). ASCII 글자와 단어 사이 공백 하나. 각 단어는 대문자로 시작 |
-| 제품명 크기 | 제품명 cap height = `ROBOTICS` cap height(`0.966851X`). 배율은 두 글꼴의 OS/2 cap height(Montserrat 700/UPM 1000, Pretendard 1448/UPM 2048)로 맞춤. Pretendard의 소문자 `l`은 cap height와 같은 높이 |
+| 제품명 크기 | 제품명 cap height = `ROBOTICS` cap height(`0.966851X`). 소문자 어센더는 이를 넘을 수 있음 |
 | baseline | `ROBOTICS`와 같은 baseline |
 | 간격 | `ROBOTICS` 잉크 끝에서 제품명 잉크 시작까지 `0.35 × LK mark의 보이는 폭`(약 `0.378616X`). LK–ROBOTICS 간격(`0.25배`)보다 넓어 회사 단위와 제품명이 구분되어 읽힘 |
 | 세로 프레임 | inline과 같은 viewBox 높이. 렌더 `height`가 같으면 X가 같음 |
 | 전체 렌더 높이 | 최소 `20px`, 기본 `28px`. 시작 화면 권장 `28px` 이상 |
-| 축소 | 비례 축소만. crop·wrap·말줄임·compact 없음. full 폭(20px에서 약 `225.76px`)을 확보할 수 없으면 셸이 회사 `Lockup inline` 또는 `mark`로 전환 |
+| 축소 | 비례 축소만. crop·wrap·말줄임·compact 없음. full 폭(20px에서 약 `233.92px`)을 확보할 수 없으면 셸이 회사 `Lockup inline` 또는 `mark`로 전환 |
 | 색 | mark 형과 같음(positive navy / reverse white, 단색). 제품명만 다른 색으로 두지 않음 |
 
-Portal 회사 보증 형의 생성 결과는 `viewBox 342.60933 149.18987 724.266225 64.1628`, 제품명 transform `matrix(0.037501 0 0 0.037501 856.134058 208.421795)`, 최소 슬롯 폭 `225.758921`(보이는 폭 약 `12.753X`, 제품명 잉크 폭 약 `3.592X`)이며, generator가 pinned 글꼴 바이트, 적용 layout feature 집합, golden glyph id·origin·잉크 bounds·advance, 회사 단위와 `ROBOTICS_INLINE_*`의 동일성, path·transform·viewBox, 잉크의 세로 프레임 포함 여부를 검증합니다. 루트 자산 `assets/brand/lk-lockup-company-portal-navy.svg`·`-white.svg`도 같은 generator가 만들며 platform manifest에는 넣지 않습니다.
+Portal 회사 보증 형의 생성 결과는 `viewBox 342.60933 149.18987 750.459089 64.1628`, 제품명 transform `matrix(0.077573 0 0 0.077573 853.8673 208.421795)`, 최소 슬롯 폭 `233.923423`이며, generator가 회사 단위와 `ROBOTICS_INLINE_*`의 동일성, path·transform·viewBox, 잉크의 세로 프레임 포함 여부를 검증합니다. 루트 자산 `assets/brand/lk-lockup-company-portal-navy.svg`·`-white.svg`도 같은 generator가 만들며 platform manifest에는 넣지 않습니다.
 
 ## 4. Runtime API
 
@@ -135,7 +135,7 @@ compact가 홈 링크라면 hover/focus 사용자가 제품명을 확인해야 �
 
 ## 8. 금지 사례
 
-- LK mark나 회사 `Lockup` 옆에 Montserrat 또는 UI font(Pretendard 포함)의 live text를 붙여 제품 로크업처럼 보이게 만들기. 회사 보증 형이 필요하면 registry의 `company` 항목을 등록하고 `endorsement="company"`를 씁니다
+- LK mark나 회사 `Lockup` 옆에 Montserrat 또는 UI font의 live text를 붙여 제품 로크업처럼 보이게 만들기. 회사 보증 형이 필요하면 registry의 `company` 항목을 등록하고 `endorsement="company"`를 씁니다
 - registry에 없는 `Web Viz`, `Control`, 고객명, 지점명, 환경명 등을 우회 렌더링하기
 - `LK | CONSOLE`, slash, dot, badge로 로크업 내부를 분할하기
 - 제품마다 mark·gap·font·weight·case·appearance를 바꾸거나 제품명만 ExtraBold 800이나 Bold 700으로 되돌리기. 형태별 case(mark 형 대문자, 회사 보증 형 canonical 대소문자)는 표준이 정하며 호출부가 바꾸지 않습니다
@@ -185,9 +185,9 @@ registry 등록은 LDS 코드 변경이 아니라 **브랜드 승인**에서 시
 **표기 제약.** mark 형 wordmark는 [`generate-product-lockups.mjs`](../../scripts/generate-product-lockups.mjs)가
 `^[A-Z]+(?: [A-Z]+)*$`(ASCII 대문자와 공백)로, 회사 보증 형 wordmark는
 `^[A-Z][A-Za-z]*(?: [A-Z][A-Za-z]*)*$`(ASCII 글자, 단어마다 대문자로 시작, canonical name과 정확히 같은 문자열)로
-검증합니다. mark 형은 pinned Montserrat SemiBold 600에서, 회사 보증 형은 pinned Pretendard SemiBold 600 v1.3.9에서
-글자별 outline을 뽑습니다. 숫자·기호는 등록할 수 없습니다. 한글 제품명은 회사 보증 형이 이미 쓰는 Pretendard
-SemiBold에 글리프가 있지만, 크기 규칙이 달라 별도 개정으로만 엽니다(한글 이름은 회사 보증 형 전용, 잉크 높이 `1X`·보이는 bounds 정렬,
+검증하고 pinned Montserrat SemiBold 600에서 글자별 outline을 뽑습니다. 숫자·기호는 등록할 수 없습니다.
+한글 제품명은 Montserrat에 글리프가 없어 현재 등록할 수 없으며, 향후 Pretendard SemiBold 600 v1.3.9(UI 글꼴과
+같은 바이트)를 pin하는 별도 개정으로만 엽니다(한글 이름은 회사 보증 형 전용, 잉크 높이 `1X`·보이는 bounds 정렬,
 한 이름 안에서 문자 체계 혼용 금지). 이 제약을 우회하려고 다른 글꼴을 섞거나 글자를 직접 작도하지 않습니다.
 
 ### 9.2 등록 전 임시 사용 규칙
@@ -207,8 +207,7 @@ SemiBold에 글리프가 있지만, 크기 규칙이 달라 별도 개정으로�
 
 ## 10. 근거와 의도적 적용
 
-- [Montserrat v7.222 공식 릴리스](https://github.com/JulietaUla/Montserrat/releases/tag/v7.222)는 pinned build-time wordmark source입니다. 회사 `ROBOTICS`는 ExtraBold 800(세로형)과 Bold 700(가로형)을, 고정 Portal과 ProductLockup mark 형 제품명은 SemiBold 600을 사용합니다.
-- [Pretendard v1.3.9 공식 릴리스](https://github.com/orioncactus/pretendard/releases/tag/v1.3.9)는 LDS UI 타이포그래피이자 법인명(ExtraBold 800)과 회사 보증 형 제품명(SemiBold 600)의 pinned build-time source입니다. 회사 보증 형 제품명을 UI 글꼴로 두면 제품명이 앱의 제품 텍스트와 같은 글자 모양으로 이어지고, 이후 한글 이름도 같은 글꼴로 처리할 수 있습니다(owner 결정 2026-10-09). 배포 결과는 outline이므로 소비자 runtime에 글꼴을 요구하지 않습니다.
+- [Montserrat v7.222 공식 릴리스](https://github.com/JulietaUla/Montserrat/releases/tag/v7.222)는 pinned build-time wordmark source입니다. 회사 `ROBOTICS`는 ExtraBold 800(세로형)과 Bold 700(가로형)을, 고정 Portal과 ProductLockup 승인 제품명은 SemiBold 600을 사용합니다. 배포 결과는 outline이므로 소비자 runtime에 글꼴을 요구하지 않습니다.
 - [Atlassian logos](https://atlassian.design/foundations/logos)는 제품 식별과 고정 attribution 자산을 구분하고 승인 로고의 임의 합성을 금지합니다. LDS는 자유 조합 대신 닫힌 outline registry를 선택했습니다.
 - [W3C functional images](https://www.w3.org/WAI/tutorials/images/functional/)와 [WCAG Technique H2](https://www.w3.org/WAI/WCAG22/Techniques/html/H2)는 이미지 링크의 목적 이름과 중복 대체 텍스트 회피 근거입니다.
 - [Apple HIG Design principles](https://developer.apple.com/design/human-interface-guidelines/design-principles)는 맥락을 보존하고 콘텐츠·컨트롤을 일관되고 예측 가능한 위치에 두며 자연스러운 애니메이션으로 전환을 이해시키라고 설명합니다. LDS는 LK mark를 고정하고 제품명 영역만 reveal하는 방식으로 적용합니다.
