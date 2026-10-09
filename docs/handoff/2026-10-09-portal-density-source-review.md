@@ -145,3 +145,108 @@ the promptSha256 entries and writes `docs/components/component-content.json` plu
 make these derived records stale. Parent must refresh them through the approved Linux generation/export path,
 including package sources/types/docs, dist and any required central source hash ledger; this authoring patch
 does not hand-edit generated fingerprints or visual baselines.
+
+## Source metadata follow-up (2026-10-09)
+
+The user authorized this bounded source correction after `894625c7`, without generation, builds, stamp updates,
+commit or remote mutation. The parent owns `.github/workflows/ci.yml`, imported Linux projections and the next commit.
+
+- [InlineLayout source](../../stories/CommunicationMessageComposer.stories.jsx) now uses
+  `상호작용 · 한 행 작성과 구조 확장`, matching the interaction role and existing sidebar order.
+  Export `InlineLayout`, story ID `lds-product-communication-message-composer--inline-layout`, render and play are retained.
+- [Density owner decisions](../../scripts/check-density-coverage.mjs) move only `shell-panel`/`resource-state`
+  to explicit `density` and `empty-state` to explicit `size`; the same 214 IDs, thresholds and validation rules remain.
+  The generated [density register](../references/architecture/DENSITY_COVERAGE_CONTRACT.json) and its fingerprints are untouched.
+- Source Storybook `http://127.0.0.1:6006/index.json` was read as metadata, without browser automation or server restart.
+  Its 792 stories / public556 / hidden236 / Docs201 match the preserved IA's 783 IDs plus exactly the nine
+  source exports added in `894625c7`; removed IDs and existing visibility changes are both zero. The baseline IA
+  ID/visibility hashes also match the previous dedup contract exactly. This permits the bounded census facts in
+  [the dedup contract](../references/quality/STORYBOOK_DOCS_DEDUP_CONTRACT.json), [inventory](../REPOSITORY_INVENTORY.md)
+  and [visual inventory](../VISUAL_PARITY_LEDGER.md) to advance without claiming human IA approval or a new full run.
+  The historical `reviewedExtension` from2026-10-05 is preserved exactly. The nine new census facts live in
+  `pendingSourceExtension` with `status: "review-pending"` and a census-only reason; expected machine facts remain792/public556.
+  The existing local `storybook-static/index.json` is older (762/public527/Docs199) and must not be used for this source.
+- [Stat parity fixture](../../stories/CardsExtended.shared.jsx) now displays public556. Its owner is
+  `LDS Product/Data/Display/Metric Card`, hidden story `lds-product-data-display-metric-card--stat-card` from
+  `stories/DataAndStatus.stories.jsx`. The shared dependency is not included in that page's machine review hash;
+  its factual digit change needs parent review and can change a visual capture. The parent's earlier74 zero-diff
+  images apply to `894625c7`, precede this digit change and do not verify it. The one-value change is retained because
+  [the inventory checker](../../scripts/report-inventory.mjs) explicitly requires this fixture to display the current
+  public-story count (line233); reverting it would make `check:inventory` fail at792/public556. No threshold was changed.
+
+The eight pages whose source differs from the preserved `reviewedSourceSha256` are:
+
+| Story source | Page |
+| --- | --- |
+| [ContentListsMedia](../../stories/ContentListsMedia.stories.jsx) | LDS Core/Components/Content/Lists |
+| [FormSearchAutocomplete](../../stories/FormSearchAutocomplete.stories.jsx) | LDS Core/Components/Selection and Input/Search and Autocomplete |
+| [CommunicationConversationList](../../stories/CommunicationConversationList.stories.jsx) | LDS Product/Communication/Conversation List |
+| [CommunicationMessageComposer](../../stories/CommunicationMessageComposer.stories.jsx) | LDS Product/Communication/Message Composer |
+| [DataTable](../../stories/DataTable.stories.jsx) | LDS Product/Data/Collections/Table |
+| [DataResourceState](../../stories/DataResourceState.stories.jsx) | LDS Product/Data/Display/Resource State |
+| [LayoutShellPanel](../../stories/LayoutShellPanel.stories.jsx) | LDS Product/Layout/Shell Panel |
+| [LayoutDashboardShell](../../stories/LayoutDashboardShell.stories.jsx) | LDS Product/Operations Dashboard/Dashboard Shell |
+
+Keep the IA stamps unchanged until the owner reviews exact Linux source, page dispositions, public visibility,
+and the nine new story roles. `InlineLayout`, `WidthAutosize`, `SearchSingleFocus`, `LowHeightNavigation` are
+interaction specimens; `LongTitleSpace`, `SmallDestinationTypography`, `CompactRows`, `CompactEmptyReasons`,
+`CompactDestinations` are variants/states specimens. The default classifier's `compact` heuristic selects responsive
+for the last three, so the owner must explicitly review their variants/states role in the IA register. These are
+proposed role decisions, not stamps written by this follow-up. Primary-description sentence decisions are unchanged.
+
+The single focused run passed **3/3** (1.40s):
+`node --test --test-name-pattern="metadata follow-up|focused story modules parse" scripts/portal-density-source.test.mjs`.
+It verifies the stable inline export/public prefix, the unchanged density ID census with only three reclassifications,
+the existing public type axes, and source JSX parsing. No generator CLI, full check or browser test ran locally.
+After the user required historical review preservation, only the changed inline/census metadata test was rerun:
+`node --test --test-name-pattern="metadata follow-up: inline story" scripts/portal-density-source.test.mjs`
+passed **1/1** (0.82s). Density and JSX results above were reused; the test now requires review-pending metadata
+and keeps the old reviewed extension separate.
+
+This worker's uncommitted file set is limited to:
+
+- `stories/CommunicationMessageComposer.stories.jsx`
+- `scripts/check-density-coverage.mjs`
+- `scripts/portal-density-source.test.mjs`
+- `docs/references/quality/STORYBOOK_DOCS_DEDUP_CONTRACT.json`
+- `docs/REPOSITORY_INVENTORY.md`
+- `docs/STORYBOOK_INFORMATION_ARCHITECTURE.md`
+- `docs/VISUAL_PARITY_LEDGER.md`
+- `stories/CardsExtended.shared.jsx`
+- `docs/handoff/2026-10-09-portal-density-source-review.md`
+
+Parent's Linux sequence, using a new exact-source static index rather than the old local index:
+
+```sh
+npm run build:storybook
+npm run report:storybook-ia
+# Human review: eight page stamps and nine new story roles; also review the Stat shared fixture.
+npm run report:storybook-ia
+npm run generate:components
+node scripts/check-component-coverage.mjs --update-dedup-baseline
+# The workflow wrapper rejects looser ceilings and retains the previous reviewed ceilings.
+npm run update:density-coverage
+npm run build
+```
+
+The parent must include the generated density register in the Linux export/import set. Component registry refresh
+must precede density refresh so the three new public props are present. No blanket `--review-current` is needed.
+
+## Approved remote run and local repair evidence (2026-10-09)
+
+- The approved push placed `894625c7` on remote main. [Automatic CI 37931148503](https://github.com/LK-Design-System/lk-design-system/actions/runs/37931148503)
+  failed at the stale `docs/components/component-content.json` check; [Pages 37931148454](https://github.com/LK-Design-System/lk-design-system/actions/runs/37931148454) succeeded.
+- The approved [export run 37931220112](https://github.com/LK-Design-System/lk-design-system/actions/runs/37931220112)
+  completed its Linux export job. The parallel full-check job failed at the same stale registry. This is export success, **not a green full CI**.
+- Parent imported 115 changed/new files from that Linux artifact and removed its 52 replaced dist chunks.
+  Every imported file matched the downloaded SHA-256. No generated files were produced on the Windows host.
+- All 74 visual captures for `894625c7` had zero meaningful pixel differences at the repository's comparator settings.
+  Eight encoding/antialiasing-only differences were left out. No visual baselines or expression matrix were replaced.
+  This result predates the Stat fixture digit update above; that candidate still needs Linux visual verification.
+- The local workflow repair builds the source Storybook index, refreshes IA inventory without altering review stamps,
+  refreshes component docs and density records, preserves dedup thresholds, then builds package projections.
+  It exports the root records together with package artifacts and the Linux index as review evidence. Its embedded
+  JavaScript and step/heredoc structure passed the scoped static check; no full YAML parser was available locally.
+- The source correction and workflow repair are local review candidates. A new push and export dispatch need
+  separate per-action owner approval. Eight changed page reviews and nine new story-role decisions remain pending;
+  the export job is intentionally unable to approve them automatically. No tag, publish or Portal deployment occurred.

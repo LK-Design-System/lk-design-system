@@ -1,12 +1,12 @@
 {
   "version": 1,
   "expected": {
-    "stories": 783,
+    "stories": 792,
     "docs": 201,
-    "publicStories": 547,
+    "publicStories": 556,
     "hiddenStories": 236,
-    "storyIdsSha256": "52a440018ec1f11cd0920ab9e7ffc921db3bc7496c81b3ab53edc97b8ac2d0c9",
-    "visibilitySha256": "802f6079fec92ddb91692b40453d6bf6bf38c1abeca124272e26c01580e502f1"
+    "storyIdsSha256": "956b28af34c3aeb86038c2bbdca69b17789813cb81a8a248baa65d6a7b2d1620",
+    "visibilitySha256": "1f723ebc81be92f3e6d1b7c8bbad46cf06ce9fd8b3c7858ff883beb12a281d56"
   },
   "allowedGuideOmissions": [],
   "canonicalDocs": [
@@ -55,5 +55,24 @@
       "lds-core-components-status-notices-and-callouts--callout-variants"
     ],
     "reason": "Two existing Core Callout/Blockquote variant specimens introduced on main after the previous 760-story census. Their public role-prefixed names and purpose descriptions are reviewed separately."
+  },
+  "pendingSourceExtension": {
+    "status": "review-pending",
+    "observedAt": "2026-10-09",
+    "retainedStoryIds": 783,
+    "removedStoryIds": [],
+    "changedExistingVisibility": [],
+    "addedStoryIds": [
+      "lds-core-components-content-lists--small-destination-typography",
+      "lds-core-components-selection-and-input-search-and-autocomplete--search-single-focus",
+      "lds-product-communication-conversation-list--long-title-space",
+      "lds-product-communication-message-composer--inline-layout",
+      "lds-product-communication-message-composer--width-autosize",
+      "lds-product-data-collections-table--compact-rows",
+      "lds-product-data-display-resource-state--compact-empty-reasons",
+      "lds-product-layout-dashboard-shell--low-height-navigation",
+      "lds-product-layout-shell-panel--compact-destinations"
+    ],
+    "reason": "Source census observed from the running source Storybook index.json and matched against the 783-story IA baseline: nine public Portal-density specimens added in 894625c7, with all existing IDs and visibility retained. This records census facts only; page/story IA review stamps remain unchanged and require review."
   }
 }

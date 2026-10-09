@@ -998,7 +998,7 @@ function InlineLayoutFixture() {
 }
 
 export const InlineLayout = {
-  name: '한 행 작성 · 확장 구조 비교',
+  name: '상호작용 · 한 행 작성과 구조 확장',
   parameters: storyDescription('layout=inline을 명시한 단순 작성은 약 50px 한 행입니다. 긴 초안/폭 변경은 자동 높이, 첨부·추가 동작은 기존 full-width action band로 확장합니다. 기본 stacked는 유지하며 inline primary target은 항상 44px입니다. Claude 마케팅 CTA는 실사용 홈 근거가 아닙니다.'),
   render: () => <InlineLayoutFixture />,
   play: async ({ canvasElement }) => {

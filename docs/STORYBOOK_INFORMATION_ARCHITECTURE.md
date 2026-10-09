@@ -8,14 +8,14 @@
 | Last reviewed | 2026-10-05 census, agent recheck and human-approved IA classification |
 | Machine-readable source | `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json` |
 
-Current generated census (2026-10-09): 202개 페이지와 783개 스토리. The machine-readable audit is authoritative for public/hidden visibility and review status.
+Current source-index census (2026-10-09): 202개 페이지와 792개 스토리, Docs 201개. The generated audit retains its previous 783-story review records until Linux regeneration and human review; its review stamps were not changed by this census update.
 
-- 공개 스토리: 547개
+- 공개 스토리: 556개
 - 숨김 스토리: 236개
 - 숨김 visual parity: 102개
 - 숨김 internal contract: 130개
-- 검토 완료 페이지 202/202개, 스토리 783/783개
-- 현재 소스 해시와 일치하는 페이지 검토: 202/202개; stale review 0개
+- 보존된 원장의 검토 기록: 페이지 202/202개, 기존 스토리 783/783개; 신규 9개 스토리 역할·공개 판정 검토 필요
+- 현재 소스가 바뀐 8개 페이지 재검토 필요; `reviewedSourceSha256`는 기존 값 유지. 정확한 목록과 추가 shared fixture 변경은 [source handoff](handoff/2026-10-09-portal-density-source-review.md#source-metadata-follow-up-2026-10-09)에 기록한다.
 
 ## Operations Dashboard pattern group
 
@@ -25,9 +25,9 @@ Current generated census (2026-10-09): 202개 페이지와 783개 스토리. The
 
 ## 현재 기준선
 
-2026-10-09 현재 소스 기준으로 202개 페이지와 783개 스토리가 있다. 2026-10-05의 200개 페이지·762개 스토리에서 `Shell Panel`·`Conversation List` 페이지와 rail-panel 셸, 회사 보증 로크업, neutral SideNav, 고정 영역 레일 스토리 21개(공개 20, 숨김 visual parity 1)가 늘었다. audience page 201개는 `keep`, expression-profile 전용 machine fixture 1개는 `hide`다.
+2026-10-09 현재 소스 기준으로 202개 페이지와 792개 스토리가 있다. 2026-10-05의 200개 페이지·762개 스토리에서 `Shell Panel`·`Conversation List` 페이지와 rail-panel 셸, 회사 보증 로크업, neutral SideNav, 고정 영역 레일 스토리 21개(공개 20, 숨김 visual parity 1)가 늘었고, `894625c7`에서 Portal 밀도·반응형·작성 구조 예제 9개가 공개 스토리로 추가되었다. 보존 원장에서 audience page 201개는 `keep`, expression-profile 전용 machine fixture 1개는 `hide`다. 이번 source census 정합은 새 IA 검토 승인을 기록하지 않는다.
 
-- 공개 스토리: 547개
+- 공개 스토리: 556개
 - 숨김 스토리: 236개
 - 숨김 visual parity: 102개
 - 숨김 internal contract: 130개
@@ -37,7 +37,7 @@ Current generated census (2026-10-09): 202개 페이지와 783개 스토리. The
 - 시각 specimen이 없는 문서 전용 Foundation은 sidebar에서 Docs를 정식 진입점으로 사용한다. `Design Token`은 저장된 이전 Canvas URL도 Docs로 정규화하고, 첫 화면에서 `Primitive → Semantic → Component → Runtime projection` 계층과 상황별 선택 기준을 먼저 보여 준다. 숨김 CSF story는 Autodocs 생성과 검증만 담당하며 직접 iframe에서는 정식 Docs 링크를 제공한다. Storybook의 제품 온보딩 체크리스트는 LDS 탐색과 경쟁하므로 manager에서 비활성화한다. 이 결정은 Storybook의 [docs-only tag 계약](https://storybook.js.org/docs/writing-stories/tags#docs-only-stories)과 [onboarding feature 설정](https://storybook.js.org/docs/api/main-config/main-config-features)을 따른다.
 - 생성기의 generic fallback을 삭제하고 누락된 근거를 `omitted-no-evidence`로 드러냈다. 현재 183개 가이드의 평균 중복 prose는 2%, 60% 초과 페이지는 0개이며 `STORYBOOK_GUIDE_DEDUP_BASELINE.json`이 이 값을 lowering-only ratchet으로 고정한다. 토큰 값·API·property 설명은 prose 지표에서 제외하고 실제 정량 규칙은 포함한다. 같은 소유자의 별도 페이지는 문구를 복사하지 않고 Dashboard Shell → Dashboard Navigation, Brand Spinner → Core Spinner처럼 한 단계 canonical reference와 근거가 있는 local delta만 기록한다. Foundation 16페이지의 손으로 쓴 가이드는 페이지별 고유 원리·제약을 그대로 유지한다.
 
-2026-07-26 검토에서는 운영용 `Overview`·`Progress Board`를 정적 문서로 옮기고 Loading을 교차 컴포넌트 패턴 Docs로 연결했다. 이후 현재 202개 페이지와 783개 스토리의 owner, role, visibility, disposition과 재검토 상태는 감사 원장을 따른다.
+2026-07-26 검토에서는 운영용 `Overview`·`Progress Board`를 정적 문서로 옮기고 Loading을 교차 컴포넌트 패턴 Docs로 연결했다. 보존된 202개 페이지·783개 스토리의 owner, role, visibility, disposition은 감사 원장을 따르며, 현재 source의 792개 스토리와 변경 페이지에 대한 재검토는 아직 남아 있다.
 
 - 컴포넌트 설명이 있는 페이지: 195개
 - Canvas에서 안내 서문을 직접 보여 주는 페이지: 195개
@@ -64,7 +64,7 @@ Current generated census (2026-10-09): 202개 페이지와 783개 스토리. The
 - 1개 병합 기각·keep 정정: `History Toolbar`
 - 공개 내부 계약을 `!dev`로 전환하고 Communication·VirtualKeypad의 실제 컴포넌트 회귀 표면을 정리했으며, R3A density fixture 2개를 더해 현재 visual parity는 97개다.
 
-최종 구조에서는 audience-facing 각 페이지가 독립 소유자를 가지므로 현재 census 판정은 `keep` 199개, `split` 0개, `merge` 0개, `hide` 1개다. `hide`는 Docs·public entry를 만들지 않는 expression-profile machine fixture다. 과거 판정과 현재 소스에 대한 재검토는 구분하며, 2026-10-05 사용자 승인으로 20개 stale source hash와 신규 2개 스토리의 IA 검토를 닫았다. 현재 stale review는 0개다.
+최종 구조에서는 audience-facing 각 페이지가 독립 소유자를 가지므로 이 절의 과거 census 판정은 `keep` 199개, `split` 0개, `merge` 0개, `hide` 1개다. `hide`는 Docs·public entry를 만들지 않는 expression-profile machine fixture다. 과거 판정과 현재 소스에 대한 재검토는 구분하며, 2026-10-05 사용자 승인으로 20개 stale source hash와 신규 2개 스토리의 IA 검토를 닫았다. 보존된 원장의 stale summary 0개를 현재 소스의 검토 완료로 해석하지 않는다. 현재 변경된 8개 페이지와 신규 9개 스토리는 재검토 대상이다.
 
 정정 근거는 다음과 같다.
 

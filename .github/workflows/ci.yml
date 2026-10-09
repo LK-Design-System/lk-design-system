@@ -70,7 +70,30 @@ jobs:
         run: npm exec -- playwright install --with-deps chromium
 
       - name: Build generated artifacts on the canonical platform
-        run: npm run build
+        # Prompt/API changes also invalidate the root component registry. Refresh
+        # it before package-doc projection, then export both copies together.
+        # Review stamps remain a manual curation step; do not update them here.
+        run: |
+          npm run build:storybook
+          npm run report:storybook-ia
+          npm run generate:components
+          npm run update:density-coverage
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { execFileSync } from 'node:child_process';
+          import { readFileSync, writeFileSync } from 'node:fs';
+          const baselinePath = 'docs/references/quality/STORYBOOK_GUIDE_DEDUP_BASELINE.json';
+          const previous = JSON.parse(readFileSync(baselinePath, 'utf8'));
+          execFileSync(process.execPath, ['scripts/check-component-coverage.mjs', '--update-dedup-baseline'], { stdio: 'inherit' });
+          const next = JSON.parse(readFileSync(baselinePath, 'utf8'));
+          for (const key of Object.keys(previous.ceilings)) {
+            assert(next.ceilings[key] <= previous.ceilings[key], 'Export must not loosen guide-dedup ceilings.');
+          }
+          // Refresh observations and input hashes without changing owner-reviewed thresholds.
+          next.ceilings = previous.ceilings;
+          writeFileSync(baselinePath, JSON.stringify(next, null, 2) + '\n');
+          NODE
+          npm run build
 
       - name: Upload canonical generated artifacts
         if: ${{ inputs.export_dist == true }}
@@ -78,6 +101,11 @@ jobs:
         with:
           name: canonical-linux-generated
           path: |
+            docs/components
+            docs/references/architecture/DENSITY_COVERAGE_CONTRACT.json
+            docs/references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json
+            docs/references/quality/STORYBOOK_GUIDE_DEDUP_BASELINE.json
+            storybook-static/index.json
             dist
             src
             packages/core/src
@@ -102,7 +130,8 @@ jobs:
 
       - name: Capture visual baselines on the canonical platform
         if: ${{ inputs.export_visual_baseline == true }}
-        run: npm run update:visual-baseline
+        # The source inventory step above already built this exact Storybook.
+        run: node scripts/capture-visual-smoke.mjs --update-baseline
 
       - name: Capture expression-profile baselines on the canonical platform
         if: ${{ inputs.export_visual_baseline == true }}

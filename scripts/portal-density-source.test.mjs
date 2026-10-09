@@ -139,6 +139,51 @@ test('focused story modules parse without emitting generated output', async () =
     const text = await readFile(`stories/${name}.stories.jsx`, 'utf8');
     await transform(text, { loader: 'jsx', jsx: 'automatic', sourcefile: `${name}.stories.jsx` });
   }
+  await transform(await readFile('stories/CardsExtended.shared.jsx', 'utf8'), { loader: 'jsx', jsx: 'automatic', sourcefile: 'CardsExtended.shared.jsx' });
+});
+
+test('metadata follow-up: inline story uses the public interaction prefix without changing its export', async () => {
+  const text = await readFile('stories/CommunicationMessageComposer.stories.jsx', 'utf8');
+  const file = ts.createSourceFile('composer.jsx', text, ts.ScriptTarget.Latest, true, ts.ScriptKind.JSX);
+  const statement = file.statements.find((node) => ts.isVariableStatement(node)
+    && node.declarationList.declarations.some((declaration) => declaration.name.getText(file) === 'InlineLayout'));
+  assert.ok(statement?.modifiers.some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword));
+  const story = statement.declarationList.declarations[0].initializer;
+  const name = story.properties.find((property) => property.name?.getText(file) === 'name').initializer.text;
+  assert.match(name, /^상호작용 · \S/);
+  assert.ok(story.properties.some((property) => property.name?.getText(file) === 'play'));
+  assert.ok(story.properties.some((property) => property.name?.getText(file) === 'render'));
+  const census = JSON.parse(await readFile('docs/references/quality/STORYBOOK_DOCS_DEDUP_CONTRACT.json', 'utf8'));
+  assert.equal(census.pendingSourceExtension.status, 'review-pending');
+  assert.ok(census.pendingSourceExtension.addedStoryIds.includes('lds-product-communication-message-composer--inline-layout'));
+  assert.equal(census.reviewedExtension.observedAt, '2026-10-05');
+  assert.ok(!census.reviewedExtension.addedStoryIds.includes('lds-product-communication-message-composer--inline-layout'));
+});
+
+test('metadata follow-up: density owner decisions move only the three approved public axes', async () => {
+  const text = await readFile('scripts/check-density-coverage.mjs', 'utf8');
+  const file = ts.createSourceFile('density.mjs', text, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+  const declarations = file.statements.filter(ts.isVariableStatement).flatMap((node) => [...node.declarationList.declarations]);
+  const items = (name) => declarations.find((node) => node.name.getText(file) === name).initializer.arguments[0].elements;
+  const explicit = new Map([...items('EXPLICIT_AXIS_RULES')].map((item) => [item.elements[0].text, [...item.elements[1].elements].map((axis) => axis.text)]));
+  const decisions = [
+    ...[...explicit.keys()].map((id) => [id, 'explicit-size-density']),
+    ...[...items('PROFILE_TOKEN_AUTOMATIC_IDS')].map((item) => [item.text, 'profile-token-automatic']),
+    ...[...items('FIXED_IDS')].map((item) => [item.text, 'fixed']),
+    ...[...items('NOT_APPLICABLE_RULES')].map((item) => [item.elements[0].text, 'not-applicable']),
+  ];
+  const byId = new Map(decisions);
+  const previous = JSON.parse(await readFile('docs/references/architecture/DENSITY_COVERAGE_CONTRACT.json', 'utf8'));
+  const approved = new Map([['shell-panel', 'density'], ['resource-state', 'density'], ['empty-state', 'size']]);
+  assert.equal(decisions.length, previous.entries.length);
+  assert.equal(byId.size, previous.entries.length);
+  for (const entry of previous.entries) {
+    assert.equal(byId.get(entry.id), approved.has(entry.id) ? 'explicit-size-density' : entry.category, entry.id);
+    if (!approved.has(entry.id)) continue;
+    assert.deepEqual(explicit.get(entry.id), [approved.get(entry.id)]);
+    const declaration = await readFile(entry.source.replace(/\.jsx$/, '.d.ts'), 'utf8');
+    assert.match(declaration, new RegExp(`\\b${approved.get(entry.id)}\\?:`));
+  }
 });
 
 test('authoring public contracts typecheck on both supported React declaration majors', () => {
