@@ -4,7 +4,30 @@
   "description": "Approved parent-brand-first LK product-shell lockup registry. Typography comes from lk-logo-construction.json#productLockupWordmark and geometry from layout.productLockup; the Portal entry is synchronized with the canonical fixed Portal asset. A product may also register a company-endorsed form (company inline lockup + canonical-case product name) under `company`, laid out by `companyLockup`.",
   "companyLockup": {
     "companyUnit": "lockup-inline",
-    "productNameFont": "lk-logo-construction.json#productLockupWordmark",
+    "productNameFont": {
+      "family": "Pretendard",
+      "style": "SemiBold",
+      "weight": 600,
+      "releaseVersion": "1.3.9",
+      "fontVersion": "1.309",
+      "fontVersionMetadata": "Version 1.309",
+      "fontFormat": "static-woff2",
+      "fontFile": "vendor/pretendard-v1.309/Pretendard-SemiBold.woff2",
+      "fontSha256": "C863F76A7DE5C1DDC1ED8B2FA794964530774592C4F31407A84E2A2AE93F17F0",
+      "fontSource": "https://github.com/orioncactus/pretendard/releases/tag/v1.3.9",
+      "uiTypographyFile": "assets/fonts/Pretendard-SemiBold.woff2",
+      "license": "SIL Open Font License 1.1",
+      "licenseFile": "vendor/pretendard-v1.309/OFL.txt",
+      "licenseSha256": "85FCE85E25260B03777BF10373D3BD9363B9DA96D9E0CA86A280DD37ED7667A0",
+      "engine": "fontkit@2.0.4",
+      "layoutFeatures": { "kern": true },
+      "appliedFeatures": ["calt", "ccmp", "clig", "curs", "dnom", "frac", "kern", "liga", "locl", "ltra", "ltrm", "mark", "mkmk", "numr", "rclt", "rlig", "rvrn"],
+      "kerning": "font-default",
+      "letterSpacing": 0,
+      "horizontalScale": 1,
+      "verticalScale": 1,
+      "manualGlyphEdits": false
+    },
     "case": "canonical-label",
     "latinPattern": "^[A-Z][A-Za-z]*(?: [A-Z][A-Za-z]*)*$",
     "capHeightToRoboticsCapHeight": 1,
@@ -43,10 +66,10 @@
         "status": "approved",
         "wordmark": "Portal",
         "expected": {
-          "glyphIds": [169, 538, 576, 598, 406, 515],
-          "origins": [0, 714, 1359, 1794, 2218, 2825],
-          "sourceBounds": [94, -742, 3032, 7],
-          "finalAdvance": 3114
+          "glyphIds": [214, 645, 692, 723, 416, 605],
+          "origins": [0, 1248, 2440, 3271, 4009, 5135],
+          "sourceBounds": [134, -1448, 5513, 22],
+          "finalAdvance": 5635
         }
       }
     }
