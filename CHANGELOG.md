@@ -2,7 +2,9 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
-## Unreleased
+## 0.4.7 - 2026-10-09
+
+Paired Robotics release: `0.1.0-rc.53` (unchanged).
 
 ### Added
 
@@ -13,6 +15,7 @@ All notable package-facing changes are recorded here. The package follows semant
 ### Changed
 
 - `SideNav` 섹션 제목을 모든 외형에서 11px bold 대문자·자간 1px에서 입력한 대로의 문장형 13px(`--label2-size`) medium·자간 0으로 바꿨습니다. 한국어 제목에서 대문자 변환이 의미가 없고 1px 자간이 음절 간격을 벌렸기 때문입니다. 색(각 외형의 subtle 잉크), padding, 접힌 레일 hairline은 그대로입니다. **SideNav를 쓰는 모든 화면의 섹션 제목 모양이 바뀝니다**(Portal, 궁릉 등). SideNav가 보이는 visual baseline은 Linux export로 갱신해야 합니다.
+- 앞 색 띠 금지 규칙(`AGENTS.md`, `docs/TOKEN_GOVERNANCE.md`)의 승인된 선택 상태 예시를 `SideNav`의 선택 처리 전체로 넓혔습니다: `default` 외형은 accent 글자, `neutral` 외형은 무채색 행 채움 + 굵기입니다. 행·카드·칩·알람·callout 앞쪽 2px 이상 색 띠를 금지하는 규칙 자체와 `check:no-leading-bars`는 바뀌지 않았습니다.
 
 ### Fixed
 
