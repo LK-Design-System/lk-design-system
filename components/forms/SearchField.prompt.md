@@ -2,10 +2,17 @@
 
 ## 단일 focus 표시 (R11, 2026-10-09)
 
-Input과 MessageComposer의 필드 소유 focus를 비교했습니다. 클릭 시 외곽 border가,
-Tab 시 외곽 control의 semantic focus-indicator outline 하나가 표시됩니다. 내부 search input의
+Input과 MessageComposer의 필드 소유 focus를 비교했습니다. 외곽 border와
+외곽 control의 semantic focus-indicator outline으로 위치를 표시합니다. 내부 search input의
 전역 outline만 제외하고 clear button의 keyboard outline은 보존합니다. forced-colors는 외곽 Highlight outline입니다.
+text input은 클릭으로도 `:focus-visible`에 해당할 수 있으므로 입력 방식만으로 outline 유무를 단정하지 않습니다.
+Portal처럼 CSS를 `@layer`로 가져오면 layered `!important`가 runtime의 unlayered 규칙보다 우선합니다.
+따라서 내부 input 예외도 `tokens/focus.css`에 함께 두어 같은 layer에서 처리합니다.
+`SearchSingleFocus`는 실제 focus CSS를 layer로 가져온 상태, 지우기 버튼의 표시와 포커스 복귀,
+일반 Input의 표시 보존을 검증합니다.
 전역 focus token과 다른 필드는 바꾸지 않습니다.
+[MDN cascade layers](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/important#cascade_layers)의
+important 우선순위를 확인했습니다.
 [WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)과
 [WAI-ARIA Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)의 visible keyboard focus 원칙을 검토했습니다.
 [소스 검토 기록](../../docs/handoff/2026-10-09-portal-density-source-review.md) 참조.

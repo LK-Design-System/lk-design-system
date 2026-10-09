@@ -250,3 +250,29 @@ must precede density refresh so the three new public props are present. No blank
 - The source correction and workflow repair are local review candidates. A new push and export dispatch need
   separate per-action owner approval. Eight changed page reviews and nine new story-role decisions remain pending;
   the export job is intentionally unable to approve them automatically. No tag, publish or Portal deployment occurred.
+
+## SearchField layered consumer regression (2026-10-09)
+
+The live Portal `/projects` and `/github` on port3010 still use the published 0.4.7 package:
+CUA measured a2px native input outline plus a4px outer shadow. The earlier R11 source review
+used an unlayered Storybook stylesheet and did not cover Portal's `@import ... layer(lds)`.
+Layered important declarations outrank the runtime's unlayered important reset;
+see [MDN cascade layers](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/important#cascade_layers).
+
+The scoped repair adds only a SearchField native-input exception beside the global rule in
+`tokens/focus.css`, so both rules share the consumer's layer. The existing outer control owns
+the indicator; clear buttons and standalone inputs retain theirs. No token value, public prop,
+other field behavior, consumer override, generated artifact or review stamp changes.
+
+The existing `SearchSingleFocus` story now imports that exact canonical CSS into a named layer.
+Its play checks pointer/Tab focus, no inner outline or shadow, the outer indicator, the clear
+button's independent indicator, clear-to-input focus return and generic Input preservation.
+Parent CUA ran it through its final generic-input state without a new console error. Source
+preview at1280px and390px measured inner outline none, outer outline solid, shadow none;
+390px had no document overflow. Forced-colors also retained only the outer indicator.
+The temporary viewport and forced-colors overrides were reset.
+
+Focused token-source check and JSX syntax check passed. The preview evidence is
+`search-focus/source-fixed.jpg` in the parent task's visualization directory.
+This is source validation only: the live Portal package is unchanged. Linux artifact refresh,
+exact-candidate CI, release and consumer adoption remain pending under their separate gates.

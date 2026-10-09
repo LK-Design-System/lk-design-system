@@ -260,16 +260,57 @@ export const SearchFieldSurfaceRefContract = {
 export const SearchSingleFocus = {
   name: '상호작용 · 단일 검색 포커스',
   render: () => <div style={{ display: 'grid', gap: 'var(--space-4)', width: 320, maxWidth: '100%' }}>
+    <style>{'@import url("/tokens/focus.css") layer(lds-search-focus-contract);'}</style>
     <SearchField label="자료 검색" defaultValue="로봇" />
     <Input label="일반 입력 비교" defaultValue="로봇" />
   </div>,
   play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
     const input = canvasElement.querySelector('input[type="search"]');
+    const control = input?.closest('[data-slot="control"]');
+    const clear = control?.querySelector('button');
+    const genericInput = canvasElement.querySelector('input:not([type="search"])');
+    if (!input || !control || !clear || !genericInput) {
+      throw new Error('The focus fixture must expose SearchField, its clear action, and a generic Input.');
+    }
+    const styleOf = (element) => doc.defaultView.getComputedStyle(element);
+    const assertSearchFocus = () => {
+      const inputStyle = styleOf(input);
+      const controlStyle = styleOf(control);
+      if (doc.activeElement !== input || inputStyle.outlineStyle !== 'none' || inputStyle.boxShadow !== 'none') {
+        throw new Error('The focused native search input must not repeat the outer outline or add a shadow under layered focus CSS.');
+      }
+      if (controlStyle.outlineStyle !== 'solid' || controlStyle.outlineWidth !== '2px' || controlStyle.boxShadow !== 'none') {
+        throw new Error('SearchField must show one solid 2px outer indicator without a shadow.');
+      }
+    };
     await userEvent.click(input);
+    await waitFor(assertSearchFocus);
     await userEvent.tab({ shift: true });
     await userEvent.tab();
-    if (input.ownerDocument.activeElement !== input || getComputedStyle(input).outlineStyle !== 'none') throw new Error('The native input does not repeat the outer indicator.');
-    const control = input.closest('[data-slot="control"]');
-    if (getComputedStyle(control).outlineStyle !== 'solid') throw new Error('Keyboard focus is visible on the entire control.');
+    await waitFor(assertSearchFocus);
+
+    await userEvent.tab();
+    await waitFor(() => {
+      const clearStyle = styleOf(clear);
+      if (doc.activeElement !== clear || !clear.matches(':focus-visible') || clearStyle.outlineStyle !== 'solid' || clearStyle.outlineWidth !== '2px') {
+        throw new Error('The clear button must retain its independent visible keyboard outline.');
+      }
+    });
+    await userEvent.keyboard('{Enter}');
+    await waitFor(() => {
+      if (input.value !== '' || clear.isConnected || doc.activeElement !== input) {
+        throw new Error('Activating clear must remove the button and return focus to the empty search input.');
+      }
+      assertSearchFocus();
+    });
+
+    await userEvent.tab();
+    await waitFor(() => {
+      const genericStyle = styleOf(genericInput);
+      if (doc.activeElement !== genericInput || !genericInput.matches(':focus-visible') || genericStyle.outlineStyle !== 'solid' || genericStyle.outlineWidth !== '2px') {
+        throw new Error('The generic Input must retain its keyboard indicator under the same layered focus CSS.');
+      }
+    });
   },
 };
