@@ -5,6 +5,7 @@ import {
   Combobox,
   Icon,
   SearchField,
+  Input,
   TagInput,
 } from '../src/index.js';
 import {
@@ -253,5 +254,22 @@ export const SearchFieldSurfaceRefContract = {
     if (getComputedStyle(control).height !== '44px' || getComputedStyle(input).letterSpacing !== '2px') {
       throw new Error('SearchField vars and named-part styles must reach their documented targets.');
     }
+  },
+};
+
+export const SearchSingleFocus = {
+  name: '상호작용 · 단일 검색 포커스',
+  render: () => <div style={{ display: 'grid', gap: 'var(--space-4)', width: 320, maxWidth: '100%' }}>
+    <SearchField label="자료 검색" defaultValue="로봇" />
+    <Input label="일반 입력 비교" defaultValue="로봇" />
+  </div>,
+  play: async ({ canvasElement }) => {
+    const input = canvasElement.querySelector('input[type="search"]');
+    await userEvent.click(input);
+    await userEvent.tab({ shift: true });
+    await userEvent.tab();
+    if (input.ownerDocument.activeElement !== input || getComputedStyle(input).outlineStyle !== 'none') throw new Error('The native input does not repeat the outer indicator.');
+    const control = input.closest('[data-slot="control"]');
+    if (getComputedStyle(control).outlineStyle !== 'solid') throw new Error('Keyboard focus is visible on the entire control.');
   },
 };

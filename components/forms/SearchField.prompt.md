@@ -1,5 +1,15 @@
 **SearchField** — 앞에 돋보기, 지우기 어포던스가 있는 검색 입력.
 
+## 단일 focus 표시 (R11, 2026-10-09)
+
+Input과 MessageComposer의 필드 소유 focus를 비교했습니다. 클릭 시 외곽 border가,
+Tab 시 외곽 control의 semantic focus-indicator outline 하나가 표시됩니다. 내부 search input의
+전역 outline만 제외하고 clear button의 keyboard outline은 보존합니다. forced-colors는 외곽 Highlight outline입니다.
+전역 focus token과 다른 필드는 바꾸지 않습니다.
+[WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)과
+[WAI-ARIA Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)의 visible keyboard focus 원칙을 검토했습니다.
+[소스 검토 기록](../../docs/handoff/2026-10-09-portal-density-source-review.md) 참조.
+
 ## Public surface and ref
 
 - `ref` points to the native search input; use `rootRef` for the complete field stack.

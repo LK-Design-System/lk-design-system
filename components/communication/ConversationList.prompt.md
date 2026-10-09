@@ -40,7 +40,7 @@ nav[aria-labelledby=panel-title]
 
 ## 행과 상태
 
-- 행 높이 36px(`--component-conversation-list-row-height`, SideNav 자식 행과 같음), 한 줄 제목과 말줄임. 전체 제목은 링크의 접근 이름에 남고 `title` 툴팁은 두지 않습니다.
+- 행 높이 36px(`--component-conversation-list-row-height`, SideNav 자식 행과 같음), 한 줄 제목과 말줄임. 전체 제목은 링크의 접근 이름과 native title에 남습니다(2026-10-09 D06 개정).
 - hover와 현재 항목은 행 전체(링크 + 버튼)에 무채색 채움을 주며 `li`가 `:hover`, `[data-current]`로 소유합니다. 현재 항목은 `aria-current="page"`, `cool-neutral-96` 채움, `label-normal`, 굵기입니다. 채움 대비가 낮아(1.23:1) 굵기를 비색상 단서로 함께 씁니다(WCAG 1.4.1). forced-colors에서는 현재 링크가 `SelectedItem`을 받습니다.
 - 「더 보기」는 **늘 DOM에 있고** 포인터 hover 환경에서는 행 hover, focus-within, 현재 행, 메뉴 열림일 때만 보입니다. `@media (hover: none)`에서는 늘 보입니다. 버튼 이름은 `{제목} 더 보기`, 조작 영역은 24px 이상입니다.
 - 메뉴는 `DropdownMenu`입니다. 항목과 실행은 제품이 소유하고, 삭제 확인은 제품의 `ConfirmDialog`입니다. 삭제 뒤 focus는 제품이 다음 행(없으면 이전 행, 그것도 없으면 「새 질문」)으로 옮깁니다.
@@ -48,6 +48,14 @@ nav[aria-labelledby=panel-title]
 - 상태: 첫 `loading`은 Skeleton 행과 `aria-busy`, 빈 목록은 한 줄 문장(`emptyLabel`), `error`는 축약 `ResourceState`와 선택 `onRetry`, 목록 끝은 `hasMore` + `onLoadMore`의 「더 불러오기」 TextButton입니다. 무한 스크롤은 쓰지 않습니다.
 
 ## 내부 시각 차이 점검
+
+D06: 링크 padding 12→8px. hover 환경에서 숨긴 형제 menu button은 absolute로 배치하여 title 공간을
+상시 예약하지 않습니다. hover·focus-within·current·menu-open에서 버튼을 보이고 링크 끝 공간을 확보합니다.
+touch에서는 항상 보이고 공간을 확보합니다. DOM/Tab 순서·최소 24px target·링크와 형제 관계는 보존합니다.
+ListCell small·ShellPanel·SideNav와 비교했고
+[Carbon overflow menu](https://carbondesignsystem.com/components/data-table/usage/)의 hover/focus 노출과 touch 상시 노출,
+[WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)의 키보드 접근을 반영했습니다.
+[검토 기록](../../docs/handoff/2026-10-09-portal-density-source-review.md).
 
 - `ListCell selectedPresentation="tint"`의 「지금 열린 항목」 무채색 문법을 계승하되, 단계는 SideNav neutral과 같은 opaque `cool-neutral` 단계를 써서 ShellPanel·NavRail과 한 셸로 읽히게 했습니다.
 - 행 radius, inset 포커스 링(`outline-offset: -2px`), 굵기 규칙은 SideNav 행과 같습니다. 아이콘은 두지 않습니다(제목만으로 스캔되는 목록).

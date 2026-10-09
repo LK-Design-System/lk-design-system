@@ -7,7 +7,7 @@ const SHELL_PANEL_MAX_ACTIONS = 2;
 const SHELL_PANEL_STYLES = `
   .lk-shell-panel__primary:active{background:var(--component-shell-panel-pressed-surface)!important;color:var(--_lds-shell-panel-pressed-foreground)!important}
   .lk-shell-panel__primary:focus-visible{outline-offset:-2px!important}
-  @media(forced-colors:active){.lk-shell-panel__primary[aria-current="page"]{background:Highlight!important;color:HighlightText!important;background:SelectedItem!important;color:SelectedItemText!important}}
+  @media(forced-colors:active){.lk-shell-panel__primary[aria-current="page"]{color:Highlight!important;font-weight:bold!important}}
   @media(prefers-reduced-motion:reduce){.lk-shell-panel__primary{transition:none!important}}
 `;
 
@@ -29,6 +29,7 @@ function isDevelopment() {
 export function ShellPanel({
   title,
   headingLevel = 2,
+  density = 'comfortable',
   actions,
   primaryAction,
   renderLink,
@@ -47,6 +48,7 @@ export function ShellPanel({
   const [primaryHovered, setPrimaryHovered] = React.useState(false);
   const actionList = React.Children.toArray(actions);
   const HeadingTag = `h${Math.min(6, Math.max(1, Number(headingLevel) || 2))}`;
+  const compact = density === 'compact';
 
   React.useEffect(() => {
     if (actionList.length <= SHELL_PANEL_MAX_ACTIONS || !isDevelopment()) return;
@@ -62,19 +64,17 @@ export function ShellPanel({
     alignItems: 'center',
     gap: 'var(--space-3)',
     width: '100%',
-    minHeight: 'var(--component-shell-panel-row-height)',
+    minHeight: 'var(--component-conversation-list-row-height)',
     padding: '0 var(--space-3)',
     boxSizing: 'border-box',
     border: 'none',
     borderRadius: 'var(--radius-lg)',
-    background: primaryCurrent
-      ? primaryHovered ? 'var(--component-shell-panel-active-hover-surface)' : 'var(--component-shell-panel-active-surface)'
-      : primaryHovered ? 'var(--component-shell-panel-hover-surface)' : 'transparent',
+    background: primaryHovered ? 'var(--component-shell-panel-hover-surface)' : 'transparent',
     color: primaryCurrent || !primaryHovered ? 'var(--component-shell-panel-foreground)' : 'var(--component-shell-panel-hover-foreground)',
     fontFamily: 'var(--font-sans)',
     fontSize: 'var(--label1-size)',
     lineHeight: 'var(--label1-line)',
-    fontWeight: primaryCurrent ? 'var(--fw-bold)' : 'var(--fw-medium)',
+    fontWeight: primaryCurrent ? 'var(--fw-semibold)' : 'var(--fw-medium)',
     textAlign: 'start',
     textDecoration: 'none',
     cursor: 'pointer',
@@ -112,6 +112,7 @@ export function ShellPanel({
     <ShellPanelContext.Provider value={{ titleId: resolvedTitleId }}>
       <div
         data-slot="root"
+        data-density={compact ? 'compact' : 'comfortable'}
         className={['lk-shell-panel', className].filter(Boolean).join(' ')}
         style={{
           display: 'flex',
@@ -129,8 +130,8 @@ export function ShellPanel({
         {...rest}
       >
         <style>{SHELL_PANEL_STYLES}</style>
-        <div data-slot="header" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexShrink: 0, minHeight: 'var(--component-shell-panel-header-height)', padding: '0 var(--space-2) 0 var(--space-4)', boxSizing: 'border-box' }}>
-          <HeadingTag id={resolvedTitleId} style={{ flex: '1 1 auto', minWidth: 0, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 'var(--body1-size)', lineHeight: 'var(--body1-line)', fontWeight: 'var(--fw-bold)', color: 'var(--component-shell-panel-foreground)' }}>
+        <div data-slot="header" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', flexShrink: 0, minHeight: compact ? 'var(--space-10)' : 'var(--component-shell-panel-header-height)', padding: '0 var(--space-2) 0 var(--space-4)', boxSizing: 'border-box' }}>
+          <HeadingTag id={resolvedTitleId} style={{ flex: '1 1 auto', minWidth: 0, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: compact ? 'var(--label1-size)' : 'var(--body1-size)', lineHeight: compact ? 'var(--label1-line)' : 'var(--body1-line)', fontWeight: 'var(--fw-bold)', color: 'var(--component-shell-panel-foreground)' }}>
             {title}
           </HeadingTag>
           {actionList.length > 0 && <div data-slot="actions" style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', flexShrink: 0 }}>{actionList}</div>}

@@ -1,5 +1,17 @@
 # ResourceState
 
+## 목록 안 빈 상태 (D04, 2026-10-09)
+
+`density="compact"`는 EmptyState `size="sm"`을 조합해 큰 색상 타일 대신 20px registry icon,
+14px heading, 16px padding을 씁니다. 기본 comfortable과 공지·콘텐츠 보존 계약은 유지합니다.
+emptyReason="initial | search | filter"는 미등록(inbox), 검색 0건(search), 조건 0건(filter)의 기본 문구와 icon을 구분합니다.
+state="empty"에서만 적용되며 title/description/action override가 우선합니다. 검색·필터 실행은 제품이 소유합니다.
+EmptyState·Banner·ConversationList를 비교했고
+[Carbon Empty states](https://www.carbondesignsystem.com/building-blocks/core/patterns/empty-states)와
+[WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)을 검토했습니다.
+Carbon의 작은 공간 left alignment 대신 기존 LDS 중앙 정렬을 유지하며 장식·여백을 줄입니다.
+[소스 검토 기록](../../docs/handoff/2026-10-09-portal-density-source-review.md) 참조.
+
 `ResourceState`는 대시보드 위젯, 표, 차트처럼 비동기 리소스를 표시하는 표면에 공통 상태 계약을 부여하는 **LK Product Extension**입니다. WDS 컴포넌트 축을 주장하지 않으며, 새 카드 외형을 만들지 않고 기존 `Banner`, `EmptyState`, `Skeleton`을 조합합니다.
 
 ```jsx

@@ -11,7 +11,7 @@ export interface DashboardShellProps extends Omit<React.HTMLAttributes<HTMLDivEl
   temporaryNavigation?: React.ReactNode;
   /** temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false */
   temporaryNavigationOpen?: boolean;
-  /** Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청. */
+  /** Escape, scrim, 닫기 버튼 또는 narrow→wide 전환으로 temporaryNavigation을 닫아 달라는 요청. 부모는 열린 상태를 false로 갱신합니다. */
   onTemporaryNavigationClose?: () => void;
   /** 헤더 trigger의 `aria-controls`와 연결할 Drawer dialog id. 생략하면 내부 id를 생성합니다. */
   temporaryNavigationId?: string;

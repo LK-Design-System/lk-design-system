@@ -1,5 +1,17 @@
 # LK Product Frontend Workflow Coverage
 
+## 2026-10-09 bounded Portal source review
+
+R01/R11/D01–D06/V02/V03 are a separate incremental authoring review, recorded in
+`COVERAGE_AUDIT.json.incrementalAuthoringReviews`. The existing 17 workflow closure verdicts are preserved.
+[Source patch, independent sibling/reference decisions and adoption examples](handoff/2026-10-09-portal-density-source-review.md)
+are reviewable on local main. Portal uptake, Linux projections and release remain pending.
+Parent source CUA checks passed for D03/V02 inline50px versus stacked72px, input16px and preserved55-character
+draft44px→88px at390px; D05 xs32px header/36px row; R01 low mobile scroll and account keyboard access;
+V03 responsive modal close/main focus; R11 one outer focus including forced-colors; D01 row36px and D06 title/menu
+access. Evidence is in parent `ui-improvement/`, including `composer-inline-comparison.jpg`. These are normal-light
+and focus/SearchField forced-colors checks; exhaustive dark/touch and unreported cases remain unverified.
+
 | Field | Value |
 | --- | --- |
 | Type | Product workflow coverage contract and audit summary |

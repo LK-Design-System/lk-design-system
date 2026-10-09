@@ -1,4 +1,4 @@
-import { getTableHeaderCellStyle, StatusBadge, Table } from '../src/index.js';
+import { getTableHeaderCellStyle, Icon, IconButton, StatusBadge, Table } from '../src/index.js';
 import { TableCard as TableCardStory } from './DataDisplay.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -23,6 +23,15 @@ const meta = {
 };
 
 export default meta;
+
+export const CompactRows = {
+  name: '변형·상태 · 촘촘한 표',
+  render: () => <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,320px),1fr))', gap: 'var(--space-5)' }}>
+    {['sm', 'xs'].map((size) => <Table key={size} size={size} caption={size === 'xs' ? '촘촘한 목록' : '기존 작은 목록'} rowHeaderKey="name"
+      columns={[{ key: 'name', label: '자료', wrap: true }, { key: 'status', label: '상태' }, { key: 'action', label: '동작', width: 56, render: () => <IconButton size="xs" variant="plain" label="자료 더 보기"><Icon name="more-horizontal" size={16} /></IconButton> }]}
+      rows={[{ id: '1', name: '점검 기록', status: '검토' }, { id: '2', name: '긴 한국어 제목과 Model evaluation summary', status: '완료' }]} />)}
+  </div>,
+};
 
 const rows = [
   { id: 'ITEM-104', group: '문서', status: '진행 중', progress: 86 },

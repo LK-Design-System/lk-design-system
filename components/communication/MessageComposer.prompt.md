@@ -21,7 +21,8 @@
 - 분류는 **LK Product Extension**이며 WDS Core parity를 주장하지 않습니다.
 - `value`는 완전한 controlled value입니다. submit callback 뒤에도 내부에서 지우지 않습니다.
 - `state`는 `idle | submitting | streaming | stopping`이며 제품이 갱신합니다. callback만으로 다음 lifecycle이나 성공을 추론하지 않습니다.
-- `density`는 `comfortable | compact`이며 기본 `comfortable`은 기존 렌더링의 크기와 간격을 그대로 보존합니다. 좁은 패널에서만 `compact`를 명시합니다.
+- `density`는 `comfortable | compact`입니다. 2026-10-09 승인된 D03 개정으로 stacked 한 줄 입력은 comfortable 40px, compact 32px에서 시작합니다. 16px 입력 글자, 24px line-height와 기존 버튼 모서리는 유지합니다. stacked send/stop은 32px입니다.
+- `layout`은 `stacked | inline`이며 기본값은 `stacked`입니다. 단순 작성에서 명시한 `inline`은 textarea와 send/stop을 같은 행에 배치합니다. 입력/내장 action 최소 44px, shell 2px inset과 1px border를 합해 빈 초안 shell은 약 50px입니다. density와 별도 anatomy 축이며 설치된 0.4.7에는 없습니다.
 - `attachments`, `leadingActions`, `trailingActions`는 `ReactNode` slot입니다. attachment selection/upload, voice capture, model/tool picker와 permission은 slot consumer가 소유합니다.
 - reading order는 description/disabled reason → shell의 attachments → textarea → 하단 leading actions → trailing actions → primary send/stop → status/counter입니다.
 - leading/trailing action은 position만 설명합니다. 특정 attachment/template/provider 기능을 고정하지 않습니다.
@@ -35,6 +36,37 @@
 - `maxLength`는 native 제한과 visible counter를 함께 제공하고, `textareaProps`는 controlled value·rows·disabled 같은 소유 prop을 제외한 native textarea 속성/이벤트를 전달합니다.
 
 ## keyboard와 IME
+
+### D03/V02 자동 높이
+
+minRows=1로 더 낮게 시작하며 value뿐 아니라 textarea 폭도 ResizeObserver로 관찰합니다.
+같은 폭에서는 높이를 쓰지 않아 feedback loop를 피합니다. minRows/maxRows를 지키고 긴 초안은 내부 스크롤입니다.
+observer는 cleanup에서 해제합니다. 형제 Input·SearchField와 textarea/action band의 anatomy를 유지합니다.
+[MDN ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)와
+[WCAG Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)를 검토했습니다.
+형제 비교·제품 seam은 [소스 검토 기록](../../docs/handoff/2026-10-09-portal-density-source-review.md)에 있습니다.
+
+### D03 단순 작성의 inline anatomy
+
+```jsx
+<MessageComposer layout="inline" density="compact" minRows={1} maxRows={6}
+  value={draft} onValueChange={setDraft} onSubmit={send}
+  placeholder="무엇을 도와드릴까요?" />
+```
+
+긴 초안은 같은 textarea DOM에서 minRows/maxRows 범위로 커지고 내장 send/stop은 아래에 정렬됩니다.
+첨부 또는 leading/trailing action slot을 전달하면 textarea의 전체 폭과 utility band wrapping을 보존하는
+stacked 구조로 확장합니다. 이때도 inline을 요청한 내장 action은 44px입니다. slot의 44px touch target은
+consumer가 구성합니다. shell의 `data-layout`은 요청한 축, `data-composer-layout`은 실제 inline/stacked 구조를
+표시합니다. 초안 높이로 구조를 반복 전환하지 않아 폭/높이 계산 진동을 피합니다. 초점·IME·상태·읽기 순서는 같습니다.
+
+외부 근거는 구현 전에 확인했습니다. [OpenAI UI guidelines](https://developers.openai.com/plugins/concepts/ui-guidelines)는
+composer를 통해 대화 맥락에서 자연스럽게 이어가는 원칙을 설명하며 픽셀 규격을 제공하지 않습니다.
+[Claude Academy](https://academy.claude.com/tutorials/getting-started-with-claude)는 자연어 작성과 파일 첨부의 흐름을 설명합니다.
+[Claude 제품 페이지](https://claude.com/ko/product/overview)의 AskCTA rows=1·36px textarea 관찰은 부모가 제공한
+마케팅 CTA 관찰이며 실사용 Claude 홈 배치의 증거가 아닙니다. Claude 실사용 홈은 로그인 경계로 확인하지 못했습니다.
+사용자 첨부 ChatGPT 1920×900 화면의 약 54px 한 행 pill은 부모의 이미지 관찰이며 공식 pixel specification이 아닙니다.
+LDS는 형제 Button/Input의 token·semantic 색·모서리를 계승하고, 44px target+기존 spacing으로 약 50px을 정했습니다.
 
 - `submitMode="enter"`: modifier 없는 Enter로 제출하고 Shift+Enter는 줄바꿈입니다.
 - `submitMode="modifier-enter"`: Alt가 없는 Ctrl+Enter 또는 Meta+Enter만 제출합니다. Ctrl+Alt/AltGr와 Option+Command 조합은 문자 입력 충돌을 피하기 위해 제출하지 않습니다.
@@ -67,19 +99,21 @@
 
 - attachment preview, textarea와 하단 action band는 하나의 border, radius, fill과 focus-within state를 공유합니다. composer 바깥에 별도 footer card를 추가하지 않습니다.
 - focus 표시는 shell 하나가 소유합니다. textarea에 focus가 있으면 shell border만 중립 회색 `--component-message-composer-border-focus`(`cool-neutral-60`, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고, primary 색 border·`focus-ring` halo·두께 변화는 없습니다(2026-10-09 owner 결정, Claude·ChatGPT 작성창처럼 작성 중에는 caret이 입력 위치를 알립니다). 안쪽 textarea는 전역 `:focus-visible` 사각 링에서 제외되어(`tokens/components.css`의 product 규칙) shell 안에 두 번째 사각형을 그리지 않습니다. leading/trailing slot과 send/stop button은 전역 2px focus ring을 그대로 유지합니다. forced-colors에서는 border 색 단계가 사라지므로 focused shell이 `outline: 2px solid Highlight`를 그립니다. WCAG 2.4.7은 shell border와 caret으로, 1.4.11은 border 3:1 이상으로 충족합니다.
-- textarea는 `comfortable`의 48px 또는 `compact`의 40px 한 줄 높이에서 시작해 `minRows`/`maxRows` 범위에서 커지고 최대 높이 뒤에는 내부 scrolling을 사용합니다.
+- stacked textarea는 `comfortable` 40px 또는 `compact` 32px, inline은 44px의 한 줄 높이에서 시작해 `minRows`/`maxRows` 범위에서 커지고 최대 높이 뒤에는 내부 scrolling을 사용합니다. 초안과 컨테이너 폭 변경 모두 재계산합니다.
 - utility와 primary action은 multiline input의 하단 action band에 정렬합니다. exact pixel보다 LDS control size와 focus token을 따릅니다.
-- 320px에서는 textarea가 먼저 전체 draft 폭을 확보하고 하단 action band가 wrap합니다. action을 숨기거나 action 수 때문에 입력 열을 축소하지 않으며, slot content도 자체 wrapping/overflow policy를 제공해야 합니다.
+- 320px stacked 및 slot을 전달한 확장 구조에서는 textarea가 먼저 전체 draft 폭을 확보하고 하단 action band가 wrap합니다. 단순 inline은 send44px을 제외한 입력 폭을 쓰고 긴 초안을 높이로 확장합니다. action을 숨기지 않으며 slot content도 자체 wrapping/overflow policy를 제공해야 합니다.
 - `compact`는 textarea 세로 padding, shell inset, attachment 상단 inset과 action/status gap을 LDS spacing token의 작은 단계로 줄이고 primary send/stop의 radius를 shell corner에 맞춥니다. DOM/read order, focus ring, autosize, state, submit/stop과 live-region 계약은 `comfortable`과 같습니다.
-- density와 관계없이 내장 send/stop action은 32×32px을 유지합니다. slot consumer도 실제 button/link target을 최소 24×24 CSS px로 구성해야 하며, composer는 작은 target을 만들기 위해 action을 축소하지 않습니다.
+- stacked 내장 send/stop은 32×32px, inline을 요청한 내장 action은 확장 후에도 44×44px입니다. stacked slot target은 최소 24×24 CSS px, inline mobile slot target은 44×44px로 구성합니다. composer는 slot consumer의 control 크기를 덮어쓰지 않습니다.
 - non-idle은 성공이나 실패를 의미하지 않으므로 neutral phase text를 사용합니다. unavailable/error 이유는 visible text로 제공합니다.
 - light/dark 모두 LDS semantic input token을 사용하며 exact Figma color, product logo, provider selector와 custom shadow를 만들지 않습니다.
 
 ### LK Portal consumer evidence와 compact 계약
 
+- 2026-10-09 부모 CUA 소스 비교 통과: 빈 inline shell50px / compact stacked72px, 입력16px. 같은55자 초안은 desktop textarea44px → viewport390px에서88px로 확장되며 값이 유지되고 클리핑·overflow가 없었으며 첨부 stacked 재배치도 통과했습니다. 부모 제공 screenshot 참조는 `ui-improvement/composer-inline-comparison.jpg`입니다. 이 composer 증거는 normal light이며 exhaustive dark/touch, composer forced-colors 및 추가 responsive 판정은 포함하지 않습니다.
+
 - [`SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md`](../../docs/SELECT_AND_MESSAGE_FEED_LAYOUT_FOLLOWUP.md)에 기록된 LK Portal floating knowledge chat은 460×674px 패널에서 scope control이 action band를 키우고 primary action을 다음 줄로 미는 사례를 보였습니다. Select 결함 수정과 별개로 `minRows`, scope 위치와 composer 밀도는 Portal composition 결정입니다.
 - Portal처럼 폭과 세로 공간이 제한된 consumer는 `density="compact"`, 필요한 최소 `minRows`, 우선순위가 높은 utility만 composer 안에 조합합니다. 긴 scope/model selector를 compact가 임의로 숨기거나 재배치하지 않습니다.
-- `compact`는 한 줄 textarea를 `--space-10`, textarea 세로 padding을 `--space-2`, shell/action 간격을 `--space-0-5` 중심으로 구성합니다. primary action은 기존 `--component-button-height-sm`을 유지하고 Button의 `--lds-button-radius` seam으로 `--radius-md`를 적용합니다. 기본 `comfortable`은 size-sm Button의 기존 8px radius와 pixel geometry, interaction을 그대로 유지합니다.
+- `compact`는 한 줄 textarea를 `--space-8`, textarea 세로 padding을 `--space-1`, shell/action 간격을 `--space-0-5` 중심으로 구성합니다. primary action은 기존 `--component-button-height-sm`과 Button `--lds-button-radius`의 `--radius-md`를 유지합니다. comfortable은 textarea 40px와 세로 inset16px를 쓰며 버튼 geometry와 interaction은 보존합니다.
 
 ### slot으로 조합하는 앵커드 오버레이
 

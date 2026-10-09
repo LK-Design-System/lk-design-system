@@ -9,7 +9,7 @@ import { ShellPanel } from '../components/layout/ShellPanel.jsx';
 export const preventNavigation = (event) => event.preventDefault();
 
 export const railAreas = [
-  { value: 'ask', label: '질문', href: '#ask', icon: <Icon name="chat" size={20} /> },
+  { value: 'ask', label: '채팅', href: '#ask', icon: <Icon name="chat" size={20} /> },
   { value: 'catalog', label: '카탈로그', href: '#catalog', icon: <Icon name="folder" size={20} /> },
   { value: 'knowledge', label: '지식', href: '#knowledge', icon: <Icon name="book" size={20} /> },
   { value: 'integrations', label: '연동', href: '#integrations', icon: <Icon name="link" size={20} /> },
@@ -59,9 +59,9 @@ export function QuestionPanel({ currentId = 'c2', count = 40, conversationProps 
   return (
     <ShellPanel
       data-testid="question-panel"
-      title="질문"
+      title="채팅"
       actions={<IconButton variant="plain" size="sm" round={false} label="대화 검색"><Icon name="search" size={18} aria-hidden="true" /></IconButton>}
-      primaryAction={{ label: '새 질문', icon: <Icon name="plus" size={18} />, href: '#new', onClick: preventNavigation, current: currentId == null }}
+      primaryAction={{ label: '새 채팅', icon: <Icon name="plus" size={18} />, href: '#new', onClick: preventNavigation, current: currentId == null }}
       scrollRegion={(
         <ConversationList
           data-testid="question-conversations"

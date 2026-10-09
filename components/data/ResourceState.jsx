@@ -57,6 +57,11 @@ const STATE_PRESENTATION = {
 };
 
 const PRESERVED_DATA_STATES = new Set(['refreshing', 'error', 'stale', 'offline']);
+const EMPTY_PRESENTATION = {
+  initial: { title: '아직 등록된 데이터가 없습니다', description: '새 항목을 추가하면 여기에 표시됩니다.', icon: 'inbox', tone: 'info' },
+  search: { title: '검색 결과가 없습니다', description: '다른 검색어로 다시 검색해 보세요.', icon: 'search', tone: 'info' },
+  filter: { title: '조건에 맞는 데이터가 없습니다', description: '필터를 변경하거나 초기화해 보세요.', icon: 'filter', tone: 'info' },
+};
 const BLOCKING_STATES = new Set(['empty', 'restricted']);
 const ASSERTIVE_BLOCKING_STATES = new Set(['error', 'offline']);
 
@@ -93,13 +98,17 @@ export function ResourceState({
   lastUpdatedLabel = '마지막 업데이트',
   loadingContent,
   messageVariant = 'standalone',
+  density = 'comfortable',
+  emptyReason,
   headingLevel = 3,
   children,
   style,
   ...rest
 }) {
   const resolvedState = STATE_PRESENTATION[state] ? state : 'ready';
-  const presentation = STATE_PRESENTATION[resolvedState];
+  const presentation = resolvedState === 'empty' && EMPTY_PRESENTATION[emptyReason]
+    ? EMPTY_PRESENTATION[emptyReason]
+    : STATE_PRESENTATION[resolvedState];
   const resolvedTitle = title ?? presentation.title;
   const resolvedDescription = description ?? presentation.description;
   const hasContent = React.Children.toArray(children).length > 0;
@@ -166,7 +175,8 @@ export function ResourceState({
       {isBlocking && (
         <div role={assertive ? 'alert' : undefined} aria-live={assertive ? 'assertive' : undefined} style={{ minWidth: 0 }}>
           <EmptyState
-            icon={<Icon name={presentation.icon} size={26} aria-hidden="true" />}
+            size={density === 'compact' ? 'sm' : 'md'}
+            icon={<Icon name={presentation.icon} size={density === 'compact' ? 20 : 26} aria-hidden="true" />}
             tone={presentation.tone}
             title={resolvedTitle}
             description={resolvedDescription}

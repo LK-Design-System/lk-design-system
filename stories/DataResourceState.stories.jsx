@@ -74,6 +74,16 @@ const meta = {
 
 export default meta;
 
+export const CompactEmptyReasons = {
+  name: '변형·상태 · 미등록·검색·필터 빈 목록',
+  render: () => <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,280px),1fr))', gap: 'var(--space-4)', width: '100%' }}>
+    {['initial', 'search', 'filter'].map((emptyReason) => <ResourceSurface key={emptyReason} label={emptyReason}>
+      <ResourceState state="empty" density="compact" emptyReason={emptyReason} />
+    </ResourceSurface>)}
+    <ResourceSurface label="독립 빈 상태 비교"><ResourceState state="empty" emptyReason="initial" /></ResourceSurface>
+  </div>,
+};
+
 export const PreservedDataStates = {
   name: '개요',
   parameters: storyDescription(

@@ -2,6 +2,7 @@ import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
 import { Icon, IconButton } from '../src/index.js';
 import { ConversationList } from '../components/communication/ConversationList.jsx';
+import { ListCell } from '../components/content/ListCell.jsx';
 import { ShellPanel } from '../components/layout/ShellPanel.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 import { QuestionPanel, conversationActions, makeConversationGroups, preventNavigation } from './RailPanel.shared.jsx';
@@ -35,6 +36,28 @@ const meta = {
 };
 
 export default meta;
+
+export const CompactDestinations = {
+  name: '변형·상태 · 패널 제목과 목적지 밀도',
+  render: () => <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
+    {['comfortable', 'compact'].map((density) => <div key={density} style={{ width: 240, height: 360 }}>
+      <ShellPanel title="장치" density={density}>
+        <nav aria-label={`장치 목적지 ${density}`}><ul role="list" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+          {['장치 목록', '프로파일', '긴 장치 등록 및 운영 설정'].map((title, index) => <li key={title}><a href={`#device-${index}`} aria-current={index === 0 ? 'page' : undefined} onClick={preventNavigation} style={{ textDecoration: 'none' }}>
+            <ListCell title={title} typography={density === 'compact' ? 'small' : 'medium'} verticalPadding="small" paddingX={density === 'compact' ? 'var(--space-2)' : undefined} selected={index === 0} selectedPresentation="tint" />
+          </a></li>)}
+        </ul></nav>
+      </ShellPanel>
+    </div>)}
+  </div>,
+  play: async ({ canvasElement }) => {
+    const panel = canvasElement.querySelector('[data-density="compact"]');
+    const header = panel.querySelector('[data-slot="header"]');
+    const row = panel.querySelector('[data-slot="fixed"] li > a > div');
+    if (Math.abs(header.getBoundingClientRect().height - 40) > 1 || Math.abs(row.getBoundingClientRect().height - 36) > 1) throw new Error('Compact panel header and text-only destination resolve to 40/36px.');
+    if (getComputedStyle(panel.querySelector('h2')).fontSize !== getComputedStyle(row.firstElementChild.firstElementChild).fontSize) throw new Error('Header and destination title both use 14px typography.');
+  },
+};
 
 export const Overview = {
   name: '개요',
@@ -73,7 +96,7 @@ export const Overview = {
 export const PrimaryActionCurrent = {
   name: '변형·상태 · 새 질문 화면',
   parameters: storyDescription(
-    '새 질문 화면에서는 주 동작 행이 현재 화면입니다. 버튼 모양이 아니라 목록 행과 같은 해부이며, aria-current="page", 무채색 채움, 굵기로 표시합니다. 이때 대화 목록에는 현재 항목이 없습니다. 좁은 320px 서랍에서도 같은 행 해부를 씁니다.',
+    '새 질문 화면에서는 aria-current="page"와 semibold로 현재 동작을 표시합니다. 36px 행의 평소 배경은 투명하고, hover·pressed·focus에서만 강조합니다. 이때 대화 목록에는 현재 항목이 없습니다.',
   ),
   render: () => (
     <div style={{ display: 'flex', gap: 'var(--space-4)' }}>
@@ -91,8 +114,8 @@ export const PrimaryActionCurrent = {
     const primaries = canvasElement.querySelectorAll('[data-slot="primaryAction"]');
     if (primaries.length !== 2) throw new Error('Both panels render a primary action row.');
     for (const primary of primaries) {
-      if (primary.getAttribute('aria-current') !== 'page' || Number(getComputedStyle(primary).fontWeight) < 700) {
-        throw new Error('The current primary row exposes aria-current="page" and bold weight.');
+      if (primary.getAttribute('aria-current') !== 'page' || Number(getComputedStyle(primary).fontWeight) < 600 || getComputedStyle(primary).backgroundColor !== 'rgba(0, 0, 0, 0)') {
+        throw new Error('The current action exposes aria-current and semibold without a persistent selected fill.');
       }
     }
     if (canvasElement.querySelector('[data-testid="question-conversations"] [aria-current]')) {

@@ -128,6 +128,18 @@ Reference: [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns
 
 ## 매체 재지정 훅 (`--lk-table-*`)
 
+### 촘촘한 공개 크기 (D05, 2026-10-09)
+
+기존 size 축에 xs를 추가합니다. Table과 두 공개 cell style helper가 `size="xs"`를 받습니다.
+header 32px, body 최소 36px, 세로 padding 2px, 좌우 12px이며 기존 spacing token을 조합합니다.
+공유 token·sm/md는 바꾸지 않습니다. 24–32px control을 포함한 한 줄 행은 36–40px,
+큰 control·wrap content는 자연스럽게 증가합니다. row/column header·group·overflow focus 계약은 유지합니다.
+DataGrid의 공유 cell helper와 sm Table을 비교했고
+[Carbon Data table](https://carbondesignsystem.com/components/data-table/usage/)과
+[WCAG Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)를 검토했습니다.
+Carbon의 header/body 동일 높이 권고와 달리 LDS xs는 읽기 header 32px와 body 36px를 구분합니다.
+이 차이는 sm/md와 DataGrid에 확장하지 않습니다. [검토 기록](../../docs/handoff/2026-10-09-portal-density-source-review.md).
+
 `size`는 셀 패딩과 함께 행 높이도 선택합니다. 행 높이는 `--lk-table-row-min-height-sm/md` 매체 훅 → `--component-table-row-min-height-sm/md` profile token(default 44px/52px, ops 40px/48px) → 리터럴 44px/52px 순서로 해석되며, 셀에 `height`로 적용됩니다. 표 셀에서 `height`는 최소 높이로 동작하므로(CSS 2.1 §17.5.3은 셀의 `min-height`를 정의하지 않고 엔진은 무시합니다 — 0.2.2의 `min-height` 적용은 그래서 효과가 없었습니다) 한 줄 내용의 행은 정확히 그 높이가 되고, 여러 줄 셀만 행을 키웁니다. 셀은 `box-sizing: border-box`와 `vertical-align: middle`로 그 높이 안에서 중앙 정렬됩니다. 헬퍼에 `padding`을 직접 주면 그 값이 `size` 패딩보다 우선하고 행 높이는 `size`를 따릅니다.
 
 세로 패딩은 행 높이 안에 한 줄 control이 들어가도록 정합니다: default sm은 44px 행에 6px(내용 공간 31px), md는 52px 행에 8px(35px)라서 24px 태그, 26px 아바타, 28px `Button size="sm"`이 행을 키우지 않습니다. 이전 값(10px/14px)은 내용 공간을 23px/23px로 좁혀 태그·아바타 행이 45·47px로 제각각 커졌습니다(LK Portal 목록 화면 실측, 2026-09-08). ops는 40px/48px 행에 4px/6px입니다. [Carbon Data table](https://carbondesignsystem.com/components/data-table/style/)의 행 높이 모델(compact 24 · short 32 · medium 48 · tall 64를 셀 `height`로 고정하고 내용을 중앙 정렬)과 같은 방식이며, LDS는 자체 44/52 격자를 유지합니다.

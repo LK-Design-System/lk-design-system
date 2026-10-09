@@ -29,6 +29,17 @@ const meta = {
 
 export default meta;
 
+export const SmallDestinationTypography = {
+  name: '변형·상태 · 작은 목적지 글자',
+  render: () => <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
+    {['medium', 'small'].map((typography) => <div key={typography} style={{ width: 224 }}>
+      <ListCell title="프로젝트 자료와 연결 문서" typography={typography} verticalPadding="small" paddingX="var(--space-3)" />
+      <ListCell title="선택한 목적지" typography={typography} verticalPadding="small" paddingX="var(--space-3)" selected selectedPresentation="tint" />
+      <ListCell title="이용할 수 없는 목적지" typography={typography} verticalPadding="small" disabled />
+    </div>)}
+  </div>,
+};
+
 /* 반복 행은 ul/li로 감싸 항목 수와 위치를 보조 기술에 남깁니다(WCAG 1.3.1).
    list-style:none이 리스트 의미를 지우는 브라우저가 있어 role="list"를 함께 둡니다. */
 const listStyle = { listStyle: 'none', margin: 0, padding: 0 };

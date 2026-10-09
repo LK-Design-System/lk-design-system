@@ -30,10 +30,16 @@ const meta = {
       table: { category: 'Submission', type: { summary: 'idle | submitting | streaming | stopping' }, defaultValue: { summary: 'idle' } },
     },
     density: {
-      description: '작성 영역의 세로 여백을 조절합니다. comfortable은 기존 48px 한 줄 입력을 유지하고 compact는 40px로 줄이되 32px 동작 target은 유지합니다.',
+      description: 'stacked 입력은 comfortable 40px, compact 32px에서 시작합니다. inline은 44px 입력/동작 target을 사용하며 모두 입력 글자 16px를 유지합니다.',
       options: ['comfortable', 'compact'],
       control: { type: 'inline-radio' },
       table: { category: 'Layout', type: { summary: "'comfortable' | 'compact'" }, defaultValue: { summary: 'comfortable' } },
+    },
+    layout: {
+      description: 'inline은 단순 입력과 보내기를 약 50px 한 행에 배치합니다. 긴 초안은 자동 확장하고 첨부/utility slot은 full-width stacked 구조로 확장합니다. 기본 stacked를 유지합니다.',
+      options: ['stacked', 'inline'],
+      control: { type: 'inline-radio' },
+      table: { category: 'Layout', type: { summary: "'stacked' | 'inline'" }, defaultValue: { summary: 'stacked' } },
     },
     submitMode: {
       description: '키보드 제출 규칙입니다. enter는 Enter, modifier-enter는 Alt 없이 Ctrl/Meta+Enter, button-only는 명시적 버튼만 사용합니다. IME 조합 확정 Enter와 Shift+Enter는 제출하지 않습니다.',
@@ -92,7 +98,7 @@ const meta = {
       table: { category: 'Draft', type: { summary: 'number' } },
     },
     minRows: {
-      description: '자동 높이 조절의 최소 행 수입니다. 1행은 comfortable 48px, compact 40px 높이에서 시작합니다.',
+      description: '자동 높이 조절의 최소 행 수입니다. 1행은 comfortable 40px, compact 32px에서 시작하고 내용·폭 변경에 따라 확장합니다.',
       control: { type: 'number', min: 1, step: 1 },
       table: { category: 'Layout', type: { summary: 'number' }, defaultValue: { summary: '1' } },
     },
@@ -170,6 +176,39 @@ const meta = {
 };
 
 export default meta;
+
+function WidthAutosizeFixture() {
+  const [narrow, setNarrow] = React.useState(false);
+  const [value, setValue] = React.useState('프로젝트 자료와 장비 점검 기록을 함께 검토하고 다음 회의에서 확인할 질문을 정리해 주세요. Model evaluation results and deployment notes need to stay visible when the panel width changes.');
+  return <div style={{ display: 'grid', gap: 'var(--space-3)', maxWidth: '100%' }}>
+    <button type="button" onClick={() => setNarrow((previous) => !previous)}>작성 폭 전환</button>
+    <div data-autosize-width={narrow ? 'narrow' : 'wide'} style={{ width: narrow ? 320 : 700, maxWidth: '100%' }}>
+      <MessageComposer value={value} onValueChange={setValue} onSubmit={() => {}} density="compact" submitMode="button-only" />
+    </div>
+    <MessageComposer value="" onValueChange={() => {}} onSubmit={() => {}} placeholder="한 줄 질문을 시작하세요." />
+  </div>;
+}
+
+export const WidthAutosize = {
+  name: '상호작용 · 초안 유지와 폭 변경 자동 높이',
+  render: () => <WidthAutosizeFixture />,
+  play: async ({ canvasElement }) => {
+    const textarea = canvasElement.querySelector('textarea');
+    const value = textarea.value;
+    const before = textarea.getBoundingClientRect().height;
+    const beforeWidth = textarea.getBoundingClientRect().width;
+    await userEvent.click(canvasElement.querySelector('button'));
+    await waitFor(() => {
+      const widthDelta = beforeWidth - textarea.getBoundingClientRect().width;
+      if (textarea.value !== value || (widthDelta > 100 && textarea.getBoundingClientRect().height <= before)) throw new Error('Changing width reflows the same draft and grows its input.');
+      if (textarea.scrollHeight > textarea.clientHeight + 1 && getComputedStyle(textarea).overflowY !== 'auto') throw new Error('Overflowing draft lines remain scrollable.');
+    });
+    await userEvent.click(canvasElement.querySelector('button'));
+    await waitFor(() => {
+      if (textarea.getBoundingClientRect().height > before + 1) throw new Error('Widening returns the same draft to its natural height.');
+    });
+  },
+};
 
 function AttachmentChip({ children }) {
   return (
@@ -418,8 +457,8 @@ export const CompactDensity = {
     if (!hasRadius(shell, 12)) {
       throw new Error('Compact MessageComposer must retain a 12px shell radius.');
     }
-    if (Math.abs(input.getBoundingClientRect().height - 40) > 1) {
-      throw new Error('Compact MessageComposer must resolve its one-row textarea to 40px.');
+    if (Math.abs(input.getBoundingClientRect().height - 32) > 1) {
+      throw new Error('Compact MessageComposer starts its one-row textarea at 32px.');
     }
     if (fixture.scrollWidth > fixture.clientWidth + 1 || composer.scrollWidth > composer.clientWidth + 1) {
       throw new Error('Compact MessageComposer must not create horizontal overflow.');
@@ -924,4 +963,74 @@ export const ButtonOnlyExample = {
       />
     </main>
   ),
+};
+
+function InlineLayoutFixture() {
+  const [value, setValue] = React.useState('');
+  const [narrow, setNarrow] = React.useState(false);
+  const [attachment, setAttachment] = React.useState(false);
+  const [utilities, setUtilities] = React.useState(false);
+  return (
+    <main style={{ width: narrow ? 320 : 720, maxWidth: '100%', display: 'grid', gap: 'var(--space-4)' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
+        <Button size="sm" onClick={() => setNarrow(!narrow)}>폭 전환</Button>
+        <Button size="sm" onClick={() => setAttachment(!attachment)}>첨부 전환</Button>
+        <Button size="sm" onClick={() => setUtilities(!utilities)}>추가 동작 전환</Button>
+        <Button size="sm" onClick={() => setValue(value ? '' : '긴 초안은 입력 폭과 내용에 맞춰 자동 확장합니다. '.repeat(12))}>긴 초안 전환</Button>
+      </div>
+      <section aria-label="한 행 작성 비교">
+        <p>inline · 빈 초안 약 50px · 입력 16px · 보내기/중지 44px</p>
+        <MessageComposer layout="inline" density="compact" value={value} onValueChange={setValue}
+          onSubmit={() => {}} minRows={1} maxRows={4} submitMode="button-only"
+          placeholder="무엇을 도와드릴까요?" formLabel="한 행 메시지 작성"
+          attachments={attachment ? <Chip>제품 자료.pdf</Chip> : undefined}
+          leadingActions={utilities ? <IconButton label="파일 첨부" style={{ minWidth: 44, minHeight: 44 }}><Icon name="attachment" size={20} /></IconButton> : undefined}
+          trailingActions={utilities ? <IconButton label="음성 입력" style={{ minWidth: 44, minHeight: 44 }}><Icon name="microphone" size={20} /></IconButton> : undefined}
+        />
+      </section>
+      <section aria-label="기본 구조 비교">
+        <p>기본 stacked · 기존 compact 구조 · 같은 초안</p>
+        <MessageComposer density="compact" value={value} onValueChange={setValue} onSubmit={() => {}}
+          minRows={1} maxRows={4} submitMode="button-only" formLabel="기본 메시지 작성" />
+      </section>
+    </main>
+  );
+}
+
+export const InlineLayout = {
+  name: '한 행 작성 · 확장 구조 비교',
+  parameters: storyDescription('layout=inline을 명시한 단순 작성은 약 50px 한 행입니다. 긴 초안/폭 변경은 자동 높이, 첨부·추가 동작은 기존 full-width action band로 확장합니다. 기본 stacked는 유지하며 inline primary target은 항상 44px입니다. Claude 마케팅 CTA는 실사용 홈 근거가 아닙니다.'),
+  render: () => <InlineLayoutFixture />,
+  play: async ({ canvasElement }) => {
+    const form = canvasElement.querySelector('form[aria-label="한 행 메시지 작성"]');
+    const textarea = form.querySelector('textarea');
+    const shell = form.querySelector('[data-composer-shell]');
+    const send = form.querySelector('button[aria-label="메시지 보내기"]');
+    await waitFor(() => {
+      if (form.dataset.composerLayout !== 'inline' || shell.getBoundingClientRect().height > 52) throw new Error('빈 초안은 한 행 약 50px shell입니다.');
+    });
+    if (send.getBoundingClientRect().width < 44 || send.getBoundingClientRect().height < 44) throw new Error('inline primary touch target은 44px 이상입니다.');
+    if (parseFloat(canvasElement.ownerDocument.defaultView.getComputedStyle(textarea).fontSize) < 16) throw new Error('입력은 16px 이상입니다.');
+    const initialHeight = textarea.getBoundingClientRect().height;
+    await userEvent.type(textarea, '짧은 초안');
+    if (form.dataset.composerLayout !== 'inline') throw new Error('짧은 초안은 inline을 유지합니다.');
+    await userEvent.click([...canvasElement.querySelectorAll('button')].find((button) => button.textContent === '긴 초안 전환'));
+    // The existing short draft is cleared first, then the long draft is inserted.
+    await userEvent.click([...canvasElement.querySelectorAll('button')].find((button) => button.textContent === '긴 초안 전환'));
+    await waitFor(() => {
+      if (textarea.getBoundingClientRect().height <= initialHeight) throw new Error('긴 초안은 입력 높이가 확장됩니다.');
+    });
+    const draft = textarea.value;
+    await userEvent.click([...canvasElement.querySelectorAll('button')].find((button) => button.textContent === '첨부 전환'));
+    await waitFor(() => {
+      if (form.dataset.composerLayout !== 'stacked' || !form.querySelector('[data-composer-attachments]')) throw new Error('첨부는 기존 stacked anatomy로 확장됩니다.');
+    });
+    if (form.querySelector('textarea') !== textarea || textarea.value !== draft) throw new Error('구조 확장에도 입력 DOM과 초안을 유지합니다.');
+    if (send.getBoundingClientRect().width < 44 || send.getBoundingClientRect().height < 44) throw new Error('확장 후에도 inline target을 유지합니다.');
+    await userEvent.click([...canvasElement.querySelectorAll('button')].find((button) => button.textContent === '첨부 전환'));
+    await userEvent.click([...canvasElement.querySelectorAll('button')].find((button) => button.textContent === '긴 초안 전환'));
+    await waitFor(() => {
+      if (form.dataset.composerLayout !== 'inline' || shell.getBoundingClientRect().height > 52) throw new Error('초안을 비우면 한 행 높이로 돌아갑니다.');
+    });
+  },
 };

@@ -2,6 +2,21 @@
 
 Classification: **LK Product Extension · Operations Dashboard**. 기존 `SideNav`·`NavRail`·`ScrollArea`·`ListCell`의 해부를 조합하며 새 디자인 언어를 만들지 않습니다. 화면 템플릿이나 목록 데이터를 포함하지 않습니다.
 
+## 승인된 동작 행 개정 (D02, 2026-10-09)
+
+D01의 `density="compact"`는 패널 제목 label1(14px/20px)과 header 최소40px를 공개합니다.
+기본 comfortable의 제목16px/header56px는 유지합니다. children의 목적지 행은
+`ListCell typography="small" verticalPadding="small" paddingX="var(--space-2)"`로 조합합니다.
+8px 외곽 inset + 8px 행 padding은 ConversationList와 같은 16px 글자 시작점을 만듭니다.
+다른 child 컴포넌트의 밀도를 숨겨서 바꾸거나 Core→Product 의존을 만들지 않습니다.
+
+주 동작은 목적지 선택과 구분해 36px/14px과 투명한 idle background를 사용합니다.
+`primaryAction.current`의 aria-current는 유지하고 semibold로 current를 표시합니다.
+hover·pressed·keyboard focus는 기존 token, forced-colors는 Highlight 잉크와 bold입니다.
+ConversationList의 36px/14px과 ListCell small을 비교했고 레일 영역 선택은 그대로 둡니다.
+기존 40px·selected fill 결정을 36px·quiet action으로 개정합니다.
+외부 근거와 비교는 [소스 검토 기록](../../docs/handoff/2026-10-09-portal-density-source-review.md)에 있습니다.
+
 ```jsx
 <DashboardShell
   topology="rail-panel"
@@ -26,7 +41,7 @@ Classification: **LK Product Extension · Operations Dashboard**. 기존 `SideNa
 ## 해부 (DOM 순서와 같음)
 
 1. **머리**(56px, 고정): 제목(`h2` 기본, `headingLevel`)과 오른쪽 `actions`(아이콘 버튼 최대 2개, 넘치면 개발 경고). 접기 토글은 두지 않습니다. 토글은 셸 상단 바 시작에 하나만 둡니다(`SideNav`와 같은 원칙).
-2. **주 동작 행**(선택, 고정): `primaryAction` 객체는 버튼 모양이 아니라 목록 행과 같은 해부(아이콘 + 라벨, 40px)의 링크입니다. 해당 화면이면 `current: true`로 `aria-current="page"`, 무채색 채움, 굵기를 받습니다. 노드를 직접 넘길 수도 있지만 행 해부는 제품 책임이 됩니다.
+2. **주 동작 행**(선택, 고정): `primaryAction` 객체는 목록 행과 같은 해부(아이콘 + 라벨, 36px)의 링크입니다. 해당 화면이면 `current: true`로 `aria-current="page"`와 semibold를 받으며 평소 배경은 투명합니다. 노드를 직접 넘길 수도 있지만 행 해부는 제품 책임이 됩니다.
 3. **고정 구역**(선택, `children`): 고정한 대화처럼 짧고 스크롤하지 않는 목록.
 4. **스크롤 구역**(`scrollRegion`, 0개 또는 1개): `ScrollArea scrollbar="compact" gutter="stable"`이며 `data-scroll-region`을 가집니다. 스크롤될 때만 위쪽 경계선이 나타납니다. 이름은 `{title} 목록`(목록 nav의 이름과 겹치지 않게)이고 `scrollRegionLabel`로 바꿀 수 있습니다.
 5. **꼬리**(선택): 계정은 레일에 있으므로 비우기를 권장합니다.
@@ -36,11 +51,11 @@ Classification: **LK Product Extension · Operations Dashboard**. 기존 `SideNa
 - 패널은 랜드마크가 아닙니다. 안의 목록(`ConversationList`)이 패널 제목을 `aria-labelledby`로 쓰는 `nav`가 됩니다. 레일 nav와 이름이 같으면 `DashboardShell`이 개발 경고를 냅니다.
 - 폭은 셸이 소유합니다(`--component-shell-panel-width` 240px, SideNav 기본 폭과 같음). 제품은 `--lds-dashboard-shell-panel-width`로 224–288px 사이에서만 조정합니다. 패널 안 콘텐츠는 그 폭을 채웁니다. 크기 조절 핸들은 두지 않습니다.
 - 표면은 SideNav neutral과 같은 navy-wash 면(`--component-shell-panel-surface`)과 1px 끝 구분선이며 그림자는 없습니다. 좁은 범위 overlay에서만 셸이 덮는 쪽 그림자를 둡니다.
-- 좁은 화면에서는 셸이 같은 패널을 드로어 안 영역 행 아래에 그립니다. 그때도 스크롤 구역은 하나입니다.
+- 좁은 화면에서는 셸이 같은 패널을 드로어 안 영역 행 아래에 그립니다. 그때는 Drawer 본문이 영역·패널·계정 전체의 유일한 세로 스크롤을 소유합니다.
 
 ## 내부 시각 차이 점검
 
-- 주 동작 행은 `SideNav neutral` 행과 같은 radius, 무채색 hover(`cool-neutral-97`)·selected(`-96`)·pressed(`-95`) 단계, `label-normal` 선택 잉크, 굵기를 씁니다. 패널 행 높이는 40px로 SideNav 44px 최상위 행보다 한 단계 촘촘하고 대화 행(36px)보다 한 단계 큽니다. 주 동작이 목록 행보다 먼저 읽히게 하는 위계 차이입니다.
+- 주 동작 행은 SideNav neutral과 같은 radius·hover·pressed·focus token을 씁니다. 36px/14px은 대화 행과 같고 평소 selected fill은 생략합니다. 영역 선택은 레일이, 동작의 현재 화면은 aria-current와 semibold가 표시합니다.
 - 제목은 `--body1-size` bold로 레일 캡션과 행 라벨보다 크고, 페이지 제목보다 작습니다.
 - 앞쪽 색 띠, 카드 테두리, 그림자, 강조색 선택 표시는 쓰지 않습니다.
 

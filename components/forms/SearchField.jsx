@@ -22,7 +22,12 @@ function useSearchFieldStyles() {
 input.lk-searchfield::-webkit-search-cancel-button,
 input.lk-searchfield::-webkit-search-decoration,
 input.lk-searchfield::-webkit-search-results-button,
-input.lk-searchfield::-webkit-search-results-decoration{-webkit-appearance:none;appearance:none;display:none;}`;
+input.lk-searchfield::-webkit-search-results-decoration{-webkit-appearance:none;appearance:none;display:none;}
+/* The bordered control owns the keyboard indicator; the input must not repeat
+   tokens/focus.css's global !important ring. Clear keeps its own button ring. */
+input.lk-searchfield:focus-visible{outline:none!important}
+.lk-searchfield-control:has(input.lk-searchfield:focus-visible){outline:2px solid var(--color-semantic-focus-indicator);outline-offset:2px}
+@media(forced-colors:active){.lk-searchfield-control:has(input.lk-searchfield:focus){outline:2px solid Highlight;outline-offset:2px}}`;
     document.head.appendChild(el);
   }, []);
 }
@@ -136,7 +141,7 @@ export const SearchField = React.forwardRef(function SearchField({
       <div
         data-slot="control"
         data-readonly={readOnly ? 'true' : undefined}
-        className={partClassName(classNames, 'control', controlClassName) || undefined}
+        className={partClassName(classNames, 'control', 'lk-searchfield-control', controlClassName) || undefined}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
@@ -150,7 +155,7 @@ export const SearchField = React.forwardRef(function SearchField({
           background: fieldBackground({ disabled, readOnly }),
           border: `var(--component-input-border-width) solid ${borderColor}`,
           borderRadius: 'var(--lds-search-field-radius, var(--component-input-radius))',
-          boxShadow: focused ? 'var(--component-input-focus-shadow)' : 'none',
+          boxShadow: 'none',
           transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
           ...partStyle(styles, 'control'),
           ...controlStyle,

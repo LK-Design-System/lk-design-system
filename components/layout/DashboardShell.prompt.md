@@ -2,6 +2,19 @@
 
 Classification: **LK Product Extension · Operations Dashboard**. 루트 `DESIGN.md`의 Operations Dashboard 계약을 따르며 WDS Core 축이나 별도 디자인 시스템이 아닙니다. 화면별 데이터 fetching이나 앱 라우팅을 포함하지 않습니다.
 
+## 낮은 모바일 높이와 경계 왕복 (R01/V03, 2026-10-09)
+
+자동 rail-panel 모바일 Drawer 본문이 영역 → 패널 → 계정 전체를 세로 스크롤합니다.
+Drawer 안 ShellPanel ScrollArea는 visible overflow로 풀어 중첩 스크롤을 피합니다.
+데스크톱 고정 영역·목록 스크롤은 유지합니다. custom temporaryNavigation도 Drawer overflow를 숨기지 않습니다.
+열린 narrow→wide 전환은 공개 `onTemporaryNavigationClose`를 한 번 통지합니다.
+부모는 false로 갱신해야 하며 왕복 후 이전 intent로 재개방하지 않습니다.
+닫기/Escape는 기존 Drawer engine으로 trigger에, wide 전환은 사라지는 mobile trigger 대신 main에 복귀합니다.
+Portal matchMedia나 새 breakpoint API는 필요 없습니다.
+[WAI-ARIA Modal Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)와
+[MDN ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)를 검토했습니다.
+[소스 검토 기록](../../docs/handoff/2026-10-09-portal-density-source-review.md) 참조.
+
 ```jsx
 <DashboardShell
   topology="side-first"

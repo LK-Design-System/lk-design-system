@@ -1,5 +1,15 @@
 **ListCell** — WDS List Cell. 선택 가능한 목록 행, 설정 행, 리소스 행의 기본 단위입니다.
 
+## 공개 작은 글자 규격 (D01, 2026-10-09)
+
+`typography="small"`은 additive LDS Core 설계 개정입니다. label1 14px/20px을 쓰며
+`verticalPadding="small"`과 조합한 default profile 텍스트 전용 행은 36px입니다.
+설명·leading·trailing이 더 크면 자연스럽게 늘어납니다. ops의 기존 6px padding은 유지하므로
+ops 텍스트 행은 32px입니다. 기본 medium의 body1과 기존 축은 유지합니다.
+작은 글자 + `selectedPresentation="tint"`는 ConversationList처럼 bold와 무채색 면을 씁니다.
+목적지 anchor가 aria-current를 소유하며 내부 ListCell onClick을 중복하지 않습니다.
+형제·공식 외부 근거·제품 coverage는 [소스 검토 기록](../../docs/handoff/2026-10-09-portal-density-source-review.md)에 있습니다.
+
 `verticalPadding="small | medium | large"` 공개 문법은 유지하면서 각 값은 profile-aware
 component token을 읽습니다. `default`는 기존 8/12/16px이고 `ops`는 6/8/12px이다.
 명시적 `paddingY` escape hatch가 token보다 우선하며 selection·keyboard·list semantics는

@@ -32,28 +32,30 @@ const STATE_LABELS = {
 
 const LINE_HEIGHT = 24;
 const ACTION_SLOT_SIZE_TOKEN = 'var(--component-button-height-sm)';
+const INLINE_ACTION_SIZE = 44;
+const INLINE_ACTION_SIZE_TOKEN = 'calc(var(--space-10) + var(--space-1))';
 
 const DENSITY_LAYOUT = {
   comfortable: {
-    textareaHeight: 48,
-    textareaHeightToken: 'var(--space-12)',
-    textareaVerticalInset: 24,
+    textareaHeight: 40,
+    textareaHeightToken: 'var(--space-10)',
+    textareaVerticalInset: 16,
     formGap: 'var(--space-2)',
     shellPadding: 'var(--space-1)',
     attachmentsPadding: 'var(--space-2) var(--space-2) 0',
-    textareaPadding: 'var(--space-3) var(--space-2)',
+    textareaPadding: 'var(--space-2)',
     actionGap: 'var(--space-1)',
     actionsPadding: '0 var(--space-1) var(--space-1)',
     statusGap: 'var(--space-3)',
   },
   compact: {
-    textareaHeight: 40,
-    textareaHeightToken: 'var(--space-10)',
-    textareaVerticalInset: 16,
+    textareaHeight: 32,
+    textareaHeightToken: 'var(--space-8)',
+    textareaVerticalInset: 8,
     formGap: 'var(--space-1)',
     shellPadding: 'var(--space-0-5)',
     attachmentsPadding: 'var(--space-1) var(--space-2) 0',
-    textareaPadding: 'var(--space-2)',
+    textareaPadding: 'var(--space-1) var(--space-2)',
     actionGap: 'var(--space-0-5)',
     actionsPadding: '0 var(--space-0-5) var(--space-0-5)',
     statusGap: 'var(--space-2)',
@@ -83,6 +85,7 @@ export function MessageComposer({
   onSubmit,
   state = 'idle',
   density = 'comfortable',
+  layout = 'stacked',
   submitMode = 'enter',
   canSubmit,
   readOnly = false,
@@ -142,18 +145,33 @@ export function MessageComposer({
   const statusId = `${textareaId}-status`;
   const normalizedDensity = density === 'compact' ? 'compact' : 'comfortable';
   const densityLayout = DENSITY_LAYOUT[normalizedDensity];
-  const primaryActionVars = normalizedDensity === 'compact'
-    ? { '--lds-button-radius': 'var(--radius-md)' }
+  const normalizedLayout = layout === 'inline' ? 'inline' : 'stacked';
+  const hasLeadingActions = leadingActions != null;
+  const hasTrailingActions = trailingActions != null;
+  // Utility and attachment content keeps the established full-width input and
+  // wrapping action band. Text alone can grow without swapping DOM or focus.
+  const inlineControls = normalizedLayout === 'inline'
+    && attachments == null && !hasLeadingActions && !hasTrailingActions;
+  const primaryActionSize = normalizedLayout === 'inline'
+    ? INLINE_ACTION_SIZE_TOKEN : ACTION_SLOT_SIZE_TOKEN;
+  const primaryActionVars = {
+    ...(normalizedDensity === 'compact' ? { '--lds-button-radius': 'var(--radius-md)' } : {}),
+    ...(normalizedLayout === 'inline' ? { '--lds-button-height': INLINE_ACTION_SIZE_TOKEN } : {}),
+  };
+  const primaryActionStyle = normalizedLayout === 'inline'
+    ? { width: primaryActionSize, minWidth: primaryActionSize }
     : undefined;
+  const textareaHeightToken = inlineControls ? INLINE_ACTION_SIZE_TOKEN : densityLayout.textareaHeightToken;
+  const textareaVerticalInset = inlineControls ? 16 : densityLayout.textareaVerticalInset;
   const normalizedMinRows = Math.max(1, Math.floor(Number(minRows) || 1));
   const normalizedMaxRows = Math.max(normalizedMinRows, Math.floor(Number(maxRows) || 6));
   const minimumHeight = Math.max(
-    densityLayout.textareaHeight,
-    normalizedMinRows * LINE_HEIGHT + densityLayout.textareaVerticalInset,
+    inlineControls ? INLINE_ACTION_SIZE : densityLayout.textareaHeight,
+    normalizedMinRows * LINE_HEIGHT + textareaVerticalInset,
   );
   const maximumHeight = Math.max(
     minimumHeight,
-    normalizedMaxRows * LINE_HEIGHT + densityLayout.textareaVerticalInset,
+    normalizedMaxRows * LINE_HEIGHT + textareaVerticalInset,
   );
   const nonIdle = state !== 'idle';
   const previousNonIdleRef = React.useRef(nonIdle);
@@ -181,6 +199,22 @@ export function MessageComposer({
   useSafeLayoutEffect(() => {
     resizeTextarea();
   }, [resizeTextarea, value]);
+
+  // A container can change width without the draft changing (panel toggle,
+  // viewport rotation). Observe width only so our height writes cannot loop.
+  useSafeLayoutEffect(() => {
+    const textarea = textareaRef.current;
+    if (!textarea || typeof ResizeObserver === 'undefined') return undefined;
+    let width = textarea.getBoundingClientRect().width;
+    const observer = new ResizeObserver(([entry]) => {
+      const nextWidth = entry.target.getBoundingClientRect().width;
+      if (nextWidth === width) return;
+      width = nextWidth;
+      resizeTextarea();
+    });
+    observer.observe(textarea);
+    return () => observer.disconnect();
+  }, [resizeTextarea]);
 
   const restoreTextareaFocus = React.useCallback(() => {
     const textarea = textareaRef.current;
@@ -256,8 +290,6 @@ export function MessageComposer({
     submitValue('enter');
   };
 
-  const hasLeadingActions = leadingActions != null;
-  const hasTrailingActions = trailingActions != null;
   const textareaDescriptionIds = mergeIds(
     externalDescriptionIds,
     descriptionId,
@@ -274,6 +306,8 @@ export function MessageComposer({
       aria-disabled={disabled || undefined}
       data-state={state}
       data-density={normalizedDensity}
+      data-layout={normalizedLayout}
+      data-composer-layout={inlineControls ? 'inline' : 'stacked'}
       data-submit-mode={submitMode}
       onSubmit={(event) => {
         event.preventDefault();
@@ -340,7 +374,7 @@ export function MessageComposer({
           gap: 0,
           width: '100%',
           minWidth: 0,
-          padding: densityLayout.shellPadding,
+          padding: inlineControls ? 'var(--space-0-5)' : densityLayout.shellPadding,
           boxSizing: 'border-box',
           background: disabled
             ? 'var(--color-semantic-fill-normal)'
@@ -375,6 +409,8 @@ export function MessageComposer({
           data-composer-control-row=""
           style={{
             display: 'grid',
+            gridTemplateColumns: inlineControls ? 'minmax(0, 1fr) auto' : undefined,
+            alignItems: inlineControls ? 'end' : undefined,
             gap: 0,
             width: '100%',
             minWidth: 0,
@@ -420,10 +456,10 @@ export function MessageComposer({
               display: 'block',
               width: '100%',
               minWidth: 0,
-              minHeight: normalizedMinRows === 1 ? densityLayout.textareaHeightToken : minimumHeight,
+              minHeight: normalizedMinRows === 1 ? textareaHeightToken : minimumHeight,
               maxHeight: maximumHeight,
-              height: normalizedMinRows === 1 ? densityLayout.textareaHeightToken : minimumHeight,
-              padding: densityLayout.textareaPadding,
+              height: normalizedMinRows === 1 ? textareaHeightToken : minimumHeight,
+              padding: inlineControls ? 'var(--space-2)' : densityLayout.textareaPadding,
               boxSizing: 'border-box',
               resize: 'none',
               overflowX: 'hidden',
@@ -452,10 +488,10 @@ export function MessageComposer({
               display: 'flex',
               alignItems: 'center',
               gap: densityLayout.actionGap,
-              width: '100%',
+              width: inlineControls ? 'auto' : '100%',
               minWidth: 0,
-              minHeight: ACTION_SLOT_SIZE_TOKEN,
-              padding: densityLayout.actionsPadding,
+              minHeight: primaryActionSize,
+              padding: inlineControls ? 0 : densityLayout.actionsPadding,
               boxSizing: 'border-box',
               flexWrap: 'wrap',
             }}
@@ -478,7 +514,7 @@ export function MessageComposer({
               </div>
             )}
 
-            {!hasLeadingActions && <span aria-hidden="true" style={{ flex: '1 1 auto' }} />}
+            {!hasLeadingActions && !inlineControls && <span aria-hidden="true" style={{ flex: '1 1 auto' }} />}
 
             {hasTrailingActions && (
               <div
@@ -505,9 +541,9 @@ export function MessageComposer({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: ACTION_SLOT_SIZE_TOKEN,
-                minWidth: ACTION_SLOT_SIZE_TOKEN,
-                minHeight: ACTION_SLOT_SIZE_TOKEN,
+                width: primaryActionSize,
+                minWidth: primaryActionSize,
+                minHeight: primaryActionSize,
                 boxSizing: 'border-box',
               }}
             >
@@ -518,6 +554,7 @@ export function MessageComposer({
                   variant="primary"
                   iconOnly
                   vars={primaryActionVars}
+                  style={primaryActionStyle}
                   aria-label={stopLabel}
                   /* `stopping` still owns a stop control, but a native disabled
                      button is blurred by the browser the instant it is disabled
@@ -539,6 +576,7 @@ export function MessageComposer({
                   variant="primary"
                   iconOnly
                   vars={primaryActionVars}
+                  style={primaryActionStyle}
                   aria-label={submitLabel}
                   disabled={!submitAllowed}
                 >

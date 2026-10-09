@@ -1,5 +1,11 @@
 **EmptyState** — 빈 목록 / 결과 없음을 위한 중앙 플레이스홀더.
 
+`size="sm"`은 D04의 additive LDS Core 규격입니다. 24px plain icon 영역, 14px/20px heading,
+16px padding을 쓰며 md의 56px tile은 유지합니다. ResourceState compact의 기반이며 의미·문구·action은 호출자가 정합니다.
+형제와 [Carbon Empty states](https://www.carbondesignsystem.com/building-blocks/core/patterns/empty-states),
+[WCAG Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)를 검토했습니다.
+LDS 중앙 정렬은 유지합니다. [검토 기록](../../docs/handoff/2026-10-09-portal-density-source-review.md).
+
 ```jsx
 <EmptyState icon={<Icon name="search" size={26} />} title="검색 결과가 없습니다"
   description="다른 산업이나 제품군으로 다시 검색해 보세요."

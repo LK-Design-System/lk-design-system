@@ -9,6 +9,7 @@ import {
   Icon,
   IconButton,
   Lockup,
+  ListCell,
   MetricCard,
   NavRail,
   PageHeader,
@@ -19,6 +20,7 @@ import {
 } from '../src/index.js';
 import { DashboardGrid } from '../components/layout/DashboardGrid.jsx';
 import { DashboardShell } from '../components/layout/DashboardShell.jsx';
+import { ShellPanel } from '../components/layout/ShellPanel.jsx';
 import { QuestionPanel, RailAccount, RailLogo, railAreas, railAreasMax } from './RailPanel.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -953,5 +955,48 @@ export const RailPanelDark = {
       throw new Error('The current area uses the strongest neutral ink and bold weight in dark.');
     }
     if (getComputedStyle(row).backgroundColor === getComputedStyle(row.parentElement).backgroundColor) throw new Error('The current conversation keeps its achromatic fill in dark.');
+  },
+};
+
+function ResponsiveNavigationReview() {
+  const [open, setOpen] = React.useState(false);
+  const [closeRequests, setCloseRequests] = React.useState(0);
+  const triggerRef = React.useRef(null);
+  return <div data-close-requests={closeRequests}>
+    <DashboardShell topology="rail-panel" layout="auto" style={{ height: '100dvh' }}
+      header={<button ref={triggerRef} type="button" onClick={() => setOpen(true)}>탐색 열기</button>}
+      navigation={<NavRail aria-label="주요 영역" surface="docked" appearance="neutral" items={railAreasMax} value="knowledge" footer={<button type="button">계정 설정</button>} />}
+      panel={<ShellPanel title="지식"><nav aria-label="지식 목적지"><ul role="list" style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+        {['문서', 'GitHub', 'Hugging Face', 'Confluence', '마지막 목적지'].map((title) => <li key={title}><a href={`#${title}`} onClick={preventNavigation} style={{ textDecoration: 'none' }}><ListCell title={title} typography="small" verticalPadding="small" /></a></li>)}
+      </ul></nav></ShellPanel>}
+      temporaryNavigationOpen={open}
+      onTemporaryNavigationClose={() => { setCloseRequests((count) => count + 1); setOpen(false); }}
+      temporaryNavigationTitle="탐색"
+      temporaryNavigationReturnFocusRef={triggerRef}>
+      <p>본문. 메뉴를 연 상태에서 모바일과 데스크톱을 왕복해도 다시 열리지 않습니다.</p>
+    </DashboardShell>
+  </div>;
+}
+
+export const LowHeightNavigation = {
+  name: '상호작용 · 낮은 모바일 메뉴와 반응형 닫기',
+  parameters: { layout: 'fullscreen', viewport: { defaultViewport: 'mobile1' } },
+  render: () => <ResponsiveNavigationReview />,
+  play: async ({ canvasElement }) => {
+    if (window.matchMedia('(min-width: 768px)').matches) return;
+    await userEvent.click([...canvasElement.querySelectorAll('button')].find((button) => button.textContent === '탐색 열기'));
+    const dialog = canvasElement.ownerDocument.querySelector('[role="dialog"]');
+    const last = [...dialog.querySelectorAll('a')].find((link) => link.textContent === '마지막 목적지');
+    last.focus();
+    last.scrollIntoView({ block: 'nearest' });
+    const account = [...dialog.querySelectorAll('button')].find((button) => button.textContent === '계정 설정');
+    account.focus();
+    account.scrollIntoView({ block: 'nearest' });
+    const bounds = account.getBoundingClientRect();
+    if (bounds.top < 0 || bounds.bottom > window.innerHeight) throw new Error('The account after all destinations stays reachable at low height.');
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (canvasElement.ownerDocument.activeElement?.textContent !== '탐색 열기') throw new Error('Escape returns focus to the menu trigger.');
+    });
   },
 };

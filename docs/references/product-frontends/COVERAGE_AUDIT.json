@@ -21,6 +21,55 @@
     "implemented": 0,
     "verified": 17
   },
+  "incrementalAuthoringReviews": [
+    {
+      "id": "portal-density-20261009",
+      "scope": ["R01", "R11", "D01", "D02", "D03", "V02", "V03", "D04", "D05", "D06"],
+      "stage": "implemented",
+      "designAuthority": "Approved LDS authoring revision; existing LDS baseline and public axes, with WAI/Carbon/MDN and OpenAI UI/Claude Academy primary references reviewed before implementation. Claude marketing CTA and supplied ChatGPT screenshot observations are not live Claude-home evidence or pixel specifications.",
+      "evidence": "docs/handoff/2026-10-09-portal-density-source-review.md",
+      "verification": {
+        "publicTypes": "passed: direct authoring declarations, strict React 18 and React 19; source-only tests and story parsing",
+        "storybookDev": "127.0.0.1:6006; focused source stories registered, including compact ShellPanel title/header and destination rows, plus inline composer versus default stacked/slot expansion",
+        "visual": "Parent source CUA checks passed below; normal light plus focus and SearchField forced-colors only. Exhaustive dark/touch, D02/D04 rendered states and unreported cases remain unverified.",
+        "visualEvidence": [
+          { "scope": ["D03", "V02"], "source": "parent CUA report", "screenshot": "ui-improvement/composer-inline-comparison.jpg", "verdict": "empty inline50px vs stacked72px; input16px; same55-char draft desktop44px to88px at390px viewport, value preserved without clipping/overflow; attachments stacked" },
+          { "scope": ["D05"], "source": "parent CUA report; screenshots in ui-improvement/", "verdict": "xs header32px and row36px versus sm44px" },
+          { "scope": ["R01", "V03"], "source": "parent CUA report; screenshots in ui-improvement/", "verdict": "568x320 mobile scroll surface247px/content661px, account keyboard reachable and focus wrap; narrow to768 to767 remains closed with main focus" },
+          { "scope": ["R11"], "source": "parent CUA report; screenshots in ui-improvement/", "verdict": "pointer/keyboard input outline none and shadow none; keyboard outer2px; forced-colors outer Highlight only" },
+          { "scope": ["D01", "D06"], "source": "parent CUA report; screenshots in ui-improvement/", "verdict": "compact destination row36px vs40px; long title native title, idle padding8px and keyboard menu access" }
+        ],
+        "release": "pending separate per-action approval; no projection/dist/baseline generation"
+      },
+      "assetReviews": [
+        {
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "09e8cf23b451e45b4153efe07b8fd95c2f6d3631",
+          "sourceFiles": ["src/components/layout/Sidebar.tsx", "src/components/layout/AppShell.tsx", "src/components/chat/ChatWorkspace.tsx", "src/components/catalog/RepositoryDirectory.tsx"],
+          "classification": "supported by composition",
+          "adoption": "pending; read-only source reviewed, concurrent parent Portal changes are not this LDS patch",
+          "reason": "Portal owns route/query/state/retry and controlled close; LDS owns navigation overflow, focus, responsive close intent, input sizing, resource empty presentation and compact table/list geometry. Existing compact composer adopted by parent; new ShellPanel density, ListCell typography, ResourceState density/emptyReason, Table xs and MessageComposer inline props await release."
+        },
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "7e53534197dbad6a165d86379ee0a0eac2be22cf",
+          "sourceFiles": ["frontend/src/screens/DashboardScreen.tsx"],
+          "classification": "not applicable",
+          "reason": "Maintenance-only legacy reference: inspected flat dashboard uses robot cards, Input and top utilities; no Portal rail-panel conversation workflow. No migration or product write authorized."
+        },
+        {
+          "repo": "full-daedeok",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "d8c215fd5fef8633c7b740dc4ec3f6d980db12d4",
+          "sourceFiles": ["frontend/src/layout/MainLayout/index.jsx", "frontend/src/themes/compStyleOverride.jsx"],
+          "classification": "not applicable",
+          "reason": "Inspected independent MUI shell owns its own miniDrawer/downMD state and table overrides. No LDS adoption or changes to the separate control plane are in this approval."
+        }
+      ]
+    }
+  ],
   "componentDispositionSummary": {
     "keep": 27,
     "redesign": 7,

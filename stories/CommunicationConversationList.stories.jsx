@@ -34,6 +34,26 @@ const meta = {
 
 export default meta;
 
+export const LongTitleSpace = {
+  name: '변형·상태 · 긴 제목과 행 동작',
+  render: () => <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
+    {[240, 320].map((width) => <div key={width} style={{ width }}>
+      <ConversationList aria-label={`최근 대화 ${width}`} groups={makeConversationGroups(4)} currentId="c2" itemActions={conversationActions} renderLink={(item, props) => <a {...props} onClick={preventNavigation} />} />
+    </div>)}
+  </div>,
+  play: async ({ canvasElement }) => {
+    const row = canvasElement.querySelector('[data-slot="row"]');
+    const link = row.querySelector('a');
+    const button = row.querySelector('button');
+    if (link.title !== link.textContent) throw new Error('The full plain-text title is available without opening the conversation.');
+    await userEvent.hover(row);
+    const rect = button.getBoundingClientRect();
+    if (rect.width < 24 || rect.height < 24) throw new Error('The menu target stays reachable.');
+    button.focus();
+    if (getComputedStyle(button.closest('[data-slot="rowAction"]')).opacity !== '1') throw new Error('Keyboard focus reveals the menu.');
+  },
+};
+
 const renderLink = (item, props) => <a {...props} onClick={preventNavigation} />;
 
 function OverviewFixture() {
