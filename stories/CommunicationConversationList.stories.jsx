@@ -79,10 +79,15 @@ export const Overview = {
     if (Math.abs(row.getBoundingClientRect().height - 36) > 1) throw new Error('Rows are 36px tall.');
     await userEvent.click(more);
     const documentRef = canvasElement.ownerDocument;
-    await waitFor(() => {
+    const remove = await waitFor(() => {
       if (!documentRef.querySelector('[role="menu"]')) throw new Error('The row menu opens.');
+      const item = [...documentRef.querySelectorAll('[role="menuitem"]')].find((node) => node.textContent.includes('삭제'));
+      if (!item) throw new Error('The row menu exposes the delete action.');
+      if (documentRef.defaultView?.getComputedStyle(item).pointerEvents === 'none') {
+        throw new Error('The row menu must finish anchored positioning before interaction.');
+      }
+      return item;
     });
-    const remove = [...documentRef.querySelectorAll('[role="menuitem"]')].find((item) => item.textContent.includes('삭제'));
     await userEvent.click(remove);
     await waitFor(() => {
       if (host.dataset.log !== 'delete:c2') throw new Error('The menu reports the action id and the conversation.');
