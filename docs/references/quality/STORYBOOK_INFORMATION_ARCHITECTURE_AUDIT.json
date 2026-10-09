@@ -9936,7 +9936,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationConversationList.stories.jsx",
-      "sourceSha256": "21adea5a6bfcac8e941d401e1c547bb020073fa8ac15061c0d51b0416c8a49c3",
+      "sourceSha256": "bcca6d49a922abe439b181368509ef67e36c39ce1492426e4b32cbeb4d699b6e",
       "primaryOwner": "ConversationList",
       "ownerComponents": [
         "ConversationList"
@@ -9960,7 +9960,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-10-09",
-      "reviewedSourceSha256": "21adea5a6bfcac8e941d401e1c547bb020073fa8ac15061c0d51b0416c8a49c3",
+      "reviewedSourceSha256": "bcca6d49a922abe439b181368509ef67e36c39ce1492426e4b32cbeb4d699b6e",
       "stories": [
         {
           "id": "lds-product-communication-conversation-list--overview",
