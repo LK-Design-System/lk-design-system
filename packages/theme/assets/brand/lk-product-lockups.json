@@ -9,7 +9,7 @@
     "latinPattern": "^[A-Z][A-Za-z]*(?: [A-Z][A-Za-z]*)*$",
     "capHeightToRoboticsCapHeight": 1,
     "baseline": "robotics-inline-baseline",
-    "gapToMarkWidth": 0.35,
+    "gapToMarkWidth": 0.525,
     "gapMeasurement": "robotics-ink-right-to-name-ink-left",
     "verticalFrame": "inline-padded-mark-frame",
     "defaultRenderedHeightPx": 28,

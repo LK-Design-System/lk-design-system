@@ -1,14 +1,14 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
-
-
-
-
-
-
-var _chunkSNHGXUVKcjs = require('./chunk-SNHGXUVK.cjs');
+"use client";
+import {
+  LK_LOGO_COLORS,
+  LK_LOGO_VIEWBOX,
+  LK_PATHS,
+  ROBOTICS_INLINE_PATHS,
+  ROBOTICS_INLINE_TRANSFORM
+} from "./chunk-ZBZWQDG3.js";
 
 // components/brand/ProductLockup.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+import React from "react";
 
 // components/brand/lk-product-lockup-paths.js
 var CONSOLE_PATHS = Object.freeze([
@@ -58,11 +58,11 @@ var PRODUCT_LOCKUP_REGISTRY = Object.freeze({
       label: "Portal",
       wordmark: "Portal",
       paths: PORTAL_COMPANY_PATHS,
-      transform: "matrix(0.077573 0 0 0.077573 853.8673 208.421795)",
-      viewBox: "342.60933 149.18987 750.459089 64.1628",
+      transform: "matrix(0.077573 0 0 0.077573 864.499368 208.421795)",
+      viewBox: "342.60933 149.18987 761.091156 64.1628",
       defaultRenderedHeightPx: 28,
       minimumRenderedHeightPx: 20,
-      minimumRequiredSlotWidthPx: 233.923423
+      minimumRequiredSlotWidthPx: 237.237513
     })
   })
 });
@@ -72,9 +72,9 @@ var PRODUCT_LOCKUP_COMPANY_KEYS = Object.freeze(
 );
 
 // components/brand/ProductLockup.jsx
-var _jsxruntime = require('react/jsx-runtime');
+import { jsx, jsxs } from "react/jsx-runtime";
 var DEFAULT_HEIGHT = 28;
-var [, , MARK_VIEWBOX_WIDTH, MARK_VIEWBOX_HEIGHT] = _chunkSNHGXUVKcjs.LK_LOGO_VIEWBOX.mark.split(/\s+/).map(Number);
+var [, , MARK_VIEWBOX_WIDTH, MARK_VIEWBOX_HEIGHT] = LK_LOGO_VIEWBOX.mark.split(/\s+/).map(Number);
 var PRODUCT_LOCKUP_MOTION_STYLES = `
   @media(prefers-reduced-motion:reduce){[data-product-lockup-motion="reveal"]{transition:none!important}}
 `;
@@ -104,7 +104,7 @@ function ProductLockup({
     );
   }
   const resolvedTone = appearance === "reverse" ? "white" : "ink";
-  const fill = resolvedTone === "white" ? _chunkSNHGXUVKcjs.LK_LOGO_COLORS.white : _chunkSNHGXUVKcjs.LK_LOGO_COLORS.navy;
+  const fill = resolvedTone === "white" ? LK_LOGO_COLORS.white : LK_LOGO_COLORS.navy;
   if (endorsement === "company") {
     if (compact) {
       throw new TypeError(
@@ -121,8 +121,8 @@ function ProductLockup({
     const renderedHeight2 = Math.max(requestedHeight2, company.minimumRenderedHeightPx);
     const [, , viewBoxWidth2, viewBoxHeight2] = company.viewBox.split(/\s+/).map(Number);
     const intrinsicWidth2 = Number((renderedHeight2 * viewBoxWidth2 / viewBoxHeight2).toFixed(6));
-    const a11y2 = decorative ? { "aria-hidden": true } : { role: "img", "aria-label": _nullishCoalesce(ariaLabel, () => ( `LK ROBOTICS ${company.label}`)) };
-    return /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+    const a11y2 = decorative ? { "aria-hidden": true } : { role: "img", "aria-label": ariaLabel ?? `LK ROBOTICS ${company.label}` };
+    return /* @__PURE__ */ jsx(
       "svg",
       {
         ...rest,
@@ -142,23 +142,23 @@ function ProductLockup({
           height: "auto",
           ...style
         },
-        children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { fill, fillRule: "nonzero", children: [
-          _chunkSNHGXUVKcjs.LK_PATHS.map((path, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: path.d, transform: path.transform }, `lk-${index}`)),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { transform: _chunkSNHGXUVKcjs.ROBOTICS_INLINE_TRANSFORM, "data-product-lockup-company-paths": "", children: _chunkSNHGXUVKcjs.ROBOTICS_INLINE_PATHS.map((path, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: path.d }, `${path.letter}-${index}`)) }),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { transform: company.transform, "data-product-lockup-wordmark-paths": "", children: company.paths.map((path, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: path.d }, `${path.letter}-${index}`)) })
+        children: /* @__PURE__ */ jsxs("g", { fill, fillRule: "nonzero", children: [
+          LK_PATHS.map((path, index) => /* @__PURE__ */ jsx("path", { d: path.d, transform: path.transform }, `lk-${index}`)),
+          /* @__PURE__ */ jsx("g", { transform: ROBOTICS_INLINE_TRANSFORM, "data-product-lockup-company-paths": "", children: ROBOTICS_INLINE_PATHS.map((path, index) => /* @__PURE__ */ jsx("path", { d: path.d }, `${path.letter}-${index}`)) }),
+          /* @__PURE__ */ jsx("g", { transform: company.transform, "data-product-lockup-wordmark-paths": "", children: company.paths.map((path, index) => /* @__PURE__ */ jsx("path", { d: path.d }, `${path.letter}-${index}`)) })
         ] })
       }
     );
   }
   const requestedHeight = Number.isFinite(height) ? height : DEFAULT_HEIGHT;
   const renderedHeight = Math.max(requestedHeight, entry.minimumRenderedHeightPx);
-  const accessibleName = _nullishCoalesce(ariaLabel, () => ( `LK ${entry.label}`));
+  const accessibleName = ariaLabel ?? `LK ${entry.label}`;
   const [, , viewBoxWidth, viewBoxHeight] = entry.viewBox.split(/\s+/).map(Number);
   const fullWidth = Number((renderedHeight * viewBoxWidth / viewBoxHeight).toFixed(6));
   const compactWidth = Number((renderedHeight * MARK_VIEWBOX_WIDTH / MARK_VIEWBOX_HEIGHT).toFixed(6));
   const intrinsicWidth = compact ? compactWidth : fullWidth;
   const a11y = decorative ? { "aria-hidden": true } : { role: "img", "aria-label": accessibleName };
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ jsxs(
     "svg",
     {
       ...rest,
@@ -181,17 +181,17 @@ function ProductLockup({
         ...style
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: PRODUCT_LOCKUP_MOTION_STYLES }),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { fill, fillRule: "nonzero", children: [
-          _chunkSNHGXUVKcjs.LK_PATHS.map((path, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: path.d, transform: path.transform }, `lk-${index}`)),
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "g", { transform: entry.transform, "data-product-lockup-wordmark-paths": "", children: entry.paths.map((path, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "path", { d: path.d }, `${path.letter}-${index}`)) })
+        /* @__PURE__ */ jsx("style", { children: PRODUCT_LOCKUP_MOTION_STYLES }),
+        /* @__PURE__ */ jsxs("g", { fill, fillRule: "nonzero", children: [
+          LK_PATHS.map((path, index) => /* @__PURE__ */ jsx("path", { d: path.d, transform: path.transform }, `lk-${index}`)),
+          /* @__PURE__ */ jsx("g", { transform: entry.transform, "data-product-lockup-wordmark-paths": "", children: entry.paths.map((path, index) => /* @__PURE__ */ jsx("path", { d: path.d }, `${path.letter}-${index}`)) })
         ] })
       ]
     }
   );
 }
 
-
-
-exports.ProductLockup = ProductLockup;
-//# sourceMappingURL=chunk-Y36UU72E.cjs.map
+export {
+  ProductLockup
+};
+//# sourceMappingURL=chunk-LV4PVKUE.js.map

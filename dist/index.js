@@ -680,7 +680,7 @@ import {
 } from "./chunk-XCWIAZA7.js";
 import {
   ProductLockup
-} from "./chunk-JEKL2ODJ.js";
+} from "./chunk-LV4PVKUE.js";
 import "./chunk-ZBZWQDG3.js";
 export {
   Accordion,
