@@ -42,13 +42,28 @@ package set을 소비하는 `workspace-consumer-windows` job으로 검증한다.
 본체 발행은 `lk-lds-release-linux-x64` label과 `lk-lds-release-server04-*` 이름을
 가진 승인된 isolated runner만 사용한다. 이름/label은 운영 계약 확인이며 물리 호스트의
 보안 증명이 아니다. 최초 qualification과 SSH host identity/등록 provenance도 확인한다.
-발행 전에 `node scripts/dispatch-package-release.mjs --preflight <existing-lds-tag>`로
-remote tag·main ancestry와 online/idle 등록을 조회한다. 없거나 다른 host identity거나
-busy/offline이면 `release_environment_unavailable`로 중단한다. dispatch를 쌓아 두거나
-현재 PC·aipc1·노트북·server02로 fallback하지 않는다. 기본 설정이 빠졌다고 local VM,
-runner, credential 복사를 생성하지 않는다.
+release guest는 한 번만 쓴다. 매 발행은 immutable base 위의 새 overlay·seed로 부팅해
+자격검증한 guest를 그 run 하나의 runner로 등록하고, run이 끝나면 성공·실패와 무관하게
+runner를 등록 해제하고 guest를 폐기한다. 발행 job이 `packages: write` 토큰을 들고
+의존성 설치 스크립트를 실행하므로, 한 run의 상태가 다음 발행으로 이어지지 않게 하기
+위해서다. Portal release VM과 같은 원칙이다.
 
-runner를 등록하거나 고칠 때 custom label은 정확히 `lk-lds-release-linux-x64` 하나다.
+이 순환은 `scripts/release/`가 수행한다(Portal `scripts/release`와 같은 구조).
+`ship.sh <existing-lds-tag>`는 태그·main ancestry·미발행을 확인한 뒤 예비 guest
+준비(`vm-prepare.sh`, server04의 `prepare.sh`) → 단일 runner 등록(`vm-register.sh`,
+label 검사 포함) → `dispatch-package-release.mjs`의 preflight·dispatch → run 감시 →
+runner 해제·guest 폐기(`vm-down.sh`) → 다음 예비 guest 준비 → 세 패키지 버전 확인까지
+한 번에 진행한다. 세션이 끊겨도 끝까지 가도록 `ship-bg.sh <tag>`로 띄운다. 운영자 PC에는
+`release.env.example`을 복사한 `~/.config/lds-release/release.env`, `server04` SSH alias
+(고정 host key), runner 등록 토큰을 발급할 `admin:org` 권한의 `gh`가 필요하다. 사설 주소·
+host key·계정명은 public 저장소가 아니라 이 env와 server04의 VM 디렉터리에만 둔다.
+
+스크립트 밖에서 runner를 등록하지 않는다. 등록할 runner가 이미 있거나, preflight가
+없음·다른 host identity·busy/offline을 보고하면 `release_environment_unavailable`로
+중단한다. dispatch를 쌓아 두거나 현재 PC·aipc1·노트북·server02로 fallback하지 않는다.
+기본 설정이 빠졌다고 local VM, runner, credential 복사를 생성하지 않는다.
+
+runner의 custom label은 정확히 `lk-lds-release-linux-x64` 하나다(`vm-register.sh`가 검사한다).
 준비용 label을 따로 두는 절차는 없다. label이 다르면 runner가 online·idle이어도 job이
 배정되지 않고 run이 `queued`로 남는다. 2026-10-08 0.4.6 발행 run이 등록 시 잘못 들어간
 `lk-lds-ready-linux-x64` 때문에 이렇게 멈췄다. 그 run은 dispatch 시점(`b7b78905`)
@@ -425,13 +440,12 @@ cd <LDS 체크아웃>
 git tag lds-v<새 LDS 버전> "$lds_sha"
 git push origin refs/tags/lds-v<새 LDS 버전>
 
-# 10. 원격에 올라간 태그가 $lds_sha를 가리키는지 확인한 뒤 release-packages를
-#     그 태그로 dispatch한다. --ref는 반드시 main이다 — 두 job 모두
-#     `github.ref == 'refs/heads/main'`일 때만 돈다.
+# 10. 원격에 올라간 태그가 $lds_sha를 가리키는지 확인한 뒤, 발행 행위 승인을 받아
+#     ship-bg.sh로 일회용 guest 준비·등록·dispatch·감시·폐기를 한 번에 돌린다.
+#     dispatch는 main ref로 나간다 — 두 job 모두 `github.ref == 'refs/heads/main'`일
+#     때만 돈다.
 git ls-remote --tags origin refs/tags/lds-v<새 LDS 버전>
-node scripts/dispatch-package-release.mjs --preflight lds-v<새 LDS 버전>
-# 발행 행위 승인 후, 같은 검사를 다시 통과해야 main workflow를 dispatch한다.
-node scripts/dispatch-package-release.mjs lds-v<새 LDS 버전>
+scripts/release/ship-bg.sh lds-v<새 LDS 버전>
 ```
 
 ### 2.5 릴리스 이후
@@ -447,9 +461,10 @@ checkout한다. `publish` job은 dispatch·태그 동일성(태그 commit이 `or
 job만 일시 실패했다면 GitHub의 **Re-run failed jobs**로 검증만 다시 실행한다.
 
 두 job은 server04의 자격검증된 self-hosted `lk-lds-release-linux-x64` 러너에서만 돈다.
-위 preflight로 dispatch 전에 online/idle과 이름을 확인한다. unavailable이면 dispatch하지
-않는다. 조회 뒤 상태가 바뀌어 queued가 되면 등록 상태를 다시 확인하고 보고한다.
-새 runner나 local fallback을 만들지 않는다. 시작한 workflow는 종료까지 감시한다.
+`ship.sh`가 등록 직후 preflight로 online/idle과 이름을 확인하고 dispatch한다.
+unavailable이면 dispatch하지 않는다. run이 5분 넘게 queued면 로그에 알리므로 등록
+상태를 다시 확인하고 보고한다. 새 runner나 local fallback을 만들지 않는다. `ship.sh`는
+run이 끝날 때까지 감시하고, 로그는 `~/.local/state/lds-release/logs/`에 남는다.
 
 dispatch run의 `headSha`는 dispatch 시점의 `main` SHA이며 태그 SHA와 다를 수 있다.
 발행된 source가 태그와 같은지는 `publish` job의 `Verify canonical dispatch and immutable
@@ -493,8 +508,8 @@ consumer adoption, product deployment는 서로 독립이며 deployment evidence
 **실패하면 태그를 옮기지 않는다.** 고친 뒤 버전을 올려 다시 릴리스한다 —
 같은 버전이 서로 다른 커밋을 가리키는 것을 막는 것이 이 게이트의 목적이다.
 다만 태그된 source가 아니라 러너·워크플로 쪽이 원인이고 아직 아무 패키지도 발행되지
-않았다면, 원인을 `main`에서 고친 뒤 같은 태그로 다시 dispatch한다. 패키지 부재 확인
-단계가 이미 발행된 버전의 재발행을 막는다.
+않았다면, 원인을 `main`에서 고친 뒤 같은 태그로 `ship-bg.sh`를 다시 실행한다. 새 guest로
+다시 돌고, 패키지 부재 확인 단계가 이미 발행된 버전의 재발행을 막는다.
 패키지가 하나라도 이미 발행된 상태에서는 전체 workflow를 다시 실행하지 말고,
 세 패키지의 실제 상태와 dist-tag를 먼저 감사한다.
 
