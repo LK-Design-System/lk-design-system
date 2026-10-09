@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "8e42500c109f797b5acb739f714e4b85c5f9b11c7498511acfd4e8b508cf6d96",
+  "sourceFingerprint": "18715d517a4399dd8c016b7a997dbfdf06adeae175d589956dfeeac6855bfd34",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -328,7 +328,7 @@
           "url": "https://www.w3.org/WAI/WCAG22/Techniques/css/C39"
         }
       ],
-      "promptSha256": "660e5eeb9da0fcc858e7f741a78518d1e9e8a3dbc736f1f32fb087b57d171962"
+      "promptSha256": "39b43bf3b3ffc787b1248ebd557d2534ee7f0ef0861de2d378fef29f906b84db"
     },
     {
       "id": "action-area",

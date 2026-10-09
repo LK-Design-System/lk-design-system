@@ -65,13 +65,13 @@ public API는 `product: "console" | "portal"`의 닫힌 union만 허용하며, `
 | 표기 | canonical name과 같은 대소문자(예: `Portal`). ASCII 글자와 단어 사이 공백 하나. 각 단어는 대문자로 시작 |
 | 제품명 크기 | 제품명 cap height = `ROBOTICS` cap height(`0.966851X`). 소문자 어센더는 이를 넘을 수 있음 |
 | baseline | `ROBOTICS`와 같은 baseline |
-| 간격 | `ROBOTICS` 잉크 끝에서 제품명 잉크 시작까지 `0.35 × LK mark의 보이는 폭`(약 `0.378616X`). LK–ROBOTICS 간격(`0.25배`)보다 넓어 회사 단위와 제품명이 구분되어 읽힘 |
+| 간격 | `ROBOTICS` 잉크 끝에서 제품명 잉크 시작까지 `0.525 × LK mark의 보이는 폭`(약 `0.567924X`). 「ROBOTICS Portal」을 글자로 조판했을 때의 잉크 간격(약 `0.550X`)에 맞춘 값으로, 제품명이 회사명 뒤의 별도 단어로 읽힘(owner 결정 2026-10-09). mark 형의 `0.35배`·LK–ROBOTICS `0.25배`와 별도 값이며, generator는 LK–ROBOTICS 간격보다 넓은지 검증 |
 | 세로 프레임 | inline과 같은 viewBox 높이. 렌더 `height`가 같으면 X가 같음 |
 | 전체 렌더 높이 | 최소 `20px`, 기본 `28px`. 시작 화면 권장 `28px` 이상 |
-| 축소 | 비례 축소만. crop·wrap·말줄임·compact 없음. full 폭(20px에서 약 `233.92px`)을 확보할 수 없으면 셸이 회사 `Lockup inline` 또는 `mark`로 전환 |
+| 축소 | 비례 축소만. crop·wrap·말줄임·compact 없음. full 폭(20px에서 약 `237.24px`)을 확보할 수 없으면 셸이 회사 `Lockup inline` 또는 `mark`로 전환 |
 | 색 | mark 형과 같음(positive navy / reverse white, 단색). 제품명만 다른 색으로 두지 않음 |
 
-Portal 회사 보증 형의 생성 결과는 `viewBox 342.60933 149.18987 750.459089 64.1628`, 제품명 transform `matrix(0.077573 0 0 0.077573 853.8673 208.421795)`, 최소 슬롯 폭 `233.923423`이며, generator가 회사 단위와 `ROBOTICS_INLINE_*`의 동일성, path·transform·viewBox, 잉크의 세로 프레임 포함 여부를 검증합니다. 루트 자산 `assets/brand/lk-lockup-company-portal-navy.svg`·`-white.svg`도 같은 generator가 만들며 platform manifest에는 넣지 않습니다.
+Portal 회사 보증 형의 생성 결과는 `viewBox 342.60933 149.18987 761.091156 64.1628`, 제품명 transform `matrix(0.077573 0 0 0.077573 864.499368 208.421795)`, 최소 슬롯 폭 `237.237513`(보이는 폭 약 `13.409X`)이며, generator가 회사 단위와 `ROBOTICS_INLINE_*`의 동일성, path·transform·viewBox, 잉크의 세로 프레임 포함 여부를 검증합니다. 루트 자산 `assets/brand/lk-lockup-company-portal-navy.svg`·`-white.svg`도 같은 generator가 만들며 platform manifest에는 넣지 않습니다.
 
 ## 4. Runtime API
 
@@ -161,7 +161,7 @@ LDS는 registry key, canonical name, mark+wordmark geometry, outline path, appea
 
 1. 제품 naming owner가 canonical name과 형태(mark 형·회사 보증 형·둘 다)를 승인합니다. mark 형은 대문자 문자열, 회사 보증 형은 canonical 대소문자 문자열입니다.
 2. Montserrat SemiBold 600 v7.222의 고정 font hash와 기본 kerning으로 [`generate-product-lockups.mjs`](../../scripts/generate-product-lockups.mjs)에서 형태별 outline을 생성합니다.
-3. mark 형은 보이는 높이 `1X`·mark 폭 `0.35배` gap·보이는 bounds 정렬을, 회사 보증 형은 `ROBOTICS` cap height·baseline 공유·`ROBOTICS` 잉크 끝에서 mark 폭 `0.35배` gap·inline 세로 프레임을 검증하고, 두 형태 모두 viewBox와 path hash를 검증합니다.
+3. mark 형은 보이는 높이 `1X`·mark 폭 `0.35배` gap·보이는 bounds 정렬을, 회사 보증 형은 `ROBOTICS` cap height·baseline 공유·`ROBOTICS` 잉크 끝에서 mark 폭 `0.525배` gap·inline 세로 프레임을 검증하고, 두 형태 모두 viewBox와 path hash를 검증합니다.
 4. `20px`·`28px`, positive·reverse를 시각 검수합니다. mark 형은 full·compact도, 회사 보증 형은 비례 축소도 검수합니다.
 5. 접근성 이름, Storybook, visual regression, 제품 적용 audit와 문서를 함께 갱신합니다.
 
@@ -216,7 +216,7 @@ registry 등록은 LDS 코드 변경이 아니라 **브랜드 승인**에서 시
 
 - [Atlassian logos — Property logos](https://atlassian.design/foundations/logos): 회사 logomark·wordmark 뒤에 property 이름을 붙인 공식 lockup family, 「회사 + 이름」 alt, 직접 조합 금지. LDS는 구조와 alt를 채택하고, neutral 이름 색은 LK 승인 색 밖이므로 채택하지 않습니다.
 - [Red Hat product logos](https://www.redhat.com/en/about/brand/standards/product-logos)·[universal logos](https://www.redhat.com/en/about/brand/standards/universal-logos): 회사 로고 먼저·full 제품명, 판매 제품에만 생성, custom text lockup 금지, 좁은 interface용 one-line 버전.
-- [GOV.UK brand hierarchy](https://brand.design-system.service.gov.uk/logo-system/brand-hierarchy): wordmark와 이름 사이 간격을 wordmark 자체 기하로 정의. LDS는 mark 폭 기준 `0.35배`를 재사용합니다.
+- [GOV.UK brand hierarchy](https://brand.design-system.service.gov.uk/logo-system/brand-hierarchy): wordmark와 이름 사이 간격을 wordmark 자체 기하로 정의. LDS는 mark 폭 기준 간격을 쓰되, 회사 보증 형은 회사명과 제품명이 두 단어로 읽히도록 조판 어간에 맞춘 `0.525배`를 씁니다.
 - [W3C Images of text](https://www.w3.org/WAI/tutorials/images/textual/): logo 대체 텍스트는 이미지 속 글과 같게 둡니다.
 
 일반 UI shell이 native text 제품명을 사용하는 사례와 달리, LK는 기존 Portal의 대문자·높이·간격 리듬을 유지하되 제품명만 SemiBold로 낮춰 모브랜드 우선 위계를 채택합니다. raw string API를 열지 않고 승인 registry, deterministic outline과 hash로 오용 범위를 제한합니다. 외부 자료의 geometry나 수치는 LK에 복사하지 않습니다.

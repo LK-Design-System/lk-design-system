@@ -212,8 +212,8 @@ export const NarrowCompact = {
   },
 };
 
-const COMPANY_PORTAL_VIEWBOX = '342.60933 149.18987 750.459089 64.1628';
-const COMPANY_PORTAL_TRANSFORM = 'matrix(0.077573 0 0 0.077573 853.8673 208.421795)';
+const COMPANY_PORTAL_VIEWBOX = '342.60933 149.18987 761.091156 64.1628';
+const COMPANY_PORTAL_TRANSFORM = 'matrix(0.077573 0 0 0.077573 864.499368 208.421795)';
 
 function expectTypeError(render, message) {
   try {
@@ -239,7 +239,7 @@ const companyPanelStyle = {
 export const CompanyEndorsed = {
   name: '변형·상태 · 회사 보증 형',
   parameters: storyDescription(
-    '회사 inline 로크업(LK ROBOTICS) 뒤에 승인 제품명 Portal을 SemiBold 600 outline으로 붙인 회사 보증 형입니다. 제품명 대문자 높이는 ROBOTICS와 같고 baseline을 공유하며, ROBOTICS 끝에서 LK mark 폭의 0.35배 간격을 둡니다. 홈 hero·로그인처럼 넓은 첫인상 표면에만 쓰고, 같은 화면에 mark 형과 함께 두지 않습니다. 아래 비교 줄은 같은 28px에서 회사 inline과 mark 형을 나란히 둔 구성 비교입니다.',
+    '회사 inline 로크업(LK ROBOTICS) 뒤에 승인 제품명 Portal을 SemiBold 600 outline으로 붙인 회사 보증 형입니다. 제품명 대문자 높이는 ROBOTICS와 같고 baseline을 공유하며, ROBOTICS 끝에서 LK mark 폭의 0.525배 간격을 둬 제품명이 별도 단어로 읽힙니다. 홈 hero·로그인처럼 넓은 첫인상 표면에만 쓰고, 같은 화면에 mark 형과 함께 두지 않습니다. 아래 비교 줄은 같은 28px에서 회사 inline과 mark 형을 나란히 둔 구성 비교입니다.',
   ),
   render: () => (
     <div style={{ display: 'grid', gap: 'var(--space-5)', width: 'min(880px, 100%)', fontFamily: 'var(--font-sans)' }}>
@@ -281,7 +281,7 @@ export const CompanyEndorsed = {
   ),
   play: async ({ canvasElement }) => {
     const byId = (id) => canvasElement.querySelector(`[data-testid="${id}"]`);
-    const sizes = [['company-20', '20', '233.923423'], ['company-28', '28', '327.492792'], ['company-32', '32', '374.277476']];
+    const sizes = [['company-20', '20', '237.237513'], ['company-28', '28', '332.132519'], ['company-32', '32', '379.580021']];
     const inline = byId('company-sibling-inline');
     const reverse = byId('company-reverse');
     const home = byId('company-home');
@@ -347,7 +347,7 @@ export const CompanyEndorsed = {
       'An unknown endorsement must be rejected.',
     );
     const clamped = ProductLockup({ product: 'portal', endorsement: 'company', height: 10 });
-    if (clamped.props.height !== 20 || clamped.props.width !== 233.923423) {
+    if (clamped.props.height !== 20 || clamped.props.width !== 237.237513) {
       throw new Error('A company-endorsed height below 20px must clamp to the 20px minimum.');
     }
   },

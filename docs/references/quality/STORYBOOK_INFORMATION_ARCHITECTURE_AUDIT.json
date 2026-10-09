@@ -26421,7 +26421,7 @@
       "layer": "Theme",
       "family": "Brand",
       "importPath": "./stories/BrandProductLockup.stories.jsx",
-      "sourceSha256": "1169e6ca9dbd879fd01c8b99ba15bcbca76781642791d37bbf6e4c9d7dda9711",
+      "sourceSha256": "50e37140ed9487038c55d5f80b1630804dfa7457adfc9a615177c8ba14fa903d",
       "primaryOwner": "ProductLockup",
       "ownerComponents": [
         "ProductLockup"
@@ -26448,7 +26448,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-10-09",
-      "reviewedSourceSha256": "1169e6ca9dbd879fd01c8b99ba15bcbca76781642791d37bbf6e4c9d7dda9711",
+      "reviewedSourceSha256": "50e37140ed9487038c55d5f80b1630804dfa7457adfc9a615177c8ba14fa903d",
       "stories": [
         {
           "id": "lds-theme-brand-product-lockup--product-lockup-standard",

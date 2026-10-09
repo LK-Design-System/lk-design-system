@@ -1,8 +1,8 @@
 {
   "metricVersion": 2,
   "inputHashes": {
-    "componentContentSha256": "c2b38708e419aad023fa742a0b8c1a15ada9585957d332f93a32fbd446830a5d",
-    "informationArchitectureAuditSha256": "2481d031c82a44add51cc943a88521e603c86ee3e84959d09dfcbf616e0fd251"
+    "componentContentSha256": "8b32eacbc7424171dbe907daadf29ad9c90c063d0cdf764ce6c3fd9343526151",
+    "informationArchitectureAuditSha256": "9326d49e76614b8b016c30a2102277a81eb674ea7d7277e32fa3934431e85315"
   },
   "observed": {
     "metricVersion": 2,

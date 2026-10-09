@@ -72,7 +72,7 @@ v2.0은 커스텀 LK 심볼의 geometry v1.0을 그대로 동결하고, 고정 P
 | stacked | `ROBOTICS` 명목 cap height `0.25X`; 심볼 보이는 폭의 `0.2배` 간격; 가로 중앙 정렬 |
 | inline | `ROBOTICS` 보이는 높이 `1X`; 심볼 보이는 폭의 `0.25배` 간격; 보이는 bounds 기준 세로 정렬 |
 | ProductLockup | 승인 제품명 보이는 높이 `1X`; 심볼 보이는 폭의 `0.35배` 간격(약 `0.378616X`, **`0.35X`가 아님**); 보이는 bounds 기준 세로 정렬 |
-| ProductLockup 회사 보증 형 | 회사 inline 조합 + 제품명 cap height = `ROBOTICS` cap height(`0.966851X`), baseline 공유, `ROBOTICS` 잉크 끝에서 심볼 보이는 폭의 `0.35배` 간격 |
+| ProductLockup 회사 보증 형 | 회사 inline 조합 + 제품명 cap height = `ROBOTICS` cap height(`0.966851X`), baseline 공유, `ROBOTICS` 잉크 끝에서 심볼 보이는 폭의 `0.525배` 간격(약 `0.567924X`, 조판 어간 약 `0.550X`에 맞춤) |
 | corporate | 법인명 보이는 폭 `1.9X`; 상단 로크업과 `0.21X` 간격; 상단 로크업 보이는 중심축에 중앙 정렬 |
 | banner | inline 조합을 사용하고 사방 `0.5X` 보호 여백을 자산 안에 포함 |
 
@@ -117,7 +117,7 @@ v2.0은 커스텀 LK 심볼의 geometry v1.0을 그대로 동결하고, 고정 P
 | inline | `20px` | 기본 `28px` 이상 | 전체 SVG 렌더 높이 |
 | portal fixed lockup | `20px` | 기본 `28px` 이상 | 승인된 전체 `LK Portal` SVG 렌더 높이 |
 | registered product lockup | `20px` | `ProductLockup` 기본값 `28px` | 전체 SVG 렌더 높이; 좁은 rail은 `compact`로 명시 전환 |
-| company-endorsed product lockup | `20px` | `28px` 이상 | 전체 SVG 렌더 높이. 최소 슬롯 폭 `233.923423`(Portal); compact 없음 |
+| company-endorsed product lockup | `20px` | `28px` 이상 | 전체 SVG 렌더 높이. 최소 슬롯 폭 `237.237513`(Portal); compact 없음 |
 | stacked | `64px` | 기본 `64px` 이상 | 전체 SVG 렌더 높이 |
 | banner | `28px` | 사용 표면에 맞춰 확대 | 전체 banner SVG 렌더 높이; crop 금지 |
 | official square / tile | `64px` | `96px` 이상 | 정사각형 한 변 |

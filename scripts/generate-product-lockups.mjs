@@ -64,7 +64,14 @@ assertEqual(companyLayout.case, 'canonical-label', 'company lockup case');
 assertEqual(companyLayout.latinPattern, '^[A-Z][A-Za-z]*(?: [A-Z][A-Za-z]*)*$', 'company lockup Latin pattern');
 assertEqual(companyLayout.capHeightToRoboticsCapHeight, 1, 'company lockup cap-height ratio');
 assertEqual(companyLayout.baseline, 'robotics-inline-baseline', 'company lockup baseline');
-assertEqual(companyLayout.gapToMarkWidth, layout.gapToMarkWidth, 'company lockup gap reuses the product-lockup mark-width gap');
+/* The company form owns its ROBOTICS-to-name gap (owner decision 2026-10-09):
+   0.525 x mark width (0.568X) is close to the ink gap of the words typeset as
+   text (0.550X), so the product name reads as a separate word after the company
+   name. The mark-form 0.35 gap and the LK-to-ROBOTICS 0.25 gap are unchanged. */
+assertEqual(companyLayout.gapToMarkWidth, 0.525, 'company lockup ROBOTICS-to-name gap');
+if (!(companyLayout.gapToMarkWidth > construction.layout.inline.gapToMarkWidth)) {
+  throw new Error('The company lockup name gap must stay wider than the LK-to-ROBOTICS gap so the product name reads apart from the company unit.');
+}
 assertEqual(companyLayout.gapMeasurement, 'robotics-ink-right-to-name-ink-left', 'company lockup gap measurement');
 assertEqual(companyLayout.verticalFrame, 'inline-padded-mark-frame', 'company lockup vertical frame');
 assertEqual(companyLayout.defaultRenderedHeightPx, 28, 'company lockup default height');
