@@ -52,12 +52,14 @@ const HIDDEN_HEADER_LABEL_STYLE = {
 };
 
 function getTableRowMinHeight(size = 'md') {
+  if (size === 'xs') return 'calc(var(--space-8) + var(--space-1))';
   return size === 'sm'
     ? 'var(--lk-table-row-min-height-sm, var(--component-table-row-min-height-sm, 44px))'
     : 'var(--lk-table-row-min-height-md, var(--component-table-row-min-height-md, 52px))';
 }
 
 function getTableCellPadding(size = 'md') {
+  if (size === 'xs') return 'var(--space-0-5) var(--space-3)';
   return size === 'sm'
     ? 'var(--lk-table-cell-pad-sm, var(--component-table-cell-padding-sm, 6px 12px))'
     : 'var(--lk-table-cell-pad-md, var(--component-table-cell-padding-md, 8px 16px))';
@@ -65,7 +67,7 @@ function getTableCellPadding(size = 'md') {
 
 /** Public style helpers for product-owned native tables that must match LDS Table cells. */
 export function getTableHeaderCellStyle({ size = 'md', padding, align = 'left', width, truncate = false, wrap = false } = {}) {
-  return { ...thStyle(padding ?? getTableCellPadding(size), getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate, wrap }) };
+  return { ...thStyle(padding ?? getTableCellPadding(size), size === 'xs' ? 'var(--space-8)' : getTableRowMinHeight(size)), textAlign: align, ...getColumnSizingStyle({ width, truncate, wrap }) };
 }
 
 export function getTableDataCellStyle({ size = 'md', padding, align = 'left', width, truncate = false, wrap = false } = {}) {

@@ -66,7 +66,7 @@
     "documents": [
       {
         "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-        "sha256": "f80545f6715112601d44f370ef99851606c3a15f5376af04879ba039751dca30"
+        "sha256": "a5cc77879395ece407eafe0b7c122a48e7942af44f496934378e31a757b33791"
       },
       {
         "path": "docs/agent-skills/lds-ui/references/anti-patterns.md",
@@ -595,11 +595,11 @@
     },
     {
       "path": "policies/ACCESSIBILITY_CONTRACTS.md",
-      "sha256": "f80545f6715112601d44f370ef99851606c3a15f5376af04879ba039751dca30",
+      "sha256": "bf3d3951286b7c4abc2166847eb54818ec051800067096e7ee51ee39a2f9dd10",
       "sources": [
         {
           "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-          "sha256": "f80545f6715112601d44f370ef99851606c3a15f5376af04879ba039751dca30"
+          "sha256": "a5cc77879395ece407eafe0b7c122a48e7942af44f496934378e31a757b33791"
         }
       ]
     },

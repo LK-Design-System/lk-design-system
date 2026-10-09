@@ -8,7 +8,7 @@ export interface ShellPanelPrimaryAction {
   /** 제공하면 실제 anchor로 렌더링합니다. */
   href?: string;
   onClick?: React.MouseEventHandler<HTMLElement>;
-  /** 현재 화면이면 `aria-current="page"`와 무채색 채움·굵기를 받습니다. */
+  /** 현재 화면이면 `aria-current="page"`와 semibold를 받습니다. 동작 행은 평소 채움 없이 36px로 표시합니다. */
   current?: boolean;
 }
 
@@ -17,6 +17,8 @@ export interface ShellPanelProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   title: React.ReactNode;
   /** 제목 heading 단계. @default 2 */
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  /** Compact header uses 14px/20px title and 40px minimum height. Pair destination children with ListCell small typography, small verticalPadding and spacing-token paddingX. @default "comfortable" */
+  density?: 'comfortable' | 'compact';
   /** 머리 오른쪽 아이콘 동작(예: 검색). 최대 2개이며 넘치면 개발 경고를 냅니다. 접기 토글은 두지 않습니다. */
   actions?: React.ReactNode;
   /** 목록 행과 같은 해부의 주 동작 행(예: `새 질문`). 객체를 주면 LDS 행으로 렌더링합니다. */

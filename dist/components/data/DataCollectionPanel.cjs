@@ -1,16 +1,16 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk6POMHJALcjs = require('../../chunk-6POMHJAL.cjs');
-require('../../chunk-3GCNLJNO.cjs');
+var _chunk66JF6C5Wcjs = require('../../chunk-66JF6C5W.cjs');
+require('../../chunk-I3SGZOMA.cjs');
 require('../../chunk-WESPBUC7.cjs');
-require('../../chunk-TDXNYGRZ.cjs');
+require('../../chunk-3UKT3QUI.cjs');
 require('../../chunk-J7EDA4ZV.cjs');
-require('../../chunk-45F635XM.cjs');
+require('../../chunk-KUU4NWK3.cjs');
 require('../../chunk-26AXEFA6.cjs');
 require('../../chunk-ZAM5AMCO.cjs');
 require('../../chunk-23CLSYGA.cjs');
-require('../../chunk-YNRA4IIW.cjs');
+require('../../chunk-EJUEMSN7.cjs');
 require('../../chunk-MBKOVB2K.cjs');
 require('../../chunk-XLRNY734.cjs');
 require('../../chunk-677EM4M2.cjs');
@@ -23,5 +23,5 @@ require('../../chunk-7OXVB7WX.cjs');
 require('../../chunk-SNHGXUVK.cjs');
 
 
-exports.DataCollectionPanel = _chunk6POMHJALcjs.DataCollectionPanel;
+exports.DataCollectionPanel = _chunk66JF6C5Wcjs.DataCollectionPanel;
 //# sourceMappingURL=DataCollectionPanel.cjs.map

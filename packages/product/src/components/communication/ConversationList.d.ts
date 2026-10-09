@@ -3,7 +3,7 @@ import * as React from 'react';
 export interface ConversationListItem {
   /** 안정적인 대화 id. */
   id: string;
-  /** 한 줄 제목. 넘치면 말줄임하고 전체 제목은 링크의 접근 이름에 남습니다. */
+  /** 한 줄 제목. 넘치면 말줄임하고 전체 제목은 링크의 접근 이름과 native title에 남습니다. */
   title: string;
   /** 대화 URL. 행은 실제 링크입니다. */
   href?: string;

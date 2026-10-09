@@ -54,6 +54,7 @@ export function ListCell({
   fillWidth = true,
   textEllipsis = true,
   verticalPadding = "medium",
+  typography = "medium",
   paddingY,
   paddingX = 20,
   verticalAlign = "center",
@@ -225,9 +226,9 @@ export function ListCell({
           <div
             style={{
               fontFamily: "var(--font-sans)",
-              fontSize: "var(--body1-size)",
-              fontWeight: selected ? "var(--fw-medium)" : "var(--fw-regular)",
-              lineHeight: "var(--body1-line)",
+              fontSize: typography === "small" ? "var(--label1-size)" : "var(--body1-size)",
+              fontWeight: selected ? (typography === "small" && selectedTint ? "var(--fw-bold)" : "var(--fw-medium)") : "var(--fw-regular)",
+              lineHeight: typography === "small" ? "var(--label1-line)" : "var(--body1-line)",
               letterSpacing: 0,
               color: disabledState
                 ? "var(--color-semantic-label-disable)"

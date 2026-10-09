@@ -16,17 +16,21 @@ const CONVERSATION_LIST_STYLES = `
   .lk-conversation-list__row[data-current="true"]{background:var(--component-conversation-list-active-surface)}
   .lk-conversation-list__row[data-current="true"]:hover{background:var(--component-conversation-list-active-hover-surface)}
   .lk-conversation-list__row:has(.lk-conversation-list__link:active){background:var(--component-conversation-list-pressed-surface)}
-  .lk-conversation-list__link{flex:1 1 auto;min-width:0;align-self:stretch;display:flex;align-items:center;padding:0 var(--space-3);border-radius:var(--radius-lg);color:var(--component-conversation-list-muted-foreground);font-family:var(--font-sans);font-size:var(--label1-size);line-height:var(--label1-line);font-weight:var(--fw-medium);text-decoration:none;transition:color var(--dur-fast) var(--ease-out)}
+  .lk-conversation-list__link{flex:1 1 auto;min-width:0;align-self:stretch;display:flex;align-items:center;padding:0 var(--space-2);border-radius:var(--radius-lg);color:var(--component-conversation-list-muted-foreground);font-family:var(--font-sans);font-size:var(--label1-size);line-height:var(--label1-line);font-weight:var(--fw-medium);text-decoration:none;transition:color var(--dur-fast) var(--ease-out)}
   .lk-conversation-list__row:hover .lk-conversation-list__link{color:var(--component-conversation-list-hover-foreground)}
   .lk-conversation-list__row[data-current="true"] .lk-conversation-list__link{color:var(--component-conversation-list-foreground);font-weight:var(--fw-bold)}
   .lk-conversation-list__link:focus-visible{outline-color:var(--component-conversation-list-focus-indicator)!important;outline-offset:-2px!important}
   .lk-conversation-list__title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .lk-conversation-list__action{flex-shrink:0;opacity:0;transition:opacity var(--dur-fast) var(--ease-out)}
+  .lk-conversation-list__action{position:absolute;inset-inline-end:var(--space-1);flex-shrink:0;opacity:0;pointer-events:none;transition:opacity var(--dur-fast) var(--ease-out)}
   .lk-conversation-list__row:hover .lk-conversation-list__action,
   .lk-conversation-list__row:focus-within .lk-conversation-list__action,
   .lk-conversation-list__row[data-current="true"] .lk-conversation-list__action,
-  .lk-conversation-list__action:has([aria-expanded="true"]){opacity:1}
-  @media(hover:none){.lk-conversation-list__action{opacity:1}}
+  .lk-conversation-list__action:has([aria-expanded="true"]){opacity:1;pointer-events:auto}
+  .lk-conversation-list__row:has(.lk-conversation-list__action):hover .lk-conversation-list__link,
+  .lk-conversation-list__row:has(.lk-conversation-list__action):focus-within .lk-conversation-list__link,
+  .lk-conversation-list__row:has(.lk-conversation-list__action)[data-current="true"] .lk-conversation-list__link,
+  .lk-conversation-list__row:has([aria-expanded="true"]) .lk-conversation-list__link{padding-inline-end:calc(var(--space-8) + var(--space-1))}
+  @media(hover:none){.lk-conversation-list__action{opacity:1;pointer-events:auto}.lk-conversation-list__row:has(.lk-conversation-list__action) .lk-conversation-list__link{padding-inline-end:calc(var(--space-8) + var(--space-1))}}
   @media(forced-colors:active){.lk-conversation-list__row[data-current="true"] .lk-conversation-list__link{background:Highlight;color:HighlightText;background:SelectedItem;color:SelectedItemText}}
   @media(prefers-reduced-motion:reduce){.lk-conversation-list__row,.lk-conversation-list__link,.lk-conversation-list__action{transition:none!important}}
 `;
@@ -107,6 +111,7 @@ export function ConversationList({
                 className: 'lk-conversation-list__link',
                 'data-slot': 'link',
                 href: item.href,
+                title: typeof item.title === 'string' ? item.title : undefined,
                 'aria-current': current ? 'page' : undefined,
                 onClick: item.onClick,
                 children: <span className="lk-conversation-list__title">{item.title}</span>,

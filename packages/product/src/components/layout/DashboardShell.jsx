@@ -10,6 +10,10 @@ const INERT_VALUE = Number.parseInt(React.version, 10) >= 19 ? true : 'true';
 const inertWhen = (isInert) => (isInert ? INERT_VALUE : undefined);
 
 const DASHBOARD_SHELL_STYLES = `
+/* On mobile the Drawer body owns the entire navigation scroll. Desktop's
+   fixed panel regions retain their own contract. */
+[data-rail-panel-drawer] .lk-shell-panel{height:auto!important;flex:1 0 auto}
+[data-rail-panel-drawer] [data-scroll-region]{overflow:visible!important;max-height:none!important;flex:1 0 auto!important}
 .lk-dashboard-shell{
   display:grid;
   grid-template-columns:auto minmax(0,1fr);
@@ -108,7 +112,7 @@ function isDevelopment() {
 function RailPanelDrawerBody({ navigation, panel, navigationLabel }) {
   const footer = React.isValidElement(navigation) ? navigation.props.footer : null;
   return (
-    <div data-rail-panel-drawer="" style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto', minHeight: 0, height: '100%' }}>
+    <div data-rail-panel-drawer="" style={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}>
       {React.isValidElement(navigation) && (
         <div data-rail-panel-drawer-areas="" style={{ flexShrink: 0, padding: 'var(--space-2)' }}>
           {React.cloneElement(navigation, {
@@ -120,7 +124,7 @@ function RailPanelDrawerBody({ navigation, panel, navigationLabel }) {
         </div>
       )}
       {panel != null && (
-        <div data-rail-panel-drawer-panel="" style={{ display: 'flex', flexDirection: 'column', flex: '1 1 auto', minHeight: 0, borderTop: '1px solid var(--color-semantic-line-solid-normal)' }}>
+        <div data-rail-panel-drawer-panel="" style={{ display: 'flex', flexDirection: 'column', flex: '1 0 auto', borderTop: '1px solid var(--color-semantic-line-solid-normal)' }}>
           {panel}
         </div>
       )}
@@ -221,6 +225,17 @@ export function DashboardShell({
   const panelExpanded = hasPanel && !!panelOpen && !isNarrowLayout;
   const hasTemporaryNavigation = temporaryNavigation != null || (railPanel && navigation != null);
   const temporaryOpen = hasTemporaryNavigation && temporaryNavigationOpen && isNarrowLayout;
+
+  // A controlled open intent must be cleared when the mobile surface goes
+  // away. Otherwise returning to mobile reopens yesterday's modal state.
+  const previousNarrowLayoutRef = React.useRef(isNarrowLayout);
+  React.useEffect(() => {
+    const wasNarrow = previousNarrowLayoutRef.current;
+    previousNarrowLayoutRef.current = isNarrowLayout;
+    if (wasNarrow && !isNarrowLayout && hasTemporaryNavigation && temporaryNavigationOpen) {
+      onTemporaryNavigationClose?.();
+    }
+  }, [isNarrowLayout, hasTemporaryNavigation, temporaryNavigationOpen, onTemporaryNavigationClose]);
 
   // Entering the 768–1023px overlay range closes an open panel: there the panel
   // covers the body, so it starts collapsed and the product reopens it.
@@ -334,7 +349,7 @@ export function DashboardShell({
           panel → header → main. The other topologies keep skip → header → nav → main. */}
       {railPanel ? <React.Fragment>{navigationRegion}{panelRegion}{headerRegion}</React.Fragment> : <React.Fragment>{headerRegion}{navigationRegion}</React.Fragment>}
       <main
-        ref={railPanel ? mainRef : undefined}
+        ref={mainRef}
         id={resolvedMainId}
         tabIndex={railPanel && mainOverflows ? 0 : -1}
         aria-label={mainLabel}
@@ -362,10 +377,10 @@ export function DashboardShell({
           closeButtonVariant={temporaryNavigationCloseButtonVariant}
           onClose={onTemporaryNavigationClose}
           initialFocusRef={temporaryNavigationInitialFocusRef}
-          returnFocusRef={temporaryNavigationReturnFocusRef}
+          returnFocusRef={isNarrowLayout ? temporaryNavigationReturnFocusRef : mainRef}
           bodyStyle={railPanel && temporaryNavigation == null
-            ? { padding: 0, overflow: 'hidden', scrollbarGutter: 'auto', display: 'flex', flexDirection: 'column', minHeight: 0 }
-            : { padding: 0, overflow: 'hidden', scrollbarGutter: 'auto' }}
+            ? { padding: 0, overflow: 'auto', scrollbarGutter: 'auto', display: 'flex', flexDirection: 'column', minHeight: 0 }
+            : { padding: 0, overflow: 'auto', scrollbarGutter: 'auto' }}
         >
           {temporaryContent}
         </Drawer>

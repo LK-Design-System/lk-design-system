@@ -11,6 +11,8 @@ export interface EmptyStateProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   action?: React.ReactNode;
   /** 아이콘 타일의 semantic status tone. @default "signal" */
   tone?: 'signal' | 'info' | 'positive' | 'success' | 'cautionary' | 'warning' | 'negative' | 'error' | 'offline';
+  /** md retains the standalone tile; sm uses a plain 24px icon area, 14px title and 16px padding inside lists. @default "md" */
+  size?: 'sm' | 'md';
   /**
    * `title`이 렌더되는 heading 레벨. 주변 문서 개요에 맞춰 h2–h6 중 선택합니다.
    * @default 2

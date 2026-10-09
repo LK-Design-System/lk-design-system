@@ -1,11 +1,11 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkMAVGPZ6Fcjs = require('../../chunk-MAVGPZ6F.cjs');
+var _chunkPKUCXVUBcjs = require('../../chunk-PKUCXVUB.cjs');
 require('../../chunk-TAUPYJRF.cjs');
-require('../../chunk-TDXNYGRZ.cjs');
+require('../../chunk-3UKT3QUI.cjs');
 require('../../chunk-23CLSYGA.cjs');
-require('../../chunk-YNRA4IIW.cjs');
+require('../../chunk-EJUEMSN7.cjs');
 require('../../chunk-MBKOVB2K.cjs');
 require('../../chunk-CRYFD2LA.cjs');
 require('../../chunk-XLRNY734.cjs');
@@ -23,5 +23,5 @@ require('../../chunk-7OXVB7WX.cjs');
 require('../../chunk-SNHGXUVK.cjs');
 
 
-exports.ConversationList = _chunkMAVGPZ6Fcjs.ConversationList;
+exports.ConversationList = _chunkPKUCXVUBcjs.ConversationList;
 //# sourceMappingURL=ConversationList.cjs.map

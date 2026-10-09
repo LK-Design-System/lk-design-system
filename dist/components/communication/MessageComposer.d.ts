@@ -2,6 +2,7 @@ import * as React from "react";
 
 export type MessageComposerState = "idle" | "submitting" | "streaming" | "stopping";
 export type MessageComposerDensity = "comfortable" | "compact";
+export type MessageComposerLayout = "stacked" | "inline";
 export type MessageComposerSubmitMode = "enter" | "modifier-enter" | "button-only";
 export type MessageComposerSubmitReason = "enter" | "modifier-enter" | "button";
 
@@ -28,8 +29,10 @@ interface MessageComposerBaseProps extends Omit<
   onSubmit: (value: string, reason: MessageComposerSubmitReason) => void;
   /** Product-owned request/response lifecycle. @default "idle" */
   state?: MessageComposerState;
-  /** Composer-owned spacing density. Comfortable preserves the legacy rendering; compact reduces vertical space for narrow panels without shrinking the 32px primary action. @default "comfortable" */
+  /** Composer-owned spacing density. Stacked inputs start at 40px comfortable / 32px compact; inline starts at 44px. All keep 16px input text. @default "comfortable" */
   density?: MessageComposerDensity;
+  /** Inline puts a simple textarea and 44px send/stop control on one row (~50px shell). Long drafts grow up to maxRows. Attachments or leading/trailing actions use the full-width stacked anatomy, retaining the 44px primary target. @default "stacked" */
+  layout?: MessageComposerLayout;
   /** Keyboard submission rule. modifier-enter accepts Alt-free Ctrl/Meta+Enter only. @default "enter" */
   submitMode?: MessageComposerSubmitMode;
   /** Explicit submit eligibility. Defaults to whether the trimmed value is non-empty. */
@@ -48,7 +51,7 @@ interface MessageComposerBaseProps extends Omit<
   description?: React.ReactNode;
   /** Native maximum character count and visible counter. */
   maxLength?: number;
-  /** Minimum autosize rows; one row starts at 48px in comfortable density and 40px in compact density. @default 1 */
+  /** Minimum autosize rows; grows with content and container width up to maxRows. @default 1 */
   minRows?: number;
   /** Maximum autosize rows before internal scrolling. @default 6 */
   maxRows?: number;
@@ -58,9 +61,9 @@ interface MessageComposerBaseProps extends Omit<
   leadingActions?: React.ReactNode;
   /** Actions rendered at the trailing edge of the action band before the primary send/stop control. */
   trailingActions?: React.ReactNode;
-  /** Accessible name for the 32px submit control. @default "메시지 보내기" */
+  /** Accessible name for the submit control (stacked 32px / inline 44px). @default "메시지 보내기" */
   submitLabel?: string;
-  /** Accessible name for the 32px stop control. @default "응답 중지" */
+  /** Accessible name for the stop control (stacked 32px / inline 44px). @default "응답 중지" */
   stopLabel?: string;
   /** Requests transport cancellation in submitting/streaming states. */
   onStop?: () => void;

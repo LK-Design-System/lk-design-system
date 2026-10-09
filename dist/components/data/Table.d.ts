@@ -17,8 +17,8 @@ export interface TableColumn<Row extends Record<string, unknown> = Record<string
 export interface TableProps<Row extends Record<string, unknown> = Record<string, unknown>> extends React.HTMLAttributes<HTMLDivElement> {
   columns: TableColumn<Row>[];
   rows: Row[];
-  /** 행 밀도. @default "md" */
-  size?: 'sm' | 'md';
+  /** 행 밀도. xs: header 32px, single-line row minimum 36px (32px controls with padding grow to at least 36px). Wrapped/taller content grows naturally. @default "md" */
+  size?: 'xs' | 'sm' | 'md';
   /** 행 호버 워시. @default true */
   hover?: boolean;
   /**
@@ -59,7 +59,7 @@ export interface TableProps<Row extends Record<string, unknown> = Record<string,
 
 export interface TableCellStyleOptions {
   /** Table density. Selects the matching minimum row height. @default "md" */
-  size?: 'sm' | 'md';
+  size?: 'xs' | 'sm' | 'md';
   /** Cell padding. @default "14px 16px" */
   padding?: number | string;
   /** Logical text alignment. @default "left" */

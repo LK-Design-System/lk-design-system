@@ -37,6 +37,8 @@ export interface ListCellProps extends Omit<
   /** verticalPadding axis. @default "medium" */
   verticalPadding?:
     "none" | "small" | "sm" | "medium" | "md" | "large" | "lg" | "custom";
+  /** Title typography. small is 14px/20px; with small verticalPadding a text-only row is 36px in the default profile. Tint selection uses bold weight. @default "medium" */
+  typography?: "small" | "medium";
   /** `verticalPadding="custom"`일 때 직접 패딩 지정. */
   paddingY?: number;
   /** 좌우 패딩. @default 20 */

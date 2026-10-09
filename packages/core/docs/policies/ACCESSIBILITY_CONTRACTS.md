@@ -11,6 +11,15 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 
 ## Required contract
 
+2026-10-09 source review: SearchField owns one outer keyboard outline (including forced-colors),
+MessageComposer opt-in inline owns 44px send/stop and 16px input text, preserves the same textarea and keyboard/IME
+order through attachment/utility expansion, and grows up to maxRows on draft or width changes; default stacked stays available.
+DashboardShell's low mobile Drawer scrolls all destinations/account and requests controlled close on narrow→wide;
+wide close restores focus to main. ConversationList keeps its sibling menu in DOM/Tab order and shows it on focus
+or touch; full titles remain accessible. Compact Table/EmptyState/MessageComposer preserve headings, native table
+headers, persistent announcements, 16px input text and 24–32px action targets.
+Source checks and pending parent visual evidence: [handoff](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.7/docs/handoff/2026-10-09-portal-density-source-review.md).
+
 | 항목 | 기준 | 증거 |
 | --- | --- | --- |
 | Semantic | 가능한 경우 native HTML element를 우선 사용한다. custom role은 native로 표현할 수 없을 때만 쓴다. | 컴포넌트 JSX, Storybook accessibility 패널 |
@@ -70,7 +79,7 @@ LK 디자인 시스템의 접근성 기준은 컴포넌트를 사용하는 제�
 - 한 message article의 기본 순서는 identity → body → response status → attachments → sources → delivery/static status → actions다. `inlineSources`에서는 본문 뒤 단일 footer 안에 action group → sources 순서로 두 요소를 형제로 렌더해, provenance가 action group에 포함되지 않으면서 화면의 canonical action 순서를 먼저 유지한다. action group 안에서는 `응답 복사` → `응답 다시 생성` → 긍정 평가 → 부정 평가 순서를 유지한다. 선택형 평가는 제품 상태를 `aria-pressed`와 시각 selected surface로 함께 노출하고, streaming 중에는 이 후속 action을 비활성화하며, failed 상태에는 오류와 재시도만 둔다. response stop은 `MessageComposer` 한 곳이 소유해 중복 control을 만들지 않는다.
 - `MessageFeed` 하나만 이름 있는 `role="log"`, `aria-live="polite"`, `aria-relevant="additions"`를 소유한다. history prepend 중에는 live announcement를 억제하고 scroll anchor 복원 뒤 다시 polite로 전환한다. 무결과·실패·`hasPrevious=false` 경로에서도 억제를 해제한다. 날짜와 첫 미읽음 경계는 기존 `Divider`의 이름 있는 `role="separator"` 조합이며 focus target이나 별도 announcement region이 아니다.
 - `MessageFeed` viewport 자체에 focus가 있을 때만 Home/End로 처음·끝, Page Up/Page Down으로 한 viewport를 이동하고 `aria-keyshortcuts`로 이를 노출한다. modifier가 있거나 message 내부 action에 focus가 있으면 키를 가로채지 않는다.
-- `MessageComposer`는 label → description → disabled reason → 한 elevated shell 안 attachments → textarea → 하단 leading actions → trailing actions → send-or-stop → status/counter 순서로 읽힌다. 32px icon action은 이름을 가지며, `disabled` shell의 slot control도 inert subtree에서 focus와 activation이 차단된다. 한글·일본어·중국어 IME 확정 Enter를 submit으로 재처리하지 않으며 Enter/modifier-enter/button-only 제출 정책을 명시적으로 선택한다. modifier-enter는 Alt가 없는 Ctrl/Meta+Enter만 허용해 AltGr 문자 입력과 충돌하지 않는다.
+- `MessageComposer`는 label → description → disabled reason → 한 elevated shell 안 attachments → textarea → leading actions → trailing actions → send-or-stop → status/counter 순서로 읽힌다. 기본 stacked primary action은32px, 명시한 inline은44px이며 슬롯 확장 뒤에도44px을 유지한다. inline mobile utility slot도 consumer가44px target으로 구성한다. 입력 글자는16px이고 같은 textarea DOM을 유지해 anatomy 전환으로 초안을 지우거나 초점을 교체하지 않는다. `disabled` shell의 slot control도 inert subtree에서 focus와 activation이 차단된다. 한글·일본어·중국어 IME 확정 Enter를 submit으로 재처리하지 않으며 Enter/modifier-enter/button-only 제출 정책을 명시적으로 선택한다. modifier-enter는 Alt가 없는 Ctrl/Meta+Enter만 허용해 AltGr 문자 입력과 충돌하지 않는다.
 - `density="compact"`는 세 컴포넌트의 의미나 상호작용 축이 아니라 좁은 persistent panel용 spacing 축이다. 이름·role·live-region 소유권·DOM/Tab 순서·IME 정책은 comfortable과 같고, composer의 send/stop 및 message action target은 WCAG 2.2 Target Size (Minimum)의 24×24 CSS px 하한을 유지한다.
 - 약 760px reading column과 320px narrow, 460/360/296px compact conversation column, light/dark에서 긴 rich assistant document, multiline user solid primary bubble, human-agent neutral fill bubble, streaming/error, disabled composer, 날짜/미읽음 separator를 확인한다. 320 CSS px reflow에서 가로 스크롤이 생기지 않고 source/action wrapping이 DOM·keyboard 순서를 바꾸지 않는지, bubble·칩·배지 대비가 WCAG AA를 유지하는지 검증한다.
 

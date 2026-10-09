@@ -43,5 +43,5 @@ export interface SearchFieldProps extends Omit<React.InputHTMLAttributes<HTMLInp
   vars?: LdsVars<SearchFieldVariable>;
 }
 
-/** Search input with Enter-to-search and an accessible clear action. */
+/** Search input with Enter-to-search, one control-owned keyboard focus outline and a separately focusable accessible clear action. */
 export const SearchField: React.ForwardRefExoticComponent<SearchFieldProps & React.RefAttributes<HTMLInputElement>>;

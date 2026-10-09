@@ -1,7 +1,7 @@
 "use client";
 import {
   ShellPanel
-} from "../../chunk-VG4Q4E2W.js";
+} from "../../chunk-UXVKLG6H.js";
 import "../../chunk-JCKLJY45.js";
 import "../../chunk-IWXB4YKK.js";
 export {
