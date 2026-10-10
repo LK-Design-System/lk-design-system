@@ -52,6 +52,7 @@ const agentSkillFiles = [
 // reference they do not own locally.
 const sharedReferenceTargets = new Map([
   ['docs/TOKEN_GOVERNANCE.md', 'docs/policies/TOKEN_GOVERNANCE.md'],
+  ['docs/references/quality/TOKEN_DEPRECATION_RETENTION.json', 'docs/policies/TOKEN_DEPRECATION_RETENTION.json'],
   ['docs/PACKAGE_MIGRATION_GUIDE.md', 'docs/policies/PACKAGE_MIGRATION_GUIDE.md'],
   ['docs/LOADING_PATTERN.md', 'docs/patterns/loading.md'],
   ['docs/COPY_REVIEW_CONTRACT.md', 'docs/policies/COPY_REVIEW_CONTRACT.md'],

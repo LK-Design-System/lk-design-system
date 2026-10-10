@@ -73,6 +73,39 @@ for (const absolute of await collect(path.join(root, 'components'))) {
     }
   }
 }
+// Component-owned size decisions are separate from historical API debt. They
+// retain the global vocabulary and every baseline entry; each approved opt-in
+// must still exist in the public contract and carry reviewable source evidence.
+const decisionsPath = path.join(root, 'docs/references/quality/API_GRAMMAR_COMPONENT_AXES.json');
+const decisions = JSON.parse(await readFile(decisionsPath, 'utf8'));
+if (decisions.schemaVersion !== 1 || !Array.isArray(decisions.sizeAxes)) {
+  throw new Error('Invalid component-owned API grammar size-axis register.');
+}
+const approvedSizeFindings = new Set();
+for (const decision of decisions.sizeAxes) {
+  const keys = Object.keys(decision).sort().join(',');
+  if (keys !== 'evidence,finding,owner,rationale,status' || decision.status !== 'approved'
+      || decision.owner !== 'LDS design owner' || !decision.rationale?.trim()
+      || !/^components\/[A-Za-z0-9_/-]+\.d\.ts#[A-Za-z0-9_]+Props:size=[A-Za-z0-9_-]+$/.test(decision.finding)
+      || approvedSizeFindings.has(decision.finding)
+      || !findings.nonstandardSizeValues.includes(decision.finding)
+      || !Array.isArray(decision.evidence) || decision.evidence.length < 3
+      || new Set(decision.evidence.map(item => item.path)).size !== decision.evidence.length
+      || !['docs/', 'components/', 'stories/'].every(prefix => decision.evidence.some(item => item.path?.startsWith(prefix)))) {
+    throw new Error('Invalid, unapproved, duplicate or stale component-owned size decision: ' + decision.finding);
+  }
+  for (const evidence of decision.evidence) {
+    if (Object.keys(evidence).sort().join(',') !== 'contains,path'
+        || typeof evidence.path !== 'string' || !/^(?:docs|components|stories)\//.test(evidence.path)
+        || evidence.path.includes('..') || evidence.path.includes('\\')
+        || !evidence.contains?.trim()
+        || !(await readFile(path.join(root, evidence.path), 'utf8')).includes(evidence.contains)) {
+      throw new Error('Missing component-owned size decision evidence: ' + decision.finding);
+    }
+  }
+  approvedSizeFindings.add(decision.finding);
+}
+findings.nonstandardSizeValues = findings.nonstandardSizeValues.filter(value => !approvedSizeFindings.has(value));
 for (const values of Object.values(findings)) values.sort();
 
 if (update) {

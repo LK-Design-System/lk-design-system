@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "sizeAxes": [
+    {
+      "finding": "components/data/Table.d.ts#TableProps:size=xs",
+      "status": "approved",
+      "owner": "LDS design owner",
+      "rationale": "D05 explicitly approved Table xs: 32px header, 36px minimum body and 2px vertical padding; sm/md and wrapping remain unchanged. This records an approved component contract, not historical vocabulary debt or a global xs size.",
+      "evidence": [
+        {
+          "path": "docs/handoff/2026-10-09-portal-density-source-review.md",
+          "contains": "| D05 | Table size=xs, header32/body minimum36, vertical padding2; public helpers also xs |"
+        },
+        {
+          "path": "components/data/Table.prompt.md",
+          "contains": "### 촘촘한 공개 크기 (D05, 2026-10-09)"
+        },
+        {
+          "path": "stories/DataTable.stories.jsx",
+          "contains": "export const CompactRows"
+        }
+      ]
+    }
+  ]
+}
