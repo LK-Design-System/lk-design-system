@@ -4532,7 +4532,8 @@
           "$type": "dimension",
           "$value": "var(--component-shell-panel-row-height)",
           "css": "--component-shell-panel-row-height",
-          "source": "rail-panel shell spec (owner-approved L-S1..L-S12, 2026-10-09)"
+          "source": "rail-panel shell spec (owner-approved L-S1..L-S12, 2026-10-09)",
+          "$description": "Deprecated. Retained compatibility only; migrate to --component-conversation-list-row-height (36px primary action). First deprecation minor planned: 0.5.0; retain through 0.5.x and review at 0.6.0. See docs/TOKEN_GOVERNANCE.md#shell-panel-retained-compatibility."
         },
         "surface": {
           "$type": "color",
@@ -4589,7 +4590,7 @@
           },
           "generated": true,
           "ref": "primitive.colorRamps.cool-neutral.tokens.96",
-          "$description": "Same role as --component-side-nav-neutral-active-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+          "$description": "Deprecated. Retained compatibility only; migrate to transparent idle surface; aria-current and semibold identify the current primary action. First deprecation minor planned: 0.5.0; retain through 0.5.x and review at 0.6.0. See docs/TOKEN_GOVERNANCE.md#shell-panel-retained-compatibility."
         },
         "activeHoverSurface": {
           "$type": "color",
@@ -4601,7 +4602,7 @@
           },
           "generated": true,
           "ref": "primitive.colorRamps.cool-neutral.tokens.95",
-          "$description": "Same role as --component-side-nav-neutral-active-hover-surface (SideNav neutral), so the rail-panel shell reads as one light shell."
+          "$description": "Deprecated. Retained compatibility only; migrate to --component-shell-panel-hover-surface for hover, including the current primary action. First deprecation minor planned: 0.5.0; retain through 0.5.x and review at 0.6.0. See docs/TOKEN_GOVERNANCE.md#shell-panel-retained-compatibility."
         },
         "pressedSurface": {
           "$type": "color",
