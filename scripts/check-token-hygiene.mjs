@@ -1,5 +1,6 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { loadTokenRetention } from './token-deprecation-retention.mjs';
 
 const root = process.cwd();
 const baselinePath = path.join(root, 'docs', 'references', 'quality', 'TOKEN_HYGIENE_BASELINE.json');
@@ -79,6 +80,7 @@ for (const token of [
 }
 
 const source = JSON.parse(await readFile(path.join(root, 'tokens', 'source.json'), 'utf8'));
+const retained = await loadTokenRetention(root, source);
 const sourceTokens = tokenObjects(source);
 const sourceComponentNames = new Set(sourceTokens
   .filter(({ path: tokenPath }) => tokenPath.startsWith('component.'))
@@ -122,6 +124,7 @@ const findings = {
   missingComponentSource: [...new Set(componentDefinitions.filter((name) => !sourceComponentNames.has(name)))].sort(),
   unusedTokens: [...definitionCounts.keys()]
     .filter((name) => (occurrenceCounts.get(name) || 0) <= (definitionCounts.get(name) || 0))
+    .filter((name) => !retained.has(name)) // Valid, unexpired declarations serve consumer compatibility, not LDS runtime.
     .sort(),
   invalidNames: [...definitionCounts.keys()].filter((name) => !/^--[a-z0-9-]+$/.test(name)).sort(),
   transparentColors: sourceTokens

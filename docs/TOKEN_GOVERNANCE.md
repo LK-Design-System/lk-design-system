@@ -232,6 +232,35 @@ deprecated: `npm run check:deprecated-tokens` fails on any reference from
 `components/`, `stories/` or hand-written `tokens/*.css` to a token whose
 `tokens/source.json` entry starts its `$description` with `Deprecated`.
 
+### Shell-panel retained compatibility
+
+The authored [retention contract](references/quality/TOKEN_DEPRECATION_RETENTION.json)
+records three existing public names whose former ShellPanel primary-action role
+was replaced by the approved quiet 36px action. It preserves every name and value;
+it does not add aliases or restore the old selected fill or 40px action.
+Affected component: `components/layout/ShellPanel.jsx`.
+
+| Retained name | Migration |
+| --- | --- |
+| `--component-shell-panel-row-height` | --component-conversation-list-row-height (36px primary action) |
+| `--component-shell-panel-active-surface` | transparent idle surface; aria-current and semibold identify the current primary action |
+| `--component-shell-panel-active-hover-surface` | --component-shell-panel-hover-surface for hover, including the current primary action |
+
+First deprecation minor planned: **0.5.0** (not a claim that it has shipped).
+Retain through **0.5.x**; mandatory review at **0.6.0**. Expiry fails validation
+and requires a reviewed retention extension or an explicitly approved breaking
+removal; it never deletes a public token automatically. This preserves at least
+one full minor cycle. Explicit breaking-change approval required; review expiry never removes tokens automatically.
+
+Only registered, still-declared, source-marked Deprecated tokens with intact
+values, migration notes and an unexpired review date qualify as retained
+compatibility. `check:token-hygiene` exempts those declarations from active-unused
+findings; active unused and unregistered deprecated unused tokens still fail.
+`check:deprecated-tokens` permits only their registered CSS declaration names,
+including generated color definitions. CSS values/var(), runtime, story, prompt
+and preview references remain forbidden. Legacy deprecations retain their
+existing checks. No token-hygiene baseline allowance is added.
+
 ### Deprecated · `accent-*-light-blue`, `accent-*-red-orange`, `--color-atomic-orange-39` (removal 0.5.0)
 
 - `--color-semantic-accent-background-light-blue`, `-foreground-light-blue`: primary와
