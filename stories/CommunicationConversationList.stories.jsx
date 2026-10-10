@@ -55,6 +55,9 @@ export const LongTitleSpace = {
     if (rect.width < 24 || rect.height < 24) throw new Error('The menu target stays reachable.');
     await userEvent.click(link);
     await userEvent.tab();
+    await Promise.all(
+      button.closest('[data-slot="rowAction"]').getAnimations().map((animation) => animation.finished),
+    );
     await waitFor(() => {
       if (canvasElement.ownerDocument.activeElement !== button) {
         throw new Error('Tab moves from the conversation link to its sibling menu.');
