@@ -31,6 +31,7 @@ export default meta;
 
 export const SmallDestinationTypography = {
   name: '변형·상태 · 작은 목적지 글자',
+  parameters: storyDescription("같은 목적지 목록을 기본 글자와 작은 글자로 비교하는 상황입니다. 선택·비활성 상태를 유지하면서 제목의 기준선과 행 간격이 일관되게 읽히는지 확인하세요."),
   render: () => <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
     {['medium', 'small'].map((typography) => <div key={typography} style={{ width: 224 }}>
       <ListCell title="프로젝트 자료와 연결 문서" typography={typography} verticalPadding="small" paddingX="var(--space-3)" />

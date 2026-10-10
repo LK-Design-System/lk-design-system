@@ -75,7 +75,8 @@ const meta = {
 export default meta;
 
 export const CompactEmptyReasons = {
-  name: '변형·상태 · 미등록·검색·필터 빈 목록',
+  name: "반응형 · 미등록·검색·필터 빈 목록",
+  parameters: storyDescription("자료가 없거나 검색·필터 결과가 비어 있는 목록을 촘촘한 빈 상태로 비교하는 상황입니다. 원인에 맞는 안내를 구분할 수 있고 독립 빈 상태와의 밀도 차이가 읽히는지 확인하세요."),
   render: () => <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,280px),1fr))', gap: 'var(--space-4)', width: '100%' }}>
     {['initial', 'search', 'filter'].map((emptyReason) => <ResourceSurface key={emptyReason} label={emptyReason}>
       <ResourceState state="empty" density="compact" emptyReason={emptyReason} />

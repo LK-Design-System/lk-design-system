@@ -38,7 +38,8 @@ const meta = {
 export default meta;
 
 export const CompactDestinations = {
-  name: '변형·상태 · 패널 제목과 목적지 밀도',
+  name: "반응형 · 패널 제목과 목적지 밀도",
+  parameters: storyDescription("같은 목적지 목록을 기본 밀도와 촘촘한 패널 밀도로 비교하는 상황입니다. 제목과 선택 행의 글자 크기·간격이 맞고 긴 목적지 이름도 패널 안에서 읽히는지 확인하세요."),
   render: () => <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
     {['comfortable', 'compact'].map((density) => <div key={density} style={{ width: 240, height: 360 }}>
       <ShellPanel title="장치" density={density}>

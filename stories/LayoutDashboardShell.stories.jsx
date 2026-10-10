@@ -980,7 +980,7 @@ function ResponsiveNavigationReview() {
 
 export const LowHeightNavigation = {
   name: '상호작용 · 낮은 모바일 메뉴와 반응형 닫기',
-  parameters: { layout: 'fullscreen', viewport: { defaultViewport: 'mobile1' } },
+  parameters: { ...storyDescription("높이가 낮은 모바일 화면에서 탐색 메뉴를 열고 마지막 목적지와 계정 동작까지 이동하는 상황입니다. 아래 항목에 도달할 수 있고 Escape로 닫으면 탐색을 연 버튼으로 포커스가 돌아오는지 확인하세요."), layout: 'fullscreen', viewport: { defaultViewport: 'mobile1' } },
   render: () => <ResponsiveNavigationReview />,
   play: async ({ canvasElement }) => {
     if (window.matchMedia('(min-width: 768px)').matches) return;

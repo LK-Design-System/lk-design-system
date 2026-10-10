@@ -191,6 +191,7 @@ function WidthAutosizeFixture() {
 
 export const WidthAutosize = {
   name: '상호작용 · 초안 유지와 폭 변경 자동 높이',
+  parameters: storyDescription("같은 초안을 유지한 채 작성 영역의 폭을 줄였다가 넓히는 상황입니다. 줄바꿈에 맞춰 입력 높이가 늘고 줄어들며 최대 높이를 넘는 내용은 스크롤로 읽을 수 있는지 확인하세요."),
   render: () => <WidthAutosizeFixture />,
   play: async ({ canvasElement }) => {
     const textarea = canvasElement.querySelector('textarea');

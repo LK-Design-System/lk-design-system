@@ -25,7 +25,8 @@ const meta = {
 export default meta;
 
 export const CompactRows = {
-  name: '변형·상태 · 촘촘한 표',
+  name: "반응형 · 촘촘한 표",
+  parameters: storyDescription("작은 밀도와 더 촘촘한 밀도의 표에서 긴 자료명과 행 동작을 비교하는 상황입니다. 열 정렬과 줄바꿈을 유지하면서 더 보기 버튼을 사용할 수 있는지 확인하세요."),
   render: () => <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(min(100%,320px),1fr))', gap: 'var(--space-5)' }}>
     {['sm', 'xs'].map((size) => <Table key={size} size={size} caption={size === 'xs' ? '촘촘한 목록' : '기존 작은 목록'} rowHeaderKey="name"
       columns={[{ key: 'name', label: '자료', wrap: true }, { key: 'status', label: '상태' }, { key: 'action', label: '동작', width: 56, render: () => <IconButton size="xs" variant="plain" label="자료 더 보기"><Icon name="more-horizontal" size={16} /></IconButton> }]}

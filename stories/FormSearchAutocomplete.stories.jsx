@@ -259,6 +259,7 @@ export const SearchFieldSurfaceRefContract = {
 
 export const SearchSingleFocus = {
   name: '상호작용 · 단일 검색 포커스',
+  parameters: storyDescription("레이어로 가져온 포커스 스타일 아래에서 검색 입력과 일반 입력을 함께 사용하는 상황입니다. 검색 칸에는 바깥 표시 하나만 보이고 지우기 버튼과 일반 입력은 각자의 키보드 포커스를 유지하는지 확인하세요."),
   render: () => <div style={{ display: 'grid', gap: 'var(--space-4)', width: 320, maxWidth: '100%' }}>
     <style>{'@import url("/tokens/focus.css") layer(lds-search-focus-contract);'}</style>
     <SearchField label="자료 검색" defaultValue="로봇" />
