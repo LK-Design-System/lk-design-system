@@ -38,7 +38,7 @@ export const LongTitleSpace = {
   name: '변형·상태 · 긴 제목과 행 동작',
   parameters: storyDescription("240px와 320px 목록에서 긴 대화 제목과 행 동작을 함께 보여 주는 상황입니다. 전체 제목을 확인할 수 있고 포인터와 키보드 모두에서 더 보기 버튼에 접근할 수 있는지 확인하세요."),
   render: () => <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
-    {[240, 320].map((width) => <div key={width} style={{ width }}>
+    {[240, 320].map((width) => <div key={width} style={{ width, maxWidth: '100%' }}>
       <ConversationList aria-label={`최근 대화 ${width}`} groups={makeConversationGroups(4)} currentId="c2" itemActions={conversationActions} renderLink={(item, props) => <a {...props} onClick={preventNavigation} />} />
     </div>)}
   </div>,
@@ -51,7 +51,12 @@ export const LongTitleSpace = {
     const rect = button.getBoundingClientRect();
     if (rect.width < 24 || rect.height < 24) throw new Error('The menu target stays reachable.');
     button.focus();
-    if (getComputedStyle(button.closest('[data-slot="rowAction"]')).opacity !== '1') throw new Error('Keyboard focus reveals the menu.');
+    await waitFor(() => {
+      const actionStyle = getComputedStyle(button.closest('[data-slot="rowAction"]'));
+      if (actionStyle.opacity !== '1' || actionStyle.pointerEvents !== 'auto') {
+        throw new Error('Keyboard focus reveals the menu.');
+      }
+    });
   },
 };
 
