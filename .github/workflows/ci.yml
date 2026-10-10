@@ -65,6 +65,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Generate workspace package sources
+        run: npm run generate:workspace-sources
+
+      - name: Build Storybook workspace dependencies
+        run: node scripts/build-workspace-packages.mjs --implementation-only
+
       - name: Install Playwright browser for visual capture
         if: ${{ inputs.export_visual_baseline == true }}
         run: npm exec -- playwright install --with-deps chromium
