@@ -294,6 +294,106 @@ export const ResponsiveMultiSelectFilters = {
   },
 };
 
+function AdaptiveFilterGroupDemo() {
+  const [width, setWidth] = React.useState(867);
+  const [filterCount, setFilterCount] = React.useState(2);
+  const [long, setLong] = React.useState(false);
+  const [values, setValues] = React.useState(['all', 'all', 'all']);
+  const [sort, setSort] = React.useState('updated');
+  const labels = ['조직', '토픽', '언어'];
+  const widths = long ? [380, 360, 340] : [201, 191, 180];
+  return (
+    <main style={{ display: 'grid', gap: 'var(--space-4)', width: '100%', maxWidth: 1150 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
+        {[867, 878, 360].map((value) => <Button key={value} size="sm" variant="outlined" onClick={() => setWidth(value)}>{value}px</Button>)}
+        {[0, 1, 2, 3].map((value) => <Button key={value} size="sm" variant="outlined" onClick={() => setFilterCount(value)}>{value} 필터</Button>)}
+        <Button size="sm" variant="outlined" aria-pressed={long} onClick={() => setLong((value) => !value)}>긴 필터</Button>
+      </div>
+      <div data-testid="adaptive-filter-group" style={{ ...surfaceStyle, width, maxWidth: '100%' }}>
+        <DataToolbar
+          variant="embedded"
+          size="sm"
+          searchPlaceholder="저장소 검색"
+          filters={filterCount ? ({ size }) => (
+            <>{labels.slice(0, filterCount).map((label, index) => (
+              <Select key={label} aria-label={label} size={size} value={values[index]}
+                onChange={(value) => setValues((current) => current.map((item, i) => i === index ? value : item))}
+                style={{ minWidth: `min(100%, ${widths[index]}px)` }}>
+                <option value="all">{long ? `모든 ${label} 및 국제 로보틱스 운영 리포지토리` : `전체 ${label}`}</option>
+                <option value="selected">{label} 선택</option>
+              </Select>
+            ))}</>
+          ) : undefined}
+          sort={({ size }) => <Select aria-label="정렬" size={size} value={sort} onChange={setSort} style={{ minWidth: 159.296875 }}>
+            <option value="updated">최근 푸시순</option><option value="name">이름순</option>
+          </Select>}
+        />
+      </div>
+    </main>
+  );
+}
+
+export const AdaptiveFilterGroup = {
+  name: '반응형 · 필터 그룹 단위 줄바꿈',
+  parameters: storyDescription(
+    '중간 폭에서도 필터만 두 줄로 갈라지지 않습니다. 실제 필터·정렬 폭이 검색과 함께 들어가면 한 행, 검색과 함께 들어가지 않으면 검색 다음 행에 그룹 전체를 둡니다. 그룹만으로 폭을 넘으면 기존 필터 Drawer로 접고, 폭이나 필터가 바뀌면 다시 판정합니다.',
+  ),
+  render: () => <AdaptiveFilterGroupDemo />,
+  play: async ({ canvasElement }) => {
+    const fixture = canvasElement.querySelector('[data-testid="adaptive-filter-group"]');
+    const toolbar = fixture?.querySelector('.lk-data-toolbar');
+    const click = async (text) => {
+      const button = [...canvasElement.querySelectorAll('button')].find((el) => el.textContent?.trim() === text);
+      if (!button) throw new Error(`Missing adaptive fixture control: ${text}`);
+      await userEvent.click(button);
+    };
+    const assertFlow = async (mode, count) => waitFor(() => {
+      if (!toolbar || toolbar.dataset.controlFlow !== mode) throw new Error(`Expected adaptive ${mode} layout.`);
+      const host = toolbar.querySelector('[data-toolbar-view="wide"]');
+      const filters = host?.querySelector('[data-slot="filters"]');
+      const children = [...(filters?.children || [])];
+      if (children.length !== count) throw new Error('Adaptive filter count did not update.');
+      if (fixture.scrollWidth > fixture.clientWidth + 1) throw new Error('Adaptive toolbar must stay inside its collection.');
+      if (mode === 'narrow') {
+        if (getComputedStyle(host).visibility !== 'hidden' || toolbar.querySelector('[data-data-toolbar-filter-trigger]')?.getClientRects().length === 0) {
+          throw new Error('An oversized group must use the existing filter trigger.');
+        }
+        return;
+      }
+      if (getComputedStyle(host).visibility !== 'visible') throw new Error('The group must recover after its contents or container change.');
+      const tops = children.map((el) => Math.round(el.getBoundingClientRect().top));
+      if (new Set(tops).size > 1 || (filters && Math.round(filters.getBoundingClientRect().height) !== 32)) {
+        throw new Error('Filters must remain on a single complete 32px row.');
+      }
+      const search = toolbar.querySelector('[data-slot="search"]').getBoundingClientRect();
+      const group = host.getBoundingClientRect();
+      if (mode === 'inline' && Math.abs(search.top - group.top) > 1) throw new Error('Search and group must share the inline row.');
+      if (mode === 'stacked' && (group.top < search.bottom || Math.abs(search.width - toolbar.querySelector('[data-slot="controls"]').getBoundingClientRect().width) > 1)) {
+        throw new Error('Stacked layout must give search a complete row above the filter/sort group.');
+      }
+    });
+    await assertFlow('inline', 2);
+    await click('878px');
+    await assertFlow('inline', 2);
+    await click('3 필터');
+    await assertFlow('stacked', 3);
+    await click('긴 필터');
+    await assertFlow('narrow', 3);
+    await click('긴 필터');
+    await assertFlow('stacked', 3);
+    await click('0 필터');
+    await assertFlow('inline', 0);
+    await click('1 필터');
+    await assertFlow('inline', 1);
+    await click('2 필터');
+    await assertFlow('inline', 2);
+    await click('360px');
+    await assertFlow('narrow', 2);
+    await click('867px');
+    await assertFlow('inline', 2);
+  },
+};
+
 function NarrowFilterDrawerDemo({ width, testId, layout }) {
   const [language, setLanguage] = React.useState('typescript');
   const [topic, setTopic] = React.useState('robotics');
@@ -369,7 +469,7 @@ export const NarrowFilterDrawer = {
       throw new Error('The narrow fixture must expose the filter trigger, hidden wide host, narrow sort slot, and metadata.');
     }
     if (narrow.scrollWidth > narrow.clientWidth + 1) throw new Error('The narrow toolbar must not overflow its container.');
-    if (getComputedStyle(wideHost).display !== 'none' || trigger.getClientRects().length === 0) {
+    if (getComputedStyle(wideHost).visibility !== 'hidden' || trigger.getClientRects().length === 0) {
       throw new Error('A narrow container must hide the wide filter host and show the filter trigger.');
     }
     if (trigger.textContent?.trim() !== '필터 2' || trigger.getAttribute('aria-haspopup') !== 'dialog' || trigger.getAttribute('aria-expanded') !== 'false') {
