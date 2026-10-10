@@ -36,6 +36,7 @@ DashboardShell topology="rail-panel"의 둘째 열입니다. 고정 머리(제�
 | --- | --- | --- | --- |
 | `title` | `React.ReactNode` | Yes | 패널 제목. 안의 목록 nav가 aria-labelledby로 이 제목을 이름으로 씁니다. |
 | `headingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | No | 제목 heading 단계. @default 2 |
+| `density` | `'comfortable' \| 'compact'` | No | Compact header uses 14px/20px title and 40px minimum height. Pair destination children with ListCell small typography, small verticalPadding and spacing-token paddingX. @default "comfortable" |
 | `actions` | `React.ReactNode` | No | 머리 오른쪽 아이콘 동작(예: 검색). 최대 2개이며 넘치면 개발 경고를 냅니다. 접기 토글은 두지 않습니다. |
 | `primaryAction` | `ShellPanelPrimaryAction \| React.ReactNode` | No | 목록 행과 같은 해부의 주 동작 행(예: 새 질문). 객체를 주면 LDS 행으로 렌더링합니다. |
 | `renderLink` | `(action: ShellPanelPrimaryAction, props: React.AnchorHTMLAttributes) = React.ReactElement` | No | primaryAction.href를 router link로 치환하는 렌더 훅. |
@@ -49,6 +50,7 @@ DashboardShell topology="rail-panel"의 둘째 열입니다. 고정 머리(제�
 
 - 앞쪽 색 띠, 카드 테두리, 그림자, 강조색 선택 표시는 쓰지 않습니다.
 - ShellPanel — DashboardShell topology="rail-panel"의 맥락 패널. 레일이 고른 영역 안의 긴 목록 하나를 고정 머리, 주 동작 행, 고정 구역, 스크롤 구역 하나로 보여 줍니다.
+- 승인된 동작 행 개정 (D02, 2026-10-09).
 
 ## 정량 규칙
 
@@ -56,13 +58,13 @@ DashboardShell topology="rail-panel"의 둘째 열입니다. 고정 머리(제�
 | --- | --- |
 | 명시 규칙 1 | 폭은 셸이 소유합니다(--component-shell-panel-width 240px, SideNav 기본 폭과 같음). 제품은 --lds-dashboard-shell-panel-width로 224–288px 사이에서만 조정합니다. 패널 안 콘텐츠는 그 폭을 채웁니다. 크기 조절 핸들은 두지 않습니다. |
 | 명시 규칙 2 | 표면은 SideNav neutral과 같은 navy-wash 면(--component-shell-panel-surface)과 1px 끝 구분선이며 그림자는 없습니다. 좁은 범위 overlay에서만 셸이 덮는 쪽 그림자를 둡니다. |
-| 명시 규칙 3 | 주 동작 행은 SideNav neutral 행과 같은 radius, 무채색 hover(cool-neutral-97)·selected(-96)·pressed(-95) 단계, label-normal 선택 잉크, 굵기를 씁니다. 패널 행 높이는 40px로 SideNav 44px 최상위 행보다 한 단계 촘촘하고 대화 행(36px)보다 한 단계 큽니다. 주 동작이 목록 행보다 먼저 읽히게 하는 위계 차이입니다. |
+| 명시 규칙 3 | 주 동작 행은 SideNav neutral과 같은 radius·hover·pressed·focus token을 씁니다. 36px/14px은 대화 행과 같고 평소 selected fill은 생략합니다. 영역 선택은 레일이, 동작의 현재 화면은 aria-current와 semibold가 표시합니다. |
 | 명시 규칙 4 | Atlassian navigation system layout — side nav는 머리와 꼬리가 고정이고 가운데만 스크롤됩니다. 각 랜드마크에 고유 이름을 붙이고 1024px 이하에서 panel은 overlay가 됩니다. 머리 고정 + 스크롤 구역 하나, 768–1023px overlay에 반영했습니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
 
-- 좁은 화면에서는 셸이 같은 패널을 드로어 안 영역 행 아래에 그립니다. 그때도 스크롤 구역은 하나입니다.
+- 좁은 화면에서는 셸이 같은 패널을 드로어 안 영역 행 아래에 그립니다. 그때는 Drawer 본문이 영역·패널·계정 전체의 유일한 세로 스크롤을 소유합니다.
 - Fluent 2 Nav usage — 보조 동작은 하나로 줄이고 나머지는 overflow 메뉴에 둡니다. 머리 동작 최대 2개의 근거입니다.
 - 의도적 제외: 패널 너비 조절, 패널 안 디스클로저 그룹(그런 계층은 SideNav), 패널 안 SideNav 전체, 무한 스크롤, 사용자별 접힘 저장(제품 소유).
 
@@ -76,7 +78,9 @@ DashboardShell topology="rail-panel"의 둘째 열입니다. 고정 머리(제�
 
 - 패널은 랜드마크가 아닙니다. 안의 목록(ConversationList)이 패널 제목을 aria-labelledby로 쓰는 nav가 됩니다. 레일 nav와 이름이 같으면 DashboardShell이 개발 경고를 냅니다.
 - WAI-ARIA APG Landmark Regions — nav가 여럿이면 고유 이름, 보이는 제목이 있으면 aria-labelledby.
-- 1. 머리(56px, 고정): 제목(h2 기본, headingLevel)과 오른쪽 actions(아이콘 버튼 최대 2개, 넘치면 개발 경고). 접기 토글은 두지 않습니다. 토글은 셸 상단 바 시작에 하나만 둡니다(SideNav와 같은 원칙). 2. 주 동작 행(선택, 고정): primaryAction 객체는 버튼 모양이 아니라 목록 행과 같은 해부(아이콘 + 라벨, 40px)의 링크입니다. 해당 화면이면 current: true로 aria-current="page", 무채색 채움, 굵기를 받습니다. 노드를 직접 넘길 수도 있지만 행 해부는 제품 책임이 됩니다. 3.
+- D01의 density="compact"는 패널 제목 label1(14px/20px)과 header 최소40px를 공개합니다. 기본 comfortable의 제목16px/header56px는 유지합니다. children의 목적지 행은 ListCell typography="small" verticalPadding="small" paddingX="var(--space-2)"로 조합합니다. 8px 외곽 inset + 8px 행 padding은 ConversationList와 같은 16px 글자 시작점을 만듭니다.
+- 주 동작은 목적지 선택과 구분해 36px/14px과 투명한 idle background를 사용합니다. primaryAction.current의 aria-current는 유지하고 semibold로 current를 표시합니다. hover·pressed·keyboard focus는 기존 token, forced-colors는 Highlight 잉크와 bold입니다. ConversationList의 36px/14px과 ListCell small을 비교했고 레일 영역 선택은 그대로 둡니다.
+- 1. 머리(56px, 고정): 제목(h2 기본, headingLevel)과 오른쪽 actions(아이콘 버튼 최대 2개, 넘치면 개발 경고). 접기 토글은 두지 않습니다. 토글은 셸 상단 바 시작에 하나만 둡니다(SideNav와 같은 원칙). 2. 주 동작 행(선택, 고정): primaryAction 객체는 목록 행과 같은 해부(아이콘 + 라벨, 36px)의 링크입니다. 해당 화면이면 current: true로 aria-current="page"와 semibold를 받으며 평소 배경은 투명합니다. 노드를 직접 넘길 수도 있지만 행 해부는 제품 책임이 됩니다. 3.
 
 ## Related components
 
@@ -122,25 +126,25 @@ DashboardShell topology="rail-panel"의 둘째 열입니다. 고정 머리(제�
 - `--_lds-shell-panel-pressed-foreground`
 - `--body1-line`
 - `--body1-size`
-- `--component-shell-panel-active-hover-surface`
-- `--component-shell-panel-active-surface`
+- `--component-conversation-list-row-height`
 - `--component-shell-panel-divider`
 - `--component-shell-panel-foreground`
 - `--component-shell-panel-header-height`
 - `--component-shell-panel-hover-foreground`
 - `--component-shell-panel-hover-surface`
 - `--component-shell-panel-pressed-surface`
-- `--component-shell-panel-row-height`
 - `--component-shell-panel-surface`
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`
 - `--fw-bold`
 - `--fw-medium`
+- `--fw-semibold`
 - `--label1-line`
 - `--label1-size`
 - `--radius-lg`
 - `--space-1`
+- `--space-10`
 - `--space-2`
 - `--space-3`
 - `--space-4`

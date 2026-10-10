@@ -34,7 +34,7 @@
 | narrowNavigation | 좁은 화면의 navigation landmark 슬롯. BottomNav를 사용합니다. 생략하면 navigation이 좁은 화면에서 본문 앞에 유지됩니다. |
 | temporaryNavigation | 좁은 화면에서 modal Drawer로 표시할 계층형 탐색 슬롯. 제공하면 좁은 화면에서 넓은 navigation은 숨고 본문은 그대로 유지됩니다. |
 | temporaryNavigationOpen | temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false |
-| onTemporaryNavigationClose | Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청. |
+| onTemporaryNavigationClose | Escape, scrim, 닫기 버튼 또는 narrow→wide 전환으로 temporaryNavigation을 닫아 달라는 요청. 부모는 열린 상태를 false로 갱신합니다. |
 | temporaryNavigationId | 헤더 trigger의 aria-controls와 연결할 Drawer dialog id. 생략하면 내부 id를 생성합니다. |
 
 ## Properties
@@ -46,7 +46,7 @@
 | `narrowNavigation` | `React.ReactNode` | No | 좁은 화면의 navigation landmark 슬롯. BottomNav를 사용합니다. 생략하면 navigation이 좁은 화면에서 본문 앞에 유지됩니다. |
 | `temporaryNavigation` | `React.ReactNode` | No | 좁은 화면에서 modal Drawer로 표시할 계층형 탐색 슬롯. 제공하면 좁은 화면에서 넓은 navigation은 숨고 본문은 그대로 유지됩니다. |
 | `temporaryNavigationOpen` | `boolean` | No | temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false |
-| `onTemporaryNavigationClose` | `() = void` | No | Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청. |
+| `onTemporaryNavigationClose` | `() = void` | No | Escape, scrim, 닫기 버튼 또는 narrow→wide 전환으로 temporaryNavigation을 닫아 달라는 요청. 부모는 열린 상태를 false로 갱신합니다. |
 | `temporaryNavigationId` | `string` | No | 헤더 trigger의 aria-controls와 연결할 Drawer dialog id. 생략하면 내부 id를 생성합니다. |
 | `temporaryNavigationTitle` | `React.ReactNode` | No | Drawer에 보이는 탐색 제목. |
 | `temporaryNavigationLabel` | `string` | No | Drawer dialog와 내부 navigation의 접근 가능한 이름. @default "주 탐색" |
@@ -192,11 +192,11 @@
 
 - DashboardShell prompt contract: `components/layout/DashboardShell.prompt.md`
 - Storybook implementation evidence: `stories/NavigationDashboard.stories.jsx`
+- [WAI-ARIA Modal Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
+- [MDN ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)
 - [Material NavigationRail](https://github.com/material-components/material-components-android/blob/master/docs/components/NavigationRail.md)
 - [NavigationDrawer](https://github.com/material-components/material-components-android/blob/master/docs/components/NavigationDrawer.md)
 - [Fluent 2 Nav](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
 - [Carbon UI shell left panel](https://carbondesignsystem.com/components/UI-shell-left-panel/usage/)
 - [Atlassian navigation system layout](https://atlassian.design/components/navigation-system/layout/usage)
 - [WAI-ARIA APG landmarks](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
-- [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/)
-- [Carbon UI shell accessibility](https://carbondesignsystem.com/components/UI-shell-header/accessibility/)

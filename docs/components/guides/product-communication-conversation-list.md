@@ -70,10 +70,14 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 묶음 제목은 headingLevel(기본 3)이며 SideNav 섹션 제목과 같은 문장형 13px medium, subtle 잉크입니다. 묶음 계산과 문구는 제품이 넘깁니다. |
-| 명시 규칙 2 | 행 높이 36px(--component-conversation-list-row-height, SideNav 자식 행과 같음), 한 줄 제목과 말줄임. 전체 제목은 링크의 접근 이름에 남고 title 툴팁은 두지 않습니다. |
+| 명시 규칙 2 | 행 높이 36px(--component-conversation-list-row-height, SideNav 자식 행과 같음), 한 줄 제목과 말줄임. 전체 제목은 링크의 접근 이름과 native title에 남습니다(2026-10-09 D06 개정). |
 | 명시 규칙 3 | hover와 현재 항목은 행 전체(링크 + 버튼)에 무채색 채움을 주며 li가 :hover, [data-current]로 소유합니다. 현재 항목은 aria-current="page", cool-neutral-96 채움, label-normal, 굵기입니다. 채움 대비가 낮아(1.23:1) 굵기를 비색상 단서로 함께 씁니다(WCAG 1.4.1). forced-colors에서는 현재 링크가 SelectedItem을 받습니다. |
 | 명시 규칙 4 | 「더 보기」는 늘 DOM에 있고 포인터 hover 환경에서는 행 hover, focus-within, 현재 행, 메뉴 열림일 때만 보입니다. @media (hover: none)에서는 늘 보입니다. 버튼 이름은 {제목} 더 보기, 조작 영역은 24px 이상입니다. |
 | --component-conversation-list-active-hover-surface | var(--color-atomic-cool-neutral-95) |
+
+## Responsive
+
+- D06: 링크 padding 12→8px. hover 환경에서 숨긴 형제 menu button은 absolute로 배치하여 title 공간을 상시 예약하지 않습니다. hover·focus-within·current·menu-open에서 버튼을 보이고 링크 끝 공간을 확보합니다. touch에서는 항상 보이고 공간을 확보합니다. DOM/Tab 순서·최소 24px target·링크와 형제 관계는 보존합니다.
 
 ## Content and writing
 
@@ -153,6 +157,7 @@ nav[aria-labelledby=panel-title]
 - `--space-1`
 - `--space-2`
 - `--space-3`
+- `--space-8`
 
 ### Source contracts
 
@@ -165,6 +170,8 @@ nav[aria-labelledby=panel-title]
 
 - ConversationList prompt contract: `components/communication/ConversationList.prompt.md`
 - Storybook implementation evidence: `stories/CommunicationConversationList.stories.jsx`
+- [Carbon overflow menu](https://carbondesignsystem.com/components/data-table/usage/)
+- [WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)
 - [Fluent 2 Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
 - [WAI-ARIA APG Landmark Regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
 - [MDN aria-current](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-current)

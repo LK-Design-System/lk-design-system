@@ -27,6 +27,7 @@
 | `description` | `React.ReactNode` | No | 뮤트 설명. |
 | `action` | `React.ReactNode` | No | 액션 노드(예: Button). |
 | `tone` | `'signal' \| 'info' \| 'positive' \| 'success' \| 'cautionary' \| 'warning' \| 'negative' \| 'error' \| 'offline'` | No | 아이콘 타일의 semantic status tone. @default "signal" |
+| `size` | `'sm' \| 'md'` | No | md retains the standalone tile; sm uses a plain 24px icon area, 14px title and 16px padding inside lists. @default "md" |
 | `headingLevel` | `2 \| 3 \| 4 \| 5 \| 6` | No | title이 렌더되는 heading 레벨. 주변 문서 개요에 맞춰 h2–h6 중 선택합니다. |
 
 ## States
@@ -44,10 +45,10 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | headingLevel — 기본 2. 주변 문서 개요에 맞춰 2–6으로 지정하세요(범위를 벗어나면 클램프됩니다). 카드나 패널 안처럼 이미 h2가 있는 영역에서는 headingLevel={3}처럼 한 단계 낮춰 heading 순서가 건너뛰지 않게 합니다. |
+| 명시 규칙 2 | size="sm"은 D04의 additive LDS Core 규격입니다. 24px plain icon 영역, 14px/20px heading, 16px padding을 쓰며 md의 56px tile은 유지합니다. ResourceState compact의 기반이며 의미·문구·action은 호출자가 정합니다. 형제와 Carbon Empty states, WCAG Target Size를 검토했습니다. LDS 중앙 정렬은 유지합니다. 검토 기록. |
 | --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
 | --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
 | --fw-bold | 700 |
-| --headline1-line | 26px |
 
 ## Responsive
 
@@ -99,10 +100,14 @@
 - `--fw-bold`
 - `--headline1-line`
 - `--headline1-size`
+- `--label1-line`
 - `--label1-size`
 - `--radius-xl`
+- `--space-1`
 - `--space-1-5`
 - `--space-3-5`
+- `--space-4`
+- `--space-6`
 
 ### Source contracts
 
@@ -115,6 +120,8 @@
 
 - EmptyState prompt contract: `components/status/EmptyState.prompt.md`
 - Storybook implementation evidence: `stories/StatusEmpty.stories.jsx`
+- [Carbon Empty states](https://www.carbondesignsystem.com/building-blocks/core/patterns/empty-states)
+- [WCAG Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
 - [Carbon Empty states](https://carbondesignsystem.com/patterns/empty-states-pattern/)
 - [SAP Fiori Empty States](https://experience.sap.com/fiori-design-web/designing-for-empty-states/)
 - [Illustrated Message](https://experience.sap.com/fiori-design-web/illustrated-message-web-component/)

@@ -43,9 +43,9 @@
 | `fillWidth` | `boolean` | No | 가능한 폭을 채움. @default true |
 | `textEllipsis` | `boolean` | No | 제목/설명 말줄임. @default true |
 | `verticalPadding` | `"none" \| "small" \| "sm" \| "medium" \| "md" \| "large" \| "lg" \| "custom"` | No | verticalPadding axis. @default "medium" |
+| `typography` | `"small" \| "medium"` | No | Title typography. small is 14px/20px; with small verticalPadding a text-only row is 36px in the default profile. Tint selection uses bold weight. @default "medium" |
 | `paddingY` | `number` | No | verticalPadding="custom"일 때 직접 패딩 지정. |
 | `paddingX` | `number \| string` | No | 좌우 패딩. @default 20 |
-| `verticalAlign` | `"top" \| "center"` | No | 세로 정렬. @default "center" |
 
 ## States
 
@@ -65,11 +65,11 @@
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | verticalPadding="small \| medium \| large" 공개 문법은 유지하면서 각 값은 profile-aware component token을 읽습니다. default는 기존 8/12/16px이고 ops는 6/8/12px이다. 명시적 paddingY escape hatch가 token보다 우선하며 selection·keyboard·list semantics는 profile과 무관합니다. 정본은 docs/DENSITYANDEXPRESSIONPROFILECONTRACT.md입니다. |
-| 명시 규칙 2 | 반복되는 행은 반드시 리스트로 감싸세요. 감싸지 않으면 스크린리더가 "3개 중 2번째"를 읽지 못해 항목 수와 현재 위치가 사라집니다(WCAG 1.3.1). |
+| 명시 규칙 1 | 공개 작은 글자 규격 (D01, 2026-10-09) |
+| 명시 규칙 2 | typography="small"은 additive LDS Core 설계 개정입니다. label1 14px/20px을 쓰며 verticalPadding="small"과 조합한 default profile 텍스트 전용 행은 36px입니다. 설명·leading·trailing이 더 크면 자연스럽게 늘어납니다. ops의 기존 6px padding은 유지하므로 ops 텍스트 행은 32px입니다. 기본 medium의 body1과 기존 축은 유지합니다. |
+| 명시 규칙 3 | verticalPadding="small \| medium \| large" 공개 문법은 유지하면서 각 값은 profile-aware component token을 읽습니다. default는 기존 8/12/16px이고 ops는 6/8/12px이다. 명시적 paddingY escape hatch가 token보다 우선하며 selection·keyboard·list semantics는 profile과 무관합니다. 정본은 docs/DENSITYANDEXPRESSIONPROFILECONTRACT.md입니다. |
+| 명시 규칙 4 | 반복되는 행은 반드시 리스트로 감싸세요. 감싸지 않으면 스크린리더가 "3개 중 2번째"를 읽지 못해 항목 수와 현재 위치가 사라집니다(WCAG 1.3.1). |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
-| --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
-| --body2-size | 15px |
 
 ## Content and writing
 
@@ -147,6 +147,8 @@
 - `--fw-medium`
 - `--fw-regular`
 - `--headline2-size`
+- `--label1-line`
+- `--label1-size`
 - `--label2-line`
 - `--label2-size`
 - `--radius-lg`

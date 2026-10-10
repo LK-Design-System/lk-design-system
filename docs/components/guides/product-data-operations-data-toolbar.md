@@ -14,7 +14,6 @@
 
 ### 사용하지 않음
 
-- 여러 필터의 host는 자식의 max-content 폭을 우선 보존하고 툴바 가용 폭으로 상한을 둡니다. 검색과 필터 합계가 control 행에 들어가면 한 줄을 유지하고, 실제 공간이 부족할 때만 필터 host가 다음 줄로 이동한 뒤 내부 control을 감쌉니다. 제품별 breakpoint나 고정 필터 폭은 DataToolbar가 소유하지 않습니다.
 - Classification: LK Product Extension. 선택 상태와 bulk action은 DataGrid가 소유하며 DataToolbar API에 중복하지 않습니다.
 - The header row is independent: title, description, count, or page-level actions keeps it present even when controls are omitted. If neither header content nor controls exist, DataToolbar returns null instead of leaving an empty bordered strip.
 
@@ -52,7 +51,7 @@
 | `actions` | `React.ReactNode` | No | 우측 일반 액션 슬롯. |
 | `size` | `DataToolbarSize` | No | 밀도. @default "md" |
 | `variant` | `'standalone' \| 'embedded'` | No | 외곽선 소유. "embedded"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default "standalone" |
-| `layout` | `'auto' \| 'wide' \| 'narrow'` | No | 반응형 control 정책. auto는 767px 이하 컨테이너에서 검색을 한 행으로 두고 필터를 Drawer trigger로 접습니다. @default "auto" |
+| `layout` | `'auto' \| 'wide' \| 'narrow'` | No | 반응형 control 정책. auto는 실제 필터·정렬 폭을 측정해 한 행 또는 검색/필터 두 행으로 배치합니다. 767px 이하이거나 필터·정렬만으로도 폭을 넘으면 필터를 Drawer trigger로 접습니다. @default "auto" |
 | `classNames` | `LdsClassNames` | No |  |
 | `styles` | `LdsStyles` | No |  |
 | `vars` | `LdsVars` | No |  |
@@ -77,9 +76,9 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | count는 ko-KR 천 단위 구분으로 렌더링됩니다(count={3941} → 3,941개). 결과 수 copy가 한국어로 고정된 표면이므로 grouping locale도 host 환경을 따르지 않고 함께 고정합니다. 숫자가 아닌 값은 그대로 통과시킵니다. |
-| 명시 규칙 2 | size="sm"은 검색과 render-prop filter control에 --control-h-sm(32px) compact 밀도를, 기본 md는 --component-input-height field 밀도(default 48px, ops 40px)를 제공합니다. SearchField·Select·Input 계열은 모두 이 토큰을 통해 해석되므로 profile을 바꿔도 한 행에서 서로 어긋나지 않습니다. |
-| 명시 규칙 3 | { size } context는 field 밀도입니다. action용 Button 척도(--component-button-height-)와 field 척도는 전역에서 합치지 않으므로, 같은 size를 Button에 그대로 넘겨도 높이는 일치하지 않습니다(의도된 분리). 필터 행의 Button은 control 행 중앙 정렬로 두고, 필드 높이에 실제로 맞물려야 하는 field+action 조합은 FieldAction이 소유합니다. FilterChip은 고유 32px pill 높이를 유지하며 control 행 중앙에 정렬됩니다. |
-| 명시 규칙 4 | 필터 trigger는 aria-haspopup="dialog", aria-expanded, aria-controls로 Drawer와 연결됩니다. activeFilterCount가 1 이상이면 trigger 라벨에 필터 3처럼 적용 수를 붙여 접힌 상태에서도 현재 query가 좁혀져 있음을 드러냅니다. 기본값이 아닌 필터 수의 계산은 제품이 소유합니다. |
+| 명시 규칙 2 | 기본 layout="auto"는 실제 필터 자식 폭과 간격, 정렬 폭을 합산해 그룹을 배치합니다. 검색의 최소 폭(기본 200px)까지 함께 들어가면 한 행을 유지하고, 그룹만 들어가면 검색을 첫 행 전체에, 필터·정렬을 다음 행에 둡니다. 그룹 자체가 가용 폭보다 넓으면 기존 narrow 필터 Drawer를 사용합니다. 필터만 두 줄로 갈라진 채 검색·정렬이 중간에 정렬되는 상태를 만들지 않습니다. 제품별 breakpoint나 고정 필터 폭은 DataToolbar가 소유하지 않습니다. |
+| 명시 규칙 3 | size="sm"은 검색과 render-prop filter control에 --control-h-sm(32px) compact 밀도를, 기본 md는 --component-input-height field 밀도(default 48px, ops 40px)를 제공합니다. SearchField·Select·Input 계열은 모두 이 토큰을 통해 해석되므로 profile을 바꿔도 한 행에서 서로 어긋나지 않습니다. |
+| 명시 규칙 4 | { size } context는 field 밀도입니다. action용 Button 척도(--component-button-height-)와 field 척도는 전역에서 합치지 않으므로, 같은 size를 Button에 그대로 넘겨도 높이는 일치하지 않습니다(의도된 분리). 필터 행의 Button은 control 행 중앙 정렬로 두고, 필드 높이에 실제로 맞물려야 하는 field+action 조합은 FieldAction이 소유합니다. FilterChip은 고유 32px pill 높이를 유지하며 control 행 중앙에 정렬됩니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
@@ -99,8 +98,9 @@
 ## Accessibility
 
 - WAI-ARIA APG Table pattern에 따라 DataToolbar가 표의 native semantics나 keyboard model을 대신하지 않습니다. 검색과 action은 각 native control의 정상 Tab 순서를 유지합니다.
+- 필터 trigger는 aria-haspopup="dialog", aria-expanded, aria-controls로 Drawer와 연결됩니다. activeFilterCount가 1 이상이면 trigger 라벨에 필터 3처럼 적용 수를 붙여 접힌 상태에서도 현재 query가 좁혀져 있음을 드러냅니다. 기본값이 아닌 필터 수의 계산은 제품이 소유합니다.
 - 필터 Drawer는 density="compact"이며 filterPanelTitle을 제목으로, filterCloseLabel을 footer의 full-width 확정 action으로 사용합니다. 필터 자식은 filterPanel part 안에서 세로로 쌓이고 전체 폭을 채웁니다. 닫히면 Drawer 계약대로 trigger로 초점을 복원합니다. 같은 filters 노드가 wide host와 Drawer 양쪽에 렌더링되므로 필터 상태는 항상 제품 state에 두고 자식 내부 state에 의존하지 않습니다.
-- 반응형 규칙은 #lk-data-toolbar-layout head style 하나로 주입되며(Input의 placeholder 패턴), 루트는 grid 행당 정확히 한 DOM 자식만 가집니다. narrow에서 숨겨지는 wide host는 display:none이므로 Tab 순서에 남지 않습니다. 반대로 wide에서는 narrow trigger 행이 display:none입니다.
+- 반응형 규칙은 #lk-data-toolbar-layout head style 하나로 주입되며(Input의 placeholder 패턴), 루트는 grid 행당 정확히 한 DOM 자식만 가집니다. auto의 narrow 배치에서 wide host는 visibility:hidden과 화면 밖 고정 위치로 숨겨 Tab 순서와 접근성 트리에서 제외하면서 폭을 측정합니다. 이 측정으로 화면을 넓히거나 필터를 줄였을 때 넓은 배치로 복귀합니다. 명시적 narrow의 wide host와 넓은 배치의 narrow trigger 행은 display:none입니다.
 
 ## Related components
 

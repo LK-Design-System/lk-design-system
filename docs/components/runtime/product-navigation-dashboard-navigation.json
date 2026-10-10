@@ -51,7 +51,7 @@
     },
     {
       "part": "onTemporaryNavigationClose",
-      "rule": "Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청."
+      "rule": "Escape, scrim, 닫기 버튼 또는 narrow→wide 전환으로 temporaryNavigation을 닫아 달라는 요청. 부모는 열린 상태를 false로 갱신합니다."
     },
     {
       "part": "temporaryNavigationId",
@@ -98,7 +98,7 @@
       "name": "onTemporaryNavigationClose",
       "type": "() = void",
       "required": false,
-      "description": "Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청.",
+      "description": "Escape, scrim, 닫기 버튼 또는 narrow→wide 전환으로 temporaryNavigation을 닫아 달라는 요청. 부모는 열린 상태를 false로 갱신합니다.",
       "owner": "DashboardShellProps"
     },
     {

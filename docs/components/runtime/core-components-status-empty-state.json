@@ -66,6 +66,13 @@
       "owner": "EmptyStateProps"
     },
     {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "md retains the standalone tile; sm uses a plain 24px icon area, 14px title and 16px padding inside lists. @default \"md\"",
+      "owner": "EmptyStateProps"
+    },
+    {
       "name": "headingLevel",
       "type": "2 | 3 | 4 | 5 | 6",
       "required": false,
@@ -88,6 +95,10 @@
       "rule": "headingLevel — 기본 2. 주변 문서 개요에 맞춰 2–6으로 지정하세요(범위를 벗어나면 클램프됩니다). 카드나 패널 안처럼 이미 h2가 있는 영역에서는 headingLevel={3}처럼 한 단계 낮춰 heading 순서가 건너뛰지 않게 합니다."
     },
     {
+      "subject": "명시 규칙 2",
+      "rule": "size=\"sm\"은 D04의 additive LDS Core 규격입니다. 24px plain icon 영역, 14px/20px heading, 16px padding을 쓰며 md의 56px tile은 유지합니다. ResourceState compact의 기반이며 의미·문구·action은 호출자가 정합니다. 형제와 Carbon Empty states, WCAG Target Size를 검토했습니다. LDS 중앙 정렬은 유지합니다. 검토 기록."
+    },
+    {
       "subject": "--color-semantic-label-alternative",
       "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
     },
@@ -98,10 +109,6 @@
     {
       "subject": "--fw-bold",
       "rule": "700"
-    },
-    {
-      "subject": "--headline1-line",
-      "rule": "26px"
     }
   ],
   "responsive": [
@@ -158,10 +165,14 @@
     "--fw-bold",
     "--headline1-line",
     "--headline1-size",
+    "--label1-line",
     "--label1-size",
     "--radius-xl",
+    "--space-1",
     "--space-1-5",
-    "--space-3-5"
+    "--space-3-5",
+    "--space-4",
+    "--space-6"
   ],
   "apiLinks": [],
   "migration": [],

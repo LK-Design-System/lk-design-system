@@ -19,7 +19,7 @@
 | [Card](guides/core-components-content-card.md) | Core / Content | `Card` | mapped | implemented | not-tracked | not-tracked | 7 public / 2 hidden |
 | [Content Badge](guides/core-components-content-content-badge.md) | Core / Content | `ContentBadge` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Disclosure](guides/core-components-content-disclosure.md) | Core / Content | `Accordion`, `Collapsible` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Lists](guides/core-components-content-lists.md) | Core / Content | `Accordion`, `ListCell` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
+| [Lists](guides/core-components-content-lists.md) | Core / Content | `Accordion`, `ListCell` | mapped | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Media Patterns](guides/core-components-content-media-patterns.md) | Core / Content | `Thumbnail` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Missing Value](guides/core-components-content-missing-value.md) | Core / Content | `MissingValue` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Overline](guides/core-components-content-overline.md) | Core / Content | `Overline` | mapped | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
@@ -55,7 +55,7 @@
 | [Number Field](guides/core-components-selection-and-input-number-field.md) | Core / Selection and Input | `NumberField` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Password Input](guides/core-components-selection-and-input-password-input.md) | Core / Selection and Input | `PasswordInput` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
 | [Radio](guides/core-components-selection-and-input-radio.md) | Core / Selection and Input | `Radio` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
-| [Search and Autocomplete](guides/core-components-selection-and-input-search-and-autocomplete.md) | Core / Selection and Input | `AutoComplete`, `Combobox`, `SearchField`, `TagInput` | mapped | implemented | not-tracked | not-tracked | 2 public / 7 hidden |
+| [Search and Autocomplete](guides/core-components-selection-and-input-search-and-autocomplete.md) | Core / Selection and Input | `AutoComplete`, `Combobox`, `SearchField`, `TagInput` | mapped | implemented | not-tracked | not-tracked | 3 public / 7 hidden |
 | [Segmented Control](guides/core-components-selection-and-input-segmented-control.md) | Core / Selection and Input | `SegmentedControl` | mapped | implemented | not-tracked | not-tracked | 1 public / 5 hidden |
 | [Select](guides/core-components-selection-and-input-select.md) | Core / Selection and Input | `Select` | mapped | implemented | not-tracked | not-tracked | 2 public / 8 hidden |
 | [Slider and Range](guides/core-components-selection-and-input-slider-and-range.md) | Core / Selection and Input | `RangeSlider`, `Slider` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
@@ -79,9 +79,9 @@
 | [Social Login](guides/product-action-social-login.md) | Product / Action | `SocialButton` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Speed Dial](guides/product-action-speed-dial.md) | Product / Action | `SpeedDial` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Split Button](guides/product-action-split-button.md) | Product / Action | `SplitButton` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Conversation List](guides/product-communication-conversation-list.md) | Product / Communication | `ConversationList` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
+| [Conversation List](guides/product-communication-conversation-list.md) | Product / Communication | `ConversationList` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
 | [Message](guides/product-communication-message.md) | Product / Communication | `ConversationMessage` | not-tracked | implemented | not-tracked | not-tracked | 12 public / 5 hidden |
-| [Message Composer](guides/product-communication-message-composer.md) | Product / Communication | `MessageComposer` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
+| [Message Composer](guides/product-communication-message-composer.md) | Product / Communication | `MessageComposer` | not-tracked | implemented | not-tracked | not-tracked | 9 public / 1 hidden |
 | [Message Feed](guides/product-communication-message-feed.md) | Product / Communication | `MessageFeed` | not-tracked | implemented | not-tracked | not-tracked | 8 public / 1 hidden |
 | [Bubble](guides/product-content-bubble.md) | Product / Content | `Bubble` | mapped | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Checklist Item](guides/product-content-checklist-item.md) | Product / Content | `ChecklistItem` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
@@ -104,13 +104,13 @@
 | [Data Collection Panel](guides/product-data-collections-data-collection-panel.md) | Product / Collections | `DataCollectionPanel` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 6 hidden |
 | [Data Grid](guides/product-data-collections-data-grid.md) | Product / Collections | `DataGrid` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 1 hidden |
 | [File Browser](guides/product-data-collections-file-browser.md) | Product / Collections | `FileBrowser` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
-| [Table](guides/product-data-collections-table.md) | Product / Collections | `Table` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 6 hidden |
+| [Table](guides/product-data-collections-table.md) | Product / Collections | `Table` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 6 hidden |
 | [Tree](guides/product-data-collections-tree.md) | Product / Collections | `Tree` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Carousel](guides/product-data-display-carousel.md) | Product / Display | `Carousel` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
 | [Description List](guides/product-data-display-description-list.md) | Product / Display | `DescriptionList` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Metric Card](guides/product-data-display-metric-card.md) | Product / Display | `MetricCard` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
-| [Resource State](guides/product-data-display-resource-state.md) | Product / Display | `ResourceState` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Data Toolbar](guides/product-data-operations-data-toolbar.md) | Product / Operations | `DataToolbar` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 1 hidden |
+| [Resource State](guides/product-data-display-resource-state.md) | Product / Display | `ResourceState` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
+| [Data Toolbar](guides/product-data-operations-data-toolbar.md) | Product / Operations | `DataToolbar` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
 | [Export Action](guides/product-data-operations-export-action.md) | Product / Operations | `DataExportAction` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Filter Bar](guides/product-data-operations-filter-bar.md) | Product / Operations | `FilterBar` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Refresh Control](guides/product-data-operations-refresh-control.md) | Product / Operations | `RefreshControl` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
@@ -136,7 +136,7 @@
 | [Dock Panel](guides/product-layout-dock-panel.md) | Product / Layout | `DockPanel` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 1 hidden |
 | [Page Header](guides/product-layout-page-header.md) | Product / Layout | `PageHeader` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Primary Detail](guides/product-layout-primary-detail.md) | Product / Layout | `PrimaryDetail` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Shell Panel](guides/product-layout-shell-panel.md) | Product / Layout | `ShellPanel` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
+| [Shell Panel](guides/product-layout-shell-panel.md) | Product / Layout | `ShellPanel` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Adaptive Navigation](guides/product-navigation-adaptive-navigation.md) | Product / Navigation | `BottomNav`, `NavRail` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 3 hidden |
 | [Anchor](guides/product-navigation-anchor.md) | Product / Navigation | `Anchor` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Breadcrumb](guides/product-navigation-breadcrumb.md) | Product / Navigation | `Breadcrumb` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
@@ -150,7 +150,7 @@
 | [User Menu](guides/product-navigation-user-menu.md) | Product / Navigation | `UserMenu` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Wizard](guides/product-navigation-wizard.md) | Product / Navigation | `Wizard` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
 | [Dashboard Grid](guides/product-operations-dashboard-dashboard-grid.md) | Product / Operations Dashboard | `DashboardGrid` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
-| [Dashboard Shell](guides/product-operations-dashboard-dashboard-shell.md) | Product / Operations Dashboard | `DashboardShell` | not-tracked | implemented | not-tracked | not-tracked | 13 public / 0 hidden |
+| [Dashboard Shell](guides/product-operations-dashboard-dashboard-shell.md) | Product / Operations Dashboard | `DashboardShell` | not-tracked | implemented | not-tracked | not-tracked | 14 public / 0 hidden |
 | [Command Palette](guides/product-overlay-command-palette.md) | Product / Overlay | `CommandPalette` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
 | [Drawer](guides/product-overlay-drawer.md) | Product / Overlay | `Drawer` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Hover Card](guides/product-overlay-hover-card.md) | Product / Overlay | `HoverCard` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |

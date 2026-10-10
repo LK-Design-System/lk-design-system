@@ -20,3 +20,12 @@
   outline: 2px solid var(--color-semantic-focus-indicator) !important;
   outline-offset: 2px !important;
 }
+
+/* SearchField's bordered control owns the complete focus indicator. Keep this
+   exception beside the global rule so it survives consumers importing LDS in a
+   cascade layer: layered !important beats a runtime unlayered !important reset.
+   The clear button and all standalone inputs keep their global keyboard ring. */
+.lk-searchfield-control input.lk-searchfield:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+}

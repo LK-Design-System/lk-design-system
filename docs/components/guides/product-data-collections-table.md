@@ -39,7 +39,7 @@
 | --- | --- | --- | --- |
 | `columns` | `TableColumn[]` | Yes |  |
 | `rows` | `Row[]` | Yes |  |
-| `size` | `'sm' \| 'md'` | No | 행 밀도. @default "md" |
+| `size` | `'xs' \| 'sm' \| 'md'` | No | 행 밀도. xs: header 32px, single-line row minimum 36px (32px controls with padding grow to at least 36px). Wrapped/taller content grows naturally. @default "md" |
 | `hover` | `boolean` | No | 행 호버 워시. @default true |
 | `banded` | `boolean` | No | 모든 데이터 행에 가장 조용한 fill 밴드를 깝니다. 라벨과 측정값 사이가 먼 넓은 표에서 헤어라인 대신 밴드가 행의 시선을 잇습니다. 교차(지브라)가 아니라 전 행 밴드입니다 — 행이 적을 때 줄무늬는 강조로 오독됩니다. |
 | `columnLabelsHidden` | `boolean` | No | 열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름과 열 폭을 모두 유지하며, 감추는 것은 라벨과 밴드뿐입니다. |
@@ -101,14 +101,14 @@
 
 | Component | Relationship |
 | --- | --- |
+| `Icon` | 대표 시나리오에서 조합 |
+| `IconButton` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
-| `DataGrid` | 대표 시나리오에서 조합 |
-| `DataToolbar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -159,7 +159,11 @@
 - `--lk-table-cell-pad-sm`
 - `--lk-table-row-min-height-md`
 - `--lk-table-row-min-height-sm`
+- `--space-0-5`
+- `--space-1`
 - `--space-2`
+- `--space-3`
+- `--space-8`
 
 ### Source contracts
 
@@ -179,4 +183,4 @@
 - [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns/table/)
 - [Carbon Data table](https://carbondesignsystem.com/components/data-table/usage/)
 - [USWDS Table](https://designsystem.digital.gov/components/table/)
-- [Carbon Data table](https://carbondesignsystem.com/components/data-table/style/)
+- [WCAG Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)

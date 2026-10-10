@@ -63,9 +63,9 @@
 | --- | --- |
 | 명시 규칙 1 | Keep a visible label whenever the surrounding context does not already name the search. Enter submits the current query; Escape clears it. The clear action is 32px, has a contextual name such as 로봇 검색 지우기, and is disabled with the field. |
 | 명시 규칙 2 | Reference basis: Carbon Search, GOV.UK Text input, WCAG 2.2 3.2.1 On Focus. |
+| 명시 규칙 3 | 단일 focus 표시 (R11, 2026-10-09) |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-background-normal-alternative | light: #F7F7F8; dark: #0F0F10 |
 
 ## Content and writing
 
@@ -79,6 +79,7 @@
 - readOnly preserves focus and text selection but removes the clear action and editable hover affordance.
 - 지우기 후 포커스 복귀 — 지우기 버튼은 값이 비면 언마운트되므로, 활성화 시 포커스를 입력으로 되돌립니다. 그렇지 않으면 포커스가 로 떨어져 키보드 사용자가 필드를 잃습니다(Carbon Search 관례).
 - value / defaultValue / onChange — 제어/비제어. onSearch — Enter. size sm · md. 시그널 잉크 포커스 링.
+- Input과 MessageComposer의 필드 소유 focus를 비교했습니다. 외곽 border와 외곽 control의 semantic focus-indicator outline으로 위치를 표시합니다. 내부 search input의 전역 outline만 제외하고 clear button의 keyboard outline은 보존합니다. forced-colors는 외곽 Highlight outline입니다. text input은 클릭으로도 :focus-visible에 해당할 수 있으므로 입력 방식만으로 outline 유무를 단정하지 않습니다.
 
 ## Related components
 
@@ -88,8 +89,8 @@
 | `Combobox` | 같은 페이지가 소유 |
 | `TagInput` | 같은 페이지가 소유 |
 | `Icon` | 대표 시나리오에서 조합 |
-| `FormField` | 대표 시나리오에서 조합 |
 | `Input` | 대표 시나리오에서 조합 |
+| `FormField` | 대표 시나리오에서 조합 |
 | `Select` | 대표 시나리오에서 조합 |
 | `Textarea` | 대표 시나리오에서 조합 |
 
@@ -110,6 +111,7 @@
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-background-normal-alternative`
 - `--color-semantic-fill-normal`
+- `--color-semantic-focus-indicator`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-disable`
 - `--color-semantic-label-neutral`
@@ -172,6 +174,9 @@
 
 - SearchField prompt contract: `components/forms/SearchField.prompt.md`
 - Storybook implementation evidence: `stories/FormSearchAutocomplete.stories.jsx`
+- [MDN cascade layers](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/important#cascade_layers)
+- [WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)
+- [WAI-ARIA Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [Carbon Search](https://carbondesignsystem.com/components/search/usage/)
 - [GOV.UK Text input](https://design-system.service.gov.uk/components/text-input/)
 - [WCAG 2.2 3.2.1 On Focus](https://www.w3.org/TR/WCAG22/#on-focus)

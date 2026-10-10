@@ -148,8 +148,8 @@
         "height": 520
       },
       "reducedMotion": "no-preference",
-      "bytes": 45086,
-      "sha256": "bea494731061ec7d8102c4c752ea4c58589748e07af2605f18672b65894aa446"
+      "bytes": 45081,
+      "sha256": "390f4ab342f80dd6fb6997219f0201c34711ed9573335c47faa03234389c410f"
     },
     {
       "name": "react-forms",

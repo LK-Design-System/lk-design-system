@@ -16,6 +16,7 @@
     "Container",
     "Icon",
     "IconButton",
+    "ListCell",
     "Lockup",
     "MetricCard",
     "NavRail",
@@ -81,6 +82,11 @@
         "id": "lds-product-layout-dashboard-shell--header-first",
         "name": "변형·상태 · 헤더 우선",
         "role": "variants-states"
+      },
+      {
+        "id": "lds-product-layout-dashboard-shell--low-height-navigation",
+        "name": "상호작용 · 낮은 모바일 메뉴와 반응형 닫기",
+        "role": "interaction"
       },
       {
         "id": "lds-product-layout-dashboard-shell--rail-panel-collapse",

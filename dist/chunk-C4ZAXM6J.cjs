@@ -1,4 +1,4 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }"use client";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
 
 
 var _chunkWESPBUC7cjs = require('./chunk-WESPBUC7.cjs');
@@ -33,6 +33,20 @@ var DATA_TOOLBAR_STYLES = `
 .lk-data-toolbar__narrow-sort>*{width:100%;max-width:100%}
 .lk-data-toolbar__filter-panel-content{display:grid;gap:var(--space-3);min-width:0}
 .lk-data-toolbar__filter-panel-content>*{width:100%;max-width:100%}
+
+/* Measure the entire filter/sort group before choosing a row. Select's
+   percentage-clamped min-width is not its max-content flex basis. */
+.lk-data-toolbar[data-control-flow="inline"]>.lk-data-toolbar__controls>.lk-data-toolbar__search{flex-basis:200px}
+.lk-data-toolbar[data-control-flow="stacked"]>.lk-data-toolbar__controls>.lk-data-toolbar__search{flex-basis:100%;max-width:none}
+.lk-data-toolbar[data-control-flow="stacked"]>.lk-data-toolbar__controls>.lk-data-toolbar__wide-controls{flex-basis:100%}
+.lk-data-toolbar[data-control-flow="inline"] .lk-data-toolbar__filters,.lk-data-toolbar[data-control-flow="stacked"] .lk-data-toolbar__filters{flex-shrink:0;flex-wrap:nowrap}
+.lk-data-toolbar[data-control-flow="narrow"]>.lk-data-toolbar__controls{display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch}
+.lk-data-toolbar[data-control-flow="narrow"]>.lk-data-toolbar__controls>.lk-data-toolbar__search{width:100%;max-width:none;min-width:0}
+.lk-data-toolbar[data-control-flow="narrow"]>.lk-data-toolbar__controls>.lk-data-toolbar__wide-controls{position:fixed;left:0;top:0;transform:translateX(-100%);visibility:hidden;pointer-events:none;width:max-content;max-width:none}
+.lk-data-toolbar[data-control-flow="narrow"] .lk-data-toolbar__filters{flex-wrap:nowrap}
+.lk-data-toolbar[data-control-flow="narrow"]>.lk-data-toolbar__controls>.lk-data-toolbar__narrow-controls{display:flex}
+.lk-data-toolbar[data-control-flow="narrow"]>.lk-data-toolbar__controls>.lk-data-toolbar__metadata{width:100%;margin-left:0}
+
 .lk-data-toolbar[data-layout="narrow"]>.lk-data-toolbar__controls{display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch}
 .lk-data-toolbar[data-layout="narrow"]>.lk-data-toolbar__controls>.lk-data-toolbar__search{width:100%;max-width:none;min-width:0}
 .lk-data-toolbar[data-layout="narrow"]>.lk-data-toolbar__controls>.lk-data-toolbar__wide-controls{display:none}
@@ -41,11 +55,69 @@ var DATA_TOOLBAR_STYLES = `
 @container lds-data-toolbar (max-width:767px){
   .lk-data-toolbar[data-layout="auto"]>.lk-data-toolbar__controls{display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch}
   .lk-data-toolbar[data-layout="auto"]>.lk-data-toolbar__controls>.lk-data-toolbar__search{width:100%;max-width:none;min-width:0}
-  .lk-data-toolbar[data-layout="auto"]>.lk-data-toolbar__controls>.lk-data-toolbar__wide-controls{display:none}
+  .lk-data-toolbar[data-layout="auto"]>.lk-data-toolbar__controls>.lk-data-toolbar__wide-controls{position:fixed;left:0;top:0;transform:translateX(-100%);visibility:hidden;pointer-events:none;width:max-content;max-width:none}
   .lk-data-toolbar[data-layout="auto"]>.lk-data-toolbar__controls>.lk-data-toolbar__narrow-controls{display:flex}
   .lk-data-toolbar[data-layout="auto"]>.lk-data-toolbar__controls>.lk-data-toolbar__metadata{width:100%;margin-left:0}
 }
 `;
+function resolveControlFlow(width, wideWidth, searchMinimum, gap, searchable) {
+  if (width <= 767 || wideWidth > width) return "narrow";
+  return searchable && searchMinimum + gap + wideWidth > width ? "stacked" : "inline";
+}
+function measureControlFlow(root) {
+  const view = root.ownerDocument.defaultView;
+  if (!view) return null;
+  const controls = root.querySelector("[data-data-toolbar-controls]");
+  const wide = root.querySelector('[data-toolbar-view="wide"]');
+  if (!controls || !wide) return null;
+  const filters = wide.querySelector('[data-slot="filters"]');
+  const sort = wide.querySelector('[data-slot="sort"]');
+  const search = controls.querySelector(':scope > [data-slot="search"]');
+  const filterGap = filters ? parseFloat(view.getComputedStyle(filters).columnGap) || 0 : 0;
+  const children = filters ? [...filters.children] : [];
+  const filterWidth = children.reduce((total, child) => total + child.getBoundingClientRect().width, 0) + Math.max(0, children.length - 1) * filterGap;
+  const wideGap = filters && sort ? parseFloat(view.getComputedStyle(wide).columnGap) || 0 : 0;
+  const wideWidth = Math.ceil(filterWidth + (_optionalChain([sort, 'optionalAccess', _ => _.getBoundingClientRect, 'call', _2 => _2(), 'access', _3 => _3.width]) || 0) + wideGap);
+  const width = controls.getBoundingClientRect().width;
+  if (width <= 0 || wideWidth <= 0) return null;
+  const gap = parseFloat(view.getComputedStyle(controls).columnGap) || 0;
+  const searchMinimum = search ? parseFloat(view.getComputedStyle(search).minWidth) || 200 : 0;
+  const mode = resolveControlFlow(width, wideWidth, search ? Math.max(200, searchMinimum) : 0, gap, Boolean(search));
+  return { mode, wideWidth };
+}
+function useAdaptiveControlFlow(rootRef, layout, filters, sort, searchable) {
+  const [flow, setFlow] = _react2.default.useState(null);
+  _react2.default.useEffect(() => {
+    const root = rootRef.current;
+    if (!root || layout !== "auto") {
+      setFlow(null);
+      return;
+    }
+    const view = root.ownerDocument.defaultView;
+    if (!view || typeof view.ResizeObserver !== "function") return void 0;
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
+      const next = measureControlFlow(root);
+      setFlow((previous) => _optionalChain([previous, 'optionalAccess', _4 => _4.mode]) === _optionalChain([next, 'optionalAccess', _5 => _5.mode]) && _optionalChain([previous, 'optionalAccess', _6 => _6.wideWidth]) === _optionalChain([next, 'optionalAccess', _7 => _7.wideWidth]) ? previous : next);
+    };
+    const schedule = () => {
+      if (!frame) frame = view.requestAnimationFrame(measure);
+    };
+    const observer = new view.ResizeObserver(schedule);
+    observer.observe(root);
+    root.querySelectorAll('[data-data-toolbar-controls], [data-toolbar-view="wide"], [data-slot="filters"] > *, [data-slot="sort"]').forEach((element) => observer.observe(element));
+    const mutation = new view.MutationObserver(schedule);
+    mutation.observe(root, { childList: true, subtree: true });
+    schedule();
+    return () => {
+      observer.disconnect();
+      mutation.disconnect();
+      if (frame) view.cancelAnimationFrame(frame);
+    };
+  }, [rootRef, layout, filters, sort, searchable]);
+  return flow;
+}
 function useDataToolbarStyles() {
   _react2.default.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById(DATA_TOOLBAR_STYLE_ID)) return;
@@ -83,6 +155,10 @@ var DataToolbar = _react2.default.forwardRef(function DataToolbar2({
   vars,
   ...rest
 }, forwardedRef) {
+  const rootRef = _react2.default.useRef(null);
+  _react2.default.useImperativeHandle(forwardedRef, () => rootRef.current);
+  const resolvedLayout = ["auto", "wide", "narrow"].includes(layout) ? layout : "auto";
+  const controlFlow = useAdaptiveControlFlow(rootRef, resolvedLayout, filters, sort, searchable);
   const isSearchControlled = searchValue !== void 0;
   const [internalSearch, setInternalSearch] = _react2.default.useState(defaultSearchValue);
   const currentSearch = isSearchControlled ? searchValue : internalSearch;
@@ -93,7 +169,6 @@ var DataToolbar = _react2.default.forwardRef(function DataToolbar2({
   const compact = size === "sm";
   const resolvedFilters = typeof filters === "function" ? filters({ size }) : filters;
   const resolvedSort = typeof sort === "function" ? sort({ size }) : sort;
-  const resolvedLayout = ["auto", "wide", "narrow"].includes(layout) ? layout : "auto";
   const resolvedFilterCount = typeof activeFilterCount === "number" && Number.isFinite(activeFilterCount) ? Math.max(0, Math.floor(activeFilterCount)) : 0;
   const filterTriggerText = resolvedFilterCount > 0 ? `${filterLabel} ${resolvedFilterCount}` : filterLabel;
   const [filterPanelOpen, setFilterPanelOpen] = _react2.default.useState(false);
@@ -106,11 +181,12 @@ var DataToolbar = _react2.default.forwardRef(function DataToolbar2({
   return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
-      ref: forwardedRef,
+      ref: rootRef,
       "data-slot": "root",
       "data-size": size,
       "data-variant": variant,
       "data-layout": resolvedLayout,
+      "data-control-flow": _optionalChain([controlFlow, 'optionalAccess', _8 => _8.mode]),
       className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "root", "lk-data-toolbar", className) || void 0,
       style: {
         ..._chunkGWMGPLNWcjs.componentVars.call(void 0, vars, "--lds-data-toolbar-"),
@@ -156,7 +232,7 @@ var DataToolbar = _react2.default.forwardRef(function DataToolbar2({
               size
             }
           ) }),
-          (resolvedFilters != null || resolvedSort != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { className: "lk-data-toolbar__wide-controls", "data-toolbar-view": "wide", children: [
+          (resolvedFilters != null || resolvedSort != null) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { className: "lk-data-toolbar__wide-controls", "data-toolbar-view": "wide", style: _optionalChain([controlFlow, 'optionalAccess', _9 => _9.mode]) === "inline" ? { flexBasis: controlFlow.wideWidth } : void 0, children: [
             resolvedFilters != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
               "div",
               {
@@ -219,4 +295,4 @@ var DataToolbar = _react2.default.forwardRef(function DataToolbar2({
 
 
 exports.DataToolbar = DataToolbar;
-//# sourceMappingURL=chunk-I3SGZOMA.cjs.map
+//# sourceMappingURL=chunk-C4ZAXM6J.cjs.map

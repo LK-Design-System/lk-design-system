@@ -65,7 +65,7 @@ export interface DataToolbarProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   size?: DataToolbarSize;
   /** 외곽선 소유. "embedded"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default "standalone" */
   variant?: 'standalone' | 'embedded';
-  /** 반응형 control 정책. auto는 767px 이하 컨테이너에서 검색을 한 행으로 두고 필터를 Drawer trigger로 접습니다. @default "auto" */
+  /** 반응형 control 정책. auto는 실제 필터·정렬 폭을 측정해 한 행 또는 검색/필터 두 행으로 배치합니다. 767px 이하이거나 필터·정렬만으로도 폭을 넘으면 필터를 Drawer trigger로 접습니다. @default "auto" */
   layout?: 'auto' | 'wide' | 'narrow';
   classNames?: LdsClassNames<DataToolbarPart>;
   styles?: LdsStyles<DataToolbarPart>;

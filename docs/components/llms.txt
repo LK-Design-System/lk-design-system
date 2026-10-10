@@ -1602,9 +1602,9 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 | `fillWidth` | `boolean` | No | 가능한 폭을 채움. @default true |
 | `textEllipsis` | `boolean` | No | 제목/설명 말줄임. @default true |
 | `verticalPadding` | `"none" \| "small" \| "sm" \| "medium" \| "md" \| "large" \| "lg" \| "custom"` | No | verticalPadding axis. @default "medium" |
+| `typography` | `"small" \| "medium"` | No | Title typography. small is 14px/20px; with small verticalPadding a text-only row is 36px in the default profile. Tint selection uses bold weight. @default "medium" |
 | `paddingY` | `number` | No | verticalPadding="custom"일 때 직접 패딩 지정. |
 | `paddingX` | `number \| string` | No | 좌우 패딩. @default 20 |
-| `verticalAlign` | `"top" \| "center"` | No | 세로 정렬. @default "center" |
 
 ## States
 
@@ -1624,11 +1624,11 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | verticalPadding="small \| medium \| large" 공개 문법은 유지하면서 각 값은 profile-aware component token을 읽습니다. default는 기존 8/12/16px이고 ops는 6/8/12px이다. 명시적 paddingY escape hatch가 token보다 우선하며 selection·keyboard·list semantics는 profile과 무관합니다. 정본은 docs/DENSITYANDEXPRESSIONPROFILECONTRACT.md입니다. |
-| 명시 규칙 2 | 반복되는 행은 반드시 리스트로 감싸세요. 감싸지 않으면 스크린리더가 "3개 중 2번째"를 읽지 못해 항목 수와 현재 위치가 사라집니다(WCAG 1.3.1). |
+| 명시 규칙 1 | 공개 작은 글자 규격 (D01, 2026-10-09) |
+| 명시 규칙 2 | typography="small"은 additive LDS Core 설계 개정입니다. label1 14px/20px을 쓰며 verticalPadding="small"과 조합한 default profile 텍스트 전용 행은 36px입니다. 설명·leading·trailing이 더 크면 자연스럽게 늘어납니다. ops의 기존 6px padding은 유지하므로 ops 텍스트 행은 32px입니다. 기본 medium의 body1과 기존 축은 유지합니다. |
+| 명시 규칙 3 | verticalPadding="small \| medium \| large" 공개 문법은 유지하면서 각 값은 profile-aware component token을 읽습니다. default는 기존 8/12/16px이고 ops는 6/8/12px이다. 명시적 paddingY escape hatch가 token보다 우선하며 selection·keyboard·list semantics는 profile과 무관합니다. 정본은 docs/DENSITYANDEXPRESSIONPROFILECONTRACT.md입니다. |
+| 명시 규칙 4 | 반복되는 행은 반드시 리스트로 감싸세요. 감싸지 않으면 스크린리더가 "3개 중 2번째"를 읽지 못해 항목 수와 현재 위치가 사라집니다(WCAG 1.3.1). |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
-| --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
-| --body2-size | 15px |
 
 ## Content and writing
 
@@ -1706,6 +1706,8 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 - `--fw-medium`
 - `--fw-regular`
 - `--headline2-size`
+- `--label1-line`
+- `--label1-size`
 - `--label2-line`
 - `--label2-size`
 - `--radius-lg`
@@ -6404,9 +6406,9 @@ const firstFieldRef = useRef(null);
 | --- | --- |
 | 명시 규칙 1 | Keep a visible label whenever the surrounding context does not already name the search. Enter submits the current query; Escape clears it. The clear action is 32px, has a contextual name such as 로봇 검색 지우기, and is disabled with the field. |
 | 명시 규칙 2 | Reference basis: Carbon Search, GOV.UK Text input, WCAG 2.2 3.2.1 On Focus. |
+| 명시 규칙 3 | 단일 focus 표시 (R11, 2026-10-09) |
 | --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 | --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
-| --color-semantic-background-normal-alternative | light: #F7F7F8; dark: #0F0F10 |
 
 ## Content and writing
 
@@ -6420,6 +6422,7 @@ const firstFieldRef = useRef(null);
 - readOnly preserves focus and text selection but removes the clear action and editable hover affordance.
 - 지우기 후 포커스 복귀 — 지우기 버튼은 값이 비면 언마운트되므로, 활성화 시 포커스를 입력으로 되돌립니다. 그렇지 않으면 포커스가 로 떨어져 키보드 사용자가 필드를 잃습니다(Carbon Search 관례).
 - value / defaultValue / onChange — 제어/비제어. onSearch — Enter. size sm · md. 시그널 잉크 포커스 링.
+- Input과 MessageComposer의 필드 소유 focus를 비교했습니다. 외곽 border와 외곽 control의 semantic focus-indicator outline으로 위치를 표시합니다. 내부 search input의 전역 outline만 제외하고 clear button의 keyboard outline은 보존합니다. forced-colors는 외곽 Highlight outline입니다. text input은 클릭으로도 :focus-visible에 해당할 수 있으므로 입력 방식만으로 outline 유무를 단정하지 않습니다.
 
 ## Related components
 
@@ -6429,8 +6432,8 @@ const firstFieldRef = useRef(null);
 | `Combobox` | 같은 페이지가 소유 |
 | `TagInput` | 같은 페이지가 소유 |
 | `Icon` | 대표 시나리오에서 조합 |
-| `FormField` | 대표 시나리오에서 조합 |
 | `Input` | 대표 시나리오에서 조합 |
+| `FormField` | 대표 시나리오에서 조합 |
 | `Select` | 대표 시나리오에서 조합 |
 | `Textarea` | 대표 시나리오에서 조합 |
 
@@ -6451,6 +6454,7 @@ const firstFieldRef = useRef(null);
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-background-normal-alternative`
 - `--color-semantic-fill-normal`
+- `--color-semantic-focus-indicator`
 - `--color-semantic-label-alternative`
 - `--color-semantic-label-disable`
 - `--color-semantic-label-neutral`
@@ -6513,6 +6517,9 @@ const firstFieldRef = useRef(null);
 
 - SearchField prompt contract: `components/forms/SearchField.prompt.md`
 - Storybook implementation evidence: `stories/FormSearchAutocomplete.stories.jsx`
+- [MDN cascade layers](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/important#cascade_layers)
+- [WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)
+- [WAI-ARIA Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [Carbon Search](https://carbondesignsystem.com/components/search/usage/)
 - [GOV.UK Text input](https://design-system.service.gov.uk/components/text-input/)
 - [WCAG 2.2 3.2.1 On Focus](https://www.w3.org/TR/WCAG22/#on-focus)
@@ -7600,6 +7607,7 @@ const firstFieldRef = useRef(null);
 | `description` | `React.ReactNode` | No | 뮤트 설명. |
 | `action` | `React.ReactNode` | No | 액션 노드(예: Button). |
 | `tone` | `'signal' \| 'info' \| 'positive' \| 'success' \| 'cautionary' \| 'warning' \| 'negative' \| 'error' \| 'offline'` | No | 아이콘 타일의 semantic status tone. @default "signal" |
+| `size` | `'sm' \| 'md'` | No | md retains the standalone tile; sm uses a plain 24px icon area, 14px title and 16px padding inside lists. @default "md" |
 | `headingLevel` | `2 \| 3 \| 4 \| 5 \| 6` | No | title이 렌더되는 heading 레벨. 주변 문서 개요에 맞춰 h2–h6 중 선택합니다. |
 
 ## States
@@ -7617,10 +7625,10 @@ const firstFieldRef = useRef(null);
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | headingLevel — 기본 2. 주변 문서 개요에 맞춰 2–6으로 지정하세요(범위를 벗어나면 클램프됩니다). 카드나 패널 안처럼 이미 h2가 있는 영역에서는 headingLevel={3}처럼 한 단계 낮춰 heading 순서가 건너뛰지 않게 합니다. |
+| 명시 규칙 2 | size="sm"은 D04의 additive LDS Core 규격입니다. 24px plain icon 영역, 14px/20px heading, 16px padding을 쓰며 md의 56px tile은 유지합니다. ResourceState compact의 기반이며 의미·문구·action은 호출자가 정합니다. 형제와 Carbon Empty states, WCAG Target Size를 검토했습니다. LDS 중앙 정렬은 유지합니다. 검토 기록. |
 | --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
 | --color-semantic-label-normal | light: #171718; dark: #F7F7F7 |
 | --fw-bold | 700 |
-| --headline1-line | 26px |
 
 ## Responsive
 
@@ -7672,10 +7680,14 @@ const firstFieldRef = useRef(null);
 - `--fw-bold`
 - `--headline1-line`
 - `--headline1-size`
+- `--label1-line`
 - `--label1-size`
 - `--radius-xl`
+- `--space-1`
 - `--space-1-5`
 - `--space-3-5`
+- `--space-4`
+- `--space-6`
 
 ### Source contracts
 
@@ -7688,6 +7700,8 @@ const firstFieldRef = useRef(null);
 
 - EmptyState prompt contract: `components/status/EmptyState.prompt.md`
 - Storybook implementation evidence: `stories/StatusEmpty.stories.jsx`
+- [Carbon Empty states](https://www.carbondesignsystem.com/building-blocks/core/patterns/empty-states)
+- [WCAG Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
 - [Carbon Empty states](https://carbondesignsystem.com/patterns/empty-states-pattern/)
 - [SAP Fiori Empty States](https://experience.sap.com/fiori-design-web/designing-for-empty-states/)
 - [Illustrated Message](https://experience.sap.com/fiori-design-web/illustrated-message-web-component/)
@@ -9609,10 +9623,14 @@ ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드�
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 묶음 제목은 headingLevel(기본 3)이며 SideNav 섹션 제목과 같은 문장형 13px medium, subtle 잉크입니다. 묶음 계산과 문구는 제품이 넘깁니다. |
-| 명시 규칙 2 | 행 높이 36px(--component-conversation-list-row-height, SideNav 자식 행과 같음), 한 줄 제목과 말줄임. 전체 제목은 링크의 접근 이름에 남고 title 툴팁은 두지 않습니다. |
+| 명시 규칙 2 | 행 높이 36px(--component-conversation-list-row-height, SideNav 자식 행과 같음), 한 줄 제목과 말줄임. 전체 제목은 링크의 접근 이름과 native title에 남습니다(2026-10-09 D06 개정). |
 | 명시 규칙 3 | hover와 현재 항목은 행 전체(링크 + 버튼)에 무채색 채움을 주며 li가 :hover, [data-current]로 소유합니다. 현재 항목은 aria-current="page", cool-neutral-96 채움, label-normal, 굵기입니다. 채움 대비가 낮아(1.23:1) 굵기를 비색상 단서로 함께 씁니다(WCAG 1.4.1). forced-colors에서는 현재 링크가 SelectedItem을 받습니다. |
 | 명시 규칙 4 | 「더 보기」는 늘 DOM에 있고 포인터 hover 환경에서는 행 hover, focus-within, 현재 행, 메뉴 열림일 때만 보입니다. @media (hover: none)에서는 늘 보입니다. 버튼 이름은 {제목} 더 보기, 조작 영역은 24px 이상입니다. |
 | --component-conversation-list-active-hover-surface | var(--color-atomic-cool-neutral-95) |
+
+## Responsive
+
+- D06: 링크 padding 12→8px. hover 환경에서 숨긴 형제 menu button은 absolute로 배치하여 title 공간을 상시 예약하지 않습니다. hover·focus-within·current·menu-open에서 버튼을 보이고 링크 끝 공간을 확보합니다. touch에서는 항상 보이고 공간을 확보합니다. DOM/Tab 순서·최소 24px target·링크와 형제 관계는 보존합니다.
 
 ## Content and writing
 
@@ -9692,6 +9710,7 @@ nav[aria-labelledby=panel-title]
 - `--space-1`
 - `--space-2`
 - `--space-3`
+- `--space-8`
 
 ### Source contracts
 
@@ -9704,6 +9723,8 @@ nav[aria-labelledby=panel-title]
 
 - ConversationList prompt contract: `components/communication/ConversationList.prompt.md`
 - Storybook implementation evidence: `stories/CommunicationConversationList.stories.jsx`
+- [Carbon overflow menu](https://carbondesignsystem.com/components/data-table/usage/)
+- [WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)
 - [Fluent 2 Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
 - [WAI-ARIA APG Landmark Regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
 - [MDN aria-current](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-current)
@@ -9945,9 +9966,9 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 ### 사용
 
 - light/dark 모두 LDS semantic input token을 사용하며 exact Figma color, product logo, provider selector와 custom shadow를 만들지 않습니다.
+- compact는 한 줄 textarea를 --space-8, textarea 세로 padding을 --space-1, shell/action 간격을 --space-0-5 중심으로 구성합니다. primary action은 기존 --component-button-height-sm과 Button --lds-button-radius의 --radius-md를 유지합니다. comfortable은 textarea 40px와 세로 inset16px를 쓰며 버튼 geometry와 interaction은 보존합니다.
 - 좁고 짧은 대화 열에서는 body Portal로 clipping을 탈출하되, 공유 primitive가 제공하는 collisionBoundary에 visible conversation column ref를 전달해 viewport와 그 열의 교집합 안에서 panel을 배치합니다. Portal target과 geometry boundary는 같은 책임이 아닙니다.
 - Slack — Set your Enter key preference는 Enter를 보내기로 선택하면 Shift+Enter로 줄바꿈하고, Enter를 줄바꿈으로 선택하면 Mac의 Command+Enter 또는 Windows/Linux의 Ctrl+Enter로 보내는 공식 제품 관습을 설명합니다. 이를 enter와 modifier-enter 계약에 반영했고, 긴 형식 작성에는 더 명시적인 button-only도 제공합니다.
-- Slack — Use Slack with a screen reader는 conversation 진입 시 message composer에 focus가 놓이고 Tab으로 primary action toolbar에 접근하며, 입력 후 Enter로 보내는 흐름을 설명합니다. 이에 따라 form/textarea/action에 각각 명시적 accessible name을 제공하고 제출 뒤 textarea focus를 복귀시키며, slot action을 DOM reading order에 유지합니다.
 
 ### 사용하지 않음
 
@@ -9966,7 +9987,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 | description | Supporting text announced with the textarea. |
 | leadingActions | Actions rendered at the leading edge of the action band below the textarea. |
 | trailingActions | Actions rendered at the trailing edge of the action band before the primary send/stop control. |
-| submitLabel | Accessible name for the 32px submit control. @default "메시지 보내기" |
+| submitLabel | Accessible name for the submit control (stacked 32px / inline 44px). @default "메시지 보내기" |
 
 ## Properties
 
@@ -9976,7 +9997,8 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 | `onValueChange` | `(value: string, event: React.ChangeEvent) = void` | Yes | Receives the next controlled value and original textarea change event. |
 | `onSubmit` | `(value: string, reason: MessageComposerSubmitReason) = void` | Yes | Receives the current value and the explicit submit trigger. |
 | `state` | `MessageComposerState` | No | Product-owned request/response lifecycle. @default "idle" |
-| `density` | `MessageComposerDensity` | No | Composer-owned spacing density. Comfortable preserves the legacy rendering; compact reduces vertical space for narrow panels without shrinking the 32px primary action. @default "comfortable" |
+| `density` | `MessageComposerDensity` | No | Composer-owned spacing density. Stacked inputs start at 40px comfortable / 32px compact; inline starts at 44px. All keep 16px input text. @default "comfortable" |
+| `layout` | `MessageComposerLayout` | No | Inline puts a simple textarea and 44px send/stop control on one row (50px shell). Long drafts grow up to maxRows. Attachments or leading/trailing actions use the full-width stacked anatomy, retaining the 44px primary target. @default "stacked" |
 | `submitMode` | `MessageComposerSubmitMode` | No | Keyboard submission rule. modifier-enter accepts Alt-free Ctrl/Meta+Enter only. @default "enter" |
 | `canSubmit` | `boolean` | No | Explicit submit eligibility. Defaults to whether the trimmed value is non-empty. |
 | `readOnly` | `boolean` | No | Keep the draft focusable but prevent editing and submission. @default false |
@@ -9986,16 +10008,15 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 | `placeholder` | `string` | No | Internal textarea placeholder. @default "메시지를 입력하세요." |
 | `description` | `React.ReactNode` | No | Supporting text announced with the textarea. |
 | `maxLength` | `number` | No | Native maximum character count and visible counter. |
-| `minRows` | `number` | No | Minimum autosize rows; one row starts at 48px in comfortable density and 40px in compact density. @default 1 |
+| `minRows` | `number` | No | Minimum autosize rows; grows with content and container width up to maxRows. @default 1 |
 | `maxRows` | `number` | No | Maximum autosize rows before internal scrolling. @default 6 |
 | `attachments` | `React.ReactNode` | No | Attachment preview/list slot rendered inside the composer shell before the control row. |
 | `leadingActions` | `React.ReactNode` | No | Actions rendered at the leading edge of the action band below the textarea. |
 | `trailingActions` | `React.ReactNode` | No | Actions rendered at the trailing edge of the action band before the primary send/stop control. |
-| `submitLabel` | `string` | No | Accessible name for the 32px submit control. @default "메시지 보내기" |
-| `stopLabel` | `string` | No | Accessible name for the 32px stop control. @default "응답 중지" |
+| `submitLabel` | `string` | No | Accessible name for the submit control (stacked 32px / inline 44px). @default "메시지 보내기" |
+| `stopLabel` | `string` | No | Accessible name for the stop control (stacked 32px / inline 44px). @default "응답 중지" |
 | `onStop` | `() = void` | No | Requests transport cancellation in submitting/streaming states. |
 | `textareaProps` | `MessageComposerTextareaProps` | No | Native textarea attributes and event hooks not owned by the controlled contract. |
-| `disabled` | `false` | No |  |
 
 ## States
 
@@ -10018,18 +10039,18 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | composition session과 KeyboardEvent.isComposing을 함께 확인하고 legacy IME keyCode 229도 방어해 한글·일본어·중국어 확정 Enter가 submit으로 이어지지 않게 합니다. 조합 확정 직후에는 같은 keydown을 제출 동작으로 재사용하지 않습니다. |
-| 명시 규칙 2 | focus 표시는 shell 하나가 소유합니다. textarea에 focus가 있으면 shell border만 중립 회색 --component-message-composer-border-focus(cool-neutral-60, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고, primary 색 border·focus-ring halo·두께 변화는 없습니다(2026-10-09 owner 결정, Claude·ChatGPT 작성창처럼 작성 중에는 caret이 입력 위치를 알립니다). |
-| 명시 규칙 3 | textarea는 comfortable의 48px 또는 compact의 40px 한 줄 높이에서 시작해 minRows/maxRows 범위에서 커지고 최대 높이 뒤에는 내부 scrolling을 사용합니다. |
-| 명시 규칙 4 | 320px에서는 textarea가 먼저 전체 draft 폭을 확보하고 하단 action band가 wrap합니다. action을 숨기거나 action 수 때문에 입력 열을 축소하지 않으며, slot content도 자체 wrapping/overflow policy를 제공해야 합니다. |
+| 명시 규칙 1 | density는 comfortable \| compact입니다. 2026-10-09 승인된 D03 개정으로 stacked 한 줄 입력은 comfortable 40px, compact 32px에서 시작합니다. 16px 입력 글자, 24px line-height와 기존 버튼 모서리는 유지합니다. stacked send/stop은 32px입니다. |
+| 명시 규칙 2 | layout은 stacked \| inline이며 기본값은 stacked입니다. 단순 작성에서 명시한 inline은 textarea와 send/stop을 같은 행에 배치합니다. 입력/내장 action 최소 44px, shell 2px inset과 1px border를 합해 빈 초안 shell은 약 50px입니다. density와 별도 anatomy 축이며 설치된 0.4.7에는 없습니다. |
+| 명시 규칙 3 | composition session과 KeyboardEvent.isComposing을 함께 확인하고 legacy IME keyCode 229도 방어해 한글·일본어·중국어 확정 Enter가 submit으로 이어지지 않게 합니다. 조합 확정 직후에는 같은 keydown을 제출 동작으로 재사용하지 않습니다. |
+| 명시 규칙 4 | focus 표시는 shell 하나가 소유합니다. textarea에 focus가 있으면 shell border만 중립 회색 --component-message-composer-border-focus(cool-neutral-60, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고, primary 색 border·focus-ring halo·두께 변화는 없습니다(2026-10-09 owner 결정, Claude·ChatGPT 작성창처럼 작성 중에는 caret이 입력 위치를 알립니다). |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
 
-- density는 comfortable | compact이며 기본 comfortable은 기존 렌더링의 크기와 간격을 그대로 보존합니다. 좁은 패널에서만 compact를 명시합니다.
 - submitMode="button-only": Enter를 항상 줄바꿈으로 남기고 button만 제출합니다.
+- stacked textarea는 comfortable 40px 또는 compact 32px, inline은 44px의 한 줄 높이에서 시작해 minRows/maxRows 범위에서 커지고 최대 높이 뒤에는 내부 scrolling을 사용합니다. 초안과 컨테이너 폭 변경 모두 재계산합니다.
+- 320px stacked 및 slot을 전달한 확장 구조에서는 textarea가 먼저 전체 draft 폭을 확보하고 하단 action band가 wrap합니다. 단순 inline은 send44px을 제외한 입력 폭을 쓰고 긴 초안을 높이로 확장합니다. action을 숨기지 않으며 slot content도 자체 wrapping/overflow policy를 제공해야 합니다.
 - compact는 textarea 세로 padding, shell inset, attachment 상단 inset과 action/status gap을 LDS spacing token의 작은 단계로 줄이고 primary send/stop의 radius를 shell corner에 맞춥니다. DOM/read order, focus ring, autosize, state, submit/stop과 live-region 계약은 comfortable과 같습니다.
-- Portal처럼 폭과 세로 공간이 제한된 consumer는 density="compact", 필요한 최소 minRows, 우선순위가 높은 utility만 composer 안에 조합합니다. 긴 scope/model selector를 compact가 임의로 숨기거나 재배치하지 않습니다.
 
 ## Content and writing
 
@@ -10080,6 +10101,14 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 />
 ```
 
+### 추가 조합 2
+
+```jsx
+<MessageComposer layout="inline" density="compact" minRows={1} maxRows={6}
+  value={draft} onValueChange={setDraft} onSubmit={send}
+  placeholder="무엇을 도와드릴까요?" />
+```
+
 ## Tokens and API
 
 ### Tokens
@@ -10112,9 +10141,9 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--space-0-5`
 - `--space-1`
 - `--space-10`
-- `--space-12`
 - `--space-2`
 - `--space-3`
+- `--space-8`
 
 ### Source contracts
 
@@ -10127,14 +10156,14 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 
 - MessageComposer prompt contract: `components/communication/MessageComposer.prompt.md`
 - Storybook implementation evidence: `stories/CommunicationMessageComposer.stories.jsx`
+- [MDN ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)
+- [WCAG Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
+- [OpenAI UI guidelines](https://developers.openai.com/plugins/concepts/ui-guidelines)
+- [Claude Academy](https://academy.claude.com/tutorials/getting-started-with-claude)
+- [Claude 제품 페이지](https://claude.com/ko/product/overview)
 - [Slack — Set your Enter key preference](https://slack.com/help/articles/115005523006-Set-your-Enter-key-preference)
 - [Slack — Use Slack with a screen reader](https://slack.com/help/articles/360000411963-Use-Slack-with-a-screen-reader)
 - [MDN — disabled HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/disabled)
-- [MDN — aria-disabled](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-disabled)
-- [Ant Design X Sender](https://x.ant.design/components/sender/)
-- [Ant Design X Attachments](https://x.ant.design/components/attachments/)
-- [Ant Design X Bubble](https://x.ant.design/components/bubble/)
-- [Carbon AI Chat overview](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Overview.html)
 
 
 ---
@@ -13385,7 +13414,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | --- | --- | --- | --- |
 | `columns` | `TableColumn[]` | Yes |  |
 | `rows` | `Row[]` | Yes |  |
-| `size` | `'sm' \| 'md'` | No | 행 밀도. @default "md" |
+| `size` | `'xs' \| 'sm' \| 'md'` | No | 행 밀도. xs: header 32px, single-line row minimum 36px (32px controls with padding grow to at least 36px). Wrapped/taller content grows naturally. @default "md" |
 | `hover` | `boolean` | No | 행 호버 워시. @default true |
 | `banded` | `boolean` | No | 모든 데이터 행에 가장 조용한 fill 밴드를 깝니다. 라벨과 측정값 사이가 먼 넓은 표에서 헤어라인 대신 밴드가 행의 시선을 잇습니다. 교차(지브라)가 아니라 전 행 밴드입니다 — 행이 적을 때 줄무늬는 강조로 오독됩니다. |
 | `columnLabelsHidden` | `boolean` | No | 열 라벨 밴드를 보조기술에만 남기고 시각적으로 감춥니다. 항목·값 표처럼 각 행이 자기 열을 스스로 말하는 표에서 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 쓰는 것을 막습니다. 은 그대로 남아 열 이름과 열 폭을 모두 유지하며, 감추는 것은 라벨과 밴드뿐입니다. |
@@ -13447,14 +13476,14 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 | Component | Relationship |
 | --- | --- |
+| `Icon` | 대표 시나리오에서 조합 |
+| `IconButton` | 대표 시나리오에서 조합 |
 | `AnnotatedImage` | 대표 시나리오에서 조합 |
 | `BarChart` | 대표 시나리오에서 조합 |
 | `Carousel` | 대표 시나리오에서 조합 |
 | `ChartFrame` | 대표 시나리오에서 조합 |
 | `DataCollectionPanel` | 대표 시나리오에서 조합 |
 | `DataExportAction` | 대표 시나리오에서 조합 |
-| `DataGrid` | 대표 시나리오에서 조합 |
-| `DataToolbar` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -13505,7 +13534,11 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - `--lk-table-cell-pad-sm`
 - `--lk-table-row-min-height-md`
 - `--lk-table-row-min-height-sm`
+- `--space-0-5`
+- `--space-1`
 - `--space-2`
+- `--space-3`
+- `--space-8`
 
 ### Source contracts
 
@@ -13525,7 +13558,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 - [WAI-ARIA APG Table pattern](https://www.w3.org/WAI/ARIA/apg/patterns/table/)
 - [Carbon Data table](https://carbondesignsystem.com/components/data-table/usage/)
 - [USWDS Table](https://designsystem.digital.gov/components/table/)
-- [Carbon Data table](https://carbondesignsystem.com/components/data-table/style/)
+- [WCAG Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
 
 
 ---
@@ -14150,6 +14183,8 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | `lastUpdatedLabel` | `React.ReactNode` | No | 마지막 업데이트 접두 레이블. @default "마지막 업데이트" |
 | `loadingContent` | `React.ReactNode` | No | 기본 Skeleton 구성을 대체하는 로딩 콘텐츠입니다. |
 | `messageVariant` | `'standalone' \| 'embedded'` | No | 상태 메시지 표면 모양. 부모 표면과 결합할 때만 "embedded"를 명시합니다. @default "standalone" |
+| `density` | `'comfortable' \| 'compact'` | No | Compact blocking state for a list/panel; preserved content and announcements stay unchanged. @default "comfortable" |
+| `emptyReason` | `'initial' \| 'search' \| 'filter'` | No | Distinguishes no records, no search matches and no filter matches when state="empty". Product owns the query and filtering. |
 | `headingLevel` | `number` | No | 차단 상태 제목의 heading 단계. 감싸는 표면의 제목보다 한 단계 아래를 전달합니다. @default 3 |
 | `children` | `React.ReactNode` | No | ready 상태의 콘텐츠 또는 refreshing/error/stale/offline에서 유지할 마지막 정상 콘텐츠입니다. 콘텐츠를 유지하면 오류·오프라인도 polite 상태로 알립니다. |
 
@@ -14160,6 +14195,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | state | 표시할 리소스 상태. @default "ready" |
 | loadingContent | 기본 Skeleton 구성을 대체하는 로딩 콘텐츠입니다. |
 | messageVariant | 상태 메시지 표면 모양. 부모 표면과 결합할 때만 "embedded"를 명시합니다. @default "standalone" |
+| emptyReason | Distinguishes no records, no search matches and no filter matches when state="empty". Product owns the query and filtering. |
 
 ## Behavior and interaction
 
@@ -14171,10 +14207,10 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 차단 상태(EmptyState) 제목의 heading 레벨은 headingLevel(기본 3)로 지정합니다. 감싸는 표면이 자신의 제목 레벨에 맞춰 내려주면 문서 위계(WCAG 1.3.1)가 유지됩니다. ChartFrame은 자기 제목 레벨 +1을 전달합니다. |
-| 명시 규칙 2 | 구현 전에 내부의 Banner(embedded/standalone seam), EmptyState(중앙 정렬 차단 상태), Skeleton(점진 로딩)을 비교했습니다. 외부 기준은 WCAG 2.2 Status Messages, WAI-ARIA Alert pattern, Primer Banner, Fluent MessageBar, Carbon contextual empty state, PatternFly Skeleton, PatternFly stale data warning입니다. |
+| 명시 규칙 2 | 목록 안 빈 상태 (D04, 2026-10-09) |
+| 명시 규칙 3 | density="compact"는 EmptyState size="sm"을 조합해 큰 색상 타일 대신 20px registry icon, 14px heading, 16px padding을 씁니다. 기본 comfortable과 공지·콘텐츠 보존 계약은 유지합니다. emptyReason="initial \| search \| filter"는 미등록(inbox), 검색 0건(search), 조건 0건(filter)의 기본 문구와 icon을 구분합니다. state="empty"에서만 적용되며 title/description/action override가 우선합니다. |
+| 명시 규칙 4 | 구현 전에 내부의 Banner(embedded/standalone seam), EmptyState(중앙 정렬 차단 상태), Skeleton(점진 로딩)을 비교했습니다. 외부 기준은 WCAG 2.2 Status Messages, WAI-ARIA Alert pattern, Primer Banner, Fluent MessageBar, Carbon contextual empty state, PatternFly Skeleton, PatternFly stale data warning입니다. |
 | --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
-| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
-| --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
 
 ## Content and writing
 
@@ -14242,13 +14278,14 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 - ResourceState prompt contract: `components/data/ResourceState.prompt.md`
 - Storybook implementation evidence: `stories/DataResourceState.stories.jsx`
+- [Carbon Empty states](https://www.carbondesignsystem.com/building-blocks/core/patterns/empty-states)
+- [WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)
 - [WCAG 2.2 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html)
 - [WAI-ARIA Alert pattern](https://www.w3.org/WAI/ARIA/apg/patterns/alert/)
 - [Primer Banner](https://primer.style/product/components/banner/guidelines/)
 - [Fluent MessageBar](https://fluent2.microsoft.design/components/web/react/core/messagebar/usage)
 - [Carbon contextual empty state](https://carbondesignsystem.com/patterns/empty-states-pattern/)
 - [PatternFly Skeleton](https://www.patternfly.org/components/skeleton/design-guidelines/)
-- [PatternFly stale data warning](https://www.patternfly.org/component-groups/status-and-state-indicators/stale-data-warning/)
 
 
 ---
@@ -14269,7 +14306,6 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 
 ### 사용하지 않음
 
-- 여러 필터의 host는 자식의 max-content 폭을 우선 보존하고 툴바 가용 폭으로 상한을 둡니다. 검색과 필터 합계가 control 행에 들어가면 한 줄을 유지하고, 실제 공간이 부족할 때만 필터 host가 다음 줄로 이동한 뒤 내부 control을 감쌉니다. 제품별 breakpoint나 고정 필터 폭은 DataToolbar가 소유하지 않습니다.
 - Classification: LK Product Extension. 선택 상태와 bulk action은 DataGrid가 소유하며 DataToolbar API에 중복하지 않습니다.
 - The header row is independent: title, description, count, or page-level actions keeps it present even when controls are omitted. If neither header content nor controls exist, DataToolbar returns null instead of leaving an empty bordered strip.
 
@@ -14307,7 +14343,7 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | `actions` | `React.ReactNode` | No | 우측 일반 액션 슬롯. |
 | `size` | `DataToolbarSize` | No | 밀도. @default "md" |
 | `variant` | `'standalone' \| 'embedded'` | No | 외곽선 소유. "embedded"는 툴바 자체 테두리·radius를 제거하고 하단 divider만 남겨, 부모 표면(section·Card) 안에서 헤더로 결합합니다. @default "standalone" |
-| `layout` | `'auto' \| 'wide' \| 'narrow'` | No | 반응형 control 정책. auto는 767px 이하 컨테이너에서 검색을 한 행으로 두고 필터를 Drawer trigger로 접습니다. @default "auto" |
+| `layout` | `'auto' \| 'wide' \| 'narrow'` | No | 반응형 control 정책. auto는 실제 필터·정렬 폭을 측정해 한 행 또는 검색/필터 두 행으로 배치합니다. 767px 이하이거나 필터·정렬만으로도 폭을 넘으면 필터를 Drawer trigger로 접습니다. @default "auto" |
 | `classNames` | `LdsClassNames` | No |  |
 | `styles` | `LdsStyles` | No |  |
 | `vars` | `LdsVars` | No |  |
@@ -14332,9 +14368,9 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | count는 ko-KR 천 단위 구분으로 렌더링됩니다(count={3941} → 3,941개). 결과 수 copy가 한국어로 고정된 표면이므로 grouping locale도 host 환경을 따르지 않고 함께 고정합니다. 숫자가 아닌 값은 그대로 통과시킵니다. |
-| 명시 규칙 2 | size="sm"은 검색과 render-prop filter control에 --control-h-sm(32px) compact 밀도를, 기본 md는 --component-input-height field 밀도(default 48px, ops 40px)를 제공합니다. SearchField·Select·Input 계열은 모두 이 토큰을 통해 해석되므로 profile을 바꿔도 한 행에서 서로 어긋나지 않습니다. |
-| 명시 규칙 3 | { size } context는 field 밀도입니다. action용 Button 척도(--component-button-height-)와 field 척도는 전역에서 합치지 않으므로, 같은 size를 Button에 그대로 넘겨도 높이는 일치하지 않습니다(의도된 분리). 필터 행의 Button은 control 행 중앙 정렬로 두고, 필드 높이에 실제로 맞물려야 하는 field+action 조합은 FieldAction이 소유합니다. FilterChip은 고유 32px pill 높이를 유지하며 control 행 중앙에 정렬됩니다. |
-| 명시 규칙 4 | 필터 trigger는 aria-haspopup="dialog", aria-expanded, aria-controls로 Drawer와 연결됩니다. activeFilterCount가 1 이상이면 trigger 라벨에 필터 3처럼 적용 수를 붙여 접힌 상태에서도 현재 query가 좁혀져 있음을 드러냅니다. 기본값이 아닌 필터 수의 계산은 제품이 소유합니다. |
+| 명시 규칙 2 | 기본 layout="auto"는 실제 필터 자식 폭과 간격, 정렬 폭을 합산해 그룹을 배치합니다. 검색의 최소 폭(기본 200px)까지 함께 들어가면 한 행을 유지하고, 그룹만 들어가면 검색을 첫 행 전체에, 필터·정렬을 다음 행에 둡니다. 그룹 자체가 가용 폭보다 넓으면 기존 narrow 필터 Drawer를 사용합니다. 필터만 두 줄로 갈라진 채 검색·정렬이 중간에 정렬되는 상태를 만들지 않습니다. 제품별 breakpoint나 고정 필터 폭은 DataToolbar가 소유하지 않습니다. |
+| 명시 규칙 3 | size="sm"은 검색과 render-prop filter control에 --control-h-sm(32px) compact 밀도를, 기본 md는 --component-input-height field 밀도(default 48px, ops 40px)를 제공합니다. SearchField·Select·Input 계열은 모두 이 토큰을 통해 해석되므로 profile을 바꿔도 한 행에서 서로 어긋나지 않습니다. |
+| 명시 규칙 4 | { size } context는 field 밀도입니다. action용 Button 척도(--component-button-height-)와 field 척도는 전역에서 합치지 않으므로, 같은 size를 Button에 그대로 넘겨도 높이는 일치하지 않습니다(의도된 분리). 필터 행의 Button은 control 행 중앙 정렬로 두고, 필드 높이에 실제로 맞물려야 하는 field+action 조합은 FieldAction이 소유합니다. FilterChip은 고유 32px pill 높이를 유지하며 control 행 중앙에 정렬됩니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
@@ -14354,8 +14390,9 @@ const [expandedRowIds, setExpandedRowIds] = React.useState([]);
 ## Accessibility
 
 - WAI-ARIA APG Table pattern에 따라 DataToolbar가 표의 native semantics나 keyboard model을 대신하지 않습니다. 검색과 action은 각 native control의 정상 Tab 순서를 유지합니다.
+- 필터 trigger는 aria-haspopup="dialog", aria-expanded, aria-controls로 Drawer와 연결됩니다. activeFilterCount가 1 이상이면 trigger 라벨에 필터 3처럼 적용 수를 붙여 접힌 상태에서도 현재 query가 좁혀져 있음을 드러냅니다. 기본값이 아닌 필터 수의 계산은 제품이 소유합니다.
 - 필터 Drawer는 density="compact"이며 filterPanelTitle을 제목으로, filterCloseLabel을 footer의 full-width 확정 action으로 사용합니다. 필터 자식은 filterPanel part 안에서 세로로 쌓이고 전체 폭을 채웁니다. 닫히면 Drawer 계약대로 trigger로 초점을 복원합니다. 같은 filters 노드가 wide host와 Drawer 양쪽에 렌더링되므로 필터 상태는 항상 제품 state에 두고 자식 내부 state에 의존하지 않습니다.
-- 반응형 규칙은 #lk-data-toolbar-layout head style 하나로 주입되며(Input의 placeholder 패턴), 루트는 grid 행당 정확히 한 DOM 자식만 가집니다. narrow에서 숨겨지는 wide host는 display:none이므로 Tab 순서에 남지 않습니다. 반대로 wide에서는 narrow trigger 행이 display:none입니다.
+- 반응형 규칙은 #lk-data-toolbar-layout head style 하나로 주입되며(Input의 placeholder 패턴), 루트는 grid 행당 정확히 한 DOM 자식만 가집니다. auto의 narrow 배치에서 wide host는 visibility:hidden과 화면 밖 고정 위치로 숨겨 Tab 순서와 접근성 트리에서 제외하면서 폭을 측정합니다. 이 측정으로 화면을 넓히거나 필터를 줄였을 때 넓은 배치로 복귀합니다. 명시적 narrow의 wide host와 넓은 배치의 narrow trigger 행은 display:none입니다.
 
 ## Related components
 
@@ -18155,6 +18192,7 @@ DashboardShell topology="rail-panel"의 둘째 열입니다. 고정 머리(제�
 | --- | --- | --- | --- |
 | `title` | `React.ReactNode` | Yes | 패널 제목. 안의 목록 nav가 aria-labelledby로 이 제목을 이름으로 씁니다. |
 | `headingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | No | 제목 heading 단계. @default 2 |
+| `density` | `'comfortable' \| 'compact'` | No | Compact header uses 14px/20px title and 40px minimum height. Pair destination children with ListCell small typography, small verticalPadding and spacing-token paddingX. @default "comfortable" |
 | `actions` | `React.ReactNode` | No | 머리 오른쪽 아이콘 동작(예: 검색). 최대 2개이며 넘치면 개발 경고를 냅니다. 접기 토글은 두지 않습니다. |
 | `primaryAction` | `ShellPanelPrimaryAction \| React.ReactNode` | No | 목록 행과 같은 해부의 주 동작 행(예: 새 질문). 객체를 주면 LDS 행으로 렌더링합니다. |
 | `renderLink` | `(action: ShellPanelPrimaryAction, props: React.AnchorHTMLAttributes) = React.ReactElement` | No | primaryAction.href를 router link로 치환하는 렌더 훅. |
@@ -18168,6 +18206,7 @@ DashboardShell topology="rail-panel"의 둘째 열입니다. 고정 머리(제�
 
 - 앞쪽 색 띠, 카드 테두리, 그림자, 강조색 선택 표시는 쓰지 않습니다.
 - ShellPanel — DashboardShell topology="rail-panel"의 맥락 패널. 레일이 고른 영역 안의 긴 목록 하나를 고정 머리, 주 동작 행, 고정 구역, 스크롤 구역 하나로 보여 줍니다.
+- 승인된 동작 행 개정 (D02, 2026-10-09).
 
 ## 정량 규칙
 
@@ -18175,13 +18214,13 @@ DashboardShell topology="rail-panel"의 둘째 열입니다. 고정 머리(제�
 | --- | --- |
 | 명시 규칙 1 | 폭은 셸이 소유합니다(--component-shell-panel-width 240px, SideNav 기본 폭과 같음). 제품은 --lds-dashboard-shell-panel-width로 224–288px 사이에서만 조정합니다. 패널 안 콘텐츠는 그 폭을 채웁니다. 크기 조절 핸들은 두지 않습니다. |
 | 명시 규칙 2 | 표면은 SideNav neutral과 같은 navy-wash 면(--component-shell-panel-surface)과 1px 끝 구분선이며 그림자는 없습니다. 좁은 범위 overlay에서만 셸이 덮는 쪽 그림자를 둡니다. |
-| 명시 규칙 3 | 주 동작 행은 SideNav neutral 행과 같은 radius, 무채색 hover(cool-neutral-97)·selected(-96)·pressed(-95) 단계, label-normal 선택 잉크, 굵기를 씁니다. 패널 행 높이는 40px로 SideNav 44px 최상위 행보다 한 단계 촘촘하고 대화 행(36px)보다 한 단계 큽니다. 주 동작이 목록 행보다 먼저 읽히게 하는 위계 차이입니다. |
+| 명시 규칙 3 | 주 동작 행은 SideNav neutral과 같은 radius·hover·pressed·focus token을 씁니다. 36px/14px은 대화 행과 같고 평소 selected fill은 생략합니다. 영역 선택은 레일이, 동작의 현재 화면은 aria-current와 semibold가 표시합니다. |
 | 명시 규칙 4 | Atlassian navigation system layout — side nav는 머리와 꼬리가 고정이고 가운데만 스크롤됩니다. 각 랜드마크에 고유 이름을 붙이고 1024px 이하에서 panel은 overlay가 됩니다. 머리 고정 + 스크롤 구역 하나, 768–1023px overlay에 반영했습니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
 
-- 좁은 화면에서는 셸이 같은 패널을 드로어 안 영역 행 아래에 그립니다. 그때도 스크롤 구역은 하나입니다.
+- 좁은 화면에서는 셸이 같은 패널을 드로어 안 영역 행 아래에 그립니다. 그때는 Drawer 본문이 영역·패널·계정 전체의 유일한 세로 스크롤을 소유합니다.
 - Fluent 2 Nav usage — 보조 동작은 하나로 줄이고 나머지는 overflow 메뉴에 둡니다. 머리 동작 최대 2개의 근거입니다.
 - 의도적 제외: 패널 너비 조절, 패널 안 디스클로저 그룹(그런 계층은 SideNav), 패널 안 SideNav 전체, 무한 스크롤, 사용자별 접힘 저장(제품 소유).
 
@@ -18195,7 +18234,9 @@ DashboardShell topology="rail-panel"의 둘째 열입니다. 고정 머리(제�
 
 - 패널은 랜드마크가 아닙니다. 안의 목록(ConversationList)이 패널 제목을 aria-labelledby로 쓰는 nav가 됩니다. 레일 nav와 이름이 같으면 DashboardShell이 개발 경고를 냅니다.
 - WAI-ARIA APG Landmark Regions — nav가 여럿이면 고유 이름, 보이는 제목이 있으면 aria-labelledby.
-- 1. 머리(56px, 고정): 제목(h2 기본, headingLevel)과 오른쪽 actions(아이콘 버튼 최대 2개, 넘치면 개발 경고). 접기 토글은 두지 않습니다. 토글은 셸 상단 바 시작에 하나만 둡니다(SideNav와 같은 원칙). 2. 주 동작 행(선택, 고정): primaryAction 객체는 버튼 모양이 아니라 목록 행과 같은 해부(아이콘 + 라벨, 40px)의 링크입니다. 해당 화면이면 current: true로 aria-current="page", 무채색 채움, 굵기를 받습니다. 노드를 직접 넘길 수도 있지만 행 해부는 제품 책임이 됩니다. 3.
+- D01의 density="compact"는 패널 제목 label1(14px/20px)과 header 최소40px를 공개합니다. 기본 comfortable의 제목16px/header56px는 유지합니다. children의 목적지 행은 ListCell typography="small" verticalPadding="small" paddingX="var(--space-2)"로 조합합니다. 8px 외곽 inset + 8px 행 padding은 ConversationList와 같은 16px 글자 시작점을 만듭니다.
+- 주 동작은 목적지 선택과 구분해 36px/14px과 투명한 idle background를 사용합니다. primaryAction.current의 aria-current는 유지하고 semibold로 current를 표시합니다. hover·pressed·keyboard focus는 기존 token, forced-colors는 Highlight 잉크와 bold입니다. ConversationList의 36px/14px과 ListCell small을 비교했고 레일 영역 선택은 그대로 둡니다.
+- 1. 머리(56px, 고정): 제목(h2 기본, headingLevel)과 오른쪽 actions(아이콘 버튼 최대 2개, 넘치면 개발 경고). 접기 토글은 두지 않습니다. 토글은 셸 상단 바 시작에 하나만 둡니다(SideNav와 같은 원칙). 2. 주 동작 행(선택, 고정): primaryAction 객체는 목록 행과 같은 해부(아이콘 + 라벨, 36px)의 링크입니다. 해당 화면이면 current: true로 aria-current="page"와 semibold를 받으며 평소 배경은 투명합니다. 노드를 직접 넘길 수도 있지만 행 해부는 제품 책임이 됩니다. 3.
 
 ## Related components
 
@@ -18241,25 +18282,25 @@ DashboardShell topology="rail-panel"의 둘째 열입니다. 고정 머리(제�
 - `--_lds-shell-panel-pressed-foreground`
 - `--body1-line`
 - `--body1-size`
-- `--component-shell-panel-active-hover-surface`
-- `--component-shell-panel-active-surface`
+- `--component-conversation-list-row-height`
 - `--component-shell-panel-divider`
 - `--component-shell-panel-foreground`
 - `--component-shell-panel-header-height`
 - `--component-shell-panel-hover-foreground`
 - `--component-shell-panel-hover-surface`
 - `--component-shell-panel-pressed-surface`
-- `--component-shell-panel-row-height`
 - `--component-shell-panel-surface`
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`
 - `--fw-bold`
 - `--fw-medium`
+- `--fw-semibold`
 - `--label1-line`
 - `--label1-size`
 - `--radius-lg`
 - `--space-1`
+- `--space-10`
 - `--space-2`
 - `--space-3`
 - `--space-4`
@@ -18735,7 +18776,7 @@ css
 | narrowNavigation | 좁은 화면의 navigation landmark 슬롯. BottomNav를 사용합니다. 생략하면 navigation이 좁은 화면에서 본문 앞에 유지됩니다. |
 | temporaryNavigation | 좁은 화면에서 modal Drawer로 표시할 계층형 탐색 슬롯. 제공하면 좁은 화면에서 넓은 navigation은 숨고 본문은 그대로 유지됩니다. |
 | temporaryNavigationOpen | temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false |
-| onTemporaryNavigationClose | Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청. |
+| onTemporaryNavigationClose | Escape, scrim, 닫기 버튼 또는 narrow→wide 전환으로 temporaryNavigation을 닫아 달라는 요청. 부모는 열린 상태를 false로 갱신합니다. |
 | temporaryNavigationId | 헤더 trigger의 aria-controls와 연결할 Drawer dialog id. 생략하면 내부 id를 생성합니다. |
 
 ## Properties
@@ -18747,7 +18788,7 @@ css
 | `narrowNavigation` | `React.ReactNode` | No | 좁은 화면의 navigation landmark 슬롯. BottomNav를 사용합니다. 생략하면 navigation이 좁은 화면에서 본문 앞에 유지됩니다. |
 | `temporaryNavigation` | `React.ReactNode` | No | 좁은 화면에서 modal Drawer로 표시할 계층형 탐색 슬롯. 제공하면 좁은 화면에서 넓은 navigation은 숨고 본문은 그대로 유지됩니다. |
 | `temporaryNavigationOpen` | `boolean` | No | temporaryNavigation Drawer의 제품 소유 열린 상태. 넓은 화면에서는 렌더되지 않습니다. @default false |
-| `onTemporaryNavigationClose` | `() = void` | No | Escape, scrim, 닫기 버튼으로 temporaryNavigation을 닫아 달라는 요청. |
+| `onTemporaryNavigationClose` | `() = void` | No | Escape, scrim, 닫기 버튼 또는 narrow→wide 전환으로 temporaryNavigation을 닫아 달라는 요청. 부모는 열린 상태를 false로 갱신합니다. |
 | `temporaryNavigationId` | `string` | No | 헤더 trigger의 aria-controls와 연결할 Drawer dialog id. 생략하면 내부 id를 생성합니다. |
 | `temporaryNavigationTitle` | `React.ReactNode` | No | Drawer에 보이는 탐색 제목. |
 | `temporaryNavigationLabel` | `string` | No | Drawer dialog와 내부 navigation의 접근 가능한 이름. @default "주 탐색" |
@@ -18893,14 +18934,14 @@ css
 
 - DashboardShell prompt contract: `components/layout/DashboardShell.prompt.md`
 - Storybook implementation evidence: `stories/NavigationDashboard.stories.jsx`
+- [WAI-ARIA Modal Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
+- [MDN ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)
 - [Material NavigationRail](https://github.com/material-components/material-components-android/blob/master/docs/components/NavigationRail.md)
 - [NavigationDrawer](https://github.com/material-components/material-components-android/blob/master/docs/components/NavigationDrawer.md)
 - [Fluent 2 Nav](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
 - [Carbon UI shell left panel](https://carbondesignsystem.com/components/UI-shell-left-panel/usage/)
 - [Atlassian navigation system layout](https://atlassian.design/components/navigation-system/layout/usage)
 - [WAI-ARIA APG landmarks](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
-- [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/)
-- [Carbon UI shell accessibility](https://carbondesignsystem.com/components/UI-shell-header/accessibility/)
 
 
 ---
@@ -20279,14 +20320,14 @@ side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓
 
 - DashboardShell prompt contract: `components/layout/DashboardShell.prompt.md`
 - Storybook implementation evidence: `stories/LayoutDashboardShell.stories.jsx`
+- [WAI-ARIA Modal Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
+- [MDN ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)
 - [Material NavigationRail](https://github.com/material-components/material-components-android/blob/master/docs/components/NavigationRail.md)
 - [NavigationDrawer](https://github.com/material-components/material-components-android/blob/master/docs/components/NavigationDrawer.md)
 - [Fluent 2 Nav](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
 - [Carbon UI shell left panel](https://carbondesignsystem.com/components/UI-shell-left-panel/usage/)
 - [Atlassian navigation system layout](https://atlassian.design/components/navigation-system/layout/usage)
 - [WAI-ARIA APG landmarks](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
-- [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/)
-- [Carbon UI shell accessibility](https://carbondesignsystem.com/components/UI-shell-header/accessibility/)
 
 
 ---

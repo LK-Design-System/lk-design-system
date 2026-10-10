@@ -15,9 +15,9 @@
 ### 사용
 
 - light/dark 모두 LDS semantic input token을 사용하며 exact Figma color, product logo, provider selector와 custom shadow를 만들지 않습니다.
+- compact는 한 줄 textarea를 --space-8, textarea 세로 padding을 --space-1, shell/action 간격을 --space-0-5 중심으로 구성합니다. primary action은 기존 --component-button-height-sm과 Button --lds-button-radius의 --radius-md를 유지합니다. comfortable은 textarea 40px와 세로 inset16px를 쓰며 버튼 geometry와 interaction은 보존합니다.
 - 좁고 짧은 대화 열에서는 body Portal로 clipping을 탈출하되, 공유 primitive가 제공하는 collisionBoundary에 visible conversation column ref를 전달해 viewport와 그 열의 교집합 안에서 panel을 배치합니다. Portal target과 geometry boundary는 같은 책임이 아닙니다.
 - Slack — Set your Enter key preference는 Enter를 보내기로 선택하면 Shift+Enter로 줄바꿈하고, Enter를 줄바꿈으로 선택하면 Mac의 Command+Enter 또는 Windows/Linux의 Ctrl+Enter로 보내는 공식 제품 관습을 설명합니다. 이를 enter와 modifier-enter 계약에 반영했고, 긴 형식 작성에는 더 명시적인 button-only도 제공합니다.
-- Slack — Use Slack with a screen reader는 conversation 진입 시 message composer에 focus가 놓이고 Tab으로 primary action toolbar에 접근하며, 입력 후 Enter로 보내는 흐름을 설명합니다. 이에 따라 form/textarea/action에 각각 명시적 accessible name을 제공하고 제출 뒤 textarea focus를 복귀시키며, slot action을 DOM reading order에 유지합니다.
 
 ### 사용하지 않음
 
@@ -36,7 +36,7 @@
 | description | Supporting text announced with the textarea. |
 | leadingActions | Actions rendered at the leading edge of the action band below the textarea. |
 | trailingActions | Actions rendered at the trailing edge of the action band before the primary send/stop control. |
-| submitLabel | Accessible name for the 32px submit control. @default "메시지 보내기" |
+| submitLabel | Accessible name for the submit control (stacked 32px / inline 44px). @default "메시지 보내기" |
 
 ## Properties
 
@@ -46,7 +46,8 @@
 | `onValueChange` | `(value: string, event: React.ChangeEvent) = void` | Yes | Receives the next controlled value and original textarea change event. |
 | `onSubmit` | `(value: string, reason: MessageComposerSubmitReason) = void` | Yes | Receives the current value and the explicit submit trigger. |
 | `state` | `MessageComposerState` | No | Product-owned request/response lifecycle. @default "idle" |
-| `density` | `MessageComposerDensity` | No | Composer-owned spacing density. Comfortable preserves the legacy rendering; compact reduces vertical space for narrow panels without shrinking the 32px primary action. @default "comfortable" |
+| `density` | `MessageComposerDensity` | No | Composer-owned spacing density. Stacked inputs start at 40px comfortable / 32px compact; inline starts at 44px. All keep 16px input text. @default "comfortable" |
+| `layout` | `MessageComposerLayout` | No | Inline puts a simple textarea and 44px send/stop control on one row (50px shell). Long drafts grow up to maxRows. Attachments or leading/trailing actions use the full-width stacked anatomy, retaining the 44px primary target. @default "stacked" |
 | `submitMode` | `MessageComposerSubmitMode` | No | Keyboard submission rule. modifier-enter accepts Alt-free Ctrl/Meta+Enter only. @default "enter" |
 | `canSubmit` | `boolean` | No | Explicit submit eligibility. Defaults to whether the trimmed value is non-empty. |
 | `readOnly` | `boolean` | No | Keep the draft focusable but prevent editing and submission. @default false |
@@ -56,16 +57,15 @@
 | `placeholder` | `string` | No | Internal textarea placeholder. @default "메시지를 입력하세요." |
 | `description` | `React.ReactNode` | No | Supporting text announced with the textarea. |
 | `maxLength` | `number` | No | Native maximum character count and visible counter. |
-| `minRows` | `number` | No | Minimum autosize rows; one row starts at 48px in comfortable density and 40px in compact density. @default 1 |
+| `minRows` | `number` | No | Minimum autosize rows; grows with content and container width up to maxRows. @default 1 |
 | `maxRows` | `number` | No | Maximum autosize rows before internal scrolling. @default 6 |
 | `attachments` | `React.ReactNode` | No | Attachment preview/list slot rendered inside the composer shell before the control row. |
 | `leadingActions` | `React.ReactNode` | No | Actions rendered at the leading edge of the action band below the textarea. |
 | `trailingActions` | `React.ReactNode` | No | Actions rendered at the trailing edge of the action band before the primary send/stop control. |
-| `submitLabel` | `string` | No | Accessible name for the 32px submit control. @default "메시지 보내기" |
-| `stopLabel` | `string` | No | Accessible name for the 32px stop control. @default "응답 중지" |
+| `submitLabel` | `string` | No | Accessible name for the submit control (stacked 32px / inline 44px). @default "메시지 보내기" |
+| `stopLabel` | `string` | No | Accessible name for the stop control (stacked 32px / inline 44px). @default "응답 중지" |
 | `onStop` | `() = void` | No | Requests transport cancellation in submitting/streaming states. |
 | `textareaProps` | `MessageComposerTextareaProps` | No | Native textarea attributes and event hooks not owned by the controlled contract. |
-| `disabled` | `false` | No |  |
 
 ## States
 
@@ -88,18 +88,18 @@
 
 | Subject | Rule |
 | --- | --- |
-| 명시 규칙 1 | composition session과 KeyboardEvent.isComposing을 함께 확인하고 legacy IME keyCode 229도 방어해 한글·일본어·중국어 확정 Enter가 submit으로 이어지지 않게 합니다. 조합 확정 직후에는 같은 keydown을 제출 동작으로 재사용하지 않습니다. |
-| 명시 규칙 2 | focus 표시는 shell 하나가 소유합니다. textarea에 focus가 있으면 shell border만 중립 회색 --component-message-composer-border-focus(cool-neutral-60, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고, primary 색 border·focus-ring halo·두께 변화는 없습니다(2026-10-09 owner 결정, Claude·ChatGPT 작성창처럼 작성 중에는 caret이 입력 위치를 알립니다). |
-| 명시 규칙 3 | textarea는 comfortable의 48px 또는 compact의 40px 한 줄 높이에서 시작해 minRows/maxRows 범위에서 커지고 최대 높이 뒤에는 내부 scrolling을 사용합니다. |
-| 명시 규칙 4 | 320px에서는 textarea가 먼저 전체 draft 폭을 확보하고 하단 action band가 wrap합니다. action을 숨기거나 action 수 때문에 입력 열을 축소하지 않으며, slot content도 자체 wrapping/overflow policy를 제공해야 합니다. |
+| 명시 규칙 1 | density는 comfortable \| compact입니다. 2026-10-09 승인된 D03 개정으로 stacked 한 줄 입력은 comfortable 40px, compact 32px에서 시작합니다. 16px 입력 글자, 24px line-height와 기존 버튼 모서리는 유지합니다. stacked send/stop은 32px입니다. |
+| 명시 규칙 2 | layout은 stacked \| inline이며 기본값은 stacked입니다. 단순 작성에서 명시한 inline은 textarea와 send/stop을 같은 행에 배치합니다. 입력/내장 action 최소 44px, shell 2px inset과 1px border를 합해 빈 초안 shell은 약 50px입니다. density와 별도 anatomy 축이며 설치된 0.4.7에는 없습니다. |
+| 명시 규칙 3 | composition session과 KeyboardEvent.isComposing을 함께 확인하고 legacy IME keyCode 229도 방어해 한글·일본어·중국어 확정 Enter가 submit으로 이어지지 않게 합니다. 조합 확정 직후에는 같은 keydown을 제출 동작으로 재사용하지 않습니다. |
+| 명시 규칙 4 | focus 표시는 shell 하나가 소유합니다. textarea에 focus가 있으면 shell border만 중립 회색 --component-message-composer-border-focus(cool-neutral-60, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고, primary 색 border·focus-ring halo·두께 변화는 없습니다(2026-10-09 owner 결정, Claude·ChatGPT 작성창처럼 작성 중에는 caret이 입력 위치를 알립니다). |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
 
-- density는 comfortable | compact이며 기본 comfortable은 기존 렌더링의 크기와 간격을 그대로 보존합니다. 좁은 패널에서만 compact를 명시합니다.
 - submitMode="button-only": Enter를 항상 줄바꿈으로 남기고 button만 제출합니다.
+- stacked textarea는 comfortable 40px 또는 compact 32px, inline은 44px의 한 줄 높이에서 시작해 minRows/maxRows 범위에서 커지고 최대 높이 뒤에는 내부 scrolling을 사용합니다. 초안과 컨테이너 폭 변경 모두 재계산합니다.
+- 320px stacked 및 slot을 전달한 확장 구조에서는 textarea가 먼저 전체 draft 폭을 확보하고 하단 action band가 wrap합니다. 단순 inline은 send44px을 제외한 입력 폭을 쓰고 긴 초안을 높이로 확장합니다. action을 숨기지 않으며 slot content도 자체 wrapping/overflow policy를 제공해야 합니다.
 - compact는 textarea 세로 padding, shell inset, attachment 상단 inset과 action/status gap을 LDS spacing token의 작은 단계로 줄이고 primary send/stop의 radius를 shell corner에 맞춥니다. DOM/read order, focus ring, autosize, state, submit/stop과 live-region 계약은 comfortable과 같습니다.
-- Portal처럼 폭과 세로 공간이 제한된 consumer는 density="compact", 필요한 최소 minRows, 우선순위가 높은 utility만 composer 안에 조합합니다. 긴 scope/model selector를 compact가 임의로 숨기거나 재배치하지 않습니다.
 
 ## Content and writing
 
@@ -150,6 +150,14 @@
 />
 ```
 
+### 추가 조합 2
+
+```jsx
+<MessageComposer layout="inline" density="compact" minRows={1} maxRows={6}
+  value={draft} onValueChange={setDraft} onSubmit={send}
+  placeholder="무엇을 도와드릴까요?" />
+```
+
 ## Tokens and API
 
 ### Tokens
@@ -182,9 +190,9 @@
 - `--space-0-5`
 - `--space-1`
 - `--space-10`
-- `--space-12`
 - `--space-2`
 - `--space-3`
+- `--space-8`
 
 ### Source contracts
 
@@ -197,11 +205,11 @@
 
 - MessageComposer prompt contract: `components/communication/MessageComposer.prompt.md`
 - Storybook implementation evidence: `stories/CommunicationMessageComposer.stories.jsx`
+- [MDN ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)
+- [WCAG Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
+- [OpenAI UI guidelines](https://developers.openai.com/plugins/concepts/ui-guidelines)
+- [Claude Academy](https://academy.claude.com/tutorials/getting-started-with-claude)
+- [Claude 제품 페이지](https://claude.com/ko/product/overview)
 - [Slack — Set your Enter key preference](https://slack.com/help/articles/115005523006-Set-your-Enter-key-preference)
 - [Slack — Use Slack with a screen reader](https://slack.com/help/articles/360000411963-Use-Slack-with-a-screen-reader)
 - [MDN — disabled HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/disabled)
-- [MDN — aria-disabled](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-disabled)
-- [Ant Design X Sender](https://x.ant.design/components/sender/)
-- [Ant Design X Attachments](https://x.ant.design/components/attachments/)
-- [Ant Design X Bubble](https://x.ant.design/components/bubble/)
-- [Carbon AI Chat overview](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Overview.html)

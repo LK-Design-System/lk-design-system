@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "1e67bb1513cd705f6119e6185ff08ca620bdcd74415202df84e28ee9b20d6957",
+    "storybookIndexSha256": "bd50eda9416ac9b96391b323eda0e8ede78910139d2f964272af35d3b62ea729",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,24 +62,24 @@
   },
   "summary": {
     "pages": 202,
-    "stories": 783,
-    "publicStories": 547,
+    "stories": 793,
+    "publicStories": 557,
     "hiddenStories": 236,
     "componentDescriptions": 197,
     "pagesWithVisibleCanvasIntroduction": 197,
     "pagesWithDecisionGuidance": 190,
-    "describedPublicStories": 547,
+    "describedPublicStories": 557,
     "reviewedPages": 202,
-    "reviewedStories": 783,
+    "reviewedStories": 793,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
       "overview": 185,
       "usage": 42,
-      "variants-states": 126,
-      "interaction": 59,
-      "responsive": 90,
+      "variants-states": 128,
+      "interaction": 63,
+      "responsive": 94,
       "scenario": 29,
       "visual-parity": 102,
       "internal-contract": 130
@@ -93,8 +93,8 @@
     "layers": {
       "Core": {
         "pages": 66,
-        "stories": 243,
-        "public": 135,
+        "stories": 245,
+        "public": 137,
         "hidden": 108,
         "guideReadyPages": 66
       },
@@ -107,8 +107,8 @@
       },
       "Product": {
         "pages": 115,
-        "stories": 507,
-        "public": 387,
+        "stories": 515,
+        "public": 395,
         "hidden": 120,
         "guideReadyPages": 114
       },
@@ -1444,7 +1444,7 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/ContentListsMedia.stories.jsx",
-      "sourceSha256": "04b024d616116a6820cad119ba7b0e37902d27814178b04fe57b1094b0fd2711",
+      "sourceSha256": "6113918f42d971732d7522dd2fbe0e42133cc8b1596c2dca771936aa185c1c6f",
       "primaryOwner": "ListCell",
       "ownerComponents": [
         "Accordion",
@@ -1457,13 +1457,13 @@
         "StatusBadge"
       ],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-content-lists--lists",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -1473,8 +1473,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "04b024d616116a6820cad119ba7b0e37902d27814178b04fe57b1094b0fd2711",
+      "reviewedAt": "2026-10-10",
+      "reviewedSourceSha256": "6113918f42d971732d7522dd2fbe0e42133cc8b1596c2dca771936aa185c1c6f",
       "stories": [
         {
           "id": "lds-core-components-content-lists--lists",
@@ -1531,6 +1531,29 @@
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
         },
         {
+          "id": "lds-core-components-content-lists--small-destination-typography",
+          "name": "변형·상태 · 작은 목적지 글자",
+          "exportName": "SmallDestinationTypography",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ListCell"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Purpose, public Korean role/name/order and owner/visibility reviewed. Reviewed small destination typography purpose, selected/disabled states and density against unchanged Docs/Canvas evidence. Exact source69e9fd8e / Pages38029499748; unchanged prior evidence reused."
+        },
+        {
           "id": "lds-core-components-content-lists--list-cell-accordion-card",
           "name": "ListCell · Accordion card parity",
           "exportName": "ListCellAccordionCard",
@@ -1555,7 +1578,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\n2026-10-10 scoped9-page/10-story delta review: Reviewed small destination typography purpose, selected/disabled states and density against unchanged Docs/Canvas evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained."
     },
     {
       "title": "LDS Core/Components/Content/Media Patterns",
@@ -5838,7 +5861,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormSearchAutocomplete.stories.jsx",
-      "sourceSha256": "5669b41b48a149c68c51100621837f05e27f4d9fa0e42b33777bb34611406c41",
+      "sourceSha256": "23f21322544fa36fa5870ccddf844afdb3fb94f7f63c016af953be5b73a0d9f0",
       "primaryOwner": "SearchField",
       "ownerComponents": [
         "AutoComplete",
@@ -5847,16 +5870,17 @@
         "TagInput"
       ],
       "supportingComponents": [
-        "Icon"
+        "Icon",
+        "Input"
       ],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 7
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-selection-and-input-search-and-autocomplete--search-and-autocomplete",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -5866,8 +5890,8 @@
       "dispositionReason": "Kept as one LDS search/autocomplete page. The accepted local .fig snapshot has no WDS Search Field, Autocomplete, Combobox, or Tag Input component-set (only Search and Tag icons match); WDS Selection and Input centers on the single Textinput set. These are LDS extensions of Textinput, so splitting them into standalone WDS-component pages would invent taxonomy WDS does not define.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "5669b41b48a149c68c51100621837f05e27f4d9fa0e42b33777bb34611406c41",
+      "reviewedAt": "2026-10-10",
+      "reviewedSourceSha256": "23f21322544fa36fa5870ccddf844afdb3fb94f7f63c016af953be5b73a0d9f0",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-and-autocomplete",
@@ -5919,6 +5943,32 @@
           "supportingComponents": [
             "Icon"
           ]
+        },
+        {
+          "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-single-focus",
+          "name": "상호작용 · 단일 검색 포커스",
+          "exportName": "SearchSingleFocus",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SearchField"
+          ],
+          "supportingComponents": [
+            "Input"
+          ],
+          "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Purpose, public Korean role/name/order and owner/visibility reviewed. Reviewed single search focus purpose and layered focus treatment against unchanged Docs/Canvas evidence. Exact source69e9fd8e / Pages38029499748; unchanged prior evidence reused."
         },
         {
           "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-clear-focus-contract",
@@ -6084,7 +6134,7 @@
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-10 scoped9-page/10-story delta review: Reviewed single search focus purpose and layered focus treatment against unchanged Docs/Canvas evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Segmented Control",
@@ -9936,20 +9986,20 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationConversationList.stories.jsx",
-      "sourceSha256": "bcca6d49a922abe439b181368509ef67e36c39ce1492426e4b32cbeb4d699b6e",
+      "sourceSha256": "e86057a5f44b5c260d942891b50f1753fd7bc42f791b1414c897b40025c7049d",
       "primaryOwner": "ConversationList",
       "ownerComponents": [
         "ConversationList"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 3,
+        "public": 4,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-conversation-list--overview",
-        "describedPublicStories": 3,
+        "describedPublicStories": 4,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -9959,8 +10009,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-09",
-      "reviewedSourceSha256": "bcca6d49a922abe439b181368509ef67e36c39ce1492426e4b32cbeb4d699b6e",
+      "reviewedAt": "2026-10-10",
+      "reviewedSourceSha256": "e86057a5f44b5c260d942891b50f1753fd7bc42f791b1414c897b40025c7049d",
       "stories": [
         {
           "id": "lds-product-communication-conversation-list--overview",
@@ -9985,6 +10035,30 @@
           ],
           "supportingComponents": [],
           "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
+        },
+        {
+          "id": "lds-product-communication-conversation-list--long-title-space",
+          "name": "변형·상태 · 긴 제목과 행 동작",
+          "exportName": "LongTitleSpace",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ConversationList"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Purpose, public Korean role/name/order and owner/visibility reviewed. Reviewed long titles/actions; exact69e9 official desktop manager initial overall PASS, hover/click/tab/waitFor4/4, rerun0, fresh console errors0. Reused unchanged a6b direct Canvas390x600 and1440x1000 plus native Tab/Enter/Escape/menu/focus-return proof. Mobile manager addon-modal inert rerun is excluded and not certified. Exact source69e9fd8e / Pages38029499748; unchanged prior evidence reused."
         },
         {
           "id": "lds-product-communication-conversation-list--states",
@@ -10034,7 +10108,8 @@
           "supportingComponents": [],
           "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
         }
-      ]
+      ],
+      "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Reviewed long titles/actions; exact69e9 official desktop manager initial overall PASS, hover/click/tab/waitFor4/4, rerun0, fresh console errors0. Reused unchanged a6b direct Canvas390x600 and1440x1000 plus native Tab/Enter/Escape/menu/focus-return proof. Mobile manager addon-modal inert rerun is excluded and not certified. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained."
     },
     {
       "title": "LDS Product/Communication/Message",
@@ -10564,7 +10639,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageComposer.stories.jsx",
-      "sourceSha256": "3249f01ad9d7b5d602b0a5320b0d147a6f3e232620fe34afd8f532c2fda63665",
+      "sourceSha256": "ea765e087d1ce9483ae480e49b602aee30a20549567bd388426936a605fb92a0",
       "primaryOwner": "MessageComposer",
       "ownerComponents": [
         "MessageComposer"
@@ -10576,13 +10651,13 @@
         "IconButton"
       ],
       "visibility": {
-        "public": 7,
+        "public": 9,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-message-composer--message-composer-overview",
-        "describedPublicStories": 7,
+        "describedPublicStories": 9,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -10592,8 +10667,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-09",
-      "reviewedSourceSha256": "3249f01ad9d7b5d602b0a5320b0d147a6f3e232620fe34afd8f532c2fda63665",
+      "reviewedAt": "2026-10-10",
+      "reviewedSourceSha256": "ea765e087d1ce9483ae480e49b602aee30a20549567bd388426936a605fb92a0",
       "stories": [
         {
           "id": "lds-product-communication-message-composer--message-composer-overview",
@@ -10728,6 +10803,59 @@
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
         },
         {
+          "id": "lds-product-communication-message-composer--width-autosize",
+          "name": "상호작용 · 초안 유지와 폭 변경 자동 높이",
+          "exportName": "WidthAutosize",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "MessageComposer"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Purpose, public Korean role/name/order and owner/visibility reviewed. Reviewed inline composer and width-autosize purposes, retained draft and expansion contracts against unchanged Docs/Canvas evidence. Exact source69e9fd8e / Pages38029499748; unchanged prior evidence reused."
+        },
+        {
+          "id": "lds-product-communication-message-composer--inline-layout",
+          "name": "상호작용 · 한 행 작성과 구조 확장",
+          "exportName": "InlineLayout",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "MessageComposer"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Chip",
+            "Icon",
+            "IconButton"
+          ],
+          "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Purpose, public Korean role/name/order and owner/visibility reviewed. Reviewed inline composer and width-autosize purposes, retained draft and expansion contracts against unchanged Docs/Canvas evidence. Exact source69e9fd8e / Pages38029499748; unchanged prior evidence reused."
+        },
+        {
           "id": "lds-product-communication-message-composer--narrow-width",
           "name": "반응형 · 320px 좁은 폭",
           "exportName": "NarrowWidth",
@@ -10806,7 +10934,7 @@
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement.\n2026-10-10 scoped9-page/10-story delta review: Reviewed inline composer and width-autosize purposes, retained draft and expansion contracts against unchanged Docs/Canvas evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained."
     },
     {
       "title": "LDS Product/Communication/Message Feed",
@@ -13976,20 +14104,23 @@
       "layer": "Product",
       "family": "Collections",
       "importPath": "./stories/DataTable.stories.jsx",
-      "sourceSha256": "0970ef9f9aa6b37fe0f60a6a49ed090253c6ea036ad5c0debefc7877f39f3368",
+      "sourceSha256": "3e33a5aff70422d305a1bd870f633abbe11781989eca6157ce1c87288360dbc9",
       "primaryOwner": "Table",
       "ownerComponents": [
         "Table"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "Icon",
+        "IconButton"
+      ],
       "visibility": {
-        "public": 5,
+        "public": 6,
         "hidden": 6
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-collections-table--static-table",
-        "describedPublicStories": 5,
+        "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 2,
         "decisionGuidance": true
       },
@@ -13999,8 +14130,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-05",
-      "reviewedSourceSha256": "0970ef9f9aa6b37fe0f60a6a49ed090253c6ea036ad5c0debefc7877f39f3368",
+      "reviewedAt": "2026-10-10",
+      "reviewedSourceSha256": "3e33a5aff70422d305a1bd870f633abbe11781989eca6157ce1c87288360dbc9",
       "stories": [
         {
           "id": "lds-product-data-collections-table--static-table",
@@ -14145,6 +14276,32 @@
           "supportingComponents": []
         },
         {
+          "id": "lds-product-data-collections-table--compact-rows",
+          "name": "반응형 · 촘촘한 표",
+          "exportName": "CompactRows",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Table"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "IconButton"
+          ],
+          "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Purpose, public Korean role/name/order and owner/visibility reviewed. Reviewed compact rows purpose and responsive name prefix against unchanged Docs/Canvas evidence. Exact source69e9fd8e / Pages38029499748; unchanged prior evidence reused."
+        },
+        {
           "id": "lds-product-data-collections-table--table-semantics-contract",
           "name": "캡션과 행 헤더 계약",
           "exportName": "TableSemanticsContract",
@@ -14260,7 +14417,7 @@
           "reviewNote": "wrap 열이 고정 폭 열과 함께 있을 때 줄바꿈과 열 폭 배분을 고정하는 숨김 계약 스토리다."
         }
       ],
-      "reviewNote": "2026-09-09 re-review after the 0.2.6 additive axis: source, role, ownership and visibility unchanged; play and Axe clean in the static build.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement."
+      "reviewNote": "2026-09-09 re-review after the 0.2.6 additive axis: source, role, ownership and visibility unchanged; play and Axe clean in the static build.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement.\n2026-10-10 scoped9-page/10-story delta review: Reviewed compact rows purpose and responsive name prefix against unchanged Docs/Canvas evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained."
     },
     {
       "title": "LDS Product/Data/Collections/Tree",
@@ -14773,7 +14930,7 @@
       "layer": "Product",
       "family": "Display",
       "importPath": "./stories/DataResourceState.stories.jsx",
-      "sourceSha256": "500d0c0ec640a072e78ab012dcc0f957066ad35b6ed978faf9384aa2016c40bb",
+      "sourceSha256": "72c841ed344ccdb8c110bb7beba2dab81222ffead9c9c8b6f8d401edb7247977",
       "primaryOwner": "ResourceState",
       "ownerComponents": [
         "ResourceState"
@@ -14783,13 +14940,13 @@
         "StatusBadge"
       ],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-display-resource-state--preserved-data-states",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -14799,8 +14956,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-01",
-      "reviewedSourceSha256": "500d0c0ec640a072e78ab012dcc0f957066ad35b6ed978faf9384aa2016c40bb",
+      "reviewedAt": "2026-10-10",
+      "reviewedSourceSha256": "72c841ed344ccdb8c110bb7beba2dab81222ffead9c9c8b6f8d401edb7247977",
       "stories": [
         {
           "id": "lds-product-data-display-resource-state--preserved-data-states",
@@ -14830,6 +14987,29 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
+          "id": "lds-product-data-display-resource-state--compact-empty-reasons",
+          "name": "반응형 · 미등록·검색·필터 빈 목록",
+          "exportName": "CompactEmptyReasons",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ResourceState"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Purpose, public Korean role/name/order and owner/visibility reviewed. Reviewed compact empty reasons purpose and responsive name prefix against unchanged Docs/Canvas evidence. Exact source69e9fd8e / Pages38029499748; unchanged prior evidence reused."
+        },
+        {
           "id": "lds-product-data-display-resource-state--narrow-blocking-states",
           "name": "반응형 · 좁은 폭의 로딩과 차단 상태",
           "exportName": "NarrowBlockingStates",
@@ -14856,14 +15036,14 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-10 scoped9-page/10-story delta review: Reviewed compact empty reasons purpose and responsive name prefix against unchanged Docs/Canvas evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained."
     },
     {
       "title": "LDS Product/Data/Operations/Data Toolbar",
       "layer": "Product",
       "family": "Operations",
       "importPath": "./stories/DataToolbar.stories.jsx",
-      "sourceSha256": "88d77c843033ab655c1ba90fb7b13b51e8b91cf381eebe5e0eb6b6ee0f6ecdc6",
+      "sourceSha256": "ecf009c4e8e0f6785d329192b8ea9067b1b525f68aeb8c57ec587924f2c0e8e1",
       "primaryOwner": "DataToolbar",
       "ownerComponents": [
         "DataToolbar"
@@ -14877,13 +15057,13 @@
         "TextButton"
       ],
       "visibility": {
-        "public": 6,
+        "public": 7,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-data-operations-data-toolbar--toolbar-with-grid",
-        "describedPublicStories": 6,
+        "describedPublicStories": 7,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -14893,8 +15073,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-09-08",
-      "reviewedSourceSha256": "88d77c843033ab655c1ba90fb7b13b51e8b91cf381eebe5e0eb6b6ee0f6ecdc6",
+      "reviewedAt": "2026-10-10",
+      "reviewedSourceSha256": "ecf009c4e8e0f6785d329192b8ea9067b1b525f68aeb8c57ec587924f2c0e8e1",
       "stories": [
         {
           "id": "lds-product-data-operations-data-toolbar--toolbar-with-grid",
@@ -15059,6 +15239,33 @@
           "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
         },
         {
+          "id": "lds-product-data-operations-data-toolbar--adaptive-filter-group",
+          "name": "반응형 · 필터 그룹 단위 줄바꿈",
+          "exportName": "AdaptiveFilterGroup",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DataToolbar"
+          ],
+          "supportingComponents": [
+            "Button",
+            "Select"
+          ],
+          "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Purpose, public Korean role/name/order and owner/visibility reviewed. Reviewed adaptive filter-group purpose, public responsive role and intermediate-width grouping against unchanged Docs/Canvas evidence. Exact source69e9fd8e / Pages38029499748; unchanged prior evidence reused."
+        },
+        {
           "id": "lds-product-data-operations-data-toolbar--surface-ref-contract",
           "name": "Surface and ref contract",
           "exportName": "SurfaceRefContract",
@@ -15082,7 +15289,7 @@
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
-      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots."
+      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots.\n2026-10-10 scoped9-page/10-story delta review: Reviewed adaptive filter-group purpose, public responsive role and intermediate-width grouping against unchanged Docs/Canvas evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained."
     },
     {
       "title": "LDS Product/Data/Operations/Export Action",
@@ -18476,7 +18683,7 @@
       "layer": "Product",
       "family": "Layout",
       "importPath": "./stories/LayoutShellPanel.stories.jsx",
-      "sourceSha256": "5a0f534d44dc6c0685b0a8e5fd2934c00d2f393765e1a22db80f719c82088cf2",
+      "sourceSha256": "4bb88600c467c951821b174b90f8bdf044b3da3a22819b5741bb72df7d91d86f",
       "primaryOwner": "ShellPanel",
       "ownerComponents": [
         "ShellPanel"
@@ -18486,13 +18693,13 @@
         "IconButton"
       ],
       "visibility": {
-        "public": 3,
+        "public": 4,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-layout-shell-panel--overview",
-        "describedPublicStories": 3,
+        "describedPublicStories": 4,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -18502,8 +18709,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-09",
-      "reviewedSourceSha256": "5a0f534d44dc6c0685b0a8e5fd2934c00d2f393765e1a22db80f719c82088cf2",
+      "reviewedAt": "2026-10-10",
+      "reviewedSourceSha256": "4bb88600c467c951821b174b90f8bdf044b3da3a22819b5741bb72df7d91d86f",
       "stories": [
         {
           "id": "lds-product-layout-shell-panel--overview",
@@ -18583,6 +18790,30 @@
           "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
         },
         {
+          "id": "lds-product-layout-shell-panel--compact-destinations",
+          "name": "반응형 · 패널 제목과 목적지 밀도",
+          "exportName": "CompactDestinations",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "ShellPanel"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Purpose, public Korean role/name/order and owner/visibility reviewed. Reviewed compact destinations purpose, responsive name prefix and public role order against unchanged Docs/Canvas evidence. Exact source69e9fd8e / Pages38029499748; unchanged prior evidence reused."
+        },
+        {
           "id": "lds-product-layout-shell-panel--wide-panel-contract",
           "name": "맥락 패널 288px 계약",
           "exportName": "WidePanelContract",
@@ -18608,7 +18839,8 @@
           ],
           "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
         }
-      ]
+      ],
+      "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Reviewed compact destinations purpose, responsive name prefix and public role order against unchanged Docs/Canvas evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained."
     },
     {
       "title": "LDS Product/Navigation/Adaptive Navigation",
@@ -20594,7 +20826,7 @@
       "layer": "Product",
       "family": "Operations Dashboard",
       "importPath": "./stories/LayoutDashboardShell.stories.jsx",
-      "sourceSha256": "2228bb8ffa25114a583a3b2949e5db427c54ffa5dc8df60fc0116d17b99b147b",
+      "sourceSha256": "f441ec985f85eaf1bd0a71774b776f6c136ea1917c8a8e53bfc2ee8a6c1aeb0d",
       "primaryOwner": "DashboardShell",
       "ownerComponents": [
         "DashboardShell"
@@ -20607,6 +20839,7 @@
         "Container",
         "Icon",
         "IconButton",
+        "ListCell",
         "Lockup",
         "MetricCard",
         "NavRail",
@@ -20617,13 +20850,13 @@
         "UserMenu"
       ],
       "visibility": {
-        "public": 13,
+        "public": 14,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-layout-dashboard-shell--normal-width",
-        "describedPublicStories": 13,
+        "describedPublicStories": 14,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -20633,8 +20866,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-09",
-      "reviewedSourceSha256": "2228bb8ffa25114a583a3b2949e5db427c54ffa5dc8df60fc0116d17b99b147b",
+      "reviewedAt": "2026-10-10",
+      "reviewedSourceSha256": "f441ec985f85eaf1bd0a71774b776f6c136ea1917c8a8e53bfc2ee8a6c1aeb0d",
       "stories": [
         {
           "id": "lds-product-layout-dashboard-shell--normal-width",
@@ -20844,6 +21077,33 @@
             "TopBar",
             "UserMenu"
           ]
+        },
+        {
+          "id": "lds-product-layout-dashboard-shell--low-height-navigation",
+          "name": "상호작용 · 낮은 모바일 메뉴와 반응형 닫기",
+          "exportName": "LowHeightNavigation",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DashboardShell"
+          ],
+          "supportingComponents": [
+            "ListCell",
+            "NavRail"
+          ],
+          "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Purpose, public Korean role/name/order and owner/visibility reviewed. Reviewed low-height mobile menu purpose, canonical-reference Docs, last-destination reachability and Escape/focus-return contract against unchanged scoped evidence. Exact source69e9fd8e / Pages38029499748; unchanged prior evidence reused."
         },
         {
           "id": "lds-product-layout-dashboard-shell--rail-panel-collapse",
@@ -21085,7 +21345,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement."
+      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement.\n2026-10-10 scoped9-page/10-story delta review: Reviewed low-height mobile menu purpose, canonical-reference Docs, last-destination reachability and Escape/focus-return contract against unchanged scoped evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained."
     },
     {
       "title": "LDS Product/Overlay/Command Palette",

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "lds-expression-profile-visual-matrix",
-  "generatedAt": "2026-10-09",
+  "generatedAt": "2026-10-10",
   "matrix": {
     "profiles": [
       "default",
@@ -994,7 +994,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--default--light--normal.png",
-      "sha256": "68574537fb2da1a6f05dfa4d9d4c0f5975c2e4af0ffab7cc9e256cb4f63a9a4b"
+      "sha256": "065cf910d9624b0bf9cc7d9c59046747af881cee947585fcfeb2ee445a652532"
     },
     {
       "name": "navigation-overlay--ops--light--normal",

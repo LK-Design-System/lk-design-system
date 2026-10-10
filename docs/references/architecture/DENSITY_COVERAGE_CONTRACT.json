@@ -9,7 +9,7 @@
   },
   "source": {
     "componentRegistry": "docs/components/component-content.json",
-    "componentRegistryFingerprint": "5bbee6e9a6717a0dfbedb416ec08ed2f5353b8971dd042e43623b3a1f3429edf",
+    "componentRegistryFingerprint": "29eddfa540e5cdd5c59dff2c57ff0350ed7a4854af9847cf136782aa8c2a2d70",
     "expressionProfileContract": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
     "expressionProfileContractFingerprint": "88c3fd6a5eb8fb61896af87aa266ab3bf93cae9195c7b6eefd911d566c0a1b5c"
   },
@@ -17,8 +17,8 @@
     "entryCount": 214,
     "categoryCounts": {
       "profile-token-automatic": 7,
-      "explicit-size-density": 93,
-      "fixed": 99,
+      "explicit-size-density": 96,
+      "fixed": 96,
       "not-applicable": 15
     },
     "profileAwareEntries": 99
@@ -1127,14 +1127,12 @@
       "title": "ResourceState",
       "source": "components/data/ResourceState.jsx",
       "ownerLayer": "product",
-      "category": "fixed",
+      "category": "explicit-size-density",
       "profileAware": false,
-      "explicitAxes": [],
-      "profileTokens": [],
-      "owner": "LDS Product owner",
-      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
-      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
-      "nextReview": "2026-11-22"
+      "explicitAxes": [
+        "density"
+      ],
+      "profileTokens": []
     },
     {
       "id": "saved-view-control",
@@ -2104,16 +2102,14 @@
       "title": "ShellPanel",
       "source": "components/layout/ShellPanel.jsx",
       "ownerLayer": "product",
-      "category": "fixed",
+      "category": "explicit-size-density",
       "profileAware": true,
-      "explicitAxes": [],
+      "explicitAxes": [
+        "density"
+      ],
       "profileTokens": [
         "--dur-fast"
-      ],
-      "owner": "LDS Product owner",
-      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
-      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
-      "nextReview": "2026-11-22"
+      ]
     },
     {
       "id": "spacer",
@@ -2915,14 +2911,12 @@
       "title": "EmptyState",
       "source": "components/status/EmptyState.jsx",
       "ownerLayer": "core",
-      "category": "fixed",
+      "category": "explicit-size-density",
       "profileAware": false,
-      "explicitAxes": [],
-      "profileTokens": [],
-      "owner": "LDS Core owner",
-      "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
-      "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
-      "nextReview": "2026-11-22"
+      "explicitAxes": [
+        "size"
+      ],
+      "profileTokens": []
     },
     {
       "id": "meter",

@@ -181,6 +181,13 @@
       "owner": "ListCellProps"
     },
     {
+      "name": "typography",
+      "type": "\"small\" | \"medium\"",
+      "required": false,
+      "description": "Title typography. small is 14px/20px; with small verticalPadding a text-only row is 36px in the default profile. Tint selection uses bold weight. @default \"medium\"",
+      "owner": "ListCellProps"
+    },
+    {
       "name": "paddingY",
       "type": "number",
       "required": false,
@@ -192,13 +199,6 @@
       "type": "number | string",
       "required": false,
       "description": "좌우 패딩. @default 20",
-      "owner": "ListCellProps"
-    },
-    {
-      "name": "verticalAlign",
-      "type": "\"top\" | \"center\"",
-      "required": false,
-      "description": "세로 정렬. @default \"center\"",
       "owner": "ListCellProps"
     }
   ],
@@ -224,23 +224,23 @@
   "quantitativeRules": [
     {
       "subject": "명시 규칙 1",
-      "rule": "verticalPadding=\"small | medium | large\" 공개 문법은 유지하면서 각 값은 profile-aware component token을 읽습니다. default는 기존 8/12/16px이고 ops는 6/8/12px이다. 명시적 paddingY escape hatch가 token보다 우선하며 selection·keyboard·list semantics는 profile과 무관합니다. 정본은 docs/DENSITYANDEXPRESSIONPROFILECONTRACT.md입니다."
+      "rule": "공개 작은 글자 규격 (D01, 2026-10-09)"
     },
     {
       "subject": "명시 규칙 2",
+      "rule": "typography=\"small\"은 additive LDS Core 설계 개정입니다. label1 14px/20px을 쓰며 verticalPadding=\"small\"과 조합한 default profile 텍스트 전용 행은 36px입니다. 설명·leading·trailing이 더 크면 자연스럽게 늘어납니다. ops의 기존 6px padding은 유지하므로 ops 텍스트 행은 32px입니다. 기본 medium의 body1과 기존 축은 유지합니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "verticalPadding=\"small | medium | large\" 공개 문법은 유지하면서 각 값은 profile-aware component token을 읽습니다. default는 기존 8/12/16px이고 ops는 6/8/12px이다. 명시적 paddingY escape hatch가 token보다 우선하며 selection·keyboard·list semantics는 profile과 무관합니다. 정본은 docs/DENSITYANDEXPRESSIONPROFILECONTRACT.md입니다."
+    },
+    {
+      "subject": "명시 규칙 4",
       "rule": "반복되는 행은 반드시 리스트로 감싸세요. 감싸지 않으면 스크린리더가 \"3개 중 2번째\"를 읽지 못해 항목 수와 현재 위치가 사라집니다(WCAG 1.3.1)."
     },
     {
       "subject": "--body1-line",
       "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
-    },
-    {
-      "subject": "--body1-size",
-      "rule": "{\"fontSize\":\"16px\",\"lineHeight\":\"24px\",\"letterSpacing\":\"0.0057em\"}"
-    },
-    {
-      "subject": "--body2-size",
-      "rule": "15px"
     }
   ],
   "responsive": [],
@@ -325,6 +325,8 @@
     "--fw-medium",
     "--fw-regular",
     "--headline2-size",
+    "--label1-line",
+    "--label1-size",
     "--label2-line",
     "--label2-size",
     "--radius-lg",
@@ -353,6 +355,11 @@
       {
         "id": "lds-core-components-content-lists--list-cell-states",
         "name": "변형·상태 · 밀도와 선택 상태",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-core-components-content-lists--small-destination-typography",
+        "name": "변형·상태 · 작은 목적지 글자",
         "role": "variants-states"
       }
     ],

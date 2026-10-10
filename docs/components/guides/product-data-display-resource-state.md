@@ -47,6 +47,8 @@
 | `lastUpdatedLabel` | `React.ReactNode` | No | 마지막 업데이트 접두 레이블. @default "마지막 업데이트" |
 | `loadingContent` | `React.ReactNode` | No | 기본 Skeleton 구성을 대체하는 로딩 콘텐츠입니다. |
 | `messageVariant` | `'standalone' \| 'embedded'` | No | 상태 메시지 표면 모양. 부모 표면과 결합할 때만 "embedded"를 명시합니다. @default "standalone" |
+| `density` | `'comfortable' \| 'compact'` | No | Compact blocking state for a list/panel; preserved content and announcements stay unchanged. @default "comfortable" |
+| `emptyReason` | `'initial' \| 'search' \| 'filter'` | No | Distinguishes no records, no search matches and no filter matches when state="empty". Product owns the query and filtering. |
 | `headingLevel` | `number` | No | 차단 상태 제목의 heading 단계. 감싸는 표면의 제목보다 한 단계 아래를 전달합니다. @default 3 |
 | `children` | `React.ReactNode` | No | ready 상태의 콘텐츠 또는 refreshing/error/stale/offline에서 유지할 마지막 정상 콘텐츠입니다. 콘텐츠를 유지하면 오류·오프라인도 polite 상태로 알립니다. |
 
@@ -57,6 +59,7 @@
 | state | 표시할 리소스 상태. @default "ready" |
 | loadingContent | 기본 Skeleton 구성을 대체하는 로딩 콘텐츠입니다. |
 | messageVariant | 상태 메시지 표면 모양. 부모 표면과 결합할 때만 "embedded"를 명시합니다. @default "standalone" |
+| emptyReason | Distinguishes no records, no search matches and no filter matches when state="empty". Product owns the query and filtering. |
 
 ## Behavior and interaction
 
@@ -68,10 +71,10 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 차단 상태(EmptyState) 제목의 heading 레벨은 headingLevel(기본 3)로 지정합니다. 감싸는 표면이 자신의 제목 레벨에 맞춰 내려주면 문서 위계(WCAG 1.3.1)가 유지됩니다. ChartFrame은 자기 제목 레벨 +1을 전달합니다. |
-| 명시 규칙 2 | 구현 전에 내부의 Banner(embedded/standalone seam), EmptyState(중앙 정렬 차단 상태), Skeleton(점진 로딩)을 비교했습니다. 외부 기준은 WCAG 2.2 Status Messages, WAI-ARIA Alert pattern, Primer Banner, Fluent MessageBar, Carbon contextual empty state, PatternFly Skeleton, PatternFly stale data warning입니다. |
+| 명시 규칙 2 | 목록 안 빈 상태 (D04, 2026-10-09) |
+| 명시 규칙 3 | density="compact"는 EmptyState size="sm"을 조합해 큰 색상 타일 대신 20px registry icon, 14px heading, 16px padding을 씁니다. 기본 comfortable과 공지·콘텐츠 보존 계약은 유지합니다. emptyReason="initial \| search \| filter"는 미등록(inbox), 검색 0건(search), 조건 0건(filter)의 기본 문구와 icon을 구분합니다. state="empty"에서만 적용되며 title/description/action override가 우선합니다. |
+| 명시 규칙 4 | 구현 전에 내부의 Banner(embedded/standalone seam), EmptyState(중앙 정렬 차단 상태), Skeleton(점진 로딩)을 비교했습니다. 외부 기준은 WCAG 2.2 Status Messages, WAI-ARIA Alert pattern, Primer Banner, Fluent MessageBar, Carbon contextual empty state, PatternFly Skeleton, PatternFly stale data warning입니다. |
 | --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
-| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
-| --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
 
 ## Content and writing
 
@@ -139,10 +142,11 @@
 
 - ResourceState prompt contract: `components/data/ResourceState.prompt.md`
 - Storybook implementation evidence: `stories/DataResourceState.stories.jsx`
+- [Carbon Empty states](https://www.carbondesignsystem.com/building-blocks/core/patterns/empty-states)
+- [WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)
 - [WCAG 2.2 Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html)
 - [WAI-ARIA Alert pattern](https://www.w3.org/WAI/ARIA/apg/patterns/alert/)
 - [Primer Banner](https://primer.style/product/components/banner/guidelines/)
 - [Fluent MessageBar](https://fluent2.microsoft.design/components/web/react/core/messagebar/usage)
 - [Carbon contextual empty state](https://carbondesignsystem.com/patterns/empty-states-pattern/)
 - [PatternFly Skeleton](https://www.patternfly.org/components/skeleton/design-guidelines/)
-- [PatternFly stale data warning](https://www.patternfly.org/component-groups/status-and-state-indicators/stale-data-warning/)

@@ -16,11 +16,11 @@ side-first와 header-first 토폴로지, docked 탐색, 건너뛰기 링크, 넓
 
 - DashboardShell prompt contract: `components/layout/DashboardShell.prompt.md`
 - Storybook implementation evidence: `stories/LayoutDashboardShell.stories.jsx`
+- [WAI-ARIA Modal Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
+- [MDN ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)
 - [Material NavigationRail](https://github.com/material-components/material-components-android/blob/master/docs/components/NavigationRail.md)
 - [NavigationDrawer](https://github.com/material-components/material-components-android/blob/master/docs/components/NavigationDrawer.md)
 - [Fluent 2 Nav](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
 - [Carbon UI shell left panel](https://carbondesignsystem.com/components/UI-shell-left-panel/usage/)
 - [Atlassian navigation system layout](https://atlassian.design/components/navigation-system/layout/usage)
 - [WAI-ARIA APG landmarks](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
-- [Carbon UI shell usage](https://carbondesignsystem.com/components/UI-shell-header/usage/)
-- [Carbon UI shell accessibility](https://carbondesignsystem.com/components/UI-shell-header/accessibility/)

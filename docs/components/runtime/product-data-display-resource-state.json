@@ -107,6 +107,20 @@
       "owner": "ResourceStateProps"
     },
     {
+      "name": "density",
+      "type": "'comfortable' | 'compact'",
+      "required": false,
+      "description": "Compact blocking state for a list/panel; preserved content and announcements stay unchanged. @default \"comfortable\"",
+      "owner": "ResourceStateProps"
+    },
+    {
+      "name": "emptyReason",
+      "type": "'initial' | 'search' | 'filter'",
+      "required": false,
+      "description": "Distinguishes no records, no search matches and no filter matches when state=\"empty\". Product owns the query and filtering.",
+      "owner": "ResourceStateProps"
+    },
+    {
       "name": "headingLevel",
       "type": "number",
       "required": false,
@@ -133,6 +147,10 @@
     {
       "state": "messageVariant",
       "rule": "상태 메시지 표면 모양. 부모 표면과 결합할 때만 \"embedded\"를 명시합니다. @default \"standalone\""
+    },
+    {
+      "state": "emptyReason",
+      "rule": "Distinguishes no records, no search matches and no filter matches when state=\"empty\". Product owns the query and filtering."
     }
   ],
   "behavior": [
@@ -146,19 +164,19 @@
     },
     {
       "subject": "명시 규칙 2",
+      "rule": "목록 안 빈 상태 (D04, 2026-10-09)"
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "density=\"compact\"는 EmptyState size=\"sm\"을 조합해 큰 색상 타일 대신 20px registry icon, 14px heading, 16px padding을 씁니다. 기본 comfortable과 공지·콘텐츠 보존 계약은 유지합니다. emptyReason=\"initial | search | filter\"는 미등록(inbox), 검색 0건(search), 조건 0건(filter)의 기본 문구와 icon을 구분합니다. state=\"empty\"에서만 적용되며 title/description/action override가 우선합니다."
+    },
+    {
+      "subject": "명시 규칙 4",
       "rule": "구현 전에 내부의 Banner(embedded/standalone seam), EmptyState(중앙 정렬 차단 상태), Skeleton(점진 로딩)을 비교했습니다. 외부 기준은 WCAG 2.2 Status Messages, WAI-ARIA Alert pattern, Primer Banner, Fluent MessageBar, Carbon contextual empty state, PatternFly Skeleton, PatternFly stale data warning입니다."
     },
     {
       "subject": "--caption1-line",
       "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
-    },
-    {
-      "subject": "--caption1-size",
-      "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
-    },
-    {
-      "subject": "--color-semantic-label-alternative",
-      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
     }
   ],
   "responsive": [],
@@ -242,6 +260,11 @@
         "id": "lds-product-data-display-resource-state--preserved-data-states",
         "name": "개요",
         "role": "overview"
+      },
+      {
+        "id": "lds-product-data-display-resource-state--compact-empty-reasons",
+        "name": "반응형 · 미등록·검색·필터 빈 목록",
+        "role": "responsive"
       },
       {
         "id": "lds-product-data-display-resource-state--narrow-blocking-states",

@@ -18,6 +18,20 @@ const DATA_TOOLBAR_STYLES = `
 .lk-data-toolbar__narrow-sort>*{width:100%;max-width:100%}
 .lk-data-toolbar__filter-panel-content{display:grid;gap:var(--space-3);min-width:0}
 .lk-data-toolbar__filter-panel-content>*{width:100%;max-width:100%}
+
+/* Measure the entire filter/sort group before choosing a row. Select's
+   percentage-clamped min-width is not its max-content flex basis. */
+.lk-data-toolbar[data-control-flow="inline"]>.lk-data-toolbar__controls>.lk-data-toolbar__search{flex-basis:200px}
+.lk-data-toolbar[data-control-flow="stacked"]>.lk-data-toolbar__controls>.lk-data-toolbar__search{flex-basis:100%;max-width:none}
+.lk-data-toolbar[data-control-flow="stacked"]>.lk-data-toolbar__controls>.lk-data-toolbar__wide-controls{flex-basis:100%}
+.lk-data-toolbar[data-control-flow="inline"] .lk-data-toolbar__filters,.lk-data-toolbar[data-control-flow="stacked"] .lk-data-toolbar__filters{flex-shrink:0;flex-wrap:nowrap}
+.lk-data-toolbar[data-control-flow="narrow"]>.lk-data-toolbar__controls{display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch}
+.lk-data-toolbar[data-control-flow="narrow"]>.lk-data-toolbar__controls>.lk-data-toolbar__search{width:100%;max-width:none;min-width:0}
+.lk-data-toolbar[data-control-flow="narrow"]>.lk-data-toolbar__controls>.lk-data-toolbar__wide-controls{position:fixed;left:0;top:0;transform:translateX(-100%);visibility:hidden;pointer-events:none;width:max-content;max-width:none}
+.lk-data-toolbar[data-control-flow="narrow"] .lk-data-toolbar__filters{flex-wrap:nowrap}
+.lk-data-toolbar[data-control-flow="narrow"]>.lk-data-toolbar__controls>.lk-data-toolbar__narrow-controls{display:flex}
+.lk-data-toolbar[data-control-flow="narrow"]>.lk-data-toolbar__controls>.lk-data-toolbar__metadata{width:100%;margin-left:0}
+
 .lk-data-toolbar[data-layout="narrow"]>.lk-data-toolbar__controls{display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch}
 .lk-data-toolbar[data-layout="narrow"]>.lk-data-toolbar__controls>.lk-data-toolbar__search{width:100%;max-width:none;min-width:0}
 .lk-data-toolbar[data-layout="narrow"]>.lk-data-toolbar__controls>.lk-data-toolbar__wide-controls{display:none}
@@ -26,7 +40,7 @@ const DATA_TOOLBAR_STYLES = `
 @container lds-data-toolbar (max-width:767px){
   .lk-data-toolbar[data-layout="auto"]>.lk-data-toolbar__controls{display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch}
   .lk-data-toolbar[data-layout="auto"]>.lk-data-toolbar__controls>.lk-data-toolbar__search{width:100%;max-width:none;min-width:0}
-  .lk-data-toolbar[data-layout="auto"]>.lk-data-toolbar__controls>.lk-data-toolbar__wide-controls{display:none}
+  .lk-data-toolbar[data-layout="auto"]>.lk-data-toolbar__controls>.lk-data-toolbar__wide-controls{position:fixed;left:0;top:0;transform:translateX(-100%);visibility:hidden;pointer-events:none;width:max-content;max-width:none}
   .lk-data-toolbar[data-layout="auto"]>.lk-data-toolbar__controls>.lk-data-toolbar__narrow-controls{display:flex}
   .lk-data-toolbar[data-layout="auto"]>.lk-data-toolbar__controls>.lk-data-toolbar__metadata{width:100%;margin-left:0}
 }
@@ -34,6 +48,70 @@ const DATA_TOOLBAR_STYLES = `
 
 // Layout rules live in one head-level style tag (the Input placeholder
 // pattern) so the toolbar root keeps exactly one DOM child per grid row.
+function resolveControlFlow(width, wideWidth, searchMinimum, gap, searchable) {
+  if (width <= 767 || wideWidth > width) return 'narrow';
+  return searchable && searchMinimum + gap + wideWidth > width ? 'stacked' : 'inline';
+}
+
+function measureControlFlow(root) {
+  const view = root.ownerDocument.defaultView;
+  if (!view) return null;
+  const controls = root.querySelector('[data-data-toolbar-controls]');
+  const wide = root.querySelector('[data-toolbar-view="wide"]');
+  if (!controls || !wide) return null;
+  const filters = wide.querySelector('[data-slot="filters"]');
+  const sort = wide.querySelector('[data-slot="sort"]');
+  const search = controls.querySelector(':scope > [data-slot="search"]');
+  const filterGap = filters ? parseFloat(view.getComputedStyle(filters).columnGap) || 0 : 0;
+  const children = filters ? [...filters.children] : [];
+  const filterWidth = children.reduce((total, child) => total + child.getBoundingClientRect().width, 0)
+    + Math.max(0, children.length - 1) * filterGap;
+  const wideGap = filters && sort ? parseFloat(view.getComputedStyle(wide).columnGap) || 0 : 0;
+  const wideWidth = Math.ceil(filterWidth + (sort?.getBoundingClientRect().width || 0) + wideGap);
+  const width = controls.getBoundingClientRect().width;
+  if (width <= 0 || wideWidth <= 0) return null;
+  const gap = parseFloat(view.getComputedStyle(controls).columnGap) || 0;
+  const searchMinimum = search ? parseFloat(view.getComputedStyle(search).minWidth) || 200 : 0;
+  // In narrow mode min-width is 0; use the existing wide search minimum.
+  const mode = resolveControlFlow(width, wideWidth, search ? Math.max(200, searchMinimum) : 0, gap, Boolean(search));
+  return { mode, wideWidth };
+}
+
+function useAdaptiveControlFlow(rootRef, layout, filters, sort, searchable) {
+  const [flow, setFlow] = React.useState(null);
+  React.useEffect(() => {
+    const root = rootRef.current;
+    if (!root || layout !== 'auto') {
+      setFlow(null);
+      return;
+    }
+    const view = root.ownerDocument.defaultView;
+    if (!view || typeof view.ResizeObserver !== 'function') return undefined;
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
+      const next = measureControlFlow(root);
+      setFlow((previous) => previous?.mode === next?.mode && previous?.wideWidth === next?.wideWidth ? previous : next);
+    };
+    const schedule = () => {
+      if (!frame) frame = view.requestAnimationFrame(measure);
+    };
+    const observer = new view.ResizeObserver(schedule);
+    observer.observe(root);
+    root.querySelectorAll('[data-data-toolbar-controls], [data-toolbar-view="wide"], [data-slot="filters"] > *, [data-slot="sort"]').forEach((element) => observer.observe(element));
+    // A filter can appear after a collection refresh without resizing root.
+    const mutation = new view.MutationObserver(schedule);
+    mutation.observe(root, { childList: true, subtree: true });
+    schedule();
+    return () => {
+      observer.disconnect();
+      mutation.disconnect();
+      if (frame) view.cancelAnimationFrame(frame);
+    };
+  }, [rootRef, layout, filters, sort, searchable]);
+  return flow;
+}
+
 function useDataToolbarStyles() {
   React.useEffect(() => {
     if (typeof document === 'undefined' || document.getElementById(DATA_TOOLBAR_STYLE_ID)) return;
@@ -83,6 +161,10 @@ export const DataToolbar = React.forwardRef(function DataToolbar({
   vars,
   ...rest
 }, forwardedRef) {
+  const rootRef = React.useRef(null);
+  React.useImperativeHandle(forwardedRef, () => rootRef.current);
+  const resolvedLayout = ['auto', 'wide', 'narrow'].includes(layout) ? layout : 'auto';
+  const controlFlow = useAdaptiveControlFlow(rootRef, resolvedLayout, filters, sort, searchable);
   const isSearchControlled = searchValue !== undefined;
   const [internalSearch, setInternalSearch] = React.useState(defaultSearchValue);
   const currentSearch = isSearchControlled ? searchValue : internalSearch;
@@ -93,7 +175,6 @@ export const DataToolbar = React.forwardRef(function DataToolbar({
   const compact = size === 'sm';
   const resolvedFilters = typeof filters === 'function' ? filters({ size }) : filters;
   const resolvedSort = typeof sort === 'function' ? sort({ size }) : sort;
-  const resolvedLayout = ['auto', 'wide', 'narrow'].includes(layout) ? layout : 'auto';
   const resolvedFilterCount = typeof activeFilterCount === 'number' && Number.isFinite(activeFilterCount)
     ? Math.max(0, Math.floor(activeFilterCount))
     : 0;
@@ -112,11 +193,12 @@ export const DataToolbar = React.forwardRef(function DataToolbar({
 
   return (
     <div
-      ref={forwardedRef}
+      ref={rootRef}
       data-slot="root"
       data-size={size}
       data-variant={variant}
       data-layout={resolvedLayout}
+      data-control-flow={controlFlow?.mode}
       className={partClassName(classNames, 'root', 'lk-data-toolbar', className) || undefined}
       style={{
         ...componentVars(vars, '--lds-data-toolbar-'),
@@ -177,7 +259,7 @@ export const DataToolbar = React.forwardRef(function DataToolbar({
             </div>
           )}
           {(resolvedFilters != null || resolvedSort != null) && (
-            <div className="lk-data-toolbar__wide-controls" data-toolbar-view="wide">
+            <div className="lk-data-toolbar__wide-controls" data-toolbar-view="wide" style={controlFlow?.mode === 'inline' ? { flexBasis: controlFlow.wideWidth } : undefined}>
               {resolvedFilters != null && (
                 <div
                   data-slot="filters"

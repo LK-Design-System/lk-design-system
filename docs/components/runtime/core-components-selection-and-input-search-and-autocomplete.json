@@ -12,7 +12,8 @@
     "TagInput"
   ],
   "supportingComponents": [
-    "Icon"
+    "Icon",
+    "Input"
   ],
   "purpose": "자유 검색어를 전송할 때는 SearchField, 입력 중 단일 후보를 제안할 때는 AutoComplete, 정해진 후보 여러 개를 고를 때는 Combobox를 사용하세요. 간단한 고정 목록은 Select가 더 적합합니다.",
   "useWhen": [
@@ -231,16 +232,16 @@
       "rule": "Reference basis: Carbon Search, GOV.UK Text input, WCAG 2.2 3.2.1 On Focus."
     },
     {
+      "subject": "명시 규칙 3",
+      "rule": "단일 focus 표시 (R11, 2026-10-09)"
+    },
+    {
       "subject": "--caption1-size",
       "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
     },
     {
       "subject": "--color-semantic-background-elevated-normal",
       "rule": "light: #FFFFFF; dark: #212225"
-    },
-    {
-      "subject": "--color-semantic-background-normal-alternative",
-      "rule": "light: #F7F7F8; dark: #0F0F10"
     }
   ],
   "responsive": [],
@@ -253,7 +254,8 @@
   "accessibility": [
     "readOnly preserves focus and text selection but removes the clear action and editable hover affordance.",
     "지우기 후 포커스 복귀 — 지우기 버튼은 값이 비면 언마운트되므로, 활성화 시 포커스를 입력으로 되돌립니다. 그렇지 않으면 포커스가 로 떨어져 키보드 사용자가 필드를 잃습니다(Carbon Search 관례).",
-    "value / defaultValue / onChange — 제어/비제어. onSearch — Enter. size sm · md. 시그널 잉크 포커스 링."
+    "value / defaultValue / onChange — 제어/비제어. onSearch — Enter. size sm · md. 시그널 잉크 포커스 링.",
+    "Input과 MessageComposer의 필드 소유 focus를 비교했습니다. 외곽 border와 외곽 control의 semantic focus-indicator outline으로 위치를 표시합니다. 내부 search input의 전역 outline만 제외하고 clear button의 keyboard outline은 보존합니다. forced-colors는 외곽 Highlight outline입니다. text input은 클릭으로도 :focus-visible에 해당할 수 있으므로 입력 방식만으로 outline 유무를 단정하지 않습니다."
   ],
   "exceptions": [],
   "related": [
@@ -274,11 +276,11 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "FormField",
+      "component": "Input",
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "Input",
+      "component": "FormField",
       "relationship": "대표 시나리오에서 조합"
     },
     {
@@ -301,6 +303,7 @@
     "--color-semantic-background-elevated-normal",
     "--color-semantic-background-normal-alternative",
     "--color-semantic-fill-normal",
+    "--color-semantic-focus-indicator",
     "--color-semantic-label-alternative",
     "--color-semantic-label-disable",
     "--color-semantic-label-neutral",
@@ -364,6 +367,11 @@
         "id": "lds-core-components-selection-and-input-search-and-autocomplete--autocomplete-start-icon",
         "name": "사용법 · 찾는 칸 표시",
         "role": "usage"
+      },
+      {
+        "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-single-focus",
+        "name": "상호작용 · 단일 검색 포커스",
+        "role": "interaction"
       }
     ],
     "hiddenEvidence": 7
