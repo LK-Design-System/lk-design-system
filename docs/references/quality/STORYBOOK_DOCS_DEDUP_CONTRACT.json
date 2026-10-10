@@ -1,12 +1,12 @@
 {
   "version": 1,
   "expected": {
-    "stories": 792,
+    "stories": 793,
     "docs": 201,
-    "publicStories": 556,
+    "publicStories": 557,
     "hiddenStories": 236,
-    "storyIdsSha256": "956b28af34c3aeb86038c2bbdca69b17789813cb81a8a248baa65d6a7b2d1620",
-    "visibilitySha256": "1f723ebc81be92f3e6d1b7c8bbad46cf06ce9fd8b3c7858ff883beb12a281d56"
+    "storyIdsSha256": "8a17f5b3ff02f8c7d759043751c4e8d272d3b791536ba007a3fce8ebfbdbb898",
+    "visibilitySha256": "ca844e00585117894920ee0ca827e2851aa38e6fe2caa118a9a3c6620369fb45"
   },
   "allowedGuideOmissions": [],
   "canonicalDocs": [
@@ -58,7 +58,7 @@
   },
   "pendingSourceExtension": {
     "status": "review-pending",
-    "observedAt": "2026-10-09",
+    "observedAt": "2026-10-10",
     "retainedStoryIds": 783,
     "removedStoryIds": [],
     "changedExistingVisibility": [],
@@ -71,8 +71,9 @@
       "lds-product-data-collections-table--compact-rows",
       "lds-product-data-display-resource-state--compact-empty-reasons",
       "lds-product-layout-dashboard-shell--low-height-navigation",
-      "lds-product-layout-shell-panel--compact-destinations"
+      "lds-product-layout-shell-panel--compact-destinations",
+      "lds-product-data-operations-data-toolbar--adaptive-filter-group"
     ],
-    "reason": "Source census observed from the running source Storybook index.json and matched against the 783-story IA baseline: nine public Portal-density specimens added in 894625c7, with all existing IDs and visibility retained. This records census facts only; page/story IA review stamps remain unchanged and require review."
+    "reason": "Source census observed from successful canonical Linux Pages run 38025722928 at 54cc9062f8fa90f3c93c09ca3a088db0709694d5 and matched against the retained 783-story IA baseline: ten public specimens (nine Portal-density additions in 894625c7 and the T01 AdaptiveFilterGroup addition in 950b8cf7), with all existing IDs and visibility retained. This records census facts only; page/story IA review stamps remain unchanged and require review."
   }
 }
