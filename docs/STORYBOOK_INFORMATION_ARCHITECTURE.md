@@ -24,7 +24,7 @@
 
 ### 2026-10-11 scoped disposition 등록
 
-사용자의 이번 세션 예외·연속 승인을 근거로 기존 Drawer의 keep 판정을 유지하고, 새 `ShortHeader` 하나를 public `variants-states`로 기록합니다. 역할·이름·순서와 49px PC/모바일 렌더를 에이전트가 확인했으며, 사람이 해당 이미지를 직접 검토했다는 주장은 하지 않습니다. 기존 793개 검토 기록은 유지합니다. 수동 필드의 검토 범위는 이 페이지의 소스 delta와 새 story 하나뿐입니다. Linux report가 반영할 집계는 검토 완료 페이지 202/202개, 스토리 794/794개와 stale source review 0개입니다. 현재 생성 summary는 Linux 재생성 전까지 앞 절의 793/794·stale1 기록을 보존합니다.
+사용자의 이번 세션 예외·연속 승인을 근거로 기존 Drawer의 keep 판정을 유지하고, 새 `ShortHeader` 하나를 public `variants-states`로 기록합니다. 역할·이름·순서와 49px PC/모바일 렌더를 에이전트가 확인했으며, 사람이 해당 이미지를 직접 검토했다는 주장은 하지 않습니다. 기존 793개 검토 기록은 유지합니다. 수동 필드의 검토 범위는 이 페이지의 소스 delta와 새 story 하나뿐입니다. Linux report가 반영할 집계는 검토 완료 페이지 202/202개, 스토리 794/794개와 stale source review 0개입니다. 수동 입력 등록 시점의 생성 summary는 앞 절의 793/794·stale1 기록을 보존했습니다. 이후 [Linux export38147937764](https://github.com/LK-Design-System/lk-design-system/actions/runs/38147937764)가 소스 `71c01b4a`에서 이를 재계산했습니다. 현재 정본 집계는 검토 완료 페이지 202/202개, 스토리 794/794개와 stale source review 0개이며, dedup의 IA 입력 hash도 같은 생성 bytes에 연결됩니다.
 
 ### 2026-10-10 보존 원장
 
