@@ -5,12 +5,26 @@
 | Type | Stable contract and current audit summary |
 | Status | Current |
 | Owner | Storybook information-architecture owner |
-| Last reviewed | 2026-10-10 scoped delta review; prior manual reviews retained |
+| Last reviewed | 2026-10-11 Drawer source preview review; prior machine review stamps retained |
 | Machine-readable source | `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json` |
 
 ## 현재 정본 원장과 검토 범위
 
-현재 [machine-readable audit](references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json)는 정본 Linux export [38029535597](https://github.com/LK-Design-System/lk-design-system/actions/runs/38029535597)의 소스 [69e9fd8e](https://github.com/LK-Design-System/lk-design-system/commit/69e9fd8ea8cf420f679e576b68e5549394fbe4fc)에 대응한다. 현재 집계는 202개 페이지와 793개 스토리다.
+### 2026-10-11 문서 헤더 source 검토
+
+[소스 ec93f775](https://github.com/LK-Design-System/lk-design-system/commit/ec93f775c5e45f260a9f3cee8c00068e6f746891)의 Drawer는 `ShortHeader` public specimen 하나를 추가합니다. 보존된 793개 story ID와 public/hidden 구분의 hash가 기존 census 계약과 일치함을 확인한 뒤 `lds-product-overlay-drawer--short-header` 하나만 추가했습니다. 소스 집계는 202개 페이지와 794개 스토리이며 Docs route는 201개를 유지합니다.
+
+- 공개 스토리: 558개
+- 숨김 스토리: 236개
+- 숨김 visual parity: 102개
+- 숨김 internal contract: 130개
+- 새 export의 수동 도장 보존 집계는 검토 완료 페이지 202/202개, 스토리 793/794개입니다. 이 숫자는 현재 소스 전체의 검토 완료를 뜻하지 않습니다. Drawer page의 기존 도장은 source hash가 달라 stale이고 새 `ShortHeader`의 machine review는 pending입니다.
+
+실제 source preview를 PC 1280×884와 모바일 390×844에서 보고 57px와 49px를 비교했습니다. 49px header는 상하 8px·좌우 20px 여백, 32px 명령 target, 제목 말줄임과 완전한 focus ring을 유지하면서 문서 본문의 위계를 덜 가립니다. 검토한 story source SHA-256은 `2d62ba88e0bfc292902e688a579ec9e1c885f60f0176ff82ec6cd78cfe1f5a8f`입니다. 이는 모바일 92vw인 LDS source preview의 검토이며 실제 Portal의 전체 폭 적용, Linux export 성공 또는 전체 카탈로그 재검증을 인증하지 않습니다. census 변경은 inventory 사실만 기록하며 기존 IA JSON의 review 도장을 승격하거나 dedup 기준을 완화하지 않습니다.
+
+### 2026-10-10 보존 원장
+
+아래 [machine-readable audit](references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json) 집계는 정본 Linux export [38029535597](https://github.com/LK-Design-System/lk-design-system/actions/runs/38029535597)의 소스 [69e9fd8e](https://github.com/LK-Design-System/lk-design-system/commit/69e9fd8ea8cf420f679e576b68e5549394fbe4fc)에 대한 보존 기록입니다. 당시 집계는 202개 페이지와 793개 스토리였습니다.
 
 - 공개 스토리: 557개
 - 숨김 스토리: 236개
