@@ -1,4 +1,5 @@
 import React from 'react';
+import { userEvent, waitFor } from 'storybook/test';
 import { Icon, Input } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -42,6 +43,50 @@ const meta = {
 };
 
 export default meta;
+
+export const InputKeyboardFocusContract = {
+  name: '키보드 포커스 · 전체 컨트롤',
+  tags: ['!dev'],
+  render: () => (
+    <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 520 }}>
+      <style>{'@import url("/tokens/focus.css") layer(lds-input-focus-contract);'}</style>
+      <button type="button" data-focus-start>입력 시작</button>
+      <Input label="일반 입력" defaultValue="모든 계정 종류" />
+      <Input label="오류 입력" defaultValue="수정할 값" error="이름을 확인해 주세요." />
+      <Input label="읽기 전용 입력" defaultValue="고정 값" readOnly />
+      <Input label="비활성 입력" defaultValue="비활성 값" disabled />
+      <Input label="우측 동작 입력" defaultValue="인증 코드" actionRight={<button type="button" style={inlineActionStyle}>재전송</button>} />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const start = canvasElement.querySelector('[data-focus-start]');
+    const inputs = [...canvasElement.querySelectorAll('input:not(:disabled)')];
+    const action = canvasElement.querySelector('[data-slot="action"] button');
+    if (!start || inputs.length !== 4 || !action) throw new Error('Input focus fixture is incomplete.');
+    await userEvent.click(start);
+    for (const input of inputs) {
+      await userEvent.tab();
+      await waitFor(() => {
+        const control = input.closest('[data-slot="control"]');
+        const outer = getComputedStyle(control);
+        const native = getComputedStyle(input);
+        if (doc.activeElement !== input || !input.matches(':focus-visible')
+          || native.outlineStyle !== 'none' || outer.outlineStyle !== 'solid'
+          || outer.outlineWidth !== '2px' || outer.outlineOffset !== '2px'
+          || outer.boxShadow !== 'none') {
+          throw new Error('Each enabled Input must keep native focus and one complete control-level keyboard indicator, including in a CSS layer.');
+        }
+      });
+    }
+    await userEvent.tab();
+    if (doc.activeElement !== action || getComputedStyle(action).outlineWidth !== '2px') {
+      throw new Error('A trailing action must remain an independently visible keyboard focus target.');
+    }
+    await userEvent.click(start);
+    await userEvent.tab();
+  },
+};
 
 export const InputOverview = {
   name: '개요',

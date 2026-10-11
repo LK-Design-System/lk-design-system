@@ -30,6 +30,27 @@
   outline-offset: 0 !important;
 }
 
+/* Input owns one indicator around the complete rounded control, including
+   invalid and read-only fields. Keep both rules in this stylesheet so layered
+   consumers do not revive the native input's inner rectangular outline.
+   Trailing actions remain separate focus targets with their own global ring. */
+.lk-input-control:has(> input.lk-input:focus-visible) {
+  outline: 2px solid var(--color-semantic-focus-indicator) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
+}
+
+.lk-input-control > input.lk-input:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+}
+
+@media (forced-colors: active) {
+  .lk-input-control:has(> input.lk-input:focus-visible) {
+    outline-color: Highlight !important;
+  }
+}
+
 /* Map geometry owns a shape-following focus indicator inside the SVG. Keep the
    global rectangular outline from duplicating that ring or enclosing labels. */
 :where(

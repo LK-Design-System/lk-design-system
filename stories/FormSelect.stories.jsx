@@ -25,6 +25,86 @@ const meta = {
 
 export default meta;
 
+export const SelectScrollableOptionWidthContract = {
+  name: '스크롤 옵션 · label 폭',
+  tags: ['!dev'],
+  render: () => (
+    <main style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-6)', alignItems: 'start', maxWidth: 720 }}>
+      {['sm', 'md'].map((size) => (
+        <Select
+          key={size}
+          size={size}
+          label={`계정 종류 ${size}`}
+          defaultValue="all"
+          options={[
+            { value: 'all', label: '모든 계정 종류' },
+            { value: 'person', label: '일반 사용자' },
+            { value: 'service', label: '서비스 계정' },
+            { value: 'robot', label: '로봇 계정' },
+            { value: 'guest', label: '외부 사용자' },
+            { value: 'admin', label: '관리자' },
+            { value: 'reviewer', label: '검토자' },
+            { value: 'operator', label: '운영자' },
+          ]}
+        />
+      ))}
+      <Select
+        label="제약 폭 · 긴 이름"
+        size="sm"
+        defaultValue="long"
+        style={{ width: 220, minWidth: 0, maxWidth: '100%' }}
+        options={[
+          { value: 'long', label: '명시적인 제약 폭보다 훨씬 긴 옵션 이름은 말줄임을 유지합니다' },
+          { value: 'short', label: '짧은 이름' },
+        ]}
+      />
+    </main>
+  ),
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    await doc.fonts?.ready;
+    const triggers = [...canvasElement.querySelectorAll('[role="combobox"]')];
+    if (triggers.length !== 3) throw new Error('Scrollable option width fixture is incomplete.');
+    for (const trigger of triggers.slice(0, 2)) {
+      let firstOpenWidth;
+      for (let cycle = 0; cycle < 2; cycle += 1) {
+        await userEvent.click(trigger);
+        // Opening may request menu typography that the closed trigger did not
+        // need. Assert the final font/layout state, not an earlier fitting frame.
+        await doc.fonts?.ready;
+        await new Promise((resolve) => doc.defaultView.requestAnimationFrame(() => doc.defaultView.requestAnimationFrame(resolve)));
+        await waitFor(() => {
+          const listbox = doc.getElementById(trigger.getAttribute('aria-controls'));
+          const selected = listbox?.querySelector('[aria-selected="true"]');
+          const label = selected?.firstElementChild;
+          if (doc.fonts?.status === 'loading' || !listbox || listbox.scrollHeight <= listbox.clientHeight || !label
+            || label.scrollWidth > label.clientWidth + 1) {
+            throw new Error('An unconstrained Select must fit its selected Korean label beside the check marker and a real vertical scrollbar.');
+          }
+        });
+        const openWidth = trigger.getBoundingClientRect().width;
+        firstOpenWidth ??= openWidth;
+        if (Math.abs(openWidth - firstOpenWidth) > 1) {
+          throw new Error('Reopening a Select must preserve its intrinsic option width.');
+        }
+        await userEvent.keyboard('{Escape}');
+        if (doc.activeElement !== trigger || trigger.getAttribute('aria-expanded') !== 'false'
+          || !trigger.textContent.includes('모든 계정 종류')) {
+          throw new Error('Escape must preserve the value and return focus to the combobox.');
+        }
+        await new Promise((resolve) => doc.defaultView.requestAnimationFrame(resolve));
+        if (Math.abs(trigger.getBoundingClientRect().width - firstOpenWidth) > 1) {
+          throw new Error('Closing a Select must not drop its scrollbar width budget.');
+        }
+      }
+    }
+    const constrained = triggers[2];
+    if (constrained.getBoundingClientRect().width > 221) {
+      throw new Error('Explicit consumer width must continue to override intrinsic measurement.');
+    }
+  },
+};
+
 export const Selects = {
   name: '개요',
   parameters: storyDescription(
