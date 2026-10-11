@@ -177,11 +177,10 @@ export const KeyboardAndStateContract = {
     const edge = canvasElement.querySelector('[data-contract="viewport-edge"]');
     const edgeTrigger = edge?.querySelector('[aria-haspopup="menu"]');
     if (!edge || !edgeTrigger) throw new Error('Viewport-edge SplitButton contract target is required.');
-    // The step above closes a menu with Escape, and closing restores focus to
-    // the trigger it came from. Calling focus() here and typing immediately
-    // raced that restore, so the key could arrive at the previous trigger and
-    // this menu never opened — the failure read as the edge menu refusing to
-    // open when nothing had asked it to.
+    // An all-disabled menu keeps focus on its trigger, so the close assertion
+    // above can pass before Escape's scheduled focus restoration has run.
+    // Let that frame finish before directing keyboard input to another menu.
+    await new Promise((resolve) => canvasElement.ownerDocument.defaultView.requestAnimationFrame(resolve));
     edgeTrigger.focus();
     await waitFor(() => {
       if (canvasElement.ownerDocument.activeElement !== edgeTrigger) {

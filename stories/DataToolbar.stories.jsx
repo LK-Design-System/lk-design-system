@@ -305,9 +305,9 @@ function AdaptiveFilterGroupDemo() {
   return (
     <main style={{ display: 'grid', gap: 'var(--space-4)', width: '100%', maxWidth: 1150 }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
-        {[867, 878, 360].map((value) => <Button key={value} size="sm" variant="outlined" onClick={() => setWidth(value)}>{value}px</Button>)}
-        {[0, 1, 2, 3].map((value) => <Button key={value} size="sm" variant="outlined" onClick={() => setFilterCount(value)}>{value} 필터</Button>)}
-        <Button size="sm" variant="outlined" aria-pressed={long} onClick={() => setLong((value) => !value)}>긴 필터</Button>
+        {[867, 878, 360].map((value) => <Button key={value} size="sm" variant="outlined" color="assistive" onClick={() => setWidth(value)}>{value}px</Button>)}
+        {[0, 1, 2, 3].map((value) => <Button key={value} size="sm" variant="outlined" color="assistive" onClick={() => setFilterCount(value)}>{value} 필터</Button>)}
+        <Button size="sm" variant="outlined" color="assistive" aria-pressed={long} onClick={() => setLong((value) => !value)}>긴 필터</Button>
       </div>
       <div data-testid="adaptive-filter-group" style={{ ...surfaceStyle, width, maxWidth: '100%' }}>
         <DataToolbar
