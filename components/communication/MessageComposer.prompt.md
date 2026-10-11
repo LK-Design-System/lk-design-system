@@ -26,7 +26,7 @@
 - `attachments`, `leadingActions`, `trailingActions`는 `ReactNode` slot입니다. attachment selection/upload, voice capture, model/tool picker와 permission은 slot consumer가 소유합니다.
 - reading order는 description/disabled reason → shell의 attachments → textarea → 하단 leading actions → trailing actions → primary send/stop → status/counter입니다.
 - leading/trailing action은 position만 설명합니다. 특정 attachment/template/provider 기능을 고정하지 않습니다.
-- idle은 send, submitting/streaming은 stop을 같은 primary-action 위치에 둡니다. stopping은 중복 stop 요청을 막습니다.
+- idle은 send, `onStop`이 있는 submitting/streaming은 stop을 같은 primary-action 위치에 둡니다. stopping은 중복 stop 요청을 막습니다. `onStop`이 없으면 non-idle primary action은 focusable loading control이며 존재하지 않는 취소 동작을 암시하지 않습니다. 초안은 편집할 수 있고 추가 제출만 막습니다.
 - `canSubmit`을 생략하면 trim한 값이 있을 때만 submit할 수 있습니다. `readOnly`는 focus와 copy를 유지하되 편집·submit을 막습니다.
 - `statusLabel={null}`은 기본 lifecycle 문구를 숨깁니다. `undefined`일 때만 non-idle 기본 문구를 사용합니다.
 - status live region은 내용이 있을 때 mount하지 않고 **composer 수명 내내 비어 있는 상태로 상시 mount**한 뒤 텍스트만 교체합니다. 텍스트와 함께 삽입된 status node는 기존 live region의 변경이 아니어서 첫 idle→submitting 알림이 누락되기 때문입니다. 보이는 status 문구는 같은 내용을 중복 발표하지 않도록 `aria-hidden` 장식으로 둡니다.
@@ -34,6 +34,34 @@
 - `disabled: true`는 visible `disabledReason`을 요구하며 textarea의 description에 연결합니다. shell 전체를 inert subtree로 만들어 slot으로 조합한 button/link도 focus와 activation에서 제외합니다.
 - `formLabel`과 `inputLabel`은 form/textarea의 접근 가능한 이름, `submitLabel`과 `stopLabel`은 icon-only primary action 이름을 현지화합니다.
 - `maxLength`는 native 제한과 visible counter를 함께 제공하고, `textareaProps`는 controlled value·rows·disabled 같은 소유 prop을 제외한 native textarea 속성/이벤트를 전달합니다.
+
+## 채팅 자료 준비 조합과 가독성
+
+- placeholder는 Input의 컴포넌트 스코프 pseudo-element 방식으로 `label-alternative` 잉크와 opacity 1을 명시합니다. 제품 CSS reset의 placeholder 색에 기대지 않습니다. disabled 잉크는 기존 `label-disable`을 유지합니다.
+- `onStop`이 없는 대기는 기존 Button의 loading presentation과 Spinner를 재사용합니다. transport의 취소 가능 여부는 callback 유무로 명시하고 DS가 추측하지 않습니다. 커스텀 `statusLabel`이 ReactNode이면 버튼 이름은 기본 phase 문구를 사용합니다.
+- 첨부 파일의 이름은 primary title, 형식·범위는 description, 준비 상태는 Spinner와 text로 분리해 읽습니다. 새 파일 schema나 lifecycle prop을 만들지 않고 `attachments`에 정적인 ListCell을 조합합니다. 서버 job 삭제·진행률·retry와 선택 해제는 제품이 구분합니다.
+
+```jsx
+<MessageComposer layout="inline" value={draft} onValueChange={setDraft} onSubmit={send}
+  attachments={<ListCell typography="small" textEllipsis={false} verticalAlign="top" titleStyle={{ overflowWrap: 'anywhere' }}
+    title={file.name} description={<>{file.kind} · {file.scope}<span role="status"><Spinner size={12} /> 자료 준비 중</span></>}
+    trailing={<TextButton onClick={removeSelection}>선택 취소</TextButton>} />}
+/>
+```
+
+시각 delta: shell의 색·border·radius·shadow·기본 stacked geometry는 그대로입니다. Input의 scoped placeholder,
+Button의 focusable loading, ListCell의 title/description/trailing anatomy를 계승합니다. 파일 행은 제품 조합이며
+inline 요청에 첨부가 있으면 이미 존재하는 stacked 확장 계약을 사용합니다. 320px `FilePreparation`과
+`UncancellableRequest` 실제 컴포넌트 story가 초안 보존, 선택 제거, 기다리는 버튼과 폭을 확인합니다.
+
+구현 전 [WCAG Contrast Minimum](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)의 placeholder에도
+일반 텍스트 대비가 적용되는 원칙과 [Carbon Chat server communication](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Server_communication.html)의
+비스트리밍 대기·스트리밍·실제 취소 가능성의 구분을 검토했습니다. 픽셀 값은 복제하지 않고 기존 LDS semantic/type/spacing을 사용합니다.
+
+현재 product workflow 핀: Portal `740bc9d5`의 ChatWorkspace/ChatComposerMenus 자료 준비·비취소 요청은 supported by composition,
+배포된 vendor 0.4.7 통합은 별도 단계입니다. Web Viz `7e535341`의 `frontend/src/screens/MapEditScreen.tsx`와
+`frontend/src/screens/TaskCreateScreen.tsx`는 map/task 저작 화면이며 채팅 작성 흐름이 없어 not applicable입니다.
+Control Full Daedeok `d8c215fd`의 `frontend/src/views/dashboard/RobotDashboard/pages/Dashboard.jsx`는 map/camera/robot 관제이며 같은 이유로 not applicable입니다.
 
 ## keyboard와 IME
 

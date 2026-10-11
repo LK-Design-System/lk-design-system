@@ -65,7 +65,7 @@ interface MessageComposerBaseProps extends Omit<
   submitLabel?: string;
   /** Accessible name for the stop control (stacked 32px / inline 44px). @default "응답 중지" */
   stopLabel?: string;
-  /** Requests transport cancellation in submitting/streaming states. */
+  /** Requests transport cancellation in submitting/streaming states. Without this callback, non-idle renders a focusable loading control rather than offering an unavailable stop action. The draft stays editable unless readOnly/disabled is supplied. */
   onStop?: () => void;
   /** Native textarea attributes and event hooks not owned by the controlled contract. */
   textareaProps?: MessageComposerTextareaProps;

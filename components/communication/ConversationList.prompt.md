@@ -32,6 +32,7 @@ nav[aria-labelledby=panel-title]
 ## Props
 
 - `groups`, `currentId`, `headingLevel` — 묶음과 현재 대화, 묶음 제목 단계.
+- `titleLines` — 기본 1은 기존 36px/한 줄 제목입니다. 2는 최대 두 줄 제목·56px 최소 행·44px 형제 메뉴 target과 상시 예약된 메뉴 공간을 사용합니다. 전체 제목과 링크/menu 의미는 같습니다.
 - `renderLink` — 링크를 router link로 치환합니다. DS가 만든 `aria-current`, class, `href`를 그대로 넘깁니다.
 - `itemActions`, `onItemAction`, `moreLabel` — 행 메뉴 항목(배열 또는 항목별 함수), 실행 요청, 「더 보기」 버튼 이름(기본 `{제목} 더 보기`).
 - `loading`, `error`, `onRetry`, `retryLabel`, `emptyLabel` — 첫 로딩·오류·빈 목록 상태.
@@ -60,6 +61,17 @@ ListCell small·ShellPanel·SideNav와 비교했고
 - `ListCell selectedPresentation="tint"`의 「지금 열린 항목」 무채색 문법을 계승하되, 단계는 SideNav neutral과 같은 opaque `cool-neutral` 단계를 써서 ShellPanel·NavRail과 한 셸로 읽히게 했습니다.
 - 행 radius, inset 포커스 링(`outline-offset: -2px`), 굵기 규칙은 SideNav 행과 같습니다. 아이콘은 두지 않습니다(제목만으로 스캔되는 목록).
 
+### 채팅의 두 줄 제목
+
+```jsx
+<ConversationList titleLines={2} groups={groups} currentId={currentId} itemActions={actions} />
+```
+
+- 기본 D06 규칙은 유지합니다. `titleLines={2}`만 메뉴가 숨겨진 순간에도 제목 끝 공간을 예약해 hover/focus에서 줄바꿈이 변하지 않게 합니다. title은 line clamp 2, 한글 keep-all + 긴 식별자 anywhere입니다.
+- 행 높이 56px은 기존 spacing의 `space-12 + space-2`, 메뉴 44px은 `space-10 + space-1`입니다. SideNav/ListCell의 14/20px 제목, 현재 행의 무채색 fill·굵기·radius·포커스 문법은 바꾸지 않습니다.
+- [Fluent 2 Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage)의 탐색과 행 동작 분리와 [WCAG Target Size Enhanced](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html)의 44px 목표를 검토했습니다. 기본 AA 최소 24px 동작을 위반으로 바꾸는 주장이 아닙니다.
+- `TwoLineTitles` 실제 story는 320px 폭, 전체 제목, hover 전후 일정한 제목 폭, 44px와 링크/menu 형제 관계를 확인합니다.
+
 ## 외부 기준과 적용 결론
 
 - [Fluent 2 Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage) — hover나 focus에서만 보이는 동작도 늘 DOM에 있어야 하고 컨텍스트 메뉴로도 제공합니다. 「더 보기」를 늘 렌더하고 opacity로만 숨기는 근거입니다.
@@ -71,6 +83,6 @@ ListCell small·ShellPanel·SideNav와 비교했고
 
 ## LK 제품 workflow coverage
 
-- **LK Portal** `438c131e`(dev, 2026-10-09) — 질문 영역 대화 목록. supported by new contract(미적용). 대화 URL, 이름 바꾸기 API, 목록 커서는 Portal gap입니다.
+- **LK Portal** `740bc9d5`(dev, 2026-10-09) — ChatConversationPanel 대화 목록. titleLines=2는 supported by new contract(설치판 0.4.7 미지원). 대화 URL, 이름 바꾸기 API, 목록 커서는 Portal 책임입니다.
 - **LK Control Full Daedeok** `d8c215fd` — 대화·세션 목록 없음, not applicable.
-- **LK Web Viz** `7e535341`(unverified pin) — 대화 목록 없음, not applicable.
+- **LK Web Viz** `7e535341` — MapEditScreen/TaskCreateScreen 실제 map/task 저작 화면에 대화 목록 없음, not applicable.

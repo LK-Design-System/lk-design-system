@@ -331,7 +331,7 @@ function renderSourceChip(source, onSourceActivate) {
 // One source inside the `inline` popover: a borderless row, with the quoted
 // passage beneath it when there is one. The panel is already an elevated card,
 // so the rows carry no border of their own.
-function renderSourceRow(source, onSourceActivate) {
+function renderSourceRow(source, onSourceActivate, inlineDetails) {
   const Comp = source.href != null ? 'a' : typeof onSourceActivate === 'function' ? 'button' : 'span';
   const interactive = Comp !== 'span';
   const linkProps = source.href != null
@@ -343,14 +343,17 @@ function renderSourceRow(source, onSourceActivate) {
     <li key={source.id} style={{ minWidth: 0 }}>
       <Comp
         className="lk-source-disclosure__row"
+        data-inline-details={inlineDetails ? 'true' : undefined}
         aria-label={source.actionAriaLabel}
+        title={inlineDetails && typeof source.label === 'string' ? source.label : undefined}
         {...linkProps}
         style={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: inlineDetails ? 'flex-start' : 'center',
           gap: 'var(--space-2)',
           width: '100%',
           minWidth: 0,
+          minHeight: inlineDetails ? 'calc(var(--space-10) + var(--space-1))' : undefined,
           padding: 'var(--space-2)',
           boxSizing: 'border-box',
           border: 0,
@@ -367,9 +370,18 @@ function renderSourceRow(source, onSourceActivate) {
         }}
       >
         <Icon name="document-text" size={16} aria-hidden="true" style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)' }} />
-        <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          {source.label}
-        </span>
+        {inlineDetails ? (
+          <span style={{ display: 'grid', gap: 'var(--space-1)', flex: '1 1 auto', minWidth: 0 }}>
+            <span style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden', overflowWrap: 'anywhere', wordBreak: 'keep-all' }}>{source.label}</span>
+            {(source.kind != null || source.location != null) && (
+              <span style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)', overflowWrap: 'anywhere' }}>
+                {source.kind}{source.kind != null && source.location != null ? ' · ' : null}{source.location}
+              </span>
+            )}
+          </span>
+        ) : (
+          <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{source.label}</span>
+        )}
         {source.href != null && (
           <Icon name="arrow-up-right" size={14} aria-hidden="true" style={{ flexShrink: 0, color: 'var(--color-semantic-label-alternative)' }} />
         )}
@@ -431,6 +443,7 @@ export function SourceDisclosure({
   emptyMessage = '표시할 출처가 없습니다.',
   onSourceActivate,
   variant = 'inline',
+  inlineDetails = false,
   defaultOpen = false,
   hiddenCount = 0,
   hiddenMessage,
@@ -482,7 +495,7 @@ export function SourceDisclosure({
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 'var(--space-1)',
-                height: 'var(--space-8)',
+                height: inlineDetails ? 'calc(var(--space-10) + var(--space-1))' : 'var(--space-8)',
                 minWidth: 0,
                 maxWidth: '100%',
                 padding: '0 var(--space-2)',
@@ -516,7 +529,7 @@ export function SourceDisclosure({
             className="lk-source-disclosure__rows"
             style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 'var(--space-1)', minWidth: 0, maxWidth: 360 }}
           >
-            {visible.map((source) => renderSourceRow(source, onSourceActivate))}
+            {visible.map((source) => renderSourceRow(source, onSourceActivate, inlineDetails))}
           </ul>
           {withheldLine != null && (
             <p className="lk-source-disclosure__withheld" style={{ margin: 'var(--space-2) 0 0', padding: '0 var(--space-2)', maxWidth: 360, color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>

@@ -13,7 +13,24 @@
 - picker와 drag/drop handler는 consumer wrapper handler와 합성합니다. 같은 파일을 다시 고를 수 있도록 처리 후 picker value를 초기화합니다.
 - 선택 이후 upload/processing/retry 상태는 `FileUploadQueue`가 소유합니다. parser, storage, virus scan, retry policy는 제품 계층 책임입니다.
 
-## External research basis
+## 간단한 파일 선택 버튼
+
+```jsx
+<FileUpload presentation="button" size="sm" accept=".pdf,.txt" hint="파일 선택"
+  inputAriaDescribedBy="file-restrictions" onFiles={prepareFiles} onRejectedFiles={showRejected} />
+```
+
+- `presentation` 기본 dropzone는 기존 표면과 112/144px 높이를 유지합니다. button은 같은 실제 input에 연결된 LDS `Button as="label"`, outlined assistive variant로 표시합니다. 기존 Button size/radius/폰트/fill을 재사용하며 label에 별도 tab stop을 만들지 않습니다.
+- button의 hint 기본값은 「파일 선택」입니다. dropzone 기본 안내는 그대로입니다. 조작 이름은 선택 뒤에도 유지하고 파일 선택·거부 결과는 같은 polite status로 알립니다. 선택 파일명 목록과 upload/processing/cancel은 제품이 별도 구성합니다.
+- picker·accept·multiple·capture·거부 callback·disabled·aria-describedby/invalid·동일 파일 재선택과 drag/drop handler 합성은 두 presentation에서 같습니다. focus는 실제 input이 받고 기존 input focus shadow를 Button label 표면에 표시합니다.
+- 시각 delta는 dashed target·tile·여러 줄 파일명을 짧은 button entry로 대체하는 opt-in뿐입니다. Button/FileUpload 내부 비교 결과 다른 border/radius/shadow 값을 만들지 않았습니다. `ButtonSelection` 실제 story는 320px, 허용/거부, keyboard focus, 동일 input·disabled 계약을 확인합니다.
+- 구현 전 [USWDS File input](https://designsystem.digital.gov/components/file-input/)의 native input·연결된 label·형식 제한·거부 status 원칙과 [GOV.UK File upload](https://design-system.service.gov.uk/components/file-upload/)의 파일 선택 이름·힌트와 오류 연결을 확인했습니다. 압축 표면 때문에 native picker를 자체 input으로 대체하지 않습니다.
+
+제품 검토 핀: Portal `740bc9d5` ChatComposerMenus의 bounded 자료 패널은 supported by new contract이며 vendor 0.4.7에는
+presentation이 없습니다. Web Viz `7e535341` MapEditScreen/TaskCreateScreen의 map/task 저작에는 같은 chat picker가 없어 not applicable,
+Control Full Daedeok `d8c215fd` RobotDashboard Dashboard의 관제에는 같은 파일 선택 흐름이 없어 not applicable입니다.
+
+### 기본 파일 선택 근거
 
 - [USWDS File input](https://designsystem.digital.gov/components/file-input/)
 - [Carbon File uploader accessibility](https://carbondesignsystem.com/components/file-uploader/accessibility/)

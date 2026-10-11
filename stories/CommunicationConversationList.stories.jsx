@@ -178,3 +178,33 @@ export const NarrowTouch = {
     if (!styleText.includes('@media(hover:none)')) throw new Error('Touch environments always show the row action.');
   },
 };
+
+export const TwoLineTitles = {
+  name: '변형·상태 · 두 줄 제목과 고정 메뉴 공간',
+  parameters: {
+    ...storyDescription('titleLines=2는 긴 대화 제목에 두 줄과 고정된 메뉴 공간을 제공합니다. 한 줄 기본 행은 유지하고 두 줄 변형의 형제 메뉴 버튼만 44px로 확장합니다.'),
+    layout: 'fullscreen',
+  },
+  render: () => <div data-two-line-conversations style={{ width: '100%', maxWidth: 320, minWidth: 0, boxSizing: 'border-box' }}>
+    <ConversationList titleLines={2} aria-label="두 줄 대화" currentId="c1" groups={[{ id: 'today', label: '오늘', items: [
+      { id: 'c1', title: '제품의 위키 문서는 어떻게 만들어지고 언제 회사 자료로 공개되나요?', href: '/chat/c1' },
+      { id: 'c2', title: 'Quarterly-product-planning-discussion-and-revision-history', href: '/chat/c2' },
+    ] }]} itemActions={conversationActions} renderLink={renderLink} />
+  </div>,
+  play: async ({ canvasElement }) => {
+    const host = canvasElement.querySelector('[data-two-line-conversations]');
+    const row = host.querySelectorAll('[data-slot="row"]')[1];
+    const title = row.querySelector('.lk-conversation-list__title');
+    const link = row.querySelector('a');
+    const button = row.querySelector('button');
+    const width = title.getBoundingClientRect().width;
+    if (canvasElement.ownerDocument.defaultView.getComputedStyle(title).webkitLineClamp !== '2' || link.title !== title.textContent) throw new Error('시각 제목은 두 줄, 전체 제목은 링크에 유지합니다.');
+    await userEvent.hover(row);
+    if (Math.abs(title.getBoundingClientRect().width - width) > 1) throw new Error('hover 시 메뉴가 나타나도 제목의 폭은 변하지 않습니다.');
+    const rect = button.getBoundingClientRect();
+    if (rect.width < 44 || rect.height < 44 || button.closest('a')) throw new Error('두 줄 메뉴는 링크의 형제이며 44px target입니다.');
+    if (host.scrollWidth > host.clientWidth + 1) throw new Error('두 줄 목록은 320px에서 넘치지 않습니다.');
+    const documentElement = canvasElement.ownerDocument.documentElement;
+    if (documentElement.scrollWidth > documentElement.clientWidth + 1) throw new Error('좁은 viewport의 예제 wrapper도 가로로 넘치지 않습니다.');
+  },
+};

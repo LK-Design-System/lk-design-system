@@ -37,6 +37,17 @@ const PROSE_CSS = `
 .lk-prose th{background:var(--color-semantic-fill-normal);font-weight:var(--fw-bold);color:var(--color-semantic-label-strong);}
 .lk-prose ul.contains-task-list,.lk-prose li.task-list-item{list-style:none;}
 .lk-prose li.task-list-item{padding-inline-start:0;}
+.lk-prose[data-typography="chat"]{line-height:var(--body1-line);letter-spacing:var(--body1-spacing);}
+.lk-prose[data-typography="chat"] p,.lk-prose[data-typography="chat"] ul,.lk-prose[data-typography="chat"] ol{font-size:var(--body1-size);margin:var(--space-2) 0;}
+.lk-prose[data-typography="chat"] li{margin:var(--space-1) 0;}
+.lk-prose[data-typography="chat"] h1{font-size:var(--heading2-size);line-height:var(--heading2-line);}
+.lk-prose[data-typography="chat"] h2{font-size:var(--headline1-size);line-height:var(--headline1-line);}
+.lk-prose[data-typography="chat"] h3,.lk-prose[data-typography="chat"] h4{font-size:var(--headline2-size);line-height:var(--headline2-line);}
+.lk-prose[data-typography="chat"] h1,.lk-prose[data-typography="chat"] h2,.lk-prose[data-typography="chat"] h3,.lk-prose[data-typography="chat"] h4,.lk-prose[data-typography="chat"] h5,.lk-prose[data-typography="chat"] h6{font-weight:var(--fw-semibold);margin:var(--space-5) 0 var(--space-2);}
+.lk-prose[data-typography="chat"] pre,.lk-prose[data-typography="chat"] blockquote,.lk-prose[data-typography="chat"] table{margin:var(--space-3) 0;}
+.lk-prose[data-typography="chat"] table{display:block;max-width:100%;overflow-x:auto;}
+.lk-prose[data-typography="chat"] > :first-child{margin-top:0;}
+.lk-prose[data-typography="chat"] > :last-child{margin-bottom:0;}
 `;
 
 // Layout effect so the scoped rules are present before the browser paints and
@@ -69,7 +80,7 @@ function useProseStyles() {
  * Heading levels come from the content and are not renumbered, so the product
  * must emit levels that fit the surrounding document (WCAG 1.3.1).
  */
-export function Prose({ children, measure = '68ch', style, className, ...rest }) {
+export function Prose({ children, measure = '68ch', typography = 'document', style, className, ...rest }) {
   useProseStyles();
   const root = React.useRef(null);
 
@@ -83,7 +94,19 @@ export function Prose({ children, measure = '68ch', style, className, ...rest })
     const element = root.current;
     if (!element || typeof ResizeObserver === 'undefined') return undefined;
     const update = () => {
-      for (const block of element.querySelectorAll('pre')) {
+      for (const block of element.querySelectorAll('pre, table')) {
+        if (block.tagName === 'TABLE') {
+          const scrolls = typography === 'chat' && block.scrollWidth > block.clientWidth + 1;
+          const managedFocus = block.hasAttribute('data-prose-scroll-focus');
+          if (scrolls && !block.hasAttribute('tabindex')) {
+            block.setAttribute('tabindex', '0');
+            block.setAttribute('data-prose-scroll-focus', '');
+          } else if (!scrolls && managedFocus) {
+            block.removeAttribute('tabindex');
+            block.removeAttribute('data-prose-scroll-focus');
+          }
+          continue;
+        }
         const scrolls = block.scrollWidth > block.clientWidth + 1;
         if (scrolls) block.setAttribute('tabindex', '0');
         else if (block.getAttribute('tabindex') === '0') block.removeAttribute('tabindex');
@@ -93,12 +116,13 @@ export function Prose({ children, measure = '68ch', style, className, ...rest })
     const observer = new ResizeObserver(update);
     observer.observe(element);
     return () => observer.disconnect();
-  }, [children]);
+  }, [children, typography]);
 
   return (
     <div
       ref={root}
       className={className ? `lk-prose ${className}` : 'lk-prose'}
+      data-typography={typography === 'chat' ? 'chat' : 'document'}
       style={{ maxWidth: measure, minWidth: 0, ...style }}
       {...rest}
     >

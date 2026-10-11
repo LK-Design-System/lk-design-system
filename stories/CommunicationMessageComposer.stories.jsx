@@ -1,6 +1,6 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
-import { Button, Chip, Icon, IconButton, MessageComposer } from '../src/index.js';
+import { Button, Chip, Icon, IconButton, ListCell, MessageComposer, Spinner, TextButton } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -1033,5 +1033,71 @@ export const InlineLayout = {
     await waitFor(() => {
       if (form.dataset.composerLayout !== 'inline' || shell.getBoundingClientRect().height > 52) throw new Error('초안을 비우면 한 행 높이로 돌아갑니다.');
     });
+  },
+};
+
+function UncancellableRequestFixture() {
+  const [value, setValue] = React.useState('다음 질문의 초안');
+  const [submissions, setSubmissions] = React.useState(0);
+  return <main data-waiting-fixture data-submissions={submissions} style={{ width: '100%', maxWidth: 320, minWidth: 0, boxSizing: 'border-box' }}>
+    <MessageComposer layout="inline" density="compact" value={value} onValueChange={setValue}
+      onSubmit={() => setSubmissions((count) => count + 1)} state="submitting"
+      placeholder="무엇을 도와드릴까요?" formLabel="응답 대기 중 메시지 작성" />
+  </main>;
+}
+
+export const UncancellableRequest = {
+  name: '변형·상태 · 중지할 수 없는 응답 대기',
+  parameters: storyDescription('onStop이 없는 요청은 사용할 수 없는 중지 동작을 암시하지 않고 같은 위치의 loading control로 대기 상태를 표시합니다. 초안 편집은 유지하고 요청 중 추가 제출만 막습니다.'),
+  render: () => <UncancellableRequestFixture />,
+  play: async ({ canvasElement }) => {
+    const host = canvasElement.querySelector('[data-waiting-fixture]');
+    const textarea = host.querySelector('textarea');
+    const waiting = host.querySelector('button[data-loading="true"]');
+    if (!waiting || waiting.getAttribute('aria-busy') !== 'true' || waiting.disabled) throw new Error('대기는 초점을 유지하는 loading control이어야 합니다.');
+    if (host.querySelector('button[aria-label="응답 중지"]')) throw new Error('취소 callback이 없으면 중지 동작을 암시하지 않습니다.');
+    waiting.focus();
+    if (canvasElement.ownerDocument.activeElement !== waiting) throw new Error('대기 중 control은 초점을 유지합니다.');
+    await userEvent.click(waiting);
+    await userEvent.type(textarea, ' 이어서 작성');
+    await userEvent.keyboard('{Enter}');
+    if (!textarea.value.includes('이어서 작성') || host.dataset.submissions !== '0') throw new Error('대기 중 초안은 편집하고 추가 제출은 차단합니다.');
+    if (host.scrollWidth > host.clientWidth + 1) throw new Error('320px 대기 composer는 가로로 넘치지 않습니다.');
+  },
+};
+
+function FilePreparationFixture() {
+  const [value, setValue] = React.useState('이 문서를 요약해 주세요.');
+  const [selected, setSelected] = React.useState(true);
+  return <main data-file-preparation style={{ width: '100%', maxWidth: 320, minWidth: 0, boxSizing: 'border-box' }}>
+    <MessageComposer layout="inline" density="compact" value={value} onValueChange={setValue}
+      onSubmit={() => {}} formLabel="자료 준비 중 메시지 작성"
+      attachments={selected ? <ListCell typography="small" verticalPadding="small" paddingX="var(--space-2)"
+        textEllipsis={false} verticalAlign="top" titleStyle={{ overflowWrap: 'anywhere' }} title="2026년_3분기_제품_사용자_피드백_정리.pdf"
+        description={<span style={{ display: 'grid', gap: 'var(--space-1)' }}>
+          <span>개인 문서 · PDF</span>
+          <span role="status" style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)' }}>
+            <Spinner size={12} /> 답변에 쓸 자료를 준비하는 중
+          </span>
+        </span>}
+        leading={<Icon name="document" size={16} aria-hidden="true" />}
+        trailing={<TextButton size="sm" tone="neutral" onClick={() => setSelected(false)} style={{ minHeight: 'calc(var(--space-10) + var(--space-1))' }}>선택 취소</TextButton>} /> : undefined} />
+  </main>;
+}
+
+export const FilePreparation = {
+  name: '조합 · 파일 이름, 메타데이터, 준비 상태',
+  parameters: storyDescription('attachments slot에 정적인 ListCell의 파일 이름·보조 메타데이터·Spinner 상태와 선택 취소를 조합합니다. 선택 취소는 이 예제의 로컬 선택만 제거하며 서버의 업로드 작업을 취소한다는 의미가 아닙니다.'),
+  render: () => <FilePreparationFixture />,
+  play: async ({ canvasElement }) => {
+    const host = canvasElement.querySelector('[data-file-preparation]');
+    const form = host.querySelector('form');
+    const textarea = form.querySelector('textarea');
+    const draft = textarea.value;
+    if (!form.querySelector('[data-composer-attachments]') || !host.textContent.includes('개인 문서 · PDF')) throw new Error('파일 이름과 메타데이터는 별도 행으로 읽힙니다.');
+    if (form.dataset.composerLayout !== 'stacked') throw new Error('첨부 조합은 기존 full-width stacked 구조로 확장합니다.');
+    if (host.scrollWidth > host.clientWidth + 1) throw new Error('긴 파일 이름과 선택 취소는 320px 안에서 줄바꿈됩니다.');
+    await userEvent.click([...host.querySelectorAll('button')].find((button) => button.textContent.includes('선택 취소')));
+    if (form.querySelector('[data-composer-attachments]') || form.querySelector('textarea') !== textarea || textarea.value !== draft) throw new Error('선택 취소는 초안을 유지하면서 첨부만 제거합니다.');
   },
 };

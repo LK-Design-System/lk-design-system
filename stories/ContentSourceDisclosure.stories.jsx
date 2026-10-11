@@ -498,3 +498,30 @@ export const CompactCitationChips = {
     }
   },
 };
+
+export const InlineDetails = {
+  name: '변형·상태 · 두 줄 출처 제목과 자료 종류',
+  parameters: storyDescription('inlineDetails는 inline 출처 패널에서 긴 제목을 두 줄까지 표시하고, 제품이 실제로 제공한 kind/location만 보조 행으로 보여 줍니다. 숨긴 출처는 제목과 보이는 건수에 포함하지 않습니다.'),
+  render: () => <div style={{ width: '100%', maxWidth: 320, minWidth: 0, boxSizing: 'border-box' }}>
+    <SourceDisclosure inlineDetails sources={[
+      { id: 'notes', label: '2026년 3분기 제품 사용자 피드백 회의록과 후속 개선 결정', kind: '위키 문서', location: '제품 개발', href: 'https://example.com/notes' },
+      { id: 'pdf', label: 'Quarterly-product-planning-notes-with-revision-history.pdf', kind: 'PDF', location: '개인 문서', href: 'https://example.com/planning' },
+      { id: 'hidden', label: '숨겨야 하는 자료명', availability: 'restricted' },
+    ]} />
+  </div>,
+  play: async ({ canvasElement }) => {
+    const toggle = canvasElement.querySelector('button[aria-expanded]');
+    if (!toggle || !toggle.textContent.includes('출처 2개')) throw new Error('출처 건수는 열람 가능한 자료만 포함합니다.');
+    if (toggle.getBoundingClientRect().height < 44) throw new Error('상세 inline 토글은 44px target을 유지합니다.');
+    await userEvent.click(toggle);
+    const doc = canvasElement.ownerDocument;
+    const rows = [...doc.querySelectorAll('.lk-source-disclosure__row[data-inline-details="true"]')];
+    if (rows.length !== 2) throw new Error('inlineDetails는 보이는 출처 두 개만 렌더합니다.');
+    if (!rows[0].textContent.includes('위키 문서 · 제품 개발') || !rows[1].textContent.includes('PDF · 개인 문서')) throw new Error('종류와 위치는 전달된 실제 값을 표시합니다.');
+    if (doc.body.textContent.includes('숨겨야 하는 자료명')) throw new Error('restricted 자료명은 노출하지 않습니다.');
+    for (const row of rows) {
+      if (row.getBoundingClientRect().height < 44 || row.scrollWidth > row.clientWidth + 1) throw new Error('긴 출처 행은 target과 좁은 폭을 유지합니다.');
+    }
+    await userEvent.keyboard('{Escape}');
+  },
+};

@@ -57,3 +57,19 @@
 - [GOV.UK Tag](https://design-system.service.gov.uk/components/tag/)는 tag를 interactive 요소로 만들지 말고, 색만으로 정보를 전하지 말며, 쓸 만하다고 보는 가장 적은 수의 상태로 시작하도록 합니다. availability 배지를 예외로 한정한 근거입니다.
 - [USWDS Collection](https://designsystem.digital.gov/components/collection/)은 모호한 "read more" 대신 각 item의 고유한 heading을 원본에 연결하고 외부 이동을 표시하도록 합니다. source label 자체를 이동 경로로 쓰는 근거입니다.
 - [W3C Design System Quote](https://design-system.w3.org/components/quote.html)는 인용 원본 URL을 `blockquote`의 `cite` 속성으로 제공하도록 안내합니다.
+
+## 채팅 출처의 상세 inline 변형
+
+```jsx
+<SourceDisclosure inlineDetails sources={sources} onSourceActivate={openSource} />
+```
+
+- `inlineDetails`는 기본 false입니다. true는 `variant="inline"` 패널에서 제목을 최대 두 줄, 전달된 `kind`/`location`을 보조 행으로 표시합니다. 자료 종류나 위치를 filename/URL에서 추론하거나 별도 조회하지 않습니다. list/chips는 변경하지 않습니다.
+- 전체 plain-text 제목은 native title과 접근 이름에 남습니다. Restricted source trimming, 보이는 건수, 외부 링크와 원본 이동의 의미는 그대로입니다.
+- opt-in toggle/row는 기존 inline composer와 같은 44px(`space-10 + space-1`) target입니다. row의 borderless fill/radius, Popover의 shadow와 focus/light-dismiss engine은 기존 값을 유지합니다.
+- 내부 비교: ListCell의 primary title/secondary description 위계, 기존 SourceTag의 낮은 강조, Popover 단일 surface를 계승합니다. 새로운 카드·배지·색·아이콘 종류 매핑을 만들지 않습니다.
+- 구현 전 확인한 [USWDS Collection](https://designsystem.digital.gov/components/collection/)의 고유한 제목에 원본 경로를 붙이는 원칙과 [WCAG Target Size Enhanced](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html)의 44px touch 목표를 적용합니다. 44px은 AA 최소 24px과 구분되는 선택입니다. `InlineDetails` 실제 story는 두 줄 자료·전달된 메타·숨긴 자료·target을 확인합니다.
+
+제품 검토 핀: Portal `740bc9d5` ChatWorkspace의 source popover는 supported by new contract이며 installed vendor 0.4.7에는
+이 opt-in이 없습니다. Web Viz `7e535341` MapEditScreen/TaskCreateScreen은 map/task 저작 흐름에 근거 목록이 없어 not applicable,
+Control Full Daedeok `d8c215fd` RobotDashboard Dashboard는 map/camera/robot 관제에 채팅 출처가 없어 not applicable입니다.

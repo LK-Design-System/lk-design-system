@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFieldMetadata } from './field-shared.js';
 import { Icon } from '../icon/Icon.jsx';
+import { Button } from '../buttons/Button.jsx';
 import { useResolvedControlSize } from '../internal/component-density.js';
 
 function matchesAccept(file, accept) {
@@ -29,7 +30,8 @@ export function FileUpload({
   inputAriaLabel,
   inputAriaDescribedBy,
   inputAriaInvalid,
-  hint = '클릭하거나 파일을 끌어다 놓으세요',
+  hint,
+  presentation = 'dropzone',
   disabled = false,
   size,
   className,
@@ -43,6 +45,10 @@ export function FileUpload({
   const resolvedSize = useResolvedControlSize(size);
   const normalizedSize = resolvedSize === 'small' ? 'sm' : resolvedSize === 'medium' ? 'md' : resolvedSize;
   const compact = normalizedSize === 'sm';
+  const buttonPresentation = presentation === 'button';
+  const resolvedHint = hint === undefined
+    ? (buttonPresentation ? '파일 선택' : '클릭하거나 파일을 끌어다 놓으세요')
+    : hint;
   // The field engine owns id derivation and normalises the caller-supplied
   // description ids. Its label/message stack does not apply: the visible
   // <label> here is the drop target itself, and the description channel is
@@ -82,6 +88,7 @@ export function FileUpload({
       className={['lk-file-upload', className].filter(Boolean).join(' ')}
       aria-disabled={disabled || undefined}
       data-size={normalizedSize}
+      data-presentation={buttonPresentation ? 'button' : 'dropzone'}
       data-drag-active={drag ? '' : undefined}
       data-focus-visible={focused ? '' : undefined}
       onDragEnter={(event) => {
@@ -109,14 +116,14 @@ export function FileUpload({
         width: '100%',
         minWidth: 0,
         boxSizing: 'border-box',
-        border: `1.5px dashed ${drag || focused ? 'var(--component-input-border-color-focus)' : 'var(--color-semantic-line-solid-normal)'}`,
+        border: buttonPresentation ? 'none' : `1.5px dashed ${drag || focused ? 'var(--component-input-border-color-focus)' : 'var(--color-semantic-line-solid-normal)'}`,
         borderRadius: 'var(--component-input-radius)',
-        background: disabled
+        background: buttonPresentation ? 'transparent' : disabled
           ? 'var(--color-semantic-fill-normal)'
           : drag
             ? 'var(--color-semantic-primary-surface-normal)'
             : 'var(--component-input-bg)',
-        boxShadow: focused ? 'var(--component-input-focus-shadow)' : 'none',
+        boxShadow: !buttonPresentation && focused ? 'var(--component-input-focus-shadow)' : 'none',
         color: disabled ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-label-neutral)',
         fontFamily: 'var(--font-sans)',
         transition: 'border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
@@ -151,7 +158,21 @@ export function FileUpload({
           border: 0,
         }}
       />
-      <label
+      {buttonPresentation ? (
+        <Button
+          as="label"
+          htmlFor={inputId}
+          variant="outlined"
+          color="assistive"
+          size={normalizedSize}
+          full
+          disabled={disabled}
+          style={{ boxShadow: focused ? 'var(--component-input-focus-shadow)' : 'none' }}
+        >
+          <Icon name="upload" size={16} aria-hidden="true" />
+          {resolvedHint}
+        </Button>
+      ) : <label
         htmlFor={inputId}
         style={{
           minHeight: compact ? 112 : 144,
@@ -193,7 +214,7 @@ export function FileUpload({
             wordBreak: 'break-word',
           }}
         >
-          {hint}
+          {resolvedHint}
         </span>
         {names.length > 0 && (
           <span
@@ -212,7 +233,7 @@ export function FileUpload({
             {names.join(', ')}
           </span>
         )}
-      </label>
+      </label>}
       <span
         role="status"
         aria-live="polite"

@@ -33,6 +33,10 @@ const CONVERSATION_LIST_STYLES = `
   @media(hover:none){.lk-conversation-list__action{opacity:1;pointer-events:auto}.lk-conversation-list__row:has(.lk-conversation-list__action) .lk-conversation-list__link{padding-inline-end:calc(var(--space-8) + var(--space-1))}}
   @media(forced-colors:active){.lk-conversation-list__row[data-current="true"] .lk-conversation-list__link{background:Highlight;color:HighlightText;background:SelectedItem;color:SelectedItemText}}
   @media(prefers-reduced-motion:reduce){.lk-conversation-list__row,.lk-conversation-list__link,.lk-conversation-list__action{transition:none!important}}
+  .lk-conversation-list[data-title-lines="2"] .lk-conversation-list__row{min-height:calc(var(--space-12) + var(--space-2))}
+  .lk-conversation-list[data-title-lines="2"] .lk-conversation-list__link{padding-block:var(--space-2)}
+  .lk-conversation-list[data-title-lines="2"] .lk-conversation-list__row:has(.lk-conversation-list__action) .lk-conversation-list__link{padding-inline-end:calc(var(--space-10) + var(--space-1) + var(--space-2))}
+  .lk-conversation-list[data-title-lines="2"] .lk-conversation-list__title{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;white-space:normal;overflow-wrap:anywhere;word-break:keep-all}
 `;
 
 const DEFAULT_ACTIONS = [];
@@ -49,6 +53,7 @@ const DEFAULT_ACTIONS = [];
  */
 export function ConversationList({
   groups = [],
+  titleLines = 1,
   currentId,
   renderLink,
   itemActions = DEFAULT_ACTIONS,
@@ -125,7 +130,7 @@ export function ConversationList({
                       <DropdownMenu
                         align="right"
                         trigger={(
-                          <IconButton variant="plain" size="xs" round={false} label={moreLabel(item)}>
+                          <IconButton variant="plain" size="xs" round={false} label={moreLabel(item)} style={titleLines === 2 ? { width: 'calc(var(--space-10) + var(--space-1))', height: 'calc(var(--space-10) + var(--space-1))' } : undefined}>
                             <Icon name="more-horizontal" size={16} aria-hidden="true" />
                           </IconButton>
                         )}
@@ -155,6 +160,7 @@ export function ConversationList({
       aria-label={ariaLabel}
       aria-labelledby={labelledBy}
       aria-busy={loading || loadingMore ? true : undefined}
+      data-title-lines={titleLines === 2 ? '2' : '1'}
       className={['lk-conversation-list', className].filter(Boolean).join(' ')}
       style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: 'var(--space-1)', minWidth: 0, fontFamily: 'var(--font-sans)', ...style }}
       {...rest}

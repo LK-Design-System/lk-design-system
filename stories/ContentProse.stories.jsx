@@ -169,3 +169,27 @@ export const ProseCard = {
     </div>
   ),
 };
+
+export const ChatTypography = {
+  name: '변형·상태 · 채팅 본문 조판',
+  parameters: storyDescription('typography=chat은 body1 16/24px과 짧은 heading·문단 간격을 사용합니다. document 기본 14px는 유지하며 실제 heading 레벨, 코드·인용 스타일과 표 의미는 그대로 둡니다. 긴 표는 본문 폭 안에서만 가로로 스크롤됩니다.'),
+  render: () => <div style={{ width: '100%', minWidth: 0, boxSizing: 'border-box', display: 'flex', flexWrap: 'wrap', gap: 'var(--space-6)' }}>
+    <section data-document-prose style={{ width: '100%', maxWidth: 320, minWidth: 0, boxSizing: 'border-box' }} aria-label="기본 문서 조판"><Prose><ArticleBody /></Prose></section>
+    <section data-chat-prose style={{ width: '100%', maxWidth: 320, minWidth: 0, boxSizing: 'border-box' }} aria-label="채팅 조판"><Prose typography="chat"><ArticleBody />
+      <table><thead><tr><th scope="col">항목</th><th scope="col">실행 식별자</th></tr></thead><tbody><tr><td>점검</td><td style={{ whiteSpace: 'nowrap' }}>lkr-control-dispatch-supervision-endpoint-2026</td></tr></tbody></table>
+    </Prose></section>
+  </div>,
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const documentProse = canvasElement.querySelector('[data-document-prose] .lk-prose');
+    const chat = canvasElement.querySelector('[data-chat-prose] .lk-prose');
+    const paragraph = chat.querySelector('p');
+    if (doc.defaultView.getComputedStyle(documentProse.querySelector('p')).fontSize !== '14px') throw new Error('기본 document 조판은 14px로 유지합니다.');
+    const style = doc.defaultView.getComputedStyle(paragraph);
+    if (style.fontSize !== '16px' || style.lineHeight !== '24px') throw new Error('채팅 본문은 LDS body1 16/24px을 사용합니다.');
+    if (!chat.querySelector('h2') || !chat.querySelector('h3') || !chat.querySelector('th[scope="col"]')) throw new Error('heading과 표 의미는 콘텐츠 요소가 그대로 유지합니다.');
+    if (chat.scrollWidth > chat.clientWidth + 1) throw new Error('채팅의 긴 표는 본문 전체를 가로로 밀지 않습니다.');
+    const table = [...chat.querySelectorAll('table')].at(-1);
+    if (table.scrollWidth <= table.clientWidth || table.getAttribute('tabindex') !== '0') throw new Error('실제로 넘치는 표만 키보드로 접근 가능한 로컬 스크롤을 제공합니다.');
+  },
+};
