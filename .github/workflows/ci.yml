@@ -192,10 +192,9 @@ jobs:
         run: npm exec -- playwright install --with-deps chromium
 
       - name: Build, typecheck, and Storybook
-        # check:ci == check minus check:storybook-ia. The IA audit gate requires
-        # per-page human review, which can't run in automated CI; it stays a
-        # local/manual curation step (npm run check:storybook-ia). Immutable
-        # Wave 0 evidence is verified separately inside check:fast.
+        # check:ci includes the Storybook IA gate. Complete scoped manual review
+        # before integration; CI verifies the recorded roles, dispositions and
+        # source fingerprints. Immutable Wave 0 evidence is checked separately.
         run: npm run check:ci
 
       - name: Runtime dependency audit

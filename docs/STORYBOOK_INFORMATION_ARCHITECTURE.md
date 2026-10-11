@@ -22,6 +22,10 @@
 
 실제 source preview를 PC 1280×884와 모바일 390×844에서 보고 57px와 49px를 비교했습니다. 49px header는 상하 8px·좌우 20px 여백, 32px 명령 target, 제목 말줄임과 완전한 focus ring을 유지하면서 문서 본문의 위계를 덜 가립니다. 검토한 story source SHA-256은 `2d62ba88e0bfc292902e688a579ec9e1c885f60f0176ff82ec6cd78cfe1f5a8f`입니다. 이는 모바일 92vw인 LDS source preview의 검토이며 실제 Portal의 전체 폭 적용, Linux export 성공 또는 전체 카탈로그 재검증을 인증하지 않습니다. census 변경은 inventory 사실만 기록하며 기존 IA JSON의 review 도장을 승격하거나 dedup 기준을 완화하지 않습니다.
 
+### 2026-10-11 scoped disposition 등록
+
+사용자의 이번 세션 예외·연속 승인을 근거로 기존 Drawer의 keep 판정을 유지하고, 새 `ShortHeader` 하나를 public `variants-states`로 기록합니다. 역할·이름·순서와 49px PC/모바일 렌더를 에이전트가 확인했으며, 사람이 해당 이미지를 직접 검토했다는 주장은 하지 않습니다. 기존 793개 검토 기록은 유지합니다. 수동 필드의 검토 범위는 이 페이지의 소스 delta와 새 story 하나뿐입니다. Linux report가 반영할 집계는 검토 완료 페이지 202/202개, 스토리 794/794개와 stale source review 0개입니다. 현재 생성 summary는 Linux 재생성 전까지 앞 절의 793/794·stale1 기록을 보존합니다.
+
 ### 2026-10-10 보존 원장
 
 아래 [machine-readable audit](references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json) 집계는 정본 Linux export [38029535597](https://github.com/LK-Design-System/lk-design-system/actions/runs/38029535597)의 소스 [69e9fd8e](https://github.com/LK-Design-System/lk-design-system/commit/69e9fd8ea8cf420f679e576b68e5549394fbe4fc)에 대한 보존 기록입니다. 당시 집계는 202개 페이지와 793개 스토리였습니다.

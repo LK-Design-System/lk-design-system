@@ -21521,8 +21521,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-09-17",
-      "reviewedSourceSha256": "7910833501b184e5662dc66fa3183d2e3f71058bb06b13560eb74183db0a7c5f",
+      "reviewedAt": "2026-10-11",
+      "reviewedSourceSha256": "2d62ba88e0bfc292902e688a579ec9e1c885f60f0176ff82ec6cd78cfe1f5a8f",
       "stories": [
         {
           "id": "lds-product-overlay-drawer--drawer-open",
@@ -21591,8 +21591,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "Drawer"
           ],
@@ -21602,7 +21602,8 @@
             "Icon",
             "IconButton",
             "Input"
-          ]
+          ],
+          "reviewNote": "2026-10-11 owner-authorized scoped disposition under the explicit session exception and continuing approval: keep Drawer ownership and classify ShortHeader as a public variants-states extension. Agent-executed source/AST and desktop/mobile screenshot inspection verified the audience name/order and 49px header with 32px controls. Existing 793 reviews are retained. No human visual inspection or whole-catalog rerun is claimed."
         },
         {
           "id": "lds-product-overlay-drawer--drawer-sheet-focus-contract",
@@ -21689,7 +21690,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots."
+      "reviewNote": "2026-09-08 source and built-browser re-review for the Gungneung coverage extension (ScheduleCalendar, EquipmentStatusCard readout) and the 0.2.2 candidate stories: every story completed play and Axe checks without violations; normal/narrow and light/dark compositions were inspected from static-build screenshots. 2026-10-11 scoped extension review: the owner explicitly granted a session exception and continuing approval for the required LDS-compliant header implementation. The existing Drawer keep disposition is retained; ShortHeader is a public variants-states extension under that session authorization. Agents performed source/AST and visual inspection at 1280x884 and 390x844, confirming 49px chrome, 32px commands, complete focus rings and independent body/footer density. This records owner-authorized disposition and agent-executed verification, not a human visual inspection, a full-catalog rerun or actual Portal adoption."
     },
     {
       "title": "LDS Product/Overlay/Hover Card",
