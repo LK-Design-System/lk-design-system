@@ -21485,7 +21485,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayDrawer.stories.jsx",
-      "sourceSha256": "2d62ba88e0bfc292902e688a579ec9e1c885f60f0176ff82ec6cd78cfe1f5a8f",
+      "sourceSha256": "5153bf6e720e011efc4e3716a4f9640e8b16fe8d5999030556ce60aa109a046a",
       "primaryOwner": "Drawer",
       "ownerComponents": [
         "Drawer"
