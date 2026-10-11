@@ -234,7 +234,7 @@ deprecated: `npm run check:deprecated-tokens` fails on any reference from
 
 ### Shell-panel retained compatibility
 
-The authored [retention contract](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.7/docs/references/quality/TOKEN_DEPRECATION_RETENTION.json)
+The authored [retention contract](./TOKEN_DEPRECATION_RETENTION.json)
 records three existing public names whose former ShellPanel primary-action role
 was replaced by the approved quiet 36px action. It preserves every name and value;
 it does not add aliases or restore the old selected fill or 40px action.

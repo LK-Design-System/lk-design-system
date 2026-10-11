@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "component": "components/layout/ShellPanel.jsx",
+  "firstDeprecatedMinor": "0.5.0",
+  "reviewBy": "0.6.0",
+  "removal": "Explicit breaking-change approval required; review expiry never removes tokens automatically.",
+  "migration": "docs/TOKEN_GOVERNANCE.md#shell-panel-retained-compatibility",
+  "tokens": [
+    {
+      "css": "--component-shell-panel-row-height",
+      "sourcePath": "component.shellPanel.tokens.rowHeight",
+      "replacement": "--component-conversation-list-row-height (36px primary action)",
+      "preservedSource": {
+        "$type": "dimension",
+        "$value": "var(--component-shell-panel-row-height)",
+        "css": "--component-shell-panel-row-height",
+        "source": "rail-panel shell spec (owner-approved L-S1..L-S12, 2026-10-09)"
+      },
+      "declarations": {
+        "tokens/components.css": [
+          "40px"
+        ]
+      }
+    },
+    {
+      "css": "--component-shell-panel-active-surface",
+      "sourcePath": "component.shellPanel.tokens.activeSurface",
+      "replacement": "transparent idle surface; aria-current and semibold identify the current primary action",
+      "preservedSource": {
+        "$type": "color",
+        "css": "--component-shell-panel-active-surface",
+        "$value": "var(--color-atomic-cool-neutral-96)",
+        "modes": {
+          "light": "var(--color-atomic-cool-neutral-96)",
+          "dark": "var(--color-atomic-cool-neutral-20)"
+        },
+        "generated": true,
+        "ref": "primitive.colorRamps.cool-neutral.tokens.96"
+      },
+      "declarations": {
+        "tokens/color-components.css": [
+          "var(--color-atomic-cool-neutral-96)",
+          "var(--color-atomic-cool-neutral-20)",
+          "var(--color-atomic-cool-neutral-20)"
+        ]
+      }
+    },
+    {
+      "css": "--component-shell-panel-active-hover-surface",
+      "sourcePath": "component.shellPanel.tokens.activeHoverSurface",
+      "replacement": "--component-shell-panel-hover-surface for hover, including the current primary action",
+      "preservedSource": {
+        "$type": "color",
+        "css": "--component-shell-panel-active-hover-surface",
+        "$value": "var(--color-atomic-cool-neutral-95)",
+        "modes": {
+          "light": "var(--color-atomic-cool-neutral-95)",
+          "dark": "var(--color-atomic-cool-neutral-22)"
+        },
+        "generated": true,
+        "ref": "primitive.colorRamps.cool-neutral.tokens.95"
+      },
+      "declarations": {
+        "tokens/color-components.css": [
+          "var(--color-atomic-cool-neutral-95)",
+          "var(--color-atomic-cool-neutral-22)",
+          "var(--color-atomic-cool-neutral-22)"
+        ]
+      }
+    }
+  ]
+}

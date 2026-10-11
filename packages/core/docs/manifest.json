@@ -209,6 +209,10 @@
         "sha256": "8da2c123036ab6f6f48b007b26681f29aa8989321315af10b3651927866c8bf2"
       },
       {
+        "path": "docs/references/quality/TOKEN_DEPRECATION_RETENTION.json",
+        "sha256": "8c9045503e38d86f2a2aa6496364a44f7a95bcdb34fd0999be8d049f1fad4c90"
+      },
+      {
         "path": "docs/TOKEN_GOVERNANCE.md",
         "sha256": "492a9d0728e8c0c972adc886e9a3d7f99ba6bfc650a723759dc420b797fbcfe6"
       },
@@ -634,8 +638,18 @@
       ]
     },
     {
+      "path": "policies/TOKEN_DEPRECATION_RETENTION.json",
+      "sha256": "8c9045503e38d86f2a2aa6496364a44f7a95bcdb34fd0999be8d049f1fad4c90",
+      "sources": [
+        {
+          "path": "docs/references/quality/TOKEN_DEPRECATION_RETENTION.json",
+          "sha256": "8c9045503e38d86f2a2aa6496364a44f7a95bcdb34fd0999be8d049f1fad4c90"
+        }
+      ]
+    },
+    {
       "path": "policies/TOKEN_GOVERNANCE.md",
-      "sha256": "102472d074aad43688d38cafa3ca32221b73efce10f9531769f9508e38934230",
+      "sha256": "7a9df06b1bf107efb34e961933026fc0f43ba07493fb85561cd662c19793a2a9",
       "sources": [
         {
           "path": "docs/TOKEN_GOVERNANCE.md",
