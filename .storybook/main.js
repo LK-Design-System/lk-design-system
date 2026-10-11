@@ -1,3 +1,5 @@
+let viteDevMiddleware;
+
 const config = {
   stories: ['../stories/**/*.stories.@(js|jsx)'],
   staticDirs: [
@@ -30,6 +32,23 @@ const config = {
     allowedHosts: ['localhost', '127.0.0.1'],
     disableTelemetry: true,
   },
+  experimental_devServer: (app) => {
+    // Storybook serves staticDirs before Vite. Raw token imports need Vite's
+    // JavaScript asset transform; ordinary CSS URLs keep the static handler.
+    app.use((req, res, next) => {
+      const url = new URL(req.url || '/', 'http://localhost');
+      if (!url.pathname.startsWith('/tokens/') || !url.pathname.endsWith('.css') || !url.searchParams.has('raw')) {
+        return next();
+      }
+      if (!viteDevMiddleware) {
+        res.statusCode = 503;
+        res.end('Token asset transformer is not ready.');
+        return;
+      }
+      return viteDevMiddleware(req, res, next);
+    });
+    return app;
+  },
   viteFinal: async (config) => {
     const allowedHosts = config.server?.allowedHosts === true
       ? true
@@ -37,6 +56,16 @@ const config = {
 
     return {
       ...config,
+      plugins: [
+        ...(config.plugins || []),
+        {
+          name: 'lds-raw-token-assets',
+          apply: 'serve',
+          configureServer(server) {
+            viteDevMiddleware = server.middlewares;
+          },
+        },
+      ],
       server: {
         ...config.server,
         allowedHosts,

@@ -1,4 +1,5 @@
 import React from 'react';
+import focusStyles from '../tokens/focus.css?raw';
 import { userEvent, waitFor } from 'storybook/test';
 import { Icon, Input } from '../src/index.js';
 import { storyDescription } from './StoryGuide.shared.jsx';
@@ -49,7 +50,7 @@ export const InputKeyboardFocusContract = {
   tags: ['!dev'],
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 520 }}>
-      <style>{'@import url("/tokens/focus.css") layer(lds-input-focus-contract);'}</style>
+      <style>{`@layer lds-input-focus-contract { ${focusStyles} }`}</style>
       <button type="button" data-focus-start>입력 시작</button>
       <Input label="일반 입력" defaultValue="모든 계정 종류" />
       <Input label="오류 입력" defaultValue="수정할 값" error="이름을 확인해 주세요." />

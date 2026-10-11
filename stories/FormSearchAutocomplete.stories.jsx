@@ -310,8 +310,10 @@ export const SearchSingleFocus = {
     await userEvent.tab();
     await waitFor(() => {
       const genericStyle = styleOf(genericInput);
-      if (doc.activeElement !== genericInput || !genericInput.matches(':focus-visible') || genericStyle.outlineStyle !== 'solid' || genericStyle.outlineWidth !== '2px') {
-        throw new Error('The generic Input must retain its keyboard indicator under the same layered focus CSS.');
+      const genericControl = genericInput.closest('[data-slot="control"]');
+      const genericControlStyle = genericControl && styleOf(genericControl);
+      if (doc.activeElement !== genericInput || !genericInput.matches(':focus-visible') || genericStyle.outlineStyle !== 'none' || genericStyle.boxShadow !== 'none' || genericControlStyle?.outlineStyle !== 'solid' || genericControlStyle.outlineWidth !== '2px' || genericControlStyle.boxShadow !== 'none') {
+        throw new Error('The generic Input must keep keyboard focus with one solid 2px outer control indicator and no native outline or shadow under layered focus CSS.');
       }
     });
   },
