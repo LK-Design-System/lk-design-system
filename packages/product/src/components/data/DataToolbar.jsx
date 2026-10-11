@@ -321,7 +321,7 @@ export const DataToolbar = React.forwardRef(function DataToolbar({
           title={filterPanelTitle}
           density="compact"
           width={420}
-          style={{ width: '100%', maxWidth: '100vw' }}
+          style={{ width: 'min(420px, 100vw)', maxWidth: '100vw' }}
           bodyStyle={{ padding: 'var(--space-5)' }}
           footer={(
             <Button type="button" full onClick={() => setFilterPanelOpen(false)}>
