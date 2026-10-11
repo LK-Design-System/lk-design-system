@@ -21522,7 +21522,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-10-11",
-      "reviewedSourceSha256": "2d62ba88e0bfc292902e688a579ec9e1c885f60f0176ff82ec6cd78cfe1f5a8f",
+      "reviewedSourceSha256": "5153bf6e720e011efc4e3716a4f9640e8b16fe8d5999030556ce60aa109a046a",
       "stories": [
         {
           "id": "lds-product-overlay-drawer--drawer-open",

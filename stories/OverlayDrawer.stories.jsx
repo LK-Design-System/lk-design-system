@@ -82,7 +82,7 @@ function BrandCloseControlExample() {
   );
 }
 
-const shortHeaderFilename = '2026년 회사 지식 등록 절차 및 문서 보관 정책 — registration-guide.md';
+const shortHeaderFilename = '2026년 회사 지식 등록 절차 및 문서 보관 정책 — registration-guide.pdf';
 
 function ShortHeaderExample({ density = 'comfortable', headerSize = 'sm' }) {
   const [open, setOpen] = React.useState(false);
