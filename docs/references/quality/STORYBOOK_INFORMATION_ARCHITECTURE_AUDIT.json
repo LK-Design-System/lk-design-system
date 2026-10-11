@@ -5861,7 +5861,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormSearchAutocomplete.stories.jsx",
-      "sourceSha256": "23f21322544fa36fa5870ccddf844afdb3fb94f7f63c016af953be5b73a0d9f0",
+      "sourceSha256": "75a91340be267b42c3f135329f786fc0c9b647e151e519d202f6668dd6efa584",
       "primaryOwner": "SearchField",
       "ownerComponents": [
         "AutoComplete",
@@ -5891,7 +5891,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-10-10",
-      "reviewedSourceSha256": "23f21322544fa36fa5870ccddf844afdb3fb94f7f63c016af953be5b73a0d9f0",
+      "reviewedSourceSha256": "75a91340be267b42c3f135329f786fc0c9b647e151e519d202f6668dd6efa584",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-and-autocomplete",
