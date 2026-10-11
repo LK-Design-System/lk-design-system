@@ -8,16 +8,16 @@
 | Last reviewed | 2026-08-23 |
 | Update | `npm run report:inventory` · `npm run check:inventory` |
 
-Storybook의 732개 스토리 역할·공개 여부·소유 컴포넌트와 196개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
+Storybook의 794개 스토리 역할·공개 여부·소유 컴포넌트와 202개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
 
 이 레포는 Core·Theme·Product owner package를 함께 개발하고 검증하는 LDS workspace입니다. 루트는 배포 패키지가 아니라 private orchestrator이며, Robotics UI는 별도 저장소와 패키지가 소유합니다.
 
 ## 패키지 범위
 
-- 워크스페이스 orchestrator: `@lk-design-system/lds-workspace@0.4.7` · `private: true`
-- Core: `@lk-design-system/lds-core@0.4.7` · source entry 94개 · named export 95개
-- Theme: `@lk-design-system/lds-theme@0.4.7` · source entry 4개 · named export 8개
-- Product: `@lk-design-system/lds-product@0.4.7` · source entry 125개 · named export 133개
+- 워크스페이스 orchestrator: `@lk-design-system/lds-workspace@0.4.8` · `private: true`
+- Core: `@lk-design-system/lds-core@0.4.8` · source entry 94개 · named export 95개
+- Theme: `@lk-design-system/lds-theme@0.4.8` · source entry 4개 · named export 8개
+- Product: `@lk-design-system/lds-product@0.4.8` · source entry 125개 · named export 133개
 - 로컬 owner-package canonical unique surface: source entry 214개 · named export 227개
 - Product deprecated compatibility projection: source entry 9개 · named export 9개
 - 외부 Robotics: `@lk-design-system/lds-robotics-ui@0.1.0-rc.53` · source entry 23개 · named export 54개
@@ -54,12 +54,12 @@ WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`
 
 - 현재 React component entry export: 214개
 - 공개 named export: 227개
-- Storybook 전체 story: 793개
-- Storybook public story: 557개
+- Storybook 전체 story: 794개
+- Storybook public story: 558개
 - Storybook hidden story: 236개
 - 숨김 visual parity story: 102개
-- visual inventory React story: 793개
-- 접근성 guard 검사 대상 implementation story: 793개
+- visual inventory React story: 794개
+- 접근성 guard 검사 대상 implementation story: 794개
 
 ## 생성 영역
 
