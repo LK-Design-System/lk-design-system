@@ -206,6 +206,7 @@
   --component-toolbar-padding: var(--space-1-5);
   --component-drawer-header-padding-comfortable: var(--space-5) var(--space-6);
   --component-drawer-header-padding-compact: var(--space-4) var(--space-5);
+  --component-drawer-header-padding-sm: var(--space-2) var(--space-5);
   --component-drawer-body-padding-comfortable: var(--space-5) var(--space-6);
   --component-drawer-body-padding-compact: var(--space-4) var(--space-5);
   --component-drawer-footer-padding-comfortable: var(--space-4) var(--space-6);

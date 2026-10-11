@@ -2,6 +2,15 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.4.8-rc.0 - 2026-10-11
+
+Paired Robotics release: `0.1.0-rc.53` (unchanged).
+
+### Added
+
+- `Drawer`에 `headerSize="auto"|"sm"`을 추가했습니다. 기본 `auto`는 기존 density별 여백을 유지하며, `sm`은 상하 8px·좌우 20px로 32px control을 둔 한 줄 헤더를 49px로 구성합니다. 본문·푸터 밀도와 control 크기는 유지합니다.
+- `Drawer.headerActions`로 보조 명령을 제목의 말줄임 영역 밖, 닫기 버튼 앞에 배치합니다. 긴 제목에서도 명령과 포커스 표시가 잘리지 않습니다.
+
 ## 0.4.7 - 2026-10-09
 
 Paired Robotics release: `0.1.0-rc.53` (unchanged).

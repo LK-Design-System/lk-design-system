@@ -27,10 +27,21 @@ const firstFilterRef = useRef(null);
 
 - `Modal`, `Sheet`, `ConfirmDialog`를 sibling으로 확인했습니다. focus/keyboard 계약은 `ConfirmDialog`와 공유하되 표면은 기존 Drawer 그대로입니다.
 - Modal과 달리 좌/우 edge에 붙고, `side`, 380px 기본 폭, 92vw 상한, slide transition을 유지합니다. 이 차이는 본문 맥락과 나란히 연결되는 보조 작업이라는 기능으로 정당화됩니다.
-- 시각 delta inventory: headline typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. `default` profile의 `comfortable`은 기존과 동일하게 header/body `space-5 space-6`, footer `space-4 space-6`, body `body2`/1.7을 사용합니다. `compact`은 같은 anatomy를 유지하며 header/body `space-4 space-5`, footer `space-3 space-5`, body `label1` 14/20px로 좁힙니다. `ops` profile은 선택된 density의 header/body/footer token만 한 단계 좁히며 type와 action target은 유지합니다. action gap은 두 밀도 모두 `space-2`입니다. radius와 선택/활성 marker는 추가하지 않습니다.
+- 시각 delta inventory: headline typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. `default` profile의 `comfortable`은 기존과 동일하게 header/body `space-5 space-6`, footer `space-4 space-6`, body `body2`/1.7을 사용합니다. `compact`은 같은 anatomy를 유지하며 header/body `space-4 space-5`, footer `space-3 space-5`, body `label1` 14/20px로 좁힙니다. `ops` profile은 별도의 header/body/footer 및 control token 값을 읽습니다. density와 headerSize 선택 자체는 현재 profile의 type와 action target을 바꾸지 않습니다. action gap은 두 밀도 모두 `space-2`입니다. radius와 선택/활성 marker는 추가하지 않습니다.
 - 제목이 있으면 `aria-labelledby`, 없으면 `ariaLabel`을 사용합니다.
 - 제품 맥락에 맞는 닫기 명령은 `closeLabel`로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.
 - `bodyStyle`은 기본 body padding과 scroll contract를 유지하되, `DashboardShell temporaryNavigation`처럼 edge-attached 자식이 자체 padding·divider를 소유할 때만 `padding: 0` 같은 layout override를 전달합니다.
+
+## Short header contract (`headerSize`)
+
+- 이 변경은 기존 Product Extension의 선택적 축입니다. `headerSize="auto"`가 기본이며 기존 `density`별 header 출력은 그대로입니다. 문서처럼 제목과 빠른 명령만 놓이는 표면은 `headerSize="sm"`을 명시해 header padding만 `space-2 space-5`(8×20px)로 줄입니다. width, body/footer density, 자식 밀도 상속은 독립적입니다.
+- 구현 전 시각 delta inventory: 가장 가까운 `Drawer auto`, `Modal`, `Sheet`와 비교해 제목 단계·글꼴·전경, 20px 닫기 glyph, 현재 profile의 `IconButton sm` target, gap, divider, fill, shadow, radius, hover/focus/disabled, edge 방향과 읽기·Tab 순서는 유지합니다. 유일한 차이는 header의 수직 여백입니다. 새 marker, 테두리, 고정 높이 또는 control 축소는 추가하지 않습니다.
+- `default` profile에서 32px control 한 줄은 8+32+8+1px divider로 49px입니다. 이 수치는 LDS의 spacing scale 선택이며 외부 제품의 필수 치수가 아닙니다. subtitle, 줄바꿈 또는 확대 시에는 내용에 맞춰 높이가 늘어납니다. `ops` profile로 전환하지 않으므로 profile의 다른 control·type·motion 값은 바꾸지 않습니다.
+- [Fluent 2 Drawer](https://fluent2.microsoft.design/components/web/react/core/drawer/usage)의 독립된 header/body/footer와 맥락에 맞는 빠른 명령, width 선택을 근거로 header와 body 밀도를 분리했습니다. [Adobe Spectrum app frame](https://spectrum.adobe.com/foundations/app-frame/overview)의 예측 가능한 프레임과 콘텐츠 우선 원칙에 따라 문서 header의 chrome만 줄이고 기존 anatomy는 보존합니다. 두 자료에서 특정 높이를 복사하지 않습니다.
+- 제품 적용 범위: LK Portal HEAD `c1382aafe3595de275dbc066ebc01dc9dbbc7cde`와 별도 작업 중인 `ChatDocumentReader.tsx`의 split header/full-width compact Drawer를 읽었습니다. 짧은 문서 reader만 `sm`에 opt-in하고 폼·탐색 Drawer는 `auto`를 유지합니다. reader worktree blob `7760f9fa1fb394cb06d9e6c2d49cdc0dd96e7a79`는 커밋된 제품 증거가 아닙니다.
+- LK Web Viz HEAD `7e53534197dbad6a165d86379ee0a0eac2be22cf`의 `frontend/src/screens/ConnectionSettingsScreen.tsx:112-135`는 full-page settings header이며 overlay reader가 없어 이 header-only 요청에 해당하지 않습니다. LK Control Full Daedeok HEAD `d8c215fd5fef8633c7b740dc4ec3f6d980db12d4`의 `MainLayout/index.jsx:48-55`와 `Sidebar/index.jsx:95-115`는 AppBar와 MUI 탐색 Drawer여서 해당하지 않습니다. 이 범위 확인을 기존 전체 coverage registry의 지원 판정으로 확대하지 않습니다.
+- `ShortHeader` story는 긴 파일명, 여러 32px 명령, `comfortable/compact` body와 `auto/sm` header 조합을 소유합니다. 기존 `CompactDensity` story의 16×20px header/body와 footer 회귀 검증은 유지합니다. 정상·좁은 폭 시각 검증은 실제 렌더링으로 별도 확인해야 합니다.
+- 첫 렌더링의 키보드 시각 검증에서 `title` 안에 합성한 명령의 focus ring이 기존 ellipsis wrapper에 잘리는 것을 확인했습니다. `headerActions`는 제목의 말줄임 영역 밖, 닫기 앞에 놓이는 optional quick-action slot입니다. Fluent header quick-action anatomy를 따르며 slot이 없을 때 기존 DOM과 chrome은 유지합니다. 제목 → quick actions → 닫기의 읽기·Tab 순서를 보존하고 overlay overflow를 전역 해제하지 않습니다.
 
 ## Density contract
 

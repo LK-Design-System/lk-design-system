@@ -8,6 +8,8 @@ import {
   Drawer,
   DrawerSection,
   FileUpload,
+  Icon,
+  IconButton,
   Input,
   Select,
   Sheet,
@@ -75,6 +77,44 @@ function BrandCloseControlExample() {
         onClose={() => setOpen(false)}
       >
         브랜드 표면에서는 외곽선 없는 닫기 X도 같은 on-surface 전경으로 렌더링합니다.
+      </Drawer>
+    </main>
+  );
+}
+
+const shortHeaderFilename = '2026년 회사 지식 등록 절차 및 문서 보관 정책 — registration-guide.md';
+
+function ShortHeaderExample({ density = 'comfortable', headerSize = 'sm' }) {
+  const [open, setOpen] = React.useState(false);
+  const fieldRef = React.useRef(null);
+  return (
+    <main style={{ minHeight: 180 }}>
+      <Button data-testid="short-header-trigger" onClick={() => setOpen(true)}>문서 열기</Button>
+      <Drawer
+        open={open}
+        density={density}
+        headerSize={headerSize}
+        width={720}
+        title={(
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', minWidth: 0 }}>
+            <Icon name="document-text" size={20} aria-hidden="true" />
+            <span data-testid="short-header-filename" style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', fontSize: 'var(--label1-size)', fontWeight: 'var(--fw-medium)' }}>{shortHeaderFilename}</span>
+          </div>
+        )}
+        headerActions={(
+          <>
+            <IconButton size="sm" variant="plain" label="문서 전체 화면으로 보기"><Icon name="maximize" size={20} aria-hidden="true" /></IconButton>
+            <IconButton size="sm" variant="plain" label="문서 다운로드"><Icon name="download" size={20} aria-hidden="true" /></IconButton>
+          </>
+        )}
+        initialFocusRef={fieldRef}
+        onClose={() => setOpen(false)}
+        footer={<Button data-testid="short-header-footer-action">확인</Button>}
+      >
+        <DrawerSection title="문서 보관 정책" description="원본과 접근 권한을 유지하며 회사 지식으로 등록합니다.">
+          <p>문서를 읽는 동안 제목과 빠른 명령은 상단에 유지됩니다.</p>
+          <Input ref={fieldRef} data-testid="short-header-body-input" aria-label="문서 내 검색" placeholder="문서 내 검색" />
+        </DrawerSection>
       </Drawer>
     </main>
   );
@@ -253,6 +293,56 @@ export const BrandCloseControl = {
       || getComputedStyle(close).borderTopColor !== 'rgba(0, 0, 0, 0)') {
       throw new Error('Brand Drawer plain close control must keep an on-surface X without visible button chrome.');
     }
+  },
+};
+
+export const ShortHeader = {
+  name: '변형·상태 · 짧은 문서 헤더',
+  args: { density: 'comfortable', headerSize: 'sm' },
+  argTypes: {
+    density: { control: 'select', options: ['comfortable', 'compact'] },
+    headerSize: { control: 'select', options: ['auto', 'sm'] },
+  },
+  parameters: storyDescription(
+    '긴 문서명과 여러 명령을 가진 짧은 header입니다. headerSize는 header 여백만 줄이고 body 밀도·footer CTA·닫기 target을 유지합니다. auto와 두 density도 비교할 수 있습니다.',
+  ),
+  render: (args) => <ShortHeaderExample {...args} />,
+  play: async ({ canvasElement, args }) => {
+    await userEvent.click(canvasElement.querySelector('[data-testid="short-header-trigger"]'));
+    const drawer = canvasElement.ownerDocument.querySelector('[role="dialog"]');
+    const header = drawer?.firstElementChild;
+    const body = drawer?.querySelector('.lk-scroll-surface');
+    const footer = drawer?.lastElementChild;
+    const filename = drawer?.querySelector('[data-testid="short-header-filename"]');
+    const input = drawer?.querySelector('[data-testid="short-header-body-input"]');
+    const inputControl = input?.closest('[data-slot="root"]')?.querySelector('[data-slot="control"]');
+    const action = drawer?.querySelector('[data-testid="short-header-footer-action"]');
+    const controls = header?.querySelectorAll('button');
+    if (!drawer || !header || !body || !footer || !filename || !inputControl || !action || controls?.length !== 3) {
+      throw new Error('Short header requires a long filename, three header controls, body field and footer CTA.');
+    }
+    const compact = args.density === 'compact';
+    const small = args.headerSize === 'sm';
+    const headerStyle = getComputedStyle(header);
+    const bodyStyle = getComputedStyle(body);
+    const footerStyle = getComputedStyle(footer);
+    if (drawer.getAttribute('data-header-size') !== (small ? 'sm' : 'auto')
+      || headerStyle.paddingTop !== (small ? '8px' : compact ? '16px' : '20px')
+      || headerStyle.paddingRight !== (small || compact ? '20px' : '24px')
+      || bodyStyle.paddingTop !== (compact ? '16px' : '20px')
+      || bodyStyle.paddingRight !== (compact ? '20px' : '24px')
+      || footerStyle.paddingTop !== (compact ? '12px' : '16px')
+      || getComputedStyle(inputControl).height !== (compact ? '32px' : '48px')
+      || getComputedStyle(action).height !== '40px'
+      || [...controls].some((control) => control.getBoundingClientRect().height !== 32 || control.getBoundingClientRect().width !== 32)
+      || [...controls].some((control) => drawer.querySelector('[id]')?.contains(control))
+      || drawer.scrollWidth > drawer.clientWidth
+      || getComputedStyle(filename).textOverflow !== 'ellipsis') {
+      throw new Error('Header size must affect only header padding and preserve density, 32px header targets, footer CTA and narrow overflow.');
+    }
+    await waitFor(() => {
+      if (canvasElement.ownerDocument.activeElement !== input) throw new Error('Short header must preserve initial body focus.');
+    });
   },
 };
 
