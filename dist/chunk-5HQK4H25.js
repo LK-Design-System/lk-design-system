@@ -1,7 +1,7 @@
 "use client";
 import {
   Drawer
-} from "./chunk-PIAORETY.js";
+} from "./chunk-DAUSYR43.js";
 import {
   Icon
 } from "./chunk-IKUN5X7H.js";
@@ -125,4 +125,4 @@ function PrimaryDetail({
 export {
   PrimaryDetail
 };
-//# sourceMappingURL=chunk-TKIN7L6W.js.map
+//# sourceMappingURL=chunk-5HQK4H25.js.map

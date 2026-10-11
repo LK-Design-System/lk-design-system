@@ -38879,6 +38879,8 @@
         "ChoiceCard",
         "DrawerSection",
         "FileUpload",
+        "Icon",
+        "IconButton",
         "Input",
         "Select",
         "Sheet",
@@ -38892,10 +38894,18 @@
       "avoidWhen": [
         "테스트·특수 embedding에서만 withinPortal=false를 사용하며 이 경우 background inert는 적용하지 않습니다.",
         "scrim 클릭 닫기는 closeOnScrim으로 제어하지만, 유일한 dismiss 수단으로 사용하지 않습니다.",
-        "WCAG 2.2 Target Size (Minimum): compact scope에서도 Checkbox/Radio의 실제 target을 최소 24×24px로 유지하고 footer action을 축소하지 않는 근거입니다.",
-        "Fluent 2 Dialog: 확인이 필요한 작업은 Drawer를 중첩 확장하지 않고 별도 확인 dialog로 구분합니다."
+        "WAI-ARIA APG Modal Dialog Pattern: modal Drawer에도 내부 focus trap, Escape, 복원, 이름 있는 dialog 계약을 적용했습니다. 밀도는 이 interaction/semantic 계약을 변경하지 않습니다.",
+        "WCAG 2.2 Target Size (Minimum): compact scope에서도 Checkbox/Radio의 실제 target을 최소 24×24px로 유지하고 footer action을 축소하지 않는 근거입니다."
       ],
       "anatomy": [
+        {
+          "part": "headerSize",
+          "rule": "header padding만 선택합니다. auto는 기존 density별 여백, sm은 8×20px이며 body/footer 밀도와 control 크기는 유지합니다. @default \"auto\""
+        },
+        {
+          "part": "headerActions",
+          "rule": "제목의 말줄임 영역 밖, 닫기 앞에 놓이는 보조 명령. icon-only control에는 접근 가능한 이름을 제공하세요."
+        },
         {
           "part": "subtitle",
           "rule": "제목 아래의 짧은 보조 설명. dialog의 aria-describedby와 연결됩니다."
@@ -38915,14 +38925,6 @@
         {
           "part": "onTransitionEnd",
           "rule": "dialog 표면의 transition 종료 handler. Drawer는 slide-out이 끝난 뒤 unmount하며, 제품 handler를 먼저 호출합니다."
-        },
-        {
-          "part": "title",
-          "rule": "Drawer 본문 안의 보이는 하위 제목."
-        },
-        {
-          "part": "description",
-          "rule": "제목 아래의 짧은 설명."
         }
       ],
       "properties": [
@@ -38962,10 +38964,24 @@
           "owner": "DrawerProps"
         },
         {
+          "name": "headerSize",
+          "type": "'auto' | 'sm'",
+          "required": false,
+          "description": "header padding만 선택합니다. auto는 기존 density별 여백, sm은 8×20px이며 body/footer 밀도와 control 크기는 유지합니다. @default \"auto\"",
+          "owner": "DrawerProps"
+        },
+        {
           "name": "title",
           "type": "React.ReactNode",
           "required": false,
           "description": "",
+          "owner": "DrawerProps"
+        },
+        {
+          "name": "headerActions",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "제목의 말줄임 영역 밖, 닫기 앞에 놓이는 보조 명령. icon-only control에는 접근 가능한 이름을 제공하세요.",
           "owner": "DrawerProps"
         },
         {
@@ -39079,20 +39095,6 @@
           "required": false,
           "description": "dialog 표면의 transition 종료 handler. Drawer는 slide-out이 끝난 뒤 unmount하며, 제품 handler를 먼저 호출합니다.",
           "owner": "DrawerProps"
-        },
-        {
-          "name": "style",
-          "type": "React.CSSProperties",
-          "required": false,
-          "description": "",
-          "owner": "DrawerProps"
-        },
-        {
-          "name": "title",
-          "type": "React.ReactNode",
-          "required": true,
-          "description": "Drawer 본문 안의 보이는 하위 제목.",
-          "owner": "DrawerSectionProps"
         }
       ],
       "states": [
@@ -39108,9 +39110,9 @@
       "behavior": [
         "density=\"comfortable\"이 기본값이며 default profile의 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다. ops에서는 같은 density API가 profile-aware chrome token을 읽습니다.",
         "자식의 명시적 size, padding, density가 항상 상속값보다 우선합니다. Drawer 밖과 comfortable Drawer의 기존 기본 출력은 유지됩니다.",
-        "근거: WAI-ARIA APG Modal Dialog Pattern은 dialog가 닫히면 invoker로 초점을 되돌리도록 요구하며, WCAG 2.1 Success Criterion 2.3.3 Animation from Interactions에 따라 motion을 줄인 사용자에게는 exit transition을 생략합니다.",
-        "initialFocusRef → 첫 tabbable 요소 → dialog 표면 순으로 초기 초점을 선택합니다.",
-        "최상위 Drawer만 Tab/Shift+Tab 순환, 외부 focus containment, Escape dismiss를 소유합니다."
+        "header 닫기와 footer는 scope 밖에 있습니다. footer CTA와 보조 액션은 기존 md 40px를 유지하며 body 안의 행 단위 액션도 의미상 필요할 때만 명시적으로 size=\"sm\"을 선택합니다.",
+        "open={false}가 되어도 Drawer는 slide-out transition이 끝날 때까지 mount를 유지합니다. 그동안 dialog는 aria-modal을 잃고 aria-hidden·inert가 되어 접근성 트리와 Tab 순서에서 즉시 제외되며, scrim 클릭과 닫기 버튼은 무시됩니다. transitionend(transform) 또는 계산된 transition 시간 + 50ms 뒤에 unmount하고, prefers-reduced-motion: reduce에서는 transition을 0으로 두어 바로 unmount합니다.",
+        "초점 복원은 시각 transition을 기다리지 않습니다. useDialogFocus가 modal을 해제하는 layout-effect cleanup은 shell이 배경 inert를 제거하기 전에 실행되므로, Drawer는 그 직후의 layout effect에서 returnFocusRef 또는 열 때 기록한 invoker가 다시 focus 가능해졌는지(hidden·inert·aria-hidden·display:none·disabled 아님) 확인한 뒤 복원합니다. 제품이 닫는 동안 다른 곳으로 초점을 명시적으로 옮겼으면 덮어쓰지 않습니다."
       ],
       "quantitativeRules": [
         {
@@ -39127,7 +39129,7 @@
         },
         {
           "subject": "명시 규칙 4",
-          "rule": "header 닫기와 footer는 scope 밖에 있습니다. footer CTA와 보조 액션은 기존 md 40px를 유지하며 body 안의 행 단위 액션도 의미상 필요할 때만 명시적으로 size=\"sm\"을 선택합니다."
+          "rule": "이 변경은 기존 Product Extension의 선택적 축입니다. headerSize=\"auto\"가 기본이며 기존 density별 header 출력은 그대로입니다. 문서처럼 제목과 빠른 명령만 놓이는 표면은 headerSize=\"sm\"을 명시해 header padding만 space-2 space-5(8×20px)로 줄입니다. width, body/footer density, 자식 밀도 상속은 독립적입니다."
         },
         {
           "subject": "--body2-line",
@@ -39135,23 +39137,23 @@
         }
       ],
       "responsive": [
-        "density=\"compact\"은 데스크톱의 짧고 반복적인 필터·설정 폼에서 Drawer가 소유하는 header/body/footer chrome과 body typography만 조밀하게 만듭니다. 제목 단계, 닫기 target, footer action 크기는 바꾸지 않습니다.",
-        "body의 bounded component-density scope는 Input, Select, Textarea, Checkbox/CheckboxGroup, Radio/RadioGroup, ChoiceCard, Callout, FileUpload처럼 밀도 상속 계약을 가진 자식에 compact를 전달합니다. 중첩 깊이나 DrawerField 같은 직접 자식 복제에 의존하지 않습니다.",
-        "DrawerSection은 본문 하위 제목, 설명, 선택적 divider와 간격을 소유합니다. 제품은 type-headline1, pt-6, 직접 구분선으로 같은 해부학을 다시 만들지 않습니다. compact에서는 divider 상단 16px, 제목·설명 다음 8px을 사용하고 comfortable에서는 기존 읽기 여유를 유지합니다.",
-        "근거는 모바일 셸의 표면 연속성입니다. TopBar dark(네이비 masthead) + SideNav appearance=\"brand\"(네이비 내비 패널)을 조합하면 그 사이의 Drawer 골격만 밝은 elevated 표면으로 남아 \"네이비 → 흰색 → 네이비\"로 표면이 두 번 끊깁니다. 제목 행과 닫기 버튼은 host가 도달할 수 없는 Drawer 내부이므로 소비 측 CSS 재매핑으로 고칠 수 없습니다."
+        "default profile에서 32px control 한 줄은 8+32+8+1px divider로 49px입니다. 이 수치는 LDS의 spacing scale 선택이며 외부 제품의 필수 치수가 아닙니다. subtitle, 줄바꿈 또는 확대 시에는 내용에 맞춰 높이가 늘어납니다. ops profile로 전환하지 않으므로 profile의 다른 control·type·motion 값은 바꾸지 않습니다.",
+        "Fluent 2 Drawer의 독립된 header/body/footer와 맥락에 맞는 빠른 명령, width 선택을 근거로 header와 body 밀도를 분리했습니다. Adobe Spectrum app frame의 예측 가능한 프레임과 콘텐츠 우선 원칙에 따라 문서 header의 chrome만 줄이고 기존 anatomy는 보존합니다. 두 자료에서 특정 높이를 복사하지 않습니다.",
+        "ShortHeader story는 긴 파일명, 여러 32px 명령, comfortable/compact body와 auto/sm header 조합을 소유합니다. 기존 CompactDensity story의 16×20px header/body와 footer 회귀 검증은 유지합니다. 정상·좁은 폭 시각 검증은 실제 렌더링으로 별도 확인해야 합니다.",
+        "density=\"compact\"은 데스크톱의 짧고 반복적인 필터·설정 폼에서 Drawer가 소유하는 header/body/footer chrome과 body typography만 조밀하게 만듭니다. 제목 단계, 닫기 target, footer action 크기는 바꾸지 않습니다."
       ],
       "contentGuidance": [
         "제품 맥락에 맞는 닫기 명령은 closeLabel로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.",
+        "DrawerSection은 본문 하위 제목, 설명, 선택적 divider와 간격을 소유합니다. 제품은 type-headline1, pt-6, 직접 구분선으로 같은 해부학을 다시 만들지 않습니다. compact에서는 divider 상단 16px, 제목·설명 다음 8px을 사용하고 comfortable에서는 기존 읽기 여유를 유지합니다.",
         "조밀화는 정보 위계나 상호작용 의미를 바꾸지 않습니다. Checkbox와 Radio의 실제 target은 시각 glyph보다 넓은 최소 24×24px이며, ChoiceCard와 FileUpload의 전체 label target도 유지됩니다.",
-        "appearance=\"brand\"는 패널 chrome 전체를 네이비 브랜드 표면으로 렌더링합니다: 패널 배경 --color-semantic-brand-surface, header/footer divider --color-semantic-brand-on-surface-border, 제목 --color-semantic-brand-on-surface, subtitle·body --color-semantic-brand-on-surface-muted, 닫기 버튼 IconButton variant=\"on-dark\".",
-        "WAI-ARIA APG Modal Dialog Pattern: modal Drawer에도 내부 focus trap, Escape, 복원, 이름 있는 dialog 계약을 적용했습니다. 밀도는 이 interaction/semantic 계약을 변경하지 않습니다."
+        "appearance=\"brand\"는 패널 chrome 전체를 네이비 브랜드 표면으로 렌더링합니다: 패널 배경 --color-semantic-brand-surface, header/footer divider --color-semantic-brand-on-surface-border, 제목 --color-semantic-brand-on-surface, subtitle·body --color-semantic-brand-on-surface-muted, 닫기 버튼 IconButton variant=\"on-dark\"."
       ],
       "accessibility": [
         "Modal, Sheet, ConfirmDialog를 sibling으로 확인했습니다. focus/keyboard 계약은 ConfirmDialog와 공유하되 표면은 기존 Drawer 그대로입니다.",
         "제목이 있으면 aria-labelledby, 없으면 ariaLabel을 사용합니다.",
-        "DrawerSection.headingLevel은 실제 문서 계층에 맞춰 26을 선택하고 기본값은 3입니다. 짧은 보조 명령은 actions에 두며, headerStyle과 contentStyle은 고유한 레이아웃 조합에만 사용합니다. 이 style escape hatch로 제목 크기·밀도·divider 간격을 다시 정의하지 않습니다.",
-        "appearance는 표면만 바꿉니다. anatomy, density, focus/Escape/스크롤 계약, portal·stack 동작은 동일합니다. DashboardShell은 temporaryNavigationAppearance로 이 축을 그대로 전달합니다.",
-        "open={false}가 되어도 Drawer는 slide-out transition이 끝날 때까지 mount를 유지합니다. 그동안 dialog는 aria-modal을 잃고 aria-hidden·inert가 되어 접근성 트리와 Tab 순서에서 즉시 제외되며, scrim 클릭과 닫기 버튼은 무시됩니다. transitionend(transform) 또는 계산된 transition 시간 + 50ms 뒤에 unmount하고, prefers-reduced-motion: reduce에서는 transition을 0으로 두어 바로 unmount합니다."
+        "구현 전 시각 delta inventory: 가장 가까운 Drawer auto, Modal, Sheet와 비교해 제목 단계·글꼴·전경, 20px 닫기 glyph, 현재 profile의 IconButton sm target, gap, divider, fill, shadow, radius, hover/focus/disabled, edge 방향과 읽기·Tab 순서는 유지합니다. 유일한 차이는 header의 수직 여백입니다. 새 marker, 테두리, 고정 높이 또는 control 축소는 추가하지 않습니다.",
+        "첫 렌더링의 키보드 시각 검증에서 title 안에 합성한 명령의 focus ring이 기존 ellipsis wrapper에 잘리는 것을 확인했습니다. headerActions는 제목의 말줄임 영역 밖, 닫기 앞에 놓이는 optional quick-action slot입니다. Fluent header quick-action anatomy를 따르며 slot이 없을 때 기존 DOM과 chrome은 유지합니다. 제목 → quick actions → 닫기의 읽기·Tab 순서를 보존하고 overlay overflow를 전역 해제하지 않습니다.",
+        "DrawerSection.headingLevel은 실제 문서 계층에 맞춰 26을 선택하고 기본값은 3입니다. 짧은 보조 명령은 actions에 두며, headerStyle과 contentStyle은 고유한 레이아웃 조합에만 사용합니다. 이 style escape hatch로 제목 크기·밀도·divider 간격을 다시 정의하지 않습니다."
       ],
       "exceptions": [
         "closeButtonVariant는 Drawer가 소유한 닫기 control의 표현만 바꾸는 additive axis입니다. 기본은 표면별 기존값(default: plain, brand: on-dark)이라 기존 소비자 출력은 바뀌지 않습니다. brand surface에서 외곽선 없는 X가 필요한 경우 closeButtonVariant=\"plain\"을 선택할 수 있으며, Drawer가 --viewer-foreground를 brand on-surface로 고정해 투명 button이라도 대비를 유지합니다.",
@@ -39183,11 +39185,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Input",
+          "component": "Icon",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "Select",
+          "component": "IconButton",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -39221,6 +39223,7 @@
         "--component-drawer-footer-padding-compact",
         "--component-drawer-header-padding-comfortable",
         "--component-drawer-header-padding-compact",
+        "--component-drawer-header-padding-sm",
         "--dur-base",
         "--dur-slow",
         "--ease-out",
@@ -39260,6 +39263,11 @@
           {
             "id": "lds-product-overlay-drawer--brand-close-control",
             "name": "변형·상태 · 브랜드 표면의 최소 닫기",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-overlay-drawer--short-header",
+            "name": "변형·상태 · 짧은 문서 헤더",
             "role": "variants-states"
           },
           {

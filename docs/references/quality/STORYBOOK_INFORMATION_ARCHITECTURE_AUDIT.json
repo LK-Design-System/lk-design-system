@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "bd50eda9416ac9b96391b323eda0e8ede78910139d2f964272af35d3b62ea729",
+    "storybookIndexSha256": "0b1de984b0c2f6efa7f4bc0fc6d10920ec048539e77a98fa2e1d962cb5d54f0f",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,22 +62,22 @@
   },
   "summary": {
     "pages": 202,
-    "stories": 793,
-    "publicStories": 557,
+    "stories": 794,
+    "publicStories": 558,
     "hiddenStories": 236,
     "componentDescriptions": 197,
     "pagesWithVisibleCanvasIntroduction": 197,
     "pagesWithDecisionGuidance": 190,
-    "describedPublicStories": 557,
+    "describedPublicStories": 558,
     "reviewedPages": 202,
     "reviewedStories": 793,
-    "staleReviewedPages": 0,
+    "staleReviewedPages": 1,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
       "overview": 185,
       "usage": 42,
-      "variants-states": 128,
+      "variants-states": 129,
       "interaction": 63,
       "responsive": 94,
       "scenario": 29,
@@ -107,8 +107,8 @@
       },
       "Product": {
         "pages": 115,
-        "stories": 515,
-        "public": 395,
+        "stories": 516,
+        "public": 396,
         "hidden": 120,
         "guideReadyPages": 114
       },
@@ -21485,7 +21485,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayDrawer.stories.jsx",
-      "sourceSha256": "7910833501b184e5662dc66fa3183d2e3f71058bb06b13560eb74183db0a7c5f",
+      "sourceSha256": "2d62ba88e0bfc292902e688a579ec9e1c885f60f0176ff82ec6cd78cfe1f5a8f",
       "primaryOwner": "Drawer",
       "ownerComponents": [
         "Drawer"
@@ -21497,19 +21497,21 @@
         "ChoiceCard",
         "DrawerSection",
         "FileUpload",
+        "Icon",
+        "IconButton",
         "Input",
         "Select",
         "Sheet",
         "Textarea"
       ],
       "visibility": {
-        "public": 4,
+        "public": 5,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-overlay-drawer--drawer-open",
-        "describedPublicStories": 4,
+        "describedPublicStories": 5,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -21572,6 +21574,35 @@
             "Button"
           ],
           "reviewNote": "2026-09-08 source, role, ownership, and visibility review complete (play and Axe clean in the static build)."
+        },
+        {
+          "id": "lds-product-overlay-drawer--short-header",
+          "name": "변형·상태 · 짧은 문서 헤더",
+          "exportName": "ShortHeader",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "Drawer"
+          ],
+          "supportingComponents": [
+            "Button",
+            "DrawerSection",
+            "Icon",
+            "IconButton",
+            "Input"
+          ]
         },
         {
           "id": "lds-product-overlay-drawer--drawer-sheet-focus-contract",

@@ -1,8 +1,8 @@
 "use client";
 import {
   PrimaryDetail
-} from "../../chunk-TKIN7L6W.js";
-import "../../chunk-PIAORETY.js";
+} from "../../chunk-5HQK4H25.js";
+import "../../chunk-DAUSYR43.js";
 import "../../chunk-PQDJATRI.js";
 import "../../chunk-EEL7ELPX.js";
 import "../../chunk-CCEOS7UM.js";

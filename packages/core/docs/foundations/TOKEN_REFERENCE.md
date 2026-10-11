@@ -141,6 +141,7 @@
 | `component.drawer.tokens.footerPaddingCompact` | string | `--component-drawer-footer-padding-compact` | `var(--component-drawer-footer-padding-compact)` | — |
 | `component.drawer.tokens.headerPaddingComfortable` | string | `--component-drawer-header-padding-comfortable` | `var(--component-drawer-header-padding-comfortable)` | — |
 | `component.drawer.tokens.headerPaddingCompact` | string | `--component-drawer-header-padding-compact` | `var(--component-drawer-header-padding-compact)` | — |
+| `component.drawer.tokens.headerPaddingSm` | string | `--component-drawer-header-padding-sm` | `var(--component-drawer-header-padding-sm)` | — |
 | `component.filterBar.tokens.gapMd` | dimension | `--component-filter-bar-gap-md` | `var(--component-filter-bar-gap-md)` | — |
 | `component.filterBar.tokens.gapSm` | dimension | `--component-filter-bar-gap-sm` | `var(--component-filter-bar-gap-sm)` | — |
 | `component.filterBar.tokens.paddingMd` | dimension | `--component-filter-bar-padding-md` | `var(--component-filter-bar-padding-md)` | — |

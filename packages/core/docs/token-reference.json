@@ -4848,6 +4848,12 @@
           "css": "--component-drawer-header-padding-compact",
           "source": "R3A density contract"
         },
+        "headerPaddingSm": {
+          "$type": "string",
+          "$value": "var(--component-drawer-header-padding-sm)",
+          "css": "--component-drawer-header-padding-sm",
+          "source": "Drawer independent small header contract"
+        },
         "bodyPaddingComfortable": {
           "$type": "string",
           "$value": "var(--component-drawer-body-padding-comfortable)",

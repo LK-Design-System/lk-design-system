@@ -81,7 +81,9 @@ function Drawer({
   width = 380,
   appearance = "default",
   density = "comfortable",
+  headerSize = "auto",
   title,
+  headerActions,
   subtitle,
   children,
   footer,
@@ -168,6 +170,8 @@ function Drawer({
   const isRight = side === "right";
   const isCompact = density === "compact";
   const resolvedDensity = isCompact ? "compact" : "comfortable";
+  const resolvedHeaderSize = headerSize === "sm" ? "sm" : "auto";
+  const headerPadding = resolvedHeaderSize === "sm" ? "var(--component-drawer-header-padding-sm, var(--space-2) var(--space-5))" : isCompact ? "var(--component-drawer-header-padding-compact, var(--space-4) var(--space-5))" : "var(--component-drawer-header-padding-comfortable, var(--space-5) var(--space-6))";
   const resolvedCloseButtonVariant = closeButtonVariant || tones.closeVariant;
   const hidden = isRight ? "translateX(100%)" : "translateX(-100%)";
   const handleTransitionEnd = (event) => {
@@ -204,12 +208,14 @@ function Drawer({
             "aria-hidden": open ? void 0 : true,
             inert: inertWhen(!open),
             "data-density": resolvedDensity,
+            "data-header-size": resolvedHeaderSize,
             children: [
-              (title != null || subtitle != null || onClose) && /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)", padding: isCompact ? "var(--component-drawer-header-padding-compact, var(--space-4) var(--space-5))" : "var(--component-drawer-header-padding-comfortable, var(--space-5) var(--space-6))", borderBottom: `1px solid ${tones.divider}` }, children: [
+              (title != null || subtitle != null || headerActions != null || onClose) && /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)", padding: headerPadding, borderBottom: `1px solid ${tones.divider}` }, children: [
                 /* @__PURE__ */ jsxs("div", { style: { flex: 1, minWidth: 0, display: "grid", gap: "var(--space-1)" }, children: [
                   title != null && /* @__PURE__ */ jsx("div", { id: titleId, style: { fontSize: "var(--headline1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: tones.title, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
                   subtitle != null && /* @__PURE__ */ jsx("div", { id: subtitleId, style: { color: tones.body, fontSize: "var(--label1-size)", lineHeight: "var(--label1-reading-line)", overflowWrap: "anywhere" }, children: subtitle })
                 ] }),
+                headerActions != null && /* @__PURE__ */ jsx("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-2)", flexShrink: 0, color: tones.title, "--viewer-foreground": tones.title }, children: headerActions }),
                 onClose && /* @__PURE__ */ jsx(
                   IconButton,
                   {
@@ -277,4 +283,4 @@ export {
   Drawer,
   DrawerSection
 };
-//# sourceMappingURL=chunk-PIAORETY.js.map
+//# sourceMappingURL=chunk-DAUSYR43.js.map
