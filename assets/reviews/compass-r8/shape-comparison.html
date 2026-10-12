@@ -1,0 +1,2545 @@
+<!doctype html>
+<html lang="ko" data-theme="light" data-lds-profile="default">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="description" content="LDS actual authoring components의 단일 축 시각 비교. 공유 토큰으로 채택하지 않은 정적 형태 시안.">
+<title>LDS · 형태 비교</title>
+<style id="lds-authored-tokens">/* Authored source: styles.css */
+/* ==========================================================================
+   LK ROBOTICS — Design System · global entry point
+   --------------------------------------------------------------------------
+   Consumers link THIS one file. It is an @import manifest only — every token
+   and @font-face the system ships is reachable from here. Add nothing else.
+   ========================================================================== */
+
+/* Authored source: tokens/fonts.css */
+/* ==========================================================================
+   LK ROBOTICS — Webfonts
+   --------------------------------------------------------------------------
+   LK unifies on ONE typeface for all text — KR, EN (and JP where present) —
+   for a single engineered voice across the bilingual site: PRETENDARD.
+
+   Pretendard is an open-source (SIL OFL 1.1) neo-grotesque with excellent
+   Hangul + Latin harmony and a tight, technical character that suits a
+   robotics / defense brand. The binaries are VENDORED locally (woff2,
+   Pretendard 1.3.9) so the system is fully self-contained / offline — no CDN
+   dependency. They are declared under the family name "Pretendard JP" so every
+   token and component keeps resolving the same family; Pretendard covers the
+   full KR/EN glyph set LK uses (the JP cut only adds kana, which LK content
+   does not require).
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Pretendard JP';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../fonts/Pretendard-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard JP';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../fonts/Pretendard-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard JP';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../fonts/Pretendard-SemiBold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard JP';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../fonts/Pretendard-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard JP';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url('../../fonts/Pretendard-ExtraBold.woff2') format('woff2');
+}
+
+:root {
+  /* Pretendard JP carries all text — LK unifies on one offline-vendored face,
+     including display / hero moments. --font-brand is a display hook that also
+     resolves to Pretendard, so the system stays fully offline. The 7-tier
+     type SCALE (see typography.css) is kept and renders in Pretendard. */
+  --font-sans: 'Pretendard JP', 'Pretendard', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', 'Apple SD Gothic Neo', 'Noto Sans KR',
+    Arial, sans-serif;
+  --font-brand: var(--font-sans);
+  /* --font-alt kept as a token hook for product codes / numerals. */
+  --font-alt: var(--font-sans);
+  /* Monospace hook for code / identifiers (ROS topic types, IDs, tabular codes).
+     System stack, offline-safe — LK ships no vendored mono face. */
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+/* Authored source: tokens/color-atomic.css */
+/* ==========================================================================
+   LK ROBOTICS — Atomic color ramps — 15 families / 178 tokens (GENERATED — do not hand-edit)
+   --------------------------------------------------------------------------
+   Source of truth: tokens/source.json
+   Regenerate: node scripts/generate-lk-color-system.mjs
+   ========================================================================== */
+:root {
+  --color-atomic-cool-neutral-5: #0F0F10;
+  --color-atomic-cool-neutral-7: #141415;
+  --color-atomic-cool-neutral-10: #171719;
+  --color-atomic-cool-neutral-15: #1B1C1E;
+  --color-atomic-cool-neutral-17: #212225;
+  --color-atomic-cool-neutral-20: #292A2D;
+  --color-atomic-cool-neutral-22: #2E2F33;
+  --color-atomic-cool-neutral-23: #333438;
+  --color-atomic-cool-neutral-25: #37383C;
+  --color-atomic-cool-neutral-30: #46474C;
+  --color-atomic-cool-neutral-40: #5A5C63;
+  --color-atomic-cool-neutral-50: #70737C;
+  --color-atomic-cool-neutral-60: #878A93;
+  --color-atomic-cool-neutral-70: #989BA2;
+  --color-atomic-cool-neutral-80: #AEB0B6;
+  --color-atomic-cool-neutral-90: #C2C4C8;
+  --color-atomic-cool-neutral-95: #DBDCDF;
+  --color-atomic-cool-neutral-96: #E1E2E4;
+  --color-atomic-cool-neutral-97: #EAEBEC;
+  --color-atomic-cool-neutral-98: #F4F4F5;
+  --color-atomic-cool-neutral-99: #F7F7F8;
+  --color-atomic-red-10: #370606;
+  --color-atomic-red-20: #6F0E0E;
+  --color-atomic-red-30: #AA1C1C;
+  --color-atomic-red-40: #D63D3D;
+  --color-atomic-red-50: #EE5656;
+  --color-atomic-red-60: #F16F6F;
+  --color-atomic-red-70: #F49292;
+  --color-atomic-red-80: #F8B8B8;
+  --color-atomic-red-90: #FAD6D6;
+  --color-atomic-red-95: #FCEDED;
+  --color-atomic-red-99: #FFFAFA;
+  --color-atomic-green-10: #04240E;
+  --color-atomic-green-20: #07441B;
+  --color-atomic-green-30: #0B6D2C;
+  --color-atomic-green-40: #0F953C;
+  --color-atomic-green-50: #13BE4C;
+  --color-atomic-green-60: #3FD270;
+  --color-atomic-green-70: #78DF9A;
+  --color-atomic-green-80: #A0EEBA;
+  --color-atomic-green-90: #C2F7D4;
+  --color-atomic-green-95: #E2FCEB;
+  --color-atomic-green-99: #F5FEF8;
+  --color-atomic-violet-0: #000000;
+  --color-atomic-violet-10: #130E38;
+  --color-atomic-violet-20: #28216E;
+  --color-atomic-violet-30: #40369C;
+  --color-atomic-violet-40: #5244B9;
+  --color-atomic-violet-45: #5D4EC1;
+  --color-atomic-violet-50: #6656C7;
+  --color-atomic-violet-60: #7D6CD1;
+  --color-atomic-violet-70: #9D8FDE;
+  --color-atomic-violet-80: #BFB4EA;
+  --color-atomic-violet-90: #DBD5F3;
+  --color-atomic-violet-95: #F0EDF9;
+  --color-atomic-violet-99: #FBFAFE;
+  --color-atomic-violet-100: #FFFFFF;
+  --color-atomic-blue-10: #0B1722;
+  --color-atomic-blue-20: #162E45;
+  --color-atomic-blue-30: #21476A;
+  --color-atomic-blue-40: #2D6090;
+  --color-atomic-blue-45: #336CA1;
+  --color-atomic-blue-50: #3878B3;
+  --color-atomic-blue-55: #3C80BF;
+  --color-atomic-blue-60: #4E8DC7;
+  --color-atomic-blue-65: #639ACE;
+  --color-atomic-blue-70: #79A9D5;
+  --color-atomic-blue-80: #A7C6E3;
+  --color-atomic-blue-90: #CDDFEF;
+  --color-atomic-blue-95: #EBF2F9;
+  --color-atomic-blue-99: #F8FBFD;
+  --color-atomic-orange-10: #341F05;
+  --color-atomic-orange-20: #623C0A;
+  --color-atomic-orange-30: #965B0F;
+  --color-atomic-orange-39: #C97A14;
+  --color-atomic-orange-40: #CC7C14;
+  --color-atomic-orange-50: #EB9C33;
+  --color-atomic-orange-60: #EFAF5C;
+  --color-atomic-orange-70: #F3C486;
+  --color-atomic-orange-80: #F7D6AB;
+  --color-atomic-orange-90: #F9E7CE;
+  --color-atomic-orange-95: #FCF4E9;
+  --color-atomic-orange-99: #FEFCF8;
+  --color-atomic-red-orange-10: #261004;
+  --color-atomic-red-orange-20: #542508;
+  --color-atomic-red-orange-30: #8A3B0E;
+  --color-atomic-red-orange-40: #C05313;
+  --color-atomic-red-orange-48: #E8661A;
+  --color-atomic-red-orange-50: #EA7029;
+  --color-atomic-red-orange-60: #ED864A;
+  --color-atomic-red-orange-70: #F1A173;
+  --color-atomic-red-orange-80: #F6C0A1;
+  --color-atomic-red-orange-90: #F9DAC9;
+  --color-atomic-red-orange-95: #FCEFE7;
+  --color-atomic-red-orange-99: #FEFAF8;
+  --color-atomic-lime-0: #000000;
+  --color-atomic-lime-10: #17280D;
+  --color-atomic-lime-20: #2F4F1E;
+  --color-atomic-lime-30: #487830;
+  --color-atomic-lime-37: #5C993F;
+  --color-atomic-lime-40: #64A745;
+  --color-atomic-lime-50: #7AC854;
+  --color-atomic-lime-60: #96D66E;
+  --color-atomic-lime-70: #B4E494;
+  --color-atomic-lime-80: #CAECB2;
+  --color-atomic-lime-90: #DDF4CE;
+  --color-atomic-lime-95: #EFFBE7;
+  --color-atomic-lime-99: #FBFEF7;
+  --color-atomic-lime-100: #FFFFFF;
+  --color-atomic-cyan-0: #000000;
+  --color-atomic-cyan-10: #05252A;
+  --color-atomic-cyan-20: #0A4852;
+  --color-atomic-cyan-30: #106F7F;
+  --color-atomic-cyan-40: #1698AE;
+  --color-atomic-cyan-50: #1BBDD9;
+  --color-atomic-cyan-60: #64CDDF;
+  --color-atomic-cyan-70: #85DBEA;
+  --color-atomic-cyan-80: #A9E9F4;
+  --color-atomic-cyan-90: #C7F1F8;
+  --color-atomic-cyan-95: #E5F8FC;
+  --color-atomic-cyan-99: #F9FEFE;
+  --color-atomic-cyan-100: #FFFFFF;
+  --color-atomic-light-blue-0: #000000;
+  --color-atomic-light-blue-10: #05212B;
+  --color-atomic-light-blue-20: #0A4356;
+  --color-atomic-light-blue-30: #0F6986;
+  --color-atomic-light-blue-40: #1590B9;
+  --color-atomic-light-blue-50: #19B2E4;
+  --color-atomic-light-blue-60: #4CC4EB;
+  --color-atomic-light-blue-70: #79D3F0;
+  --color-atomic-light-blue-80: #A6E1F5;
+  --color-atomic-light-blue-90: #C7ECF8;
+  --color-atomic-light-blue-95: #E6F6FB;
+  --color-atomic-light-blue-99: #F7FDFE;
+  --color-atomic-light-blue-100: #FFFFFF;
+  --color-atomic-pink-0: #000000;
+  --color-atomic-pink-10: #360E2E;
+  --color-atomic-pink-20: #691F5A;
+  --color-atomic-pink-30: #993787;
+  --color-atomic-pink-40: #BC54A9;
+  --color-atomic-pink-46: #D066BD;
+  --color-atomic-pink-50: #DC71C9;
+  --color-atomic-pink-60: #E488D4;
+  --color-atomic-pink-70: #EDA2E0;
+  --color-atomic-pink-80: #F2C0E9;
+  --color-atomic-pink-90: #F6D7F1;
+  --color-atomic-pink-95: #FAEEF9;
+  --color-atomic-pink-99: #FEFAFE;
+  --color-atomic-pink-100: #FFFFFF;
+  --color-atomic-purple-0: #000000;
+  --color-atomic-purple-10: #250F38;
+  --color-atomic-purple-20: #51236A;
+  --color-atomic-purple-30: #7B3B9C;
+  --color-atomic-purple-40: #9F55C2;
+  --color-atomic-purple-50: #BB72DE;
+  --color-atomic-purple-60: #C689E3;
+  --color-atomic-purple-70: #D2A1E9;
+  --color-atomic-purple-80: #E0C0F0;
+  --color-atomic-purple-90: #EDD9F6;
+  --color-atomic-purple-95: #F7EFFB;
+  --color-atomic-purple-99: #FEFBFE;
+  --color-atomic-purple-100: #FFFFFF;
+  --color-atomic-navy-shell-18: #1E2B40;
+  --color-atomic-navy-shell-20: #232F44;
+  --color-atomic-navy-shell-24: #2D394D;
+  --color-atomic-navy-shell-26: #323D51;
+  --color-atomic-navy-shell-65: #A0A5AE;
+  --color-atomic-navy-shell-68: #7FB0DE;
+  --color-atomic-navy-shell-93: #EBECEE;
+  --color-atomic-navy-wash-6: #0E121F;
+  --color-atomic-navy-wash-98: #F7F9FC;
+  --color-atomic-primary-blue-30: #1D4FAA;
+  --color-atomic-primary-blue-40: #2059BF;
+  --color-atomic-primary-blue-45: #2260CE;
+  --color-atomic-primary-blue-50: #2463D4;
+  --color-atomic-primary-blue-60: #558CE9;
+  --color-atomic-primary-blue-70: #79A5F2;
+  --color-atomic-primary-blue-80: #A0BEF6;
+}
+
+/* Authored source: tokens/color-semantic.css */
+/* ==========================================================================
+   LK ROBOTICS — Semantic color roles — 118 tokens / light and dark (GENERATED — do not hand-edit)
+   --------------------------------------------------------------------------
+   Source of truth: tokens/source.json
+   Regenerate: node scripts/generate-lk-color-system.mjs
+   ========================================================================== */
+:root, [data-theme="light"], .theme-light {
+  --color-semantic-static-white: #FFFFFF;
+  --color-semantic-primary-normal: var(--color-atomic-primary-blue-50);
+  --color-semantic-background-normal-normal: #FFFFFF;
+  --color-semantic-fill-strong: rgba(112, 115, 124, 0.16);
+  --color-semantic-label-normal: #171718;
+  --color-semantic-fill-normal: rgba(112, 115, 124, 0.08);
+  --color-semantic-static-black: #000000;
+  --color-semantic-label-strong: #000000;
+  --color-semantic-line-normal-normal: rgba(112, 115, 124, 0.22);
+  --color-semantic-line-normal-alternative: rgba(112, 115, 124, 0.08);
+  --color-semantic-inverse-background: #1B1C1E;
+  --color-semantic-inverse-label: #FFFFFF;
+  --color-semantic-primary-strong: var(--color-atomic-primary-blue-40);
+  --color-semantic-primary-heavy: var(--color-atomic-primary-blue-30);
+  --color-semantic-primary-fill: var(--color-semantic-primary-normal);
+  --color-semantic-primary-ink: var(--color-atomic-primary-blue-40);
+  --color-semantic-primary-ink-strong: var(--color-atomic-primary-blue-30);
+  --color-semantic-label-neutral: rgba(46, 47, 51, 0.88);
+  --color-semantic-label-alternative: rgba(55, 56, 60, 0.74);
+  --color-semantic-label-assistive: rgba(55, 56, 60, 0.28);
+  --color-semantic-label-disable: rgba(55, 56, 60, 0.52);
+  --color-semantic-background-normal-alternative: #F7F7F8;
+  --color-semantic-background-elevated-normal: #FFFFFF;
+  --color-semantic-background-elevated-alternative: #F7F7F8;
+  --color-semantic-interaction-inactive: #989BA2;
+  --color-semantic-interaction-disable: #F4F4F5;
+  --color-semantic-line-normal-neutral: rgba(112, 115, 124, 0.16);
+  --color-semantic-line-normal-_strong: rgba(112, 115, 124, 0.52);
+  --color-semantic-fill-alternative: rgba(112, 115, 124, 0.05);
+  --color-semantic-status-positive: var(--color-semantic-status-positive-signal);
+  --color-semantic-status-positive-signal: #13BE4C;
+  --color-semantic-status-cautionary: var(--color-semantic-status-cautionary-signal);
+  --color-semantic-status-cautionary-signal: #EB9C33;
+  --color-semantic-status-negative: var(--color-semantic-status-negative-signal);
+  --color-semantic-status-negative-signal: #EE5656;
+  --color-semantic-accent-background-lime: var(--color-atomic-lime-50);
+  --color-semantic-accent-background-cyan: var(--color-atomic-cyan-50);
+  --color-semantic-accent-background-light-blue: var(--color-atomic-blue-70);
+  --color-semantic-accent-background-violet: var(--color-atomic-violet-50);
+  --color-semantic-accent-background-pink: var(--color-atomic-pink-50);
+  --color-semantic-material-dimmer: rgba(23, 23, 25, 0.52);
+  --color-semantic-inverse-primary: #4E8DC7;
+  --color-semantic-line-solid-normal: #E1E2E4;
+  --color-semantic-line-solid-neutral: #EAEBEC;
+  --color-semantic-line-solid-alternative: #F4F4F5;
+  --color-semantic-line-solid-_strong: #AEB0B6;
+  --color-semantic-accent-background-red-orange: #EA7029;
+  --color-semantic-accent-background-purple: var(--color-atomic-purple-50);
+  --color-semantic-accent-foreground-lime: var(--color-atomic-lime-37);
+  --color-semantic-accent-foreground-cyan: var(--color-atomic-cyan-40);
+  --color-semantic-accent-foreground-light-blue: #498AC6;
+  --color-semantic-accent-foreground-violet: var(--color-atomic-violet-45);
+  --color-semantic-accent-foreground-purple: var(--color-atomic-purple-40);
+  --color-semantic-accent-foreground-pink: var(--color-atomic-pink-46);
+  --color-semantic-accent-foreground-red-orange: #E8661A;
+  --color-semantic-accent-foreground-red: #D63D3D;
+  --color-semantic-accent-foreground-orange: #C97A14;
+  --color-semantic-accent-foreground-green: #0F953C;
+  --color-semantic-accent-foreground-blue: var(--color-atomic-blue-45);
+  --color-semantic-material-background-onbackground: #1A1B1E;
+  --color-semantic-material-outline-outline: #73767E;
+  --color-semantic-background-transparent-normal: rgba(255, 255, 255, 0.08);
+  --color-semantic-background-transparent-alternative: rgba(255, 255, 255, 0.28);
+  --color-semantic-brand-ink: #05132B;
+  --color-semantic-brand-surface: #05132B;
+  --color-semantic-brand-on-surface: var(--color-semantic-static-white);
+  --color-semantic-brand-on-surface-muted: color-mix(in srgb, var(--color-semantic-static-white) 92%, transparent);
+  --color-semantic-brand-on-surface-subtle: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent);
+  --color-semantic-brand-on-surface-border: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent);
+  --color-semantic-secondary-normal: #2C3547;
+  --color-semantic-secondary-surface: #EAECF1;
+  --color-semantic-background-band: #F4F4F5;
+  --color-semantic-primary-surface-normal: color-mix(in srgb, var(--color-semantic-primary-normal) 10%, transparent);
+  --color-semantic-primary-surface-strong: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent);
+  --color-semantic-focus-ring: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent);
+  --color-semantic-focus-indicator: var(--color-atomic-primary-blue-50);
+  --color-semantic-status-info: var(--color-semantic-primary-normal);
+  --color-semantic-status-info-foreground: var(--color-semantic-primary-normal);
+  --color-semantic-status-info-surface: color-mix(in srgb, var(--color-semantic-primary-normal) 12%, transparent);
+  --color-semantic-status-info-border: color-mix(in srgb, var(--color-semantic-primary-normal) 36%, var(--color-semantic-line-normal-normal));
+  --color-semantic-status-info-text: var(--color-atomic-primary-blue-30);
+  --color-semantic-status-positive-surface: color-mix(in srgb, var(--color-semantic-status-positive-signal) 14%, transparent);
+  --color-semantic-status-positive-foreground: var(--color-atomic-green-40);
+  --color-semantic-status-positive-border: color-mix(in srgb, var(--color-semantic-status-positive-signal) 38%, var(--color-semantic-line-normal-normal));
+  --color-semantic-status-positive-text: #07702E;
+  --color-semantic-status-cautionary-surface: color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 18%, transparent);
+  --color-semantic-status-cautionary-foreground: var(--color-atomic-orange-40);
+  --color-semantic-status-cautionary-border: color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 42%, var(--color-semantic-line-normal-normal));
+  --color-semantic-status-cautionary-text: #7A4A00;
+  --color-semantic-status-negative-surface: color-mix(in srgb, var(--color-semantic-status-negative-signal) 14%, transparent);
+  --color-semantic-status-negative-foreground: var(--color-semantic-status-negative-signal);
+  --color-semantic-status-negative-border: color-mix(in srgb, var(--color-semantic-status-negative-signal) 38%, var(--color-semantic-line-normal-normal));
+  --color-semantic-status-negative-text: #A82727;
+  --color-semantic-status-negative-fill: var(--color-atomic-red-30);
+  --color-semantic-status-negative-on-fill: var(--color-semantic-static-white);
+  --color-semantic-status-neutral-surface: var(--color-semantic-fill-normal);
+  --color-semantic-status-neutral-border: var(--color-semantic-line-normal-neutral);
+  --color-semantic-status-neutral-text: var(--color-semantic-label-neutral);
+  --color-semantic-accent-blue-text: var(--color-atomic-blue-45);
+  --color-semantic-inverse-label-strong-soft: rgba(255, 255, 255, 0.92);
+  --color-semantic-inverse-label-neutral-soft: rgba(255, 255, 255, 0.62);
+  --color-semantic-inverse-label-alternative-soft: rgba(255, 255, 255, 0.50);
+  --color-semantic-inverse-label-assistive-soft: rgba(255, 255, 255, 0.45);
+  --color-semantic-inverse-label-disable-soft: rgba(255, 255, 255, 0.38);
+  --color-semantic-inverse-icon-muted: rgba(255, 255, 255, 0.75);
+  --color-semantic-inverse-fill-normal: rgba(255, 255, 255, 0.12);
+  --color-semantic-inverse-fill-hover: rgba(255, 255, 255, 0.14);
+  --color-semantic-inverse-fill-strong: rgba(255, 255, 255, 0.16);
+  --color-semantic-inverse-line-normal: rgba(255, 255, 255, 0.14);
+  --color-semantic-inverse-line-strong: rgba(255, 255, 255, 0.22);
+  --color-semantic-data-viz-series-1: var(--color-semantic-primary-normal);
+  --color-semantic-data-viz-series-2: var(--color-semantic-accent-foreground-cyan);
+  --color-semantic-data-viz-series-3: var(--color-semantic-accent-foreground-violet);
+  --color-semantic-data-viz-series-4: var(--color-semantic-accent-foreground-green);
+  --color-semantic-data-viz-series-5: var(--color-semantic-accent-foreground-orange);
+  --color-semantic-data-viz-series-6: var(--color-semantic-accent-foreground-purple);
+  --color-semantic-data-viz-series-7: var(--color-atomic-light-blue-30);
+  --color-semantic-data-viz-series-8: var(--color-semantic-label-alternative);
+}
+
+[data-theme="dark"], .theme-dark {
+  --color-semantic-static-white: #FFFFFF;
+  --color-semantic-primary-normal: var(--color-atomic-primary-blue-70);
+  --color-semantic-background-normal-normal: #1B1C1E;
+  --color-semantic-fill-strong: rgba(112, 115, 124, 0.28);
+  --color-semantic-label-normal: #F7F7F7;
+  --color-semantic-fill-normal: rgba(112, 115, 124, 0.22);
+  --color-semantic-static-black: #000000;
+  --color-semantic-label-strong: #FFFFFF;
+  --color-semantic-line-normal-normal: rgba(112, 115, 124, 0.32);
+  --color-semantic-line-normal-alternative: rgba(112, 115, 124, 0.22);
+  --color-semantic-inverse-background: #FFFFFF;
+  --color-semantic-inverse-label: #171719;
+  --color-semantic-primary-strong: var(--color-atomic-primary-blue-60);
+  --color-semantic-primary-heavy: var(--color-atomic-primary-blue-45);
+  --color-semantic-primary-fill: var(--color-semantic-primary-heavy);
+  --color-semantic-primary-ink: var(--color-atomic-primary-blue-70);
+  --color-semantic-primary-ink-strong: var(--color-atomic-primary-blue-80);
+  --color-semantic-label-neutral: rgba(194, 196, 200, 0.88);
+  --color-semantic-label-alternative: rgba(174, 176, 182, 0.74);
+  --color-semantic-label-assistive: rgba(174, 176, 182, 0.28);
+  --color-semantic-label-disable: rgba(174, 176, 182, 0.52);
+  --color-semantic-background-normal-alternative: #0F0F10;
+  --color-semantic-background-elevated-normal: #212225;
+  --color-semantic-background-elevated-alternative: #141415;
+  --color-semantic-interaction-inactive: #5A5C63;
+  --color-semantic-interaction-disable: #2E2F33;
+  --color-semantic-line-normal-neutral: rgba(112, 115, 124, 0.28);
+  --color-semantic-line-normal-_strong: rgba(194, 196, 200, 0.52);
+  --color-semantic-fill-alternative: rgba(112, 115, 124, 0.12);
+  --color-semantic-status-positive: var(--color-semantic-status-positive-signal);
+  --color-semantic-status-positive-signal: #3FD270;
+  --color-semantic-status-cautionary: var(--color-semantic-status-cautionary-signal);
+  --color-semantic-status-cautionary-signal: #EFAF5C;
+  --color-semantic-status-negative: var(--color-semantic-status-negative-signal);
+  --color-semantic-status-negative-signal: #F16F6F;
+  --color-semantic-accent-background-lime: var(--color-atomic-lime-60);
+  --color-semantic-accent-background-cyan: #5BCEE1;
+  --color-semantic-accent-background-light-blue: #95BADD;
+  --color-semantic-accent-background-violet: var(--color-atomic-violet-60);
+  --color-semantic-accent-background-pink: var(--color-atomic-pink-60);
+  --color-semantic-material-dimmer: rgba(23, 23, 25, 0.74);
+  --color-semantic-inverse-primary: var(--color-atomic-blue-50);
+  --color-semantic-line-solid-normal: #37383C;
+  --color-semantic-line-solid-neutral: #333438;
+  --color-semantic-line-solid-alternative: #2E2F33;
+  --color-semantic-line-solid-_strong: #70737C;
+  --color-semantic-accent-background-red-orange: #ED864A;
+  --color-semantic-accent-background-purple: var(--color-atomic-purple-60);
+  --color-semantic-accent-foreground-lime: var(--color-atomic-lime-50);
+  --color-semantic-accent-foreground-cyan: var(--color-atomic-cyan-50);
+  --color-semantic-accent-foreground-light-blue: var(--color-atomic-blue-70);
+  --color-semantic-accent-foreground-violet: var(--color-atomic-violet-70);
+  --color-semantic-accent-foreground-purple: var(--color-atomic-purple-60);
+  --color-semantic-accent-foreground-pink: var(--color-atomic-pink-60);
+  --color-semantic-accent-foreground-red-orange: #ED864A;
+  --color-semantic-accent-foreground-red: #F16F6F;
+  --color-semantic-accent-foreground-orange: #EB9C33;
+  --color-semantic-accent-foreground-green: #3FD270;
+  --color-semantic-accent-foreground-blue: #639ACE;
+  --color-semantic-material-background-onbackground: #E2E3E6;
+  --color-semantic-material-outline-outline: #8E9199;
+  --color-semantic-background-transparent-normal: rgba(33, 34, 37, 0.61);
+  --color-semantic-background-transparent-alternative: rgba(33, 34, 37, 0.61);
+  --color-semantic-brand-ink: #E7EAF2;
+  --color-semantic-brand-surface: #05132B;
+  --color-semantic-brand-on-surface: var(--color-semantic-static-white);
+  --color-semantic-brand-on-surface-muted: color-mix(in srgb, var(--color-semantic-static-white) 92%, transparent);
+  --color-semantic-brand-on-surface-subtle: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent);
+  --color-semantic-brand-on-surface-border: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent);
+  --color-semantic-secondary-normal: #2C3547;
+  --color-semantic-secondary-surface: rgba(255, 255, 255, 0.10);
+  --color-semantic-background-band: var(--color-atomic-navy-wash-6);
+  --color-semantic-primary-surface-normal: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent);
+  --color-semantic-primary-surface-strong: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent);
+  --color-semantic-focus-ring: color-mix(in srgb, var(--color-semantic-primary-normal) 40%, transparent);
+  --color-semantic-focus-indicator: var(--color-atomic-primary-blue-80);
+  --color-semantic-status-info: var(--color-semantic-primary-normal);
+  --color-semantic-status-info-foreground: var(--color-semantic-primary-normal);
+  --color-semantic-status-info-surface: color-mix(in srgb, var(--color-semantic-primary-normal) 16%, transparent);
+  --color-semantic-status-info-border: color-mix(in srgb, var(--color-semantic-primary-normal) 42%, var(--color-semantic-line-normal-normal));
+  --color-semantic-status-info-text: var(--color-atomic-primary-blue-80);
+  --color-semantic-status-positive-surface: color-mix(in srgb, var(--color-semantic-status-positive-signal) 18%, transparent);
+  --color-semantic-status-positive-foreground: var(--color-semantic-status-positive-signal);
+  --color-semantic-status-positive-border: color-mix(in srgb, var(--color-semantic-status-positive-signal) 44%, var(--color-semantic-line-normal-normal));
+  --color-semantic-status-positive-text: #5EE087;
+  --color-semantic-status-cautionary-surface: color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 20%, transparent);
+  --color-semantic-status-cautionary-foreground: var(--color-semantic-status-cautionary-signal);
+  --color-semantic-status-cautionary-border: color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 48%, var(--color-semantic-line-normal-normal));
+  --color-semantic-status-cautionary-text: #F4BE76;
+  --color-semantic-status-negative-surface: color-mix(in srgb, var(--color-semantic-status-negative-signal) 20%, transparent);
+  --color-semantic-status-negative-foreground: var(--color-semantic-status-negative-signal);
+  --color-semantic-status-negative-border: color-mix(in srgb, var(--color-semantic-status-negative-signal) 44%, var(--color-semantic-line-normal-normal));
+  --color-semantic-status-negative-text: #FF8585;
+  --color-semantic-status-negative-fill: var(--color-atomic-red-30);
+  --color-semantic-status-negative-on-fill: var(--color-semantic-static-white);
+  --color-semantic-status-neutral-surface: var(--color-semantic-fill-normal);
+  --color-semantic-status-neutral-border: var(--color-semantic-line-normal-neutral);
+  --color-semantic-status-neutral-text: var(--color-semantic-label-neutral);
+  --color-semantic-accent-blue-text: #B5D5F2;
+  --color-semantic-inverse-label-strong-soft: rgba(255, 255, 255, 0.92);
+  --color-semantic-inverse-label-neutral-soft: rgba(255, 255, 255, 0.62);
+  --color-semantic-inverse-label-alternative-soft: rgba(255, 255, 255, 0.50);
+  --color-semantic-inverse-label-assistive-soft: rgba(255, 255, 255, 0.45);
+  --color-semantic-inverse-label-disable-soft: rgba(255, 255, 255, 0.38);
+  --color-semantic-inverse-icon-muted: rgba(255, 255, 255, 0.75);
+  --color-semantic-inverse-fill-normal: rgba(255, 255, 255, 0.12);
+  --color-semantic-inverse-fill-hover: rgba(255, 255, 255, 0.14);
+  --color-semantic-inverse-fill-strong: rgba(255, 255, 255, 0.16);
+  --color-semantic-inverse-line-normal: rgba(255, 255, 255, 0.14);
+  --color-semantic-inverse-line-strong: rgba(255, 255, 255, 0.22);
+  --color-semantic-data-viz-series-1: var(--color-semantic-primary-normal);
+  --color-semantic-data-viz-series-2: var(--color-semantic-accent-foreground-cyan);
+  --color-semantic-data-viz-series-3: var(--color-semantic-accent-foreground-violet);
+  --color-semantic-data-viz-series-4: var(--color-semantic-accent-foreground-green);
+  --color-semantic-data-viz-series-5: var(--color-semantic-accent-foreground-orange);
+  --color-semantic-data-viz-series-6: var(--color-semantic-accent-foreground-purple);
+  --color-semantic-data-viz-series-7: var(--color-atomic-light-blue-70);
+  --color-semantic-data-viz-series-8: var(--color-semantic-label-alternative);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"], .theme-auto {
+    --color-semantic-static-white: #FFFFFF;
+    --color-semantic-primary-normal: var(--color-atomic-primary-blue-70);
+    --color-semantic-background-normal-normal: #1B1C1E;
+    --color-semantic-fill-strong: rgba(112, 115, 124, 0.28);
+    --color-semantic-label-normal: #F7F7F7;
+    --color-semantic-fill-normal: rgba(112, 115, 124, 0.22);
+    --color-semantic-static-black: #000000;
+    --color-semantic-label-strong: #FFFFFF;
+    --color-semantic-line-normal-normal: rgba(112, 115, 124, 0.32);
+    --color-semantic-line-normal-alternative: rgba(112, 115, 124, 0.22);
+    --color-semantic-inverse-background: #FFFFFF;
+    --color-semantic-inverse-label: #171719;
+    --color-semantic-primary-strong: var(--color-atomic-primary-blue-60);
+    --color-semantic-primary-heavy: var(--color-atomic-primary-blue-45);
+    --color-semantic-primary-fill: var(--color-semantic-primary-heavy);
+    --color-semantic-primary-ink: var(--color-atomic-primary-blue-70);
+    --color-semantic-primary-ink-strong: var(--color-atomic-primary-blue-80);
+    --color-semantic-label-neutral: rgba(194, 196, 200, 0.88);
+    --color-semantic-label-alternative: rgba(174, 176, 182, 0.74);
+    --color-semantic-label-assistive: rgba(174, 176, 182, 0.28);
+    --color-semantic-label-disable: rgba(174, 176, 182, 0.52);
+    --color-semantic-background-normal-alternative: #0F0F10;
+    --color-semantic-background-elevated-normal: #212225;
+    --color-semantic-background-elevated-alternative: #141415;
+    --color-semantic-interaction-inactive: #5A5C63;
+    --color-semantic-interaction-disable: #2E2F33;
+    --color-semantic-line-normal-neutral: rgba(112, 115, 124, 0.28);
+    --color-semantic-line-normal-_strong: rgba(194, 196, 200, 0.52);
+    --color-semantic-fill-alternative: rgba(112, 115, 124, 0.12);
+    --color-semantic-status-positive: var(--color-semantic-status-positive-signal);
+    --color-semantic-status-positive-signal: #3FD270;
+    --color-semantic-status-cautionary: var(--color-semantic-status-cautionary-signal);
+    --color-semantic-status-cautionary-signal: #EFAF5C;
+    --color-semantic-status-negative: var(--color-semantic-status-negative-signal);
+    --color-semantic-status-negative-signal: #F16F6F;
+    --color-semantic-accent-background-lime: var(--color-atomic-lime-60);
+    --color-semantic-accent-background-cyan: #5BCEE1;
+    --color-semantic-accent-background-light-blue: #95BADD;
+    --color-semantic-accent-background-violet: var(--color-atomic-violet-60);
+    --color-semantic-accent-background-pink: var(--color-atomic-pink-60);
+    --color-semantic-material-dimmer: rgba(23, 23, 25, 0.74);
+    --color-semantic-inverse-primary: var(--color-atomic-blue-50);
+    --color-semantic-line-solid-normal: #37383C;
+    --color-semantic-line-solid-neutral: #333438;
+    --color-semantic-line-solid-alternative: #2E2F33;
+    --color-semantic-line-solid-_strong: #70737C;
+    --color-semantic-accent-background-red-orange: #ED864A;
+    --color-semantic-accent-background-purple: var(--color-atomic-purple-60);
+    --color-semantic-accent-foreground-lime: var(--color-atomic-lime-50);
+    --color-semantic-accent-foreground-cyan: var(--color-atomic-cyan-50);
+    --color-semantic-accent-foreground-light-blue: var(--color-atomic-blue-70);
+    --color-semantic-accent-foreground-violet: var(--color-atomic-violet-70);
+    --color-semantic-accent-foreground-purple: var(--color-atomic-purple-60);
+    --color-semantic-accent-foreground-pink: var(--color-atomic-pink-60);
+    --color-semantic-accent-foreground-red-orange: #ED864A;
+    --color-semantic-accent-foreground-red: #F16F6F;
+    --color-semantic-accent-foreground-orange: #EB9C33;
+    --color-semantic-accent-foreground-green: #3FD270;
+    --color-semantic-accent-foreground-blue: #639ACE;
+    --color-semantic-material-background-onbackground: #E2E3E6;
+    --color-semantic-material-outline-outline: #8E9199;
+    --color-semantic-background-transparent-normal: rgba(33, 34, 37, 0.61);
+    --color-semantic-background-transparent-alternative: rgba(33, 34, 37, 0.61);
+    --color-semantic-brand-ink: #E7EAF2;
+    --color-semantic-brand-surface: #05132B;
+    --color-semantic-brand-on-surface: var(--color-semantic-static-white);
+    --color-semantic-brand-on-surface-muted: color-mix(in srgb, var(--color-semantic-static-white) 92%, transparent);
+    --color-semantic-brand-on-surface-subtle: color-mix(in srgb, var(--color-semantic-static-white) 62%, transparent);
+    --color-semantic-brand-on-surface-border: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent);
+    --color-semantic-secondary-normal: #2C3547;
+    --color-semantic-secondary-surface: rgba(255, 255, 255, 0.10);
+    --color-semantic-background-band: var(--color-atomic-navy-wash-6);
+    --color-semantic-primary-surface-normal: color-mix(in srgb, var(--color-semantic-primary-normal) 14%, transparent);
+    --color-semantic-primary-surface-strong: color-mix(in srgb, var(--color-semantic-primary-normal) 20%, transparent);
+    --color-semantic-focus-ring: color-mix(in srgb, var(--color-semantic-primary-normal) 40%, transparent);
+    --color-semantic-focus-indicator: var(--color-atomic-primary-blue-80);
+    --color-semantic-status-info: var(--color-semantic-primary-normal);
+    --color-semantic-status-info-foreground: var(--color-semantic-primary-normal);
+    --color-semantic-status-info-surface: color-mix(in srgb, var(--color-semantic-primary-normal) 16%, transparent);
+    --color-semantic-status-info-border: color-mix(in srgb, var(--color-semantic-primary-normal) 42%, var(--color-semantic-line-normal-normal));
+    --color-semantic-status-info-text: var(--color-atomic-primary-blue-80);
+    --color-semantic-status-positive-surface: color-mix(in srgb, var(--color-semantic-status-positive-signal) 18%, transparent);
+    --color-semantic-status-positive-foreground: var(--color-semantic-status-positive-signal);
+    --color-semantic-status-positive-border: color-mix(in srgb, var(--color-semantic-status-positive-signal) 44%, var(--color-semantic-line-normal-normal));
+    --color-semantic-status-positive-text: #5EE087;
+    --color-semantic-status-cautionary-surface: color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 20%, transparent);
+    --color-semantic-status-cautionary-foreground: var(--color-semantic-status-cautionary-signal);
+    --color-semantic-status-cautionary-border: color-mix(in srgb, var(--color-semantic-status-cautionary-signal) 48%, var(--color-semantic-line-normal-normal));
+    --color-semantic-status-cautionary-text: #F4BE76;
+    --color-semantic-status-negative-surface: color-mix(in srgb, var(--color-semantic-status-negative-signal) 20%, transparent);
+    --color-semantic-status-negative-foreground: var(--color-semantic-status-negative-signal);
+    --color-semantic-status-negative-border: color-mix(in srgb, var(--color-semantic-status-negative-signal) 44%, var(--color-semantic-line-normal-normal));
+    --color-semantic-status-negative-text: #FF8585;
+    --color-semantic-status-negative-fill: var(--color-atomic-red-30);
+    --color-semantic-status-negative-on-fill: var(--color-semantic-static-white);
+    --color-semantic-status-neutral-surface: var(--color-semantic-fill-normal);
+    --color-semantic-status-neutral-border: var(--color-semantic-line-normal-neutral);
+    --color-semantic-status-neutral-text: var(--color-semantic-label-neutral);
+    --color-semantic-accent-blue-text: #B5D5F2;
+    --color-semantic-inverse-label-strong-soft: rgba(255, 255, 255, 0.92);
+    --color-semantic-inverse-label-neutral-soft: rgba(255, 255, 255, 0.62);
+    --color-semantic-inverse-label-alternative-soft: rgba(255, 255, 255, 0.50);
+    --color-semantic-inverse-label-assistive-soft: rgba(255, 255, 255, 0.45);
+    --color-semantic-inverse-label-disable-soft: rgba(255, 255, 255, 0.38);
+    --color-semantic-inverse-icon-muted: rgba(255, 255, 255, 0.75);
+    --color-semantic-inverse-fill-normal: rgba(255, 255, 255, 0.12);
+    --color-semantic-inverse-fill-hover: rgba(255, 255, 255, 0.14);
+    --color-semantic-inverse-fill-strong: rgba(255, 255, 255, 0.16);
+    --color-semantic-inverse-line-normal: rgba(255, 255, 255, 0.14);
+    --color-semantic-inverse-line-strong: rgba(255, 255, 255, 0.22);
+    --color-semantic-data-viz-series-1: var(--color-semantic-primary-normal);
+    --color-semantic-data-viz-series-2: var(--color-semantic-accent-foreground-cyan);
+    --color-semantic-data-viz-series-3: var(--color-semantic-accent-foreground-violet);
+    --color-semantic-data-viz-series-4: var(--color-semantic-accent-foreground-green);
+    --color-semantic-data-viz-series-5: var(--color-semantic-accent-foreground-orange);
+    --color-semantic-data-viz-series-6: var(--color-semantic-accent-foreground-purple);
+    --color-semantic-data-viz-series-7: var(--color-atomic-light-blue-70);
+    --color-semantic-data-viz-series-8: var(--color-semantic-label-alternative);
+  }
+}
+
+/* Authored source: tokens/color-components.css */
+/* ==========================================================================
+   LK ROBOTICS — Component color contracts — 154 tokens (GENERATED — do not hand-edit)
+   --------------------------------------------------------------------------
+   Source of truth: tokens/source.json
+   Regenerate: node scripts/generate-lk-color-system.mjs
+   ========================================================================== */
+:root, [data-theme="light"], .theme-light {
+  --component-button-primary-bg: var(--color-semantic-primary-fill);
+  --component-button-primary-bg-hover: var(--component-button-primary-bg);
+  --component-button-primary-fg: var(--color-semantic-static-white);
+  --component-button-danger-bg: var(--color-semantic-status-negative-fill);
+  --component-button-danger-bg-hover: var(--color-atomic-red-20);
+  --component-button-danger-fg: var(--color-semantic-status-negative-on-fill);
+  --component-button-secondary-bg: var(--color-semantic-secondary-normal);
+  --component-button-signal-bg: var(--color-semantic-primary-fill);
+  --component-button-signal-bg-hover: var(--component-button-signal-bg);
+  --component-button-disabled-bg: var(--color-semantic-fill-normal);
+  --component-button-disabled-fg: var(--color-semantic-label-assistive);
+  --component-button-disabled-fg-outlined: var(--color-semantic-label-disable);
+  --component-button-disabled-outlined-border: var(--border-thin) solid var(--color-semantic-line-normal-neutral);
+  --component-button-secondary-fg: var(--color-semantic-static-white);
+  --component-button-signal-fg: var(--color-semantic-static-white);
+  --component-button-dark-bg: var(--color-semantic-inverse-background);
+  --component-button-dark-fg: var(--color-semantic-inverse-label);
+  --component-button-flat-bg: var(--color-semantic-secondary-surface);
+  --component-button-flat-fg: var(--color-semantic-label-normal);
+  --component-button-ghost-fg: var(--color-semantic-label-normal);
+  --component-button-ghost-border: var(--border-thin) solid var(--color-semantic-line-solid-normal);
+  --component-button-on-dark-bg: color-mix(in srgb, var(--color-semantic-static-white) 14%, transparent);
+  --component-button-on-dark-bg-hover: color-mix(in srgb, var(--color-semantic-static-white) 16%, transparent);
+  --component-button-on-dark-fg: var(--color-semantic-static-white);
+  --component-button-on-dark-border: var(--border-thin) solid color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent);
+  --component-button-secondary-bg-hover: var(--component-button-secondary-bg);
+  --component-button-dark-bg-hover: var(--component-button-dark-bg);
+  --component-button-flat-bg-hover: var(--component-button-flat-bg);
+  --component-button-ghost-border-hover: var(--component-button-ghost-border);
+  --component-action-area-bg: var(--color-semantic-background-elevated-normal);
+  --component-action-area-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
+  --component-toggle-icon-bg: var(--color-semantic-background-elevated-normal);
+  --component-toggle-icon-bg-active: var(--component-button-primary-bg);
+  --component-toggle-icon-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
+  --component-toggle-icon-bg-hover: var(--color-semantic-fill-alternative);
+  --component-toggle-icon-fg: var(--color-semantic-label-normal);
+  --component-toggle-icon-fg-active: var(--component-button-primary-fg);
+  --component-chip-bg: var(--color-semantic-background-elevated-normal);
+  --component-chip-bg-hover: var(--color-semantic-background-elevated-normal);
+  --component-chip-bg-selected: var(--color-semantic-primary-surface-strong);
+  --component-chip-fg: var(--color-semantic-label-normal);
+  --component-chip-fg-active: var(--color-semantic-label-normal);
+  --component-chip-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
+  --component-chip-border-active: var(--border-thin) solid var(--color-semantic-primary-normal);
+  --component-chip-solid-bg: var(--color-semantic-primary-fill);
+  --component-chip-solid-fg: var(--color-semantic-static-white);
+  --component-chip-solid-border: var(--border-thin) solid transparent;
+  --component-divider-color: var(--color-semantic-line-normal-normal);
+  --component-divider-color-normal: var(--color-semantic-line-normal-normal);
+  --component-divider-color-thick: var(--color-semantic-fill-normal);
+  --component-menu-item-hover-bg: var(--color-semantic-fill-normal);
+  --component-menu-item-selected-bg: var(--color-semantic-fill-alternative);
+  --component-menu-item-check-color: var(--color-semantic-label-normal);
+  --component-menu-item-active-ring-color: var(--color-semantic-label-normal);
+  --component-topbar-menu-item-hover-bg: var(--component-menu-item-hover-bg);
+  --component-topbar-menu-item-selected-bg: var(--component-menu-item-selected-bg);
+  --component-system-bars-fg: var(--color-semantic-label-strong);
+  --component-system-bars-muted-fg: var(--color-semantic-label-alternative);
+  --component-input-bg: var(--color-semantic-background-elevated-normal);
+  --component-input-border-color: var(--color-semantic-line-normal-normal);
+  --component-input-border-color-focus: var(--color-semantic-primary-normal);
+  --component-input-border-color-invalid: var(--color-semantic-status-negative-foreground);
+  --component-input-icon-color: var(--color-semantic-label-alternative);
+  --component-input-text-color: var(--color-semantic-label-normal);
+  --component-input-label-color: var(--color-semantic-label-normal);
+  --component-input-required-color: var(--color-semantic-status-negative-text);
+  --component-card-bg: var(--color-semantic-background-elevated-normal);
+  --component-card-bg-subtle: var(--color-semantic-background-elevated-alternative);
+  --component-card-bg-dark: var(--color-semantic-inverse-background);
+  --component-card-fg: var(--color-semantic-label-normal);
+  --component-card-fg-dark: var(--color-semantic-static-white);
+  --component-card-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
+  --component-status-badge-surface: var(--color-semantic-fill-strong);
+  --component-status-badge-foreground: var(--color-semantic-label-normal);
+  --component-status-badge-positive-indicator: var(--color-semantic-status-positive-foreground);
+  --component-status-badge-cautionary-indicator: var(--color-semantic-status-cautionary-foreground);
+  --component-status-badge-negative-indicator: var(--color-semantic-status-negative-foreground);
+  --component-status-badge-offline-indicator: var(--color-semantic-interaction-inactive);
+  --component-status-badge-signal-indicator: var(--color-semantic-primary-normal);
+  --component-status-badge-critical-indicator: var(--color-semantic-status-negative-foreground);
+  --component-badge-signal-bg: var(--color-semantic-primary-fill);
+  --component-badge-signal-fg: var(--color-semantic-static-white);
+  --component-badge-navy-bg: var(--color-semantic-brand-surface);
+  --component-badge-navy-fg: var(--color-semantic-brand-on-surface);
+  --component-badge-steel-bg: var(--color-semantic-primary-surface-strong);
+  --component-badge-steel-fg: var(--color-semantic-accent-blue-text);
+  --component-badge-positive-bg: var(--color-semantic-status-positive-surface);
+  --component-badge-positive-fg: var(--color-semantic-status-positive-text);
+  --component-badge-cautionary-bg: var(--color-semantic-status-cautionary-surface);
+  --component-badge-cautionary-fg: var(--color-semantic-status-cautionary-text);
+  --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
+  --component-badge-negative-fg: var(--color-semantic-status-negative-text);
+  --component-message-composer-border-focus: var(--color-atomic-cool-neutral-60);
+  --component-conversation-list-foreground: var(--color-semantic-label-normal);
+  --component-conversation-list-muted-foreground: var(--color-semantic-label-alternative);
+  --component-conversation-list-hover-foreground: var(--color-semantic-label-neutral);
+  --component-conversation-list-group-foreground: var(--color-semantic-label-alternative);
+  --component-conversation-list-hover-surface: var(--color-atomic-cool-neutral-97);
+  --component-conversation-list-active-surface: var(--color-atomic-cool-neutral-96);
+  --component-conversation-list-active-hover-surface: var(--color-atomic-cool-neutral-95);
+  --component-conversation-list-pressed-surface: var(--color-atomic-cool-neutral-95);
+  --component-conversation-list-focus-indicator: var(--color-semantic-focus-indicator);
+  --component-lockup-auto-fill: var(--color-semantic-brand-surface);
+  --component-side-nav-brand-surface: var(--color-semantic-brand-surface);
+  --component-side-nav-brand-hover-surface: var(--color-atomic-navy-shell-18);
+  --component-side-nav-brand-active-surface: var(--color-atomic-navy-shell-18);
+  --component-side-nav-brand-active-hover-surface: var(--color-atomic-navy-shell-20);
+  --component-side-nav-brand-pressed-surface: var(--color-atomic-navy-shell-20);
+  --component-side-nav-brand-foreground: var(--color-semantic-static-white);
+  --component-side-nav-brand-hover-foreground: var(--color-atomic-navy-shell-93);
+  --component-side-nav-brand-active-foreground: var(--color-atomic-navy-shell-68);
+  --component-side-nav-brand-muted-foreground: var(--color-atomic-navy-shell-65);
+  --component-side-nav-brand-subtle-foreground: var(--color-atomic-navy-shell-65);
+  --component-side-nav-brand-divider: var(--color-atomic-navy-shell-26);
+  --component-side-nav-brand-badge-surface: var(--color-atomic-navy-shell-18);
+  --component-side-nav-brand-badge-foreground: var(--color-atomic-navy-shell-65);
+  --component-side-nav-brand-badge-active-surface: var(--color-atomic-navy-shell-24);
+  --component-side-nav-brand-focus-indicator: var(--color-atomic-navy-shell-68);
+  --component-side-nav-neutral-surface: var(--color-atomic-navy-wash-98);
+  --component-side-nav-neutral-divider: var(--color-semantic-line-solid-normal);
+  --component-side-nav-neutral-foreground: var(--color-semantic-label-normal);
+  --component-side-nav-neutral-muted-foreground: var(--color-semantic-label-alternative);
+  --component-side-nav-neutral-subtle-foreground: var(--color-semantic-label-alternative);
+  --component-side-nav-neutral-hover-foreground: var(--color-semantic-label-neutral);
+  --component-side-nav-neutral-active-foreground: var(--color-semantic-label-normal);
+  --component-side-nav-neutral-hover-surface: var(--color-atomic-cool-neutral-97);
+  --component-side-nav-neutral-active-surface: var(--color-atomic-cool-neutral-96);
+  --component-side-nav-neutral-active-hover-surface: var(--color-atomic-cool-neutral-95);
+  --component-side-nav-neutral-pressed-surface: var(--color-atomic-cool-neutral-95);
+  --component-side-nav-neutral-badge-surface: var(--color-semantic-fill-strong);
+  --component-side-nav-neutral-badge-foreground: var(--color-semantic-label-neutral);
+  --component-side-nav-neutral-badge-dot: var(--color-semantic-label-alternative);
+  --component-side-nav-neutral-focus-indicator: var(--color-semantic-focus-indicator);
+  --component-nav-rail-neutral-surface: var(--color-atomic-navy-wash-98);
+  --component-nav-rail-neutral-divider: var(--color-semantic-line-solid-normal);
+  --component-nav-rail-neutral-foreground: var(--color-semantic-label-normal);
+  --component-nav-rail-neutral-muted-foreground: var(--color-semantic-label-alternative);
+  --component-nav-rail-neutral-hover-foreground: var(--color-semantic-label-neutral);
+  --component-nav-rail-neutral-hover-surface: var(--color-atomic-cool-neutral-97);
+  --component-nav-rail-neutral-active-surface: var(--color-atomic-cool-neutral-96);
+  --component-nav-rail-neutral-active-hover-surface: var(--color-atomic-cool-neutral-95);
+  --component-nav-rail-neutral-pressed-surface: var(--color-atomic-cool-neutral-95);
+  --component-nav-rail-neutral-focus-indicator: var(--color-semantic-focus-indicator);
+  --component-shell-panel-surface: var(--color-atomic-navy-wash-98);
+  --component-shell-panel-divider: var(--color-semantic-line-solid-normal);
+  --component-shell-panel-foreground: var(--color-semantic-label-normal);
+  --component-shell-panel-hover-foreground: var(--color-semantic-label-neutral);
+  --component-shell-panel-hover-surface: var(--color-atomic-cool-neutral-97);
+  --component-shell-panel-active-surface: var(--color-atomic-cool-neutral-96);
+  --component-shell-panel-active-hover-surface: var(--color-atomic-cool-neutral-95);
+  --component-shell-panel-pressed-surface: var(--color-atomic-cool-neutral-95);
+  --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
+  --component-dialog-scrim: var(--color-semantic-material-dimmer);
+  --component-transient-feedback-bg: color-mix(in srgb, var(--color-semantic-inverse-background) 72%, transparent);
+}
+
+[data-theme="dark"], .theme-dark {
+  --component-button-primary-bg: var(--color-semantic-primary-fill);
+  --component-button-primary-bg-hover: var(--component-button-primary-bg);
+  --component-button-primary-fg: var(--color-semantic-static-white);
+  --component-button-danger-bg: var(--color-semantic-status-negative-fill);
+  --component-button-danger-bg-hover: var(--color-atomic-red-20);
+  --component-button-danger-fg: var(--color-semantic-status-negative-on-fill);
+  --component-button-secondary-bg: var(--color-semantic-secondary-normal);
+  --component-button-signal-bg: var(--color-semantic-primary-fill);
+  --component-button-signal-bg-hover: var(--component-button-signal-bg);
+  --component-button-disabled-bg: var(--color-semantic-fill-normal);
+  --component-button-disabled-fg: var(--color-semantic-label-assistive);
+  --component-button-disabled-fg-outlined: var(--color-semantic-label-disable);
+  --component-button-disabled-outlined-border: var(--border-thin) solid var(--color-semantic-line-normal-neutral);
+  --component-button-secondary-fg: var(--color-semantic-static-white);
+  --component-button-signal-fg: var(--color-semantic-static-white);
+  --component-button-dark-bg: var(--color-semantic-inverse-background);
+  --component-button-dark-fg: var(--color-semantic-inverse-label);
+  --component-button-flat-bg: var(--color-semantic-secondary-surface);
+  --component-button-flat-fg: var(--color-semantic-label-normal);
+  --component-button-ghost-fg: var(--color-semantic-label-normal);
+  --component-button-ghost-border: var(--border-thin) solid var(--color-semantic-line-solid-normal);
+  --component-button-on-dark-bg: color-mix(in srgb, var(--color-semantic-static-white) 14%, transparent);
+  --component-button-on-dark-bg-hover: color-mix(in srgb, var(--color-semantic-static-white) 16%, transparent);
+  --component-button-on-dark-fg: var(--color-semantic-static-white);
+  --component-button-on-dark-border: var(--border-thin) solid color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent);
+  --component-button-secondary-bg-hover: var(--component-button-secondary-bg);
+  --component-button-dark-bg-hover: var(--component-button-dark-bg);
+  --component-button-flat-bg-hover: var(--component-button-flat-bg);
+  --component-button-ghost-border-hover: var(--component-button-ghost-border);
+  --component-action-area-bg: var(--color-semantic-background-elevated-normal);
+  --component-action-area-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
+  --component-toggle-icon-bg: var(--color-semantic-background-elevated-normal);
+  --component-toggle-icon-bg-active: var(--component-button-primary-bg);
+  --component-toggle-icon-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
+  --component-toggle-icon-bg-hover: var(--color-semantic-fill-alternative);
+  --component-toggle-icon-fg: var(--color-semantic-label-normal);
+  --component-toggle-icon-fg-active: var(--component-button-primary-fg);
+  --component-chip-bg: var(--color-semantic-background-elevated-normal);
+  --component-chip-bg-hover: var(--color-semantic-background-elevated-normal);
+  --component-chip-bg-selected: var(--color-semantic-primary-surface-strong);
+  --component-chip-fg: var(--color-semantic-label-normal);
+  --component-chip-fg-active: var(--color-semantic-label-normal);
+  --component-chip-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
+  --component-chip-border-active: var(--border-thin) solid var(--color-semantic-primary-normal);
+  --component-chip-solid-bg: var(--color-semantic-primary-fill);
+  --component-chip-solid-fg: var(--color-semantic-static-white);
+  --component-chip-solid-border: var(--border-thin) solid transparent;
+  --component-divider-color: var(--color-semantic-line-normal-normal);
+  --component-divider-color-normal: var(--color-semantic-line-normal-normal);
+  --component-divider-color-thick: var(--color-semantic-fill-normal);
+  --component-menu-item-hover-bg: var(--color-semantic-fill-normal);
+  --component-menu-item-selected-bg: var(--color-semantic-fill-alternative);
+  --component-menu-item-check-color: var(--color-semantic-label-normal);
+  --component-menu-item-active-ring-color: var(--color-semantic-label-normal);
+  --component-topbar-menu-item-hover-bg: var(--component-menu-item-hover-bg);
+  --component-topbar-menu-item-selected-bg: var(--component-menu-item-selected-bg);
+  --component-system-bars-fg: var(--color-semantic-label-strong);
+  --component-system-bars-muted-fg: var(--color-semantic-label-alternative);
+  --component-input-bg: var(--color-semantic-background-elevated-normal);
+  --component-input-border-color: var(--color-semantic-line-normal-normal);
+  --component-input-border-color-focus: var(--color-semantic-primary-normal);
+  --component-input-border-color-invalid: var(--color-semantic-status-negative-foreground);
+  --component-input-icon-color: var(--color-semantic-label-alternative);
+  --component-input-text-color: var(--color-semantic-label-normal);
+  --component-input-label-color: var(--color-semantic-label-normal);
+  --component-input-required-color: var(--color-semantic-status-negative-text);
+  --component-card-bg: var(--color-semantic-background-elevated-normal);
+  --component-card-bg-subtle: var(--color-semantic-background-elevated-alternative);
+  --component-card-bg-dark: var(--color-semantic-inverse-background);
+  --component-card-fg: var(--color-semantic-label-normal);
+  --component-card-fg-dark: var(--color-semantic-static-white);
+  --component-card-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
+  --component-status-badge-surface: var(--color-semantic-fill-strong);
+  --component-status-badge-foreground: var(--color-semantic-label-normal);
+  --component-status-badge-positive-indicator: var(--color-semantic-status-positive-foreground);
+  --component-status-badge-cautionary-indicator: var(--color-semantic-status-cautionary-foreground);
+  --component-status-badge-negative-indicator: var(--color-semantic-status-negative-foreground);
+  --component-status-badge-offline-indicator: var(--color-semantic-interaction-inactive);
+  --component-status-badge-signal-indicator: var(--color-semantic-primary-normal);
+  --component-status-badge-critical-indicator: var(--color-semantic-status-negative-foreground);
+  --component-badge-signal-bg: var(--color-semantic-primary-fill);
+  --component-badge-signal-fg: var(--color-semantic-static-white);
+  --component-badge-navy-bg: var(--color-semantic-brand-surface);
+  --component-badge-navy-fg: var(--color-semantic-brand-on-surface);
+  --component-badge-steel-bg: var(--color-semantic-primary-surface-strong);
+  --component-badge-steel-fg: var(--color-semantic-accent-blue-text);
+  --component-badge-positive-bg: var(--color-semantic-status-positive-surface);
+  --component-badge-positive-fg: var(--color-semantic-status-positive-text);
+  --component-badge-cautionary-bg: var(--color-semantic-status-cautionary-surface);
+  --component-badge-cautionary-fg: var(--color-semantic-status-cautionary-text);
+  --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
+  --component-badge-negative-fg: var(--color-semantic-status-negative-text);
+  --component-message-composer-border-focus: var(--color-atomic-cool-neutral-60);
+  --component-conversation-list-foreground: var(--color-semantic-label-normal);
+  --component-conversation-list-muted-foreground: var(--color-semantic-label-alternative);
+  --component-conversation-list-hover-foreground: var(--color-semantic-label-neutral);
+  --component-conversation-list-group-foreground: var(--color-semantic-label-alternative);
+  --component-conversation-list-hover-surface: var(--color-atomic-cool-neutral-17);
+  --component-conversation-list-active-surface: var(--color-atomic-cool-neutral-20);
+  --component-conversation-list-active-hover-surface: var(--color-atomic-cool-neutral-22);
+  --component-conversation-list-pressed-surface: var(--color-atomic-cool-neutral-22);
+  --component-conversation-list-focus-indicator: var(--color-semantic-focus-indicator);
+  --component-lockup-auto-fill: var(--color-semantic-static-white);
+  --component-side-nav-brand-surface: var(--color-semantic-brand-surface);
+  --component-side-nav-brand-hover-surface: var(--color-atomic-navy-shell-18);
+  --component-side-nav-brand-active-surface: var(--color-atomic-navy-shell-18);
+  --component-side-nav-brand-active-hover-surface: var(--color-atomic-navy-shell-20);
+  --component-side-nav-brand-pressed-surface: var(--color-atomic-navy-shell-20);
+  --component-side-nav-brand-foreground: var(--color-semantic-static-white);
+  --component-side-nav-brand-hover-foreground: var(--color-atomic-navy-shell-93);
+  --component-side-nav-brand-active-foreground: var(--color-atomic-navy-shell-68);
+  --component-side-nav-brand-muted-foreground: var(--color-atomic-navy-shell-65);
+  --component-side-nav-brand-subtle-foreground: var(--color-atomic-navy-shell-65);
+  --component-side-nav-brand-divider: var(--color-atomic-navy-shell-26);
+  --component-side-nav-brand-badge-surface: var(--color-atomic-navy-shell-18);
+  --component-side-nav-brand-badge-foreground: var(--color-atomic-navy-shell-65);
+  --component-side-nav-brand-badge-active-surface: var(--color-atomic-navy-shell-24);
+  --component-side-nav-brand-focus-indicator: var(--color-atomic-navy-shell-68);
+  --component-side-nav-neutral-surface: var(--color-atomic-navy-wash-6);
+  --component-side-nav-neutral-divider: var(--color-semantic-line-solid-normal);
+  --component-side-nav-neutral-foreground: var(--color-semantic-label-normal);
+  --component-side-nav-neutral-muted-foreground: var(--color-semantic-label-alternative);
+  --component-side-nav-neutral-subtle-foreground: var(--color-semantic-label-alternative);
+  --component-side-nav-neutral-hover-foreground: var(--color-semantic-label-neutral);
+  --component-side-nav-neutral-active-foreground: var(--color-semantic-label-normal);
+  --component-side-nav-neutral-hover-surface: var(--color-atomic-cool-neutral-17);
+  --component-side-nav-neutral-active-surface: var(--color-atomic-cool-neutral-20);
+  --component-side-nav-neutral-active-hover-surface: var(--color-atomic-cool-neutral-22);
+  --component-side-nav-neutral-pressed-surface: var(--color-atomic-cool-neutral-22);
+  --component-side-nav-neutral-badge-surface: var(--color-semantic-fill-strong);
+  --component-side-nav-neutral-badge-foreground: var(--color-semantic-label-neutral);
+  --component-side-nav-neutral-badge-dot: var(--color-semantic-label-alternative);
+  --component-side-nav-neutral-focus-indicator: var(--color-semantic-focus-indicator);
+  --component-nav-rail-neutral-surface: var(--color-atomic-navy-wash-6);
+  --component-nav-rail-neutral-divider: var(--color-semantic-line-solid-normal);
+  --component-nav-rail-neutral-foreground: var(--color-semantic-label-normal);
+  --component-nav-rail-neutral-muted-foreground: var(--color-semantic-label-alternative);
+  --component-nav-rail-neutral-hover-foreground: var(--color-semantic-label-neutral);
+  --component-nav-rail-neutral-hover-surface: var(--color-atomic-cool-neutral-17);
+  --component-nav-rail-neutral-active-surface: var(--color-atomic-cool-neutral-20);
+  --component-nav-rail-neutral-active-hover-surface: var(--color-atomic-cool-neutral-22);
+  --component-nav-rail-neutral-pressed-surface: var(--color-atomic-cool-neutral-22);
+  --component-nav-rail-neutral-focus-indicator: var(--color-semantic-focus-indicator);
+  --component-shell-panel-surface: var(--color-atomic-navy-wash-6);
+  --component-shell-panel-divider: var(--color-semantic-line-solid-normal);
+  --component-shell-panel-foreground: var(--color-semantic-label-normal);
+  --component-shell-panel-hover-foreground: var(--color-semantic-label-neutral);
+  --component-shell-panel-hover-surface: var(--color-atomic-cool-neutral-17);
+  --component-shell-panel-active-surface: var(--color-atomic-cool-neutral-20);
+  --component-shell-panel-active-hover-surface: var(--color-atomic-cool-neutral-22);
+  --component-shell-panel-pressed-surface: var(--color-atomic-cool-neutral-22);
+  --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
+  --component-dialog-scrim: var(--color-semantic-material-dimmer);
+  --component-transient-feedback-bg: color-mix(in srgb, var(--color-semantic-inverse-background) 72%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"], .theme-auto {
+    --component-button-primary-bg: var(--color-semantic-primary-fill);
+    --component-button-primary-bg-hover: var(--component-button-primary-bg);
+    --component-button-primary-fg: var(--color-semantic-static-white);
+    --component-button-danger-bg: var(--color-semantic-status-negative-fill);
+    --component-button-danger-bg-hover: var(--color-atomic-red-20);
+    --component-button-danger-fg: var(--color-semantic-status-negative-on-fill);
+    --component-button-secondary-bg: var(--color-semantic-secondary-normal);
+    --component-button-signal-bg: var(--color-semantic-primary-fill);
+    --component-button-signal-bg-hover: var(--component-button-signal-bg);
+    --component-button-disabled-bg: var(--color-semantic-fill-normal);
+    --component-button-disabled-fg: var(--color-semantic-label-assistive);
+    --component-button-disabled-fg-outlined: var(--color-semantic-label-disable);
+    --component-button-disabled-outlined-border: var(--border-thin) solid var(--color-semantic-line-normal-neutral);
+    --component-button-secondary-fg: var(--color-semantic-static-white);
+    --component-button-signal-fg: var(--color-semantic-static-white);
+    --component-button-dark-bg: var(--color-semantic-inverse-background);
+    --component-button-dark-fg: var(--color-semantic-inverse-label);
+    --component-button-flat-bg: var(--color-semantic-secondary-surface);
+    --component-button-flat-fg: var(--color-semantic-label-normal);
+    --component-button-ghost-fg: var(--color-semantic-label-normal);
+    --component-button-ghost-border: var(--border-thin) solid var(--color-semantic-line-solid-normal);
+    --component-button-on-dark-bg: color-mix(in srgb, var(--color-semantic-static-white) 14%, transparent);
+    --component-button-on-dark-bg-hover: color-mix(in srgb, var(--color-semantic-static-white) 16%, transparent);
+    --component-button-on-dark-fg: var(--color-semantic-static-white);
+    --component-button-on-dark-border: var(--border-thin) solid color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent);
+    --component-button-secondary-bg-hover: var(--component-button-secondary-bg);
+    --component-button-dark-bg-hover: var(--component-button-dark-bg);
+    --component-button-flat-bg-hover: var(--component-button-flat-bg);
+    --component-button-ghost-border-hover: var(--component-button-ghost-border);
+    --component-action-area-bg: var(--color-semantic-background-elevated-normal);
+    --component-action-area-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
+    --component-toggle-icon-bg: var(--color-semantic-background-elevated-normal);
+    --component-toggle-icon-bg-active: var(--component-button-primary-bg);
+    --component-toggle-icon-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
+    --component-toggle-icon-bg-hover: var(--color-semantic-fill-alternative);
+    --component-toggle-icon-fg: var(--color-semantic-label-normal);
+    --component-toggle-icon-fg-active: var(--component-button-primary-fg);
+    --component-chip-bg: var(--color-semantic-background-elevated-normal);
+    --component-chip-bg-hover: var(--color-semantic-background-elevated-normal);
+    --component-chip-bg-selected: var(--color-semantic-primary-surface-strong);
+    --component-chip-fg: var(--color-semantic-label-normal);
+    --component-chip-fg-active: var(--color-semantic-label-normal);
+    --component-chip-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
+    --component-chip-border-active: var(--border-thin) solid var(--color-semantic-primary-normal);
+    --component-chip-solid-bg: var(--color-semantic-primary-fill);
+    --component-chip-solid-fg: var(--color-semantic-static-white);
+    --component-chip-solid-border: var(--border-thin) solid transparent;
+    --component-divider-color: var(--color-semantic-line-normal-normal);
+    --component-divider-color-normal: var(--color-semantic-line-normal-normal);
+    --component-divider-color-thick: var(--color-semantic-fill-normal);
+    --component-menu-item-hover-bg: var(--color-semantic-fill-normal);
+    --component-menu-item-selected-bg: var(--color-semantic-fill-alternative);
+    --component-menu-item-check-color: var(--color-semantic-label-normal);
+    --component-menu-item-active-ring-color: var(--color-semantic-label-normal);
+    --component-topbar-menu-item-hover-bg: var(--component-menu-item-hover-bg);
+    --component-topbar-menu-item-selected-bg: var(--component-menu-item-selected-bg);
+    --component-system-bars-fg: var(--color-semantic-label-strong);
+    --component-system-bars-muted-fg: var(--color-semantic-label-alternative);
+    --component-input-bg: var(--color-semantic-background-elevated-normal);
+    --component-input-border-color: var(--color-semantic-line-normal-normal);
+    --component-input-border-color-focus: var(--color-semantic-primary-normal);
+    --component-input-border-color-invalid: var(--color-semantic-status-negative-foreground);
+    --component-input-icon-color: var(--color-semantic-label-alternative);
+    --component-input-text-color: var(--color-semantic-label-normal);
+    --component-input-label-color: var(--color-semantic-label-normal);
+    --component-input-required-color: var(--color-semantic-status-negative-text);
+    --component-card-bg: var(--color-semantic-background-elevated-normal);
+    --component-card-bg-subtle: var(--color-semantic-background-elevated-alternative);
+    --component-card-bg-dark: var(--color-semantic-inverse-background);
+    --component-card-fg: var(--color-semantic-label-normal);
+    --component-card-fg-dark: var(--color-semantic-static-white);
+    --component-card-border: var(--border-thin) solid var(--color-semantic-line-normal-normal);
+    --component-status-badge-surface: var(--color-semantic-fill-strong);
+    --component-status-badge-foreground: var(--color-semantic-label-normal);
+    --component-status-badge-positive-indicator: var(--color-semantic-status-positive-foreground);
+    --component-status-badge-cautionary-indicator: var(--color-semantic-status-cautionary-foreground);
+    --component-status-badge-negative-indicator: var(--color-semantic-status-negative-foreground);
+    --component-status-badge-offline-indicator: var(--color-semantic-interaction-inactive);
+    --component-status-badge-signal-indicator: var(--color-semantic-primary-normal);
+    --component-status-badge-critical-indicator: var(--color-semantic-status-negative-foreground);
+    --component-badge-signal-bg: var(--color-semantic-primary-fill);
+    --component-badge-signal-fg: var(--color-semantic-static-white);
+    --component-badge-navy-bg: var(--color-semantic-brand-surface);
+    --component-badge-navy-fg: var(--color-semantic-brand-on-surface);
+    --component-badge-steel-bg: var(--color-semantic-primary-surface-strong);
+    --component-badge-steel-fg: var(--color-semantic-accent-blue-text);
+    --component-badge-positive-bg: var(--color-semantic-status-positive-surface);
+    --component-badge-positive-fg: var(--color-semantic-status-positive-text);
+    --component-badge-cautionary-bg: var(--color-semantic-status-cautionary-surface);
+    --component-badge-cautionary-fg: var(--color-semantic-status-cautionary-text);
+    --component-badge-negative-bg: var(--color-semantic-status-negative-surface);
+    --component-badge-negative-fg: var(--color-semantic-status-negative-text);
+    --component-message-composer-border-focus: var(--color-atomic-cool-neutral-60);
+    --component-conversation-list-foreground: var(--color-semantic-label-normal);
+    --component-conversation-list-muted-foreground: var(--color-semantic-label-alternative);
+    --component-conversation-list-hover-foreground: var(--color-semantic-label-neutral);
+    --component-conversation-list-group-foreground: var(--color-semantic-label-alternative);
+    --component-conversation-list-hover-surface: var(--color-atomic-cool-neutral-17);
+    --component-conversation-list-active-surface: var(--color-atomic-cool-neutral-20);
+    --component-conversation-list-active-hover-surface: var(--color-atomic-cool-neutral-22);
+    --component-conversation-list-pressed-surface: var(--color-atomic-cool-neutral-22);
+    --component-conversation-list-focus-indicator: var(--color-semantic-focus-indicator);
+    --component-lockup-auto-fill: var(--color-semantic-static-white);
+    --component-side-nav-brand-surface: var(--color-semantic-brand-surface);
+    --component-side-nav-brand-hover-surface: var(--color-atomic-navy-shell-18);
+    --component-side-nav-brand-active-surface: var(--color-atomic-navy-shell-18);
+    --component-side-nav-brand-active-hover-surface: var(--color-atomic-navy-shell-20);
+    --component-side-nav-brand-pressed-surface: var(--color-atomic-navy-shell-20);
+    --component-side-nav-brand-foreground: var(--color-semantic-static-white);
+    --component-side-nav-brand-hover-foreground: var(--color-atomic-navy-shell-93);
+    --component-side-nav-brand-active-foreground: var(--color-atomic-navy-shell-68);
+    --component-side-nav-brand-muted-foreground: var(--color-atomic-navy-shell-65);
+    --component-side-nav-brand-subtle-foreground: var(--color-atomic-navy-shell-65);
+    --component-side-nav-brand-divider: var(--color-atomic-navy-shell-26);
+    --component-side-nav-brand-badge-surface: var(--color-atomic-navy-shell-18);
+    --component-side-nav-brand-badge-foreground: var(--color-atomic-navy-shell-65);
+    --component-side-nav-brand-badge-active-surface: var(--color-atomic-navy-shell-24);
+    --component-side-nav-brand-focus-indicator: var(--color-atomic-navy-shell-68);
+    --component-side-nav-neutral-surface: var(--color-atomic-navy-wash-6);
+    --component-side-nav-neutral-divider: var(--color-semantic-line-solid-normal);
+    --component-side-nav-neutral-foreground: var(--color-semantic-label-normal);
+    --component-side-nav-neutral-muted-foreground: var(--color-semantic-label-alternative);
+    --component-side-nav-neutral-subtle-foreground: var(--color-semantic-label-alternative);
+    --component-side-nav-neutral-hover-foreground: var(--color-semantic-label-neutral);
+    --component-side-nav-neutral-active-foreground: var(--color-semantic-label-normal);
+    --component-side-nav-neutral-hover-surface: var(--color-atomic-cool-neutral-17);
+    --component-side-nav-neutral-active-surface: var(--color-atomic-cool-neutral-20);
+    --component-side-nav-neutral-active-hover-surface: var(--color-atomic-cool-neutral-22);
+    --component-side-nav-neutral-pressed-surface: var(--color-atomic-cool-neutral-22);
+    --component-side-nav-neutral-badge-surface: var(--color-semantic-fill-strong);
+    --component-side-nav-neutral-badge-foreground: var(--color-semantic-label-neutral);
+    --component-side-nav-neutral-badge-dot: var(--color-semantic-label-alternative);
+    --component-side-nav-neutral-focus-indicator: var(--color-semantic-focus-indicator);
+    --component-nav-rail-neutral-surface: var(--color-atomic-navy-wash-6);
+    --component-nav-rail-neutral-divider: var(--color-semantic-line-solid-normal);
+    --component-nav-rail-neutral-foreground: var(--color-semantic-label-normal);
+    --component-nav-rail-neutral-muted-foreground: var(--color-semantic-label-alternative);
+    --component-nav-rail-neutral-hover-foreground: var(--color-semantic-label-neutral);
+    --component-nav-rail-neutral-hover-surface: var(--color-atomic-cool-neutral-17);
+    --component-nav-rail-neutral-active-surface: var(--color-atomic-cool-neutral-20);
+    --component-nav-rail-neutral-active-hover-surface: var(--color-atomic-cool-neutral-22);
+    --component-nav-rail-neutral-pressed-surface: var(--color-atomic-cool-neutral-22);
+    --component-nav-rail-neutral-focus-indicator: var(--color-semantic-focus-indicator);
+    --component-shell-panel-surface: var(--color-atomic-navy-wash-6);
+    --component-shell-panel-divider: var(--color-semantic-line-solid-normal);
+    --component-shell-panel-foreground: var(--color-semantic-label-normal);
+    --component-shell-panel-hover-foreground: var(--color-semantic-label-neutral);
+    --component-shell-panel-hover-surface: var(--color-atomic-cool-neutral-17);
+    --component-shell-panel-active-surface: var(--color-atomic-cool-neutral-20);
+    --component-shell-panel-active-hover-surface: var(--color-atomic-cool-neutral-22);
+    --component-shell-panel-pressed-surface: var(--color-atomic-cool-neutral-22);
+    --component-notification-unread-surface: var(--color-semantic-primary-surface-normal);
+    --component-dialog-scrim: var(--color-semantic-material-dimmer);
+    --component-transient-feedback-bg: color-mix(in srgb, var(--color-semantic-inverse-background) 72%, transparent);
+  }
+}
+
+/* Authored source: tokens/typography.css */
+/* ==========================================================================
+   LK ROBOTICS — Typography tokens
+   --------------------------------------------------------------------------
+   One workhorse face (Pretendard JP) carries everything: ExtraBold/Bold for
+   headings, Regular for body. Headings use TIGHT negative tracking for a
+   crisp, engineered look; body runs loose line-height (~1.7) for calm
+   bilingual readability. Overlines are 13px UPPERCASE, +letter-spaced.
+
+   Korean copy always sets `word-break: keep-all` + `text-wrap: balance/pretty`
+   so lines break between words, never mid-word (see base.css helpers).
+   ========================================================================== */
+
+:root {
+  /* ---- Weights --------------------------------------------------------- */
+  --fw-regular:  400; /* @kind font */
+  --fw-medium:   500; /* @kind font */
+  --fw-semibold: 600; /* @kind font */
+  --fw-bold:     700; /* @kind font */
+  --fw-extra:    800; /* @kind font */
+
+  /* ---- Font sizes (px) ------------------------------------------------- */
+  --fs-display:  60px;  /* hero headline (clamps down on small screens) */
+  --fs-h1:       48px;  /* page masthead                                */
+  --fs-h2:       36px;  /* section title                                */
+  --fs-h3:       32px;  /* sub-section                                  */
+  --fs-h4:       24px;  /* card title                                   */
+  --fs-h5:       21px;  /* small heading                                */
+  --fs-lead:     19px;  /* large body / intro                           */
+  --fs-body:     17px;  /* default body                                 */
+  --fs-caption:  13px;  /* overline / tag / meta                        */
+  --fs-tiny:     12px;  /* fine print                                   */
+
+  /* ---- Line heights ---------------------------------------------------- */
+  --lh-display:  1.1;   /* @kind other */
+  --lh-h1:       1.12;  /* @kind other */
+  --lh-h2:       1.25;  /* @kind other */
+  --lh-h3:       1.3;   /* @kind other */
+  --lh-h4:       1.33;  /* @kind other */
+  --lh-h5:       1.45;  /* @kind other */
+  --lh-lead:     1.7;   /* @kind other */
+  --lh-body:     1.7;   /* @kind other */
+  --lh-caption:  1.2;   /* @kind other */
+
+  /* ---- Letter spacing (tracking) --------------------------------------- */
+  --ls-display:  -1.8px;
+  --ls-h1:       -1.6px;
+  --ls-h2:       -1.2px;
+  --ls-h3:       -1px;
+  --ls-h4:       -0.6px;
+  --ls-h5:       -0.4px;
+  --ls-lead:     -0.2px;
+  --ls-body:     -0.2px;
+  --ls-small:    -0.1px;
+  --ls-caption:  1.6px;  /* UPPERCASE overline / eyebrow */
+  --ls-overline: 1.8px;  /* eyebrow / overline tracking (refined 700-weight) */
+
+  /* ---- 7-tier type scale (Display/Title/Heading/Headline/Body/Label/
+     Caption) provided alongside the LK fs/lh/ls token families so
+     consumers can use this vocabulary directly.
+
+     display0 sits ABOVE the product scale: a projection/exhibition rung
+     (one statement or one number carrying a whole surface, read from
+     meters away). Product UI must not consume it directly — it exists so
+     projection media (Slides and downstream) resolve their hero tier
+     through the ramp instead of deriving it with calc
+     (docs/TYPE_RAMP_DISPLAY0_PROPOSAL.md). Value equals the calc it
+     replaces (display1 ×2), so adoption changes no rendered surface. -- */
+  --display0-size: 112px; --display0-line: 144px; --display0-spacing: -0.034em;
+  --display1-size: 56px;  --display1-line: 72px;  --display1-spacing: -0.0319em;
+  --display2-size: 40px;  --display2-line: 52px;  --display2-spacing: -0.0282em;
+  --display3-size: 36px;  --display3-line: 48px;  --display3-spacing: -0.027em;
+
+  --title1-size: 32px;    --title1-line: 44px;    --title1-spacing: -0.0253em;
+  --title2-size: 28px;    --title2-line: 38px;    --title2-spacing: -0.0236em;
+  --title3-size: 24px;    --title3-line: 32px;    --title3-spacing: -0.023em;
+
+  --heading1-size: 22px;  --heading1-line: 30px;  --heading1-spacing: -0.0194em;
+  --heading2-size: 20px;  --heading2-line: 28px;  --heading2-spacing: -0.012em;
+
+  --headline1-size: 18px; --headline1-line: 26px; --headline1-spacing: -0.0002em;
+  --headline2-size: 17px; --headline2-line: 24px; --headline2-spacing: 0em;
+
+  --body1-size: 16px;     --body1-line: 24px;     --body1-spacing: 0.0057em;
+  --body1-reading-line: 26px;
+  --body2-size: 15px;     --body2-line: 22px;     --body2-spacing: 0.0096em;
+  --body2-reading-line: 24px;
+
+  --label1-size: 14px;    --label1-line: 20px;    --label1-spacing: 0.0145em;
+  --label1-reading-line: 22px;
+  --label2-size: 13px;    --label2-line: 18px;    --label2-spacing: 0.0194em;
+  --label2-reading-line: 20px;
+
+  --caption1-size: 12px;  --caption1-line: 16px;  --caption1-spacing: 0.0252em;
+  --caption2-size: 11px;  --caption2-line: 14px;  --caption2-spacing: 0.0311em;
+}
+
+/* Type-scale utility classes — apply a complete type style in one shot. Headings
+   Bold/SemiBold with negative tracking; body Medium with slight positive
+   tracking for Hangul legibility. */
+.type-display0 { font-family: var(--font-sans); font-weight: 700; font-size: var(--display0-size); line-height: var(--display0-line); letter-spacing: var(--display0-spacing); }
+.type-display1 { font-family: var(--font-sans); font-weight: 700; font-size: var(--display1-size); line-height: var(--display1-line); letter-spacing: var(--display1-spacing); }
+.type-display2 { font-family: var(--font-sans); font-weight: 700; font-size: var(--display2-size); line-height: var(--display2-line); letter-spacing: var(--display2-spacing); }
+.type-display3 { font-family: var(--font-sans); font-weight: 700; font-size: var(--display3-size); line-height: var(--display3-line); letter-spacing: var(--display3-spacing); }
+.type-title1 { font-family: var(--font-sans); font-weight: 700; font-size: var(--title1-size); line-height: var(--title1-line); letter-spacing: var(--title1-spacing); }
+.type-title2 { font-family: var(--font-sans); font-weight: 700; font-size: var(--title2-size); line-height: var(--title2-line); letter-spacing: var(--title2-spacing); }
+.type-title3 { font-family: var(--font-sans); font-weight: 700; font-size: var(--title3-size); line-height: var(--title3-line); letter-spacing: var(--title3-spacing); }
+.type-heading1 { font-family: var(--font-sans); font-weight: 600; font-size: var(--heading1-size); line-height: var(--heading1-line); letter-spacing: var(--heading1-spacing); }
+.type-heading2 { font-family: var(--font-sans); font-weight: 600; font-size: var(--heading2-size); line-height: var(--heading2-line); letter-spacing: var(--heading2-spacing); }
+.type-headline1 { font-family: var(--font-sans); font-weight: 600; font-size: var(--headline1-size); line-height: var(--headline1-line); letter-spacing: var(--headline1-spacing); }
+.type-headline2 { font-family: var(--font-sans); font-weight: 600; font-size: var(--headline2-size); line-height: var(--headline2-line); letter-spacing: var(--headline2-spacing); }
+.type-body1 { font-family: var(--font-sans); font-weight: 500; font-size: var(--body1-size); line-height: var(--body1-line); letter-spacing: var(--body1-spacing); }
+.type-body2 { font-family: var(--font-sans); font-weight: 500; font-size: var(--body2-size); line-height: var(--body2-line); letter-spacing: var(--body2-spacing); }
+.type-label1 { font-family: var(--font-sans); font-weight: 500; font-size: var(--label1-size); line-height: var(--label1-line); letter-spacing: var(--label1-spacing); }
+.type-label2 { font-family: var(--font-sans); font-weight: 500; font-size: var(--label2-size); line-height: var(--label2-line); letter-spacing: var(--label2-spacing); }
+.type-body1-reading { font-family: var(--font-sans); font-weight: 500; font-size: var(--body1-size); line-height: var(--body1-reading-line); letter-spacing: var(--body1-spacing); }
+.type-body2-reading { font-family: var(--font-sans); font-weight: 500; font-size: var(--body2-size); line-height: var(--body2-reading-line); letter-spacing: var(--body2-spacing); }
+.type-label1-reading { font-family: var(--font-sans); font-weight: 500; font-size: var(--label1-size); line-height: var(--label1-reading-line); letter-spacing: var(--label1-spacing); }
+.type-label2-reading { font-family: var(--font-sans); font-weight: 500; font-size: var(--label2-size); line-height: var(--label2-reading-line); letter-spacing: var(--label2-spacing); }
+.type-caption1 { font-family: var(--font-sans); font-weight: 500; font-size: var(--caption1-size); line-height: var(--caption1-line); letter-spacing: var(--caption1-spacing); }
+.type-caption2 { font-family: var(--font-sans); font-weight: 500; font-size: var(--caption2-size); line-height: var(--caption2-line); letter-spacing: var(--caption2-spacing); }
+
+/* Authored source: tokens/spacing.css */
+/* ==========================================================================
+ LK ROBOTICS — Spacing, radii, sizing, layout
+ --------------------------------------------------------------------------
+ 8-pt soft grid. Sections breathe (generous vertical rhythm). A 1280px
+ page container with 24–32px gutters; inner reading bands narrow to ~1080px.
+ ========================================================================== */
+
+:root {
+  /* ---- Spacing scale --------------------------------------------------- */
+  --space-0: 0px;
+  --space-1: 4px;
+  /* Half steps. Layout spacing uses the whole steps below; these exist only for spacing
+     *inside* a control — the gap between a badge dot and its label, a chip's icon and text —
+     where a full 4px step reads as a gap between two things rather than one thing's padding.
+     Named on the same rule as the whole steps: --space-N is N x 4px. */
+  --space-0-5: 2px;
+  --space-1-5: 6px;
+  --space-2-5: 10px;
+  --space-3-5: 14px;
+  --space-4-5: 18px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-28: 112px; /* light section vertical padding */
+  --space-32: 128px; /* hero / dark-band vertical padding */
+
+  /* ---- Basic / Ratio ---------------------------------------------- */
+  --ratio-1-1: 1 / 1;
+  --ratio-1-2: 1 / 2;
+  --ratio-5-4: 5 / 4;
+  --ratio-4-3: 4 / 3;
+  --ratio-3-2: 3 / 2;
+  --ratio-16-10: 16 / 10;
+  --ratio-golden: 1.618 / 1;
+  --ratio-16-9: 16 / 9;
+  --ratio-2-1: 2 / 1;
+  --ratio-21-9: 21 / 9;
+  --ratio-4-5: 4 / 5;
+  --ratio-3-4: 3 / 4;
+  --ratio-2-3: 2 / 3;
+  --ratio-10-16: 10 / 16;
+  --ratio-golden-vertical: 1 / 1.618;
+  --ratio-9-16: 9 / 16;
+  --ratio-9-21: 9 / 21;
+
+  /* ---- Radii ------------------------------------------- */
+  --radius-xs: 4px; /* annotation boxes, status bar pills — the step below sm */
+  --radius-sm: 6px; /* checkbox, tags, small chips */
+  --radius-md: 8px; /* buttons, tabs, controls (base radius = 8) */
+  --radius-input: 8px; /* text inputs, selects */
+  --radius-lg: 10px; /* menus, popovers */
+  --radius-xl: 12px; /* feature cards, panels (card) */
+  --radius-2xl: 12px; /* product / location cards */
+  --radius-3xl: 16px; /* large cards / sheets, dialogs */
+  --radius-4xl: 20px; /* containers */
+  --radius-pill: 999px; /* tags, avatars, dots, nav pills */
+
+  /* Radius aliases (pt values) */
+  --radius-4: 4px; /* WDS _Badge/Status and _Badge/Value parity */
+  --radius-5: 5px;
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-10: 10px;
+  --radius-12: 12px;
+  --radius-14: 14px;
+  --radius-16: 16px;
+  --radius-20: 20px;
+  --radius-24: 24px;
+  --radius-32: 32px;
+  --radius-full: 9999px;
+
+  /* Frame/Radius aliases: Small 12, Medium 14, Large 16, Xlarge 20 */
+  --radius-frame-sm: var(--radius-12);
+  --radius-frame-md: var(--radius-14);
+  --radius-frame-lg: var(--radius-16);
+  --radius-frame-xl: var(--radius-20);
+
+  /* ---- Layout (grid — container 1440 / content 1100, 20px margin) --- */
+  --container: 1440px; /* page container max-width */
+  --container-read: 1100px; /* inner reading band */
+  --container-wide: 1500px; /* full-bleed carousels / rails */
+  --gutter: 20px; /* page margin / gutter */
+  --gutter-lg: 32px; /* wide margin (xlarge) */
+  --header-h: 76px; /* sticky GNB height */
+
+  /* ---- Mobile safe-area spacing (Spacing / Status + Bottom) ------- */
+  --mobile-safe-area-top: env(safe-area-inset-top, 0px);
+  --mobile-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --mobile-status-bar-min-height: 44px;
+  --mobile-home-indicator-height: 34px;
+  --mobile-bottom-bar-min-height: 64px;
+  --mobile-bottom-action-padding-y: var(--space-4);
+  --mobile-bottom-action-padding-bottom: calc(
+    var(--space-4) + var(--mobile-safe-area-bottom)
+  );
+
+  /* ---- Control sizing -------------------------------------------------- */
+  --control-h-sm: 32px; /* small controls (kit-exact) */
+  --control-h-md: 48px; /* inputs, selects (kit-exact) */
+  --control-h-lg: 52px; /* primary buttons */
+
+  /* ---- Border widths --------------------------------------------- */
+  --border-thin: 1px;
+  --border-medium: 1.5px;
+  --border-thick: 2px;
+}
+
+/* Authored source: tokens/grid.css */
+/* ==========================================================================
+ LK ROBOTICS — Grid, breakpoints & gap
+ --------------------------------------------------------------------------
+ The layout skeleton: responsive BREAKPOINTS, a
+ centered CONTAINER that steps through the content widths, a 12-column
+ GRID you divide layouts with (spanning), and a semantic GAP scale on the
+ 4px base. Tokens are `--bp-* / --grid-* / --container-* / --gap-*`; the
+ utility classes (`.lk-grid`, `.lk-col`, `.lk-split`, `.lk-section`,
+ `.lk-container-fluid`) carry the media queries inline styles can't.
+
+ Breakpoints (from the kit): xs 0 · sm 768 · md 992 · lg 1200 · xl 1600
+ Content widths: lg 1100 · xl 1440 · page margin 20
+ ========================================================================== */
+
+:root {
+  /* ---- Breakpoints (min-width) ----------------------------------------- */
+  --bp-sm: 768px; /* tablet portrait */
+  --bp-md: 992px; /* tablet landscape */
+  --bp-lg: 1200px; /* desktop */
+  --bp-xl: 1600px; /* desktop large */
+
+  /* ---- Column grid ----------------------------------------------------- */
+  --grid-columns-mobile: 2; /* mobile column grid */
+  --grid-columns-tablet: 3; /* tablet column grid */
+  --grid-columns-desktop: 12; /* desktop column grid */
+  --grid-columns: var(--grid-columns-mobile); /* @kind other */
+  --grid-gutter: 20px; /* space between columns */
+  --grid-margin: 20px; /* page side margin — column-grid offset, flat 20 across breakpoints */
+
+  /* ---- Container tiers (content max-widths) ------------------------ */
+  --container-lg: 1100px; /* content column ≤ lg */
+  --container-xl: 1440px; /* content column @ xl */
+
+  /* ---- Column-grid overlay (design-guide illustration) ----------------
+     Grid marker red — used to visualise column tracks in grid docs. */
+  --grid-overlay-fill: rgba(255, 66, 66, 0.08); /* column-grid fill */
+  --grid-overlay-line: rgba(255, 66, 66, 0.32); /* column edge */
+
+  /* ---- Gap scale (4px base) -------------------------------------------- */
+  --gap-3xs: 4px;
+  --gap-2xs: 8px;
+  --gap-xs: 12px;
+  --gap-sm: 16px;
+  --gap-md: 20px;
+  --gap-lg: 24px;
+  --gap-xl: 32px;
+  --gap-2xl: 40px;
+  --gap-3xl: 48px;
+  --gap-4xl: 64px;
+
+  /* ---- Responsive rhythm ----------------------------------------------- */
+  --gap-normal: 16px; /* "normal" content gap — 16 → 20 on desktop */
+  --gap-section: 56px; /* vertical space between page sections — steps up */
+}
+
+/* Mobile-first breakpoint bumps — mirror the margin / gap modes. */
+@media (min-width: 768px) {
+  :root {
+    --grid-columns: var(--grid-columns-tablet);
+    --gap-section: 80px;
+  }
+}
+@media (min-width: 992px) {
+  :root {
+    --gap-normal: 20px;
+  }
+}
+@media (min-width: 1200px) {
+  :root {
+    --grid-columns: var(--grid-columns-desktop);
+    --gap-section: 100px;
+  }
+}
+@media (min-width: 1600px) {
+  :root {
+    --gap-section: 120px;
+  }
+}
+
+/* ==========================================================================
+ Responsive page container
+ Centered content column: caps at 1100 (through lg), widens to 1440 at xl.
+ ========================================================================== */
+.lk-container-fluid {
+  width: 100%;
+  max-width: var(--container-lg);
+  margin-inline: auto;
+  padding-inline: var(--grid-margin);
+  box-sizing: border-box;
+}
+@media (min-width: 1600px) {
+  .lk-container-fluid {
+    max-width: var(--container-xl);
+  }
+}
+
+/* ==========================================================================
+ 12-column grid — divide a layout
+ Set --cols to change the division; children are <.lk-col> spanning tracks.
+ ========================================================================== */
+.lk-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    var(--cols, var(--grid-columns)),
+    minmax(0, 1fr)
+  );
+  column-gap: var(--col-gap, var(--grid-gutter));
+  row-gap: var(--row-gap, var(--grid-gutter));
+}
+
+/* A grid child that spans N columns, responsively. Only set the breakpoints
+ you need — each falls back to the smaller one, then to a full-width span. */
+.lk-col {
+  min-width: 0;
+  grid-column: span min(var(--col-span, var(--grid-columns)), var(--grid-columns));
+}
+@media (min-width: 768px) {
+  .lk-col {
+    grid-column: span min(var(--col-span-sm, var(--col-span, var(--grid-columns))), var(--grid-columns));
+  }
+}
+@media (min-width: 992px) {
+  .lk-col {
+    grid-column: span min(var(--col-span-md, var(--col-span-sm, var(--col-span, var(--grid-columns)))), var(--grid-columns));
+  }
+}
+@media (min-width: 1200px) {
+  .lk-col {
+    grid-column: span min(var(--col-span-lg, var(--col-span-md, var(--col-span-sm, var(--col-span, var(--grid-columns))))), var(--grid-columns));
+  }
+}
+
+/* ==========================================================================
+ Two-pane split — sidebar + main
+ Stacks on mobile; splits at `at` (md default, or lg). Control the tracks
+ with --split-template (e.g. "280px 1fr", "1fr 320px", "2fr 1fr").
+ ========================================================================== */
+.lk-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--split-gap, var(--gap-lg));
+}
+.lk-split > * {
+  min-width: 0;
+}
+@media (min-width: 992px) {
+  .lk-split:not([data-at="lg"]) {
+    grid-template-columns: var(--split-template, 1fr 1fr);
+  }
+}
+@media (min-width: 1200px) {
+  .lk-split[data-at="lg"] {
+    grid-template-columns: var(--split-template, 1fr 1fr);
+  }
+}
+
+/* ==========================================================================
+ Section band — vertical rhythm
+ Full-width band with responsive vertical padding; pair with a container.
+ ========================================================================== */
+.lk-section {
+  padding-block: var(--section-py, var(--gap-section));
+}
+
+/* Authored source: tokens/effects.css */
+/* ==========================================================================
+ LK ROBOTICS — Effects: elevation, borders, motion
+ --------------------------------------------------------------------------
+ Shadows are soft, diffuse and NAVY-TINTED — never hard black (LK identity).
+ Motion uses timings (120/200/320ms · cubic-bezier(.4,0,.2,1), plus an
+ emphasized ease. Elevation is
+ restrained; cards lift gently on hover. Respects prefers-reduced-motion.
+ ========================================================================== */
+
+:root {
+  /* ---- Elevation ramp (navy-tinted, diffuse) --------------------------- */
+  --shadow-xs: 0 2px 4px rgba(14, 19, 41, 0.06);
+  --shadow-sm: 0 4px 12px rgba(8, 14, 33, 0.06);
+  --shadow-md: 0 16px 40px rgba(14, 19, 41, 0.1);
+  --shadow-lg: 0 24px 64px rgba(14, 19, 41, 0.13);
+  --shadow-xl: 0 40px 80px rgba(14, 19, 41, 0.16);
+
+  /* CTA lift — graphite primary gets a soft navy lift (not a bright glow);
+ the signal accent gets a restrained cyan glint for emphasis moments. */
+  --shadow-indigo: 0 12px 28px rgba(14, 19, 41, 0.2);
+  --shadow-green: 0 12px 26px rgba(94, 110, 134, 0.24);
+  --shadow-accent: 0 12px 30px rgba(132, 146, 164, 0.3);
+  --shadow-control: 0 1px 3px rgba(8, 14, 33, 0.28);
+
+  /* ---- Borders --------------------------------------------------------- */
+  --border-hairline: 1px solid var(--color-semantic-line-solid-normal);
+  --border-hairline-dark: 1px solid rgba(255, 255, 255, 0.08); /* @kind other */
+
+  /* ---- Glass / overlay ------------------------------------------------- */
+  --blur-panel: blur(14px) saturate(150%); /* @kind other */
+  --scrim-dark: rgba(14, 19, 41, 0.86); /* solid nav over hero */
+  --material-dimmer: rgba(8, 11, 28, 0.92);
+  --material-control-dimmer: rgba(0, 0, 0, 0.42);
+
+  /* ---- Decorate / Gradient ---------------------------------------- */
+  --decorate-gradient-solid-top: linear-gradient(
+    180deg,
+    var(--color-semantic-background-elevated-normal) 0%,
+    transparent 100%
+  );
+  --decorate-gradient-solid-right: linear-gradient(
+    270deg,
+    var(--color-semantic-background-elevated-normal) 0%,
+    transparent 100%
+  );
+  --decorate-gradient-solid-bottom: linear-gradient(
+    0deg,
+    var(--color-semantic-background-elevated-normal) 0%,
+    transparent 100%
+  );
+  --decorate-gradient-solid-left: linear-gradient(
+    90deg,
+    var(--color-semantic-background-elevated-normal) 0%,
+    transparent 100%
+  );
+  --decorate-gradient-multiple-top: linear-gradient(
+    180deg,
+    var(--color-semantic-background-elevated-normal) 0%,
+    var(--color-semantic-fill-strong) 48%,
+    transparent 100%
+  );
+  --decorate-gradient-multiple-right: linear-gradient(
+    270deg,
+    var(--color-semantic-background-elevated-normal) 0%,
+    var(--color-semantic-fill-strong) 48%,
+    transparent 100%
+  );
+  --decorate-gradient-multiple-bottom: linear-gradient(
+    0deg,
+    var(--color-semantic-background-elevated-normal) 0%,
+    var(--color-semantic-fill-strong) 48%,
+    transparent 100%
+  );
+  --decorate-gradient-multiple-left: linear-gradient(
+    90deg,
+    var(--color-semantic-background-elevated-normal) 0%,
+    var(--color-semantic-fill-strong) 48%,
+    transparent 100%
+  );
+  --decorate-mask-fade-top: linear-gradient(180deg, #000 0%, transparent 100%);
+  --decorate-mask-fade-right: linear-gradient(
+    270deg,
+    #000 0%,
+    transparent 100%
+  );
+  --decorate-mask-fade-bottom: linear-gradient(0deg, #000 0%, transparent 100%);
+  --decorate-mask-fade-left: linear-gradient(90deg, #000 0%, transparent 100%);
+
+  /* ---- Motion (timings + easing) ------- */
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1); /* @kind other */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --dur-fast: 120ms; /* @kind other */
+  --dur-base: 200ms; /* @kind other */
+  --dur-slow: 320ms; /* @kind other */
+  --duration-fast: 120ms; /* @kind other */
+  --duration-normal: 200ms; /* @kind other */
+  --duration-slow: 320ms; /* @kind other */
+  --transition-base: all var(--dur-base) var(--ease-out);
+}
+
+/* ==========================================================================
+ DARK THEME — elevation & scrim
+ Navy-tinted shadows disappear on a navy-black canvas, so dark mode swaps to
+ deeper near-black shadows (a touch more opaque, since cards must read
+ against the page); the accent glow keeps its cyan. Duplicated across the OS
+ media query and the explicit selector so a manual toggle always wins.
+ ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"],
+  .theme-auto {
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.46);
+    --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.52);
+    --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.58);
+    --shadow-xl: 0 40px 80px rgba(0, 0, 0, 0.64);
+    --shadow-indigo: 0 12px 28px rgba(0, 0, 0, 0.55);
+    --shadow-green: 0 12px 26px rgba(0, 0, 0, 0.5);
+    --shadow-accent: 0 12px 30px rgba(132, 146, 164, 0.34);
+    --shadow-control: 0 1px 3px rgba(0, 0, 0, 0.42);
+    --scrim-dark: rgba(2, 4, 9, 0.72);
+    --material-dimmer: rgba(2, 4, 9, 0.88);
+    --material-control-dimmer: rgba(0, 0, 0, 0.46);
+    --border-hairline-dark: 1px solid rgba(255, 255, 255, 0.12); /* @kind other */
+  }
+}
+
+[data-theme="dark"],
+.theme-dark {
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.46);
+  --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.52);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.58);
+  --shadow-xl: 0 40px 80px rgba(0, 0, 0, 0.64);
+  --shadow-indigo: 0 12px 28px rgba(0, 0, 0, 0.55);
+  --shadow-green: 0 12px 26px rgba(0, 0, 0, 0.5);
+  --shadow-accent: 0 12px 30px rgba(132, 146, 164, 0.34);
+  --shadow-control: 0 1px 3px rgba(0, 0, 0, 0.42);
+  --scrim-dark: rgba(2, 4, 9, 0.72);
+  --material-dimmer: rgba(2, 4, 9, 0.88);
+  --material-control-dimmer: rgba(0, 0, 0, 0.46);
+  --border-hairline-dark: 1px solid rgba(255, 255, 255, 0.12); /* @kind other */
+}
+
+/* LIGHT ISLAND — explicit light elevation so a [data-theme="light"] subtree
+ inside a dark/OS-dark page gets light shadows. Mirrors :root. */
+[data-theme="light"],
+.theme-light {
+  --shadow-xs: 0 2px 4px rgba(14, 19, 41, 0.06);
+  --shadow-sm: 0 4px 12px rgba(8, 14, 33, 0.06);
+  --shadow-md: 0 16px 40px rgba(14, 19, 41, 0.1);
+  --shadow-lg: 0 24px 64px rgba(14, 19, 41, 0.13);
+  --shadow-xl: 0 40px 80px rgba(14, 19, 41, 0.16);
+  --shadow-indigo: 0 12px 28px rgba(14, 19, 41, 0.2);
+  --shadow-green: 0 12px 26px rgba(94, 110, 134, 0.24);
+  --shadow-accent: 0 12px 30px rgba(132, 146, 164, 0.3);
+  --shadow-control: 0 1px 3px rgba(8, 14, 33, 0.28);
+  --scrim-dark: rgba(14, 19, 41, 0.86);
+  --material-dimmer: rgba(8, 11, 28, 0.92);
+  --material-control-dimmer: rgba(0, 0, 0, 0.42);
+  --border-hairline-dark: 1px solid rgba(255, 255, 255, 0.08); /* @kind other */
+}
+
+/* Authored source: tokens/components.css */
+/* ==========================================================================
+   LK ROBOTICS component tokens
+   --------------------------------------------------------------------------
+   Component tokens sit above semantic tokens. Components should consume these
+   when a value is specific to one component family.
+   ========================================================================== */
+
+/* Resolve the timing alias at each profile boundary; inheriting a root-resolved
+   transition would freeze nested ops controls at the default duration. */
+:root, :where([data-lds-profile], .lds-profile-ops) {
+  --component-button-transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+
+:root {
+  /* ---- Button ---------------------------------------------------------- */
+  --component-button-height-sm: 32px;
+  --component-button-height-md: 40px;
+  --component-button-height-lg: 48px;
+  /* Button size grading: padding 28/20/14, radius 8/8/6 (LDS 2026-09, was 12/10/8),
+     gap 6/5/4, type body1/body2/label2, per-size tracking. */
+  --component-button-padding-sm: 0 14px;
+  --component-button-padding-md: 0 20px;
+  --component-button-padding-lg: 0 28px;
+  --component-button-gap-sm: 4px;
+  --component-button-gap-md: 5px;
+  --component-button-gap-lg: 6px;
+  --component-button-gap: var(--component-button-gap-md);
+  --component-button-font-size-sm: var(--label2-size);
+  --component-button-font-size-md: var(--body2-size);
+  --component-button-font-size-lg: var(--body1-size);
+  --component-button-line-height-sm: var(--label2-line);
+  --component-button-line-height-md: var(--body2-line);
+  --component-button-line-height-lg: var(--body1-line);
+  --component-button-letter-spacing-sm: var(--label2-spacing);
+  --component-button-letter-spacing-md: var(--body2-spacing);
+  --component-button-letter-spacing-lg: var(--body1-spacing);
+  --component-button-font-weight: var(--fw-semibold);
+  --component-button-font-weight-assistive: var(--fw-medium);
+  --component-button-letter-spacing: var(--component-button-letter-spacing-md);
+  --component-button-radius-sm: var(--radius-6);
+  --component-button-radius-md: var(--radius-8);
+  --component-button-radius-lg: var(--radius-md);
+  --component-button-radius: var(--component-button-radius-lg);
+  --component-button-icon-size-sm: 16px;
+  --component-button-icon-size-md: 18px;
+  --component-button-icon-size-lg: 20px;
+  --component-button-icon-size: var(--component-button-icon-size-md);
+  --component-button-icon-only-icon-size-sm: 18px;
+  --component-button-icon-only-icon-size-md: 20px;
+  --component-button-icon-only-icon-size-lg: 24px;
+  --component-button-disabled-opacity: 0.45;
+  --component-button-text-hover-opacity: 0.9;
+  --component-button-shadow-rest: var(--shadow-xs);
+  --component-button-transform-hover: none;
+  --component-button-transform-pressed: none;
+
+  /* ---- Icon Button ----------------------------------------------------- */
+  /* 24px is an LDS dense-action extension. WDS sizes remain 28/32/40px. */
+  --component-icon-button-size-xs: 24px;
+  --component-icon-button-size-custom: 28px;
+  --component-icon-button-size-sm: 32px;
+  --component-icon-button-size-md: 40px;
+
+  --component-button-primary-shadow-hover: var(--component-button-shadow-rest);
+
+  /* LDS safety extension: destructive or emergency requests, not WDS parity. */
+
+  --component-button-secondary-shadow-hover: var(--component-button-shadow-rest);
+
+  --component-button-signal-shadow-hover: var(--component-button-shadow-rest);
+
+  --component-button-dark-shadow-hover: var(--component-button-shadow-rest);
+
+
+  --component-button-ghost-bg: transparent;
+  --component-button-ghost-bg-hover: var(--component-button-ghost-bg);
+
+
+  /* ---- Action Area ----------------------------------------------------- */
+  --component-action-area-padding-x: var(--space-5);
+  --component-action-area-padding-y: var(--space-5);
+  --component-action-area-gap: var(--space-4);
+  --component-action-area-shadow-sticky: var(--shadow-control);
+  --component-action-area-z-index: 20;
+
+  /* ---- Toggle Icon ----------------------------------------------------- */
+  --component-toggle-icon-size-sm: 32px;
+  --component-toggle-icon-size-md: 40px;
+  --component-toggle-icon-radius: var(--radius-md);
+  --component-toggle-icon-disabled-opacity: var(--component-button-disabled-opacity);
+
+  /* ---- Chip ------------------------------------------------------------ */
+  --component-chip-height-xs: 24px;
+  --component-chip-height-sm: 32px;
+  --component-chip-height-md: 36px;
+  --component-chip-height-lg: 40px;
+  /* Chip size grading: padding 12/11/8/7, radius 8/8/6/6 (LDS 2026-09, was 10/10/8/6),
+     gap 3/3/2/2, type body2/body2/label1/caption1. */
+  --component-chip-padding-x-xs: 7px;
+  --component-chip-padding-x-sm: var(--space-2);
+  --component-chip-padding-x-md: 11px;
+  --component-chip-padding-x-lg: var(--space-3);
+  --component-chip-gap-xs: 2px;
+  --component-chip-gap-sm: 2px;
+  --component-chip-gap-md: 3px;
+  --component-chip-gap-lg: 3px;
+  --component-chip-gap: var(--component-chip-gap-md);
+  --component-chip-media-size-xs: 16px;
+  --component-chip-media-size-sm: 18px;
+  --component-chip-media-size-md: 20px;
+  --component-chip-media-size-lg: 24px;
+  --component-chip-font-size-xs: var(--caption1-size);
+  --component-chip-font-size-sm: var(--label1-size);
+  --component-chip-font-size-md: var(--body2-size);
+  --component-chip-font-size-lg: var(--body2-size);
+  --component-chip-letter-spacing-xs: var(--caption1-spacing);
+  --component-chip-letter-spacing-sm: var(--label1-spacing);
+  --component-chip-letter-spacing-md: var(--body2-spacing);
+  --component-chip-letter-spacing-lg: var(--body2-spacing);
+  --component-chip-font-weight: var(--fw-medium);
+  --component-chip-letter-spacing: var(--component-chip-letter-spacing-md);
+  --component-chip-radius-xs: var(--radius-sm);
+  --component-chip-radius-sm: var(--radius-6);
+  --component-chip-radius-md: var(--radius-8);
+  --component-chip-radius-lg: var(--radius-8);
+  --component-chip-radius: var(--component-chip-radius-md);
+  --component-chip-disabled-opacity: var(--component-button-disabled-opacity);
+
+  /* ---- Tag pills --------------------------------------------------------- */
+  --component-tag-height: 26px;
+  --component-filter-chip-height: 32px;
+
+  /* ---- Menu surface ------------------------------------------------------ */
+  --component-menu-min-width: 176px;
+  --component-menu-max-width: 320px;
+  --component-menu-radius: var(--radius-10);
+  --component-menu-padding-y: var(--space-2);
+  --component-menu-padding-x: var(--space-2);
+  --component-menu-gap: var(--space-1);
+  --component-menu-scrollbar-gap: var(--space-1);
+  --component-menu-item-min-height: 40px;
+  --component-menu-item-padding-y: 10px;
+  --component-menu-item-padding-x: var(--space-4);
+  --component-menu-item-font-size: var(--label1-size);
+  --component-menu-item-line-height: var(--label1-line);
+  --component-menu-item-radius: var(--radius-6);
+  --component-menu-header-font-size: var(--label1-size);
+  --component-menu-header-line-height: var(--label1-line);
+  --component-menu-header-font-weight: var(--fw-semibold);
+  /* Persistent selection fill for aria-current menu items (WDS List Cell
+     Selected axis). Weaker than hover-bg so the pointer/focus row reads above
+     selected rows; checked radio/checkbox items use their glyph instead. */
+  /* Selection glyph + keyboard-active ring for option lists sharing this menu
+     surface (Select). Achromatic by default so option lists follow the
+     DropdownMenu monochrome state model; themes may re-point them at an accent. */
+
+  /* ---- Top Bar navigation menu ------------------------------------------ */
+  --component-topbar-menu-min-width: var(--component-menu-min-width);
+  --component-topbar-menu-max-width: var(--component-menu-max-width);
+  --component-topbar-menu-padding: var(--component-menu-padding-y);
+  --component-topbar-menu-gap: var(--component-menu-gap);
+  --component-topbar-menu-radius: var(--component-menu-radius);
+  --component-topbar-menu-item-min-height: var(--component-menu-item-min-height);
+  --component-topbar-menu-item-padding-y: var(--component-menu-item-padding-y);
+  --component-topbar-menu-item-padding-x: var(--component-menu-item-padding-x);
+  --component-topbar-menu-item-radius: var(--component-menu-item-radius);
+
+  /* ---- Repeated data density -------------------------------------------- */
+  --component-table-cell-padding-sm: 6px 12px;
+  --component-table-cell-padding-md: 8px 16px;
+  --component-table-row-min-height-sm: 44px;
+  --component-table-row-min-height-md: 52px;
+  --component-data-grid-cell-padding-sm: 10px 12px;
+  --component-data-grid-cell-padding-md: 13px 16px;
+  --component-data-grid-header-height-sm: 50px;
+  --component-data-grid-header-height-md: 58px;
+  --component-data-grid-detail-padding-sm: var(--space-3) var(--space-4);
+  --component-data-grid-detail-padding-md: var(--space-4);
+  --component-list-cell-padding-y-sm: 8px;
+  --component-list-cell-padding-y-md: 12px;
+  --component-list-cell-padding-y-lg: 16px;
+  --component-tree-row-min-height: 36px;
+  --component-tree-row-padding-y: 8px;
+  --component-tree-row-padding-x: 10px;
+  --component-tree-row-gap: var(--space-2);
+  --component-tree-indent: 20px;
+
+  /* ---- Navigation and overlay density ---------------------------------- */
+  --component-side-nav-padding: var(--space-2-5);
+  --component-side-nav-item-height: 44px;
+  --component-side-nav-item-padding-y: var(--space-2-5);
+  --component-side-nav-item-padding-x: var(--space-3);
+  --component-side-nav-child-item-height: 36px;
+  --component-side-nav-child-item-padding-y: var(--space-2);
+  /* Docked NavRail for DashboardShell topology="rail-panel": 64px matches the
+     SideNav collapsed rail, 56px items fit icon 20 + gap 4 + caption 14 + 9/9,
+     and the 56px slots match TopBar and the SideNav brand band. */
+  --component-nav-rail-docked-width: 64px;
+  --component-nav-rail-docked-item-size: 56px;
+  --component-nav-rail-docked-item-gap: var(--space-1);
+  --component-nav-rail-docked-padding-block: var(--space-2);
+  --component-nav-rail-docked-slot-height: 56px;
+  /* ShellPanel (rail-panel contextual panel) and ConversationList rows. The
+     240px panel matches the SideNav default width; rows match the SideNav
+     36px child row. */
+  --component-shell-panel-width: 240px;
+  --component-shell-panel-header-height: 56px;
+  --component-shell-panel-row-height: 40px;
+  --component-conversation-list-row-height: 36px;
+  --component-toolbar-gap: var(--space-1-5);
+  --component-toolbar-padding: var(--space-1-5);
+  --component-drawer-header-padding-comfortable: var(--space-5) var(--space-6);
+  --component-drawer-header-padding-compact: var(--space-4) var(--space-5);
+  --component-drawer-header-padding-sm: var(--space-2) var(--space-5);
+  --component-drawer-body-padding-comfortable: var(--space-5) var(--space-6);
+  --component-drawer-body-padding-compact: var(--space-4) var(--space-5);
+  --component-drawer-footer-padding-comfortable: var(--space-4) var(--space-6);
+  --component-drawer-footer-padding-compact: var(--space-3) var(--space-5);
+
+  /* Selection checkboxes keep a 16px glyph inside a measured 24px target. */
+  --component-data-grid-selection-target-size: 24px;
+  --component-data-grid-selection-cell-padding: 10px;
+  --component-data-toolbar-gap-sm: var(--space-2);
+  --component-data-toolbar-gap-md: var(--space-3);
+  --component-data-toolbar-padding-sm: 10px 12px;
+  --component-data-toolbar-padding-md: 14px 16px;
+  --component-filter-bar-gap-sm: var(--space-2);
+  --component-filter-bar-gap-md: var(--space-3);
+  --component-filter-bar-padding-sm: var(--space-3);
+  --component-filter-bar-padding-md: var(--space-4);
+
+  /* ---- Dialog ------------------------------------------------------------ */
+  --component-dialog-radius: var(--radius-3xl);
+  --component-dialog-scrim-blur: 2px;
+  --component-confirm-dialog-max-width: 26.25rem;
+
+  /* ---- Divider --------------------------------------------------------- */
+  /* Source-model roles: normal = line 0.22 step, thick = fill 0.08 step. */
+  --component-divider-thickness-normal: 1px;
+  --component-divider-thickness-thick: 8px;
+
+  /* ---- Mobile System Bars --------------------------------------------- */
+  --component-system-bars-home-width: 78px;
+  --component-system-bars-home-height: 4px;
+
+  /* ---- Input ----------------------------------------------------------- */
+  --component-input-stack-gap: var(--space-2);
+  --component-input-gap: var(--space-2);
+  --component-input-height: var(--control-h-md);
+  --component-input-padding-x: var(--space-3);
+  --component-input-radius: var(--radius-input);
+  --component-input-border-width: var(--border-thin);
+  --component-input-focus-shadow: 0 0 0 4px var(--color-semantic-focus-ring);
+  --component-input-font-size: var(--body1-size);
+  --component-input-font-size-sm: var(--label1-size);
+  --component-input-line-height: var(--body1-line);
+  --component-input-line-height-sm: var(--label1-line);
+  --component-input-letter-spacing: var(--body1-spacing);
+  --component-input-letter-spacing-sm: var(--label1-spacing);
+  --component-input-label-font-size: var(--label1-size);
+  --component-input-label-line-height: var(--label1-line);
+  --component-input-label-letter-spacing: var(--label1-spacing);
+  --component-input-label-font-weight: var(--fw-semibold);
+
+  /* ---- Transient feedback (Toast, Snackbar) ----------------------------- */
+  /* Source-model material: translucent inverse surface behind a backdrop blur. */
+  --component-transient-feedback-blur: 20px;
+
+  /* ---- Viewer ---------------------------------------------------------- */
+  /* Theme-stable dark and light roles shared by every Viewer preset. */
+  --component-viewer-surface: color-mix(in srgb, var(--color-semantic-static-black) 88%, var(--color-semantic-primary-normal));
+  --component-viewer-surface-elevated: color-mix(in srgb, var(--color-semantic-static-black) 78%, var(--color-semantic-primary-normal));
+  --component-viewer-foreground: var(--color-semantic-static-white);
+  --component-viewer-muted: color-mix(in srgb, var(--color-semantic-static-white) 72%, transparent);
+  --component-viewer-subtle: color-mix(in srgb, var(--color-semantic-static-white) 52%, transparent);
+  --component-viewer-border: color-mix(in srgb, var(--color-semantic-static-white) 18%, transparent);
+  --component-viewer-overlay: color-mix(in srgb, var(--color-semantic-static-black) 68%, transparent);
+  --component-viewer-light-surface: var(--color-semantic-static-white);
+  --component-viewer-light-surface-elevated: color-mix(in srgb, var(--color-semantic-static-black) 4%, var(--color-semantic-static-white));
+  --component-viewer-light-foreground: color-mix(in srgb, var(--color-semantic-static-black) 90%, transparent);
+  --component-viewer-light-muted: color-mix(in srgb, var(--color-semantic-static-black) 68%, transparent);
+  --component-viewer-light-border: color-mix(in srgb, var(--color-semantic-static-black) 16%, transparent);
+  --component-viewer-map-free: color-mix(in srgb, var(--color-semantic-static-black) 78%, var(--color-semantic-primary-normal));
+  --component-viewer-map-occupied: color-mix(in srgb, var(--color-semantic-static-white) 88%, transparent);
+  --component-viewer-map-unknown: color-mix(in srgb, var(--color-semantic-static-black) 88%, var(--color-semantic-primary-normal));
+  --component-viewer-map-boundary: color-mix(in srgb, var(--color-semantic-static-white) 32%, transparent);
+  --component-viewer-light-map-free: var(--color-semantic-static-white);
+  --component-viewer-light-map-occupied: color-mix(in srgb, var(--color-semantic-static-black) 79%, transparent);
+  --component-viewer-light-map-unknown: color-mix(in srgb, var(--color-semantic-static-black) 4%, var(--color-semantic-static-white));
+  --component-viewer-light-map-boundary: color-mix(in srgb, var(--color-semantic-static-black) 28%, transparent);
+
+  /* ---- Card ------------------------------------------------------------ */
+  --component-card-border-dark: var(--border-hairline-dark);
+  --component-card-radius: var(--radius-xl);
+  --component-card-padding: var(--space-8);
+  --component-card-shadow-none: none;
+  /* 쉬고 있는 카드의 기본 단계. `NewsCard`·`ListingCard`가 이미 평상시에 쓰던
+     `--shadow-xs`와 같은 값이며, `md`는 들어올린 상태로 예약한다. */
+  --component-card-shadow-xs: var(--shadow-xs);
+  --component-card-shadow-sm: var(--shadow-sm);
+  --component-card-shadow-md: var(--shadow-md);
+  --component-card-shadow-lg: var(--shadow-lg);
+  --component-card-hover-transform: translateY(-4px);
+  --component-card-transition: var(--transition-base);
+}
+
+/* Lockup adaptive in the dark theme. LK_LOGO_STANDARD 6.2 approves the white
+   lockup only on LK Navy, so it sits on a navy plate padded by the 0.5X clear space. */
+[data-theme="dark"] [data-lockup-adaptive],
+.theme-dark [data-lockup-adaptive] {
+  background: var(--color-semantic-brand-surface);
+  padding: var(--lockup-plate-pad);
+  border-radius: var(--radius-xs);
+}
+
+[data-theme="dark"] [data-theme="light"] [data-lockup-adaptive],
+.theme-dark .theme-light [data-lockup-adaptive] {
+  background: none;
+  padding: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  [data-theme="auto"] [data-lockup-adaptive],
+  .theme-auto [data-lockup-adaptive] {
+    background: var(--color-semantic-brand-surface);
+    padding: var(--lockup-plate-pad);
+    border-radius: var(--radius-xs);
+  }
+}
+
+.lk-data-grid__selection-checkbox:focus-visible + [data-selection-glyph] {
+  outline: 2px solid var(--color-semantic-focus-indicator);
+  outline-offset: 2px;
+}
+
+/* Product-only component rules; projected to @lk-design-system/lds-product. */
+@keyframes lk-conn-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-lds-connection-motion] { animation: none !important; }
+}
+
+@container (max-width: 240px) {
+  [data-viewer-blocking-state] {
+    padding: 8px !important;
+  }
+
+  [data-viewer-blocking-body],
+  [data-viewer-blocking-live] {
+    gap: 4px !important;
+  }
+
+  [data-viewer-blocking-icon] {
+    display: none !important;
+  }
+
+  [data-viewer-blocking-description] {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  [data-viewer-blocking-action] {
+    margin-top: 0 !important;
+  }
+}
+
+.lk-canvas-editor-shell__responsive-navigation {
+  display: none;
+}
+
+.lk-canvas-editor-shell .lk-canvas-editor-shell__layers > [data-side] > div > button,
+.lk-canvas-editor-shell .lk-canvas-editor-shell__panel > [data-side] > div > button {
+  top: 72px !important;
+}
+
+.lk-editor-toolbar__button {
+  position: relative;
+  z-index: 1;
+}
+
+/* ToggleIcon paints inline colours; selection keeps a readable foreground. */
+.lk-editor-toolbar__button[aria-pressed="true"]:not([aria-disabled="true"]) {
+  background: var(--color-semantic-primary-surface-normal) !important;
+  color: var(--color-semantic-label-normal) !important;
+}
+
+@container (max-width: 260px) {
+  .lk-layer-panel__row-description,
+  .lk-layer-panel__row-meta {
+    display: none !important;
+  }
+}
+
+@container (max-width: 760px) {
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__responsive-navigation {
+    display: block;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__header-description {
+    display: none !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: minmax(260px, 1fr) !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="canvas"][data-mobile-has-tools="true"] {
+    grid-template-columns: auto minmax(0, 1fr) !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__tools,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__canvas {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="canvas"][data-mobile-has-tools="true"] .lk-canvas-editor-shell__canvas {
+    grid-column: 2 !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__layers,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--docked {
+    grid-column: 1 / -1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__layers > [data-side],
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--docked > [data-side],
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__layers > [data-side] > div,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--docked > [data-side] > div,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__layers aside,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--docked aside {
+    width: 100% !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__layers > [data-side] > div > button,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--docked > [data-side] > div > button,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__layers [role="separator"],
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--docked [role="separator"] {
+    display: none !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="canvas"] .lk-canvas-editor-shell__layers,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="canvas"] .lk-canvas-editor-shell__panel--docked,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="layers"] .lk-canvas-editor-shell__tools,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="layers"] .lk-canvas-editor-shell__canvas,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="layers"] .lk-canvas-editor-shell__panel--docked,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="panel"] .lk-canvas-editor-shell__tools,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="panel"] .lk-canvas-editor-shell__canvas,
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__body[data-mobile-region="panel"] .lk-canvas-editor-shell__layers {
+    display: none !important;
+  }
+
+  .lk-canvas-editor-shell .lk-canvas-editor-shell__panel--drawer {
+    width: min(var(--canvas-editor-panel-width), calc(100% - 40px)) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lk-canvas-editor-shell [data-side] > div {
+    transition: none !important;
+  }
+}
+
+/* MessageComposer owns focus on its shell (neutral focus-within border). The
+   inner textarea must not draw a second rectangle inside the shared shell, so
+   it is exempt from the global :focus-visible ring (tokens/focus.css). Slot and
+   send/stop buttons keep the global ring. */
+[data-composer-shell] [data-composer-input]:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+}
+
+/* Forced colors drop the border colour step, so the shell carries a system
+   focus outline instead. */
+@media (forced-colors: active) {
+  [data-composer-shell][data-focused="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}
+/* End product-only component rules. */
+
+/* Component aliases declared at :root otherwise keep their light computed
+   value when inherited into a nested dark scope. Re-declare theme-adaptive
+   contracts at the scope that owns the dark semantic values. */
+:where([data-theme='dark'], .theme-dark) {
+}
+
+:where([data-theme='light'], .theme-light, [data-theme='dark'], .theme-dark, [data-theme='auto'], .theme-auto) {
+}
+
+/* Native scrolling is the component. LDS only standardizes reserved space,
+   keyboard focus and the optional compact treatment; it does not reconstruct
+   platform scrollbar controls with DOM elements. */
+.lk-scroll-surface {
+  scrollbar-gutter: stable;
+}
+
+.lk-scroll-surface[data-scroll-gutter='auto'] {
+  scrollbar-gutter: auto;
+}
+
+.lk-scroll-surface[data-scrollbar='compact'] {
+  scrollbar-width: thin;
+}
+
+.lk-scroll-surface:focus-visible {
+  outline: 2px solid var(--color-semantic-focus-indicator);
+  outline-offset: 2px;
+}
+
+@media (forced-colors: active) {
+  .lk-scroll-surface {
+    forced-color-adjust: auto;
+    scrollbar-color: auto;
+    scrollbar-width: auto;
+  }
+}
+
+/* Authored source: tokens/base.css */
+/* ==========================================================================
+   LK ROBOTICS — Base element defaults
+   Applies the brand's typographic + colour foundations to bare HTML and
+   provides a few brand utility helpers.
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; color-scheme: light; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  color: var(--color-semantic-label-normal);
+  background: var(--color-semantic-background-normal-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: var(--fw-bold);
+  color: var(--color-semantic-label-strong);
+  /* Korean: break between words, balance ragged edges */
+  word-break: keep-all;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); letter-spacing: var(--ls-h1); }
+h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); letter-spacing: var(--ls-h2); }
+h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--ls-h3); }
+h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); letter-spacing: var(--ls-h4); }
+h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); letter-spacing: var(--ls-h5); }
+
+p { margin: 0; text-wrap: pretty; }
+
+a { color: var(--color-semantic-primary-normal); text-decoration: none; transition: color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out); }
+a:hover { opacity: 0.8; }
+
+img { display: block; max-width: 100%; }
+
+::selection { background: var(--color-semantic-primary-surface-strong); }
+
+/* Brand utility helpers ----------------------------------------------------- */
+
+/* Eyebrow / overline — tiny UPPERCASE label above a heading. Muted grey by
+   default (the heading carries the colour); add --signal for the brand cyan or
+   --ink for max contrast. */
+.lk-overline {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-overline);
+  text-transform: uppercase;
+  color: var(--color-semantic-label-alternative);       /* muted — default tone */
+}
+.lk-overline--signal { color: var(--color-semantic-primary-normal); }   /* brand signal */
+.lk-overline--ink    { color: var(--color-semantic-label-strong); }  /* max contrast  */
+/* On a dark surface inside a light theme (tokens don't flip): */
+.lk-overline--on-dark                      { color: rgba(255,255,255,0.60); }
+.lk-overline--on-dark.lk-overline--signal  { color: var(--color-semantic-primary-normal); }
+.lk-overline--on-dark.lk-overline--ink     { color: #fff; }
+
+/* Centred page container + narrow reading band. */
+.lk-container { max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter-lg); }
+.lk-read      { max-width: var(--container-read); margin-inline: auto; padding-inline: var(--gutter); }
+
+/* Korean text helper — never split words. */
+.lk-keep { word-break: keep-all; }
+
+/* Tabular numerals for specs, years, telemetry. */
+.lk-nums { font-variant-numeric: tabular-nums; }
+
+/* Wide overline tracking is a Latin-capitals device; on Hangul it splits words into letters. */
+.lk-overline:lang(ko) { letter-spacing: 0; }
+
+/* Authored source: tokens/focus.css */
+/* ==========================================================================
+   LK ROBOTICS — Keyboard focus ring
+   --------------------------------------------------------------------------
+   A single, token-driven :focus-visible ring for every interactive element.
+   Shows ONLY on keyboard navigation (:focus-visible excludes mouse clicks).
+   `!important` guarantees the ring even where a component sets inline
+   `outline: none`, so no per-component edits are needed to close the
+   focus-indicator a11y gap. Theme-aware.
+
+   The outline uses the semantic focus-indicator role. The softer focus-ring
+   role remains reserved for input box-shadows.
+   ========================================================================== */
+:where(
+  a[href], button, input, select, textarea, summary,
+  [tabindex]:not([tabindex="-1"]),
+  [role="button"], [role="link"], [role="tab"], [role="checkbox"],
+  [role="radio"], [role="switch"], [role="menuitem"], [role="menuitemcheckbox"],
+  [role="menuitemradio"], [role="option"], [role="slider"]
+):focus-visible {
+  outline: 2px solid var(--color-semantic-focus-indicator) !important;
+  outline-offset: 2px !important;
+}
+
+/* SearchField's bordered control owns the complete focus indicator. Keep this
+   exception beside the global rule so it survives consumers importing LDS in a
+   cascade layer: layered !important beats a runtime unlayered !important reset.
+   The clear button and all standalone inputs keep their global keyboard ring. */
+.lk-searchfield-control input.lk-searchfield:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+}
+
+/* Input owns one indicator around the complete rounded control, including
+   invalid and read-only fields. Keep both rules in this stylesheet so layered
+   consumers do not revive the native input's inner rectangular outline.
+   Trailing actions remain separate focus targets with their own global ring. */
+.lk-input-control:has(> input.lk-input:focus-visible) {
+  outline: 2px solid var(--color-semantic-focus-indicator) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
+}
+
+.lk-input-control > input.lk-input:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+}
+
+@media (forced-colors: active) {
+  .lk-input-control:has(> input.lk-input:focus-visible) {
+    outline-color: Highlight !important;
+  }
+}
+
+/* Map geometry owns a shape-following focus indicator inside the SVG. Keep the
+   global rectangular outline from duplicating that ring or enclosing labels. */
+:where(
+  [data-waypoint-marker],
+  [data-lk-lane-overlay],
+  [data-lk-route-overlay],
+  [data-route-segment],
+  [data-lk-trajectory-overlay],
+  [data-lds-spatial-region],
+  [data-lds-facility-transition]
+):focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+}
+
+
+/* Authored source: tokens/profiles.css */
+/* ==========================================================================
+   LDS expression profiles
+   --------------------------------------------------------------------------
+   Profiles are Theme-owned value overrides. They do not create a second
+   component set, change semantic status meaning, or alter public API/DOM.
+   `default` is the implicit baseline; `ops` is opt-in for dense operational
+   surfaces such as monitoring, investigation and recovery workspaces.
+   ========================================================================== */
+
+:where([data-lds-profile='ops'], .lds-profile-ops),
+:root:where([data-lds-profile='ops'], .lds-profile-ops) {
+  /* Density: compact controls and repeated data rows. */
+  --component-button-height-sm: 28px;
+  --component-button-height-md: 36px;
+  --component-button-height-lg: 44px;
+  --component-icon-button-size-sm: 28px;
+  --component-icon-button-size-md: 36px;
+  --component-chip-height-sm: 28px;
+  --component-chip-height-md: 32px;
+  --component-chip-height-lg: 36px;
+  --component-input-height: 40px;
+  --component-card-padding: var(--space-5);
+  --component-action-area-padding-x: var(--space-4);
+  --component-action-area-padding-y: var(--space-4);
+  --component-action-area-gap: var(--space-3);
+
+  /* Repeated data: each explicit size keeps its API meaning while the profile
+     selects the denser value for that size. Pointer targets remain >= 24px. */
+  --component-table-cell-padding-sm: 4px 10px;
+  --component-table-cell-padding-md: 6px 12px;
+  --component-table-row-min-height-sm: 40px;
+  --component-table-row-min-height-md: 48px;
+  --component-data-grid-cell-padding-sm: 8px 10px;
+  --component-data-grid-cell-padding-md: 10px 12px;
+  --component-data-grid-header-height-sm: 44px;
+  --component-data-grid-header-height-md: 50px;
+  --component-data-grid-detail-padding-sm: var(--space-3);
+  --component-data-grid-detail-padding-md: var(--space-3) var(--space-4);
+  --component-data-toolbar-gap-sm: var(--space-1-5);
+  --component-data-toolbar-gap-md: var(--space-2);
+  --component-data-toolbar-padding-sm: 8px 10px;
+  --component-data-toolbar-padding-md: 10px 12px;
+  --component-filter-bar-gap-sm: var(--space-1-5);
+  --component-filter-bar-gap-md: var(--space-2);
+  --component-filter-bar-padding-sm: var(--space-2);
+  --component-filter-bar-padding-md: var(--space-3);
+  --component-list-cell-padding-y-sm: 6px;
+  --component-list-cell-padding-y-md: 8px;
+  --component-list-cell-padding-y-lg: 12px;
+  --component-tree-row-min-height: 32px;
+  --component-tree-row-padding-y: 6px;
+  --component-tree-row-padding-x: 8px;
+  --component-tree-row-gap: 6px;
+  --component-tree-indent: 18px;
+
+  /* Operational navigation and overlay chrome. Explicit component density
+     still wins; these values only tune the selected density under ops. */
+  --component-menu-padding-y: var(--space-1);
+  --component-menu-padding-x: var(--space-1);
+  --component-menu-gap: var(--space-0-5);
+  --component-menu-item-min-height: 32px;
+  --component-menu-item-padding-y: 6px;
+  --component-menu-item-padding-x: var(--space-3);
+  --component-side-nav-padding: var(--space-2);
+  --component-side-nav-item-height: 36px;
+  --component-side-nav-item-padding-y: 6px;
+  --component-side-nav-item-padding-x: var(--space-3);
+  --component-side-nav-child-item-height: 32px;
+  --component-side-nav-child-item-padding-y: 6px;
+  --component-toolbar-gap: var(--space-1);
+  --component-toolbar-padding: var(--space-1);
+  --component-drawer-header-padding-comfortable: var(--space-4) var(--space-5);
+  --component-drawer-header-padding-compact: var(--space-3) var(--space-4);
+  --component-drawer-body-padding-comfortable: var(--space-4) var(--space-5);
+  --component-drawer-body-padding-compact: var(--space-3) var(--space-4);
+  --component-drawer-footer-padding-comfortable: var(--space-3) var(--space-5);
+  --component-drawer-footer-padding-compact: var(--space-2) var(--space-4);
+
+  /* Operational motion/depth: calm and legible under repeated updates. */
+  --dur-fast: 80ms;
+  --dur-base: 160ms;
+  --dur-slow: 240ms;
+  --duration-fast: 80ms;
+  --duration-normal: 160ms;
+  --duration-slow: 240ms;
+  --shadow-sm: var(--shadow-xs);
+  --shadow-md: var(--shadow-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root,
+  :where([data-lds-profile], .lds-profile-ops),
+  :where([data-lds-profile='ops'], .lds-profile-ops),
+  :root:where([data-lds-profile='ops'], .lds-profile-ops) {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+  }
+}
+</style>
+<style id="comparison-layout">
+html { color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
+body { min-width: 320px; background: var(--color-semantic-background-normal-alternative); }
+.comparison-page { max-width: 1440px; margin: 0 auto; padding: 40px 36px 32px; }
+.page-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+.page-heading h1 { font-size: 30px; line-height: 1.35; letter-spacing: -0.6px; font-weight: 600; }
+.page-heading .intro { margin-top: 8px; max-width: 780px; color: var(--color-semantic-label-alternative); font-size: 14px; line-height: 1.65; }
+.view-options { display: flex; flex-wrap: wrap; gap: 12px; flex-shrink: 0; }
+.view-options label { display: grid; gap: 4px; font-size: 12px; color: var(--color-semantic-label-alternative); }
+.view-options select { height: 36px; padding: 0 30px 0 10px; border: 1px solid var(--color-semantic-line-normal-normal); border-radius: 8px; background: var(--color-semantic-background-normal-normal); color: var(--color-semantic-label-normal); font: 500 13px var(--font-sans); }
+.comparison-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.comparison-column { min-width: 0; background: var(--color-semantic-background-normal-normal); border: 1px solid var(--color-semantic-line-normal-normal); padding: 20px; border-radius: 16px; }
+.column-heading { min-height: 88px; }
+.case-label { display: block; margin-bottom: 8px; color: var(--color-semantic-label-alternative); font-size: 11px; font-weight: 500; }
+.column-heading h2 { font-size: 18px; line-height: 1.4; font-weight: 600; letter-spacing: -0.3px; }
+.case-values { margin-top: 5px; color: var(--color-semantic-label-alternative); font-size: 12px; }
+.specimen-block { margin-top: 18px; }
+.component-label { margin-bottom: 12px; color: var(--color-semantic-label-alternative); font-size: 12px; line-height: 1.5; }
+.control-composition { display: grid; gap: 12px; }
+.card-block { margin-top: 32px; }
+.project-list { display: grid; gap: 4px; padding: 0; margin: 8px 0 0; list-style: none; }
+.specimen-input-text { caret-color: transparent; }
+.comparison-notes { display: grid; gap: 8px; margin-top: 22px; max-width: 1050px; color: var(--color-semantic-label-alternative); font-size: 12px; line-height: 1.65; }
+.comparison-notes strong { color: var(--color-semantic-label-normal); font-weight: 600; }
+.source-note { font-size: 11px; overflow-wrap: anywhere; }
+@media (max-width: 1100px) {
+  .comparison-page { padding: 28px 24px; }
+  .page-heading { flex-direction: column; gap: 16px; }
+  .comparison-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+}
+@media (max-width: 560px) {
+  .comparison-page { padding: 24px 16px; }
+  .page-heading h1 { font-size: 25px; }
+  .comparison-grid { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+<main class="comparison-page">
+  <header class="page-heading">
+    <div><h1>형태를 하나씩 비교</h1><p class="intro">같은 컴포넌트·문구·브랜드색에서 그림자, 글자 굵기, 모서리를 한 번에 하나씩 바꿉니다. 후보는 이 specimen의 style override이며 공유 토큰 채택 전 시안입니다.</p></div>
+    <form class="view-options" aria-label="표현 환경">
+      <label>테마<select id="theme"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+      <label>프로필<select id="profile"><option value="default">Default</option><option value="ops">Ops</option></select></label>
+    </form>
+  </header>
+  <div class="comparison-grid"><article class="comparison-column" data-comparison="baseline" data-parameters="{&quot;radius&quot;:&quot;source&quot;,&quot;weight&quot;:&quot;source&quot;,&quot;shadow&quot;:&quot;source&quot;}"><header class="column-heading"><span class="case-label">LDS 기본값</span><h2>기준</h2><p class="case-values">현재 기본값 · 프로필 밀도</p></header><section class="specimen-block" aria-label="기준 Button과 Input"><p class="component-label">Button + Input</p><div class="control-composition"><div data-slot="root" data-size="lg" style="display:flex;flex-direction:column;min-width:0;gap:var(--component-input-stack-gap)"><div data-slot="control" class="lk-input-control specimen-input-control" style="position:relative;display:flex;align-items:center;min-width:0;gap:var(--lds-input-gap, var(--component-input-gap));height:var(--lds-input-height, var(--control-h-lg));padding:0 var(--lds-input-padding-inline, var(--component-input-padding-x));background:var(--color-semantic-background-elevated-normal);border:var(--component-input-border-width) solid var(--component-input-border-color);border-radius:var(--lds-input-radius, var(--component-input-radius));box-shadow:none;transition:border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"><input id="baseline-name" data-slot="input" data-lds-field="" data-specimen-node="input" class="lk-input specimen-input-text" aria-label="프로젝트 이름" style="flex:1;min-width:0;height:100%;box-sizing:border-box;border:none;outline:none;background:transparent;font-family:var(--font-sans);font-size:var(--component-input-font-size);line-height:var(--component-input-line-height);letter-spacing:var(--component-input-letter-spacing);color:var(--color-semantic-label-normal)" value="프로젝트 이름"/></div></div><button data-specimen-node="button" data-slot="root" data-size="lg" data-variant="primary" class="lk-btn lk-btn--primary" style="display:inline-flex;align-items:center;justify-content:center;gap:var(--lds-button-gap, var(--component-button-gap-lg));height:var(--lds-button-height, var(--component-button-height-lg));padding:var(--lds-button-padding, var(--component-button-padding-lg));width:100%;font-family:var(--font-sans);font-size:var(--component-button-font-size-lg);line-height:var(--component-button-line-height-lg);font-weight:var(--component-button-font-weight);letter-spacing:var(--component-button-letter-spacing-lg);position:relative;color:var(--component-button-primary-fg);background:var(--component-button-primary-bg);border:none;border-radius:var(--lds-button-radius, var(--component-button-radius-lg));box-shadow:var(--component-button-shadow-rest);transform:none;cursor:pointer;opacity:1;transition:var(--component-button-transition);white-space:nowrap;text-decoration:none;-webkit-tap-highlight-color:transparent" type="button"><span data-slot="content" style="display:inline-flex;align-items:center;justify-content:center;gap:var(--component-button-gap-lg)"><span>프로젝트 만들기</span></span></button></div></section><section class="specimen-block card-block" aria-label="기준 Card와 ListCell"><p class="component-label">Card + ListCell</p><div data-slot="root" data-surface="default" data-density="comfortable" style="background:var(--component-card-bg);color:var(--component-card-fg);border:var(--component-card-border);border-radius:var(--lds-card-radius, var(--component-card-radius));box-shadow:var(--component-card-shadow-none);transform:none;transition:var(--component-card-transition);padding:var(--lds-card-padding, var(--component-card-padding));max-width:var(--lds-card-max-width, none)" data-specimen-node="card"><div data-slot="content" style="display:grid;gap:var(--lds-card-gap, var(--space-2))"><div data-slot="body" style="display:flex;align-items:flex-start;gap:var(--space-3)"><div style="display:grid;gap:4px;min-width:0;flex:1"><h3 data-slot="title" class="specimen-card-title" style="margin:0;font-size:var(--body1-size);line-height:1.5;color:var(--color-semantic-label-strong);font-weight:var(--fw-semibold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">최근 프로젝트</h3></div></div><ul class="project-list"><li><div data-selected="" data-selected-presentation="tint" data-interaction="normal" style="position:relative;display:flex;align-items:center;gap:8px;width:100%;padding:var(--component-list-cell-padding-y-md, 12px) 20px;box-sizing:border-box;cursor:default;background:var(--color-semantic-fill-normal);color:var(--color-semantic-label-normal);border-radius:var(--radius-lg);outline:none;outline-offset:-2px;transition:background var(--dur-fast) var(--ease-out), outline-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)" data-specimen-node="list-row"><div style="flex:1;min-width:0"><div style="font-family:var(--font-sans);font-size:var(--body1-size);font-weight:var(--fw-medium);line-height:var(--body1-line);letter-spacing:0;color:var(--color-semantic-label-normal);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">운영 콘솔</div></div></div></li><li><div data-interaction="normal" style="position:relative;display:flex;align-items:center;gap:8px;width:100%;padding:var(--component-list-cell-padding-y-md, 12px) 20px;box-sizing:border-box;cursor:default;background:transparent;color:var(--color-semantic-label-neutral);border-radius:var(--radius-lg);outline:none;outline-offset:-2px;transition:background var(--dur-fast) var(--ease-out), outline-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)" data-specimen-node="list-row"><div style="flex:1;min-width:0"><div style="font-family:var(--font-sans);font-size:var(--body1-size);font-weight:var(--fw-regular);line-height:var(--body1-line);letter-spacing:0;color:var(--color-semantic-label-normal);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">디자인 시스템</div></div></div></li></ul></div></div></section></article><article class="comparison-column" data-comparison="shadow" data-parameters="{&quot;radius&quot;:&quot;source&quot;,&quot;weight&quot;:&quot;source&quot;,&quot;shadow&quot;:&quot;none&quot;}"><header class="column-heading"><span class="case-label">미채택 시안</span><h2>그림자 없음</h2><p class="case-values">휴지 그림자 → none</p></header><section class="specimen-block" aria-label="그림자 없음 Button과 Input"><p class="component-label">Button + Input</p><div class="control-composition"><div data-slot="root" data-size="lg" style="display:flex;flex-direction:column;min-width:0;gap:var(--component-input-stack-gap)"><div data-slot="control" class="lk-input-control specimen-input-control" style="position:relative;display:flex;align-items:center;min-width:0;gap:var(--lds-input-gap, var(--component-input-gap));height:var(--lds-input-height, var(--control-h-lg));padding:0 var(--lds-input-padding-inline, var(--component-input-padding-x));background:var(--color-semantic-background-elevated-normal);border:var(--component-input-border-width) solid var(--component-input-border-color);border-radius:var(--lds-input-radius, var(--component-input-radius));box-shadow:none;transition:border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"><input id="shadow-name" data-slot="input" data-lds-field="" data-specimen-node="input" class="lk-input specimen-input-text" aria-label="프로젝트 이름" style="flex:1;min-width:0;height:100%;box-sizing:border-box;border:none;outline:none;background:transparent;font-family:var(--font-sans);font-size:var(--component-input-font-size);line-height:var(--component-input-line-height);letter-spacing:var(--component-input-letter-spacing);color:var(--color-semantic-label-normal)" value="프로젝트 이름"/></div></div><button data-specimen-node="button" data-slot="root" data-size="lg" data-variant="primary" class="lk-btn lk-btn--primary" style="display:inline-flex;align-items:center;justify-content:center;gap:var(--lds-button-gap, var(--component-button-gap-lg));height:var(--lds-button-height, var(--component-button-height-lg));padding:var(--lds-button-padding, var(--component-button-padding-lg));width:100%;font-family:var(--font-sans);font-size:var(--component-button-font-size-lg);line-height:var(--component-button-line-height-lg);font-weight:var(--component-button-font-weight);letter-spacing:var(--component-button-letter-spacing-lg);position:relative;color:var(--component-button-primary-fg);background:var(--component-button-primary-bg);border:none;border-radius:var(--lds-button-radius, var(--component-button-radius-lg));box-shadow:none;transform:none;cursor:pointer;opacity:1;transition:var(--component-button-transition);white-space:nowrap;text-decoration:none;-webkit-tap-highlight-color:transparent" type="button"><span data-slot="content" style="display:inline-flex;align-items:center;justify-content:center;gap:var(--component-button-gap-lg)"><span>프로젝트 만들기</span></span></button></div></section><section class="specimen-block card-block" aria-label="그림자 없음 Card와 ListCell"><p class="component-label">Card + ListCell</p><div data-slot="root" data-surface="default" data-density="comfortable" style="background:var(--component-card-bg);color:var(--component-card-fg);border:var(--component-card-border);border-radius:var(--lds-card-radius, var(--component-card-radius));box-shadow:var(--component-card-shadow-none);transform:none;transition:var(--component-card-transition);padding:var(--lds-card-padding, var(--component-card-padding));max-width:var(--lds-card-max-width, none)" data-specimen-node="card"><div data-slot="content" style="display:grid;gap:var(--lds-card-gap, var(--space-2))"><div data-slot="body" style="display:flex;align-items:flex-start;gap:var(--space-3)"><div style="display:grid;gap:4px;min-width:0;flex:1"><h3 data-slot="title" class="specimen-card-title" style="margin:0;font-size:var(--body1-size);line-height:1.5;color:var(--color-semantic-label-strong);font-weight:var(--fw-semibold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">최근 프로젝트</h3></div></div><ul class="project-list"><li><div data-selected="" data-selected-presentation="tint" data-interaction="normal" style="position:relative;display:flex;align-items:center;gap:8px;width:100%;padding:var(--component-list-cell-padding-y-md, 12px) 20px;box-sizing:border-box;cursor:default;background:var(--color-semantic-fill-normal);color:var(--color-semantic-label-normal);border-radius:var(--radius-lg);outline:none;outline-offset:-2px;transition:background var(--dur-fast) var(--ease-out), outline-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)" data-specimen-node="list-row"><div style="flex:1;min-width:0"><div style="font-family:var(--font-sans);font-size:var(--body1-size);font-weight:var(--fw-medium);line-height:var(--body1-line);letter-spacing:0;color:var(--color-semantic-label-normal);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">운영 콘솔</div></div></div></li><li><div data-interaction="normal" style="position:relative;display:flex;align-items:center;gap:8px;width:100%;padding:var(--component-list-cell-padding-y-md, 12px) 20px;box-sizing:border-box;cursor:default;background:transparent;color:var(--color-semantic-label-neutral);border-radius:var(--radius-lg);outline:none;outline-offset:-2px;transition:background var(--dur-fast) var(--ease-out), outline-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)" data-specimen-node="list-row"><div style="flex:1;min-width:0"><div style="font-family:var(--font-sans);font-size:var(--body1-size);font-weight:var(--fw-regular);line-height:var(--body1-line);letter-spacing:0;color:var(--color-semantic-label-normal);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">디자인 시스템</div></div></div></li></ul></div></div></section></article><article class="comparison-column" data-comparison="weight" data-parameters="{&quot;radius&quot;:&quot;source&quot;,&quot;weight&quot;:&quot;cap-500&quot;,&quot;shadow&quot;:&quot;source&quot;}"><header class="column-heading"><span class="case-label">미채택 시안</span><h2>가벼운 글자</h2><p class="case-values">600 → 500 · 400/500 유지</p></header><section class="specimen-block" aria-label="가벼운 글자 Button과 Input"><p class="component-label">Button + Input</p><div class="control-composition"><div data-slot="root" data-size="lg" style="display:flex;flex-direction:column;min-width:0;gap:var(--component-input-stack-gap)"><div data-slot="control" class="lk-input-control specimen-input-control" style="position:relative;display:flex;align-items:center;min-width:0;gap:var(--lds-input-gap, var(--component-input-gap));height:var(--lds-input-height, var(--control-h-lg));padding:0 var(--lds-input-padding-inline, var(--component-input-padding-x));background:var(--color-semantic-background-elevated-normal);border:var(--component-input-border-width) solid var(--component-input-border-color);border-radius:var(--lds-input-radius, var(--component-input-radius));box-shadow:none;transition:border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"><input id="weight-name" data-slot="input" data-lds-field="" data-specimen-node="input" class="lk-input specimen-input-text" aria-label="프로젝트 이름" style="flex:1;min-width:0;height:100%;box-sizing:border-box;border:none;outline:none;background:transparent;font-family:var(--font-sans);font-size:var(--component-input-font-size);line-height:var(--component-input-line-height);letter-spacing:var(--component-input-letter-spacing);color:var(--color-semantic-label-normal)" value="프로젝트 이름"/></div></div><button data-specimen-node="button" data-slot="root" data-size="lg" data-variant="primary" class="lk-btn lk-btn--primary" style="display:inline-flex;align-items:center;justify-content:center;gap:var(--lds-button-gap, var(--component-button-gap-lg));height:var(--lds-button-height, var(--component-button-height-lg));padding:var(--lds-button-padding, var(--component-button-padding-lg));width:100%;font-family:var(--font-sans);font-size:var(--component-button-font-size-lg);line-height:var(--component-button-line-height-lg);font-weight:500;letter-spacing:var(--component-button-letter-spacing-lg);position:relative;color:var(--component-button-primary-fg);background:var(--component-button-primary-bg);border:none;border-radius:var(--lds-button-radius, var(--component-button-radius-lg));box-shadow:var(--component-button-shadow-rest);transform:none;cursor:pointer;opacity:1;transition:var(--component-button-transition);white-space:nowrap;text-decoration:none;-webkit-tap-highlight-color:transparent" type="button"><span data-slot="content" style="display:inline-flex;align-items:center;justify-content:center;gap:var(--component-button-gap-lg)"><span>프로젝트 만들기</span></span></button></div></section><section class="specimen-block card-block" aria-label="가벼운 글자 Card와 ListCell"><p class="component-label">Card + ListCell</p><div data-slot="root" data-surface="default" data-density="comfortable" style="background:var(--component-card-bg);color:var(--component-card-fg);border:var(--component-card-border);border-radius:var(--lds-card-radius, var(--component-card-radius));box-shadow:var(--component-card-shadow-none);transform:none;transition:var(--component-card-transition);padding:var(--lds-card-padding, var(--component-card-padding));max-width:var(--lds-card-max-width, none)" data-specimen-node="card"><div data-slot="content" style="display:grid;gap:var(--lds-card-gap, var(--space-2))"><div data-slot="body" style="display:flex;align-items:flex-start;gap:var(--space-3)"><div style="display:grid;gap:4px;min-width:0;flex:1"><h3 data-slot="title" class="specimen-card-title" style="margin:0;font-size:var(--body1-size);line-height:1.5;color:var(--color-semantic-label-strong);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">최근 프로젝트</h3></div></div><ul class="project-list"><li><div data-selected="" data-selected-presentation="tint" data-interaction="normal" style="position:relative;display:flex;align-items:center;gap:8px;width:100%;padding:var(--component-list-cell-padding-y-md, 12px) 20px;box-sizing:border-box;cursor:default;background:var(--color-semantic-fill-normal);color:var(--color-semantic-label-normal);border-radius:var(--radius-lg);outline:none;outline-offset:-2px;transition:background var(--dur-fast) var(--ease-out), outline-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)" data-specimen-node="list-row"><div style="flex:1;min-width:0"><div style="font-family:var(--font-sans);font-size:var(--body1-size);font-weight:var(--fw-medium);line-height:var(--body1-line);letter-spacing:0;color:var(--color-semantic-label-normal);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">운영 콘솔</div></div></div></li><li><div data-interaction="normal" style="position:relative;display:flex;align-items:center;gap:8px;width:100%;padding:var(--component-list-cell-padding-y-md, 12px) 20px;box-sizing:border-box;cursor:default;background:transparent;color:var(--color-semantic-label-neutral);border-radius:var(--radius-lg);outline:none;outline-offset:-2px;transition:background var(--dur-fast) var(--ease-out), outline-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)" data-specimen-node="list-row"><div style="flex:1;min-width:0"><div style="font-family:var(--font-sans);font-size:var(--body1-size);font-weight:var(--fw-regular);line-height:var(--body1-line);letter-spacing:0;color:var(--color-semantic-label-normal);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">디자인 시스템</div></div></div></li></ul></div></div></section></article><article class="comparison-column" data-comparison="radius" data-parameters="{&quot;radius&quot;:&quot;source-plus-4px&quot;,&quot;weight&quot;:&quot;source&quot;,&quot;shadow&quot;:&quot;source&quot;}"><header class="column-heading"><span class="case-label">미채택 시안</span><h2>둥근 모서리</h2><p class="case-values">각 표면의 기본 모서리 +4px</p></header><section class="specimen-block" aria-label="둥근 모서리 Button과 Input"><p class="component-label">Button + Input</p><div class="control-composition"><div data-slot="root" data-size="lg" style="display:flex;flex-direction:column;min-width:0;gap:var(--component-input-stack-gap)"><div data-slot="control" class="lk-input-control specimen-input-control" style="position:relative;display:flex;align-items:center;min-width:0;gap:var(--lds-input-gap, var(--component-input-gap));height:var(--lds-input-height, var(--control-h-lg));padding:0 var(--lds-input-padding-inline, var(--component-input-padding-x));background:var(--color-semantic-background-elevated-normal);border:var(--component-input-border-width) solid var(--component-input-border-color);border-radius:calc(var(--lds-input-radius, var(--component-input-radius)) + 4px);box-shadow:none;transition:border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out)"><input id="radius-name" data-slot="input" data-lds-field="" data-specimen-node="input" class="lk-input specimen-input-text" aria-label="프로젝트 이름" style="flex:1;min-width:0;height:100%;box-sizing:border-box;border:none;outline:none;background:transparent;font-family:var(--font-sans);font-size:var(--component-input-font-size);line-height:var(--component-input-line-height);letter-spacing:var(--component-input-letter-spacing);color:var(--color-semantic-label-normal)" value="프로젝트 이름"/></div></div><button data-specimen-node="button" data-slot="root" data-size="lg" data-variant="primary" class="lk-btn lk-btn--primary" style="display:inline-flex;align-items:center;justify-content:center;gap:var(--lds-button-gap, var(--component-button-gap-lg));height:var(--lds-button-height, var(--component-button-height-lg));padding:var(--lds-button-padding, var(--component-button-padding-lg));width:100%;font-family:var(--font-sans);font-size:var(--component-button-font-size-lg);line-height:var(--component-button-line-height-lg);font-weight:var(--component-button-font-weight);letter-spacing:var(--component-button-letter-spacing-lg);position:relative;color:var(--component-button-primary-fg);background:var(--component-button-primary-bg);border:none;border-radius:calc(var(--lds-button-radius, var(--component-button-radius-lg)) + 4px);box-shadow:var(--component-button-shadow-rest);transform:none;cursor:pointer;opacity:1;transition:var(--component-button-transition);white-space:nowrap;text-decoration:none;-webkit-tap-highlight-color:transparent" type="button"><span data-slot="content" style="display:inline-flex;align-items:center;justify-content:center;gap:var(--component-button-gap-lg)"><span>프로젝트 만들기</span></span></button></div></section><section class="specimen-block card-block" aria-label="둥근 모서리 Card와 ListCell"><p class="component-label">Card + ListCell</p><div data-slot="root" data-surface="default" data-density="comfortable" style="background:var(--component-card-bg);color:var(--component-card-fg);border:var(--component-card-border);border-radius:calc(var(--lds-card-radius, var(--component-card-radius)) + 4px);box-shadow:var(--component-card-shadow-none);transform:none;transition:var(--component-card-transition);padding:var(--lds-card-padding, var(--component-card-padding));max-width:var(--lds-card-max-width, none)" data-specimen-node="card"><div data-slot="content" style="display:grid;gap:var(--lds-card-gap, var(--space-2))"><div data-slot="body" style="display:flex;align-items:flex-start;gap:var(--space-3)"><div style="display:grid;gap:4px;min-width:0;flex:1"><h3 data-slot="title" class="specimen-card-title" style="margin:0;font-size:var(--body1-size);line-height:1.5;color:var(--color-semantic-label-strong);font-weight:var(--fw-semibold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">최근 프로젝트</h3></div></div><ul class="project-list"><li><div data-selected="" data-selected-presentation="tint" data-interaction="normal" style="position:relative;display:flex;align-items:center;gap:8px;width:100%;padding:var(--component-list-cell-padding-y-md, 12px) 20px;box-sizing:border-box;cursor:default;background:var(--color-semantic-fill-normal);color:var(--color-semantic-label-normal);border-radius:calc(var(--radius-lg) + 4px);outline:none;outline-offset:-2px;transition:background var(--dur-fast) var(--ease-out), outline-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)" data-specimen-node="list-row"><div style="flex:1;min-width:0"><div style="font-family:var(--font-sans);font-size:var(--body1-size);font-weight:var(--fw-medium);line-height:var(--body1-line);letter-spacing:0;color:var(--color-semantic-label-normal);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">운영 콘솔</div></div></div></li><li><div data-interaction="normal" style="position:relative;display:flex;align-items:center;gap:8px;width:100%;padding:var(--component-list-cell-padding-y-md, 12px) 20px;box-sizing:border-box;cursor:default;background:transparent;color:var(--color-semantic-label-neutral);border-radius:calc(var(--radius-lg) + 4px);outline:none;outline-offset:-2px;transition:background var(--dur-fast) var(--ease-out), outline-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out)" data-specimen-node="list-row"><div style="flex:1;min-width:0"><div style="font-family:var(--font-sans);font-size:var(--body1-size);font-weight:var(--fw-regular);line-height:var(--body1-line);letter-spacing:0;color:var(--color-semantic-label-normal);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">디자인 시스템</div></div></div></li></ul></div></div></section></article></div>
+  <footer class="comparison-notes">
+    <p><strong>현재 기준</strong> 실제 기본 모서리·굵기·간격을 유지합니다. Button/Input은 네 안 모두 lg입니다. 프로필을 바꾸면 기존 source의 높이·padding이 반영되며 48px로 정규화하지 않습니다.</p>
+    <p><strong>기존 그림자</strong> Button은 실제 --component-button-shadow-rest를 사용합니다. Card 기본 elevation·Input 휴지 상태·ListCell은 이미 none이므로 그림자 후보에서도 동일하게 보입니다.</p>
+    <p><strong>확인 범위</strong> 실제 authoring Button / Input / Card / ListCell을 React SSR로 렌더한 정적 형태 비교입니다. hover·focus·모션 동작은 이 파일의 검증 범위에 포함되지 않으며 실제 Storybook에서 확인합니다. 글꼴은 이 저장소의 assets/fonts를 상대 경로로 참조합니다. 이 정적 시안의 실제 글꼴 로드와 시각 검토는 아직 완료하지 않았습니다.</p>
+    <p class="source-note">출처: shared/lk-design-system/components/{buttons/Button, forms/Input, cards/Card, content/ListCell}.jsx · styles.css + tokens/profiles.css</p>
+  </footer>
+</main>
+<script>
+  const root = document.documentElement;
+  const theme = document.getElementById('theme');
+  const profile = document.getElementById('profile');
+  theme.addEventListener('change', () => { root.dataset.theme = theme.value; });
+  profile.addEventListener('change', () => { root.dataset.ldsProfile = profile.value; });
+  document.querySelectorAll('[data-specimen-node="input"]').forEach(input => { input.readOnly = true; });
+  document.querySelector('.view-options').addEventListener('submit', event => event.preventDefault());
+</script>
+</body>
+</html>

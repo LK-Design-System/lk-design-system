@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko" data-theme="light" data-lds-profile="default">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compass 비교 후 적용한 LDS 컨트롤과 Overlay 모션을 실제 Storybook 예제로 확인하는 임시 데모입니다.">
+  <meta name="robots" content="noindex">
+  <title>LDS R8 변경 데모</title>
+  <link rel="stylesheet" href="../../../styles.css">
+  <link rel="stylesheet" href="../../../tokens/profiles.css">
+  <style>
+    * { box-sizing: border-box; }
+    html { color-scheme: light; }
+    html[data-theme="dark"] { color-scheme: dark; }
+    body { margin: 0; background: var(--color-semantic-background-normal-alternative); color: var(--color-semantic-label-normal); font-family: var(--font-sans); line-height: 1.6; }
+    a { color: var(--color-semantic-primary-normal); text-underline-offset: 3px; }
+    button, select { font: inherit; }
+    button, a, select { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 2px solid var(--color-semantic-primary-normal); outline-offset: 4px; }
+    .page { width: min(1480px, 100%); margin: auto; padding: 36px; }
+    .top { display: flex; justify-content: space-between; align-items: start; gap: 20px; margin-bottom: 28px; }
+    .eyebrow { margin: 0 0 6px; font-size: 12px; color: var(--color-semantic-label-alternative); }
+    h1 { margin: 0; font-size: clamp(24px, 3vw, 32px); line-height: 1.4; font-weight: 600; letter-spacing: -.6px; }
+    .intro { margin: 8px 0 0; color: var(--color-semantic-label-neutral); font-size: 14px; }
+    .links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; padding-top: 8px; }
+    .workspace { display: grid; grid-template-columns: 196px minmax(0, 1fr); gap: 28px; align-items: start; }
+    .items { display: grid; gap: 4px; }
+    .items button { text-align: left; border: 0; border-radius: var(--radius-lg); padding: 10px 12px; background: transparent; color: var(--color-semantic-label-neutral); cursor: pointer; }
+    .items button:hover { background: var(--color-semantic-fill-normal); }
+    .items button[aria-current="true"] { background: var(--color-semantic-fill-normal); color: var(--color-semantic-label-strong); font-weight: 600; }
+    .viewer { min-width: 0; }
+    .toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid var(--color-semantic-line-normal-normal); }
+    .toolbar label { display: grid; gap: 5px; font-size: 12px; color: var(--color-semantic-label-alternative); }
+    select, .reload { min-height: 36px; border: 1px solid var(--color-semantic-line-normal-normal); border-radius: var(--radius-md); background: var(--color-semantic-background-normal-normal); color: var(--color-semantic-label-normal); padding: 6px 10px; font-size: 13px; }
+    select { min-width: 104px; }
+    .reload { margin-left: auto; cursor: pointer; }
+    .preview-heading { display: flex; justify-content: space-between; align-items: start; gap: 16px; padding: 20px 0 16px; }
+    h2 { margin: 0; font-size: 18px; line-height: 1.5; font-weight: 600; }
+    #description { margin: 4px 0 0; font-size: 13px; color: var(--color-semantic-label-neutral); }
+    .story-link { white-space: nowrap; font-size: 12px; padding-top: 4px; }
+    .stage { display: grid; justify-items: center; min-width: 0; }
+    iframe { display: block; width: 100%; height: 720px; border: 1px solid var(--color-semantic-line-normal-normal); border-radius: var(--radius-lg); background: var(--color-semantic-background-normal-normal); }
+    .stage[data-size="narrow"] iframe { width: min(390px, 100%); height: 844px; }
+    .loading { margin: 8px 0 0; font-size: 12px; color: var(--color-semantic-label-alternative); }
+    .notes { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 22px; font-size: 12px; color: var(--color-semantic-label-alternative); }
+    .notes p { margin: 0; }
+    .notes a { color: inherit; }
+    @media (max-width: 760px) {
+      .page { padding: 24px 16px; }
+      .top { display: block; margin-bottom: 20px; }
+      .links { margin-top: 10px; }
+      .workspace { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+      .items { display: flex; gap: 6px; overflow-x: auto; padding: 4px; margin: -4px; }
+      .items button { white-space: nowrap; flex-shrink: 0; font-size: 13px; }
+      .toolbar { gap: 10px; }
+      .reload { margin-left: 0; }
+      .preview-heading { display: block; }
+      .story-link { display: inline-block; margin-top: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="top">
+      <div>
+        <p class="eyebrow">LDS · R8 · 임시 데모</p>
+        <h1>바뀐 동작을 직접 확인</h1>
+        <p class="intro">컨트롤 피드백, 선택면 이동, Overlay 전환과 대표 예제입니다.</p>
+      </div>
+      <nav class="links" aria-label="관련 자료">
+        <a href="https://github.com/LK-Design-System/lk-design-system/blob/main/docs/working/compass-r8/README.md" target="_blank" rel="noopener">핸드오프</a>
+        <a href="./shape-comparison.html" target="_blank" rel="noopener">미채택 형태 시안</a>
+      </nav>
+    </header>
+    <div class="workspace">
+      <nav id="items" class="items" aria-label="변경 항목"></nav>
+      <section class="viewer" aria-labelledby="preview-title">
+        <div class="toolbar">
+          <label>테마<select id="theme"><option value="light">Light</option><option value="dark">Dark</option></select></label>
+          <label>프로필<select id="profile"><option value="default">Default</option><option value="ops">Ops</option></select></label>
+          <label>화면 폭<select id="size"><option value="wide">가용 폭</option><option value="narrow">좁게 · 최대 390px</option></select></label>
+          <button id="reload" class="reload" type="button">다시 보기</button>
+        </div>
+        <div class="preview-heading">
+          <div><h2 id="preview-title"></h2><p id="description"></p></div>
+          <a id="story-link" class="story-link" target="_blank" rel="noopener">Storybook에서 열기 ↗</a>
+        </div>
+        <div id="stage" class="stage" data-size="wide">
+          <iframe id="preview" title="LDS 변경 예제"></iframe>
+        </div>
+        <p id="loading" class="loading" role="status">불러오는 중…</p>
+        <noscript><p>JavaScript를 켜거나 <a href="../../../?path=/story/lds-core-foundation-motion--overview">Storybook 예제</a>를 열어 주세요.</p></noscript>
+        <footer class="notes">
+          <p>실제 Storybook 예제를 불러옵니다. 환경 변경과 다시 보기는 예제 상태를 초기화합니다.</p>
+          <p>OS의 동작 줄이기 설정을 따릅니다.</p>
+          <p>소스 기준 <a href="https://github.com/LK-Design-System/lk-design-system/commit/be26eae86d62799c2851de6f16792311198d9d1d" target="_blank" rel="noopener">be26eae8</a> · 예제는 배포된 main을 따릅니다.</p>
+        </footer>
+      </section>
+    </div>
+  </main>
+  <script>
+    const examples = [
+      { key: 'segmented', label: '선택면 이동', id: 'lds-core-components-selection-and-input-segmented-control--segmented-control-overview', description: '선택 상태는 즉시 바뀌고 선택면이 새 위치로 이동합니다. 방향키로도 선택할 수 있습니다.' },
+      { key: 'button', label: '버튼 피드백', id: 'lds-core-components-action-button--playground', description: '마우스를 올리거나 키보드로 초점을 옮겨 짧은 색·테두리 전환을 확인합니다.' },
+      { key: 'switch', label: '토글', id: 'lds-core-components-selection-and-input-switch--switch-control', description: '켜짐과 꺼짐의 도착 위치를 유지합니다. Space 키로 토글할 수 있습니다.' },
+      { key: 'disclosure', label: '펼침', id: 'lds-core-components-content-disclosure--disclosure', description: '내용과 chevron을 함께 확인합니다. 동작 줄이기에서도 열린 상태는 유지됩니다.' },
+      { key: 'motion', label: '모션 비교', id: 'lds-core-foundation-motion--overview', description: '같은 거리의 duration·easing을 재생하고 멈춥니다. Default와 Ops의 시간을 비교해 보세요.' },
+      { key: 'modal', label: '모달', id: 'lds-core-components-overlay-modal--modal-open', description: '열기와 닫기 전환을 확인합니다. Escape로 닫으면 호출 버튼에 초점이 돌아옵니다.' },
+      { key: 'nested-modal', label: '중첩 모달', id: 'lds-core-components-overlay-modal--modal-focus-contract', description: '환경 설정을 열고 변경 영향 확인을 누릅니다. Escape는 위에 열린 창부터 닫습니다.' },
+      { key: 'popover', label: '팝오버', id: 'lds-core-components-overlay-popover--popover-overview', description: '운영 설정을 열고 바깥 클릭과 Escape의 닫힘·초점 복귀를 확인합니다.' },
+      { key: 'sheet', label: '시트', id: 'lds-product-overlay-sheet--sheet-narrow-content', description: '긴 제목과 여러 동작이 있는 하단 시트입니다. 좁은 폭에서 열고 닫아 보세요.' },
+      { key: 'avatar', label: '아바타 그룹', id: 'lds-core-components-content-avatar--avatar-patterns', description: '여러 사람과 초과 인원을 보여주는 대표 그룹 구성을 확인합니다.' },
+      { key: 'page-indicator', label: '페이지 선택', id: 'lds-core-components-navigation-page-indicator--counter-and-dots', description: '도트를 선택하면 현재 위치와 페이지가 함께 바뀝니다.' },
+      { key: 'lightbox', label: '이미지 보기', id: 'lds-product-overlay-lightbox--lightbox-open', description: '여러 이미지를 선택하고 확대 화면을 닫아 원래 흐름으로 돌아갑니다.' },
+    ];
+    const root = document.documentElement;
+    const controls = Object.fromEntries(['theme', 'profile', 'size'].map(key => [key, document.getElementById(key)]));
+    const frame = document.getElementById('preview');
+    const loading = document.getElementById('loading');
+    const menu = document.getElementById('items');
+    const base = new URL('../../../', location.href);
+    const params = new URLSearchParams(location.search);
+    for (const [key, control] of Object.entries(controls)) {
+      if ([...control.options].some(option => option.value === params.get(key))) control.value = params.get(key);
+    }
+    let selected = examples.find(example => example.key === location.hash.slice(1)) || examples[0];
+    for (const example of examples) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = example.label;
+      button.dataset.key = example.key;
+      button.addEventListener('click', () => { selected = example; render(); });
+      menu.append(button);
+    }
+    function render() {
+      root.dataset.theme = controls.theme.value;
+      root.dataset.ldsProfile = controls.profile.value;
+      document.getElementById('stage').dataset.size = controls.size.value;
+      document.getElementById('preview-title').textContent = selected.label;
+      document.getElementById('description').textContent = selected.description;
+      menu.querySelectorAll('button').forEach(button => {
+        if (button.dataset.key === selected.key) button.setAttribute('aria-current', 'true');
+        else button.removeAttribute('aria-current');
+      });
+      const globals = `profile:${controls.profile.value};backgrounds.value:${controls.theme.value === 'dark' ? 'Dark' : 'Light'}`;
+      const storyUrl = new URL('./', base);
+      storyUrl.searchParams.set('path', `/story/${selected.id}`);
+      storyUrl.searchParams.set('globals', globals);
+      document.getElementById('story-link').href = storyUrl.href;
+      const frameUrl = new URL('iframe.html', base);
+      frameUrl.searchParams.set('id', selected.id);
+      frameUrl.searchParams.set('viewMode', 'story');
+      frameUrl.searchParams.set('globals', globals);
+      loading.hidden = false;
+      frame.title = `LDS ${selected.label} 예제`;
+      frame.src = frameUrl.href;
+      const shareUrl = new URL(location.href);
+      for (const [key, control] of Object.entries(controls)) shareUrl.searchParams.set(key, control.value);
+      shareUrl.hash = selected.key;
+      history.replaceState(null, '', shareUrl);
+    }
+    frame.addEventListener('load', () => { loading.hidden = true; });
+    for (const control of Object.values(controls)) control.addEventListener('change', render);
+    document.getElementById('reload').addEventListener('click', render);
+    render();
+  </script>
+</body>
+</html>

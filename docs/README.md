@@ -115,6 +115,12 @@ Adoption contract가 판정·evidence·완료 기준을 소유합니다. 이 ind
 | --- | --- |
 | [`LDS_HARNESS_IMPROVEMENT_PLAN.md`](LDS_HARNESS_IMPROVEMENT_PLAN.md) | R7 하위 계획 — LDS를 DS 본체·계약·저작/소비 하네스로 나눈 감사의 결론과 H0–H5 단계·종료 조건·지표 |
 
+### Active working handoffs
+
+| Document | Disposition |
+| --- | --- |
+| [R8 Compass 개선 핸드오프](working/compass-r8/README.md) | 2026-10-13 source snapshot · 임시 변경 데모, 승인 Overlay 계약, 검증 결과와 남은 owner·Linux 생성물 작업; R8 종료 시 보관 여부 결정 |
+
 ### Adopted or completed implementation records
 
 | Document | Disposition |
