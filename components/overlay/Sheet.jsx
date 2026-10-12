@@ -128,7 +128,7 @@ export function Sheet({
   }, [mounted]);
   if (!mounted) return null;
   return (
-    <OverlayPortal open={mounted} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={portalAnchorRef} portalRef={portalRef} layer="modal">
+    <OverlayPortal open={mounted} interactionOpen={open} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={portalAnchorRef} portalRef={portalRef} layer="modal">
     <style>{SHEET_MOTION_STYLES}</style>
     <div
       role="presentation"

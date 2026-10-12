@@ -1,5 +1,6 @@
 import React from 'react';
-import { useOverlayLayer } from './overlay-platform.js';
+import { useOverlayRuntime } from './overlay-platform.js';
+import { insertOverlayEntry, isDescendantOverlayPortal, useOverlayLayerRegistration, useOverlayInteraction } from './overlay-presence.js';
 
 const FOCUSABLE_SELECTOR = [
   'a[href]:not([tabindex="-1"])',
@@ -82,18 +83,28 @@ function isTopOverlay(entry) {
   return overlayStack.at(-1) === entry;
 }
 
+// Multiple modal scopes can hold the same sibling inert. Restore its original
+// value only when the last owner releases it, independent of cleanup order.
+const inertLocks = new WeakMap();
+
 function inertBackground(portalNode) {
   const container = portalNode?.parentElement;
   if (!container) return () => {};
-  const siblings = Array.from(container.children).filter((element) => element !== portalNode);
-  const snapshots = siblings.map((element) => ({
-    element,
-    inert: element.hasAttribute('inert'),
-  }));
-  siblings.forEach((element) => element.setAttribute('inert', ''));
-  return () => snapshots.forEach(({ element, inert }) => {
+  const siblings = Array.from(container.children).filter((element) => (
+    element !== portalNode && !isDescendantOverlayPortal(element, portalNode)
+  ));
+  siblings.forEach((element) => {
+    const existing = inertLocks.get(element);
+    if (existing) existing.depth += 1;
+    else inertLocks.set(element, { depth: 1, inert: element.hasAttribute('inert') });
+    element.setAttribute('inert', '');
+  });
+  return () => siblings.forEach((element) => {
+    const existing = inertLocks.get(element);
+    if (!existing || --existing.depth > 0) return;
+    inertLocks.delete(element);
     if (!element.isConnected) return;
-    if (inert) element.setAttribute('inert', '');
+    if (existing.inert) element.setAttribute('inert', '');
     else element.removeAttribute('inert');
   });
 }
@@ -121,8 +132,10 @@ export function useDialogFocus({
   portalRef,
   zIndex,
 }) {
+  open = useOverlayInteraction(open);
   const dialogRef = React.useRef(null);
-  const { zIndex: resolvedZIndex, isTopmost } = useOverlayLayer({ open, zIndex });
+  const { zIndexBase } = useOverlayRuntime();
+  const { zIndex: resolvedZIndex, isTopmost, ancestorOwners } = useOverlayLayerRegistration({ open, zIndex, zIndexBase, ownerRef: portalRef });
   const optionsRef = React.useRef(null);
   optionsRef.current = {
     onDismiss,
@@ -141,8 +154,8 @@ export function useDialogFocus({
     const ownerDocument = dialog?.ownerDocument ?? document;
     const view = ownerDocument.defaultView ?? window;
     const previouslyFocused = ownerDocument.activeElement;
-    const entry = { dialogRef };
-    overlayStack.push(entry);
+    const entry = { dialogRef, ancestorOwners };
+    insertOverlayEntry(overlayStack, entry, portalRef);
     const scrollLocked = optionsRef.current.lockScroll;
     if (scrollLocked) lockBodyScroll(ownerDocument);
     const restoreBackground = optionsRef.current.inert
@@ -150,7 +163,9 @@ export function useDialogFocus({
       : () => {};
 
     const focusFrame = view.requestAnimationFrame(() => {
-      if (isTopmost()) {
+      const activeElement = ownerDocument.activeElement;
+      const needsInitialFocus = activeElement === ownerDocument.body || !isAvailable(activeElement);
+      if (isTopmost() || (isTopOverlay(entry) && needsInitialFocus)) {
         focusDialogStart(dialogRef.current, optionsRef.current.initialFocusRef);
       }
     });

@@ -73,3 +73,7 @@ const position = useFloatingPosition({
   `boundaryElement`는 Portal 위치와 positioning boundary를 분리하고 overlay가 자동으로 위치를
   갱신하는 공식 비교 기준입니다. LDS는 같은 책임을 `collisionBoundary`와 공통 측정 engine으로 둡니다.
 - 전용 계약 테스트: `scripts/check-engine-contracts.mjs`(`npm run check:engine-contracts`).
+
+## 상위 overlay의 실제 닫힘
+
+상위 OverlayPortal의 interactionOpen이 false이면 light-dismiss 엔진은 layer와 document listener를 해제합니다. 기존 rootRef 객체 identity를 Core-private registration에 전달해 같은 commit의 controlled 자식이 부모보다 위에 남도록 합니다. public hook signature/return은 바뀌지 않습니다. 부모의 시각 퇴장 중 자식 Escape/outside press callback이나 focus 복원을 새로 예약하지 않습니다. 부모 닫힘은 소비자 controlled 값을 재작성하지 않습니다.

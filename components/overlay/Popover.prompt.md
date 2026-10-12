@@ -60,3 +60,7 @@ Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유�
 - Core-private visual presence 동안 Portal과 positioning만 유지합니다. 닫히는 즉시 trigger의 expanded/controls 및 light-dismiss stack은 실제 닫힘 상태가 되고, 퇴장 픽셀은 `aria-hidden`·`inert`·`pointer-events:none`으로 상호작용에서 제외합니다. 좌표를 닫힘 초기에 초기화하지 않아 offscreen으로 튀지 않습니다.
 - 퇴장은 transition 완료 또는 계산된 최대 시간 + 50ms 뒤 제거하며 재오픈·unmount 시 frame·timer를 취소합니다. `prefers-reduced-motion: reduce`에서는 endpoint를 즉시 표시하고, 퇴장 중 preference 변경도 즉시 반영합니다.
 - [Fluent 2 Popover](https://fluent2.microsoft.design/components/web/react/core/popover/usage)의 관계가 보이는 배치와 비모달 맥락 표면 원칙을 유지합니다. [W3C Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)의 비필수 이동 비활성화 원칙을 반영하며, 새로운 focus trap이나 배경 차단은 만들지 않습니다.
+
+## 상위 overlay의 실제 닫힘
+
+기존 OverlayPortal의 interactionOpen에 실제 visible을 전달해 퇴장 중 자식 portal·layer·light-dismiss·menu 엔진을 즉시 비활성화합니다. 재오픈에서는 이전 immediate-unmount와 같은 자식 subtree 초기화를 적용하며 controlled 값은 소비자가 유지합니다. 부모 닫힘으로 자식 dismiss callback을 합성하지 않습니다.

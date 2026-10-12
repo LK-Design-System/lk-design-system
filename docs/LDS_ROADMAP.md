@@ -620,6 +620,138 @@ commit/release, pin 격차 기간, CI·문서 유지 비용을 같은 snapshot�
 - plan이 완료되면 implementation record로 바꾸고 active roadmap에서 제거한다.
 - follow-up은 owner·entry trigger·종료 gate·roadmap ID가 없으면 무기한 active로 두지 않는다.
 
+## 12.1. R8 — 컨트롤 피드백과 모션·대표 예제 개선
+
+| Field | Value |
+| --- | --- |
+| Status | `Now` |
+| Owner | Design system owner · Foundation owner |
+| Source | 2026-10-13 Compass 비교와 사용자 개선 계획 승인 · authoring source |
+| Boundary | Core controls/overlays, Product Sheet, Theme timing, existing Storybook specimens |
+
+별도 비교 갤러리를 늘리지 않고 기존 컴포넌트의 피드백과 대표 예제를 개선합니다.
+Compass의 짧은 상태 전환과 선택 연속성을 LDS의 기존 timing·시각 기준선에 맞춥니다.
+
+- [x] Button 공유 fast 색·테두리 피드백: Button, ButtonGroup, ToggleIcon,
+  SocialButton, TextButton, SplitButton, IconButton, Fab, SavedViewControl,
+  Combobox의 chevron, ThemeToggle, ToggleButton, Select와 default/ops를
+  함께 확인합니다. Combobox field의 base 전환은 유지합니다.
+- [x] solid SegmentedControl 선택면 이동: 즉시 radio state, Arrow/Home/End,
+  disabled, 긴 한국어, resize, RTL, 빠른 반복 선택을 보존합니다.
+- [x] Switch·Disclosure·변경 Overlay의 reduced-motion과 중단 계약을 확인합니다.
+  이동 보간을 중단해도 상태를 나타내는 도착 위치는 유지합니다.
+- [x] Sheet 퇴장을 Drawer 선례에 맞추고 Modal·Popover의 짧은 enter/exit를
+  확인합니다. focus·ARIA·inert 해제를 시각 퇴장 완료까지 늦추지 않습니다.
+- [x] 기존 Motion 개요에 같은 거리의 duration/easing 재생·정지 예제를 추가하고
+  AvatarGroup·PageIndicator·Lightbox의 첫 진입에서 대표 동작을 드러냅니다.
+  PIN·Wheel 시간 선택·PrimaryDetail·Carousel는 기존 공개 예제의 적합성을 확인합니다.
+- [ ] Button+Input, Card+List 조합에서 그림자·굵기·모서리를 각각 분리한
+  비교안을 제시합니다. 공유 형태 값의 채택은 시각 비교 이후 owner 결정입니다.
+- [x] 일반/좁은 폭, light/dark, default/ops, keyboard/reduced-motion의
+  변경 대상 검증과 primary reference·세 제품 소비 경계를 기록합니다.
+
+### R8 로컬 source 검증 기록 · 2026-10-13
+
+아래 체크는 authoring source의 구현·대표 화면 검토 상태입니다. 공유 형태의 owner
+선택과 Linux canonical 생성·exact-SHA CI는 남아 있으므로 R8은 `Now`를 유지합니다.
+시각 검토는 대표 조합이며 모든 story와 appearance의 전수 교차 검증은 아닙니다.
+
+후속 독립 검토에서 부모 Modal/Sheet의 실제 open이 false가 된 뒤에도 별도로
+Portal된 자식 Popover/Modal이 부모의 시각 퇴장 동안 활성 상태로 남는 회귀를
+재현했습니다. 수정 전에는 전체 27개 검사 중 기존 15개가 통과하고, 중첩 닫힘
+4개와 퇴장 중 재열기 8개가 실패했습니다. 사용자 승인으로 interaction 수명과
+Menu keyboard guard 수정안을 적용한 뒤 실제 authoring source의 27개 검사가
+모두 통과했습니다. 이는 아래 범위의 로컬 source 완료이며 배포 완료가 아닙니다.
+
+| 대상 | 확인한 상태와 결과 |
+| --- | --- |
+| Button | 1280px light/default에서 120ms, 390px dark/ops에서 80ms 색·테두리·opacity 전환. reduced-motion은 0ms. 공유 alias의 13개 소비 경로는 source로 확인했으며 각각을 모두 브라우저에서 검토한 것은 아닙니다. |
+| SegmentedControl | 390px light/default에서 선택 즉시 반영·선택면 이동·넘침 없음. focused probe가 반복 선택, 긴 label/count, resize, disabled, 키보드와 runtime 방향 전환을 검사합니다. 조상의 dir/class/style 변경 후 선택면 좌표가 남던 회귀를 수정했습니다. custom segment/option paint는 기존 버튼의 우선순위를 유지하고, root·text·geometry hook와 documented vars는 공유 이동을 유지합니다. inline/class paint와 controlled/disabled 변경 회귀를 추가했습니다. |
+| Switch·Disclosure | 390px light/ops 및 dark/default에서 토글·펼침 상태를 검토했습니다. OS reduced-motion에서 0ms이며 thumb 도착 위치·펼친 내용·chevron 회전을 유지합니다. Switch는 키보드 Space 후 초점을 유지합니다. |
+| Sheet·Modal·Popover | Sheet dark/ops 390px·240ms, Modal light/default 320px·200ms, Popover dark/ops 390px·80ms. 제목·본문·footer가 화면 안에 배치되고 Escape/닫기 후 호출 지점에 초점을 복원합니다. Modal dark/default 1280px도 검토했습니다. |
+| 초기 open Overlay | Storybook의 CSS wrapper만으로 초기 Portal이 dark/ops를 받지 못하던 사례를 Provider context로 수정했습니다. target=null·persist=false이며 HTML 속성과 저장 설정을 바꾸지 않습니다. focused probe는 초기 Sheet 240ms·Modal 160ms와 초점 순환·Escape 복원을 확인합니다. |
+| 대표 예제 | Motion·AvatarGroup·PageIndicator·Lightbox를 390px dark/ops에서 검토했습니다. Motion 표와 표본이 80/160/240ms로 일치하고, 도트 4 선택과 Lightbox 이미지 2/3 선택·닫기 초점 복원을 확인했습니다. 기존 PIN·WheelPicker는 390px light/default, PrimaryDetail·Carousel은 390px dark/default에서 화면과 공개 예제의 적합성을 확인했습니다. |
+
+- `node --test scripts/control-motion-source.test.mjs`: 17/17 통과. 사용자 정의
+  segment paint를 가리던 4개 경로는 수정 전 실패, 수정 후 통과를 확인했습니다.
+- `node --test scripts/overlay-motion-source.test.mjs`: 실제 적용 소스에서 27/27
+  통과했습니다. 부모 Modal/Sheet 닫힘 × 자식 Modal/Popover 4개와,
+  같은 부모·자식 조합에서 consumer-controlled/subtree-owned 상태를 구분한
+  퇴장 중 재열기 8개를 추가했습니다. 기존 15개 검사는 단일 exit의 retained DOM,
+  빠른 재열기·호출 지점 교체·reduce 변경·
+  unmount를 확인합니다. 수정 전 재열기에서는 controlled 자식이 열려 있어도
+  Escape가 부모를 먼저 닫고, 자식 subtree의 open 상태가 초기화되지 않았습니다.
+  새 검사는 부모 Fixture의 ref에 callback 기록을 보존하므로 subtree
+  재생성으로 기록이 사라지는 것을 통과 근거로 쓰지 않습니다. 자식 controlled
+  값·callback을 변경하지 않는 부모 닫힘, subtree-owned 상태 초기화, 자식부터
+  처리하는 Escape와 body overflow/padding·background inert 복원을 함께 검증합니다.
+  별도 검토 후보도 같은 27개 검사에 통과한 뒤 적용했습니다. 구현은 부모의
+  시각 퇴장과 자식 interaction을 분리하고,
+  재열기에서 이전 immediate-unmount의 subtree 초기화를 보존합니다. React ref 객체로
+  ancestry를 식별해 inline Modal/Sheet와 Popover 부모의 같은 commit 등록 순서를
+  보정하며, 요소별 inert 소유 depth로 최초 상태를 복원합니다. 추가 probe 34개는
+  Modal/Sheet 부모 × Modal/Popover/Menu 자식, controlled/subtree-owned 재열기,
+  세 단계 Escape, 나중에 열린 독립 root, inline/Popover 부모·StrictMode·활성 root
+  unmount와 Menu 부모 action 영역에서 연 Modal을 확인했습니다. 마지막 경로에서는
+  자식 이벤트가 React tree를 따라 부모 Menu에 도달할 때, topmost가 아닌 부모가
+  Escape를 먼저 처리하던 문제를 재현했습니다. Menu의 두 region handler와 shared
+  keyboard handler가 topmost/defaultPrevented를 확인하도록 보완한 뒤 통과했습니다.
+  적용한 17개 파일은 승인한 최종 patch와 일치합니다. 추가 34개 probe가 검증한
+  9개 runtime source의 hash도 적용 소스와 같으므로 해당 증거를 재사용합니다.
+  공개 platform named export·기존 hook signature/return은 유지하고 사설 context는
+  export-null Core helper 한 곳에 둡니다. 선택적 공개
+  `OverlayPortal.interactionOpen?: boolean`(기본값 `open`) 추가와 Menu key guard는
+  2026-10-13 사용자 승인으로 R8의 API 비확장 경계에서 별도 승격했습니다.
+  이 속성은 자식 LDS overlay의 interaction 수명을 제어합니다. false일 때 생성된
+  Portal host는 숨김/inert 상태가 되며, inline embedding은 DOM host를 추가하지
+  않으므로 표면 소유자가 aria-hidden·inert·pointer 차단과 modal ARIA 해제를
+  적용합니다. 재열기는 자식 subtree를 재생성하며, consumer-controlled 값과
+  callback은 덮어쓰지 않습니다.
+  적용 후 1280×720 light/default의 중첩 Modal에서 z-index 100/101, 자식 우선
+  Escape와 부모·외부 호출 지점 초점 복귀를 확인했습니다. 390×844 dark/ops의
+  긴 Sheet와 Popover는 화면 내 배치와 가로 넘침 없음을 확인했습니다.
+  engine-reuse·prompt-contracts·design-system-contracts와 변경 d.ts의 strict
+  source 타입 검사도 통과했습니다. prompt ratchet은 사설 engine prompt를 제외하며,
+  별도 독립 문구 검토가 그 증거입니다. 생성 package를 읽는 engine-contracts는
+  이번 source 검증으로 사용하지 않았습니다.
+  이 검증은 Chromium source fixture이며 SSR/hydration·다른 브라우저·custom
+  portal target·packed package 검증을 대신하지 않습니다.
+- Motion의 재생 → 중간 정지 → 수동 또는 OS reduced-motion 변경에서, 추가 재생 없이
+  여섯 표본이 모두 128px 도착점으로 전환되고 남은 animation이 0인 것을 focused probe로
+  확인했습니다. 수정 전 guard에서는 두 경로가 중간 위치에 머무는 실패를 재현했습니다.
+  명시적 정지는 두 frame 뒤에도 위치를 유지하며 unmount는 native animation을 취소합니다.
+  재생 중 default↔ops 변경 때 표시값만 바뀌고 native timing은 이전 값을 쓰던 회귀도
+  수정했습니다. 기존 animation의 진행 비율·running/paused를 유지한 채 duration/easing을
+  갱신하며 양방향 전환, 빠른 반복, Stop/완료 후 전환과 OS reduce를 확인했습니다.
+  새 animation이나 자동 재생 없이 표·표본 timing이 일치합니다.
+  이 증거는 실제 MotionComparison과 저작 Button/Checkbox의 390px dark default/ops
+  Chromium 검증이며 전체 Storybook/provider 조합, React 18, 다른 브라우저·실제 화면낭독기·
+  packed package의 검증을 뜻하지 않습니다. 컨트롤·Overlay 회귀도 authored source의
+  Chromium 증거로 범위를 한정합니다.
+- token source/coverage, motion hygiene, design-system contract, product-frontend
+  coverage, story token reference, masthead copy와 변경 JSX/prompt의 좁은 검사가
+  통과했습니다. motion hygiene는 모든 transition을 검사하는 전수 gate가 아닙니다.
+- primary reference와 결론은 변경 컴포넌트의 `.prompt.md`에, Portal·Web Viz·Full
+  Daedeok revision/blob과 소비 경계는 `PRODUCT_FRONTEND_COVERAGE.md` 및
+  `COVERAGE_AUDIT.json#incrementalAuthoringReviews`에 기록했습니다.
+- 그림자·글자 굵기·모서리 비교는 task preview로 분리했습니다. 기준안은 실제 저작
+  Button/Input의 공통 `size="lg"`와 Card/ListCell 기본값을 사용하며, 높이·padding·
+  radius·weight를 공통 숫자로 정규화하지 않습니다. default/ops의 실제 밀도를 유지하고
+  그림자 제거, 600→500 굵기 하향(기존 400/500 유지), 각 표면 radius +4px를 한 축씩
+  비교합니다. 두 profile의 SSR style/token 해석과 각 후보의 단일 축 변경을 검사했으며,
+  preview의 실제 font 로드·layout 검토는 아직 완료하지 않았습니다.
+  공유 radius/weight/shadow 값은 owner 선택 전 변경하지 않습니다.
+- `generate-foundation-docs.mjs --check`는 `docs/foundations/motion.md`가 stale임을
+  보고합니다. Windows에서 생성하지 않았으며 generated package source/dist/baseline,
+  Linux exact-SHA CI, package 채택·제품 배포는 이 로컬 검증의 완료 범위가 아닙니다.
+
+ActivityHeatmap·녹음·서명·국제 전화 입력은 `Conditional`입니다. 사용 제품·화면·
+사용자 문제와 기존 조합의 부족함이 확인될 때 구현 대상으로 승격합니다.
+비차단 코너 패널은 Card/Button 조합을 먼저 사용합니다. 승인한 interactionOpen 외의
+새 public API, 브랜드 색 변경, repository 전체 motion gate 확대는 포함하지 않습니다.
+생성 package source/dist/baseline은 Linux canonical workflow에서 확인하고
+push·dispatch·발행은 각 행위의 승인 경계를 따릅니다.
+
 ## 13. 기존 계획 문서 정리
 
 | 문서 | 분류 | 현재 disposition | Roadmap 연결 |

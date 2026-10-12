@@ -631,7 +631,7 @@ export const DropdownMenu = React.forwardRef(function DropdownMenu({
   const handleMenuRegionKeyDown = (event) => {
     // The drill-up control and submenu triggers consume their own keys; without
     // this guard ArrowLeft on the back control would drill up twice.
-    if (event.defaultPrevented) return;
+    if (!isTopmost() || event.defaultPrevented) return;
     if (drill && event.key === 'ArrowLeft' && drillPath.length > 0) {
       event.preventDefault();
       drillBack();
@@ -660,6 +660,7 @@ export const DropdownMenu = React.forwardRef(function DropdownMenu({
   };
 
   const handleActionAreaKeyDown = (event) => {
+    if (!isTopmost() || event.defaultPrevented) return;
     if (event.key === 'Escape') {
       event.preventDefault();
       closeMenu({ restoreFocus: true });

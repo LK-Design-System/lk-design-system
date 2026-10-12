@@ -52,3 +52,7 @@ const { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown } = useMenuKeybo
   roving tabindex 관리 기법을 따릅니다: 한 시점에 composite 위젯 내부의 tab stop은 하나입니다.
 - 전용 계약 테스트는 `scripts/check-engine-contracts.mjs`(`npm run check:engine-contracts`)가
   소비자 없이 검증합니다.
+
+## 상위 overlay의 실제 닫힘
+
+상위 OverlayPortal의 interactionOpen이 false이면 menu 엔진은 layer·entry-focus frame·document Escape listener와 typeahead를 정리합니다. OverlayPortal이 실제 anchor DOM에 등록한 owner ref identity를 기존 getTrigger 경로에서 Core-private하게 조회해 layer ancestry를 보존하며, 새 공개 hook 옵션은 추가하지 않습니다. 공용 React handleMenuKeyDown도 기존 isTopmost와 defaultPrevented를 먼저 확인해 portaled 자식의 키보드 이벤트를 부모 메뉴가 가로채지 않습니다. retained 부모의 시각 퇴장은 자식 menu의 키보드 수명을 연장하지 않으며 자식 onClose를 합성하지 않습니다.

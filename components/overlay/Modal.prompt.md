@@ -70,3 +70,7 @@ Portal 선택, route 전환, 제출 상태와 데이터 보존은 제품 레이�
 - 퇴장 도중 다른 호출 요소가 다시 열어도 새 open edge에서 호출 지점을 캡처하므로, 다음 닫힘은 이전 trigger가 아닌 최신 trigger로 복원됩니다.
 - `prefers-reduced-motion: reduce`는 이동과 scrim 전환을 즉시 종료하고 열린 endpoint/닫힌 상태를 표시합니다. 퇴장 중 preference 변경도 반영합니다.
 - [WAI-ARIA Modal Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)에서 요구하는 실제 modality와 `aria-modal`의 일치를 퇴장 중에도 유지합니다. [Fluent 2 Dialog](https://fluent2.microsoft.design/components/web/react/core/dialog/usage)의 닫힘 후 trigger 복귀 및 기존 header/body/footer를 보존하고, [W3C Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)의 비필수 이동 비활성화를 LDS 기준으로 채택했습니다.
+
+## 상위 overlay의 실제 닫힘
+
+시각 퇴장 동안 기존 OverlayPortal의 interactionOpen에 실제 visible을 전달합니다. 닫힌 부모의 자식 portal과 기존 dialog/light-dismiss/menu 엔진은 즉시 비활성화됩니다. 퇴장 중 재오픈하면 portal subtree를 새로 만들어 이전 immediate-unmount처럼 uncontrolled 자식 상태를 초기화하며, consumer-controlled 값과 onClose/onOpenChange는 임의로 바꾸거나 호출하지 않습니다.

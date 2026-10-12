@@ -1181,6 +1181,22 @@ WF-17은 궁릉 긴급 배너의 고정 source로 표시·상호작용 계약을
 
 기계 판정의 source of truth는 `docs/references/product-frontends/COVERAGE_AUDIT.json`이며, `npm run check:product-frontends`가 source pin, stage evidence, component disposition, 제거·교체 경계를 검증한다.
 
+## R8 컨트롤·Overlay 모션 소비 경계 · 2026-10-13
+
+`COVERAGE_AUDIT.json#incrementalAuthoringReviews`의 `compass-motion-20261013`은
+source 검토이며 제품 적용·배포 증거가 아닙니다. 해당 파일의 revision/blob을 직접
+대조했고 검토 파일에는 미커밋 변경이 없었습니다.
+
+| 제품 source | 확인된 workflow와 경계 | 판정 |
+| --- | --- | --- |
+| Portal `287deb64` · `DeviceResourceHistory.tsx`, `ChatComposerMenus.tsx` | 기간별 리소스 조회와 응답 방식 Popover가 controlled selection/open을 소비합니다. LDS는 선택면·전환·키보드·초점, Portal은 조회·권한·설정·close state를 소유합니다. | supported by composition; package 채택 대기 |
+| Web Viz `7e535341` · `frontend/src/components/ui/LdsUi.tsx` | Modal을 감싼 LdsDialog와 Button/IconButton alias의 기존 공개 계약을 유지합니다. exit 시각 수명과 callback·focus 복원을 분리합니다. | supported by composition; maintenance-only 제품 변경 없음 |
+| Full Daedeok `d8c215fd` · `Controls/index.jsx` | 수동조작의 MUI Switch와 실시간 명령·별도 창 수명은 독립 control plane입니다. | not applicable; 이번 LDS 변경의 소비자가 아님 |
+
+ActivityHeatmap·녹음·서명·국제 전화 입력은 이 검토에서 제품 수요가 확정되지
+않았습니다. 날짜별 강도 격자가 필요한 판단·데이터와 기존 Calendar/차트/표로
+부족한 이유를 확인할 때 로드맵의 `Conditional` 항목을 엽니다.
+
 ## LK 브랜드 자산 적용 감사
 
 로고 규격화는 LDS 저장소 안에서 SVG를 생성하는 것으로 끝나지 않는다. 실제 제품이 같은 정본을 소비하는지 확인하기 위해 `web-viz`, `control`, `portal`의 현재 소스를 별도로 고정했다. 기계 판정 원본은 `docs/references/brand/PRODUCT_BRAND_ASSET_AUDIT.json`이며 `npm run check:brand-products`는 세 제품의 필수 pin, revision·blob SHA 형식, 문서 인용, 최소 크기와 LDS/제품 소유권 경계를 검증한다. 외부 저장소의 Git object 자체는 감사 시점에 직접 대조해 pin했으며 이 명령이 원격 저장소를 다시 조회한다고 주장하지 않는다.

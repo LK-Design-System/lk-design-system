@@ -53,3 +53,7 @@ const firstOptionRef = useRef(null);
 - 퇴장 중 다른 호출 요소로 재오픈하면 새 open edge에서 호출 지점을 다시 캡처해 다음 닫힘이 최신 trigger로 복원되도록 합니다.
 - `prefers-reduced-motion: reduce`에서는 전환을 0으로 두고 열린 endpoint를 바로 표시합니다. 퇴장 도중 환경설정이 바뀌어도 즉시 제거하며 상태·초점 계약은 유지합니다.
 - [WAI-ARIA Modal Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)의 닫힘 후 호출 지점 복귀는 시각 퇴장을 기다리는 이유가 될 수 없다는 기준으로 적용했습니다. [W3C Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)의 비필수 이동 비활성화 원칙을 적용했으며, 이는 AAA SC 2.3.3을 참고한 LDS 모션 계약입니다.
+
+## 상위 overlay의 실제 닫힘
+
+Product는 기존 공개 OverlayPortal의 interactionOpen에 실제 open을 전달합니다. Core-private hook을 import하지 않습니다. 자식 portal과 기존 엔진의 상호작용은 부모 닫힘과 함께 끝나며, 퇴장 중 재오픈은 uncontrolled 자식 subtree를 이전 immediate-unmount처럼 초기화합니다. controlled 상태와 callback은 소비자가 소유합니다.

@@ -30,6 +30,13 @@ export function useOverlayLayer(options?: UseOverlayLayerOptions): {
 export interface OverlayPortalProps {
   children?: React.ReactNode;
   open?: boolean;
+  /**
+   * Controls descendant LDS overlay activity while open retains content for exit.
+   * Defaults to open. When false, portalled content is hidden and inert through the generated host.
+   * With withinPortal=false, no DOM host is added: the caller must make its retained
+   * surface aria-hidden, inert, and non-interactive. Reopening recreates the descendant subtree.
+   */
+  interactionOpen?: boolean;
   withinPortal?: boolean;
   portalTarget?: HTMLElement | null;
   anchorRef?: React.RefObject<HTMLElement | null>;

@@ -159,3 +159,7 @@ LDS 메뉴 토큰을 사용합니다.
   `aria-controls`, menu roles, and first/last-item keyboard focus are unchanged.
 - [React Aria Popover](https://react-spectrum.adobe.com/react-aria/Popover.html)의
   `boundaryElement`처럼 Portal mount target과 positioning boundary는 서로 다른 책임입니다.
+
+## 상위 overlay의 실제 닫힘
+
+공개 action 슬롯 또는 메뉴 영역 안에 portaled Modal 등 LDS 자식 overlay가 열리면 부모 menu의 React keydown region은 기존 isTopmost와 defaultPrevented를 먼저 확인합니다. 최상단 자식이 Escape·Tab·방향키를 처리하도록 하며 부모 actionArea의 React bubble handler가 자식 document handler 전에 이벤트를 가로채 부모를 닫거나 초점을 이동하지 않습니다. public props와 callback 계약은 유지합니다.

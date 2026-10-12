@@ -23,6 +23,55 @@
   },
   "incrementalAuthoringReviews": [
     {
+      "id": "compass-motion-20261013",
+      "scope": ["R8"],
+      "stage": "implemented",
+      "designAuthority": "User-approved Compass benchmarking plan adapted to existing LDS timing, shape, ARIA and Core/Product ownership. Product source proves consumption seams only; it does not define shared anatomy or token values.",
+      "evidence": "docs/LDS_ROADMAP.md",
+      "verification": {
+        "source": "Authored-source JSX/prompt/token checks and representative Storybook review are recorded in the R8 local verification notes. Control regression tests pass 17/17. The user-approved interaction-lifetime and Menu keyboard changes are applied; the actual overlay source suite passes 27/27, resolving four nested-parent-close and eight rapid-reopen regressions. The 34-case candidate probe has the same nine runtime source hashes as the applied implementation. Scoped engine reuse, prompt, design-system contract and changed-declaration strict type checks pass. Shared shape selection and canonical Linux verification remain pending.",
+        "release": "Pending canonical Linux generated projection and per-action remote approval; product package pins and deployments unchanged."
+      },
+      "assetReviews": [
+        {
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "287deb64beab5114767db676602ed28e36d6c3ba",
+          "sourceEvidence": [
+            { "path": "src/components/devices/DeviceResourceHistory.tsx", "blobSha": "8b75e747d8065b73dab6f9352a8a26a27ef3ce70" },
+            { "path": "src/components/chat/ChatComposerMenus.tsx", "blobSha": "7be86fab7e47a3a8a561e0ec42a0cf07b242f8d9" }
+          ],
+          "classification": "supported by composition",
+          "adoption": "pending package release and product-owned pin update",
+          "reason": "Controlled 1h/6h/24h resource-history selection and anchored response-mode settings consume SegmentedControl/Popover. LDS owns visual continuity, keyboard and focus; Portal owns query range, request data, permissions, selected mode and close state."
+        },
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "7e53534197dbad6a165d86379ee0a0eac2be22cf",
+          "sourceEvidence": [
+            { "path": "frontend/src/components/ui/LdsUi.tsx", "blobSha": "a736f700c591c11c7f119a06c5a9fb405e409ef4" }
+          ],
+          "classification": "supported by composition",
+          "adoption": "pending; maintenance-only reference, no product migration authorized",
+          "reason": "LdsDialog delegates open/onClose/closeOnScrim/width to Core Modal and aliases Button/IconButton. Existing controlled contract is retained; LDS exit visuals do not defer callback or focus restoration."
+        },
+        {
+          "repo": "full-daedeok",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "d8c215fd5fef8633c7b740dc4ec3f6d980db12d4",
+          "sourceEvidence": [
+            { "path": "frontend/src/views/dashboard/RobotDashboard/components/Controls/index.jsx", "blobSha": "83b1f688d565dde84738b349cbfede7c99bf7033" }
+          ],
+          "classification": "not applicable",
+          "reason": "The inspected manualMode control is MUI Switch in an independent real-time control plane. This LDS refinement does not migrate its control loop, popup lifecycle, command timing or safety behavior."
+        }
+      ],
+      "conditionalGaps": {
+        "ActivityHeatmap": "No approved product date-intensity decision or insufficiency of Calendar/chart/table composition is established by this review. Remains conditional alongside voice/signature/international-phone UI."
+      }
+    },
+    {
       "id": "portal-density-20261009",
       "scope": ["R01", "R11", "D01", "D02", "D03", "V02", "V03", "D04", "D05", "D06"],
       "stage": "implemented",

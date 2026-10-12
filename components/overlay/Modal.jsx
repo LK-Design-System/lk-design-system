@@ -90,7 +90,7 @@ export const Modal = React.forwardRef(function Modal({
   }, [mounted]);
   if (!mounted) return null;
   return (
-    <OverlayPortal open={mounted} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={portalAnchorRef} portalRef={portalRef} layer="modal">
+    <OverlayPortal open={mounted} interactionOpen={visible} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={portalAnchorRef} portalRef={portalRef} layer="modal">
     <style>{OVERLAY_MOTION_STYLES}</style>
     <div
       data-slot="backdrop"

@@ -48,3 +48,7 @@ const { dialogRef, zIndex } = useDialogFocus({
   [SC 2.1.2 No Keyboard Trap](https://www.w3.org/WAI/WCAG22/Understanding/no-keyboard-trap.html):
   모달이 열려 있는 동안의 초점 봉쇄는 닫기 수단(Escape·닫기 버튼)과 함께 제공될 때만 허용됩니다.
 - 전용 계약 테스트: `scripts/check-engine-contracts.mjs`(`npm run check:engine-contracts`).
+
+## 상위 overlay의 실제 닫힘
+
+상위 OverlayPortal의 실제 interactionOpen이 false이면 자식 dialog는 자기 open 값과 무관하게 등록·focus trap·background inert·scroll lock을 즉시 해제합니다. 부모의 visual exit는 이 해제를 늦추지 않으며 자식 onDismiss를 합성하지 않습니다. 같은 sibling의 inert는 element별 owner depth와 최초 값을 추적해 마지막 해제에서만 복원합니다. React portal ancestry로 자식 portal을 부모의 background inert 대상에서 제외합니다. layer·modal stack은 portalRef 객체 identity와 React owner ancestry를 사용해 inline 여부와 무관하게 조상 먼저·자식 나중 순서를 보존하며, 관계없는 나중 overlay는 기존처럼 최상단에 등록합니다. 동시 mount·cleanup 순서가 서로를 inert로 만들거나 배경을 다시 inert로 남기지 않습니다. top modal의 initial focus는 자식 menu가 이미 받은 초점을 덮지 않으며, inactive 배경에 남은 초점만 내부로 옮깁니다.

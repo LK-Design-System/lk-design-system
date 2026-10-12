@@ -116,7 +116,7 @@ export const Popover = React.forwardRef(function Popover({
       {...rest}
     >
       <span data-slot="trigger" className={partClassName(classNames, 'trigger') || undefined} style={{ display: 'inline-flex', ...partStyle(styles, 'trigger') }}>{renderedTrigger}</span>
-      <OverlayPortal open={mounted} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={rootRef} layer="anchored">
+      <OverlayPortal open={mounted} interactionOpen={visible} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={rootRef} layer="anchored">
         <style>{OVERLAY_MOTION_STYLES}</style>
         <div
           ref={panelRef}
