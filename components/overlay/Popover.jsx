@@ -2,6 +2,7 @@ import React from 'react';
 import { anchoredPanelStyle } from './anchored-panel-style.js';
 import { OverlayPortal } from './overlay-platform.js';
 import { componentVars, partClassName, partStyle, useMergedRefs } from '../internal/surface.js';
+import { OVERLAY_MOTION_STYLES, useOverlayPresence } from './overlay-presence.js';
 import {
   appendAriaReference,
   findOverlayTrigger,
@@ -10,6 +11,8 @@ import {
   useFloatingPosition,
   useLightDismiss,
 } from './anchored-overlay.js';
+
+const INERT_VALUE = Number.parseInt(React.version, 10) >= 19 ? true : 'true';
 
 /**
  * LK ROBOTICS — Popover
@@ -43,10 +46,11 @@ export const Popover = React.forwardRef(function Popover({
   const rootRef = React.useRef(null);
   const panelRef = React.useRef(null);
   const panelId = React.useId();
+  const { mounted, shown, onTransitionEnd } = useOverlayPresence(visible, panelRef);
   const mergedRootRef = useMergedRefs(rootRef, forwardedRef);
   const getTrigger = React.useCallback(() => findOverlayTrigger(rootRef.current), []);
   const position = useFloatingPosition({
-    open: visible,
+    open: mounted,
     anchorRef: rootRef,
     panelRef,
     placement: requestedPosition,
@@ -112,7 +116,8 @@ export const Popover = React.forwardRef(function Popover({
       {...rest}
     >
       <span data-slot="trigger" className={partClassName(classNames, 'trigger') || undefined} style={{ display: 'inline-flex', ...partStyle(styles, 'trigger') }}>{renderedTrigger}</span>
-      <OverlayPortal open={visible} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={rootRef} layer="anchored">
+      <OverlayPortal open={mounted} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={rootRef} layer="anchored">
+        <style>{OVERLAY_MOTION_STYLES}</style>
         <div
           ref={panelRef}
           data-slot="panel"
@@ -123,7 +128,11 @@ export const Popover = React.forwardRef(function Popover({
           id={panelId}
           role="dialog"
           aria-label={ariaLabel}
+          aria-hidden={visible ? undefined : true}
+          inert={visible ? undefined : INERT_VALUE}
+          data-lds-overlay-motion=""
           data-placement={position.placement}
+          onTransitionEnd={onTransitionEnd}
           style={{
             ...componentVars(vars, '--lds-popover-'),
             ...anchoredPanelStyle(width),
@@ -135,9 +144,13 @@ export const Popover = React.forwardRef(function Popover({
             maxHeight: `var(--lds-popover-max-height, ${position.maxHeight == null ? 'none' : `${position.maxHeight}px`})`,
             overflowY: 'auto',
             scrollbarGutter: 'stable',
+            opacity: shown ? 1 : 0,
+            transform: shown ? 'none' : `translateY(${position.placement === 'top' ? 'var(--space-1)' : 'calc(-1 * var(--space-1))'})`,
+            transition: 'opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out)',
             ...partStyle(styles, 'panel'),
             ...(boundaryMaxWidth == null ? null : { minWidth: 0, maxWidth: boundaryMaxWidth }),
             ...(boundaryMaxHeight == null ? null : { minHeight: 0, maxHeight: boundaryMaxHeight, overflow: 'auto' }),
+            ...(visible ? {} : { pointerEvents: 'none' }),
           }}
         >
           {children}

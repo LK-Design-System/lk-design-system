@@ -77,6 +77,17 @@ export const SwitchControl = {
         throw new Error('The knob must move as the non-colour on/off signal.');
       }
     });
+    const view = canvasElement.ownerDocument.defaultView;
+    if (view.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const knob = knobOf(switches[1]);
+      const transform = new view.DOMMatrixReadOnly(view.getComputedStyle(knob).transform);
+      if (Math.abs(transform.m41 - 20) > 0.1) throw new Error('Reduced motion must retain the checked knob endpoint.');
+      for (const node of canvasElement.querySelectorAll('[data-lds-switch-motion]')) {
+        if (view.getComputedStyle(node).transitionDuration.split(',').some((duration) => Number.parseFloat(duration) !== 0)) {
+          throw new Error('Reduced motion must stop Switch interpolation without removing its positional state cue.');
+        }
+      }
+    }
   },
 };
 

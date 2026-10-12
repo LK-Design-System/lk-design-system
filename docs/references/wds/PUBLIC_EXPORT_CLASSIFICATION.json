@@ -991,6 +991,10 @@
       "ownerLayer": "core"
     },
     {
+      "path": "components/overlay/overlay-presence.js",
+      "ownerLayer": "core"
+    },
+    {
       "path": "components/overlay/dialog-focus.js",
       "ownerLayer": "core"
     },

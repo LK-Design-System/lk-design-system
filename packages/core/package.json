@@ -59,6 +59,7 @@
     "./components/overlay/anchored-overlay": null,
     "./components/overlay/overlay-platform": null,
     "./components/overlay/anchored-panel-style": null,
+    "./components/overlay/overlay-presence": null,
     "./components/overlay/dialog-focus": null,
     "./components/selection/pill-chip-style": null,
     "./components/status/status-presentation": null,

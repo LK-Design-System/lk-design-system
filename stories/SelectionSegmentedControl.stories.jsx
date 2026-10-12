@@ -1,6 +1,6 @@
 import React from 'react';
-import { userEvent } from 'storybook/test';
-import { Icon, SegmentedControl } from '../src/index.js';
+import { userEvent, waitFor } from 'storybook/test';
+import { Button, Icon, SegmentedControl } from '../src/index.js';
 import { SegmentedControlCard as SegmentedControlCardStory } from './SelectionStatus.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -52,8 +52,35 @@ export const SegmentedControlStates = {
   },
 };
 
+function SegmentedMotionFixture() {
+  const [value, setValue] = React.useState('status');
+  const [narrow, setNarrow] = React.useState(false);
+  return (
+    <section style={{ display: 'grid', gap: 'var(--space-2)', width: narrow ? 240 : 320, maxWidth: '100%' }}>
+      <SegmentedControl
+        data-contract="motion"
+        aria-label="선택 전환 보기"
+        value={value}
+        onChange={setValue}
+        options={[
+          { value: 'status', label: '상태', count: 12 },
+          { value: 'history', label: '최근 장치 연결 및 동작 이력', count: 8 },
+          { value: 'disabled', label: '미지원', disabled: true },
+          { value: 'log', label: '로그', count: 3 },
+        ]}
+        full
+      />
+      <output data-contract="selected-value">{value}</output>
+      <Button variant="outlined" color="assistive" size="sm" data-contract="resize-motion" onClick={() => setNarrow((previous) => !previous)}>폭 변경</Button>
+      <div dir="rtl">
+        <SegmentedControl data-contract="rtl" aria-label="오른쪽에서 왼쪽 보기" options={['첫째', '둘째', '셋째']} defaultValue="첫째" full />
+      </div>
+    </section>
+  );
+}
+
 export const SegmentedKeyboardContract = {
-  name: '로빙 키보드 계약',
+  name: '선택·키보드·모션 계약',
   tags: ['!dev'],
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-3)', width: 320, maxWidth: '100%' }}>
@@ -84,6 +111,7 @@ export const SegmentedKeyboardContract = {
         defaultValue="선택됨"
         disabled
       />
+      <SegmentedMotionFixture />
     </main>
   ),
   play: async ({ canvasElement }) => {
@@ -116,9 +144,58 @@ export const SegmentedKeyboardContract = {
 
     const disabledSelected = canvasElement.querySelector('[data-contract="disabled-selected"] [data-selected="true"]');
     const disabledUnselected = canvasElement.querySelector('[data-contract="disabled-selected"] [data-selected="false"]');
+    const disabledSurface = canvasElement.querySelector('[data-contract="disabled-selected"] [data-lds-segmented-surface]');
     if (!disabledSelected?.disabled || !disabledUnselected?.disabled
-      || getComputedStyle(disabledSelected).backgroundColor === getComputedStyle(disabledUnselected).backgroundColor) {
+      || !disabledSurface || disabledSurface.getAttribute('aria-hidden') !== 'true'
+      || getComputedStyle(disabledSurface).backgroundColor === 'rgba(0, 0, 0, 0)') {
       throw new Error('Disabled SegmentedControl must preserve selection with a neutral visual cue.');
+    }
+
+    const view = canvasElement.ownerDocument.defaultView;
+    const motionGroup = canvasElement.querySelector('[data-contract="motion"]');
+    const motionRadios = [...motionGroup.querySelectorAll('[role="radio"]')];
+    const selectedValue = canvasElement.querySelector('[data-contract="selected-value"]');
+    const surface = motionGroup.querySelector('[data-lds-segmented-surface]');
+    if (!surface || surface.getAttribute('aria-hidden') !== 'true') throw new Error('A solid selection surface must remain decorative.');
+    const expectSurfaceAtSelection = async (group) => waitFor(() => {
+      const selected = group.querySelector('[aria-checked="true"]');
+      const indicator = group.querySelector('[data-lds-segmented-surface]');
+      const target = selected?.getBoundingClientRect();
+      const current = indicator?.getBoundingClientRect();
+      if (!target || !current || Math.abs(target.left - current.left) > 1
+        || Math.abs(target.top - current.top) > 1 || Math.abs(target.width - current.width) > 1
+        || Math.abs(target.height - current.height) > 1) {
+        throw new Error('The moving surface must settle on the latest selected segment after selection or resize.');
+      }
+    });
+    await userEvent.click(motionRadios[1]);
+    if (motionRadios[1].getAttribute('aria-checked') !== 'true' || selectedValue.textContent !== 'history') {
+      throw new Error('Controlled value and radio semantics must update before the visual transition completes.');
+    }
+    await userEvent.click(motionRadios[3]);
+    await expectSurfaceAtSelection(motionGroup);
+    if (motionRadios[3].getAttribute('aria-checked') !== 'true' || selectedValue.textContent !== 'log') {
+      throw new Error('Rapid selection must preserve the latest controlled value.');
+    }
+    await userEvent.click(canvasElement.querySelector('[data-contract="resize-motion"]'));
+    await expectSurfaceAtSelection(motionGroup);
+    if (motionGroup.scrollWidth > motionGroup.clientWidth + 1) throw new Error('Long labels and counts must fit a narrow segmented track.');
+    if (!motionRadios[1].textContent.includes('최근 장치 연결 및 동작 이력8')) throw new Error('Truncation must preserve the full accessible label and count.');
+
+    const rtlGroup = canvasElement.querySelector('[data-contract="rtl"]');
+    const rtlRadios = [...rtlGroup.querySelectorAll('[role="radio"]')];
+    rtlRadios[0].focus();
+    await userEvent.keyboard('{ArrowLeft}');
+    if (rtlRadios[1].getAttribute('aria-checked') !== 'true' || canvasElement.ownerDocument.activeElement !== rtlRadios[1]) {
+      throw new Error('RTL inline arrow navigation must follow the mirrored visual order.');
+    }
+    await expectSurfaceAtSelection(rtlGroup);
+    if (view.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      for (const node of canvasElement.querySelectorAll('[data-lds-segmented-motion]')) {
+        if (view.getComputedStyle(node).transitionDuration.split(',').some((duration) => Number.parseFloat(duration) !== 0)) {
+          throw new Error('Reduced motion must stop interpolation while preserving the selected endpoint.');
+        }
+      }
     }
   },
 };

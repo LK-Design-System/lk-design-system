@@ -1,5 +1,16 @@
 import React from 'react';
-import { componentVars, partClassName, partStyle } from '../internal/surface.js';
+import { componentVars, partClassName, partStyle, useMergedRefs } from '../internal/surface.js';
+
+const useSafeLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
+const SEGMENTED_MOTION_STYLES = `
+@media(prefers-reduced-motion:reduce){
+  [data-lds-segmented-motion]{transition-duration:0s!important;transition-delay:0s!important}
+}`;
+
+function hasSegmentPaintOverride(style) {
+  return Object.keys(style ?? {}).some((property) => /^(background|border|mask|--)/.test(property)
+    || ['boxShadow', 'opacity', 'filter', 'backdropFilter', 'mixBlendMode', 'clipPath', 'visibility'].includes(property));
+}
 
 function normalizeSegmentOption(option) {
   return typeof option === 'string'
@@ -40,7 +51,10 @@ export const SegmentedControl = React.forwardRef(function SegmentedControl({
   const [internalValue, setInternalValue] = React.useState(fallbackValue);
   const currentValue = isControlled ? value : internalValue;
   const disabledState = disabled || disable || interaction === 'inactive';
+  const rootRef = React.useRef(null);
+  const mergedRootRef = useMergedRefs(rootRef, forwardedRef);
   const buttonRefs = React.useRef([]);
+  const [surface, setSurface] = React.useState(null);
   const normalizedSize = size === 'small' ? 'sm' : size === 'medium' ? 'md' : size === 'large' ? 'lg' : size;
   const height = normalizedSize === 'sm' ? 32 : normalizedSize === 'lg' ? 48 : 40;
   const fontSize = normalizedSize === 'sm' ? 'var(--label1-size)' : normalizedSize === 'lg' ? 'var(--headline2-size)' : 'var(--body1-size)';
@@ -51,6 +65,56 @@ export const SegmentedControl = React.forwardRef(function SegmentedControl({
   const fill = full || resize === 'fill';
   const selectedIndex = normalizedOptions.findIndex((option) => option.value === currentValue && !option.disabled);
   const rovingIndex = selectedIndex >= 0 ? selectedIndex : (enabledIndices[0] ?? -1);
+  const surfaceIndex = normalizedOptions.findIndex((option) => option.value === currentValue);
+  const selectedOption = normalizedOptions[surfaceIndex];
+  const surfaceDisabled = disabledState || selectedOption?.disabled;
+  // Preserve the existing button paint and CSS cascade for targeted consumer
+  // overrides. Text/layout hooks and root classes keep the shared surface.
+  const sharedSelection = !outlined && !hasSegmentPaintOverride(partStyle(styles, 'segment'))
+    && !classNames?.segment && !hasSegmentPaintOverride(selectedOption?.style) && !selectedOption?.className;
+
+  const measureSurface = React.useCallback(() => {
+    const selected = buttonRefs.current[surfaceIndex];
+    const next = sharedSelection && selected ? {
+      x: selected.offsetLeft,
+      y: selected.offsetTop,
+      width: selected.offsetWidth,
+      height: selected.offsetHeight,
+    } : null;
+    setSurface((previous) => {
+      if (previous === null && next === null) return previous;
+      if (previous && next && Object.keys(next).every((key) => previous[key] === next[key])) return previous;
+      return next;
+    });
+  }, [sharedSelection, surfaceIndex]);
+
+  // Measure after every React layout: selection, labels, counts and inherited
+  // direction can change independently. offset geometry also works in RTL and
+  // under a transformed ancestor without assuming equal segment widths.
+  useSafeLayoutEffect(measureSurface);
+  useSafeLayoutEffect(() => {
+    if (!sharedSelection) return undefined;
+    const root = rootRef.current;
+    const view = root?.ownerDocument?.defaultView;
+    const Observer = view?.ResizeObserver;
+    const observer = Observer ? new Observer(measureSurface) : null;
+    if (root) observer?.observe(root);
+    buttonRefs.current.forEach((button) => { if (button) observer?.observe(button); });
+    // Direction can change through a provider or DOM/CSS scope without a
+    // component render or a size change. Watch only this inheritance chain,
+    // then use the same geometry measurement as selection and resize.
+    const DirectionObserver = view?.MutationObserver;
+    const directionObserver = DirectionObserver ? new DirectionObserver(measureSurface) : null;
+    for (let ancestor = root; ancestor; ancestor = ancestor.parentElement) {
+      directionObserver?.observe(ancestor, { attributes: true, attributeFilter: ['dir', 'class', 'style'] });
+    }
+    view?.addEventListener('resize', measureSurface);
+    return () => {
+      observer?.disconnect();
+      directionObserver?.disconnect();
+      view?.removeEventListener('resize', measureSurface);
+    };
+  }, [measureSurface, sharedSelection, options]);
 
   const pick = (index, { focus = false } = {}) => {
     const option = normalizedOptions[index];
@@ -73,7 +137,7 @@ export const SegmentedControl = React.forwardRef(function SegmentedControl({
   return (
     <div
       {...groupProps}
-      ref={forwardedRef}
+      ref={mergedRootRef}
       data-slot="root"
       data-size={normalizedSize}
       data-variant={outlined ? 'outlined' : 'solid'}
@@ -84,8 +148,11 @@ export const SegmentedControl = React.forwardRef(function SegmentedControl({
       className={partClassName(classNames, 'root', className) || undefined}
       style={{
         ...componentVars(vars, '--lds-segmented-control-'),
+        position: 'relative',
+        isolation: 'isolate',
         display: 'inline-flex',
         width: fill ? '100%' : undefined,
+        maxWidth: '100%',
         height: `var(--lds-segmented-control-height, ${height}px)`,
         boxSizing: 'border-box',
         justifySelf: fill ? undefined : 'start',
@@ -99,6 +166,23 @@ export const SegmentedControl = React.forwardRef(function SegmentedControl({
         ...style,
       }}
     >
+      <style>{SEGMENTED_MOTION_STYLES}</style>
+      {sharedSelection && surface && (
+        <span
+          aria-hidden="true"
+          data-lds-segmented-surface=""
+          data-lds-segmented-motion=""
+          style={{
+            position: 'absolute', left: 0, top: 0, pointerEvents: 'none', zIndex: 0,
+            width: surface.width, height: surface.height,
+            transform: `translate(${surface.x}px, ${surface.y}px)`,
+            borderRadius: `var(--lds-segmented-control-segment-radius, ${segmentRadius})`,
+            background: surfaceDisabled ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-background-elevated-normal)',
+            boxShadow: surfaceDisabled ? 'none' : 'var(--shadow-xs)',
+            transition: 'transform var(--dur-base) var(--ease-out), width var(--dur-base) var(--ease-out), height var(--dur-base) var(--ease-out), background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
+          }}
+        />
+      )}
       {normalizedOptions.map((option, index) => {
         const optionInteraction = option.interaction || interaction;
         const selected = option.value === currentValue;
@@ -106,11 +190,13 @@ export const SegmentedControl = React.forwardRef(function SegmentedControl({
         const active = selected || optionInteraction === 'active' || optionInteraction === 'active-focused';
         const activeHover = !optionDisabled && optionInteraction === 'hovered';
         const activeFocus = !optionDisabled && (optionInteraction === 'focused' || optionInteraction === 'active-focused');
+        const sharedSurface = sharedSelection && selected && surface !== null;
         return (
           <button
             key={option.value}
             ref={(node) => { buttonRefs.current[index] = node; }}
             data-slot="segment"
+            data-lds-segmented-motion=""
             data-state={selected ? 'checked' : 'unchecked'}
             type="button"
             role="radio"
@@ -124,12 +210,13 @@ export const SegmentedControl = React.forwardRef(function SegmentedControl({
             onClick={() => pick(index)}
             onKeyDown={(event) => {
               if (event.defaultPrevented || optionDisabled) return;
+              const rtl = rootRef.current?.ownerDocument?.defaultView?.getComputedStyle(rootRef.current).direction === 'rtl';
               if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
                 event.preventDefault();
-                move(index, 1);
+                move(index, event.key === 'ArrowRight' && rtl ? -1 : 1);
               } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
                 event.preventDefault();
-                move(index, -1);
+                move(index, event.key === 'ArrowLeft' && rtl ? 1 : -1);
               } else if (event.key === 'Home') {
                 event.preventDefault();
                 pick(enabledIndices[0], { focus: true });
@@ -140,6 +227,9 @@ export const SegmentedControl = React.forwardRef(function SegmentedControl({
             }}
             style={{
               flex: fill ? 1 : undefined,
+              position: 'relative',
+              zIndex: 1,
+              minWidth: 0,
               height: '100%',
               minHeight: 0,
               boxSizing: 'border-box',
@@ -161,7 +251,7 @@ export const SegmentedControl = React.forwardRef(function SegmentedControl({
                   : activeFocus
                     ? 'var(--color-semantic-label-normal)'
                     : 'var(--color-semantic-label-neutral)',
-              background: optionDisabled
+              background: sharedSurface ? 'transparent' : optionDisabled
                 ? active
                   ? 'var(--color-semantic-fill-strong)'
                   : 'transparent'
@@ -173,7 +263,7 @@ export const SegmentedControl = React.forwardRef(function SegmentedControl({
               borderRadius: outlined ? 0 : `var(--lds-segmented-control-segment-radius, ${segmentRadius})`,
               borderLeft: outlined && index > 0 ? '1px solid var(--color-semantic-line-solid-normal)' : 'none',
               boxShadow: [
-                active && !outlined && !optionDisabled ? 'var(--shadow-xs)' : null,
+                active && !outlined && !optionDisabled && !sharedSurface ? 'var(--shadow-xs)' : null,
                 activeFocus ? '0 0 0 4px var(--color-semantic-focus-ring)' : null,
               ].filter(Boolean).join(', ') || 'none',
               transition: 'background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
@@ -183,7 +273,7 @@ export const SegmentedControl = React.forwardRef(function SegmentedControl({
             }}
           >
             {option.icon && <span data-slot="icon" className={partClassName(classNames, 'icon') || undefined} aria-hidden="true" style={{ display: 'inline-flex', flex: '0 0 auto', ...partStyle(styles, 'icon') }}>{option.icon}</span>}
-            <span data-slot="label" className={partClassName(classNames, 'label') || undefined} style={partStyle(styles, 'label')}>{option.label}</span>
+            <span data-slot="label" className={partClassName(classNames, 'label') || undefined} style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', ...partStyle(styles, 'label') }}>{option.label}</span>
             {option.count != null && (
               <span
                 data-slot="count"
@@ -191,6 +281,7 @@ export const SegmentedControl = React.forwardRef(function SegmentedControl({
                 className={partClassName(classNames, 'count') || undefined}
                 style={{
                   minWidth: '1.25em',
+                  flexShrink: 0,
                   fontVariantNumeric: 'tabular-nums',
                   fontWeight: 'var(--fw-bold)',
                   color: active ? 'currentColor' : 'var(--color-semantic-label-alternative)',

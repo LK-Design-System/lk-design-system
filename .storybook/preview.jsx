@@ -1,4 +1,5 @@
 import React from 'react';
+import { LdsProvider } from '../src/index.js';
 import {
   LdsStorybookDocsStyles,
   LdsStorybookGuideLayout,
@@ -201,29 +202,32 @@ export const decorators = [
       && guide?.hideCanvasHeader !== true
       && context.viewMode !== 'docs';
 
+    // Context reaches initially open portals without changing the document or saved preferences.
     return (
-      <div
-        data-theme={theme}
-        data-lds-profile={profile}
-        className={`theme-${theme} lds-profile-${profile}`}
-        style={canvasShell(context.viewMode)}
-      >
-        {showGuide ? (
-          <div data-story-guide-layout style={{ display: 'grid', gap: 'var(--space-6)', minWidth: 0 }}>
-            <StoryGuide
-              eyebrow={guide.eyebrow}
-              title={guide.title}
-              description={guide.description}
-              relatedPatterns={context.parameters?.relatedPatterns}
-            />
-            <div style={{ minWidth: 0 }}>
-              <Story />
+      <LdsProvider colorScheme={theme} profile={profile} target={null} persist={false}>
+        <div
+          data-theme={theme}
+          data-lds-profile={profile}
+          className={`theme-${theme} lds-profile-${profile}`}
+          style={canvasShell(context.viewMode)}
+        >
+          {showGuide ? (
+            <div data-story-guide-layout style={{ display: 'grid', gap: 'var(--space-6)', minWidth: 0 }}>
+              <StoryGuide
+                eyebrow={guide.eyebrow}
+                title={guide.title}
+                description={guide.description}
+                relatedPatterns={context.parameters?.relatedPatterns}
+              />
+              <div style={{ minWidth: 0 }}>
+                <Story />
+              </div>
             </div>
-          </div>
-        ) : (
-          <Story />
-        )}
-      </div>
+          ) : (
+            <Story />
+          )}
+        </div>
+      </LdsProvider>
     );
   },
 ];

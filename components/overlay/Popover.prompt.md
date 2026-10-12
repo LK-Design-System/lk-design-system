@@ -53,3 +53,10 @@
 Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유하지 않습니다.
 
 - **ariaLabel** — 트리거에 보이는 텍스트가 없을 때 팝오버 콘텐츠의 접근성 이름을 지정합니다.
+
+## 열림·닫힘 모션 (2026-10-13)
+
+- HoverCard와 공유하는 surface·radius·padding·shadow를 유지하며 opacity와 anchor 방향의 `space-1` 수직 이동만 `--dur-fast`·`--ease-out`으로 연결합니다. 선택·제출 상태와 콘텐츠 정책은 추가하지 않습니다.
+- Core-private visual presence 동안 Portal과 positioning만 유지합니다. 닫히는 즉시 trigger의 expanded/controls 및 light-dismiss stack은 실제 닫힘 상태가 되고, 퇴장 픽셀은 `aria-hidden`·`inert`·`pointer-events:none`으로 상호작용에서 제외합니다. 좌표를 닫힘 초기에 초기화하지 않아 offscreen으로 튀지 않습니다.
+- 퇴장은 transition 완료 또는 계산된 최대 시간 + 50ms 뒤 제거하며 재오픈·unmount 시 frame·timer를 취소합니다. `prefers-reduced-motion: reduce`에서는 endpoint를 즉시 표시하고, 퇴장 중 preference 변경도 즉시 반영합니다.
+- [Fluent 2 Popover](https://fluent2.microsoft.design/components/web/react/core/popover/usage)의 관계가 보이는 배치와 비모달 맥락 표면 원칙을 유지합니다. [W3C Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)의 비필수 이동 비활성화 원칙을 반영하며, 새로운 focus trap이나 배경 차단은 만들지 않습니다.

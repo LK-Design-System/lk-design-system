@@ -120,6 +120,7 @@
     "check:lds3d-storybook-browser": "node scripts/check-lds3d-storybook-browser.mjs --root \"../lk-design-system-3d\"",
     "update:token-hygiene-baseline": "node scripts/check-token-hygiene.mjs --update-baseline",
     "check:motion-hygiene": "node scripts/check-motion-hygiene.mjs",
+    "check:control-motion": "node --test scripts/control-motion-source.test.mjs",
     "update:motion-hygiene-baseline": "node scripts/check-motion-hygiene.mjs --update-baseline",
     "check:prompt-contracts": "node scripts/check-prompt-contracts.mjs",
     "update:prompt-contract-baseline": "node scripts/check-prompt-contracts.mjs --update-baseline",

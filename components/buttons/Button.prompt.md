@@ -42,6 +42,14 @@ LK theme tokens.
   create hierarchy.
 - Hover and pressed feedback use calm tone changes only: no lift, scale, or
   shadow escalation. Focus remains the shared 2px `:focus-visible` outline.
+- Color, fill, border and opacity use `--component-button-transition` with the
+  existing fast timing: 120ms/default and 80ms/ops. Reduced motion resolves the
+  timing to zero without delaying activation, focus or unavailable semantics.
+  This shared token also applies to ButtonGroup, ToggleIcon, SocialButton,
+  TextButton, SplitButton, IconButton, Fab, SavedViewControl, Combobox,
+  ThemeToggle, ToggleButton and Select; review all thirteen consumers when
+  changing it. Combobox applies this token to its chevron; its field border
+  and shadow retain the existing base timing.
 - **as="a"** renders a link CTA while preserving Button styling.
 - **arrow** is deprecated and remains as a no-op compatibility prop.
 - Use `IconButton` for icon-only one-shot actions and `ToggleIcon` for
@@ -66,6 +74,12 @@ LK theme tokens.
   native button, Enter/Space, accessible name, disabled semantics를 따릅니다.
 - [Fluent 2 Button](https://fluent2.microsoft.design/components/web/react/core/button/usage)의
   단일 주요 액션과 toggle/split 역할 분리를 채택합니다.
+- [Compass Button](https://compass.designcompass.org/components/button)의 짧은
+  상태 전환을 비교하고 LDS의 기존 fast timing으로 적용합니다. 8px 모서리,
+  600 굵기와 기본 그림자는 유지하며, 형태 후보는 공유 값 변경 전에 따로 비교합니다.
+- [W3C Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)
+  기준에 따라 모션 감소 환경에서 상태를 지연시키지 않습니다. 색 전환과
+  이동 효과의 의미를 구분하고 위치·크기 변화는 버튼 피드백에 추가하지 않습니다.
 - 32/40/48 높이와 solid/outlined·primary/assistive·icon-only·disable 축은
   WDS `Button/Button` component set을 따릅니다. `danger`, dark-surface 변형,
   loading과 polymorphic anchor는 명시적인 LDS 확장입니다.

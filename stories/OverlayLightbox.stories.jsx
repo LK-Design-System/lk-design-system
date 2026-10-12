@@ -1,9 +1,8 @@
 import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
-import { Button, Lightbox } from '../src/index.js';
+import { Button, Grid, Lightbox, Thumbnail } from '../src/index.js';
 import {
   LightboxCard as LightboxCardStory,
-  LightboxOpen as LightboxOpenStory,
 } from './Overlay.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
@@ -29,13 +28,27 @@ const meta = {
 export default meta;
 
 export const LightboxOpen = {
-  ...LightboxOpenStory,
   name: '개요',
-  parameters: {
-    ...LightboxOpenStory.parameters,
-    ...storyDescription(
-      '미디어를 화면 위에 확대해 보는 대표 열린 상태입니다. 이미지 대체 텍스트, 닫기 액션, 배경과의 시각적 분리, viewport 안의 미디어 배치를 확인하세요.',
-    ),
+  parameters: storyDescription(
+    '썸네일을 선택해 해당 이미지를 크게 보고 이전·다음 이미지로 이동합니다. 닫기나 Escape 뒤 선택했던 썸네일로 초점이 돌아오고 다시 열 수 있는지 확인하세요.',
+  ),
+  render: () => <LightboxNavigationDemo showThumbnails />,
+  play: async ({ canvasElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const trigger = canvasElement.querySelector('button[aria-label="점검 중 초록 캡처 크게 보기"]');
+    if (!trigger) throw new Error('Lightbox 개요는 선택할 수 있는 이미지 미리보기를 보여줘야 합니다.');
+    await userEvent.click(trigger);
+    await waitFor(() => {
+      const dialog = canvasElement.querySelector('[role="dialog"]');
+      if (dialog?.querySelector('img')?.getAttribute('alt') !== '점검 중 초록 캡처') throw new Error('선택한 썸네일의 이미지가 열려야 합니다.');
+    });
+    const dialog = canvasElement.querySelector('[role="dialog"]');
+    await waitUntilLoaded(dialog);
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => {
+      if (canvasElement.querySelector('[role="dialog"]') || ownerDocument.activeElement !== trigger) throw new Error('닫은 뒤 선택했던 썸네일로 초점이 돌아와야 합니다.');
+    });
+    trigger.blur();
   },
 };
 
@@ -79,12 +92,29 @@ const galleryImages = [
   { src: swatch('B3722E'), alt: '점검 후 주황 캡처' },
 ];
 
-function LightboxNavigationDemo() {
+function LightboxNavigationDemo({ showThumbnails = false }) {
   const [open, setOpen] = React.useState(false);
   const [index, setIndex] = React.useState(0);
   return (
-    <div style={{ minHeight: 260, display: 'grid', placeItems: 'center' }}>
-      <Button onClick={() => setOpen(true)}>이미지 갤러리 열기</Button>
+    <div style={{ minHeight: 260, display: 'grid', alignContent: 'start', justifyItems: 'start', gap: 'var(--space-4)', maxWidth: 640 }}>
+      {showThumbnails && (
+        <Grid minItemWidth={160} gap="var(--space-3)" style={{ width: '100%' }}>
+          {galleryImages.map((image, imageIndex) => (
+            <Button
+              key={image.src}
+              variant="ghost"
+              aria-label={`${image.alt} 크게 보기`}
+              onClick={() => { setIndex(imageIndex); setOpen(true); }}
+              style={{ height: 'auto', padding: 'var(--space-2)', minWidth: 0 }}
+              styles={{ content: { display: 'grid', gap: 'var(--space-2)', width: '100%', whiteSpace: 'normal' } }}
+            >
+              <Thumbnail src={image.src} alt="" ratio="16/9" />
+              <span style={{ fontSize: 'var(--label2-size)', lineHeight: 'var(--label2-line)' }}>{image.alt}</span>
+            </Button>
+          ))}
+        </Grid>
+      )}
+      <Button onClick={() => { setIndex(0); setOpen(true); }}>이미지 갤러리 열기</Button>
       <Lightbox
         open={open}
         images={galleryImages}

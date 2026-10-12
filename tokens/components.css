@@ -5,6 +5,12 @@
    when a value is specific to one component family.
    ========================================================================== */
 
+/* Resolve the timing alias at each profile boundary; inheriting a root-resolved
+   transition would freeze nested ops controls at the default duration. */
+:root, :where([data-lds-profile], .lds-profile-ops) {
+  --component-button-transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+
 :root {
   /* ---- Button ---------------------------------------------------------- */
   --component-button-height-sm: 32px;
@@ -45,7 +51,6 @@
   --component-button-disabled-opacity: 0.45;
   --component-button-text-hover-opacity: 0.9;
   --component-button-shadow-rest: var(--shadow-xs);
-  --component-button-transition: none;
   --component-button-transform-hover: none;
   --component-button-transform-pressed: none;
 

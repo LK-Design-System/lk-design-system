@@ -29,8 +29,8 @@ function useMissingNameWarning(shouldWarn, message) {
  * LK ROBOTICS — Button
  * Solid, rounded-rect CTAs driven entirely by design-system tokens.
  * Calm by default: hover keeps solid fills visually stable, with only minimal
- * tone changes for low-emphasis variants. No animation, positional lift, or
- * press scale. `arrow` is deprecated and kept as a no-op for compatibility.
+ * tone changes through the shared fast transition. Position, depth and scale
+ * stay stable. `arrow` is deprecated and kept as a no-op for compatibility.
  *
  * variant: primary (LK azure — brand) · secondary (graphite) · signal (primary azure fill) ·
  *          dark (navy) · flat (cool-gray) · ghost (hairline) · on-dark (translucent, for navy sections)

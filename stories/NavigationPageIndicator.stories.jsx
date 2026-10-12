@@ -13,7 +13,7 @@ const meta = {
       eyebrow: 'Core / Navigation',
       title: 'Page Indicator는 연속된 화면 중 현재 위치와 전체 범위를 보여줍니다',
       description:
-        '캐러셀이나 단계별 콘텐츠처럼 앞뒤 이동은 다른 제어가 담당하고 현재 위치만 간결하게 알려줄 때 적합합니다. 사용자가 특정 페이지를 직접 선택해야 하면 Pagination을, 업무 단계의 이름과 완료 상태를 설명해야 하면 Stepper를 사용하세요.',
+        '캐러셀이나 단계별 콘텐츠처럼 앞뒤 이동은 다른 제어가 담당하고 현재 위치만 간결하게 알려줄 때 적합합니다. 사용자가 특정 페이지를 직접 선택해야 하면 Pagination을, 업무 단계의 이름과 완료 상태를 설명해야 하면 Steps를 사용하세요.',
     },
     docs: {
       description: {
@@ -72,6 +72,10 @@ export const CounterAndDots = {
   ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-8)', width: 'min(880px, 100%)' }}>
+      <section aria-label="직접 페이지 선택" style={{ display: 'grid', gap: 'var(--space-3)' }}>
+        <h2 style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--headline2-size)', lineHeight: 'var(--headline2-line)', fontWeight: 'var(--fw-bold)' }}>페이지 선택</h2>
+        <InteractiveDotsDemo groupLabel="대표 페이지 선택" />
+      </section>
       <section aria-labelledby="page-indicator-counter-heading" style={{ display: 'grid', gap: 'var(--space-3)' }}>
         <h2 id="page-indicator-counter-heading" style={{ margin: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--headline2-size)', lineHeight: 'var(--headline2-line)', fontWeight: 'var(--fw-bold)' }}>
           카운터
@@ -108,6 +112,12 @@ export const CounterAndDots = {
     </main>
   ),
   play: async ({ canvasElement }) => {
+    const overview = canvasElement.querySelector('[role="group"][aria-label="대표 페이지 선택"]');
+    const fourth = overview?.querySelector('button[aria-label="4페이지로 이동"]');
+    if (!fourth) throw new Error('첫 예제는 직접 고를 수 있는 도트를 보여줘야 합니다.');
+    await userEvent.click(fourth);
+    if (overview.querySelector('[aria-current="page"]') !== fourth) throw new Error('첫 예제의 도트를 누르면 현재 페이지가 바뀌어야 합니다.');
+    await userEvent.click(overview.querySelector('button[aria-label="2페이지로 이동"]'));
     const specimenGeometry = (name) => {
       const specimen = canvasElement.querySelector(`[data-page-indicator-specimen="${name}"]`);
       const visual = specimen?.querySelector('[role="group"] > [aria-hidden="true"]');
@@ -172,12 +182,12 @@ export const CounterAndDots = {
   },
 };
 
-function InteractiveDotsDemo() {
+function InteractiveDotsDemo({ groupLabel = '배너 페이지 표시기' }) {
   const [page, setPage] = React.useState(2);
   return (
     <div style={{ display: 'grid', gap: 10, justifyItems: 'start' }}>
-      <PageIndicator variant="dot" page={page} count={6} onChange={setPage} groupLabel="배너 페이지 표시기" />
-      <span style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', color: 'var(--color-semantic-label-neutral)' }}>
+      <PageIndicator variant="dot" page={page} count={6} onChange={setPage} groupLabel={groupLabel} />
+      <span role="status" style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', color: 'var(--color-semantic-label-neutral)' }}>
         현재 페이지: {page}
       </span>
     </div>

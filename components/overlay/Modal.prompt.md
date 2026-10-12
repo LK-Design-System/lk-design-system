@@ -60,3 +60,13 @@ const firstFieldRef = useRef(null);
 - [Fluent 2 Drawer](https://fluent2.microsoft.design/components/web/react/core/drawer/usage): edge surface와 중앙 dialog의 용도를 분리하고, 확인이 필요할 때 Drawer 자체를 다른 dialog처럼 스타일링하지 않도록 했습니다.
 
 Portal 선택, route 전환, 제출 상태와 데이터 보존은 제품 레이어가 소유합니다. Modal은 controlled open/dismiss, 표면 구조, focus/ARIA 계약만 소유합니다.
+
+## 열림·닫힘 모션 (2026-10-13)
+
+- 중앙 배치와 표면 anatomy를 유지하고 scrim opacity와 패널의 `space-2` 수직 이동을 `--dur-base`·`--ease-out`으로 연결합니다. Drawer/Sheet의 edge 이동보다 짧은 거리를 사용해 중앙 작업 공간의 맥락을 유지합니다. 새 공개 모션 prop이나 radius·그림자 변경은 추가하지 않습니다.
+- Core-private `overlay-presence.js`는 시각적 lifetime만 담당합니다. focus trap·stack·scroll lock은 기존 `useDialogFocus`가 실제 열림 상태에만 적용합니다.
+- 닫힘 상태는 즉시 `aria-modal`을 제거하고 `aria-hidden`·`inert`로 Tab 순서와 접근성 트리에서 제외합니다. scrim의 pointer hit-testing도 즉시 해제하고, 초점은 퇴장 완료를 기다리지 않습니다. shell 소유 inert가 같은 commit에서 제거되면 Drawer와 같은 post-mutation handoff로 복원을 마칩니다.
+- transition 완료 또는 계산된 최대 시간 + 50ms 뒤 제거하며 빠른 재오픈은 이전 제거를 취소합니다. unmount는 예약된 frame·timer·media listener를 정리합니다.
+- 퇴장 도중 다른 호출 요소가 다시 열어도 새 open edge에서 호출 지점을 캡처하므로, 다음 닫힘은 이전 trigger가 아닌 최신 trigger로 복원됩니다.
+- `prefers-reduced-motion: reduce`는 이동과 scrim 전환을 즉시 종료하고 열린 endpoint/닫힌 상태를 표시합니다. 퇴장 중 preference 변경도 반영합니다.
+- [WAI-ARIA Modal Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)에서 요구하는 실제 modality와 `aria-modal`의 일치를 퇴장 중에도 유지합니다. [Fluent 2 Dialog](https://fluent2.microsoft.design/components/web/react/core/dialog/usage)의 닫힘 후 trigger 복귀 및 기존 header/body/footer를 보존하고, [W3C Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)의 비필수 이동 비활성화를 LDS 기준으로 채택했습니다.

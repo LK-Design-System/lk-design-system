@@ -1,6 +1,9 @@
+import React from 'react';
+import { userEvent } from 'storybook/test';
 import {
   Avatar,
   AvatarGroup,
+  Stepper,
 } from '../src/index.js';
 import {
   AvatarCard as AvatarCardStory,
@@ -112,6 +115,30 @@ function ExampleTile({ label, children, width = 86 }) {
   );
 }
 
+function IdentityPreview() {
+  const [visible, setVisible] = React.useState(3);
+  const participants = ['김운영', '박관리', '이문서', '최품질', '정지원', '한설계'].map((name) => ({ name }));
+  return (
+    <section data-testid="avatar-identity-preview" aria-label="개인과 참여자 그룹" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(240px, 100%), 1fr))', gap: 'var(--space-5)' }}>
+      <div style={{ display: 'grid', gap: 'var(--space-3)', alignContent: 'start' }}>
+        <h2 style={{ margin: 0, fontSize: 'var(--headline2-size)', lineHeight: 'var(--headline2-line)' }}>개인</h2>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+          <Avatar name="김운영" status="online" size="medium" />
+          <span style={{ fontSize: 'var(--body2-size)' }}>김운영</span>
+        </div>
+      </div>
+      <div style={{ display: 'grid', gap: 'var(--space-3)', alignContent: 'start' }}>
+        <h2 style={{ margin: 0, fontSize: 'var(--headline2-size)', lineHeight: 'var(--headline2-line)' }}>참여자 6명</h2>
+        <AvatarGroup items={participants} max={visible} aria-label={`참여자 6명 중 ${visible}명 표시`} data-avatar-preview-group />
+        <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
+          <span style={{ fontSize: 'var(--label2-size)', color: 'var(--color-semantic-label-neutral)' }}>표시할 인원</span>
+          <Stepper label="표시할 참여자 수" value={visible} min={1} max={6} onChange={setVisible} size="sm" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function AvatarResourceComparison() {
   return (
     <section style={{ display: 'grid', gap: 'var(--space-3)' }}>
@@ -148,6 +175,7 @@ export const AvatarPatterns = {
   ),
   render: () => (
     <main style={{ display: 'grid', gap: 'var(--space-5)', maxWidth: 920 }}>
+      <IdentityPreview />
       <MatrixSection title="Person Avatar">
         <MatrixRow label="variant">
           {avatarVariants.map((item) => (
@@ -241,6 +269,15 @@ export const AvatarPatterns = {
     </main>
   ),
   play: async ({ canvasElement }) => {
+    const preview = canvasElement.querySelector('[data-testid="avatar-identity-preview"]');
+    const previewGroup = preview?.querySelector('[data-avatar-preview-group]');
+    const increase = preview?.querySelector('button[aria-label="표시할 참여자 수 증가"]');
+    const decrease = preview?.querySelector('button[aria-label="표시할 참여자 수 감소"]');
+    if (!increase || !decrease || !previewGroup?.textContent.includes('+3')) throw new Error('첫 예제는 개인과 초과 인원을 가진 참여자 그룹을 함께 보여줘야 합니다.');
+    await userEvent.click(increase);
+    if (!previewGroup.textContent.includes('+2')) throw new Error('표시 인원을 늘리면 그룹의 초과 인원이 갱신되어야 합니다.');
+    await userEvent.click(decrease);
+    canvasElement.ownerDocument.activeElement?.blur?.();
     // WCAG 1.4.1 / 1.1.1 — the status dot and the pushBadge are colour-only
     // marks, so each must contribute a text alternative. A role="img" avatar
     // hides its subtree, hence the fold into the accessible name.

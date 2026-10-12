@@ -8,7 +8,7 @@ const meta = {
   tags: ['autodocs'],
   component: Button,
   args: {
-    children: '버튼',
+    children: '저장',
     variant: 'primary',
     size: 'md',
     full: false,
@@ -55,7 +55,13 @@ export const Playground = {
   parameters: storyDescription(
     '문맥에 맞는 버튼의 변형, 색상, 크기와 로딩·비활성 상태를 직접 조정하는 상황입니다. 행동의 우선순위가 시각적 강조와 일치하고 상태가 바뀌어도 레이블의 의미가 유지되는지 확인하세요.',
   ),
-  render: (args) => <Button {...args} />,
+  render: (args) => (
+    <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
+      <Button {...args} />
+      <Button variant="outlined" color="assistive" size={args.size}>취소</Button>
+      <Button variant="ghost" size={args.size} iconOnly aria-label="더 보기"><Icon name="more-horizontal" size={18} /></Button>
+    </div>
+  ),
 };
 
 export const Variants = {

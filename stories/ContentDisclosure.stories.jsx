@@ -85,6 +85,14 @@ export const Disclosure = {
       throw new Error('접은 뒤 패널은 inert가 되어 탭 포커스·스크린리더에서 빠져야 합니다.');
     }
     await userEvent.click(collapsibleTrigger);
+    const view = doc.defaultView;
+    if (view.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      for (const node of canvasElement.querySelectorAll('[data-lds-accordion-motion], [data-lds-collapsible-motion]')) {
+        if (view.getComputedStyle(node).transitionDuration.split(',').some((duration) => Number.parseFloat(duration) !== 0)) {
+          throw new Error('Reduced motion must reveal disclosure endpoints immediately while keeping expanded/inert semantics.');
+        }
+      }
+    }
   },
 };
 

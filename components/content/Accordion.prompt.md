@@ -12,3 +12,9 @@
 - 슬롯 이름은 같은 해부를 쓰는 `ListCell`(`leading` · `title` · `description`)과 맞췄습니다. 구분선은 항상 그려집니다(끄는 옵션은 실제 필요가 확인되면 엽니다).
 - 접근성: 각 트리거는 `aria-expanded` + `aria-controls`로 자신의 패널을 가리키고, 패널은 `role="region"` + `aria-labelledby`로 트리거와 연결됩니다. 접힌 패널은 `inert`로 접근성 트리·탭 포커스 순서에서 제거되어 `aria-expanded=false`와 상태가 일치합니다(시각 리빌 전환은 유지). `Collapsible`도 같은 계약을 공유합니다.
 - 접근성: 각 헤더 버튼은 실제 heading(기본 `<h3>`)으로 감싸집니다 — APG Accordion 은 "each accordion header is contained in an element with role heading"을 요구하며, 이 래퍼 덕분에 스크린리더 사용자가 heading 탐색(H 키)으로 섹션 사이를 건너뛸 수 있습니다. 래퍼는 `margin: 0; font: inherit` 이라 시각은 버튼이 그대로 소유합니다. 주변 문서의 제목 계층에 맞춰 `headingLevel` 을 조정하고(레벨 건너뛰기 금지), 바깥에서 이미 heading 을 제공하면 `headingLevel={false}` 로 끄세요.
+
+## Motion contract
+
+- 헤더 색은 fast, chevron 회전과 grid-rows reveal은 base timing을 유지합니다. Collapsible과 같은 disclosure 연속성이며 새로운 API·모서리·브랜드 표현을 추가하지 않습니다.
+- `prefers-reduced-motion: reduce`에서는 scoped guard로 transition의 시간·지연만 0으로 둡니다. 열린 chevron 방향과 grid의 최종 높이를 유지하고 `aria-expanded`·`inert`는 클릭 시 즉시 바뀝니다.
+- 근거: [WAI-ARIA Accordion Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)의 header/panel 연결과 expanded 의미를 유지하며, [WCAG 2.2 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)에 따라 비필수 reveal/rotation 보간을 생략할 수 있게 합니다. default 200ms·ops 160ms의 속도는 기존 LDS token 결정입니다.

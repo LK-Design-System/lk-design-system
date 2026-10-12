@@ -57,7 +57,7 @@ function tokenKind(name) {
   if (/^--shadow-/.test(name)) return 'shadow';
   if (/^--radius-/.test(name)) return 'radius';
   if (/^--(space|gutter|container|header-h|control-h|mobile-)/.test(name)) return 'length';
-  if (/^--(duration|ease|motion|transition)/.test(name)) return 'motion';
+  if (/^--(dur-|duration|ease|motion|transition)/.test(name)) return 'motion';
   if (/-(size|line|spacing)$/.test(name) || /^--(fw|fs|ls|font)/.test(name)) return 'type';
   if (/^--border-/.test(name)) return 'border';
   return 'raw';
@@ -160,19 +160,37 @@ function Preview({ name, value, kind }) {
  * Resolved during render, not in an effect: an effect leaves the first paint with an empty
  * table, and a play function that runs before it flushes sees a specimen with no rows.
  */
-function useResolvedTokens(names) {
+function useResolvedTokens(names, scopeRef) {
+  const [revision, refresh] = React.useReducer((value) => value + 1, 0);
+  React.useEffect(() => {
+    const scope = scopeRef?.current;
+    if (!scope) return undefined;
+    const view = scope.ownerDocument.defaultView;
+    const observer = new view.MutationObserver(refresh);
+    const preference = view.matchMedia('(prefers-reduced-motion: reduce)');
+    for (let ancestor = scope; ancestor; ancestor = ancestor.parentElement) {
+      observer.observe(ancestor, { attributes: true, attributeFilter: ['data-lds-profile', 'data-theme', 'class'] });
+    }
+    preference.addEventListener('change', refresh);
+    refresh();
+    return () => {
+      observer.disconnect();
+      preference.removeEventListener('change', refresh);
+    };
+  }, [scopeRef]);
   return React.useMemo(() => {
     if (typeof document === 'undefined') return [];
-    const computed = getComputedStyle(document.documentElement);
+    const computed = getComputedStyle(scopeRef?.current ?? document.documentElement);
     return names.map((name) => ({
       name,
       value: computed.getPropertyValue(name).trim(),
       kind: tokenKind(name),
     }));
-  }, [names]);
+  }, [names, scopeRef, revision]);
 }
 
 export function FoundationSpecimen({ slug }) {
+  const motionScopeRef = React.useRef(null);
   const foundation = foundations.get(slug);
   if (!foundation) throw new Error(`Unknown foundation: ${slug}`);
 
@@ -186,10 +204,11 @@ export function FoundationSpecimen({ slug }) {
     return [...new Set(expanded)];
   }, [foundation]);
   const notes = foundation.tokens.filter((token) => !token.startsWith('--'));
-  const rows = useResolvedTokens(names);
+  const rows = useResolvedTokens(names, slug === 'motion' ? motionScopeRef : undefined);
   const undefinedTokens = rows.filter((row) => !row.value);
 
   return (
+    <div ref={slug === 'motion' ? motionScopeRef : undefined} style={{ display: 'contents' }}>
     <Stack as="main" gap="var(--space-6)" style={{ width: 'min(920px, 100%)', minWidth: 0 }}>
       <Callout tone="signal">{foundation.purpose}</Callout>
 
@@ -224,6 +243,7 @@ export function FoundationSpecimen({ slug }) {
         </Callout>
       ) : null}
     </Stack>
+    </div>
   );
 }
 
