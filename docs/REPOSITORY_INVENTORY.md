@@ -5,10 +5,10 @@
 | Type | Current register |
 | Status | Current |
 | Owner | Frontend platform · Design system owner |
-| Last reviewed | 2026-08-23 |
+| Last reviewed | 2026-10-13 |
 | Update | `npm run report:inventory` · `npm run check:inventory` |
 
-Storybook의 794개 스토리 역할·공개 여부·소유 컴포넌트와 202개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
+Storybook의 802개 스토리 역할·공개 여부·소유 컴포넌트와 202개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
 
 이 레포는 Core·Theme·Product owner package를 함께 개발하고 검증하는 LDS workspace입니다. 루트는 배포 패키지가 아니라 private orchestrator이며, Robotics UI는 별도 저장소와 패키지가 소유합니다.
 
@@ -54,12 +54,14 @@ WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`
 
 - 현재 React component entry export: 214개
 - 공개 named export: 227개
-- Storybook 전체 story: 794개
-- Storybook public story: 558개
-- Storybook hidden story: 236개
+- Storybook 전체 story: 802개
+- Storybook public story: 564개
+- Storybook hidden story: 238개
 - 숨김 visual parity story: 102개
-- visual inventory React story: 794개
-- 접근성 guard 검사 대상 implementation story: 794개
+- visual inventory React story: 802개
+- 접근성 guard 검사 대상 implementation story: 802개
+
+이 수치는 `dc4072a1`의 정본 Linux index census이며 접근성 검사 대상의 크기를 나타냅니다. 전체 접근성 검사의 통과 증거는 별도 exact-SHA CI 결과로 확인합니다. `a7009772` CI는 inventory 문서 drift에서 중단되어 접근성·packed package·소비자 검증까지 완료하지 못했습니다.
 
 ## 생성 영역
 

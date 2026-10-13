@@ -1,11 +1,11 @@
 # Compass R8 변경 사항과 후속 작업
 
-R8 source·IA 검토 후보 `dc4072a1`을 승인받아 push하고 Linux export 1회를 완료했습니다. 새 산출물의 추적 문서 11개를 검토해 로컬에 반영했으며 IA 802개 전체 reviewed·stale 0입니다. 형태 비교는 네 테마/프로필의 넓은·좁은 화면과 글꼴을 확인했고 현행 공유 값 유지를 권고합니다. 생성물 통합 커밋의 push와 exact-SHA 자동 CI·release qualification은 남아 있습니다. R8 완료나 제품 배포를 뜻하지 않습니다.
+R8 source와 정본 생성물을 통합한 `a7009772`를 승인받아 push했습니다. 자동 CI의 fast gate와 Storybook build·치수 검사는 통과했지만 `check:inventory`에서 기존 문서·숨김 Stat 예제의 오래된 story 수 때문에 실패했습니다. 세 곳을 실제 census인 802/564/238에 맞췄고 focused inventory 검사가 통과한 로컬 후보를 준비했습니다. IA는 802개 전체 reviewed·stale 0이며 현행 공유 형태 값 유지를 권고합니다. 새 후보의 push·exact-SHA CI와 release qualification은 남아 있습니다.
 
 | Field | Value |
 | --- | --- |
 | Type | Working source handoff |
-| Status | dc4072a1 export reviewed and locally integrated; integrated-SHA automatic CI and release qualification pending |
+| Status | a7009772 CI failed at inventory census; scoped local fix verified; new push/CI and release qualification pending |
 | Owner | Design system owner · Foundation owner |
 | Last reviewed | 2026-10-13 |
 | Roadmap | [LDS Roadmap R8](../../LDS_ROADMAP.md#121-r8--컨트롤-피드백과-모션대표-예제-개선) |
@@ -60,7 +60,7 @@ Portal은 기간별 조회, 권한, 응답 방식과 controlled 상태를 소유
 ## 남은 작업과 승인
 
 1. 형태 시안의 font·layout 검토는 완료했습니다. 현행 공유 값 유지를 권고하며 미채택 세 안을 공유 토큰 변경으로 확대하지 않습니다. 새로운 형태 채택은 구체적인 owner 결정 후 별도 변경으로 진행합니다.
-2. 최신 생성물 통합 커밋의 push를 승인받고 자동 CI·Pages를 확인합니다. `dc4072a1`의 Linux export와 diff 검토는 완료했으므로 같은 입력의 수동 export를 다시 실행하지 않습니다. Windows에서 생성하거나 전체 gate를 중복 실행하지 않습니다.
+2. inventory 수치 정정 커밋의 push를 승인받고 자동 CI·Pages를 확인합니다. `dc4072a1`의 Linux export와 diff 검토는 완료했으며 이번 수치 정정은 정본 생성 입력을 바꾸지 않으므로 추가 수동 export는 필요하지 않습니다. Windows에서 생성하거나 전체 gate를 중복 실행하지 않습니다.
 3. 권한 있는 release operator 환경에서 registry와 server04 fresh guest qualification을 확인한 뒤 태그 push·발행·서버 실행을 각각 승인받습니다. 검증된 패키지 발행 후 제품 owner가 pin 갱신과 제품 검토·배포를 진행합니다.
 
 이번 source·데모·핸드오프 업로드 승인을 후속 push, 수동 dispatch, 태그, 발행, 제품 배포나 서버 변경의 승인으로 확장하지 않습니다. 각 행위는 기존 [운영 정책](../../OPERATIONS.md)과 사용자 승인을 따릅니다. 승인된 `interactionOpen` 외의 새 공개 API, 브랜드 색 변경과 repository 전체 motion gate 확대는 R8 범위에 포함하지 않습니다.
@@ -169,6 +169,20 @@ Artifact `canonical-linux-generated`의 ID는 `11790956880`, GitHub 보고 크�
 - Root dist·package runtime/source/token/docs·foundation 변경과 누락은 0개입니다. 기존 sourcemap/import 무결성 증거는 byte-identical 파일에 재사용합니다. Core 42 / Theme 13 / Product 9개 package docs manifest의 총 64개 hash도 실제 파일과 일치합니다. 의도하지 않은 runtime/API/token churn은 없습니다.
 
 검토 후 11개 추적 파일만 preimage와 결과 blob을 다시 검증해 로컬에 반영했습니다. 정본 index는 추적 파일로 추가하지 않았고 Windows 생성기는 실행하지 않았습니다. 이 통합 후보는 아직 원격에 없으므로 **전체 CI green은 남아 있습니다**. 다음은 이 로컬 통합 커밋의 승인된 push가 유발하는 자동 CI·Pages이며, 추가 수동 export는 필요하지 않습니다. 검토 증거는 `~/.local/state/lds-r8-export/38350921957/`에 보존했습니다.
+
+### a7009772 자동 CI 결과와 inventory 복구 후보
+
+사용자가 생성물 통합 `main@a7009772bdc77982aec5dc5e275f7832e38635f8`의 push를 승인해 원격 SHA를 확인한 뒤 push했습니다. 추가 수동 dispatch는 하지 않았습니다. [자동 CI 38351846142](https://github.com/LK-Design-System/lk-design-system/actions/runs/38351846142)는 2026-10-13 14:31:41 KST에 시작해 14:34:15 KST에 실패로 종료됐습니다(2분 34초). [Pages 38351846148](https://github.com/LK-Design-System/lk-design-system/actions/runs/38351846148)와 Linux conformance는 성공했습니다.
+
+이번 CI는 이전 stale 오류를 통과해 `check:fast` 전체를 마쳤고 Storybook build·adoption·rendered component 치수와 nested 치수 검사도 통과했습니다. 두 치수 검사에서 drift는 0개입니다. 다음 `check:inventory`가 아래 세 곳의 이전 794/558/236 수치로 실패했습니다.
+
+- `docs/REPOSITORY_INVENTORY.md`: 전체 802 / public 564 / hidden 238과 implementation 대상 802로 정정했습니다.
+- `docs/VISUAL_PARITY_LEDGER.md`: public 564와 implementation 대상 802로 정정했습니다. 접근성 행은 실행/통과 수가 아니라 guard 입력 census임을 명시했습니다.
+- `stories/CardsExtended.shared.jsx`: 숨김 `StatCard`의 공개 story 표시값 하나를 558→564로 맞췄습니다. story ID·이름·tags·visibility·primary description은 그대로입니다. 이 specimen은 현재 visual-smoke·expression-profile capture 대상이 아닙니다.
+
+검토된 `dc4072a1`의 Linux index를 비추적 `storybook-static/index.json`에 byte-identical 검사 입력으로 복사하고 실제 `node scripts/report-inventory.mjs --check-docs`를 실행해 통과했습니다. index를 생성하거나 기존 파일을 덮어쓰지 않았고 Git ignore도 확인했습니다. 공개 API·token·runtime·gate 규칙·review stamp·정본 생성물은 수정하지 않았습니다. 추가 export 없이 다음 승인된 push의 자동 CI로 진행할 수 있습니다.
+
+CI는 inventory에서 멈춰 `check:storybook-ia`, 전체 accessibility·visual regression, packed package와 Linux/Windows 소비자 검증까지 완료하지 못했습니다. 이 로컬 inventory 수정의 통과를 전체 CI green으로 해석하지 않습니다. 실패 로그·완료 snapshot은 `~/.local/state/lds-r8-export/a7009772-ci/`에 보존했고 기존 실행 감시는 종료합니다. 원격 push·재실행·태그·발행·서버 변경은 새로 하지 않았습니다.
 
 ## 로컬 확인 명령
 

@@ -5,7 +5,7 @@
 | Type | Current parity register |
 | Status | Current |
 | Owner | Design system owner |
-| Last reviewed | 2026-08-02 |
+| Last reviewed | 2026-10-13 |
 | Source | accepted WDS `.fig`, parity audit JSON, current Storybook index |
 
 This ledger tracks parity between the WDS source and the current
@@ -21,10 +21,12 @@ parity gates.
 | Runtime export gaps | 0 | No public export gap required by the WDS source |
 | React component entry exports | 214 | Public package component entries covered by checks |
 | Named public exports | 227 | Public package surface covered by type checks |
-| Storybook public stories | 558 | Component and pattern surfaces only |
+| Storybook public stories | 564 | Component and pattern surfaces only |
 | Storybook hidden visual parity stories | 102 | Tagged `visual-parity` and `!dev` |
-| Visual inventory React stories | 794 | Current implementation-story census; current source accessibility results require the Linux gate |
-| Accessibility checked implementation stories | 794 | Current implementation-story gate scope; no new full accessibility run claimed by the census update |
+| Visual inventory React stories | 802 | Current implementation-story census; current source accessibility results require the Linux gate |
+| Accessibility checked implementation stories | 802 | Current implementation-story gate scope; no new full accessibility run claimed by the census update |
+
+These counts come from the canonical Linux index for `dc4072a1`. The accessibility row records the gate's input scope, not completed checks. CI at `a7009772` stopped on inventory documentation drift before the full accessibility and package-consumer gates; its successful source and dimension checks do not certify those later gates.
 
 ## Parity source of truth
 
