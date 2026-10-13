@@ -1,11 +1,11 @@
 # Compass R8 변경 사항과 후속 작업
 
-Inventory 수정 `c9776d0c`를 승인받아 push했습니다. 자동 CI는 fast gate·Storybook build·치수·inventory·IA 802개 검사를 통과했지만 별도 primary description 원장에서 Motion·Lightbox 두 설명의 이전 hash로 실패했습니다. 실제 source의 다섯 문장을 검토해 두 항목만 갱신했고 read-only 설명문 체커 197개가 모두 통과한 로컬 후보를 준비했습니다. IA는 802개 전체 reviewed·stale 0이며 현행 공유 형태 값 유지를 권고합니다. 새 후보의 push·exact-SHA CI와 release qualification은 남아 있습니다.
+Inventory 수정 `c9776d0c`를 승인받아 push했습니다. 자동 CI는 fast gate·Storybook build·치수·inventory·IA 802개 검사를 통과했지만 별도 primary description 원장에서 Motion·Lightbox 두 설명의 이전 hash로 실패했습니다. 두 항목을 검토·갱신해 read-only 설명문 체커 197개가 통과한 `35a6b8b4`를 준비했습니다. 이어지는 접근성 단계의 사전검토에서 FileUpload 버튼의 실제 조작 영역을 확인하고 내부 target 표시를 source 한 줄로 보완했습니다. 최신 source의 push와 Linux projection·exact-SHA CI, release qualification은 남아 있습니다.
 
 | Field | Value |
 | --- | --- |
 | Type | Working source handoff |
-| Status | c9776d0c CI passed inventory/IA; two primary-description records reviewed and corrected locally; new push/CI and release qualification pending |
+| Status | Primary-description review corrected; FileUpload pointer-target annotation prepared; new push/Linux export/CI and release qualification pending |
 | Owner | Design system owner · Foundation owner |
 | Last reviewed | 2026-10-13 |
 | Roadmap | [LDS Roadmap R8](../../LDS_ROADMAP.md#121-r8--컨트롤-피드백과-모션대표-예제-개선) |
@@ -60,7 +60,7 @@ Portal은 기간별 조회, 권한, 응답 방식과 controlled 상태를 소유
 ## 남은 작업과 승인
 
 1. 형태 시안의 font·layout 검토는 완료했습니다. 현행 공유 값 유지를 권고하며 미채택 세 안을 공유 토큰 변경으로 확대하지 않습니다. 새로운 형태 채택은 구체적인 owner 결정 후 별도 변경으로 진행합니다.
-2. primary description 검토 기록 정정 커밋의 push를 승인받고 자동 CI·Pages를 확인합니다. `dc4072a1`의 Linux export와 diff 검토는 완료했으며 이번 두 수동 기록 정정은 정본 생성 입력을 바꾸지 않으므로 추가 수동 export는 필요하지 않습니다. Windows에서 생성하거나 전체 gate를 중복 실행하지 않습니다.
+2. 설명문 기록과 FileUpload pointer-target 보완 source의 push, 동일 SHA의 Linux export 1회를 각각 승인받습니다. 설명문 기록만의 `35a6b8b4`에는 export가 필요 없지만 후속 FileUpload source·prompt는 package/dist/문서 projection을 바꾸므로 최신 SHA에서 정본 생성이 필요합니다. 산출물 diff 검토·통합 후 승인된 push의 자동 CI·Pages를 확인합니다. Windows 생성·전체 gate 중복 실행은 하지 않습니다.
 3. 권한 있는 release operator 환경에서 registry와 server04 fresh guest qualification을 확인한 뒤 태그 push·발행·서버 실행을 각각 승인받습니다. 검증된 패키지 발행 후 제품 owner가 pin 갱신과 제품 검토·배포를 진행합니다.
 
 이번 source·데모·핸드오프 업로드 승인을 후속 push, 수동 dispatch, 태그, 발행, 제품 배포나 서버 변경의 승인으로 확장하지 않습니다. 각 행위는 기존 [운영 정책](../../OPERATIONS.md)과 사용자 승인을 따릅니다. 승인된 `interactionOpen` 외의 새 공개 API, 브랜드 색 변경과 repository 전체 motion gate 확대는 R8 범위에 포함하지 않습니다.
@@ -198,6 +198,14 @@ CI는 inventory에서 멈춰 `check:storybook-ia`, 전체 accessibility·visual 
 실제 checker로 수정 전 동일 두 실패를 재현했고 수정 후 **197개 primary description 전체가 통과**했습니다. lockfile과 같은 TypeScript 5.9.3을 검증용 상태 디렉터리에서 사용하고 registry integrity를 확인했습니다. 저장소 dependency/lockfile·node_modules·generator·build·정본 산출물은 변경하지 않았으며 `--review-current`나 전체 도장 갱신을 사용하지 않았습니다. 이 수동 review JSON은 생성/Storybook 입력이 아니므로 추가 Linux export는 필요하지 않습니다.
 
 CI는 이 검사에서 중단되어 tooltip/public surface·전체 접근성·visual regression·expression-profile, packed package 및 Linux/Windows 소비자 검증은 아직 남아 있습니다. 실패 로그와 SHA별 snapshot은 `~/.local/state/lds-r8-export/c9776d0c-ci/`에 보존했습니다. 로컬 체커 통과는 새 후보의 전체 CI green을 의미하지 않습니다. 기존 실행 감시는 종료하며 다음 단계는 정정 커밋의 행위별 push 승인입니다.
+
+### 후속 접근성 target 사전검토와 FileUpload 보완
+
+다음 접근성 단계의 source 사전검토에서 신규 `ButtonSelection`의 숨김 native file input이 `1×1px`이며 선언된 pointer target이 없어 새 undersized signature가 될 수 있음을 확인했습니다. 이것은 아직 도달하지 않은 전체 접근성 job의 실제 실패 결과와 구분합니다. 공개 `c9776d0c` Pages를 Chromium에서 확인하니 enabled/disabled input은 모두 1×1px, 연결된 Button label은 320×32px, wrapper는 320×32.9px였습니다. x/y/width는 같으며 작은 줄높이 차이가 target-size 통과를 만들지 않습니다.
+
+Button presentation에서만 기존 wrapper에 `data-lds-target="file-upload-button"`을 선언해 검사기가 실제 label에 대응하는 선택 영역을 측정하도록 source 한 줄을 보완했습니다. 기본 dropzone, DOM 구조, input의 수명·focus·native picker·callback·disabled 동작과 공개 API·token·시각 값은 변경하지 않았습니다. `[data-lds-target]` CSS는 없고 접근성 검사·expression matrix 측정만 소비합니다. 현재 expression fixture에는 FileUpload가 없습니다. Target baseline이나 gate 규칙을 완화하지 않았습니다.
+
+Prompt contract와 whitespace 검사는 통과했습니다. 이 private annotation의 source 선택과 측정 근거를 독립 에이전트도 검토했습니다. 새 source의 실제 접근성 job 통과를 인증하지 않으며 package/dist/생성 문서의 정본 Linux projection과 그 통합 SHA의 전체 CI가 필요합니다. 설명문 기록만의 수정과 별도 커밋으로 유지합니다. 다음 요청은 최신 source push와 `export_dist=true`, `export_visual_baseline=false`인 Linux export 1회의 행위별 승인입니다.
 
 ## 로컬 확인 명령
 

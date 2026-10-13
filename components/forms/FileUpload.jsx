@@ -89,6 +89,7 @@ export function FileUpload({
       aria-disabled={disabled || undefined}
       data-size={normalizedSize}
       data-presentation={buttonPresentation ? 'button' : 'dropzone'}
+      data-lds-target={buttonPresentation ? 'file-upload-button' : undefined}
       data-drag-active={drag ? '' : undefined}
       data-focus-visible={focused ? '' : undefined}
       onDragEnter={(event) => {

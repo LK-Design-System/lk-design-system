@@ -23,6 +23,7 @@
 - `presentation` 기본 dropzone는 기존 표면과 112/144px 높이를 유지합니다. button은 같은 실제 input에 연결된 LDS `Button as="label"`, outlined assistive variant로 표시합니다. 기존 Button size/radius/폰트/fill을 재사용하며 label에 별도 tab stop을 만들지 않습니다.
 - button의 hint 기본값은 「파일 선택」입니다. dropzone 기본 안내는 그대로입니다. 조작 이름은 선택 뒤에도 유지하고 파일 선택·거부 결과는 같은 polite status로 알립니다. 선택 파일명 목록과 upload/processing/cancel은 제품이 별도 구성합니다.
 - picker·accept·multiple·capture·거부 callback·disabled·aria-describedby/invalid·동일 파일 재선택과 drag/drop handler 합성은 두 presentation에서 같습니다. focus는 실제 input이 받고 기존 input focus shadow를 Button label 표면에 표시합니다.
+- button presentation의 wrapper는 보이는 Button label에 대응하는 선택 영역을 `data-lds-target`으로 선언합니다. 접근성 target-size 검사는 실제 32px 이상인 선택 표면을 측정하며, Tab 순서에 남는 숨김 1px native input을 별도 작은 pointer target으로 취급하지 않습니다. input의 위치·수명·focus·picker 동작은 그대로입니다.
 - 시각 delta는 dashed target·tile·여러 줄 파일명을 짧은 button entry로 대체하는 opt-in뿐입니다. Button/FileUpload 내부 비교 결과 다른 border/radius/shadow 값을 만들지 않았습니다. `ButtonSelection` 실제 story는 320px, 허용/거부, keyboard focus, 동일 input·disabled 계약을 확인합니다.
 - 구현 전 [USWDS File input](https://designsystem.digital.gov/components/file-input/)의 native input·연결된 label·형식 제한·거부 status 원칙과 [GOV.UK File upload](https://design-system.service.gov.uk/components/file-upload/)의 파일 선택 이름·힌트와 오류 연결을 확인했습니다. 압축 표면 때문에 native picker를 자체 input으로 대체하지 않습니다.
 
