@@ -130,8 +130,9 @@ export function Toast({
         display: "inline-flex",
         alignItems: "center",
         gap: 'var(--space-2-5)',
-        minWidth: 335,
-        maxWidth: 520,
+        boxSizing: "border-box",
+        minWidth: "min(335px, 100%)",
+        maxWidth: "min(520px, 100%)",
         padding: "11px 16px",
         background: "var(--component-transient-feedback-bg)",
         backdropFilter: "blur(var(--component-transient-feedback-blur))",
@@ -163,6 +164,7 @@ export function Toast({
           letterSpacing: "var(--body2-spacing)",
           color: "var(--color-semantic-inverse-label)",
           wordBreak: "keep-all",
+          overflowWrap: "anywhere",
         }}
       >
         {children}

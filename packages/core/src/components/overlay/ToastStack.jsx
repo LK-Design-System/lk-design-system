@@ -68,7 +68,7 @@ export function ToastStack({ children, position = 'bottom-right', gap = 10, live
 
   return (
     <ToastLiveRegionContext.Provider value={liveRegion ? announce : null}>
-      <div style={{ position: 'fixed', zIndex: 120, display: 'flex', flexDirection: 'column', gap, ...pos, ...style }} {...rest}>
+      <div style={{ position: 'fixed', zIndex: 120, display: 'flex', flexDirection: 'column', width: 'max-content', minWidth: 'min(335px, calc(100% - 40px))', maxWidth: 'calc(100% - 40px)', gap, ...pos, ...style }} {...rest}>
         {children}
       </div>
       {liveRegion && (

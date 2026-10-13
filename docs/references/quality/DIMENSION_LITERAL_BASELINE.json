@@ -95,6 +95,7 @@
     "components/overlay/Snackbar.jsx:padding:11px": 1,
     "components/overlay/Toast.jsx:minWidth:335px": 1,
     "components/overlay/Toast.jsx:padding:11px": 1,
+    "components/overlay/ToastStack.jsx:minWidth:335px": 1,
     "components/robotics/BatteryGauge.jsx:borderRadius:3px": 1,
     "components/robotics/BatteryGauge.jsx:height:5px": 1,
     "components/selection/SegmentedControl.jsx:padding:9px": 1
