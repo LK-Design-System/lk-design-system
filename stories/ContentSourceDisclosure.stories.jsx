@@ -1,5 +1,5 @@
 import { Card, SourceDisclosure } from '../src/index.js';
-import { userEvent } from 'storybook/test';
+import { userEvent, waitFor } from 'storybook/test';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -97,9 +97,11 @@ export const AvailabilityAndProvenance = {
       throw new Error('Withheld sources must be reported as an aggregate line.');
     }
     await userEvent.keyboard('{Escape}');
-    if ((panelId && doc.getElementById(panelId)) || toggle.getAttribute('aria-expanded') !== 'false') {
-      throw new Error('Escape must close the source popover.');
-    }
+    await waitFor(() => {
+      if ((panelId && doc.getElementById(panelId)) || toggle.getAttribute('aria-expanded') !== 'false') {
+        throw new Error('Escape must close the source popover.');
+      }
+    });
   },
 };
 

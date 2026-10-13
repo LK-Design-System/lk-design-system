@@ -1857,9 +1857,11 @@ export const InlineSourceFooter = {
       throw new Error('href 출처 행은 새 탭 링크여야 합니다.');
     }
     await userEvent.keyboard('{Escape}');
-    if ((panelId && canvasElement.ownerDocument.getElementById(panelId)) || toggle.getAttribute('aria-expanded') !== 'false') {
-      throw new Error('Escape는 출처 팝오버를 닫아야 합니다.');
-    }
+    await waitFor(() => {
+      if ((panelId && canvasElement.ownerDocument.getElementById(panelId)) || toggle.getAttribute('aria-expanded') !== 'false') {
+        throw new Error('Escape는 출처 팝오버를 닫아야 합니다.');
+      }
+    });
     assertNoPerMessageLiveRegions(canvasElement);
   },
 };

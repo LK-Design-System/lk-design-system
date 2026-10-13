@@ -1,4 +1,5 @@
 import React from 'react';
+import { waitFor } from 'storybook/test';
 import { Icon, Popover, Switch, ViewerToolbar, ViewerToolbarButton } from '../src/index.js';
 import { ViewerToolbarCard as ViewerToolbarCardStory } from './ProductEditorAndViz.shared.jsx';
 import { storyDescription } from './StoryGuide.shared.jsx';
@@ -236,9 +237,11 @@ export const ViewerToolbarOverview = {
     }
     layerSettings.click();
     await waitForRender();
-    if (panelId && canvasElement.ownerDocument.getElementById(panelId)) {
-      throw new Error('The layer settings verification must leave the overview in its default closed state.');
-    }
+    await waitFor(() => {
+      if (panelId && canvasElement.ownerDocument.getElementById(panelId)) {
+        throw new Error('The layer settings verification must leave the overview in its default closed state.');
+      }
+    });
   },
 };
 
