@@ -10,6 +10,20 @@
 
 ## 현재 정본 원장과 검토 범위
 
+### 2026-10-13 Linux 산출물과 위임 검토 후보
+
+`c4209276`의 [Linux export 38334450818](https://github.com/LK-Design-System/lk-design-system/actions/runs/38334450818)을 로컬 `f8aa0017`에 반영했습니다. 정본 관측은 202개 페이지와 802개 스토리이며 Docs route는 201개입니다. 기존 794개 ID·공개 상태를 모두 보존하고 R8 이전 Input/Select 2개와 채팅·첨부 6개가 추가됐습니다.
+
+- 공개 스토리: 564개
+- 숨김 스토리: 238개
+- 숨김 visual parity: 102개
+- 숨김 internal contract: 132개
+- 이 export의 생성 summary는 검토 완료 페이지 202/202개, 스토리 794/802개이며 stale source review 16개를 기록합니다.
+
+사용자가 후속 작업 전부를 위임해 에이전트가 16페이지·93스토리의 실제 source·역할·owner·설명·공개 순서·중복 목적과 신규 8개 예제를 검토했습니다. 기존 판정은 유지하며 새 public 6개는 `variants-states`, hidden 2개는 `internal-contract`입니다. 수동 필드에는 에이전트 위임 검토임을 적었고 직접 인간 시각 승인·H3·전수 접근성 검증으로 표현하지 않았습니다. FilePreparation 접두어와 컴포넌트 선택 안내를 고쳤고 Prose의 비동기 overflow-focus 검사를 보완했습니다. 측정과 제한은 [R8 후보 기록](working/compass-r8/README.md#생성물-반영과-위임-검토-후보)에 있습니다.
+
+수동 검토 필드가 기록한 범위는 검토 완료 페이지 202/202개, 스토리 802/802개입니다. 생성 source hash·summary·built index는 로컬에서 재계산하지 않았습니다. 최신 네 story source와 수동 필드를 다음 Linux export에 투영한 뒤 stale 0과 exact-SHA CI를 확인해야 하며, 현재 후보를 IA gate 통과로 표시하지 않습니다.
+
 ### 2026-10-11 문서 헤더 source 검토
 
 [소스 ec93f775](https://github.com/LK-Design-System/lk-design-system/commit/ec93f775c5e45f260a9f3cee8c00068e6f746891)의 Drawer는 `ShortHeader` public specimen 하나를 추가합니다. 보존된 793개 story ID와 public/hidden 구분의 hash가 기존 census 계약과 일치함을 확인한 뒤 `lds-product-overlay-drawer--short-header` 하나만 추가했습니다. 소스 집계는 202개 페이지와 794개 스토리이며 Docs route는 201개를 유지합니다.

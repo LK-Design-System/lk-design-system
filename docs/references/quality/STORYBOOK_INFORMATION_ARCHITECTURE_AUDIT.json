@@ -252,8 +252,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "d3bca1f0941578884948405273d35bfc2f23d0eecc03a2fcb0f41f06bb7496c1",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "55b3b3934114c5025e04fb840672df837f2eeef545056bef943acca9d90bf59c",
       "stories": [
         {
           "id": "lds-core-components-action-button--playground",
@@ -448,7 +448,7 @@
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\n2026-10-13 owner-delegated agent source/IA review: Action emphasis, busy/focus states and motion evidence remain distinct; Button stays the primary owner. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Core/Components/Action/FAB",
@@ -901,8 +901,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "54a4925a109026f1e6b615f14b5a7f9edfb7a6ba14bc7f0248e9bbdc17f61a85",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "dbbf84a74690f00276c50e7503618f4c7450925b0448f69a6c39715b64602ec8",
       "stories": [
         {
           "id": "lds-core-components-content-avatar--avatar-patterns",
@@ -978,7 +978,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\n2026-10-13 owner-delegated agent source/IA review: Person and group identity retain one home; Stepper only demonstrates group count. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Core/Components/Content/Card",
@@ -1385,8 +1385,8 @@
       "dispositionReason": "Kept as one LDS disclosure-pattern page. The accepted local .fig snapshot has no WDS Accordion or Collapsible component-set (only a Folder icon matches); WDS Content defines Icon, Content Badge, Thumbnail, Avatar, List Cell, Card. Accordion and Collapsible are LDS extensions, so promoting them to standalone WDS-component pages would invent taxonomy WDS does not define.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "d9ce569eeb850417f9ca75a95a79cfa77c009c25bc39357e5e313e2d3fc44715",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "abf778521dd660a35e9434aa69cf125e5383bb13c83a9e58bd05bf38e181b4ca",
       "stories": [
         {
           "id": "lds-core-components-content-disclosure--disclosure",
@@ -1441,7 +1441,7 @@
           ]
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\n2026-10-13 owner-delegated agent source/IA review: Accordion and Collapsible retain joint ownership; expansion, inert descendants and accessible descriptions are distinct learning goals. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Core/Components/Content/Lists",
@@ -1984,8 +1984,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "56c536ddbee75f038522eb1f2eb35ec716ea7460b4b55aa56fb3a8e3fc0f915b",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "bd05ed07d4a8745b788a99d09ea77e24cb7adf5c16ff2e3d21be94f7b9ac1e8e",
       "stories": [
         {
           "id": "lds-core-components-content-prose--prose-example",
@@ -2027,12 +2027,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": true,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "Prose"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-10-13 owner-delegated agent source/IA review: Document versus chat typography is a public variant, separate from narrow content. Font/overflow-focus timing in ChatTypography was corrected without weakening its assertion. Retain public variants-states; actual source purpose, naming, ownership and distinctness reviewed. Published c4209276 render observed at 390px; play completion and final candidate CI are not certified by this note. See docs/working/compass-r8/README.md."
         },
         {
           "id": "lds-core-components-content-prose--narrow-reflow",
@@ -2082,7 +2083,7 @@
           "reviewNote": "2026-07-24 owner review: 신규 Prose 컴포넌트(마크다운 렌더 결과의 문서 타이포그래피 표면) 페이지 추가 — 개요·반응형·parity 스토리와 조판/접근성 계약을 소유자가 확인."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-13 owner-delegated agent source/IA review: Document versus chat typography is a public variant, separate from narrow content. Font/overflow-focus timing in ChatTypography was corrected without weakening its assertion. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Core/Components/Content/Step List",
@@ -3242,8 +3243,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "62c756cf764b3d57fa5ac3ec9bcb51afe464dfe9c05fb7953a89b0587e7987c7",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "49551b4a080c499e4d2f16d162f55e574eb89f032b2c13af3770046e7606a3b3",
       "stories": [
         {
           "id": "lds-core-components-navigation-page-indicator--counter-and-dots",
@@ -3294,7 +3295,7 @@
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\n2026-10-13 owner-delegated agent source/IA review: Counter and selectable dots remain one owner. Guidance now distinguishes short direct-dot selection from numbered Pagination and named Steps. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Core/Components/Navigation/Pagination",
@@ -5406,8 +5407,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "afadb0a9f9d6bad10f4115d9fd9214292b4aac6859d0f27cacbe5ce10e221eda",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "ae1d28c229ca53567f7b62f8db23bc862d10a7d8e44978db35af5e65c7a62b67",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-input--input-overview",
@@ -5494,12 +5495,13 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "Input"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-10-13 owner-delegated agent source/IA review: The layered single-focus specimen is hidden internal-contract evidence, distinct from public slot usage. Retain hidden internal-contract; actual source purpose, naming, ownership and distinctness reviewed. Published c4209276 render observed at 390px; play completion and final candidate CI are not certified by this note. See docs/working/compass-r8/README.md."
         },
         {
           "id": "lds-core-components-selection-and-input-input--input-interaction-matrix",
@@ -5573,7 +5575,7 @@
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\n2026-10-13 owner-delegated agent source/IA review: The layered single-focus specimen is hidden internal-contract evidence, distinct from public slot usage. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Number Field",
@@ -5939,8 +5941,8 @@
       "dispositionReason": "Kept as one LDS search/autocomplete page. The accepted local .fig snapshot has no WDS Search Field, Autocomplete, Combobox, or Tag Input component-set (only Search and Tag icons match); WDS Selection and Input centers on the single Textinput set. These are LDS extensions of Textinput, so splitting them into standalone WDS-component pages would invent taxonomy WDS does not define.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-10",
-      "reviewedSourceSha256": "75a91340be267b42c3f135329f786fc0c9b647e151e519d202f6668dd6efa584",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "09a9ef1581e360b25b4aab1d88fa8cb18a19a51079eb71ee6aa21e7c5d1aceda",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-search-and-autocomplete--search-and-autocomplete",
@@ -6183,7 +6185,7 @@
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-10 scoped9-page/10-story delta review: Reviewed single search focus purpose and layered focus treatment against unchanged Docs/Canvas evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-10 scoped9-page/10-story delta review: Reviewed single search focus purpose and layered focus treatment against unchanged Docs/Canvas evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained.\n2026-10-13 owner-delegated agent source/IA review: The four search input choices retain their existing family; the public single-focus example has a separate purpose. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Segmented Control",
@@ -6216,8 +6218,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-02",
-      "reviewedSourceSha256": "76e7d6d56d98adedfc3f329379f8783dca163748eef6649eeaa4c6c671904902",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "639fec7728ce1263a523ef0ba0c19a6a4fcf40184fc09491d3d07e2f6ab9eb78",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-segmented-control--segmented-control-overview",
@@ -6359,7 +6361,7 @@
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-13 owner-delegated agent source/IA review: One radiogroup owner; resize/RTL/reduced-motion checks stay hidden. Guidance now matches the established 2–4-option prompt. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Select",
@@ -6393,8 +6395,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-05",
-      "reviewedSourceSha256": "58d01a78294ae81151ab2b5ebb2b8bd9ff55f67186f0bb137d60fdfe2d60424f",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "cd5ce94b3f26aa897528968aa6f26ceacbdc24f16e4131dca64530bd58c8962e",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-select--selects",
@@ -6480,12 +6482,13 @@
           "hasStoryDescription": false,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "hidden",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "Select"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-10-13 owner-delegated agent source/IA review: Scrollbar/font/repeated-open width evidence stays hidden internal-contract, distinct from public popup density usage. Retain hidden internal-contract; actual source purpose, naming, ownership and distinctness reviewed. Published c4209276 render observed at 390px; play completion and final candidate CI are not certified by this note. See docs/working/compass-r8/README.md."
         },
         {
           "id": "lds-core-components-selection-and-input-select--select-stable-option-width-contract",
@@ -6652,7 +6655,7 @@
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         }
       ],
-      "reviewNote": "2026-08-02 full Select source and built-index review complete. The public popup-density example is a distinct usage reference, the density fixture remains hidden as an internal contract, and stable-width, surface/ref, keyboard, typeahead, disabled-option, and typography contracts retain Select ownership and intended visibility. The portalled density play now waits for measured positioning before pointer assertions and passed five consecutive browser runs.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement."
+      "reviewNote": "2026-08-02 full Select source and built-index review complete. The public popup-density example is a distinct usage reference, the density fixture remains hidden as an internal contract, and stable-width, surface/ref, keyboard, typeahead, disabled-option, and typography contracts retain Select ownership and intended visibility. The portalled density play now waits for measured positioning before pointer assertions and passed five consecutive browser runs.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement.\n2026-10-13 owner-delegated agent source/IA review: Scrollbar/font/repeated-open width evidence stays hidden internal-contract, distinct from public popup density usage. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Slider and Range",
@@ -6912,8 +6915,8 @@
       "dispositionReason": "Human layer review confirmed a distinct Core owner or intentionally coherent family; keep this page and add an audience-entry guide.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "41c25e30b86b77cd00cced071bf8e5378311254643ca19d1fb5c0d6dd5a02a0c",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "ac6492334f580dda2bee7ed05a2d2b6463d281005329e5e688e636055de73b22",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-switch--switch-control",
@@ -7030,7 +7033,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-13 owner-delegated agent source/IA review: Immediate binary-setting overview remains public; platform, keyboard and parity checks stay hidden. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Textarea",
@@ -8950,8 +8953,8 @@
       "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "cd9fd53c56d0b1146703dc1e884568d8a35f1327a9443420a683a9e358305829",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "e1abf3334df1d63edbaf49ed71fa9d64739d64382e9967325361a28f4cd4a021",
       "stories": [
         {
           "id": "lds-core-foundation-motion--overview",
@@ -8981,7 +8984,7 @@
           "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
         }
       ],
-      "reviewNote": "Foundation pages now follow the same split every component page uses: the canvas shows the foundation itself (its tokens resolved live, with a preview per token family) and the ten-section guide moved to a Docs tab. Pages whose token list is only file references carry no canvas story and are documentation only. Verified in the running dev server: no duplicated title or purpose between the docs blocks and the guide, contents rail sits on the section rhythm rather than on the divider, and the specimen play asserts no page-level horizontal overflow at 320px."
+      "reviewNote": "Foundation pages now follow the same split every component page uses: the canvas shows the foundation itself (its tokens resolved live, with a preview per token family) and the ten-section guide moved to a Docs tab. Pages whose token list is only file references carry no canvas story and are documentation only. Verified in the running dev server: no duplicated title or purpose between the docs blocks and the guide, contents rail sits on the section rhythm rather than on the divider, and the specimen play asserts no page-level horizontal overflow at 320px.\n2026-10-13 owner-delegated agent source/IA review: Foundation reference retains timing/profile, replay/stop and reduced-motion examples without becoming a component usage page. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Core/Foundation/Radius",
@@ -10089,8 +10092,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-10",
-      "reviewedSourceSha256": "e86057a5f44b5c260d942891b50f1753fd7bc42f791b1414c897b40025c7049d",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "4ad72e5063428f6150a68c01c1eb8c4b4abd906dc3dd98299431945c3646184b",
       "stories": [
         {
           "id": "lds-product-communication-conversation-list--overview",
@@ -10156,12 +10159,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "ConversationList"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-10-13 owner-delegated agent source/IA review: Two-line titles are a public variant distinct from one-line long-title behavior; navigation and row actions retain the same owner. Retain public variants-states; actual source purpose, naming, ownership and distinctness reviewed. Published c4209276 render observed at 390px; play completion and final candidate CI are not certified by this note. See docs/working/compass-r8/README.md."
         },
         {
           "id": "lds-product-communication-conversation-list--states",
@@ -10212,7 +10216,7 @@
           "reviewNote": "Rendered and play-checked by the implementing agent on 2026-10-09 (light/dark, normal/narrow); owner may re-review."
         }
       ],
-      "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Reviewed long titles/actions; exact69e9 official desktop manager initial overall PASS, hover/click/tab/waitFor4/4, rerun0, fresh console errors0. Reused unchanged a6b direct Canvas390x600 and1440x1000 plus native Tab/Enter/Escape/menu/focus-return proof. Mobile manager addon-modal inert rerun is excluded and not certified. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained."
+      "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Reviewed long titles/actions; exact69e9 official desktop manager initial overall PASS, hover/click/tab/waitFor4/4, rerun0, fresh console errors0. Reused unchanged a6b direct Canvas390x600 and1440x1000 plus native Tab/Enter/Escape/menu/focus-return proof. Mobile manager addon-modal inert rerun is excluded and not certified. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained.\n2026-10-13 owner-delegated agent source/IA review: Two-line titles are a public variant distinct from one-line long-title behavior; navigation and row actions retain the same owner. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Product/Communication/Message",
@@ -10773,8 +10777,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-10",
-      "reviewedSourceSha256": "ea765e087d1ce9483ae480e49b602aee30a20549567bd388426936a605fb92a0",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "76f28ecc14de1fe885df10f6db2b0527f5deecb6a362c970460320fc45ec6f39",
       "stories": [
         {
           "id": "lds-product-communication-message-composer--message-composer-overview",
@@ -10900,12 +10904,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "MessageComposer"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-10-13 owner-delegated agent source/IA review: Uncancellable waiting and attachment preparation are public states, distinct from cancellable requests. ListCell/Spinner/TextButton/Icon support the attachment slot. Prefix sorting and onStop guidance were corrected. Retain public variants-states; actual source purpose, naming, ownership and distinctness reviewed. Published c4209276 render observed at 390px; play completion and final candidate CI are not certified by this note. See docs/working/compass-r8/README.md."
         },
         {
           "id": "lds-product-communication-message-composer--keyboard-and-ime-contract",
@@ -11078,8 +11083,8 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "MessageComposer"
           ],
@@ -11088,10 +11093,11 @@
             "ListCell",
             "Spinner",
             "TextButton"
-          ]
+          ],
+          "reviewNote": "2026-10-13 owner-delegated agent source/IA review: Uncancellable waiting and attachment preparation are public states, distinct from cancellable requests. ListCell/Spinner/TextButton/Icon support the attachment slot. Prefix sorting and onStop guidance were corrected. Retain public variants-states; actual source purpose, naming, ownership and distinctness reviewed. Published c4209276 render observed at 390px; play completion and final candidate CI are not certified by this note. See docs/working/compass-r8/README.md."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement.\n2026-10-10 scoped9-page/10-story delta review: Reviewed inline composer and width-autosize purposes, retained draft and expansion contracts against unchanged Docs/Canvas evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement.\n2026-10-10 scoped9-page/10-story delta review: Reviewed inline composer and width-autosize purposes, retained draft and expansion contracts against unchanged Docs/Canvas evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained.\n2026-10-13 owner-delegated agent source/IA review: Uncancellable waiting and attachment preparation are public states, distinct from cancellable requests. ListCell/Spinner/TextButton/Icon support the attachment slot. Prefix sorting and onStop guidance were corrected. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Product/Communication/Message Feed",
@@ -13007,8 +13013,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-09",
-      "reviewedSourceSha256": "3b72447366cbf678d4a5c98c7c2845cb4dbf3fae3ba92fd56ee84085fdba57a3",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "4d972783c2817493f6c44a13e39acc8fb98c6ad45b6729f5fbd0bde780ef4661",
       "stories": [
         {
           "id": "lds-product-content-source-disclosure--availability-and-provenance",
@@ -13073,12 +13079,13 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "SourceDisclosure"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-10-13 owner-delegated agent source/IA review: Inline title/kind/location details are a public variant, distinct from provenance lists and compact chips; the toggle and rows retain SourceDisclosure ownership. Retain public variants-states; actual source purpose, naming, ownership and distinctness reviewed. Published c4209276 render observed at 390px; play completion and final candidate CI are not certified by this note. See docs/working/compass-r8/README.md."
         },
         {
           "id": "lds-product-content-source-disclosure--no-sources",
@@ -13272,7 +13279,7 @@
           "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. Reviewed in the running dev server: the Canvas opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas. The 2026-08-08 re-review adds an explicit default title arg to AvailabilityAndProvenance and confirms the representative uncontrolled Canvas exposes the title control, reruns its play contract, and reflects runtime arg updates in the toggle text."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. Reviewed in the running dev server: the Canvas opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas. The 2026-08-08 re-review adds an explicit default title arg to AvailabilityAndProvenance and confirms the representative uncontrolled Canvas exposes the title control, reruns its play contract, and reflects runtime arg updates in the toggle text.\n2026-10-13 owner-delegated agent source/IA review: Inline title/kind/location details are a public variant, distinct from provenance lists and compact chips; the toggle and rows retain SourceDisclosure ownership. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Product/Content/Spec Row",
@@ -22013,8 +22020,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "1bbc416da486eaedad4d6c82db459fbf245e793e0b607feb375e7b3ec7793821",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "686fdf62b9d2591261af5fd3b1a1f7ae6a684221c405f65d2e1e27591e1027f1",
       "stories": [
         {
           "id": "lds-product-overlay-lightbox--lightbox-open",
@@ -22121,7 +22128,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-13 owner-delegated agent source/IA review: Lightbox retains the overview and ownership; thumbnail controls are supporting components rather than a new page. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Product/Overlay/Sheet",
@@ -22798,8 +22805,8 @@
       "dispositionReason": "Post-split human review confirmed one distinct public owner and no duplicate audience-facing home in the final taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "57017b738d4c3e1af65aa4b9953c34d93cac9a8cf8c47c4152c6b64670b5f10b",
+      "reviewedAt": "2026-10-13",
+      "reviewedSourceSha256": "64141908d598750039131534576848098e5b0158e2a48ea040163cc130f0cb0e",
       "stories": [
         {
           "id": "lds-product-selection-and-input-file-upload--keyboard-file-selection",
@@ -22841,15 +22848,16 @@
           "hasStoryDescription": true,
           "hasCanvasGuidance": false,
           "recommendedVisibility": "public",
-          "reviewStatus": "pending",
-          "reviewMethod": null,
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
           "ownerComponents": [
             "FileUpload"
           ],
-          "supportingComponents": []
+          "supportingComponents": [],
+          "reviewNote": "2026-10-13 owner-delegated agent source/IA review: Button presentation is a public variant of the native picker with the same accept/rejection/disabled contract; upload execution remains product-owned. Retain public variants-states; actual source purpose, naming, ownership and distinctness reviewed. Published c4209276 render observed at 390px; play completion and final candidate CI are not certified by this note. See docs/working/compass-r8/README.md."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-13 owner-delegated agent source/IA review: Button presentation is a public variant of the native picker with the same accept/rejection/disabled contract; upload execution remains product-owned. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
     },
     {
       "title": "LDS Product/Selection and Input/File Upload Queue",

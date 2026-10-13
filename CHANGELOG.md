@@ -10,6 +10,26 @@ Paired Robotics release: `0.1.0-rc.53` (unchanged).
 
 - `Drawer`에 `headerSize="auto"|"sm"`을 추가했습니다. 기본 `auto`는 기존 density별 여백을 유지하며, `sm`은 상하 8px·좌우 20px로 32px control을 둔 한 줄 헤더를 49px로 구성합니다. 본문·푸터 밀도와 control 크기는 유지합니다.
 - `Drawer.headerActions`로 보조 명령을 제목의 말줄임 영역 밖, 닫기 버튼 앞에 배치합니다. 긴 제목에서도 명령과 포커스 표시가 잘리지 않습니다.
+- `ShellPanel density="compact"`, `ListCell typography="small"`, `EmptyState size="sm"`, `ResourceState density="compact"`·`emptyReason`을 추가했습니다. 좁은 목록에서도 차단 상태와 초기·검색·필터 빈 상태를 구분합니다.
+- `Table`과 공개 셀 스타일 helper에 `size="xs"`를 추가했습니다. 헤더는 32px, 한 줄 데이터 행의 최소 높이는 36px이며 긴 콘텐츠는 자연스럽게 늘어납니다.
+- `MessageComposer layout="inline"`을 추가했습니다. 단순 입력과 44px 보내기·중지 버튼을 한 행에 배치하고, 첨부나 보조 동작이 있으면 전체 너비 입력과 동작 행으로 전환합니다.
+- `ConversationList titleLines={2}`, `Prose typography="chat"`, `SourceDisclosure inlineDetails`를 추가했습니다. 긴 대화 제목, 16px/24px 채팅 본문과 표 스크롤, 출처 종류·위치를 표시하며 상세 행의 동작 영역은 44px로 확보합니다. `FileUpload presentation="button"`으로 기존 native 파일 선택기를 LDS 버튼 형태로 사용할 수 있습니다.
+- `OverlayPortal interactionOpen`으로 시각적 퇴장 유지와 자식 overlay의 실제 상호작용 수명을 구분합니다.
+
+### Changed
+
+- `ShellPanel` 주 동작을 36px 행으로 맞추고 현재 동작을 상시 배경 채움 대신 semibold로 표시합니다. 기본 한 줄 `ConversationList`는 메뉴가 보일 때 필요한 영역을 확보하며 전체 제목을 native title에도 남깁니다.
+- `MessageComposer`의 기본 stacked 입력 시작 높이를 comfortable 48→40px, compact 40→32px로 줄였습니다. placeholder 색을 컴포넌트가 소유하고, 컨테이너 너비가 바뀔 때 초안 높이를 다시 계산합니다. `onStop`이 없으면 non-idle에서 중지 버튼 대신 초점을 유지하는 대기 control을 표시합니다.
+- Button 상태 색상, SegmentedControl 선택면, Switch 노브와 Accordion·Collapsible 펼침에 기존 LDS motion token을 적용했습니다. 값·ARIA·callback은 즉시 반영하고 reduced-motion에서는 최종 상태를 유지하며 보간을 생략합니다.
+- Modal·Popover·Sheet에 열림·닫힘 전환을 적용했습니다. 닫히는 즉시 포커스·상호작용·접근성 상태를 해제하며, 빠른 재오픈과 중첩 overlay에서도 퇴장 타이머와 이전 자식 상태가 남지 않도록 했습니다.
+- 사용을 마친 ShellPanel 호환 토큰 3개의 이전 경로와 보존 계획을 문서화했습니다. 기존 선언 값은 보존하며 `0.5.x`까지 유지하고 `0.6.0`에서 검토합니다. 기한만으로 자동 제거하지 않습니다.
+
+### Fixed
+
+- Input·SearchField의 키보드 포커스를 전체 control을 둘러싼 표시 하나로 통일했습니다. CSS cascade layer에서도 안쪽 사각 링이 되살아나지 않으며 보조 버튼은 독립 포커스를 유지합니다. Select는 옵션·체크 표시·스크롤바와 글꼴 변경까지 반영해 팝업 너비를 계산합니다.
+- `DataToolbar layout="auto"`가 필터·정렬 묶음의 실제 너비에 따라 한 행·두 행·Drawer 배치를 선택하도록 고쳤습니다. 필터 묶음이 중간에 갈라지지 않고 필터 Drawer는 최대 420px를 유지합니다.
+- `DashboardShell` 모바일 내비게이션을 단일 Drawer 스크롤로 구성했습니다. 넓은 화면으로 전환할 때 닫힘을 요청하고 main으로 포커스를 돌려, 모바일로 돌아왔을 때 이전 열린 상태가 재등장하지 않게 했습니다.
+- Storybook의 자료 준비 예제 이름·역할 순서와 컴포넌트 선택 안내를 정정했습니다. 채팅 표 스크롤 예제는 글꼴과 overflow focus 반영을 기다린 뒤 기존 조건을 검사합니다.
 
 ## 0.4.7 - 2026-10-09
 

@@ -24,7 +24,7 @@ const meta = {
       table: { category: 'Submission', type: { summary: '(value, reason) => void' } },
     },
     state: {
-      description: '제품이 소유하는 요청 수명주기입니다. idle은 보내기, submitting/streaming은 중지, stopping은 비활성 중지를 표시합니다.',
+      description: '제품이 소유하는 요청 수명주기입니다. idle은 보내기를 표시합니다. onStop이 있으면 submitting/streaming은 중지, stopping은 비활성 중지를 표시하고, 없으면 모든 non-idle 상태에서 초점을 유지하는 대기 control을 표시합니다.',
       options: ['idle', 'submitting', 'streaming', 'stopping'],
       control: { type: 'select' },
       table: { category: 'Submission', type: { summary: 'idle | submitting | streaming | stopping' }, defaultValue: { summary: 'idle' } },
@@ -128,12 +128,12 @@ const meta = {
       table: { category: 'Accessibility', type: { summary: 'string' }, defaultValue: { summary: '메시지 보내기' } },
     },
     stopLabel: {
-      description: 'submitting/streaming 상태에서 표시되는 icon-only 중지 버튼의 접근 가능한 이름입니다.',
+      description: 'onStop이 있는 submitting/streaming 상태에서 표시되는 icon-only 중지 버튼의 접근 가능한 이름입니다.',
       control: 'text',
       table: { category: 'Accessibility', type: { summary: 'string' }, defaultValue: { summary: '응답 중지' } },
     },
     onStop: {
-      description: 'submitting 또는 streaming 상태의 명시적 중지 버튼이 transport 취소를 요청할 때 호출됩니다. Escape는 중지 shortcut이 아닙니다.',
+      description: 'submitting 또는 streaming 상태의 명시적 중지 버튼이 transport 취소를 요청할 때 호출됩니다. 생략하면 중지 대신 초점을 유지하는 대기 control을 표시합니다. Escape는 중지 shortcut이 아닙니다.',
       control: false,
       table: { category: 'Submission', type: { summary: '() => void' } },
     },
@@ -169,7 +169,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'controlled autosize textarea, leading/trailing action slot, 명시적 키보드 제출 모드와 IME 보호를 제공하는 LK Product Extension입니다. Enter 모드는 Enter 제출·Shift+Enter 줄바꿈, modifier-enter 모드는 Alt 없는 Ctrl/Meta+Enter 제출, button-only 모드는 버튼 제출만 허용합니다. submitting/streaming에서는 이름 있는 중지 버튼을 제공하며, readOnly는 읽기·포커스를 유지하고 disabled는 보이는 disabledReason과 함께 전체 shell을 이용 불가로 만듭니다. slot에는 즉시 실행 명령 메뉴와 안내·단일 선택·범위 조절 같은 연속 설정 패널을 조합할 수 있지만, 작성기 자체 API는 provider·외부 렌더·overlay dismiss 상태를 소유하지 않습니다.',
+          'controlled autosize textarea, leading/trailing action slot, 명시적 키보드 제출 모드와 IME 보호를 제공하는 LK Product Extension입니다. Enter 모드는 Enter 제출·Shift+Enter 줄바꿈, modifier-enter 모드는 Alt 없는 Ctrl/Meta+Enter 제출, button-only 모드는 버튼 제출만 허용합니다. submitting/streaming에서는 onStop이 있으면 이름 있는 중지 버튼, 없으면 초점을 유지하는 대기 control을 제공하며, readOnly는 읽기·포커스를 유지하고 disabled는 보이는 disabledReason과 함께 전체 shell을 이용 불가로 만듭니다. slot에는 즉시 실행 명령 메뉴와 안내·단일 선택·범위 조절 같은 연속 설정 패널을 조합할 수 있지만, 작성기 자체 API는 provider·외부 렌더·overlay dismiss 상태를 소유하지 않습니다.',
       },
     },
   },
@@ -1086,7 +1086,7 @@ function FilePreparationFixture() {
 }
 
 export const FilePreparation = {
-  name: '조합 · 파일 이름, 메타데이터, 준비 상태',
+  name: '변형·상태 · 파일 이름, 메타데이터, 준비 상태',
   parameters: storyDescription('attachments slot에 정적인 ListCell의 파일 이름·보조 메타데이터·Spinner 상태와 선택 취소를 조합합니다. 선택 취소는 이 예제의 로컬 선택만 제거하며 서버의 업로드 작업을 취소한다는 의미가 아닙니다.'),
   render: () => <FilePreparationFixture />,
   play: async ({ canvasElement }) => {

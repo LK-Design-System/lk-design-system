@@ -1,4 +1,5 @@
 import { Prose } from '../src/index.js';
+import { waitFor } from 'storybook/test';
 import { storyDescription } from './StoryGuide.shared.jsx';
 
 const meta = {
@@ -181,6 +182,7 @@ export const ChatTypography = {
   </div>,
   play: async ({ canvasElement }) => {
     const doc = canvasElement.ownerDocument;
+    await doc.fonts?.ready;
     const documentProse = canvasElement.querySelector('[data-document-prose] .lk-prose');
     const chat = canvasElement.querySelector('[data-chat-prose] .lk-prose');
     const paragraph = chat.querySelector('p');
@@ -190,6 +192,8 @@ export const ChatTypography = {
     if (!chat.querySelector('h2') || !chat.querySelector('h3') || !chat.querySelector('th[scope="col"]')) throw new Error('heading과 표 의미는 콘텐츠 요소가 그대로 유지합니다.');
     if (chat.scrollWidth > chat.clientWidth + 1) throw new Error('채팅의 긴 표는 본문 전체를 가로로 밀지 않습니다.');
     const table = [...chat.querySelectorAll('table')].at(-1);
-    if (table.scrollWidth <= table.clientWidth || table.getAttribute('tabindex') !== '0') throw new Error('실제로 넘치는 표만 키보드로 접근 가능한 로컬 스크롤을 제공합니다.');
+    await waitFor(() => {
+      if (table.scrollWidth <= table.clientWidth || table.getAttribute('tabindex') !== '0') throw new Error('실제로 넘치는 표만 키보드로 접근 가능한 로컬 스크롤을 제공합니다.');
+    });
   },
 };

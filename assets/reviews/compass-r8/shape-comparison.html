@@ -2528,7 +2528,7 @@ body { min-width: 320px; background: var(--color-semantic-background-normal-alte
   <footer class="comparison-notes">
     <p><strong>현재 기준</strong> 실제 기본 모서리·굵기·간격을 유지합니다. Button/Input은 네 안 모두 lg입니다. 프로필을 바꾸면 기존 source의 높이·padding이 반영되며 48px로 정규화하지 않습니다.</p>
     <p><strong>기존 그림자</strong> Button은 실제 --component-button-shadow-rest를 사용합니다. Card 기본 elevation·Input 휴지 상태·ListCell은 이미 none이므로 그림자 후보에서도 동일하게 보입니다.</p>
-    <p><strong>확인 범위</strong> 실제 authoring Button / Input / Card / ListCell을 React SSR로 렌더한 정적 형태 비교입니다. hover·focus·모션 동작은 이 파일의 검증 범위에 포함되지 않으며 실제 Storybook에서 확인합니다. 글꼴은 이 저장소의 assets/fonts를 상대 경로로 참조합니다. 이 정적 시안의 실제 글꼴 로드와 시각 검토는 아직 완료하지 않았습니다.</p>
+    <p><strong>확인 범위</strong> 실제 authoring Button / Input / Card / ListCell을 React SSR로 렌더한 정적 형태 비교입니다. 2026-10-13 Chromium에서 Pretendard 400·500·600 로드와 Light·Dark × Default·Ops의 1280px·390px 배치를 확인했습니다. hover·focus·모션 동작은 이 파일의 검증 범위에 포함되지 않으며 실제 Storybook에서 확인합니다. 공유 형태 값은 현재 기준을 유지하며 세 시안은 미채택 상태입니다.</p>
     <p class="source-note">출처: shared/lk-design-system/components/{buttons/Button, forms/Input, cards/Card, content/ListCell}.jsx · styles.css + tokens/profiles.css</p>
   </footer>
 </main>

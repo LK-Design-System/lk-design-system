@@ -1,11 +1,11 @@
 # Compass R8 변경 사항과 후속 작업
 
-R8의 컨트롤 피드백과 Overlay 수정은 authoring source에 적용해 원격으로 업로드했습니다. 공유 그림자·글자 굵기·모서리의 채택 결정과 Linux에서 생성 산출물을 갱신한 뒤 수행하는 검증은 남아 있습니다. 이 기록은 2026-10-13의 source snapshot이며 R8 완료나 제품 배포를 뜻하지 않습니다.
+R8의 컨트롤 피드백과 Overlay source는 원격에 올라가 있으며, 승인된 Linux export의 검토 대상 739개 경로를 로컬 `f8aa0017`에 반영했습니다. 이후 IA 16페이지·93스토리와 신규 8개 예제를 검토하고 문구·검증 대기 오류를 수정했습니다. 형태 비교는 네 테마/프로필의 넓은·좁은 화면과 글꼴을 확인했고 현행 공유 값 유지를 권고합니다. 최신 source의 원격 push, Linux 재투영과 exact-SHA CI는 남아 있습니다. R8 완료나 제품 배포를 뜻하지 않습니다.
 
 | Field | Value |
 | --- | --- |
 | Type | Working source handoff |
-| Status | Source applied and uploaded; shared shape decision and Linux generated qualification pending |
+| Status | Reviewed Linux artifacts applied locally; delegated IA review and source fixes prepared; final Linux projection/CI and release qualification pending |
 | Owner | Design system owner · Foundation owner |
 | Last reviewed | 2026-10-13 |
 | Roadmap | [LDS Roadmap R8](../../LDS_ROADMAP.md#121-r8--컨트롤-피드백과-모션대표-예제-개선) |
@@ -59,9 +59,9 @@ Portal은 기간별 조회, 권한, 응답 방식과 controlled 상태를 소유
 
 ## 남은 작업과 승인
 
-1. 형태 시안의 font·layout을 브라우저에서 검토하고 owner가 공유 그림자·굵기·모서리 채택 여부를 결정합니다. 공유 값은 승인 후 별도 변경으로 진행합니다.
-2. 승인된 Linux canonical workflow에서 `motion.md`를 포함한 필요한 생성 projection을 갱신하고 해당 source SHA의 필수 CI를 확인합니다. Windows에서 generated source/dist/baseline을 만들거나 전체 gate를 중복 실행하지 않습니다.
-3. 검증된 패키지 발행 후 제품 owner가 pin 갱신과 제품 검토·배포를 진행합니다. source 업로드만으로 소비 제품에 변경이 적용되지는 않습니다.
+1. 형태 시안의 font·layout 검토는 완료했습니다. 현행 공유 값 유지를 권고하며 미채택 세 안을 공유 토큰 변경으로 확대하지 않습니다. 새로운 형태 채택은 구체적인 owner 결정 후 별도 변경으로 진행합니다.
+2. 최신 로컬 후보의 push와 Linux export 1회를 각각 승인받아 실행합니다. 네 story source 수정과 수동 IA 검토 필드가 반영된 정본 관측·문서 projection을 받아 diff를 검토한 뒤 통합합니다. 해당 통합 SHA의 자동 CI·Pages가 green이어야 합니다. Windows에서 생성하거나 전체 gate를 중복 실행하지 않습니다.
+3. 권한 있는 release operator 환경에서 registry와 server04 fresh guest qualification을 확인한 뒤 태그 push·발행·서버 실행을 각각 승인받습니다. 검증된 패키지 발행 후 제품 owner가 pin 갱신과 제품 검토·배포를 진행합니다.
 
 이번 source·데모·핸드오프 업로드 승인을 후속 push, 수동 dispatch, 태그, 발행, 제품 배포나 서버 변경의 승인으로 확장하지 않습니다. 각 행위는 기존 [운영 정책](../../OPERATIONS.md)과 사용자 승인을 따릅니다. 승인된 `interactionOpen` 외의 새 공개 API, 브랜드 색 변경과 repository 전체 motion gate 확대는 R8 범위에 포함하지 않습니다.
 
@@ -114,6 +114,39 @@ Artifact 3,534개 파일을 해당 SHA의 Git blob과 대조했습니다. 3,054�
 별도 source/IA 대조에서 기존 [MessageComposer의 FilePreparation](../../../stories/CommunicationMessageComposer.stories.jsx) 이름(`조합 · 파일 이름, 메타데이터, 준비 상태`, source 1089행)이 생성 role `variants-states`의 `변형·상태 ·` prefix와 맞지 않는 점을 확인했습니다. Built index에서도 responsive `CompactDensity` 뒤에 있어 role 순서를 위반합니다. 이는 `report-storybook-information-architecture.mjs`의 prefix/order 검사에 맞춘 실제 source 검토·수정이 필요한 후속 blocker이며, 이번 CI의 최초 실패 원인인 `motion.md` stale 오류와 구분합니다. 나머지 신규 7개 story에서는 같은 이름·순서 오류를 발견하지 않았습니다.
 
 이 산출물 검토는 정적 무결성과 source 투영 확인이며 16개 페이지의 UI·접근성·역할 검토나 packed package·전체 CI 검증을 대신하지 않습니다. 생성물 반영, 남은 IA 검토와 그 후보의 원격 push·발행은 아직 남아 있습니다.
+
+### 생성물 반영과 위임 검토 후보
+
+사용자의 “전부 해라” 요청에 따라 위 산출물을 경로별로 반영했습니다. 모든 preimage와 artifact Git blob을 검증한 뒤 261개 추가·218개 변경·260개 삭제, 총 739개 경로를 적용했습니다. `storybook-static/index.json`은 검토 입력으로만 보존했고 추적 파일로 추가하지 않았습니다. `f8aa0017`은 canonical artifact bytes만 담은 로컬 커밋입니다. Git rename 탐지의 536 files 표시는 같은 변경의 표시 방식이며, rename을 끈 경로 수는 739개입니다.
+
+Core 11페이지와 Product 5페이지, 그 안의 93스토리의 실제 source·설명·역할·owner·공개 순서·중복 목적을 검토했습니다. 기존 owner/disposition/visibility는 유지하며 신규 6개 public은 `variants-states`, hidden Input/Select 2개는 `internal-contract`가 맞습니다. 이전 검토 노트는 보존하고 16페이지의 검토 hash/date/note와 신규 8스토리의 수동 검토 필드에 **사용자가 위임한 에이전트 검토**임을 명시했습니다. 직접 사람의 시각 승인, H3, 전수 접근성 또는 package qualification으로 표시하지 않습니다.
+
+실제 수정은 다음 네 source 파일에 한정됩니다.
+
+- MessageComposer: FilePreparation을 `변형·상태 · …`로 정정했습니다. 기존 prefix 기반 Storybook 정렬에 따라 responsive 앞에 배치됩니다. `onStop`이 없는 모든 non-idle 상태가 중지 대신 focusable loading control을 사용한다는 설명도 맞췄습니다.
+- PageIndicator: 공개 도트의 `onChange` 직접 선택과 Pagination/Steps 선택 기준을 일치시켰습니다.
+- SegmentedControl: `2~5개`가 생성 guide에서 `25개`로 읽히던 안내를 기존 prompt의 `2–4개`와 일치시켰습니다.
+- Prose: 공개 `c4209276` ChatTypography의 play가 두 번 `실제로 넘치는 표만 키보드로 접근 가능한 로컬 스크롤을 제공합니다.`로 실패했습니다. 안정된 390px 렌더에서는 긴 표 `clientWidth=320`, `scrollWidth=347`, `tabindex=0`이고 작은 표는 `320/320`, tabindex 없음이었습니다. 글꼴 준비와 overflow focus의 비동기 반영을 기다린 뒤 **같은 조건**을 검사하도록 고쳤습니다. 이 수정 source의 실행 통과는 다음 Linux CI에서 확인해야 합니다.
+
+IA의 생성 `sourceSha256`·index hash·summary 및 정본 index는 로컬에서 재계산하지 않았습니다. 따라서 현재 파일의 과거 관측 summary는 794 reviewed / 8 pending / 16 stale을 유지하고, 새 수동 필드와 네 source 수정은 다음 Linux export에서 투영됩니다. 이 중간 상태를 `check:storybook-ia` 통과로 주장하지 않습니다.
+
+### 형태·신규 예제의 브라우저 관측
+
+공개 Pages `c4209276`을 Chromium에서 검토했습니다. 형태 비교의 Light/Dark × Default/Ops 네 조합을 각각 1280×800과 390×844에서 확인했습니다. 네 후보 모두 body 가로 넘침이나 Button/Input 문구 잘림이 없었고, 기본 lg Button은 Default 48px / Ops 44px를 유지했습니다. computed family는 Pretendard이며, 실제 Regular/Medium/SemiBold woff2 resource와 `document.fonts.check`의 400·500·600 성공을 함께 확인했습니다.
+
+현재 기준을 유지하는 것이 권고안입니다. 그림자 제거는 이미 none인 Card/Input/ListCell에는 차이가 없고 Button의 미세한 휴지 상태만 바꿉니다. 600→500은 제목·주 동작의 위계를 약화시키며, radius +4px는 2026-09-24 owner가 축소한 기준선을 다시 넓힙니다. 이번 비교에서 이 전체 변경을 정당화하는 기능·접근성 문제를 찾지 못했습니다. 세 후보는 계속 미채택이며 공유 토큰 값·브랜드색은 변경하지 않았습니다.
+
+신규 8개 story는 390px에서 실제 렌더와 accessible tree를 확인했습니다. Input의 단일 외곽 focus, Select의 긴 값 말줄임, Prose의 로컬 표 스크롤, 두 줄 대화 제목과 독립 더 보기, 대기 중 편집 가능한 초안, 선택 취소 후 초안 유지, 출처 제목→종류·위치와 권한 안내, PDF 선택/거부·disabled picker가 관측됐습니다. SourceDisclosure는 직접 펼쳐 두 상세 행을 확인했습니다. FilePreparation은 자동 play의 선택 취소 후 상태를 관측했으며 초기 첨부 배치의 별도 시각 승인을 주장하지 않습니다. Prose의 위 play 실패를 제외한 전수 play 성공이나 새 후보의 런타임 검증을 인증하는 기록은 아닙니다.
+
+스크린샷과 AX/DOM 관측은 이 PC의 `~/.codex/visualizations/2026/10/13/01a132ca-aa0f-79c0-880f-0e3312775335/`에, 적용 manifest와 curation 증거는 `~/.local/state/lds-r8-export/38334450818/`에 보존했습니다.
+
+### 검증과 발행 한계
+
+로컬의 read-only foundation 생성 정합 검사(16 guides / 918 token rows), Docs source 테스트 11/11, prompt-contract ratchet, design-system contracts, immutable release identity `0.4.8 → lds-v0.4.8`와 whitespace 검사는 통과했습니다. 문서 검사에서 드러난 IA Markdown의 오래된 census는 같은 IA 문서의 날짜별 현황에 정정했고, 링크·census 단계는 통과했습니다. dependency가 없는 checkout이므로 문서 검사의 최종 adoption 단계와 foundation coverage는 `ajv`, component/IA AST 검사는 `typescript` 부재로 실행되지 않았습니다. 설치나 로컬 전체 build로 우회하지 않았으며 기존 source SHA의 통과 증거와 다음 자동 Linux CI를 사용합니다.
+
+`CHANGELOG.md` 0.4.8에 기존 Drawer 항목을 유지하면서 미발행 compact navigation·Table·chat/file·focus·R8 motion/overlay 변경을 보완했습니다. Robotics 채택 입력 5개는 기존 기록 hash와 같고 artifact에서도 변경되지 않아 `0.1.0-rc.53 (unchanged)`를 유지합니다. 원격 최신 태그는 `lds-v0.4.7 → 334b07268b29a87eaa397708a0ca35df464d65b2`이며 기존 발행 run 37896785434는 성공했습니다. 이것은 새 후보의 발행 증거가 아닙니다.
+
+현재 PC에는 release operator config/state가 없고 org runner 조회는 403, package version 조회도 read 권한 부재의 403입니다. 따라서 `0.4.8` registry 미발행이나 server04 guest availability/qualification은 증명하지 못했습니다. 설치본 Robotics 관측 gate도 observation 부재로 실행 조건을 충족하지 못했으며 canonical mismatch로 해석하지 않습니다. 태그·발행 준비 완료는 아니고, 권한 있는 operator의 read-only preflight와 격리 guest 절차가 남아 있습니다. 추가 push·dispatch·태그·발행·서버 변경은 하지 않았습니다.
 
 ## 로컬 확인 명령
 
