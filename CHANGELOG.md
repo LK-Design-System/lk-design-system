@@ -2,6 +2,15 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.4.9 - 2026-10-13
+
+Paired Robotics release: `0.1.0-rc.53` (unchanged).
+
+### Fixed
+
+- `Toast`와 `ToastStack`의 가용 폭을 제한해 320px 화면에서 20px 가장자리 여백 안으로 줄어들도록 수정했습니다. 긴 URL·식별자는 정보 손실 없이 줄바꿈하며, 넓은 화면의 335px 최소 폭과 520px 최대 폭, action·닫기·키보드·타이머·라이브 영역 계약을 유지합니다.
+- 이 개발 소비 후보는 Portal이 검증한 `ec9c770a0f27b26911361b66eed0f0e76f29ca45`에 승인된 Toast 수정 `2e93db3363bdb6ae0138dd74cffae02ab1dfcc9a`의 6파일 diff와 새 버전 메타데이터만 적용합니다. 이후 main의 Input/Select·Chat·R8 변경은 포함하지 않으며 registry 발행본이 아닙니다.
+
 ## 0.4.8 - 2026-10-11
 
 Paired Robotics release: `0.1.0-rc.53` (unchanged).
