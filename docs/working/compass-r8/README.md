@@ -92,6 +92,29 @@ Portal은 기간별 조회, 권한, 응답 방식과 controlled 상태를 소유
 
 이 수정의 원격 push와 수정 SHA의 새 export 실행은 각각 별도 승인 대상입니다. 새 export가 성공하면 해당 실행의 source SHA를 확인하고 artifact diff를 검토합니다. 기존 컴포넌트 registry도 R8 이전 일부 변경을 아직 투영하지 않은 상태라 채팅/첨부·Input/Select의 파생 변경이 함께 나올 수 있으며, 이를 R8 변경과 구분해 검토합니다. 생성된 IA audit에서 미검토 source가 드러나더라도 사람 검토 stamp를 자동 승격하지 않습니다.
 
+### 수정 SHA의 Linux export와 산출물 검토
+
+사용자가 `c4209276`의 원격 `main` push와 같은 입력의 export 1회를 별도로 승인했습니다. 원격 SHA를 확인한 뒤 [실행 38334450818](https://github.com/LK-Design-System/lk-design-system/actions/runs/38334450818)을 시작했고, 실행의 `headSha`와 artifact의 `workflow_run.head_sha` 모두 `c4209276e89d99ec9987b6b81b53a33dc4906023`입니다. 2026-10-13 10:55:39 KST에 시작해 10:56:41 KST에 종료됐습니다. 추가 dispatch나 재실행은 하지 않았습니다.
+
+- **Export 성공:** `canonical-linux-generated` artifact `11783853716`이 생성됐습니다. GitHub 보고 크기는 26,976,365 bytes, digest는 `sha256:1182a8dd06b67e3759a8b7a3d0b628ccdde12a0f465ba2fd116bad2e76ad7665`입니다. 내려받아 별도 디렉터리에서 검토했으며 원본 checkout 생성물에는 아직 적용하지 않았습니다.
+- **전체 CI 실패:** Linux conformance는 성공했지만 일반 `Design system checks`는 checkout의 기존 `motion.md` stale 오류로 실패했고 Windows 소비 검사는 skipped입니다. 자동 push CI [38334448547](https://github.com/LK-Design-System/lk-design-system/actions/runs/38334448547)도 실패했습니다. Pages [38334448551](https://github.com/LK-Design-System/lk-design-system/actions/runs/38334448551)은 성공했습니다. Export 성공은 전체 CI·패키지 발행·제품 배포 성공이 아닙니다.
+
+Artifact 3,534개 파일을 해당 SHA의 Git blob과 대조했습니다. 3,054개는 동일합니다. 업로드된 파일 중 262개가 추가되고 218개가 변경됐으며, export 대상의 기존 추적 파일 중 260개가 산출물에서 사라졌습니다. 합계 740개 경로의 diff를 별도 before/after snapshot으로 검토했습니다.
+
+| 변경 그룹 | 검토 결과 |
+| --- | --- |
+| Root `dist` 653개 경로 | 해시 chunk 260개 추가·260개 삭제와 기존 파일 133개 변경입니다. R8와 이전 미투영 source의 bundle/type 반영입니다. sourcemap 924개에 절대 source 경로가 없고 상대 module 참조 3,366개가 모두 해석됩니다. |
+| 나머지 87개 경로 | 컴포넌트 문서/registry 38개, foundation 3개, 감사 계약 3개, Core/Theme/Product 문서 10개, package source 27개, package token 5개와 `storybook-static/index.json` 1개입니다. 마지막 index는 검토용이며 원래 Git 비추적 파일입니다. |
+| R8 투영 | Button·SegmentedControl·Switch·Disclosure·Overlay source, `overlay-presence.js`, 승인된 `interactionOpen` 타입과 reduced-motion 설명이 반영됐습니다. |
+| R8 이전 backlog | Input/Select focus·폭, Prose·ConversationList·MessageComposer·SourceDisclosure·FileUpload의 기존 main source 변경을 함께 투영합니다. 이를 새 R8 API나 추가 제품 작업으로 취급하지 않습니다. |
+| 문서·기준 무결성 | Core 42 / Theme 13 / Product 9개 manifest 문서 hash가 파일과 일치합니다. Dedup ceilings는 `meanDuplicatedSharePercent=2`, `guidesOverSixtyPercent=0`으로 유지되고 사람 검토 stamp도 변경되지 않았습니다. |
+
+생성 IA audit은 802 stories 중 794 reviewed / 8 pending, source hash가 바뀐 reviewed page 16개를 정확히 드러냅니다. 생성물 반영 후에는 이 실제 source/예제의 IA 검토가 별도로 필요합니다. Stamp만 갱신해 통과로 만들지 않습니다.
+
+별도 source/IA 대조에서 기존 [MessageComposer의 FilePreparation](../../../stories/CommunicationMessageComposer.stories.jsx) 이름(`조합 · 파일 이름, 메타데이터, 준비 상태`, source 1089행)이 생성 role `variants-states`의 `변형·상태 ·` prefix와 맞지 않는 점을 확인했습니다. Built index에서도 responsive `CompactDensity` 뒤에 있어 role 순서를 위반합니다. 이는 `report-storybook-information-architecture.mjs`의 prefix/order 검사에 맞춘 실제 source 검토·수정이 필요한 후속 blocker이며, 이번 CI의 최초 실패 원인인 `motion.md` stale 오류와 구분합니다. 나머지 신규 7개 story에서는 같은 이름·순서 오류를 발견하지 않았습니다.
+
+이 산출물 검토는 정적 무결성과 source 투영 확인이며 16개 페이지의 UI·접근성·역할 검토나 packed package·전체 CI 검증을 대신하지 않습니다. 생성물 반영, 남은 IA 검토와 그 후보의 원격 push·발행은 아직 남아 있습니다.
+
 ## 로컬 확인 명령
 
 설치된 repository dependency를 사용해 source Storybook을 엽니다. `storybook:dev`는 생성기를 실행하지 않습니다.
