@@ -40,7 +40,7 @@ function ToastStack({ children, position = "bottom-right", gap = 10, liveRegion 
     "bottom-center": { bottom: 20, left: "50%", transform: "translateX(-50%)", alignItems: "center" }
   }[position] || {};
   return /* @__PURE__ */ jsxs(ToastLiveRegionContext.Provider, { value: liveRegion ? announce : null, children: [
-    /* @__PURE__ */ jsx("div", { style: { position: "fixed", zIndex: 120, display: "flex", flexDirection: "column", gap, ...pos, ...style }, ...rest, children }),
+    /* @__PURE__ */ jsx("div", { style: { position: "fixed", zIndex: 120, display: "flex", flexDirection: "column", width: "max-content", minWidth: "min(335px, calc(100% - 40px))", maxWidth: "calc(100% - 40px)", gap, ...pos, ...style }, ...rest, children }),
     liveRegion && /* @__PURE__ */ jsxs(Fragment, { children: [
       /* @__PURE__ */ jsx("div", { ref: politeRef, "data-toast-live": "polite", role: "status", "aria-live": "polite", "aria-atomic": "true", style: SR_ONLY_STYLE }),
       /* @__PURE__ */ jsx("div", { ref: assertiveRef, "data-toast-live": "assertive", role: "alert", "aria-live": "assertive", "aria-atomic": "true", style: SR_ONLY_STYLE })
@@ -52,4 +52,4 @@ export {
   ToastLiveRegionContext,
   ToastStack
 };
-//# sourceMappingURL=chunk-ZJHJNQCP.js.map
+//# sourceMappingURL=chunk-YRG6XM4O.js.map

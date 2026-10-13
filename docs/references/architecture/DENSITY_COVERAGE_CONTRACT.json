@@ -9,7 +9,7 @@
   },
   "source": {
     "componentRegistry": "docs/components/component-content.json",
-    "componentRegistryFingerprint": "1369797d71e1655cceaffa41ac3acc6cd5634d9524568adddedb583ead8ed901",
+    "componentRegistryFingerprint": "c2cfe382c91426405a8c3dba3a0c0d62d445a2ddd8c01ee86df0bc46f2407b72",
     "expressionProfileContract": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
     "expressionProfileContractFingerprint": "88c3fd6a5eb8fb61896af87aa266ab3bf93cae9195c7b6eefd911d566c0a1b5c"
   },

@@ -1,13 +1,13 @@
 {
   "metricVersion": 2,
   "inputHashes": {
-    "componentContentSha256": "ac4a693b51da3d8d95ee997129b7b1916152c0c5c7a398f5e1e48569445c0b1f",
+    "componentContentSha256": "caf884b8b84627712d531369a07b26aa9685d9c1005be759d9cfea92e12f95c4",
     "informationArchitectureAuditSha256": "f9952ce82b2755247ecc66a642f3dfcf60221aae801ee6e09188f00ffd28c9c7"
   },
   "observed": {
     "metricVersion": 2,
     "guideDenominator": 183,
-    "totalUnits": 3308,
+    "totalUnits": 3311,
     "duplicatedUnits": 32,
     "meanDuplicatedSharePercent": 2,
     "guidesOverSixtyPercent": 0,

@@ -1,25 +1,25 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-var _chunk26AXEFA6cjs = require('./chunk-26AXEFA6.cjs');
-
-
-var _chunkZAM5AMCOcjs = require('./chunk-ZAM5AMCO.cjs');
-
-
-var _chunkL6VI7H4Qcjs = require('./chunk-L6VI7H4Q.cjs');
-
-
-var _chunk7OXVB7WXcjs = require('./chunk-7OXVB7WX.cjs');
+"use client";
+import {
+  useFieldMetadata
+} from "./chunk-JAVQXFMQ.js";
+import {
+  useResolvedControlSize
+} from "./chunk-EEL7ELPX.js";
+import {
+  Button
+} from "./chunk-Q2MY3D6I.js";
+import {
+  Icon
+} from "./chunk-IKUN5X7H.js";
 
 // components/forms/FileUpload.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
 function matchesAccept(file, accept) {
-  const rules = String(_nullishCoalesce(accept, () => ( ""))).split(",").map((rule) => rule.trim().toLowerCase()).filter(Boolean);
+  const rules = String(accept ?? "").split(",").map((rule) => rule.trim().toLowerCase()).filter(Boolean);
   if (rules.length === 0) return true;
-  const name = String(_nullishCoalesce(_optionalChain([file, 'optionalAccess', _ => _.name]), () => ( ""))).toLowerCase();
-  const type = String(_nullishCoalesce(_optionalChain([file, 'optionalAccess', _2 => _2.type]), () => ( ""))).toLowerCase();
+  const name = String(file?.name ?? "").toLowerCase();
+  const type = String(file?.type ?? "").toLowerCase();
   return rules.some((rule) => {
     if (rule.startsWith(".")) return name.endsWith(rule);
     if (rule.endsWith("/*")) return type.startsWith(rule.slice(0, -1));
@@ -47,18 +47,18 @@ function FileUpload({
   onDrop,
   ...rest
 }) {
-  const resolvedSize = _chunkZAM5AMCOcjs.useResolvedControlSize.call(void 0, size);
+  const resolvedSize = useResolvedControlSize(size);
   const normalizedSize = resolvedSize === "small" ? "sm" : resolvedSize === "medium" ? "md" : resolvedSize;
   const compact = normalizedSize === "sm";
   const buttonPresentation = presentation === "button";
   const resolvedHint = hint === void 0 ? buttonPresentation ? "\uD30C\uC77C \uC120\uD0DD" : "\uD074\uB9AD\uD558\uAC70\uB098 \uD30C\uC77C\uC744 \uB04C\uC5B4\uB2E4 \uB193\uC73C\uC138\uC694" : hint;
-  const { fieldId: inputId, describedBy } = _chunk26AXEFA6cjs.useFieldMetadata.call(void 0, { prefix: "file-upload", describedBy: inputAriaDescribedBy });
-  const [drag, setDrag] = _react2.default.useState(false);
-  const [focused, setFocused] = _react2.default.useState(false);
-  const [names, setNames] = _react2.default.useState([]);
-  const [rejectedNames, setRejectedNames] = _react2.default.useState([]);
+  const { fieldId: inputId, describedBy } = useFieldMetadata({ prefix: "file-upload", describedBy: inputAriaDescribedBy });
+  const [drag, setDrag] = React.useState(false);
+  const [focused, setFocused] = React.useState(false);
+  const [names, setNames] = React.useState([]);
+  const [rejectedNames, setRejectedNames] = React.useState([]);
   const handle = (files) => {
-    const candidates = Array.from(_nullishCoalesce(files, () => ( [])));
+    const candidates = Array.from(files ?? []);
     const limited = multiple ? candidates : candidates.slice(0, 1);
     const overflow = multiple ? [] : candidates.slice(1);
     const accepted = limited.filter((file) => matchesAccept(file, accept));
@@ -68,14 +68,14 @@ function FileUpload({
     ];
     setNames(accepted.map((file) => file.name));
     setRejectedNames(rejected.map((file) => file.name));
-    _optionalChain([onFiles, 'optionalCall', _3 => _3(accepted)]);
-    if (rejected.length > 0) _optionalChain([onRejectedFiles, 'optionalCall', _4 => _4(rejected)]);
+    onFiles?.(accepted);
+    if (rejected.length > 0) onRejectedFiles?.(rejected);
   };
   const statusMessage = [
     names.length > 0 ? `${names.join(", ")}, \uC120\uD0DD\uB428` : "",
     rejectedNames.length > 0 ? `${rejectedNames.join(", ")}, \uD5C8\uC6A9\uB418\uC9C0 \uC54A\uB294 \uD30C\uC77C\uC774\uB77C \uC81C\uC678\uB428` : ""
   ].filter(Boolean).join(". ");
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ jsxs(
     "div",
     {
       ...rest,
@@ -83,27 +83,28 @@ function FileUpload({
       "aria-disabled": disabled || void 0,
       "data-size": normalizedSize,
       "data-presentation": buttonPresentation ? "button" : "dropzone",
+      "data-lds-target": buttonPresentation ? "file-upload-button" : void 0,
       "data-drag-active": drag ? "" : void 0,
       "data-focus-visible": focused ? "" : void 0,
       onDragEnter: (event) => {
         event.preventDefault();
         if (!disabled) setDrag(true);
-        _optionalChain([onDragEnter, 'optionalCall', _5 => _5(event)]);
+        onDragEnter?.(event);
       },
       onDragOver: (event) => {
         event.preventDefault();
         if (!disabled) setDrag(true);
-        _optionalChain([onDragOver, 'optionalCall', _6 => _6(event)]);
+        onDragOver?.(event);
       },
       onDragLeave: (event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) setDrag(false);
-        _optionalChain([onDragLeave, 'optionalCall', _7 => _7(event)]);
+        onDragLeave?.(event);
       },
       onDrop: (event) => {
         event.preventDefault();
         setDrag(false);
         if (!disabled) handle(event.dataTransfer.files);
-        _optionalChain([onDrop, 'optionalCall', _8 => _8(event)]);
+        onDrop?.(event);
       },
       style: {
         position: "relative",
@@ -120,7 +121,7 @@ function FileUpload({
         ...style
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ jsx(
           "input",
           {
             id: inputId,
@@ -151,8 +152,8 @@ function FileUpload({
             }
           }
         ),
-        buttonPresentation ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
-          _chunkL6VI7H4Qcjs.Button,
+        buttonPresentation ? /* @__PURE__ */ jsxs(
+          Button,
           {
             as: "label",
             htmlFor: inputId,
@@ -163,11 +164,11 @@ function FileUpload({
             disabled,
             style: { boxShadow: focused ? "var(--component-input-focus-shadow)" : "none" },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7OXVB7WXcjs.Icon, { name: "upload", size: 16, "aria-hidden": "true" }),
+              /* @__PURE__ */ jsx(Icon, { name: "upload", size: 16, "aria-hidden": "true" }),
               resolvedHint
             ]
           }
-        ) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        ) : /* @__PURE__ */ jsxs(
           "label",
           {
             htmlFor: inputId,
@@ -184,7 +185,7 @@ function FileUpload({
               cursor: disabled ? "not-allowed" : "pointer"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ jsx(
                 "span",
                 {
                   "aria-hidden": "true",
@@ -198,10 +199,10 @@ function FileUpload({
                     alignItems: "center",
                     justifyContent: "center"
                   },
-                  children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7OXVB7WXcjs.Icon, { name: "upload", size: 20, "aria-hidden": "true" })
+                  children: /* @__PURE__ */ jsx(Icon, { name: "upload", size: 20, "aria-hidden": "true" })
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ jsx(
                 "span",
                 {
                   style: {
@@ -217,7 +218,7 @@ function FileUpload({
                   children: resolvedHint
                 }
               ),
-              names.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              names.length > 0 && /* @__PURE__ */ jsx(
                 "span",
                 {
                   "aria-hidden": "true",
@@ -237,7 +238,7 @@ function FileUpload({
             ]
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ jsx(
           "span",
           {
             role: "status",
@@ -261,7 +262,7 @@ function FileUpload({
   );
 }
 
-
-
-exports.FileUpload = FileUpload;
-//# sourceMappingURL=chunk-2QSX2F5S.cjs.map
+export {
+  FileUpload
+};
+//# sourceMappingURL=chunk-BCVDBUP4.js.map

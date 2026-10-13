@@ -1,18 +1,18 @@
-"use client";
-import {
-  ToastLiveRegionContext
-} from "./chunk-ZJHJNQCP.js";
-import {
-  normalizeStatusTone,
-  statusToneStyle
-} from "./chunk-L2ZEGNVF.js";
-import {
-  Icon
-} from "./chunk-IKUN5X7H.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+var _chunkVOWTNISQcjs = require('./chunk-VOWTNISQ.cjs');
+
+
+
+var _chunkMBKOVB2Kcjs = require('./chunk-MBKOVB2K.cjs');
+
+
+var _chunk7OXVB7WXcjs = require('./chunk-7OXVB7WX.cjs');
 
 // components/overlay/Toast.jsx
-import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
 var POLICY_DURATION = 7e3;
 var ICONS = {
   normal: {
@@ -21,19 +21,19 @@ var ICONS = {
   },
   positive: {
     color: "var(--color-semantic-status-positive-signal)",
-    name: statusToneStyle("positive").icon
+    name: _chunkMBKOVB2Kcjs.statusToneStyle.call(void 0, "positive").icon
   },
   cautionary: {
     color: "var(--color-semantic-status-cautionary-signal)",
-    name: statusToneStyle("cautionary").icon
+    name: _chunkMBKOVB2Kcjs.statusToneStyle.call(void 0, "cautionary").icon
   },
   negative: {
     color: "var(--color-semantic-status-negative-signal)",
-    name: statusToneStyle("negative").icon
+    name: _chunkMBKOVB2Kcjs.statusToneStyle.call(void 0, "negative").icon
   }
 };
 function normalizeTone(value) {
-  const normalized = normalizeStatusTone(value || "normal");
+  const normalized = _chunkMBKOVB2Kcjs.normalizeStatusTone.call(void 0, value || "normal");
   return normalized === "signal" || normalized === "offline" ? "normal" : normalized;
 }
 function Toast({
@@ -54,17 +54,17 @@ function Toast({
   style,
   ...rest
 }) {
-  const [actionHover, setActionHover] = React.useState(false);
+  const [actionHover, setActionHover] = _react2.default.useState(false);
   const normalized = normalizeTone(variant || tone);
   const t = ICONS[normalized] || ICONS.normal;
   const urgent = normalized === "negative";
-  const announce = React.useContext(ToastLiveRegionContext);
+  const announce = _react2.default.useContext(_chunkVOWTNISQcjs.ToastLiveRegionContext);
   const hosted = typeof announce === "function";
-  const messageRef = React.useRef(null);
-  const announcedRef = React.useRef(null);
-  React.useEffect(() => {
+  const messageRef = _react2.default.useRef(null);
+  const announcedRef = _react2.default.useRef(null);
+  _react2.default.useEffect(() => {
     if (!hosted) return;
-    const message = messageRef.current?.textContent?.trim() ?? "";
+    const message = _nullishCoalesce(_optionalChain([messageRef, 'access', _ => _.current, 'optionalAccess', _2 => _2.textContent, 'optionalAccess', _3 => _3.trim, 'call', _4 => _4()]), () => ( ""));
     if (!message || message === announcedRef.current) return;
     announcedRef.current = message;
     announce(message, urgent);
@@ -72,20 +72,20 @@ function Toast({
   const actionable = action != null;
   const requestedDuration = duration === true ? POLICY_DURATION : duration;
   const autoDismissMs = actionable || typeof onClose !== "function" || !(requestedDuration > 0) ? null : requestedDuration;
-  const [paused, setPaused] = React.useState(false);
-  const remainingRef = React.useRef(autoDismissMs);
-  const closeRef = React.useRef(onClose);
+  const [paused, setPaused] = _react2.default.useState(false);
+  const remainingRef = _react2.default.useRef(autoDismissMs);
+  const closeRef = _react2.default.useRef(onClose);
   closeRef.current = onClose;
-  React.useEffect(() => {
+  _react2.default.useEffect(() => {
     remainingRef.current = autoDismissMs;
   }, [autoDismissMs]);
-  React.useEffect(() => {
+  _react2.default.useEffect(() => {
     if (autoDismissMs == null || paused) return void 0;
     const startedAt = Date.now();
-    const wait = remainingRef.current ?? autoDismissMs;
+    const wait = _nullishCoalesce(remainingRef.current, () => ( autoDismissMs));
     const timer = setTimeout(() => {
       remainingRef.current = null;
-      closeRef.current?.();
+      _optionalChain([closeRef, 'access', _5 => _5.current, 'optionalCall', _6 => _6()]);
     }, Math.max(0, wait));
     return () => {
       clearTimeout(timer);
@@ -96,7 +96,7 @@ function Toast({
   }, [autoDismissMs, paused]);
   const pause = () => setPaused(true);
   const resume = () => setPaused(false);
-  return /* @__PURE__ */ jsxs(
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       role: hosted ? void 0 : urgent ? "alert" : "status",
@@ -104,26 +104,27 @@ function Toast({
       "data-toast-paused": autoDismissMs != null && paused ? "" : void 0,
       onMouseEnter: (event) => {
         pause();
-        onMouseEnter?.(event);
+        _optionalChain([onMouseEnter, 'optionalCall', _7 => _7(event)]);
       },
       onMouseLeave: (event) => {
         resume();
-        onMouseLeave?.(event);
+        _optionalChain([onMouseLeave, 'optionalCall', _8 => _8(event)]);
       },
       onFocus: (event) => {
         pause();
-        onFocus?.(event);
+        _optionalChain([onFocus, 'optionalCall', _9 => _9(event)]);
       },
       onBlur: (event) => {
         resume();
-        onBlur?.(event);
+        _optionalChain([onBlur, 'optionalCall', _10 => _10(event)]);
       },
       style: {
         display: "inline-flex",
         alignItems: "center",
         gap: "var(--space-2-5)",
-        minWidth: 335,
-        maxWidth: 520,
+        boxSizing: "border-box",
+        minWidth: "min(335px, 100%)",
+        maxWidth: "min(520px, 100%)",
         padding: "11px 16px",
         background: "var(--component-transient-feedback-bg)",
         backdropFilter: "blur(var(--component-transient-feedback-blur))",
@@ -136,15 +137,15 @@ function Toast({
       },
       ...rest,
       children: [
-        leadingIcon && /* @__PURE__ */ jsx(
+        leadingIcon && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             "aria-hidden": "true",
             style: { display: "inline-flex", flexShrink: 0, color: t.color },
-            children: icon || /* @__PURE__ */ jsx(Icon, { name: t.name, size: 22, "aria-hidden": "true" })
+            children: icon || /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7OXVB7WXcjs.Icon, { name: t.name, size: 22, "aria-hidden": "true" })
           }
         ),
-        /* @__PURE__ */ jsx(
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "span",
           {
             ref: messageRef,
@@ -156,12 +157,13 @@ function Toast({
               fontWeight: "var(--fw-semibold)",
               letterSpacing: "var(--body2-spacing)",
               color: "var(--color-semantic-inverse-label)",
-              wordBreak: "keep-all"
+              wordBreak: "keep-all",
+              overflowWrap: "anywhere"
             },
             children
           }
         ),
-        action != null && /* @__PURE__ */ jsx(
+        action != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "button",
           {
             type: "button",
@@ -191,7 +193,7 @@ function Toast({
             children: action
           }
         ),
-        onClose && /* @__PURE__ */ jsx(
+        onClose && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "button",
           {
             type: "button",
@@ -211,7 +213,7 @@ function Toast({
               cursor: "pointer",
               color: "var(--color-semantic-inverse-label)"
             },
-            children: /* @__PURE__ */ jsx(Icon, { name: "close", size: 16, "aria-hidden": "true" })
+            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk7OXVB7WXcjs.Icon, { name: "close", size: 16, "aria-hidden": "true" })
           }
         )
       ]
@@ -219,7 +221,7 @@ function Toast({
   );
 }
 
-export {
-  Toast
-};
-//# sourceMappingURL=chunk-CXH5OS4P.js.map
+
+
+exports.Toast = Toast;
+//# sourceMappingURL=chunk-BSD7C4KA.cjs.map
