@@ -10223,7 +10223,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessage.stories.jsx",
-      "sourceSha256": "f2e905f0a3cdedf4ca050575d1b0434f3185cbea8f4f894da6308e7c3573f62f",
+      "sourceSha256": "dd2bfe7ee2d379cda226d9e2cb2fd141c9c7dcc5c9c8e1baf1040f4920b5405d",
       "primaryOwner": "ConversationMessage",
       "ownerComponents": [
         "ConversationMessage"
@@ -10259,8 +10259,8 @@
       "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-22",
-      "reviewedSourceSha256": "f2e905f0a3cdedf4ca050575d1b0434f3185cbea8f4f894da6308e7c3573f62f",
+      "reviewedAt": "2026-10-14",
+      "reviewedSourceSha256": "dd2bfe7ee2d379cda226d9e2cb2fd141c9c7dcc5c9c8e1baf1040f4920b5405d",
       "stories": [
         {
           "id": "lds-product-communication-message--message-overview",
@@ -10739,7 +10739,7 @@
           "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\n2026-10-14 owner-approved test-delta review: User approved the concrete three-story waitFor-only patch. Main agent reviewed source commit 7f23cff6dae3dbd5f39c21b3f3c778565f162df6 and the three default-motion Storybook plays/UI. Original conditions, errors and focus checks remain. IA names, order, owners, dispositions and visibility are unchanged. This records agent review under user authorization; no direct human visual review is claimed. Reduced motion was not emulated. Official Linux export: https://github.com/LK-Design-System/lk-design-system/actions/runs/38432123367. Browser evidence is retained locally. Full CI qualification remains pending."
     },
     {
       "title": "LDS Product/Communication/Message Composer",
@@ -12988,7 +12988,7 @@
       "layer": "Product",
       "family": "Content",
       "importPath": "./stories/ContentSourceDisclosure.stories.jsx",
-      "sourceSha256": "4d972783c2817493f6c44a13e39acc8fb98c6ad45b6729f5fbd0bde780ef4661",
+      "sourceSha256": "d003344aa0af7e5f1bd6152df46a3c5504066e8c50a3a46358096328e8a51469",
       "primaryOwner": "SourceDisclosure",
       "ownerComponents": [
         "SourceDisclosure"
@@ -13013,8 +13013,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-13",
-      "reviewedSourceSha256": "4d972783c2817493f6c44a13e39acc8fb98c6ad45b6729f5fbd0bde780ef4661",
+      "reviewedAt": "2026-10-14",
+      "reviewedSourceSha256": "d003344aa0af7e5f1bd6152df46a3c5504066e8c50a3a46358096328e8a51469",
       "stories": [
         {
           "id": "lds-product-content-source-disclosure--availability-and-provenance",
@@ -13279,7 +13279,7 @@
           "reviewNote": "2026-07-19 product-status human review confirmed this story's owner, role, visibility, public name/order, description, and available play/render evidence."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. Reviewed in the running dev server: the Canvas opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas. The 2026-08-08 re-review adds an explicit default title arg to AvailabilityAndProvenance and confirms the representative uncontrolled Canvas exposes the title control, reruns its play contract, and reflects runtime arg updates in the toggle text.\n2026-10-13 owner-delegated agent source/IA review: Inline title/kind/location details are a public variant, distinct from provenance lists and compact chips; the toggle and rows retain SourceDisclosure ownership. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
+      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. Reviewed in the running dev server: the Canvas opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas. The 2026-08-08 re-review adds an explicit default title arg to AvailabilityAndProvenance and confirms the representative uncontrolled Canvas exposes the title control, reruns its play contract, and reflects runtime arg updates in the toggle text.\n2026-10-13 owner-delegated agent source/IA review: Inline title/kind/location details are a public variant, distinct from provenance lists and compact chips; the toggle and rows retain SourceDisclosure ownership. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md.\n2026-10-14 owner-approved test-delta review: User approved the concrete three-story waitFor-only patch. Main agent reviewed source commit 7f23cff6dae3dbd5f39c21b3f3c778565f162df6 and the three default-motion Storybook plays/UI. Original conditions, errors and focus checks remain. IA names, order, owners, dispositions and visibility are unchanged. This records agent review under user authorization; no direct human visual review is claimed. Reduced motion was not emulated. Official Linux export: https://github.com/LK-Design-System/lk-design-system/actions/runs/38432123367. Browser evidence is retained locally. Full CI qualification remains pending."
     },
     {
       "title": "LDS Product/Content/Spec Row",
@@ -26294,7 +26294,7 @@
       "layer": "Product",
       "family": "Viewer",
       "importPath": "./stories/ViewerToolbar.stories.jsx",
-      "sourceSha256": "40152f092198ad06e488208f187662b92eee47b28e0d30dd9e2b23b7b2921053",
+      "sourceSha256": "9dbd87bfb11e6ee998a64cc1e79f80889b806ec795e48be2e982845fed2fe076",
       "primaryOwner": "ViewerToolbar",
       "ownerComponents": [
         "ViewerToolbar"
@@ -26322,8 +26322,8 @@
       "dispositionReason": "Main LDS migration review confirmed one reusable Product owner, audience-facing guidance, and no duplicate public home.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-01",
-      "reviewedSourceSha256": "40152f092198ad06e488208f187662b92eee47b28e0d30dd9e2b23b7b2921053",
+      "reviewedAt": "2026-10-14",
+      "reviewedSourceSha256": "9dbd87bfb11e6ee998a64cc1e79f80889b806ec795e48be2e982845fed2fe076",
       "stories": [
         {
           "id": "lds-product-viewer-toolbar--viewer-toolbar-overview",
@@ -26432,7 +26432,7 @@
           "reviewNote": "2026-07-27 main LDS migration review: role, description, ownership, and public/hidden visibility reviewed."
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\n2026-10-14 owner-approved test-delta review: User approved the concrete three-story waitFor-only patch. Main agent reviewed source commit 7f23cff6dae3dbd5f39c21b3f3c778565f162df6 and the three default-motion Storybook plays/UI. Original conditions, errors and focus checks remain. IA names, order, owners, dispositions and visibility are unchanged. This records agent review under user authorization; no direct human visual review is claimed. Reduced motion was not emulated. Official Linux export: https://github.com/LK-Design-System/lk-design-system/actions/runs/38432123367. Browser evidence is retained locally. Full CI qualification remains pending."
     },
     {
       "title": "LDS Product/Viewer/Video Stream",
