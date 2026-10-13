@@ -1394,16 +1394,21 @@
       "importPath": "./stories/FoundationMotion.stories.jsx",
       "storyId": "lds-core-foundation-motion--overview",
       "exportName": "Overview",
-      "descriptionHash": "044cab619e99fffecae2f22106bc93341bc80908bdcc324cb9c8d5cc92c161f6",
+      "descriptionHash": "268bc58fc99bde90f5774820936f00d6cd55c3a9d415bd4e6c83c02ee495c16a",
       "sentences": [
         {
-          "hash": "bbb6965a7999b4685b06dff5c2a6f5545f5f675a6477c8fa1e93055c28165ca8",
-          "text": "Motion가 실제로 노출하는 토큰과 현재 값을 확인합니다.",
+          "hash": "e0a7eb2aef1ebb977d6ca27aeff4b19085535dfbdf0992ef67d74b866d7c9cc7",
+          "text": "같은 거리를 이동하는 표본을 직접 재생하며 시간 길이와 곡선의 차이를 살펴봅니다.",
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "9f96bc65db751fd3f4d2735dc30e4ca0b448b49b4fac2fc8cdd69eb0e478f03a",
-          "text": "이름과 값이 런타임과 어긋나면 표가 바로 드러내며, 선택 기준과 정량 규칙은 이 페이지의 Docs 탭에 있습니다.",
+          "hash": "3176573a1e0ae71f72a71b062b38266afcfcdb4e106de3924db0192746aaecc5",
+          "text": "정지는 현재 위치를 유지하고, 동작 줄이기는 이동 없이 도착 상태를 보여줍니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "5f39f70f86746d2e579bfb419a18cc2657b0b6a6fa51d87b1a230ad28731720e",
+          "text": "표본과 토큰 표는 현재 프로필의 실제 값을 표시합니다.",
           "decision": "retained-in-canvas"
         }
       ]
@@ -3077,16 +3082,16 @@
       "importPath": "./stories/OverlayLightbox.stories.jsx",
       "storyId": "lds-product-overlay-lightbox--lightbox-open",
       "exportName": "LightboxOpen",
-      "descriptionHash": "6d38dc83f0f829b642fd532db604f6c3ee3e07b25636ca7085eec86e374785d9",
+      "descriptionHash": "4da1e7b0c3490e2458c4f51ac722453d7e5e03440dfd75ed9c2b62c21d7b0271",
       "sentences": [
         {
-          "hash": "78c725cf6838bb3933bfd955776c8a30f50d5a0f4d33a8f809af1358bf93a874",
-          "text": "미디어를 화면 위에 확대해 보는 대표 열린 상태입니다.",
+          "hash": "758dc26a200e45723c8ad00efe2386858dea4bf3beafd2dc074db53a681ef6e5",
+          "text": "썸네일을 선택해 해당 이미지를 크게 보고 이전·다음 이미지로 이동합니다.",
           "decision": "retained-in-canvas"
         },
         {
-          "hash": "b055908713e94ab30a140d9c0916cfb1a29f51e467ed214ad44c21e225342953",
-          "text": "이미지 대체 텍스트, 닫기 액션, 배경과의 시각적 분리, viewport 안의 미디어 배치를 확인하세요.",
+          "hash": "85460faf3e66a8415ef7a20ac4f5e322711f230ea26dfda9a5bf1083b35878f9",
+          "text": "닫기나 Escape 뒤 선택했던 썸네일로 초점이 돌아오고 다시 열 수 있는지 확인하세요.",
           "decision": "retained-in-canvas"
         }
       ]

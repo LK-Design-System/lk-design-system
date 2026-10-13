@@ -1,11 +1,11 @@
 # Compass R8 변경 사항과 후속 작업
 
-R8 source와 정본 생성물을 통합한 `a7009772`를 승인받아 push했습니다. 자동 CI의 fast gate와 Storybook build·치수 검사는 통과했지만 `check:inventory`에서 기존 문서·숨김 Stat 예제의 오래된 story 수 때문에 실패했습니다. 세 곳을 실제 census인 802/564/238에 맞췄고 focused inventory 검사가 통과한 로컬 후보를 준비했습니다. IA는 802개 전체 reviewed·stale 0이며 현행 공유 형태 값 유지를 권고합니다. 새 후보의 push·exact-SHA CI와 release qualification은 남아 있습니다.
+Inventory 수정 `c9776d0c`를 승인받아 push했습니다. 자동 CI는 fast gate·Storybook build·치수·inventory·IA 802개 검사를 통과했지만 별도 primary description 원장에서 Motion·Lightbox 두 설명의 이전 hash로 실패했습니다. 실제 source의 다섯 문장을 검토해 두 항목만 갱신했고 read-only 설명문 체커 197개가 모두 통과한 로컬 후보를 준비했습니다. IA는 802개 전체 reviewed·stale 0이며 현행 공유 형태 값 유지를 권고합니다. 새 후보의 push·exact-SHA CI와 release qualification은 남아 있습니다.
 
 | Field | Value |
 | --- | --- |
 | Type | Working source handoff |
-| Status | a7009772 CI failed at inventory census; scoped local fix verified; new push/CI and release qualification pending |
+| Status | c9776d0c CI passed inventory/IA; two primary-description records reviewed and corrected locally; new push/CI and release qualification pending |
 | Owner | Design system owner · Foundation owner |
 | Last reviewed | 2026-10-13 |
 | Roadmap | [LDS Roadmap R8](../../LDS_ROADMAP.md#121-r8--컨트롤-피드백과-모션대표-예제-개선) |
@@ -60,7 +60,7 @@ Portal은 기간별 조회, 권한, 응답 방식과 controlled 상태를 소유
 ## 남은 작업과 승인
 
 1. 형태 시안의 font·layout 검토는 완료했습니다. 현행 공유 값 유지를 권고하며 미채택 세 안을 공유 토큰 변경으로 확대하지 않습니다. 새로운 형태 채택은 구체적인 owner 결정 후 별도 변경으로 진행합니다.
-2. inventory 수치 정정 커밋의 push를 승인받고 자동 CI·Pages를 확인합니다. `dc4072a1`의 Linux export와 diff 검토는 완료했으며 이번 수치 정정은 정본 생성 입력을 바꾸지 않으므로 추가 수동 export는 필요하지 않습니다. Windows에서 생성하거나 전체 gate를 중복 실행하지 않습니다.
+2. primary description 검토 기록 정정 커밋의 push를 승인받고 자동 CI·Pages를 확인합니다. `dc4072a1`의 Linux export와 diff 검토는 완료했으며 이번 두 수동 기록 정정은 정본 생성 입력을 바꾸지 않으므로 추가 수동 export는 필요하지 않습니다. Windows에서 생성하거나 전체 gate를 중복 실행하지 않습니다.
 3. 권한 있는 release operator 환경에서 registry와 server04 fresh guest qualification을 확인한 뒤 태그 push·발행·서버 실행을 각각 승인받습니다. 검증된 패키지 발행 후 제품 owner가 pin 갱신과 제품 검토·배포를 진행합니다.
 
 이번 source·데모·핸드오프 업로드 승인을 후속 push, 수동 dispatch, 태그, 발행, 제품 배포나 서버 변경의 승인으로 확장하지 않습니다. 각 행위는 기존 [운영 정책](../../OPERATIONS.md)과 사용자 승인을 따릅니다. 승인된 `interactionOpen` 외의 새 공개 API, 브랜드 색 변경과 repository 전체 motion gate 확대는 R8 범위에 포함하지 않습니다.
@@ -183,6 +183,21 @@ Artifact `canonical-linux-generated`의 ID는 `11790956880`, GitHub 보고 크�
 검토된 `dc4072a1`의 Linux index를 비추적 `storybook-static/index.json`에 byte-identical 검사 입력으로 복사하고 실제 `node scripts/report-inventory.mjs --check-docs`를 실행해 통과했습니다. index를 생성하거나 기존 파일을 덮어쓰지 않았고 Git ignore도 확인했습니다. 공개 API·token·runtime·gate 규칙·review stamp·정본 생성물은 수정하지 않았습니다. 추가 export 없이 다음 승인된 push의 자동 CI로 진행할 수 있습니다.
 
 CI는 inventory에서 멈춰 `check:storybook-ia`, 전체 accessibility·visual regression, packed package와 Linux/Windows 소비자 검증까지 완료하지 못했습니다. 이 로컬 inventory 수정의 통과를 전체 CI green으로 해석하지 않습니다. 실패 로그·완료 snapshot은 `~/.local/state/lds-r8-export/a7009772-ci/`에 보존했고 기존 실행 감시는 종료합니다. 원격 push·재실행·태그·발행·서버 변경은 새로 하지 않았습니다.
+
+### c9776d0c 자동 CI 결과와 설명문 검토 기록 정정
+
+승인받은 `main@c9776d0c89605a38b2d682df86e5b911e340b785`를 push한 뒤 [CI 38357604831](https://github.com/LK-Design-System/lk-design-system/actions/runs/38357604831)와 [Pages 38357604955](https://github.com/LK-Design-System/lk-design-system/actions/runs/38357604955)를 완료까지 감시했습니다. CI는 2026-10-13 15:35:54 KST 시작, 15:38:32 KST 마지막 job 종료로 2분 38초에 실패했습니다. Pages와 Linux conformance는 성공했습니다. 수동 dispatch는 하지 않았습니다.
+
+`check:fast`, Storybook build·adoption·치수·nested 치수, 수정한 inventory와 IA audit 202페이지/802스토리, Pattern guide 검사는 통과했습니다. 다음 `check-storybook-primary-description-review.mjs`가 Motion과 Lightbox의 `primary description changed`로 실패했습니다. 앞선 IA 판정 원장과 별도로 관리되는 이 설명문 원장 두 항목의 갱신이 누락됐습니다.
+
+- Motion: 동일 거리의 duration/easing 비교, 정지와 reduced-motion 도착 상태, 현재 profile token 값의 실제 조작·관찰 안내 3문장입니다. 명시적 Overview parameters가 이전 generic token helper 설명을 대체하며 Foundation 원리와 선택 규칙은 Docs에 남습니다.
+- Lightbox: 썸네일 선택·이미지 이동과 닫기/Escape 후 선택한 썸네일 초점 복원·재열기 안내 2문장입니다. 이전의 “대표 열린 상태”는 초기 닫힌 gallery와 맞지 않았습니다.
+
+사용자가 위임한 에이전트 source/역할 검토에 따라 다섯 문장을 `retained-in-canvas`로 기록했습니다. 원장의 두 descriptionHash·sentence 배열만 변경하고 다른 195개 entry와 migration 기록을 보존했습니다. 옛 네 문장의 교체 근거와 검토 결과는 `~/.local/state/lds-r8-export/c9776d0c-ci/primary-description-curation.json`에 기록했습니다. 직접 인간의 시각 승인이나 이번 후보의 브라우저/play 통과로 표현하지 않습니다.
+
+실제 checker로 수정 전 동일 두 실패를 재현했고 수정 후 **197개 primary description 전체가 통과**했습니다. lockfile과 같은 TypeScript 5.9.3을 검증용 상태 디렉터리에서 사용하고 registry integrity를 확인했습니다. 저장소 dependency/lockfile·node_modules·generator·build·정본 산출물은 변경하지 않았으며 `--review-current`나 전체 도장 갱신을 사용하지 않았습니다. 이 수동 review JSON은 생성/Storybook 입력이 아니므로 추가 Linux export는 필요하지 않습니다.
+
+CI는 이 검사에서 중단되어 tooltip/public surface·전체 접근성·visual regression·expression-profile, packed package 및 Linux/Windows 소비자 검증은 아직 남아 있습니다. 실패 로그와 SHA별 snapshot은 `~/.local/state/lds-r8-export/c9776d0c-ci/`에 보존했습니다. 로컬 체커 통과는 새 후보의 전체 CI green을 의미하지 않습니다. 기존 실행 감시는 종료하며 다음 단계는 정정 커밋의 행위별 push 승인입니다.
 
 ## 로컬 확인 명령
 
