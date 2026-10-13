@@ -1,12 +1,12 @@
 {
   "version": 1,
   "expected": {
-    "stories": 794,
+    "stories": 802,
     "docs": 201,
-    "publicStories": 558,
-    "hiddenStories": 236,
-    "storyIdsSha256": "a28f4006f2f7311e21b3cef98ac387e6d2c28992b64a96c9ac39f9f5765758f2",
-    "visibilitySha256": "686f4135ec8b18d54c7c2ce1619cb61eefbae366d52eb5c0a024cb330b817ad5"
+    "publicStories": 564,
+    "hiddenStories": 238,
+    "storyIdsSha256": "b81b2ca5332773e97688fc46dce451df30780f71f0f80359662145e057bcb604",
+    "visibilitySha256": "7a35e423c0fcfea8602378791c66555a7ad53d875929ec28d0e5049b28081b27"
   },
   "allowedGuideOmissions": [],
   "canonicalDocs": [
@@ -55,6 +55,26 @@
       "lds-core-components-status-notices-and-callouts--callout-variants"
     ],
     "reason": "Two existing Core Callout/Blockquote variant specimens introduced on main after the previous 760-story census. Their public role-prefixed names and purpose descriptions are reviewed separately."
+  },
+  "pendingExportSourceExtension": {
+    "status": "review-pending",
+    "observedAt": "2026-10-13",
+    "sourceSha": "1b710f8031c8f0fc57f11aa69cfe406a5c8bacec",
+    "pagesRunId": 38323004212,
+    "retainedStoryIds": 794,
+    "removedStoryIds": [],
+    "changedExistingVisibility": [],
+    "addedStoryIds": [
+      "lds-core-components-content-prose--chat-typography",
+      "lds-core-components-selection-and-input-input--input-keyboard-focus-contract",
+      "lds-core-components-selection-and-input-select--select-scrollable-option-width-contract",
+      "lds-product-communication-conversation-list--two-line-titles",
+      "lds-product-communication-message-composer--file-preparation",
+      "lds-product-communication-message-composer--uncancellable-request",
+      "lds-product-content-source-disclosure--inline-details",
+      "lds-product-selection-and-input-file-upload--button-selection"
+    ],
+    "reason": "Canonical Linux Pages census matches the 802 stories observed by export run 38333772289. All 794 retained IDs and their visibility are unchanged. Two hidden Input/Select contract specimens originate in a8c46f0d and six public chat/attachment specimens in 0fbfbeb4; all predate R8. Exact census assertions remain enforced. This records inventory facts only and leaves page/story human review stamps unchanged."
   },
   "pendingSourceExtension": {
     "status": "review-pending",

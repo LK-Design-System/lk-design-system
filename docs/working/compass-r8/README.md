@@ -65,6 +65,33 @@ Portal은 기간별 조회, 권한, 응답 방식과 controlled 상태를 소유
 
 이번 source·데모·핸드오프 업로드 승인을 후속 push, 수동 dispatch, 태그, 발행, 제품 배포나 서버 변경의 승인으로 확장하지 않습니다. 각 행위는 기존 [운영 정책](../../OPERATIONS.md)과 사용자 승인을 따릅니다. 승인된 `interactionOpen` 외의 새 공개 API, 브랜드 색 변경과 repository 전체 motion gate 확대는 R8 범위에 포함하지 않습니다.
 
+## 후속 검토 — 2026-10-13
+
+대상은 원격 `main@1b710f8031c8f0fc57f11aa69cfe406a5c8bacec`입니다. 아래는 최초 source 검증과 구분한 공개 Pages 후속 관측입니다.
+
+- [Pages 38323004212](https://github.com/LK-Design-System/lk-design-system/actions/runs/38323004212)는 해당 SHA에서 성공했고, 임시 데모와 형태 비교 페이지의 실제 렌더를 확인했습니다.
+- 데모의 Light/Default 첫 화면, Dark/Ops 전환과 최대 390px iframe 폭 선택을 확인했습니다. Dark/Ops 중첩 Modal에서 자식 창을 연 뒤 첫 Escape는 자식만 닫고, 다음 Escape는 부모를 닫으며 `환경 설정 열기` 호출 버튼으로 초점이 돌아왔습니다. 이는 대표 조합의 확인이며 12개 예제 전체, 실제 모바일 viewport, 다른 브라우저 또는 reduced-motion 검증 완료를 뜻하지 않습니다.
+- 형태 비교는 Light/Default와 Dark/Ops desktop에서 네 안의 배치와 문구 잘림 없음을 확인했습니다. 공유 형태 값은 미채택 상태입니다. 실제 사용 font face의 로드·적용 여부, 나머지 테마/프로필 조합과 좁은 viewport는 아직 검증하지 않았으므로 font·layout 검토 전체를 완료로 표시하지 않습니다.
+- [CI 38323004292](https://github.com/LK-Design-System/lk-design-system/actions/runs/38323004292)의 `Design system checks`는 `check:foundations`에서 `Generated foundation artifact is stale: docs/foundations/motion.md`로 실패했습니다. Linux conformance는 성공했고 Windows package 소비 검사는 skipped입니다. 이 run에는 다운로드할 artifact가 없습니다.
+
+### 승인된 Linux export 실행 결과
+
+사용자의 행위별 승인으로 `.github/workflows/ci.yml`을 원격 `main@1b710f80`에서 `export_dist=true`, `export_visual_baseline=false`로 정확히 한 번 실행했습니다. [실행 38333772289](https://github.com/LK-Design-System/lk-design-system/actions/runs/38333772289)의 `headSha`는 승인된 전체 SHA와 일치합니다. 2026-10-13 10:47:02 KST에 시작해 마지막 job이 10:48:10 KST에 종료됐습니다.
+
+| 대상 | 결과 |
+| --- | --- |
+| Export canonical Linux artifacts | 실패. Storybook build는 성공했지만 `report:storybook-ia`에서 `Built Storybook must retain 794 stories; found 802.`로 중단했습니다. 후속 foundation 생성과 artifact 업로드에 도달하지 못했습니다. |
+| Design system checks | 기존 `docs/foundations/motion.md` stale 오류로 실패했습니다. |
+| Conformance fixtures (Linux) | 성공했습니다. |
+| Windows workspace package consumers | skipped입니다. 통과 증거로 사용하지 않습니다. |
+| Artifact 및 diff | GitHub artifact 목록은 0개입니다. `canonical-linux-generated`가 없으므로 산출물 diff 검토는 수행할 수 없었습니다. 재실행하지 않았습니다. |
+
+원인은 [Storybook 목록 계약](../../references/quality/STORYBOOK_DOCS_DEDUP_CONTRACT.json)의 오래된 794개 census입니다. 동일 SHA에서 성공한 Linux Pages의 `index.json`을 기존 IA audit과 대조해 794개 ID와 공개 상태가 모두 유지됨을 확인했습니다. 삭제 0개, 기존 공개 상태 변경 0개이며, `a8c46f0d`의 hidden Input/Select 예제 2개와 `0fbfbeb4`의 public 채팅/첨부 예제 6개가 추가됐습니다. 모두 R8 이전 변경입니다. 현재 관측은 802 stories / 201 Docs / 564 public / 238 hidden입니다.
+
+로컬 복구안은 이 목록의 정확한 수와 두 해시를 갱신하고 8개 ID·출처를 `pendingExportSourceExtension`으로 기록합니다. 기존 equality/hash 검증과 사람 검토 stamp는 유지합니다. 실제 검증 함수를 관측 index에 적용해 통과했고 ID 삭제·ID 변경·공개 상태 변경·Docs 삭제를 각각 거부하는 것도 확인했습니다. 관련 Docs source 테스트 11/11과 `git diff --check`가 통과했습니다. Linux 생성물, visual baseline, 공유 형태 값은 변경하지 않았습니다.
+
+이 수정의 원격 push와 수정 SHA의 새 export 실행은 각각 별도 승인 대상입니다. 새 export가 성공하면 해당 실행의 source SHA를 확인하고 artifact diff를 검토합니다. 기존 컴포넌트 registry도 R8 이전 일부 변경을 아직 투영하지 않은 상태라 채팅/첨부·Input/Select의 파생 변경이 함께 나올 수 있으며, 이를 R8 변경과 구분해 검토합니다. 생성된 IA audit에서 미검토 source가 드러나더라도 사람 검토 stamp를 자동 승격하지 않습니다.
+
 ## 로컬 확인 명령
 
 설치된 repository dependency를 사용해 source Storybook을 엽니다. `storybook:dev`는 생성기를 실행하지 않습니다.
