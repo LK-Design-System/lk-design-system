@@ -660,8 +660,10 @@ Compass의 짧은 상태 전환과 선택 연속성을 LDS의 기존 timing·시
 반영했습니다. 16페이지·93스토리와 신규 8개 예제를 사용자 위임으로 검토하고,
 역할 이름·선택 안내 및 Prose의 비동기 overflow-focus 검사를 수정했습니다.
 형태 시안의 네 테마/프로필을 1280px·390px에서 확인하고 Pretendard 로드를 검증했으며
-현행 공유 값 유지를 권고합니다. 최신 수동 review fields와 네 story source의 Linux
-재투영·exact-SHA CI 및 release 환경 qualification은 남아 있습니다.
+현행 공유 값 유지를 권고합니다. 이후 승인된 `dc4072a1` export `38350921957`에서
+수동 review fields와 네 story source가 정본에 투영됐고, IA 802개 reviewed·stale 0과
+의도한 문서 11개 변경을 확인해 로컬에 반영했습니다. 통합 커밋의 exact-SHA 자동 CI와
+release 환경 qualification은 남아 있습니다.
 측정·실패·검증 한계는 [R8 후속 후보 기록](working/compass-r8/README.md#생성물-반영과-위임-검토-후보)에 있습니다.
 
 후속 독립 검토에서 부모 Modal/Sheet의 실제 open이 false가 된 뒤에도 별도로

@@ -42437,7 +42437,7 @@
         "PageIndicator"
       ],
       "supportingComponents": [],
-      "purpose": "캐러셀이나 단계별 콘텐츠처럼 앞뒤 이동은 다른 제어가 담당하고 현재 위치만 간결하게 알려줄 때 적합합니다. 사용자가 특정 페이지를 직접 선택해야 하면 Pagination을, 업무 단계의 이름과 완료 상태를 설명해야 하면 Steps를 사용하세요.",
+      "purpose": "캐러셀처럼 짧은 연속 콘텐츠의 현재 위치를 카운터나 도트로 간결하게 알릴 때 적합합니다. 도트에 onChange를 제공하면 원하는 항목을 직접 고를 수 있습니다. 많은 페이지를 번호와 앞뒤 이동으로 탐색해야 하면 Pagination을, 업무 단계의 이름과 완료 상태를 설명해야 하면 Steps를 사용하세요.",
       "useWhen": [
         "counter는 숫자 위치가 중요한 onboarding이나 순차 콘텐츠에 사용합니다."
       ],
@@ -49262,7 +49262,7 @@
         "Button",
         "Icon"
       ],
-      "purpose": "동시에 하나만 활성화되는 25개의 짧고 대등한 보기에 사용하세요. 서로 독립적인 기능을 실행하는 버튼 묶음에는 Toggle Button이 더 적합합니다.",
+      "purpose": "동시에 하나만 활성화되는 2–4개의 짧고 대등한 보기에 사용하세요. 서로 독립적인 기능을 실행하는 버튼 묶음에는 Toggle Button이 더 적합합니다.",
       "useWhen": [],
       "avoidWhen": [],
       "anatomy": [
@@ -56733,6 +56733,11 @@
             "role": "variants-states"
           },
           {
+            "id": "lds-product-communication-message-composer--file-preparation",
+            "name": "변형·상태 · 파일 이름, 메타데이터, 준비 상태",
+            "role": "variants-states"
+          },
+          {
             "id": "lds-product-communication-message-composer--keyboard-and-ime-contract",
             "name": "상호작용 · 조합 입력과 제출 방식",
             "role": "interaction"
@@ -56756,11 +56761,6 @@
             "id": "lds-product-communication-message-composer--compact-density",
             "name": "반응형 · 조밀한 밀도",
             "role": "responsive"
-          },
-          {
-            "id": "lds-product-communication-message-composer--file-preparation",
-            "name": "조합 · 파일 이름, 메타데이터, 준비 상태",
-            "role": "variants-states"
           }
         ],
         "hiddenEvidence": 1

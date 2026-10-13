@@ -413,6 +413,11 @@
         "role": "variants-states"
       },
       {
+        "id": "lds-product-communication-message-composer--file-preparation",
+        "name": "변형·상태 · 파일 이름, 메타데이터, 준비 상태",
+        "role": "variants-states"
+      },
+      {
         "id": "lds-product-communication-message-composer--keyboard-and-ime-contract",
         "name": "상호작용 · 조합 입력과 제출 방식",
         "role": "interaction"
@@ -436,11 +441,6 @@
         "id": "lds-product-communication-message-composer--compact-density",
         "name": "반응형 · 조밀한 밀도",
         "role": "responsive"
-      },
-      {
-        "id": "lds-product-communication-message-composer--file-preparation",
-        "name": "조합 · 파일 이름, 메타데이터, 준비 상태",
-        "role": "variants-states"
       }
     ],
     "hiddenEvidence": 1

@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "b3f40b0618b1178c0df3e8c2d5ae7dbb97e9626b1fcb623f43bc0aeacff70299",
+    "storybookIndexSha256": "87b3cc9bd15123260c8451c223812e3d6cd32b94db3780be42c17fa1726143a3",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -70,8 +70,8 @@
     "pagesWithDecisionGuidance": 190,
     "describedPublicStories": 564,
     "reviewedPages": 202,
-    "reviewedStories": 794,
-    "staleReviewedPages": 16,
+    "reviewedStories": 802,
+    "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
@@ -1961,7 +1961,7 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/ContentProse.stories.jsx",
-      "sourceSha256": "4bf00123d9b837e1d02406e1d6532db68df8f6f82b24513d6793d624f5127b59",
+      "sourceSha256": "bd05ed07d4a8745b788a99d09ea77e24cb7adf5c16ff2e3d21be94f7b9ac1e8e",
       "primaryOwner": "Prose",
       "ownerComponents": [
         "Prose"
@@ -3220,7 +3220,7 @@
       "layer": "Core",
       "family": "Navigation",
       "importPath": "./stories/NavigationPageIndicator.stories.jsx",
-      "sourceSha256": "a3db9c03865d962e33c4da921e8db5f8c0f2998b1c4b3dd047af8b5f9b8d5c6b",
+      "sourceSha256": "49551b4a080c499e4d2f16d162f55e574eb89f032b2c13af3770046e7606a3b3",
       "primaryOwner": "PageIndicator",
       "ownerComponents": [
         "PageIndicator"
@@ -6192,7 +6192,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/SelectionSegmentedControl.stories.jsx",
-      "sourceSha256": "137a01ff45b4054171c39c8b52c4282b17d341cb9cf1404755d080349de1b5f5",
+      "sourceSha256": "639fec7728ce1263a523ef0ba0c19a6a4fcf40184fc09491d3d07e2f6ab9eb78",
       "primaryOwner": "SegmentedControl",
       "ownerComponents": [
         "SegmentedControl"
@@ -10746,7 +10746,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageComposer.stories.jsx",
-      "sourceSha256": "9d62043f249abd13a424fabfc0c700849aeb59cd4250b876d3552c6397a91d67",
+      "sourceSha256": "76f28ecc14de1fe885df10f6db2b0527f5deecb6a362c970460320fc45ec6f39",
       "primaryOwner": "MessageComposer",
       "ownerComponents": [
         "MessageComposer"
@@ -10913,6 +10913,35 @@
           "reviewNote": "2026-10-13 owner-delegated agent source/IA review: Uncancellable waiting and attachment preparation are public states, distinct from cancellable requests. ListCell/Spinner/TextButton/Icon support the attachment slot. Prefix sorting and onStop guidance were corrected. Retain public variants-states; actual source purpose, naming, ownership and distinctness reviewed. Published c4209276 render observed at 390px; play completion and final candidate CI are not certified by this note. See docs/working/compass-r8/README.md."
         },
         {
+          "id": "lds-product-communication-message-composer--file-preparation",
+          "name": "변형·상태 · 파일 이름, 메타데이터, 준비 상태",
+          "exportName": "FilePreparation",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "MessageComposer"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ListCell",
+            "Spinner",
+            "TextButton"
+          ],
+          "reviewNote": "2026-10-13 owner-delegated agent source/IA review: Uncancellable waiting and attachment preparation are public states, distinct from cancellable requests. ListCell/Spinner/TextButton/Icon support the attachment slot. Prefix sorting and onStop guidance were corrected. Retain public variants-states; actual source purpose, naming, ownership and distinctness reviewed. Published c4209276 render observed at 390px; play completion and final candidate CI are not certified by this note. See docs/working/compass-r8/README.md."
+        },
+        {
           "id": "lds-product-communication-message-composer--keyboard-and-ime-contract",
           "name": "상호작용 · 조합 입력과 제출 방식",
           "exportName": "KeyboardAndImeContract",
@@ -11066,35 +11095,6 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
-        },
-        {
-          "id": "lds-product-communication-message-composer--file-preparation",
-          "name": "조합 · 파일 이름, 메타데이터, 준비 상태",
-          "exportName": "FilePreparation",
-          "visibility": "public",
-          "tags": [
-            "autodocs",
-            "dev",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "variants-states",
-          "hasStoryDescription": true,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "public",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "MessageComposer"
-          ],
-          "supportingComponents": [
-            "Icon",
-            "ListCell",
-            "Spinner",
-            "TextButton"
-          ],
-          "reviewNote": "2026-10-13 owner-delegated agent source/IA review: Uncancellable waiting and attachment preparation are public states, distinct from cancellable requests. ListCell/Spinner/TextButton/Icon support the attachment slot. Prefix sorting and onStop guidance were corrected. Retain public variants-states; actual source purpose, naming, ownership and distinctness reviewed. Published c4209276 render observed at 390px; play completion and final candidate CI are not certified by this note. See docs/working/compass-r8/README.md."
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement.\n2026-10-10 scoped9-page/10-story delta review: Reviewed inline composer and width-autosize purposes, retained draft and expansion contracts against unchanged Docs/Canvas evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained.\n2026-10-13 owner-delegated agent source/IA review: Uncancellable waiting and attachment preparation are public states, distinct from cancellable requests. ListCell/Spinner/TextButton/Icon support the attachment slot. Prefix sorting and onStop guidance were corrected. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."

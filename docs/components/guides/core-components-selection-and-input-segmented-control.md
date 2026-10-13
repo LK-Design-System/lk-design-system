@@ -8,7 +8,7 @@
 | Storybook | `LDS Core/Components/Selection and Input/Segmented Control` |
 | Source | `../component-content.json#core-components-selection-and-input-segmented-control` |
 
-동시에 하나만 활성화되는 25개의 짧고 대등한 보기에 사용하세요. 서로 독립적인 기능을 실행하는 버튼 묶음에는 Toggle Button이 더 적합합니다.
+동시에 하나만 활성화되는 2–4개의 짧고 대등한 보기에 사용하세요. 서로 독립적인 기능을 실행하는 버튼 묶음에는 Toggle Button이 더 적합합니다.
 
 ## Anatomy
 

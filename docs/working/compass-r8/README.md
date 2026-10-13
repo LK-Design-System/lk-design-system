@@ -1,11 +1,11 @@
 # Compass R8 변경 사항과 후속 작업
 
-R8의 컨트롤 피드백과 Overlay source는 원격에 올라가 있으며, 승인된 Linux export의 검토 대상 739개 경로를 로컬 `f8aa0017`에 반영했습니다. 이후 IA 16페이지·93스토리와 신규 8개 예제를 검토하고 문구·검증 대기 오류를 수정했습니다. 형태 비교는 네 테마/프로필의 넓은·좁은 화면과 글꼴을 확인했고 현행 공유 값 유지를 권고합니다. 최신 source의 원격 push, Linux 재투영과 exact-SHA CI는 남아 있습니다. R8 완료나 제품 배포를 뜻하지 않습니다.
+R8 source·IA 검토 후보 `dc4072a1`을 승인받아 push하고 Linux export 1회를 완료했습니다. 새 산출물의 추적 문서 11개를 검토해 로컬에 반영했으며 IA 802개 전체 reviewed·stale 0입니다. 형태 비교는 네 테마/프로필의 넓은·좁은 화면과 글꼴을 확인했고 현행 공유 값 유지를 권고합니다. 생성물 통합 커밋의 push와 exact-SHA 자동 CI·release qualification은 남아 있습니다. R8 완료나 제품 배포를 뜻하지 않습니다.
 
 | Field | Value |
 | --- | --- |
 | Type | Working source handoff |
-| Status | Reviewed Linux artifacts applied locally; delegated IA review and source fixes prepared; final Linux projection/CI and release qualification pending |
+| Status | dc4072a1 export reviewed and locally integrated; integrated-SHA automatic CI and release qualification pending |
 | Owner | Design system owner · Foundation owner |
 | Last reviewed | 2026-10-13 |
 | Roadmap | [LDS Roadmap R8](../../LDS_ROADMAP.md#121-r8--컨트롤-피드백과-모션대표-예제-개선) |
@@ -60,7 +60,7 @@ Portal은 기간별 조회, 권한, 응답 방식과 controlled 상태를 소유
 ## 남은 작업과 승인
 
 1. 형태 시안의 font·layout 검토는 완료했습니다. 현행 공유 값 유지를 권고하며 미채택 세 안을 공유 토큰 변경으로 확대하지 않습니다. 새로운 형태 채택은 구체적인 owner 결정 후 별도 변경으로 진행합니다.
-2. 최신 로컬 후보의 push와 Linux export 1회를 각각 승인받아 실행합니다. 네 story source 수정과 수동 IA 검토 필드가 반영된 정본 관측·문서 projection을 받아 diff를 검토한 뒤 통합합니다. 해당 통합 SHA의 자동 CI·Pages가 green이어야 합니다. Windows에서 생성하거나 전체 gate를 중복 실행하지 않습니다.
+2. 최신 생성물 통합 커밋의 push를 승인받고 자동 CI·Pages를 확인합니다. `dc4072a1`의 Linux export와 diff 검토는 완료했으므로 같은 입력의 수동 export를 다시 실행하지 않습니다. Windows에서 생성하거나 전체 gate를 중복 실행하지 않습니다.
 3. 권한 있는 release operator 환경에서 registry와 server04 fresh guest qualification을 확인한 뒤 태그 push·발행·서버 실행을 각각 승인받습니다. 검증된 패키지 발행 후 제품 owner가 pin 갱신과 제품 검토·배포를 진행합니다.
 
 이번 source·데모·핸드오프 업로드 승인을 후속 push, 수동 dispatch, 태그, 발행, 제품 배포나 서버 변경의 승인으로 확장하지 않습니다. 각 행위는 기존 [운영 정책](../../OPERATIONS.md)과 사용자 승인을 따릅니다. 승인된 `interactionOpen` 외의 새 공개 API, 브랜드 색 변경과 repository 전체 motion gate 확대는 R8 범위에 포함하지 않습니다.
@@ -147,6 +147,28 @@ IA의 생성 `sourceSha256`·index hash·summary 및 정본 index는 로컬에�
 `CHANGELOG.md` 0.4.8에 기존 Drawer 항목을 유지하면서 미발행 compact navigation·Table·chat/file·focus·R8 motion/overlay 변경을 보완했습니다. Robotics 채택 입력 5개는 기존 기록 hash와 같고 artifact에서도 변경되지 않아 `0.1.0-rc.53 (unchanged)`를 유지합니다. 원격 최신 태그는 `lds-v0.4.7 → 334b07268b29a87eaa397708a0ca35df464d65b2`이며 기존 발행 run 37896785434는 성공했습니다. 이것은 새 후보의 발행 증거가 아닙니다.
 
 현재 PC에는 release operator config/state가 없고 org runner 조회는 403, package version 조회도 read 권한 부재의 403입니다. 따라서 `0.4.8` registry 미발행이나 server04 guest availability/qualification은 증명하지 못했습니다. 설치본 Robotics 관측 gate도 observation 부재로 실행 조건을 충족하지 못했으며 canonical mismatch로 해석하지 않습니다. 태그·발행 준비 완료는 아니고, 권한 있는 operator의 read-only preflight와 격리 guest 절차가 남아 있습니다. 추가 push·dispatch·태그·발행·서버 변경은 하지 않았습니다.
+
+### 승인된 dc4072a1 실행과 최종 projection 검토
+
+사용자가 `main@dc4072a1b8a29b45d9d729fc97d10ad029715137`의 push와 동일 SHA에서 `export_dist=true`, `export_visual_baseline=false`인 export 1회를 명시적으로 승인했습니다. 원격 `main`과 실행 SHA를 확인했고 [run 38350921957](https://github.com/LK-Design-System/lk-design-system/actions/runs/38350921957)을 정확히 한 번 실행했습니다. 2026-10-13 14:20:56 KST에 시작해 14:22:08 KST에 완료됐습니다(72초). 백그라운드 감시로 관련 run·실패 로그·artifact metadata를 확보했고 다운로드는 14:24:32 KST에 끝났습니다. 재실행·취소·추가 push·태그·발행·서버 변경은 하지 않았습니다.
+
+| 대상 | 결과 |
+| --- | --- |
+| Export canonical Linux artifacts | 성공. 정본 생성과 업로드를 완료했습니다. |
+| Conformance fixtures (Linux) | 성공했습니다. |
+| Design system checks | 실패. checkout의 `docs/components/component-content.json`이 네 story 수정에 대해 stale입니다. 이번 export가 그 projection을 생성했으며 export job은 checkout 검사와 별개입니다. |
+| Windows workspace package consumers | skipped. 통과로 해석하지 않습니다. |
+| 자동 push CI [38350863953](https://github.com/LK-Design-System/lk-design-system/actions/runs/38350863953) | 같은 component registry stale 오류로 실패했습니다. |
+| Pages [38350863955](https://github.com/LK-Design-System/lk-design-system/actions/runs/38350863955) | 성공했습니다. 전체 CI·packed package·발행 성공을 뜻하지 않습니다. |
+
+Artifact `canonical-linux-generated`의 ID는 `11790956880`, GitHub 보고 크기는 26,978,427 bytes, digest는 `sha256:33a9eee234afff5689010e9bdd9e8610ef013aac238556550f2353f13473536f`입니다. metadata의 run·branch·전체 head SHA가 승인 대상과 일치합니다. 3,534파일을 해당 Git commit의 blob과 별도 before/after snapshot에서 대조했습니다.
+
+- 3,522파일은 byte-identical이며 변경은 12경로입니다. 추적 파일 11개 변경과 비추적 `storybook-static/index.json` 1개 추가이고 삭제는 없습니다.
+- 컴포넌트 문서/registry 8개는 PageIndicator 직접 선택 안내, SegmentedControl 2–4개 안내와 MessageComposer의 FilePreparation 이름·정렬을 투영합니다. 컴포넌트 레코드 214개와 guide 183개 중 나머지는 동일합니다.
+- 감사 계약 3개는 IA의 네 story source hash·built index hash·802/802 reviewed·stale 0 관측, density의 registry fingerprint 1개, dedup의 입력 hash 2개입니다. 16페이지·8스토리의 모든 수동 review 필드와 이전 노트는 보존됐고 role·visibility·ceiling·density 분류는 변경되지 않았습니다.
+- Root dist·package runtime/source/token/docs·foundation 변경과 누락은 0개입니다. 기존 sourcemap/import 무결성 증거는 byte-identical 파일에 재사용합니다. Core 42 / Theme 13 / Product 9개 package docs manifest의 총 64개 hash도 실제 파일과 일치합니다. 의도하지 않은 runtime/API/token churn은 없습니다.
+
+검토 후 11개 추적 파일만 preimage와 결과 blob을 다시 검증해 로컬에 반영했습니다. 정본 index는 추적 파일로 추가하지 않았고 Windows 생성기는 실행하지 않았습니다. 이 통합 후보는 아직 원격에 없으므로 **전체 CI green은 남아 있습니다**. 다음은 이 로컬 통합 커밋의 승인된 push가 유발하는 자동 CI·Pages이며, 추가 수동 export는 필요하지 않습니다. 검토 증거는 `~/.local/state/lds-r8-export/38350921957/`에 보존했습니다.
 
 ## 로컬 확인 명령
 
