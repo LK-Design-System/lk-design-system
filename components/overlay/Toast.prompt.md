@@ -11,6 +11,22 @@
 - severity 글리프는 공통 `Icon` registry(`statusToneStyle` 매핑)에서 옵니다. 다크 표면 위 아이콘 색만 vivid status 색을 유지합니다.
 - 화면 배치는 `ToastStack`(bottom-right 등 5개 position)으로 감쌉니다.
 
+## 좁은 화면과 긴 메시지
+
+- 기본 폭은 335px 이상·520px 이하로 유지하되, 부모의 가용 폭이 더 작으면 그 폭까지 줄어듭니다.
+  padding을 포함하는 border-box와 `min(335px, 100%)` / `min(520px, 100%)`로 적용하며
+  소비자가 별도의 responsive prop이나 style 우회를 넣지 않아도 됩니다.
+- 메시지는 기존 한국어 `keep-all`을 유지하고, 공백 없는 URL·식별자는 `overflow-wrap: anywhere`로
+  필요할 때 줄바꿈합니다. 텍스트를 자르거나 숨기지 않고 높이를 늘립니다. 아이콘과 짧은 action·닫기
+  버튼의 크기·DOM 순서·초점·타이머·라이브 영역 계약은 유지합니다.
+- 비교한 sibling은 `Snackbar`입니다. 가용 폭 제한과 콘텐츠의 `minWidth: 0`, 축소하지 않는
+  아이콘·action·닫기 구조를 계승하고 Toast의 gap 10px, padding, 타이포·색·그림자는 유지합니다.
+- 근거: [WCAG 2.2 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)의
+  320 CSS px에서 정보·기능 손실 없는 reflow와
+  [Material Snackbar](https://m2.material.io/components/snackbars)의 좁은 화면에서 가장자리 여백을
+  유지하고 메시지 높이를 늘리는 배치 원칙입니다. Material의 치수·행 수·아이콘·해제 정책은
+  복제하지 않습니다. LDS Core의 국소 반응형 bugfix로, shared token·brand·public API 변경은 없습니다.
+
 ## 지속시간과 해제 정책 (`duration`)
 
 - 자동 닫힘은 **컴포넌트가 소유**합니다. `duration`(ms)과 `onClose`를 함께 주면 Toast가 직접 타이머를
