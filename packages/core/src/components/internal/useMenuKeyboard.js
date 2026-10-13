@@ -1,5 +1,6 @@
 import React from 'react';
-import { useOverlayLayer } from '../overlay/overlay-platform.js';
+import { useOverlayRuntime } from '../overlay/overlay-platform.js';
+import { findOverlayOwner, useOverlayInteraction, useOverlayLayerRegistration } from '../overlay/overlay-presence.js';
 
 const MENU_ITEM_SELECTOR = [
   '[role="menuitem"]',
@@ -30,7 +31,9 @@ function availableItems(menu) {
 
 /** Private roving-focus engine shared by LDS menu surfaces. */
 export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex, focusOnOpen = true }) {
-  const { zIndex: resolvedZIndex, isTopmost } = useOverlayLayer({ open, zIndex });
+  open = useOverlayInteraction(open);
+  const { zIndexBase } = useOverlayRuntime();
+  const { zIndex: resolvedZIndex, isTopmost } = useOverlayLayerRegistration({ open, zIndex, zIndexBase, getOwnerRef: () => findOverlayOwner(getTrigger) });
   const menuRef = React.useRef(null);
   const pendingFocusRef = React.useRef(focusOnOpen ? 'first' : null);
   const entryFrameRef = React.useRef(null);
@@ -134,7 +137,7 @@ export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex
   }, [closeMenu, isTopmost, open]);
 
   const handleMenuKeyDown = React.useCallback((event) => {
-    if (event.defaultPrevented) return;
+    if (!isTopmost() || event.defaultPrevented) return;
     if (event.key === 'Escape') {
       event.preventDefault();
       closeMenu({ restoreFocus: true });
@@ -180,7 +183,7 @@ export function useMenuKeyboard({ open, onClose, getTrigger, menuKey = 0, zIndex
     event.preventDefault();
     cancelEntryFocus();
     items[nextIndex].focus({ preventScroll: true });
-  }, [cancelEntryFocus, closeMenu]);
+  }, [cancelEntryFocus, closeMenu, isTopmost]);
 
   return { menuRef, requestItemFocus, closeMenu, handleMenuKeyDown, zIndex: resolvedZIndex, isTopmost };
 }

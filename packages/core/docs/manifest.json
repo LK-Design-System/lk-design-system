@@ -110,7 +110,7 @@
       },
       {
         "path": "docs/foundations/foundation-content.json",
-        "sha256": "9e79a34cb57cd45625b0e895fd9737fd65e0e9f457aadbcca3ab4dadb60f4f20"
+        "sha256": "e00720fb7c77b544e7af63a0fe0ac893d42d6d6c092f68c2aa36aa38ed38dd41"
       },
       {
         "path": "docs/foundations/foundation-content.schema.json",
@@ -138,11 +138,11 @@
       },
       {
         "path": "docs/foundations/llms.txt",
-        "sha256": "087941f920544b234a54ba465dd72165d1e0c7ea0b7338a5401af4815da54d29"
+        "sha256": "9649dfe4caa9282841130c2886e198f9b189290c38486a776629f1bc3bddae03"
       },
       {
         "path": "docs/foundations/motion.md",
-        "sha256": "c6a909e23814fc6a6a8b6f2b112181d8b1a3ae2bb310487bb672aa15c7061a10"
+        "sha256": "9786d99c42f6a19f22d17eea912b8120b042652fcb287a98197830f040df03b8"
       },
       {
         "path": "docs/foundations/radius.md",
@@ -162,7 +162,7 @@
       },
       {
         "path": "docs/foundations/TOKEN_REFERENCE.md",
-        "sha256": "ca528ce262f63a6ae3058490250a65445909c5841487e269fe0446af5ef63644"
+        "sha256": "f0432f76202fade0a662f50996be1afcb0cc7b541724618ff470824ae73c4caa"
       },
       {
         "path": "docs/foundations/typography.md",
@@ -230,15 +230,15 @@
       },
       {
         "path": "tokens/source.json",
-        "sha256": "f41c7717afc8b24f07d4408bcc40031b529d65b16147200159d51487e705259b"
+        "sha256": "5220d1b162110e6bde9931fb961b369ba2333647ddc2c91d5b3ce528058b554b"
       }
     ]
   },
   "resources": {
     "tokens": {
       "fileCount": 6,
-      "bytes": 35975,
-      "sha256": "9ea358e4a0fae705a0a78e2cb0fc1d2c7e301402dd9a9a1be9d8359a67b7b5c4"
+      "bytes": 37161,
+      "sha256": "62411b2e5f3574554a8524249d970ce3b3c409cca3f0b9de69a621de34db68ea"
     },
     "assets": {
       "fileCount": 365,
@@ -399,11 +399,11 @@
     },
     {
       "path": "foundations/foundation-content.json",
-      "sha256": "9e79a34cb57cd45625b0e895fd9737fd65e0e9f457aadbcca3ab4dadb60f4f20",
+      "sha256": "e00720fb7c77b544e7af63a0fe0ac893d42d6d6c092f68c2aa36aa38ed38dd41",
       "sources": [
         {
           "path": "docs/foundations/foundation-content.json",
-          "sha256": "9e79a34cb57cd45625b0e895fd9737fd65e0e9f457aadbcca3ab4dadb60f4f20"
+          "sha256": "e00720fb7c77b544e7af63a0fe0ac893d42d6d6c092f68c2aa36aa38ed38dd41"
         }
       ]
     },
@@ -469,21 +469,21 @@
     },
     {
       "path": "foundations/llms.txt",
-      "sha256": "087941f920544b234a54ba465dd72165d1e0c7ea0b7338a5401af4815da54d29",
+      "sha256": "9649dfe4caa9282841130c2886e198f9b189290c38486a776629f1bc3bddae03",
       "sources": [
         {
           "path": "docs/foundations/llms.txt",
-          "sha256": "087941f920544b234a54ba465dd72165d1e0c7ea0b7338a5401af4815da54d29"
+          "sha256": "9649dfe4caa9282841130c2886e198f9b189290c38486a776629f1bc3bddae03"
         }
       ]
     },
     {
       "path": "foundations/motion.md",
-      "sha256": "c6a909e23814fc6a6a8b6f2b112181d8b1a3ae2bb310487bb672aa15c7061a10",
+      "sha256": "9786d99c42f6a19f22d17eea912b8120b042652fcb287a98197830f040df03b8",
       "sources": [
         {
           "path": "docs/foundations/motion.md",
-          "sha256": "c6a909e23814fc6a6a8b6f2b112181d8b1a3ae2bb310487bb672aa15c7061a10"
+          "sha256": "9786d99c42f6a19f22d17eea912b8120b042652fcb287a98197830f040df03b8"
         }
       ]
     },
@@ -529,11 +529,11 @@
     },
     {
       "path": "foundations/TOKEN_REFERENCE.md",
-      "sha256": "ca528ce262f63a6ae3058490250a65445909c5841487e269fe0446af5ef63644",
+      "sha256": "f0432f76202fade0a662f50996be1afcb0cc7b541724618ff470824ae73c4caa",
       "sources": [
         {
           "path": "docs/foundations/TOKEN_REFERENCE.md",
-          "sha256": "ca528ce262f63a6ae3058490250a65445909c5841487e269fe0446af5ef63644"
+          "sha256": "f0432f76202fade0a662f50996be1afcb0cc7b541724618ff470824ae73c4caa"
         }
       ]
     },
@@ -659,11 +659,11 @@
     },
     {
       "path": "token-reference.json",
-      "sha256": "f41c7717afc8b24f07d4408bcc40031b529d65b16147200159d51487e705259b",
+      "sha256": "5220d1b162110e6bde9931fb961b369ba2333647ddc2c91d5b3ce528058b554b",
       "sources": [
         {
           "path": "tokens/source.json",
-          "sha256": "f41c7717afc8b24f07d4408bcc40031b529d65b16147200159d51487e705259b"
+          "sha256": "5220d1b162110e6bde9931fb961b369ba2333647ddc2c91d5b3ce528058b554b"
         }
       ]
     }

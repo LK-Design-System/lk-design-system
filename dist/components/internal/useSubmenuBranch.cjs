@@ -1,10 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkRPMS4CCKcjs = require('../../chunk-RPMS4CCK.cjs');
-require('../../chunk-IPHGQTAP.cjs');
-require('../../chunk-LDLBJ2M3.cjs');
+var _chunkZRE3UYURcjs = require('../../chunk-ZRE3UYUR.cjs');
+require('../../chunk-EM24PUG7.cjs');
+require('../../chunk-4WXZPYJG.cjs');
 
 
-exports.useSubmenuBranch = _chunkRPMS4CCKcjs.useSubmenuBranch;
+exports.useSubmenuBranch = _chunkZRE3UYURcjs.useSubmenuBranch;
 //# sourceMappingURL=useSubmenuBranch.cjs.map

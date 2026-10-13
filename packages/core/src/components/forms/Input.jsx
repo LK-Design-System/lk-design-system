@@ -111,7 +111,7 @@ export const Input = React.forwardRef(function Input({
       />
       <div
         data-slot="control"
-        className={partClassName(classNames, 'control') || undefined}
+        className={partClassName(classNames, 'control', 'lk-input-control') || undefined}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         style={{
@@ -131,7 +131,7 @@ export const Input = React.forwardRef(function Input({
           data-slot="input"
           data-lds-field=""
           {...rest}
-          className={partClassName(classNames, 'input', inputClassName) || undefined}
+          className={partClassName(classNames, 'input', 'lk-input', inputClassName) || undefined}
           disabled={disabled}
           readOnly={readOnly}
           required={required}

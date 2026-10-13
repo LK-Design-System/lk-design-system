@@ -66,6 +66,18 @@ const useSafeLayoutEffect = typeof window === 'undefined'
   ? React.useEffect
   : React.useLayoutEffect;
 
+function usePlaceholderStyle() {
+  useSafeLayoutEffect(() => {
+    if (typeof document === 'undefined' || document.getElementById('lk-message-composer-placeholder')) return;
+    const style = document.createElement('style');
+    style.id = 'lk-message-composer-placeholder';
+    // Like Input's field-scoped rule, this belongs to the component rather
+    // than the consumer reset. Alternative ink remains recessive but readable.
+    style.textContent = '[data-composer-input]::placeholder{color:var(--color-semantic-label-alternative);opacity:1}[data-composer-input]:disabled::placeholder{color:var(--color-semantic-label-disable)}';
+    document.head.appendChild(style);
+  }, []);
+}
+
 function mergeIds(...ids) {
   const merged = ids
     .flatMap((id) => String(id || '').split(/\s+/))
@@ -110,6 +122,7 @@ export function MessageComposer({
   style,
   ...formProps
 }) {
+  usePlaceholderStyle();
   const missingDisabledReason = disabledReason == null
     || (typeof disabledReason === 'string' && disabledReason.trim().length === 0);
   if (disabled && missingDisabledReason) {
@@ -186,6 +199,9 @@ export function MessageComposer({
   const resolvedStatusLabel = statusLabel !== undefined
     ? statusLabel
     : STATE_LABELS[state] ?? null;
+  const hasStopHandler = typeof onStop === 'function';
+  const waitingLabel = typeof resolvedStatusLabel === 'string' && resolvedStatusLabel.trim().length > 0
+    ? resolvedStatusLabel : STATE_LABELS[state];
 
   const resizeTextarea = React.useCallback(() => {
     const textarea = textareaRef.current;
@@ -555,7 +571,9 @@ export function MessageComposer({
                   iconOnly
                   vars={primaryActionVars}
                   style={primaryActionStyle}
-                  aria-label={stopLabel}
+                  loading={!hasStopHandler}
+                  loadingLabel={waitingLabel}
+                  aria-label={hasStopHandler ? stopLabel : waitingLabel}
                   /* `stopping` still owns a stop control, but a native disabled
                      button is blurred by the browser the instant it is disabled
                      — the caret of the person who just pressed it would be

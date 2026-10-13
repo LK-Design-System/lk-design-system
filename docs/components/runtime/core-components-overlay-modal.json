@@ -15,7 +15,8 @@
   "useWhen": [],
   "avoidWhen": [
     "여러 modal surface를 의도적으로 중첩하지 않습니다. 불가피하게 Drawer 안에서 확인 Modal 등이 열리면 가장 나중에 열린 surface만 Escape와 focus trap을 소유하며, 닫힌 뒤 바로 아래 surface의 호출 지점으로 돌아갑니다.",
-    "Fluent 2 Drawer: edge surface와 중앙 dialog의 용도를 분리하고, 확인이 필요할 때 Drawer 자체를 다른 dialog처럼 스타일링하지 않도록 했습니다."
+    "Fluent 2 Drawer: edge surface와 중앙 dialog의 용도를 분리하고, 확인이 필요할 때 Drawer 자체를 다른 dialog처럼 스타일링하지 않도록 했습니다.",
+    "중앙 배치와 표면 anatomy를 유지하고 scrim opacity와 패널의 space-2 수직 이동을 --dur-base·--ease-out으로 연결합니다. Drawer/Sheet의 edge 이동보다 짧은 거리를 사용해 중앙 작업 공간의 맥락을 유지합니다. 새 공개 모션 prop이나 radius·그림자 변경은 추가하지 않습니다."
   ],
   "anatomy": [
     {
@@ -192,7 +193,7 @@
     "Escape, scrim, 닫기 버튼은 controlled onClose를 호출합니다. 키보드 사용자를 위해 onClose와 보이는 닫기/취소 액션을 함께 제공합니다.",
     "닫히면 기본적으로 실제 trigger로 복원합니다. 워크플로상 다음 요소가 더 적절하면 returnFocusRef, 복원이 의도적으로 불필요하면 restoreFocus={false}를 사용합니다.",
     "열려 있는 동안 배경 페이지 스크롤이 잠깁니다(useDialogFocus 공용 엔진이 소유). 중첩된 다이얼로그는 깊이를 세어 마지막 표면이 닫힐 때만 해제하고, 스크롤바가 사라지며 생기는 layout shift는 같은 폭의 body padding으로 보정합니다. Modal·ConfirmDialog·Alert가 모두 같은 계약을 상속합니다.",
-    "Portal 선택, route 전환, 제출 상태와 데이터 보존은 제품 레이어가 소유합니다. Modal은 controlled open/dismiss, 표면 구조, focus/ARIA 계약만 소유합니다."
+    "Core-private overlay-presence.js는 시각적 lifetime만 담당합니다. focus trap·stack·scroll lock은 기존 useDialogFocus가 실제 열림 상태에만 적용합니다."
   ],
   "quantitativeRules": [
     {
@@ -273,6 +274,8 @@
     "--component-dialog-radius",
     "--component-dialog-scrim",
     "--component-dialog-scrim-blur",
+    "--dur-base",
+    "--ease-out",
     "--font-sans",
     "--fw-extra",
     "--headline1-size",

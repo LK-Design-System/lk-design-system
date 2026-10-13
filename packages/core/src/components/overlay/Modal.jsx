@@ -5,6 +5,17 @@ import { useDialogFocus } from './dialog-focus.js';
 import { useControllableOpen } from './anchored-overlay.js';
 import { OverlayPortal } from './overlay-platform.js';
 import { componentVars, partClassName, partStyle, useMergedRefs } from '../internal/surface.js';
+import { OVERLAY_MOTION_STYLES, useOverlayPresence } from './overlay-presence.js';
+
+const INERT_VALUE = Number.parseInt(React.version, 10) >= 19 ? true : 'true';
+const useSafeLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
+
+function availableReturnTarget(element) {
+  if (!element?.isConnected || typeof element.focus !== 'function' || element.matches?.(':disabled')) return false;
+  if (element.closest?.('[hidden], [inert], [aria-hidden="true"]')) return false;
+  const computed = element.ownerDocument?.defaultView?.getComputedStyle(element);
+  return computed?.display !== 'none' && computed?.visibility !== 'hidden';
+}
 
 /**
  * LDS Core — Modal
@@ -41,10 +52,10 @@ export const Modal = React.forwardRef(function Modal({
   const descriptionId = React.useId();
   const portalRef = React.useRef(null);
   const portalAnchorRef = React.useRef(null);
-  if (visible && !portalAnchorRef.current && typeof document !== 'undefined') {
+  const wasOpenRef = React.useRef(false);
+  if (visible && (!wasOpenRef.current || !portalAnchorRef.current) && typeof document !== 'undefined') {
     portalAnchorRef.current = returnFocusRef?.current ?? document.activeElement;
   }
-  if (!visible) portalAnchorRef.current = null;
   const requestClose = React.useCallback(() => {
     onClose?.();
     setVisible(false);
@@ -60,29 +71,52 @@ export const Modal = React.forwardRef(function Modal({
     zIndex,
   });
   const mergedDialogRef = useMergedRefs(dialogRef, forwardedRef);
-  if (!visible) return null;
+  useSafeLayoutEffect(() => {
+    const wasOpen = wasOpenRef.current;
+    wasOpenRef.current = visible;
+    if (visible || !wasOpen || !restoreFocus) return;
+    // Match Drawer: a shell may remove its own inert attribute after the focus
+    // engine's cleanup. Finish that handoff after the DOM mutation, without
+    // waiting for the retained visual exit or overriding an explicit move.
+    const ownerDocument = dialogRef.current?.ownerDocument;
+    const active = ownerDocument?.activeElement;
+    const moved = active && active !== ownerDocument.body && !dialogRef.current?.contains(active);
+    const target = returnFocusRef?.current ?? portalAnchorRef.current;
+    if (!moved && availableReturnTarget(target)) target.focus({ preventScroll: true });
+  }, [visible, restoreFocus, returnFocusRef]);
+  const { mounted, shown, onTransitionEnd } = useOverlayPresence(visible, dialogRef);
+  React.useEffect(() => {
+    if (!mounted) portalAnchorRef.current = null;
+  }, [mounted]);
+  if (!mounted) return null;
   return (
-    <OverlayPortal open={visible} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={portalAnchorRef} portalRef={portalRef} layer="modal">
+    <OverlayPortal open={mounted} interactionOpen={visible} withinPortal={withinPortal} portalTarget={portalTarget} anchorRef={portalAnchorRef} portalRef={portalRef} layer="modal">
+    <style>{OVERLAY_MOTION_STYLES}</style>
     <div
       data-slot="backdrop"
+      data-lds-overlay-motion=""
       className={partClassName(classNames, 'backdrop') || undefined}
       role="presentation"
-      onClick={closeOnScrim ? (e) => { if (e.target === e.currentTarget) requestClose(); } : undefined}
-      style={{ position: 'fixed', inset: 0, zIndex: resolvedZIndex, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--space-6)', background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))', ...partStyle(styles, 'backdrop') }}
+      onClick={visible && closeOnScrim ? (e) => { if (e.target === e.currentTarget) requestClose(); } : undefined}
+      style={{ position: 'fixed', inset: 0, zIndex: resolvedZIndex, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--space-6)', background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))', opacity: shown ? 1 : 0, transition: 'opacity var(--dur-base) var(--ease-out)', ...partStyle(styles, 'backdrop'), ...(visible ? {} : { pointerEvents: 'none' }) }}
     >
       <div
         ref={mergedDialogRef}
         data-slot="root"
-        data-open="true"
+        data-open={visible ? 'true' : undefined}
+        data-lds-overlay-motion=""
         className={partClassName(classNames, 'root', className) || undefined}
         role="dialog"
-        aria-modal="true"
         aria-labelledby={title != null ? titleId : undefined}
         aria-label={title == null ? ariaLabel : undefined}
         aria-describedby={children != null ? descriptionId : undefined}
         tabIndex={-1}
-        style={{ ...componentVars(vars, '--lds-modal-'), width: '100%', maxWidth: `var(--lds-modal-width, ${typeof width === 'number' ? `${width}px` : width})`, maxHeight: 'var(--lds-modal-max-height, 86vh)', display: 'flex', flexDirection: 'column', background: 'var(--color-semantic-background-elevated-normal)', borderRadius: 'var(--lds-modal-radius, var(--component-dialog-radius))', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', overflow: 'hidden', ...partStyle(styles, 'root'), ...style }}
+        style={{ ...componentVars(vars, '--lds-modal-'), width: '100%', maxWidth: `var(--lds-modal-width, ${typeof width === 'number' ? `${width}px` : width})`, maxHeight: 'var(--lds-modal-max-height, 86vh)', display: 'flex', flexDirection: 'column', background: 'var(--color-semantic-background-elevated-normal)', borderRadius: 'var(--lds-modal-radius, var(--component-dialog-radius))', boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', overflow: 'hidden', transform: shown ? 'none' : 'translateY(var(--space-2))', transition: 'transform var(--dur-base) var(--ease-out)', ...partStyle(styles, 'root'), ...style }}
         {...rest}
+        aria-modal={visible ? 'true' : undefined}
+        aria-hidden={visible ? undefined : true}
+        inert={visible ? undefined : INERT_VALUE}
+        onTransitionEnd={(event) => { rest.onTransitionEnd?.(event); onTransitionEnd(event); }}
       >
         {(title != null || onClose || onOpenChange || open === undefined) && (
           <div data-slot="header" className={partClassName(classNames, 'header') || undefined} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-5) var(--space-6)', borderBottom: '1px solid var(--color-semantic-line-solid-normal)', ...partStyle(styles, 'header') }}>

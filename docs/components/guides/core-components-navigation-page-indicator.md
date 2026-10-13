@@ -8,7 +8,7 @@
 | Storybook | `LDS Core/Components/Navigation/Page Indicator` |
 | Source | `../component-content.json#core-components-navigation-page-indicator` |
 
-캐러셀이나 단계별 콘텐츠처럼 앞뒤 이동은 다른 제어가 담당하고 현재 위치만 간결하게 알려줄 때 적합합니다. 사용자가 특정 페이지를 직접 선택해야 하면 Pagination을, 업무 단계의 이름과 완료 상태를 설명해야 하면 Stepper를 사용하세요.
+캐러셀이나 단계별 콘텐츠처럼 앞뒤 이동은 다른 제어가 담당하고 현재 위치만 간결하게 알려줄 때 적합합니다. 사용자가 특정 페이지를 직접 선택해야 하면 Pagination을, 업무 단계의 이름과 완료 상태를 설명해야 하면 Steps를 사용하세요.
 
 ## 사용 판단
 

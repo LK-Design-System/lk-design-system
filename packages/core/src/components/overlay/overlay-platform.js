@@ -1,8 +1,9 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+import { OverlayInteractionContext, registerOverlayOwner, registerOverlayPortal, useOverlayLayerRegistration } from './overlay-presence.js';
 
 const useSafeLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
-const overlayLayers = [];
+const INERT_VALUE = Number.parseInt(React.version, 10) >= 19 ? true : 'true';
 const THEME_SCOPE_CLASSES = ['theme-light', 'theme-dark', 'theme-auto'];
 const PROFILE_SCOPE_CLASSES = ['lds-profile-default', 'lds-profile-ops'];
 
@@ -40,38 +41,9 @@ export function useOverlayRuntime() {
   return React.useContext(OverlayRuntimeContext);
 }
 
-function syncOverlayLayers() {
-  overlayLayers.forEach((entry, index) => {
-    entry.setZIndex(entry.explicitZIndex ?? entry.zIndexBase + index);
-  });
-}
-
 export function useOverlayLayer({ open, zIndex } = {}) {
   const { zIndexBase } = useOverlayRuntime();
-  const [resolvedZIndex, setResolvedZIndex] = React.useState(zIndex ?? zIndexBase);
-  const entryRef = React.useRef(null);
-  if (!entryRef.current) entryRef.current = { setZIndex: setResolvedZIndex, explicitZIndex: zIndex, zIndexBase };
-  entryRef.current.explicitZIndex = zIndex;
-  entryRef.current.zIndexBase = zIndexBase;
-
-  useSafeLayoutEffect(() => {
-    if (!open) return undefined;
-    const entry = entryRef.current;
-    overlayLayers.push(entry);
-    syncOverlayLayers();
-    return () => {
-      const index = overlayLayers.indexOf(entry);
-      if (index >= 0) overlayLayers.splice(index, 1);
-      syncOverlayLayers();
-    };
-  }, [open]);
-
-  React.useEffect(() => {
-    if (zIndex != null) setResolvedZIndex(zIndex);
-    else syncOverlayLayers();
-  }, [zIndex, zIndexBase]);
-
-  const isTopmost = React.useCallback(() => overlayLayers.at(-1) === entryRef.current, []);
+  const { zIndex: resolvedZIndex, isTopmost } = useOverlayLayerRegistration({ open, zIndex, zIndexBase });
   return { zIndex: resolvedZIndex, isTopmost };
 }
 
@@ -114,22 +86,41 @@ export function OverlayPortal({
   children,
   open = true,
   withinPortal = true,
+  interactionOpen = open,
   portalTarget,
   anchorRef,
   portalRef,
   layer = 'anchored',
 }) {
   const runtime = useOverlayRuntime();
+  const ancestorInteraction = React.useContext(OverlayInteractionContext);
+  const ancestorOpen = ancestorInteraction.open;
+  const interactive = ancestorOpen && interactionOpen;
+  const committedInteractionRef = React.useRef({ open: interactive, generation: 0 });
+  const generation = interactive && !committedInteractionRef.current.open
+    ? committedInteractionRef.current.generation + 1
+    : committedInteractionRef.current.generation;
+  useSafeLayoutEffect(() => {
+    committedInteractionRef.current = { open: interactive, generation };
+  }, [generation, interactive]);
   const portalNodeRef = React.useRef(null);
+  const ownerRef = portalRef ?? anchorRef ?? portalNodeRef;
+  const childInteraction = React.useMemo(() => ({
+    open: interactive,
+    ancestorPortals: [...ancestorInteraction.ancestorPortals, portalNodeRef],
+    ancestorOwners: [...ancestorInteraction.ancestorOwners, ownerRef],
+  }), [ancestorInteraction, interactive, ownerRef]);
   const setPortalNode = React.useCallback((node) => {
     portalNodeRef.current = node;
+    if (node) registerOverlayPortal(node, ancestorInteraction.ancestorPortals);
     assignRef(portalRef, node);
-  }, [portalRef]);
+  }, [ancestorInteraction, portalRef]);
   useSafeLayoutEffect(() => {
     // Reconcile from the committed anchor. During the first render an
     // initially-open overlay cannot read its own root ref yet; doing this in a
     // layout effect prevents a theme/direction flash and removes any dependency
     // on a later positioning render.
+    registerOverlayOwner(ownerRef, anchorRef);
     const node = portalNodeRef.current;
     if (!open || !withinPortal || !node) return;
     const committedScope = inheritedPortalScope(anchorRef?.current, runtime);
@@ -145,6 +136,7 @@ export function OverlayPortal({
     else node.removeAttribute('dir');
   }, [
     anchorRef,
+    ownerRef,
     open,
     portalTarget,
     runtime.colorScheme,
@@ -154,7 +146,14 @@ export function OverlayPortal({
     runtime.scopeTarget,
     withinPortal,
   ]);
-  if (!open) return null;
+  if (!open || !ancestorOpen) return null;
+  // Retain exit pixels while closed, then recreate the subtree on reopen just
+  // as the former immediate unmount did. Uncontrolled child overlays reset;
+  // controlled values remain with the consumer and no dismiss is synthesized.
+  children = React.createElement(OverlayInteractionContext.Provider, {
+    value: childInteraction,
+    key: generation,
+  }, children);
   if (!withinPortal) return children;
   const anchor = anchorRef?.current;
   const ownerDocument = anchor?.ownerDocument ?? portalTarget?.ownerDocument
@@ -167,12 +166,14 @@ export function OverlayPortal({
     React.createElement('div', {
       ref: setPortalNode,
       'data-lds-overlay-portal': '',
+      'aria-hidden': interactive ? undefined : true,
+      inert: interactive ? undefined : INERT_VALUE,
       'data-overlay-layer': layer,
       'data-theme': scope.theme,
       'data-lds-profile': scope.profile,
       className: [scope.themeClass, scope.profileClass].filter(Boolean).join(' ') || undefined,
       dir: scope.direction,
-      style: { display: 'contents' },
+      style: { display: 'contents', ...(interactive ? {} : { pointerEvents: 'none' }) },
     }, children),
     target,
   );

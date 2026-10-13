@@ -138,6 +138,7 @@ export const Select = React.forwardRef(function Select({
   const mergedTriggerRef = useMergedRefs(triggerRef, forwardedRef);
   const dropdownRef = React.useRef(null);
   const widthSizerRef = React.useRef(null);
+  const scrollbarSizerRef = React.useRef(null);
   const optionRefs = React.useRef([]);
   const autoId = React.useId();
   const selId = id || `sel-${autoId}`;
@@ -204,7 +205,15 @@ export const Select = React.forwardRef(function Select({
     const sizer = widthSizerRef.current;
     if (!sizer) return undefined;
     const measure = () => {
-      const optionWidths = [...sizer.children].map((node) => node.getBoundingClientRect().width);
+      const scrollbarWidth = Math.max(0, ...[scrollbarSizerRef.current, dropdownRef.current].filter(Boolean).map((node) => {
+        const style = getComputedStyle(node);
+        return node.offsetWidth - node.clientWidth
+          - (Number.parseFloat(style.borderLeftWidth) || 0)
+          - (Number.parseFloat(style.borderRightWidth) || 0);
+      }));
+      const optionWidths = [...sizer.children].map((node) => (
+        node.getBoundingClientRect().width + (node.hasAttribute('data-select-option-width') ? scrollbarWidth : 0)
+      ));
       const tokenReserve = Number.parseFloat(getComputedStyle(sizer).getPropertyValue('--space-2')) || 8;
       const nextWidth = Math.ceil(Math.max(0, ...optionWidths) + tokenReserve);
       setIntrinsicMinWidth((current) => current === nextWidth ? current : nextWidth);
@@ -212,9 +221,13 @@ export const Select = React.forwardRef(function Select({
     measure();
     const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null;
     observer?.observe(sizer);
+    // The grid can keep its width while an option's font metrics change inside
+    // it. Observe each measurement too, so the popup budget cannot stay stale.
+    for (const node of sizer.children) observer?.observe(node);
+    if (scrollbarSizerRef.current) observer?.observe(scrollbarSizerRef.current);
     document.fonts?.ready?.then(measure);
     return () => observer?.disconnect();
-  }, [intrinsicLabels, normalizedSize, iconLeft]);
+  }, [intrinsicLabels, normalizedSize, iconLeft, visualOpen]);
 
   React.useEffect(() => {
     if (!visualOpen) return;
@@ -450,7 +463,41 @@ export const Select = React.forwardRef(function Select({
                 </span>
               </button>
             ))}
+            {norm.map((option) => (
+              <span
+                key={`option-${option.value}`}
+                data-select-option-width=""
+                style={{
+                  gridArea: '1 / 1',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 'var(--space-2-5)',
+                  width: 'max-content',
+                  // Account for both the panel and row chrome. Selected labels
+                  // use the widest supported weight, independently of value.
+                  padding: '0 calc(var(--component-menu-padding-x) + var(--component-menu-item-padding-x))',
+                  border: '1px solid transparent',
+                  boxSizing: 'border-box',
+                  fontSize: optionMetrics.fontSize,
+                  lineHeight: optionMetrics.lineHeight,
+                  letterSpacing: 0,
+                  fontWeight: 'var(--fw-medium)',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <span>{optionText(option)}</span>
+                <span style={{ width: 16, flex: '0 0 16px' }} />
+              </span>
+            ))}
           </span>
+          <span
+            ref={scrollbarSizerRef}
+            aria-hidden="true"
+            // A visibility:hidden probe can report zero scrollbar width while
+            // the visible menu consumes 15px. Keep layout visible but painting
+            // transparent, inside the clipped zero-height measurement layer.
+            style={{ position: 'absolute', width: 100, height: 100, overflowY: 'scroll', overflowX: 'hidden', visibility: 'visible', opacity: 0, padding: 0, border: 0 }}
+          />
         </span>
         <button
           {...triggerProps}

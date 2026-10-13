@@ -9,7 +9,7 @@
   },
   "source": {
     "componentRegistry": "docs/components/component-content.json",
-    "componentRegistryFingerprint": "50b8eaab0197a74b8ad2d1979ecab76ae1d16f7a2f3a44f3cf527547d18f1d1a",
+    "componentRegistryFingerprint": "0ff58757477716e1e24df469bcb507df3f0080b2abe1ce482e5a40b741338b64",
     "expressionProfileContract": "docs/references/architecture/EXPRESSION_PROFILE_CONTRACT.json",
     "expressionProfileContractFingerprint": "88c3fd6a5eb8fb61896af87aa266ab3bf93cae9195c7b6eefd911d566c0a1b5c"
   },
@@ -21,7 +21,7 @@
       "fixed": 96,
       "not-applicable": 15
     },
-    "profileAwareEntries": 99
+    "profileAwareEntries": 101
   },
   "entries": [
     {
@@ -2575,9 +2575,11 @@
       "source": "components/overlay/Modal.jsx",
       "ownerLayer": "core",
       "category": "fixed",
-      "profileAware": false,
+      "profileAware": true,
       "explicitAxes": [],
-      "profileTokens": [],
+      "profileTokens": [
+        "--dur-base"
+      ],
       "owner": "LDS Core owner",
       "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
       "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
@@ -2589,9 +2591,11 @@
       "source": "components/overlay/Popover.jsx",
       "ownerLayer": "core",
       "category": "fixed",
-      "profileAware": false,
+      "profileAware": true,
       "explicitAxes": [],
-      "profileTokens": [],
+      "profileTokens": [
+        "--dur-fast"
+      ],
       "owner": "LDS Core owner",
       "rationale": "현재 공개 계약에는 profile geometry token 또는 명시적 size/density 축이 없으며 기본 geometry를 고정해 기존 소비자 출력을 보존한다.",
       "reviewTrigger": "대표 consumer에서 반복 geometry를 profile 또는 local density에 따라 달리해야 한다는 승인된 evidence가 생길 때",
@@ -2789,6 +2793,7 @@
         "size"
       ],
       "profileTokens": [
+        "--dur-base",
         "--dur-fast"
       ]
     },

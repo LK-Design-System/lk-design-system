@@ -152,6 +152,10 @@ Compiled source: docs/components/component-content.json
 - Button is the WDS Action/Button primitive for primary, secondary, and supporting actions. LDS keeps WDS action roles but maps visual values through LK theme tokens.
 - TypeScript preserves the rendered element's props through the generic as contract. For example, as="a" accepts anchor props such as href, while the default button accepts native button props. Custom components receive their own declared props without widening the public surface to any.
 
+### 사용하지 않음
+
+- W3C Animation from Interactions 기준에 따라 모션 감소 환경에서 상태를 지연시키지 않습니다. 색 전환과 이동 효과의 의미를 구분하고 위치·크기 변화는 버튼 피드백에 추가하지 않습니다.
+
 ## Anatomy
 
 | Part | Contract |
@@ -190,6 +194,7 @@ Compiled source: docs/components/component-content.json
 
 ## Behavior and interaction
 
+- Compass Button의 짧은 상태 전환을 비교하고 LDS의 기존 fast timing으로 적용합니다. 8px 모서리, 600 굵기와 기본 그림자는 유지하며, 형태 후보는 공유 값 변경 전에 따로 비교합니다.
 - Stable parts are root, content, and loader; each is mirrored by data-slot. data-disabled, data-loading, data-size, and data-variant expose actual component state.
 
 ## 정량 규칙
@@ -197,9 +202,9 @@ Compiled source: docs/components/component-content.json
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | Hover and pressed feedback use calm tone changes only: no lift, scale, or shadow escalation. Focus remains the shared 2px :focus-visible outline. |
-| 명시 규칙 2 | WCAG 2.2 contrast minimum requires 4.5:1 for normal-size button text. |
-| 명시 규칙 3 | Fluent 2 Button usage applies text contrast across interactive button states. LDS keeps ghost low emphasis through its transparent surface and border, not low-legibility text. |
-| 명시 규칙 4 | Fluent 2 Button의 단일 주요 액션과 toggle/split 역할 분리를 채택합니다. |
+| 명시 규칙 2 | Color, fill, border and opacity use --component-button-transition with the existing fast timing: 120ms/default and 80ms/ops. Reduced motion resolves the timing to zero without delaying activation, focus or unavailable semantics. |
+| 명시 규칙 3 | WCAG 2.2 contrast minimum requires 4.5:1 for normal-size button text. |
+| 명시 규칙 4 | Fluent 2 Button usage applies text contrast across interactive button states. LDS keeps ghost low emphasis through its transparent surface and border, not low-legibility text. |
 | --border-thin | 1px |
 
 ## Responsive
@@ -345,6 +350,8 @@ Compiled source: docs/components/component-content.json
 - [Fluent 2 Button usage](https://fluent2.microsoft.design/components/web/react/core/button/usage)
 - [WAI-ARIA Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/)
 - [Fluent 2 Button](https://fluent2.microsoft.design/components/web/react/core/button/usage)
+- [Compass Button](https://compass.designcompass.org/components/button)
+- [W3C Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)
 
 
 ---
@@ -1029,6 +1036,7 @@ Compiled source: docs/components/component-content.json
 | Component | Relationship |
 | --- | --- |
 | `AvatarGroup` | 대표 시나리오에서 조합 |
+| `Stepper` | 대표 시나리오에서 조합 |
 | `Badge` | 대표 시나리오에서 조합 |
 | `Chip` | 대표 시나리오에서 조합 |
 | `Notification` | 대표 시나리오에서 조합 |
@@ -1447,6 +1455,12 @@ Compiled source: docs/components/component-content.json
 
 FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필요가 없는 보조 콘텐츠에 적합합니다. 과업 완료에 필수인 정보나 오류는 접지 말고 바로 노출하며, 화면 이동이 필요한 계층 탐색에는 Navigation을 사용하세요.
 
+## 사용 판단
+
+### 사용하지 않음
+
+- 헤더 색은 fast, chevron 회전과 grid-rows reveal은 base timing을 유지합니다. Collapsible과 같은 disclosure 연속성이며 새로운 API·모서리·브랜드 표현을 추가하지 않습니다.
+
 ## Properties
 
 | Name | Type | Required | Contract |
@@ -1478,9 +1492,9 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 | --- | --- |
 | 명시 규칙 1 | items — { title, content, leading?, description? }[]. multiple — 여러 개 동시 열기 허용. defaultOpen — 마운트 시 열려 있는 인덱스. headingLevel — 헤더 래퍼 heading 레벨(기본 3). |
 | 명시 규칙 2 | 접근성: 각 헤더 버튼은 실제 heading(기본 )으로 감싸집니다 — APG Accordion 은 "each accordion header is contained in an element with role heading"을 요구하며, 이 래퍼 덕분에 스크린리더 사용자가 heading 탐색(H 키)으로 섹션 사이를 건너뛸 수 있습니다. 래퍼는 margin: 0; font: inherit 이라 시각은 버튼이 그대로 소유합니다. |
+| 명시 규칙 3 | prefers-reduced-motion: reduce에서는 scoped guard로 transition의 시간·지연만 0으로 둡니다. 열린 chevron 방향과 grid의 최종 높이를 유지하고 aria-expanded·inert는 클릭 시 즉시 바뀝니다. |
+| 명시 규칙 4 | 근거: WAI-ARIA Accordion Pattern의 header/panel 연결과 expanded 의미를 유지하며, WCAG 2.2 Animation from Interactions에 따라 비필수 reveal/rotation 보간을 생략할 수 있게 합니다. default 200ms·ops 160ms의 속도는 기존 LDS token 결정입니다. |
 | --body2-size | 15px |
-| --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
-| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 
 ## Content and writing
 
@@ -1553,6 +1567,8 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 
 - Accordion prompt contract: `components/content/Accordion.prompt.md`
 - Storybook implementation evidence: `stories/ContentDisclosure.stories.jsx`
+- [WAI-ARIA Accordion Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)
+- [WCAG 2.2 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)
 
 
 ---
@@ -2140,16 +2156,21 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 | --- | --- | --- | --- |
 | `children` | `React.ReactNode` | No | 이미 렌더된 형식화 콘텐츠(마크다운을 파싱·정화한 React 노드, 문서 본문, 어시스턴트 rich response). Prose는 이 자식의 요소별 타이포그래피만 소유하며 파싱·정화·하이라이팅·편집은 제품 책임입니다. heading 레벨은 콘텐츠가 정하고 재번호하지 않으므로, 주변 문서 계층에 맞는 레벨을 넘기세요(WCAG 1.3.1). |
 | `measure` | `string` | No | 읽기 폭 상한(measure). 긴 줄이 가독성을 해치지 않도록 제한합니다. |
+| `typography` | `'document' \| 'chat'` | No | Document keeps the existing 14px reading scale. Chat opts into 16px/24px body, a compact heading/rhythm hierarchy and local table scrolling. Heading semantics and parsing stay product-owned. @default "document" |
+
+## Behavior and interaction
+
+- 제품 검토 핀: Portal 740bc9d5 SafeMarkdown/ChatWorkspace의 assistant rich response는 supported by new contract, vendor 0.4.7에는 typography 축이 없습니다. Web Viz 7e535341 MapEditScreen/TaskCreateScreen과 Control Full Daedeok d8c215fd RobotDashboard Dashboard의 map/task·관제 흐름은 formatted chat response가 없어 not applicable입니다.
 
 ## 정량 규칙
 
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | heading 레벨 — 콘텐츠가 정한 레벨(h1–h6)을 그대로 조판하고 재번호하지 않습니다. 문서 계층에 맞는 레벨을 제품이 emit해야 합니다(WCAG 1.3.1). 카드 heading의 headingLevel 선례와 정합. |
-| --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
-| --color-semantic-fill-alternative | light: rgba(112, 115, 124, 0.05); dark: rgba(112, 115, 124, 0.12) |
-| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
-| --color-semantic-fill-strong | light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28) |
+| 명시 규칙 2 | typography 기본 document는 기존 14px/22px 조판입니다. chat은 body1 16px/24px, 문단·리스트 gap 8px, heading 앞 20px/뒤 8px을 사용합니다. h1은 heading2 20/28, h2는 headline1 18/26, h3/h4는 headline2 17/24입니다. 요소 레벨 자체는 재번호하지 않습니다. |
+| 명시 규칙 3 | chat의 긴 table은 표 자체에 max-width와 local horizontal scroll을 주고 실제 overflow 때만 tabindex=0입니다. table/th/scope 의미, parser/sanitizer와 주변 heading 설계는 제품이 소유합니다. |
+| 명시 규칙 4 | 구현 전 GFM specification의 요소 의미와 WCAG Reflow의 본문 재흐름·표의 2차원 예외를 검토했습니다. ChatTypography 실제 story는 기본 document/채팅의 크기, 320px, heading/table 의미와 키보드 local scroll을 확인합니다. |
+| --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Accessibility
 
@@ -2178,11 +2199,19 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 <Prose measure="72ch">{articleNodes}</Prose>
 ```
 
+### 추가 조합 2
+
+```jsx
+<Prose typography="chat">{renderMarkdown(answer)}</Prose>
+```
+
 ## Tokens and API
 
 ### Tokens
 
+- `--body1-line`
 - `--body1-size`
+- `--body1-spacing`
 - `--color-semantic-fill-alternative`
 - `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
@@ -2198,9 +2227,13 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 - `--font-sans`
 - `--fw-bold`
 - `--fw-extra`
+- `--fw-semibold`
 - `--heading1-size`
+- `--heading2-line`
 - `--heading2-size`
+- `--headline1-line`
 - `--headline1-size`
+- `--headline2-line`
 - `--headline2-size`
 - `--label1-reading-line`
 - `--label1-size`
@@ -2209,6 +2242,7 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 - `--radius-lg`
 - `--radius-md`
 - `--radius-sm`
+- `--space-1`
 - `--space-2`
 - `--space-3`
 - `--space-4`
@@ -2227,6 +2261,8 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 - Prose prompt contract: `components/content/Prose.prompt.md`
 - Storybook implementation evidence: `stories/ContentProse.stories.jsx`
 - [GitHub Flavored Markdown 명세](https://github.github.com/gfm/)
+- [GFM specification](https://github.github.com/gfm/)
+- [WCAG Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)
 
 
 ---
@@ -3499,7 +3535,7 @@ iOS·Android 화면 시안과 셸에서 상태 바와 하단 홈 영역을 포�
 | Storybook | `LDS Core/Components/Navigation/Page Indicator` |
 | Source | `../component-content.json#core-components-navigation-page-indicator` |
 
-캐러셀이나 단계별 콘텐츠처럼 앞뒤 이동은 다른 제어가 담당하고 현재 위치만 간결하게 알려줄 때 적합합니다. 사용자가 특정 페이지를 직접 선택해야 하면 Pagination을, 업무 단계의 이름과 완료 상태를 설명해야 하면 Stepper를 사용하세요.
+캐러셀이나 단계별 콘텐츠처럼 앞뒤 이동은 다른 제어가 담당하고 현재 위치만 간결하게 알려줄 때 적합합니다. 사용자가 특정 페이지를 직접 선택해야 하면 Pagination을, 업무 단계의 이름과 완료 상태를 설명해야 하면 Steps를 사용하세요.
 
 ## 사용 판단
 
@@ -4569,6 +4605,7 @@ iOS·Android 화면 시안과 셸에서 상태 바와 하단 홈 영역을 포�
 
 - 여러 modal surface를 의도적으로 중첩하지 않습니다. 불가피하게 Drawer 안에서 확인 Modal 등이 열리면 가장 나중에 열린 surface만 Escape와 focus trap을 소유하며, 닫힌 뒤 바로 아래 surface의 호출 지점으로 돌아갑니다.
 - Fluent 2 Drawer: edge surface와 중앙 dialog의 용도를 분리하고, 확인이 필요할 때 Drawer 자체를 다른 dialog처럼 스타일링하지 않도록 했습니다.
+- 중앙 배치와 표면 anatomy를 유지하고 scrim opacity와 패널의 space-2 수직 이동을 --dur-base·--ease-out으로 연결합니다. Drawer/Sheet의 edge 이동보다 짧은 거리를 사용해 중앙 작업 공간의 맥락을 유지합니다. 새 공개 모션 prop이나 radius·그림자 변경은 추가하지 않습니다.
 - All modal overlays map their scrim through --component-dialog-scrim to the WDS --color-semantic-material-dimmer value and share --component-dialog-scrim-blur. Individual overlays must not use --scrim-dark, --material-dimmer, or a local blur.
 
 ## Anatomy
@@ -4618,7 +4655,7 @@ iOS·Android 화면 시안과 셸에서 상태 바와 하단 홈 영역을 포�
 - Escape, scrim, 닫기 버튼은 controlled onClose를 호출합니다. 키보드 사용자를 위해 onClose와 보이는 닫기/취소 액션을 함께 제공합니다.
 - 닫히면 기본적으로 실제 trigger로 복원합니다. 워크플로상 다음 요소가 더 적절하면 returnFocusRef, 복원이 의도적으로 불필요하면 restoreFocus={false}를 사용합니다.
 - 열려 있는 동안 배경 페이지 스크롤이 잠깁니다(useDialogFocus 공용 엔진이 소유). 중첩된 다이얼로그는 깊이를 세어 마지막 표면이 닫힐 때만 해제하고, 스크롤바가 사라지며 생기는 layout shift는 같은 폭의 body padding으로 보정합니다. Modal·ConfirmDialog·Alert가 모두 같은 계약을 상속합니다.
-- Portal 선택, route 전환, 제출 상태와 데이터 보존은 제품 레이어가 소유합니다. Modal은 controlled open/dismiss, 표면 구조, focus/ARIA 계약만 소유합니다.
+- Core-private overlay-presence.js는 시각적 lifetime만 담당합니다. focus trap·stack·scroll lock은 기존 useDialogFocus가 실제 열림 상태에만 적용합니다.
 
 ## 정량 규칙
 
@@ -4690,6 +4727,8 @@ const firstFieldRef = useRef(null);
 - `--component-dialog-radius`
 - `--component-dialog-scrim`
 - `--component-dialog-scrim-blur`
+- `--dur-base`
+- `--ease-out`
 - `--font-sans`
 - `--fw-extra`
 - `--headline1-size`
@@ -4722,6 +4761,8 @@ const firstFieldRef = useRef(null);
 - [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [Fluent 2 Dialog](https://fluent2.microsoft.design/components/web/react/core/dialog/usage)
 - [Fluent 2 Drawer](https://fluent2.microsoft.design/components/web/react/core/drawer/usage)
+- [WAI-ARIA Modal Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
+- [W3C Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)
 
 
 ---
@@ -4746,7 +4787,9 @@ const firstFieldRef = useRef(null);
 
 ### 사용하지 않음
 
+- Core-private visual presence 동안 Portal과 positioning만 유지합니다. 닫히는 즉시 trigger의 expanded/controls 및 light-dismiss stack은 실제 닫힘 상태가 되고, 퇴장 픽셀은 aria-hidden·inert·pointer-events:none으로 상호작용에서 제외합니다. 좌표를 닫힘 초기에 초기화하지 않아 offscreen으로 튀지 않습니다.
 - Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유하지 않습니다.
+- 기존 OverlayPortal의 interactionOpen에 실제 visible을 전달해 퇴장 중 자식 portal·layer·light-dismiss·menu 엔진을 즉시 비활성화합니다. 재오픈에서는 이전 immediate-unmount와 같은 자식 subtree 초기화를 적용하며 controlled 값은 소비자가 유지합니다. 부모 닫힘으로 자식 dismiss callback을 합성하지 않습니다.
 
 ## Anatomy
 
@@ -4786,6 +4829,12 @@ const firstFieldRef = useRef(null);
 | defaultOpen | 비제어 초기 열림 상태. @default false |
 | onOpenChange | 열림 상태 변경 알림. |
 
+## Behavior and interaction
+
+- Fluent 2 Popover의 관계가 보이는 배치와 비모달 맥락 표면 원칙을 유지합니다. W3C Animation from Interactions의 비필수 이동 비활성화 원칙을 반영하며, 새로운 focus trap이나 배경 차단은 만들지 않습니다.
+- 열림·닫힘 모션 (2026-10-13).
+- 상위 overlay의 실제 닫힘.
+
 ## 정량 규칙
 
 | Subject | Rule |
@@ -4793,6 +4842,8 @@ const firstFieldRef = useRef(null);
 | 명시 규칙 1 | collisionBoundary는 element 또는 ref를 받고, 그 요소와 viewport의 보이는 교집합을 positioning 경계로 사용합니다. 생략하면 기존 viewport 경계입니다. collisionPadding 기본 16px은 모든 경계 가장자리에 적용됩니다. Portal은 계속 owner-document body/provider target에 남으므로 clipping 탈출과 chat panel 내부 geometry 제한을 동시에 충족하며, 선호 width와 style은 경계의 가용 폭·높이를 넘을 수 없습니다. |
 | 명시 규칙 2 | Popover와 HoverCard는 anchoredPanelStyle의 elevated surface, 1px line, WDS Popover r12, shadow-md, 16px padding을 공유합니다. Dropdown Menu의 WDS r16·8×20px menu shell과는 역할과 원본 컴포넌트가 달라 radius/padding을 억지로 합치지 않습니다. |
 | 명시 규칙 3 | Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다. |
+| 명시 규칙 4 | HoverCard와 공유하는 surface·radius·padding·shadow를 유지하며 opacity와 anchor 방향의 space-1 수직 이동만 --dur-fast·--ease-out으로 연결합니다. 선택·제출 상태와 콘텐츠 정책은 추가하지 않습니다. |
+| --space-1 | 4px |
 
 ## Responsive
 
@@ -4831,8 +4882,11 @@ const firstFieldRef = useRef(null);
 
 ### Tokens
 
+- `--dur-fast`
+- `--ease-out`
 - `--lds-popover-max-height`
 - `--lds-popover-width`
+- `--space-1`
 
 ### Source contracts
 
@@ -4848,6 +4902,7 @@ const firstFieldRef = useRef(null);
 - [Fluent 2 Popover](https://fluent2.microsoft.design/components/web/react/core/popover/usage)
 - [WAI-ARIA APG Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [React Aria Popover](https://react-spectrum.adobe.com/react-aria/Popover.html)
+- [W3C Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)
 
 
 ---
@@ -5906,10 +5961,10 @@ const firstFieldRef = useRef(null);
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | Label, text, icon, fill, and disabled colors resolve semantic roles at the rendered field scope. This keeps nested dark-theme fields from inheriting light values computed by root-level component aliases; disabled labels and values use the shared 0.52-alpha disabled role. |
-| 명시 규칙 2 | Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale. |
-| 명시 규칙 3 | References: Fluent 2 Field, local WDS input evidence under docs/references/wds/. |
+| 명시 규칙 2 | Keyboard focus belongs to the complete rounded Input control: one 2px semantic focus-indicator outline replaces the native input's inner outline and the soft shadow. The same treatment covers invalid and read-only inputs; forced colors uses the system Highlight. |
+| 명시 규칙 3 | Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale. |
+| 명시 규칙 4 | References: Fluent 2 Field, local WDS input evidence under docs/references/wds/. |
 | --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
-| --color-semantic-label-assistive | light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28) |
 
 ## Responsive
 
@@ -5987,6 +6042,7 @@ const firstFieldRef = useRef(null);
 
 - Input prompt contract: `components/forms/Input.prompt.md`
 - Storybook implementation evidence: `stories/FormInput.stories.jsx`
+- [WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)
 - [GOV.UK Text input](https://design-system.service.gov.uk/components/text-input/)
 - [Carbon Text input](https://carbondesignsystem.com/components/text-input/usage/)
 - [Fluent 2 Field](https://fluent2.microsoft.design/components/web/react/core/field/usage)
@@ -6574,8 +6630,11 @@ const firstFieldRef = useRef(null);
 
 ## Behavior and interaction
 
-- SegmentedControl — 단일 선택 뷰 토글. 옵션이 쿨 그레이 트랙에 놓이고, 활성 옵션은 부드러운 그림자와 함께 화이트 필로 올라갑니다.
-- Semantics and keyboard contract.
+- 실행 중 root·조상의 dir, class, style 속성이 바뀌면 같은 측정 함수를 다시 실행합니다. 따라서 LdsProvider나 DOM/CSS scope가 렌더 없이 방향을 바꾸고 각 segment의 크기가 그대로여도 선택면이 새 위치를 따릅니다. 관찰은 해당 조상 경로의 세 속성에 한정하며 cleanup에서 해제합니다.
+- prefers-reduced-motion: reduce에서는 scoped guard가 transition 시간·지연만 0으로 만듭니다. 선택 surface의 최종 transform, disabled 선택 표시, 텍스트와 radio 의미를 지우지 않습니다.
+- 내부 선례: Switch의 위치 상태 단서와 Disclosure의 base timing을 재사용하며, 새로운 spring·bounce·브랜드 색·모서리 token을 만들지 않습니다. Core interaction 저작이며 제품의 route·filter 실행·권한 정책은 소비자가 소유합니다.
+- 외부 근거: WAI-ARIA Radio Group Pattern의 하나의 선택과 로빙 키보드 의미를 유지합니다. WCAG 2.2 Animation from Interactions은 비필수 움직임을 끌 수 있도록 요구하므로 reduced-motion에서 보간을 생략합니다. 이동 속도와 shared surface의 형태는 이 두 문서가 정한 값이 아니라 기존 LDS token을 사용한 LDS 결정입니다.
+- 검증: 기존 SegmentedKeyboardContract가 controlled 값의 즉시 갱신, 빠른 연속 선택, 긴 label/count, resize, RTL, disabled 선택과 reduced-motion endpoint를 함께 확인합니다.
 
 ## 정량 규칙
 
@@ -6584,18 +6643,21 @@ const firstFieldRef = useRef(null);
 | 명시 규칙 1 | size sm\|md\|lg는 전체 track 외곽 높이 32/40/48px입니다. Solid의 내부 padding과 Outlined의 border가 이 높이에 더해지지 않습니다. full은 컨테이너 폭까지 늘림. |
 | 명시 규칙 2 | 상호 배타적인 2–4개의 짧은 뷰에 쓰세요. 옵션이 많거나 길거나 실제 페이지 내비게이션에는 Tabs를 쓰세요. |
 | 명시 규칙 3 | WDS 내부 Segmented Control/Segmented Control component-set(16215:35115)의 직접 축은 Variant(Solid/Outlined), Size(Small/Medium/Large), Icon(False/True)뿐입니다. interaction은 공용 API 축이 아니라 상태 증거 호환값입니다. |
+| 명시 규칙 4 | aria-checked, 제어형 value, onChange와 로빙 초점은 즉시 갱신됩니다. surface의 위치·너비만 --dur-base와 --ease-out으로 연속성을 보여줍니다(default 200ms, ops 160ms). 연속 선택은 CSS transition의 현재 위치에서 최신 선택으로 향하며 callback을 기다리거나 다시 실행하지 않습니다. |
 | --body1-size | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
-| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
 
 ## Responsive
 
 - ButtonGroup의 단일 선택 모드는 이 컴포넌트를 조합합니다. 따라서 높이·disabled·roving 규칙을 ButtonGroup에서 별도로 다시 만들지 않습니다.
+- Solid의 실제 선택은 하나의 장식 surface가 segment의 위치와 너비로 이동해 표시합니다. 이전 색·모서리·그림자 값을 유지하며, 새 public prop이나 stable part를 추가하지 않습니다. Outlined와 강제 interaction matrix의 정적 표시는 기존 시각 문법을 유지합니다.
+- ResizeObserver가 track과 segment 크기를 관찰하므로 좁은 폭, count, font/label 변경 뒤에도 실제 선택 위치에 맞습니다. 긴 label은 시각적으로 말줄임하되 전체 텍스트와 count는 접근 이름에 남습니다. RTL도 물리 좌표로 surface를 측정하며 Left/Right는 미러된 방향, Up/Down과 Home/End는 기존 논리 순서를 따릅니다.
 
 ## Content and writing
 
 - ref, className, and style target the radiogroup root.
 - Stable parts are root, segment, icon, label, and count; each segment exposes data-state="checked|unchecked" and data-disabled.
 - options — 문자열 또는 { value, label, icon, count, disabled }. count는 단일 선택 필터를 고르기 전에 값별 결과 건수를 비교해야 할 때 사용하며 라디오의 접근 가능한 이름과 함께 읽힙니다. value / defaultValue / onChange — 제어/비제어.
+- 선택된 segment의 paint를 styles.segment나 option.style로 바꾸거나 classNames.segment·선택 option의 className을 지정하면 기존 버튼 자체가 선택 paint를 소유합니다. background·border/radius·boxShadow·opacity·filter/mask/clip·visibility·segment-local custom property를 장식면에 복사하지 않아 inline 우선순위, class의 상태 selector와 초점 paint를 보존합니다.
 
 ## Accessibility
 
@@ -6609,6 +6671,7 @@ const firstFieldRef = useRef(null);
 
 | Component | Relationship |
 | --- | --- |
+| `Button` | 대표 시나리오에서 조합 |
 | `Icon` | 대표 시나리오에서 조합 |
 | `Checkbox` | 대표 시나리오에서 조합 |
 | `CheckboxGroup` | 대표 시나리오에서 조합 |
@@ -6616,7 +6679,6 @@ const firstFieldRef = useRef(null);
 | `MultiSelectChip` | 대표 시나리오에서 조합 |
 | `Radio` | 대표 시나리오에서 조합 |
 | `RadioGroup` | 대표 시나리오에서 조합 |
-| `RangeSlider` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -6643,6 +6705,7 @@ const firstFieldRef = useRef(null);
 - `--color-semantic-label-normal`
 - `--color-semantic-line-solid-normal`
 - `--color-semantic-primary-surface-strong`
+- `--dur-base`
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`
@@ -6675,6 +6738,8 @@ const firstFieldRef = useRef(null);
 - Storybook implementation evidence: `stories/SelectionSegmentedControl.stories.jsx`
 - [WAI-ARIA Radio Group pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)
 - [Apple Segmented controls](https://developer.apple.com/design/human-interface-guidelines/segmented-controls)
+- [WAI-ARIA Radio Group Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/)
+- [WCAG 2.2 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)
 
 
 ---
@@ -6752,6 +6817,7 @@ const firstFieldRef = useRef(null);
 - 범위: 검색/자유 입력/비동기 옵션/다중 선택은 이 컴포넌트에 넣지 않습니다. 검색은 AutoComplete 또는 SearchableMultiSelect, 다중 선택은 Combobox 계열이 담당합니다.
 - readOnly는 현재 값과 포커스를 유지하지만 팝업을 열거나 값을 바꾸지 않으며, 대체 배경과 aria-readonly로 비활성과 구분합니다.
 - 형제 비교: AutoComplete와 Combobox가 이미 비활성 옵션을 aria-disabled로 노출하고 탐색·선택에서 제외합니다. Select도 같은 규칙을 사용하되, 검색과 다중 선택은 가져오지 않습니다.
+- vars accepts only --lds-select-min-width, --lds-select-height, and --lds-select-dropdown-max-height. Consumer root width constraints still override intrinsic measurement.
 - size를 생략하면 일반 표면에서는 기존 md, bounded compact component scope에서는 sm을 사용합니다. 명시한 size가 우선하며 compact Select는 32px trigger와 기존 40px option target을 조합합니다.
 
 ## 정량 규칙
@@ -6767,16 +6833,16 @@ const firstFieldRef = useRef(null);
 ## Responsive
 
 - intrinsic-width 계약: 현재 값이 아니라 option 집합의 가장 긴 label과 icon/status reserve를 기준으로 안정된 폭을 계산합니다. 숨은 측정 subtree는 높이 0·overflow: hidden·max-width: 100%의 in-flow measurement layer 안에 격리되어 root 높이·trigger y 좌표·제약된 조상의 scrollWidth를 바꾸지 않으면서도 root의 max-content 폭에는 가장 긴 label 폭을 기여합니다.
-- WDS 내부 Select/Select component-set(16215:33116)의 직접 축은 Active, Disable, Focus, Negative, Overflow, Render(Chip/Text)입니다. Size는 WDS 직접 축이 아니지만 열린 variant가 48px·16/24px Menu를 직접 포함하므로 md/lg 기본 option 밀도의 composition 근거로 사용합니다. 옵션별 disabled와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다.
-- 시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px inset ring으로 분리합니다.
-- vars accepts only --lds-select-min-width, --lds-select-height, and --lds-select-dropdown-max-height. Consumer root width constraints still override intrinsic measurement.
+- Intrinsic width also budgets the popup's option typography at selected weight, panel/row padding and borders, the trailing check and gap, and the platform's measured vertical scrollbar width. A short trigger must not force unnecessary ellipsis in its wider menu rows; overlay scrollbars contribute zero.
+- Observe individual measurement rows as well as the aggregate grid, and remeasure on open: font metrics can change a menu row without changing the grid's overall width. Recheck selected labels after the opened menu's fonts and layout settle; an earlier fitting frame is insufficient evidence.
+- The closed-state scrollbar probe is transparent rather than visibility: hidden: Chromium can report a zero gutter for a hidden probe while the visible popup consumes a classic scrollbar. Reserve the measured platform gutter consistently, and when open include the actual popup's gutter excluding its borders.
 
 ## Content and writing
 
 - render 축: WDS Render(Chip/Text)의 chip은 선택 값을 트리거 안의 캡슐로 강조하는 표시입니다. chip-trigger는 LDS 확장으로, 작성창 동작 띠처럼 폼 필드가 아닌 자리에서 트리거 전체를 보더 없는 단일 알약으로 그립니다 — 인풋 크롬과 값 캡슐이 겹치는 이중 표면을 만들지 않기 위한 값이며, 포커스 링·invalid 보더·키보드/ARIA 계약은 필드와 동일하게 유지합니다.
+- 시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px inset ring으로 분리합니다.
 - className/style and rootRef target the public field-stack root. The default ref, triggerClassName, and triggerStyle target the native combobox trigger.
 - Stable parts are root, label, control, trigger, value, indicators, dropdown, option, and message. Options additionally expose real data-active, data-selected, and data-disabled state.
-- 커스텀 단일 선택 드롭다운(스타일된 트리거 + 플로팅 패널, 시그널 포커스) — 네이티브 가 아닙니다. 옵션은 options(string[] 또는 {value,label}[]) 또는 자식으로 지정합니다. onChange는 선택된 value를 받습니다.
 
 ## Accessibility
 
@@ -6886,6 +6952,7 @@ const firstFieldRef = useRef(null);
 - [Carbon Dropdown](https://carbondesignsystem.com/components/dropdown/usage/)
 - [Fluent Select](https://fluent2.microsoft.design/components/web/react/core/select/usage)
 - [Fluent Menu](https://fluent2.microsoft.design/components/web/react/core/menu/usage)
+- [APG combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/)
 
 
 ---
@@ -7196,6 +7263,7 @@ const firstFieldRef = useRef(null);
 ## Behavior and interaction
 
 - checked / defaultChecked / onChange(next) — 제어/비제어.
+- prefers-reduced-motion: reduce에서는 트랙·노브의 transition만 즉시 종료합니다. checked 노브의 translateX를 유지해 색 외 상태 단서를 보존합니다. default/ops와 normal/iOS 모두 같은 guard를 사용합니다.
 
 ## 정량 규칙
 
@@ -7204,12 +7272,14 @@ const firstFieldRef = useRef(null);
 | 명시 규칙 1 | Switch exposes role="switch" with aria-checked; Space and Enter toggle immediately. The control-to-label gap is 8px. |
 | 명시 규칙 2 | 트랙 지오메트리(md 52×32 · sm 40×24), 노브 이동(색이 아닌 위치로도 상태 전달), disabled tabIndex=-1은 변경되지 않았습니다. |
 | 명시 규칙 3 | size — md(52×32) · sm(40×24). label은 오른쪽에 위치. disabled는 토큰 색(회색 트랙·노브)으로 표시. |
+| 명시 규칙 4 | 트랙의 색·포커스 feedback은 --dur-fast(default 120ms, ops 80ms), 노브 위치는 --dur-base(default 200ms, ops 160ms)와 --ease-out을 씁니다. SegmentedControl·Disclosure와 같은 기존 standard 곡선이며 bounce나 새 token을 추가하지 않습니다. |
 | --body2-size | 15px |
-| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 
 ## Content and writing
 
 - 키보드 조작 가능: 포커스 가능, Space/Enter로 토글, 네이비 틴트 포커스 링. 텍스트 라벨이 있는 박스형 on/off는 Checkbox를 쓰세요.
+- checked·ARIA·onChange는 즉시 반영하고 노브의 시각 이동만 보간합니다. 연속 입력은 최신 위치를 향하며 label·폼 값·readOnly 계약을 바꾸지 않습니다.
+- 근거: WAI-ARIA Switch Pattern의 고정된 label과 즉시 읽히는 이진 상태를 유지하고, WCAG 2.2 Animation from Interactions에 따라 비필수 위치 보간을 끌 수 있게 합니다. 속도와 곡선은 기존 LDS motion token을 적용한 LDS 결정입니다.
 
 ## Accessibility
 
@@ -7259,7 +7329,6 @@ const firstFieldRef = useRef(null);
 - `--component-input-gap`
 - `--dur-base`
 - `--dur-fast`
-- `--ease-in-out`
 - `--ease-out`
 - `--font-sans`
 - `--radius-pill`
@@ -7278,6 +7347,8 @@ const firstFieldRef = useRef(null);
 - Switch prompt contract: `components/selection/Switch.prompt.md`
 - Storybook implementation evidence: `stories/SelectionSwitch.stories.jsx`
 - [WAI-ARIA Switch pattern](https://www.w3.org/WAI/ARIA/apg/patterns/switch/)
+- [WAI-ARIA Switch Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/switch/)
+- [WCAG 2.2 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)
 
 
 ---
@@ -9567,12 +9638,18 @@ ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드�
 
 ### 사용
 
+- LK Portal 740bc9d5(dev, 2026-10-09) — ChatConversationPanel 대화 목록. titleLines=2는 supported by new contract(설치판 0.4.7 미지원). 대화 URL, 이름 바꾸기 API, 목록 커서는 Portal 책임입니다.
 - ConversationList — 사람이 만든 대화·세션 목록을 날짜 묶음, 링크 행, 형제 「더 보기」 메뉴, 현재 항목 표시로 보여 주는 탐색 목록.
+
+### 사용하지 않음
+
+- 메뉴는 DropdownMenu입니다. 항목과 실행은 제품이 소유하고, 삭제 확인은 제품의 ConfirmDialog입니다. 삭제 뒤 focus는 제품이 다음 행(없으면 이전 행, 그것도 없으면 「새 질문」)으로 옮깁니다.
 
 ## Anatomy
 
 | Part | Contract |
 | --- | --- |
+| titleLines | Long titles may occupy two lines. The two-line layout permanently reserves the sibling menu area and gives that action a 44px target. Default one-line row geometry is unchanged. @default 1 |
 | renderLink | 링크를 router link로 치환하는 렌더 훅. |
 | itemActions | 행의 형제 「더 보기」 메뉴 항목(예: 이름 바꾸기, 구분선, 삭제). 비우면 행 동작이 없습니다. |
 | onItemAction | 메뉴 항목 실행 요청. 확인 대화상자와 실제 실행은 제품이 소유합니다. |
@@ -9585,6 +9662,7 @@ ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드�
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
 | `groups` | `ConversationListGroup[]` | Yes |  |
+| `titleLines` | `1 \| 2` | No | Long titles may occupy two lines. The two-line layout permanently reserves the sibling menu area and gives that action a 44px target. Default one-line row geometry is unchanged. @default 1 |
 | `currentId` | `string` | No | 현재 대화 id. 해당 링크가 aria-current="page", 무채색 채움, 굵기를 받습니다. |
 | `renderLink` | `(item: ConversationListItem, props: React.AnchorHTMLAttributes) = React.ReactElement` | No | 링크를 router link로 치환하는 렌더 훅. |
 | `itemActions` | `ConversationListAction[] \| ((item: ConversationListItem) = ConversationListAction[])` | No | 행의 형제 「더 보기」 메뉴 항목(예: 이름 바꾸기, 구분선, 삭제). 비우면 행 동작이 없습니다. |
@@ -9614,22 +9692,24 @@ ID·토큰·URL처럼 그대로 옮겨 써야 하는 짧은 값을 클립보드�
 
 - 키보드: Tab 순서는 링크 → 더 보기 → 다음 링크입니다. 행 사이 방향키 이동(roving)은 v1에 넣지 않았습니다(L-S7b).
 - ListCell selectedPresentation="tint"의 「지금 열린 항목」 무채색 문법을 계승하되, 단계는 SideNav neutral과 같은 opaque cool-neutral 단계를 써서 ShellPanel·NavRail과 한 셸로 읽히게 했습니다.
+- Fluent 2 Nav usage의 탐색과 행 동작 분리와 WCAG Target Size Enhanced의 44px 목표를 검토했습니다. 기본 AA 최소 24px 동작을 위반으로 바꾸는 주장이 아닙니다.
 - Fluent 2 Nav usage — hover나 focus에서만 보이는 동작도 늘 DOM에 있어야 하고 컨텍스트 메뉴로도 제공합니다. 「더 보기」를 늘 렌더하고 opacity로만 숨기는 근거입니다.
 - (제품 참고, 권위 근거 아님) ChatGPT·Claude 대화 목록 — 날짜 묶음, 링크 행, hover 시 행 동작. 아이콘 전용 동작 노출 방식만 참고했습니다.
-- Classification: LK Product Extension · Communication. MessageFeed·ConversationMessage와 같은 계열이며 ShellPanel의 스크롤 구역에 두는 것이 기본입니다. 데이터, 라우트, 날짜 계산과 지역화, 이름 바꾸기·삭제 실행은 제품이 소유합니다.
 
 ## 정량 규칙
 
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 묶음 제목은 headingLevel(기본 3)이며 SideNav 섹션 제목과 같은 문장형 13px medium, subtle 잉크입니다. 묶음 계산과 문구는 제품이 넘깁니다. |
-| 명시 규칙 2 | 행 높이 36px(--component-conversation-list-row-height, SideNav 자식 행과 같음), 한 줄 제목과 말줄임. 전체 제목은 링크의 접근 이름과 native title에 남습니다(2026-10-09 D06 개정). |
-| 명시 규칙 3 | hover와 현재 항목은 행 전체(링크 + 버튼)에 무채색 채움을 주며 li가 :hover, [data-current]로 소유합니다. 현재 항목은 aria-current="page", cool-neutral-96 채움, label-normal, 굵기입니다. 채움 대비가 낮아(1.23:1) 굵기를 비색상 단서로 함께 씁니다(WCAG 1.4.1). forced-colors에서는 현재 링크가 SelectedItem을 받습니다. |
-| 명시 규칙 4 | 「더 보기」는 늘 DOM에 있고 포인터 hover 환경에서는 행 hover, focus-within, 현재 행, 메뉴 열림일 때만 보입니다. @media (hover: none)에서는 늘 보입니다. 버튼 이름은 {제목} 더 보기, 조작 영역은 24px 이상입니다. |
+| 명시 규칙 2 | titleLines — 기본 1은 기존 36px/한 줄 제목입니다. 2는 최대 두 줄 제목·56px 최소 행·44px 형제 메뉴 target과 상시 예약된 메뉴 공간을 사용합니다. 전체 제목과 링크/menu 의미는 같습니다. |
+| 명시 규칙 3 | 행 높이 36px(--component-conversation-list-row-height, SideNav 자식 행과 같음), 한 줄 제목과 말줄임. 전체 제목은 링크의 접근 이름과 native title에 남습니다(2026-10-09 D06 개정). |
+| 명시 규칙 4 | hover와 현재 항목은 행 전체(링크 + 버튼)에 무채색 채움을 주며 li가 :hover, [data-current]로 소유합니다. 현재 항목은 aria-current="page", cool-neutral-96 채움, label-normal, 굵기입니다. 채움 대비가 낮아(1.23:1) 굵기를 비색상 단서로 함께 씁니다(WCAG 1.4.1). forced-colors에서는 현재 링크가 SelectedItem을 받습니다. |
 | --component-conversation-list-active-hover-surface | var(--color-atomic-cool-neutral-95) |
 
 ## Responsive
 
+- 기본 D06 규칙은 유지합니다. titleLines={2}만 메뉴가 숨겨진 순간에도 제목 끝 공간을 예약해 hover/focus에서 줄바꿈이 변하지 않게 합니다. title은 line clamp 2, 한글 keep-all + 긴 식별자 anywhere입니다.
+- 행 높이 56px은 기존 spacing의 space-12 + space-2, 메뉴 44px은 space-10 + space-1입니다. SideNav/ListCell의 14/20px 제목, 현재 행의 무채색 fill·굵기·radius·포커스 문법은 바꾸지 않습니다.
 - D06: 링크 padding 12→8px. hover 환경에서 숨긴 형제 menu button은 absolute로 배치하여 title 공간을 상시 예약하지 않습니다. hover·focus-within·current·menu-open에서 버튼을 보이고 링크 끝 공간을 확보합니다. touch에서는 항상 보이고 공간을 확보합니다. DOM/Tab 순서·최소 24px target·링크와 형제 관계는 보존합니다.
 
 ## Content and writing
@@ -9708,6 +9788,8 @@ nav[aria-labelledby=panel-title]
 - `--radius-lg`
 - `--space-0-5`
 - `--space-1`
+- `--space-10`
+- `--space-12`
 - `--space-2`
 - `--space-3`
 - `--space-8`
@@ -9726,6 +9808,7 @@ nav[aria-labelledby=panel-title]
 - [Carbon overflow menu](https://carbondesignsystem.com/components/data-table/usage/)
 - [WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)
 - [Fluent 2 Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
+- [WCAG Target Size Enhanced](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html)
 - [WAI-ARIA APG Landmark Regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
 - [MDN aria-current](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-current)
 
@@ -9965,17 +10048,17 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 
 ### 사용
 
+- disabled는 native textarea disabled, form/shell의 aria-disabled, shell의 inert를 함께 사용합니다. native control의 비활성 동작과 slot으로 들어온 button/link의 focus·activation 차단을 모두 충족하기 위한 조합입니다.
+- focus 표시는 shell 하나가 소유합니다. textarea에 focus가 있으면 shell border만 중립 회색 --component-message-composer-border-focus(cool-neutral-60, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고, primary 색 border·focus-ring halo·두께 변화는 없습니다(2026-10-09 owner 결정, Claude·ChatGPT 작성창처럼 작성 중에는 caret이 입력 위치를 알립니다).
 - light/dark 모두 LDS semantic input token을 사용하며 exact Figma color, product logo, provider selector와 custom shadow를 만들지 않습니다.
 - compact는 한 줄 textarea를 --space-8, textarea 세로 padding을 --space-1, shell/action 간격을 --space-0-5 중심으로 구성합니다. primary action은 기존 --component-button-height-sm과 Button --lds-button-radius의 --radius-md를 유지합니다. comfortable은 textarea 40px와 세로 inset16px를 쓰며 버튼 geometry와 interaction은 보존합니다.
-- 좁고 짧은 대화 열에서는 body Portal로 clipping을 탈출하되, 공유 primitive가 제공하는 collisionBoundary에 visible conversation column ref를 전달해 viewport와 그 열의 교집합 안에서 panel을 배치합니다. Portal target과 geometry boundary는 같은 책임이 아닙니다.
-- Slack — Set your Enter key preference는 Enter를 보내기로 선택하면 Shift+Enter로 줄바꿈하고, Enter를 줄바꿈으로 선택하면 Mac의 Command+Enter 또는 Windows/Linux의 Ctrl+Enter로 보내는 공식 제품 관습을 설명합니다. 이를 enter와 modifier-enter 계약에 반영했고, 긴 형식 작성에는 더 명시적인 button-only도 제공합니다.
 
 ### 사용하지 않음
 
 - 분류는 LK Product Extension이며 WDS Core parity를 주장하지 않습니다.
 - state는 idle | submitting | streaming | stopping이며 제품이 갱신합니다. callback만으로 다음 lifecycle이나 성공을 추론하지 않습니다.
-- 이 세 모드는 제품이 명시적으로 선택하는 계약이며 사용자 환경을 추측해 런타임에 전환하지 않습니다. enterKeyHint는 enter 모드에서 send, 나머지 모드에서 enter를 기본값으로 제공합니다.
-- submit 뒤 textarea focus를 복귀시키되 value clear, loading 종료와 response 완료는 수행하지 않습니다.
+- onStop이 없는 대기는 기존 Button의 loading presentation과 Spinner를 재사용합니다. transport의 취소 가능 여부는 callback 유무로 명시하고 DS가 추측하지 않습니다. 커스텀 statusLabel이 ReactNode이면 버튼 이름은 기본 phase 문구를 사용합니다.
+- submitMode="modifier-enter": Alt가 없는 Ctrl+Enter 또는 Meta+Enter만 제출합니다. Ctrl+Alt/AltGr와 Option+Command 조합은 문자 입력 충돌을 피하기 위해 제출하지 않습니다.
 
 ## Anatomy
 
@@ -10015,7 +10098,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 | `trailingActions` | `React.ReactNode` | No | Actions rendered at the trailing edge of the action band before the primary send/stop control. |
 | `submitLabel` | `string` | No | Accessible name for the submit control (stacked 32px / inline 44px). @default "메시지 보내기" |
 | `stopLabel` | `string` | No | Accessible name for the stop control (stacked 32px / inline 44px). @default "응답 중지" |
-| `onStop` | `() = void` | No | Requests transport cancellation in submitting/streaming states. |
+| `onStop` | `() = void` | No | Requests transport cancellation in submitting/streaming states. Without this callback, non-idle renders a focusable loading control rather than offering an unavailable stop action. The draft stays editable unless readOnly/disabled is supplied. |
 | `textareaProps` | `MessageComposerTextareaProps` | No | Native textarea attributes and event hooks not owned by the controlled contract. |
 
 ## States
@@ -10031,9 +10114,9 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 
 - value는 완전한 controlled value입니다. submit callback 뒤에도 내부에서 지우지 않습니다.
 - attachments, leadingActions, trailingActions는 ReactNode slot입니다. attachment selection/upload, voice capture, model/tool picker와 permission은 slot consumer가 소유합니다.
-- idle은 send, submitting/streaming은 stop을 같은 primary-action 위치에 둡니다. stopping은 중복 stop 요청을 막습니다.
+- 첨부 파일의 이름은 primary title, 형식·범위는 description, 준비 상태는 Spinner와 text로 분리해 읽습니다. 새 파일 schema나 lifecycle prop을 만들지 않고 attachments에 정적인 ListCell을 조합합니다. 서버 job 삭제·진행률·retry와 선택 해제는 제품이 구분합니다.
 - Escape는 암묵적 stop shortcut이 아닙니다. stop은 접근 가능한 이름과 visible focus를 가진 primary action으로 요청합니다.
-- disabled는 native textarea disabled, form/shell의 aria-disabled, shell의 inert를 함께 사용합니다. native control의 비활성 동작과 slot으로 들어온 button/link의 focus·activation 차단을 모두 충족하기 위한 조합입니다.
+- submit 뒤 textarea focus를 복귀시키되 value clear, loading 종료와 response 완료는 수행하지 않습니다.
 
 ## 정량 규칙
 
@@ -10041,8 +10124,8 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 | --- | --- |
 | 명시 규칙 1 | density는 comfortable \| compact입니다. 2026-10-09 승인된 D03 개정으로 stacked 한 줄 입력은 comfortable 40px, compact 32px에서 시작합니다. 16px 입력 글자, 24px line-height와 기존 버튼 모서리는 유지합니다. stacked send/stop은 32px입니다. |
 | 명시 규칙 2 | layout은 stacked \| inline이며 기본값은 stacked입니다. 단순 작성에서 명시한 inline은 textarea와 send/stop을 같은 행에 배치합니다. 입력/내장 action 최소 44px, shell 2px inset과 1px border를 합해 빈 초안 shell은 약 50px입니다. density와 별도 anatomy 축이며 설치된 0.4.7에는 없습니다. |
-| 명시 규칙 3 | composition session과 KeyboardEvent.isComposing을 함께 확인하고 legacy IME keyCode 229도 방어해 한글·일본어·중국어 확정 Enter가 submit으로 이어지지 않게 합니다. 조합 확정 직후에는 같은 keydown을 제출 동작으로 재사용하지 않습니다. |
-| 명시 규칙 4 | focus 표시는 shell 하나가 소유합니다. textarea에 focus가 있으면 shell border만 중립 회색 --component-message-composer-border-focus(cool-neutral-60, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고, primary 색 border·focus-ring halo·두께 변화는 없습니다(2026-10-09 owner 결정, Claude·ChatGPT 작성창처럼 작성 중에는 caret이 입력 위치를 알립니다). |
+| 명시 규칙 3 | placeholder는 Input의 컴포넌트 스코프 pseudo-element 방식으로 label-alternative 잉크와 opacity 1을 명시합니다. 제품 CSS reset의 placeholder 색에 기대지 않습니다. disabled 잉크는 기존 label-disable을 유지합니다. |
+| 명시 규칙 4 | composition session과 KeyboardEvent.isComposing을 함께 확인하고 legacy IME keyCode 229도 방어해 한글·일본어·중국어 확정 Enter가 submit으로 이어지지 않게 합니다. 조합 확정 직후에는 같은 keydown을 제출 동작으로 재사용하지 않습니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
@@ -10061,11 +10144,11 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 
 ## Accessibility
 
+- idle은 send, onStop이 있는 submitting/streaming은 stop을 같은 primary-action 위치에 둡니다. stopping은 중복 stop 요청을 막습니다. onStop이 없으면 non-idle primary action은 focusable loading control이며 존재하지 않는 취소 동작을 암시하지 않습니다. 초안은 편집할 수 있고 추가 제출만 막습니다.
 - canSubmit을 생략하면 trim한 값이 있을 때만 submit할 수 있습니다. readOnly는 focus와 copy를 유지하되 편집·submit을 막습니다.
 - status live region은 내용이 있을 때 mount하지 않고 composer 수명 내내 비어 있는 상태로 상시 mount한 뒤 텍스트만 교체합니다. 텍스트와 함께 삽입된 status node는 기존 live region의 변경이 아니어서 첫 idle→submitting 알림이 누락되기 때문입니다. 보이는 status 문구는 같은 내용을 중복 발표하지 않도록 aria-hidden 장식으로 둡니다.
 - stop 버튼은 stopping에서도 native disabled가 되지 않고 aria-disabled로 중복 요청만 거부합니다. native disabled는 방금 누른 사용자의 초점을 로 떨어뜨립니다. 요청이 끝나 idle로 돌아갈 때 primary action이 초점을 잃으면 submit 뒤와 같은 규칙으로 textarea에 초점을 되돌립니다.
 - disabled: true는 visible disabledReason을 요구하며 textarea의 description에 연결합니다. shell 전체를 inert subtree로 만들어 slot으로 조합한 button/link도 focus와 activation에서 제외합니다.
-- submitMode="enter": modifier 없는 Enter로 제출하고 Shift+Enter는 줄바꿈입니다.
 
 ## Exceptions
 
@@ -10079,9 +10162,10 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 | `Chip` | 대표 시나리오에서 조합 |
 | `Icon` | 대표 시나리오에서 조합 |
 | `IconButton` | 대표 시나리오에서 조합 |
+| `ListCell` | 대표 시나리오에서 조합 |
+| `Spinner` | 대표 시나리오에서 조합 |
+| `TextButton` | 대표 시나리오에서 조합 |
 | `ConversationList` | 대표 시나리오에서 조합 |
-| `ConversationMessage` | 대표 시나리오에서 조합 |
-| `MessageFeed` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -10104,9 +10188,11 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 ### 추가 조합 2
 
 ```jsx
-<MessageComposer layout="inline" density="compact" minRows={1} maxRows={6}
-  value={draft} onValueChange={setDraft} onSubmit={send}
-  placeholder="무엇을 도와드릴까요?" />
+<MessageComposer layout="inline" value={draft} onValueChange={setDraft} onSubmit={send}
+  attachments={<ListCell typography="small" textEllipsis={false} verticalAlign="top" titleStyle={{ overflowWrap: 'anywhere' }}
+    title={file.name} description={<>{file.kind} · {file.scope}<span role="status"><Spinner size={12} /> 자료 준비 중</span></>}
+    trailing={<TextButton onClick={removeSelection}>선택 취소</TextButton>} />}
+/>
 ```
 
 ## Tokens and API
@@ -10156,14 +10242,14 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 
 - MessageComposer prompt contract: `components/communication/MessageComposer.prompt.md`
 - Storybook implementation evidence: `stories/CommunicationMessageComposer.stories.jsx`
+- [WCAG Contrast Minimum](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+- [Carbon Chat server communication](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Server_communication.html)
 - [MDN ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)
 - [WCAG Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
 - [OpenAI UI guidelines](https://developers.openai.com/plugins/concepts/ui-guidelines)
 - [Claude Academy](https://academy.claude.com/tutorials/getting-started-with-claude)
 - [Claude 제품 페이지](https://claude.com/ko/product/overview)
 - [Slack — Set your Enter key preference](https://slack.com/help/articles/115005523006-Set-your-Enter-key-preference)
-- [Slack — Use Slack with a screen reader](https://slack.com/help/articles/360000411963-Use-Slack-with-a-screen-reader)
-- [MDN — disabled HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/disabled)
 
 
 ---
@@ -12202,6 +12288,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - source 조회, permission, freshness 계산, excerpt 생성과 renderer 선택은 제품이 소유합니다. LDS는 URL이나 timestamp에서 availability를 추론하지 않습니다.
 - SharePoint search security trimming은 사전 트리밍이 "refiner 데이터와 hit count를 통한 정보 유출을 막는다"고 명시합니다. 숨긴 건수를 보이는 총계에 합산하지 않는 근거입니다.
 - USWDS Collection은 모호한 "read more" 대신 각 item의 고유한 heading을 원본에 연결하고 외부 이동을 표시하도록 합니다. source label 자체를 이동 경로로 쓰는 근거입니다.
+- inlineDetails는 기본 false입니다. true는 variant="inline" 패널에서 제목을 최대 두 줄, 전달된 kind/location을 보조 행으로 표시합니다. 자료 종류나 위치를 filename/URL에서 추론하거나 별도 조회하지 않습니다. list/chips는 변경하지 않습니다.
 
 ## Anatomy
 
@@ -12221,6 +12308,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 | `emptyMessage` | `React.ReactNode` | No |  |
 | `onSourceActivate` | `(source: SourceDisclosureItem) = void` | No |  |
 | `variant` | `SourceDisclosureVariant` | No | inline collapses the sources behind a recessive "출처 N개" toggle that opens an anchored Popover, so the surrounding layout never shifts. list renders the bordered provenance list, one expandable row per source, for comparing several sources' state side by side. chips renders each source as a single-line link chip at attachment weight. @default "inline" |
+| `inlineDetails` | `boolean` | No | Opt-in inline provenance rows: two-line titles, supplied kind/location beneath, and 44px trigger/row targets. Does not fetch or infer metadata. Other variants are unchanged. @default false |
 | `defaultOpen` | `boolean` | No | Start with the inline source popover open. Only applies to the inline variant. @default false |
 | `hiddenCount` | `number` | No | Sources the product withheld upstream, added to the ones this component withholds for restricted availability. Reported as one aggregate line; never named, and never folded into the visible source count. @default 0 |
 | `hiddenMessage` | `React.ReactNode` | No | Replaces the default withheld-sources line. Name what access is needed and how to ask for it — never name the withheld source. |
@@ -12311,6 +12399,12 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 />
 ```
 
+### 추가 조합 2
+
+```jsx
+<SourceDisclosure inlineDetails sources={sources} onSourceActivate={openSource} />
+```
+
 ## Tokens and API
 
 ### Tokens
@@ -12338,6 +12432,7 @@ AI 응답, 사용자 발화, 상담원과 시스템 알림이 한 대화에 섞�
 - `--label1-size`
 - `--radius-sm`
 - `--space-1`
+- `--space-10`
 - `--space-2`
 - `--space-3`
 - `--space-4`
@@ -20875,6 +20970,8 @@ const firstFilterRef = useRef(null);
 | Component | Relationship |
 | --- | --- |
 | `Button` | 대표 시나리오에서 조합 |
+| `Grid` | 대표 시나리오에서 조합 |
+| `Thumbnail` | 대표 시나리오에서 조합 |
 | `CommandPalette` | 대표 시나리오에서 조합 |
 | `Drawer` | 대표 시나리오에서 조합 |
 | `DrawerSection` | 대표 시나리오에서 조합 |
@@ -20946,6 +21043,7 @@ const firstFilterRef = useRef(null);
 - 테스트·특수 embedding에서만 withinPortal=false를 사용하며 이 경우 background inert는 적용하지 않습니다.
 - footer의 선택/취소 버튼처럼 보이는 dismiss 수단을 제공합니다. grab handle이나 scrim만으로 닫게 하지 않습니다.
 - Sheet 위에 다른 modal surface를 상시 중첩하지 않습니다. 불가피한 확인 surface가 열리면 최상위만 상호작용하고 닫힌 뒤 Sheet 내부 호출 지점으로 복원됩니다.
+- 패널 transform의 transitionend 또는 계산된 transition 시간 + 50ms 뒤 제거합니다. 재오픈·unmount는 이전 frame·timer를 취소하므로 닫힘 timer가 새 Sheet를 제거하지 않습니다.
 
 ## Anatomy
 
@@ -20982,6 +21080,10 @@ const firstFilterRef = useRef(null);
 ## Behavior and interaction
 
 - Material Web Dialog: modal surface는 배경 상호작용을 차단하고 필요 시 명시적 initial focus target을 제공해야 한다는 구현 근거를 보조로 사용했습니다.
+- open=false가 되는 즉시 공통 focus controller의 trap·background inert·scroll lock을 해제하고 호출 지점으로 초점을 복원합니다. 퇴장 중 픽셀만 남는 패널은 aria-hidden·inert이며 scrim은 pointer를 받지 않습니다. shell이 자체 inert를 함께 해제하는 경우에는 Drawer처럼 DOM mutation 뒤 초점 handoff를 마칩니다.
+- 퇴장 중 다른 호출 요소로 재오픈하면 새 open edge에서 호출 지점을 다시 캡처해 다음 닫힘이 최신 trigger로 복원되도록 합니다.
+- prefers-reduced-motion: reduce에서는 전환을 0으로 두고 열린 endpoint를 바로 표시합니다. 퇴장 도중 환경설정이 바뀌어도 즉시 제거하며 상태·초점 계약은 유지합니다.
+- WAI-ARIA Modal Dialog의 닫힘 후 호출 지점 복귀는 시각 퇴장을 기다리는 이유가 될 수 없다는 기준으로 적용했습니다. W3C Animation from Interactions의 비필수 이동 비활성화 원칙을 적용했으며, 이는 AAA SC 2.3.3을 참고한 LDS 모션 계약입니다.
 
 ## 정량 규칙
 
@@ -21075,6 +21177,8 @@ const firstOptionRef = useRef(null);
 - [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [Fluent 2 Drawer](https://fluent2.microsoft.design/components/web/react/core/drawer/usage)
 - [Material Web Dialog](https://m2.material.io/develop/web/components/dialogs)
+- [WAI-ARIA Modal Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
+- [W3C Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)
 
 
 ---
@@ -21509,23 +21613,25 @@ const firstOptionRef = useRef(null);
 | `inputAriaDescribedBy` | `string` | No | Helper/error element IDs applied to the actual file input. |
 | `inputAriaInvalid` | `React.AriaAttributes['aria-invalid']` | No |  |
 | `hint` | `React.ReactNode` | No | 안내 문구. |
-| `size` | `'sm' \| 'md' \| 'small' \| 'medium'` | No | drop target 크기. compact component scope에서는 기본 sm, 그 밖에서는 md. |
+| `presentation` | `'dropzone' \| 'button'` | No | 선택 진입점의 표면. button은 동일한 native picker를 LDS Button label로 표시합니다. @default 'dropzone' |
+| `size` | `'sm' \| 'md' \| 'small' \| 'medium'` | No | drop target 또는 button 크기. compact component scope에서는 기본 sm, 그 밖에서는 md. |
 | `disabled` | `boolean` | No |  |
 
 ## Behavior and interaction
 
 - onFiles(File[]) 로 허용된 선택을 받고, onRejectedFiles(File[]) 로 accept 또는 단일 선택 제한에서 제외된 파일을 받습니다.
 - 선택 이후 upload/processing/retry 상태는 FileUploadQueue가 소유합니다. parser, storage, virus scan, retry policy는 제품 계층 책임입니다.
+- 간단한 파일 선택 버튼.
 
 ## 정량 규칙
 
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | size를 생략하면 일반 표면은 기존 md(최소 144px), bounded compact component scope는 sm(최소 112px, 32px 아이콘 tile)을 사용합니다. 명시한 size가 우선하며 전체 label target과 native input의 키보드 접근은 유지됩니다. |
+| 명시 규칙 2 | presentation 기본 dropzone는 기존 표면과 112/144px 높이를 유지합니다. button은 같은 실제 input에 연결된 LDS Button as="label", outlined assistive variant로 표시합니다. 기존 Button size/radius/폰트/fill을 재사용하며 label에 별도 tab stop을 만들지 않습니다. |
+| 명시 규칙 3 | 시각 delta는 dashed target·tile·여러 줄 파일명을 짧은 button entry로 대체하는 opt-in뿐입니다. Button/FileUpload 내부 비교 결과 다른 border/radius/shadow 값을 만들지 않았습니다. ButtonSelection 실제 story는 320px, 허용/거부, keyboard focus, 동일 input·disabled 계약을 확인합니다. |
+| 명시 규칙 4 | 제품 검토 핀: Portal 740bc9d5 ChatComposerMenus의 bounded 자료 패널은 supported by new contract이며 vendor 0.4.7에는 presentation이 없습니다. Web Viz 7e535341 MapEditScreen/TaskCreateScreen의 map/task 저작에는 같은 chat picker가 없어 not applicable, Control Full Daedeok d8c215fd RobotDashboard Dashboard의 관제에는 같은 파일 선택 흐름이 없어 not applicable입니다. |
 | --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
-| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
-| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
-| --color-semantic-fill-strong | light: rgba(112, 115, 124, 0.16); dark: rgba(112, 115, 124, 0.28) |
 
 ## Responsive
 
@@ -21536,10 +21642,12 @@ const firstOptionRef = useRef(null);
 - accept / multiple / capture 는 picker와 drag/drop에 적용됩니다. 이 컴포넌트는 즉시 업로드 흐름을 위한 event-based picker이며 native form submission용 name/required 필드를 소유하지 않습니다.
 - control name은 선택 후에도 바뀌지 않습니다. 선택 파일명은 별도 status로 알리며 helper/error는 inputAriaDescribedBy / inputAriaInvalid 로 실제 input에 연결합니다.
 - 같은 polite status가 거부된 파일도 함께 읽습니다({파일명}, 허용되지 않는 파일이라 제외됨). accept 불일치와 단일 선택 초과는 callback으로만 흘리지 않고 보조 기술에도 전달합니다(USWDS File input 요구). 사용자에게 보이는 오류 문구와 복구 안내는 제품이 소유합니다.
+- button의 hint 기본값은 「파일 선택」입니다. dropzone 기본 안내는 그대로입니다. 조작 이름은 선택 뒤에도 유지하고 파일 선택·거부 결과는 같은 polite status로 알립니다. 선택 파일명 목록과 upload/processing/cancel은 제품이 별도 구성합니다.
 
 ## Accessibility
 
 - native 은 접근성 트리와 Tab 순서에 남습니다. 연결된 label이 picker를 열고 focus는 LDS input ring으로 표시합니다.
+- picker·accept·multiple·capture·거부 callback·disabled·aria-describedby/invalid·동일 파일 재선택과 drag/drop handler 합성은 두 presentation에서 같습니다. focus는 실제 input이 받고 기존 input focus shadow를 Button label 표면에 표시합니다.
 - Carbon File uploader accessibility.
 - FileUpload은 native file input을 유지하면서 클릭·키보드·drag/drop을 제공하는 파일 선택 target입니다.
 
@@ -21562,6 +21670,13 @@ const firstOptionRef = useRef(null);
 
 ```jsx
 <FileUpload multiple accept=".pdf,image/*" onFiles={setFiles} hint="파일을 놓거나 선택하세요" />
+```
+
+### 추가 조합 2
+
+```jsx
+<FileUpload presentation="button" size="sm" accept=".pdf,.txt" hint="파일 선택"
+  inputAriaDescribedBy="file-restrictions" onFiles={prepareFiles} onRejectedFiles={showRejected} />
 ```
 
 ## Tokens and API
@@ -21607,8 +21722,8 @@ const firstOptionRef = useRef(null);
 - FileUpload prompt contract: `components/forms/FileUpload.prompt.md`
 - Storybook implementation evidence: `stories/FormFileUpload.stories.jsx`
 - [USWDS File input](https://designsystem.digital.gov/components/file-input/)
-- [Carbon File uploader accessibility](https://carbondesignsystem.com/components/file-uploader/accessibility/)
 - [GOV.UK File upload](https://design-system.service.gov.uk/components/file-upload/)
+- [Carbon File uploader accessibility](https://carbondesignsystem.com/components/file-uploader/accessibility/)
 
 
 ---

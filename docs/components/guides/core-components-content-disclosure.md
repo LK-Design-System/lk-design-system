@@ -10,6 +10,12 @@
 
 FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필요가 없는 보조 콘텐츠에 적합합니다. 과업 완료에 필수인 정보나 오류는 접지 말고 바로 노출하며, 화면 이동이 필요한 계층 탐색에는 Navigation을 사용하세요.
 
+## 사용 판단
+
+### 사용하지 않음
+
+- 헤더 색은 fast, chevron 회전과 grid-rows reveal은 base timing을 유지합니다. Collapsible과 같은 disclosure 연속성이며 새로운 API·모서리·브랜드 표현을 추가하지 않습니다.
+
 ## Properties
 
 | Name | Type | Required | Contract |
@@ -41,9 +47,9 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 | --- | --- |
 | 명시 규칙 1 | items — { title, content, leading?, description? }[]. multiple — 여러 개 동시 열기 허용. defaultOpen — 마운트 시 열려 있는 인덱스. headingLevel — 헤더 래퍼 heading 레벨(기본 3). |
 | 명시 규칙 2 | 접근성: 각 헤더 버튼은 실제 heading(기본 )으로 감싸집니다 — APG Accordion 은 "each accordion header is contained in an element with role heading"을 요구하며, 이 래퍼 덕분에 스크린리더 사용자가 heading 탐색(H 키)으로 섹션 사이를 건너뛸 수 있습니다. 래퍼는 margin: 0; font: inherit 이라 시각은 버튼이 그대로 소유합니다. |
+| 명시 규칙 3 | prefers-reduced-motion: reduce에서는 scoped guard로 transition의 시간·지연만 0으로 둡니다. 열린 chevron 방향과 grid의 최종 높이를 유지하고 aria-expanded·inert는 클릭 시 즉시 바뀝니다. |
+| 명시 규칙 4 | 근거: WAI-ARIA Accordion Pattern의 header/panel 연결과 expanded 의미를 유지하며, WCAG 2.2 Animation from Interactions에 따라 비필수 reveal/rotation 보간을 생략할 수 있게 합니다. default 200ms·ops 160ms의 속도는 기존 LDS token 결정입니다. |
 | --body2-size | 15px |
-| --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
-| --caption1-size | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 
 ## Content and writing
 
@@ -116,3 +122,5 @@ FAQ, 선택적 설명, 상세 로그처럼 모든 사용자가 즉시 읽을 필
 
 - Accordion prompt contract: `components/content/Accordion.prompt.md`
 - Storybook implementation evidence: `stories/ContentDisclosure.stories.jsx`
+- [WAI-ARIA Accordion Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/)
+- [WCAG 2.2 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)

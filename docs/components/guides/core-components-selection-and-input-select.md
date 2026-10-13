@@ -71,6 +71,7 @@
 - 범위: 검색/자유 입력/비동기 옵션/다중 선택은 이 컴포넌트에 넣지 않습니다. 검색은 AutoComplete 또는 SearchableMultiSelect, 다중 선택은 Combobox 계열이 담당합니다.
 - readOnly는 현재 값과 포커스를 유지하지만 팝업을 열거나 값을 바꾸지 않으며, 대체 배경과 aria-readonly로 비활성과 구분합니다.
 - 형제 비교: AutoComplete와 Combobox가 이미 비활성 옵션을 aria-disabled로 노출하고 탐색·선택에서 제외합니다. Select도 같은 규칙을 사용하되, 검색과 다중 선택은 가져오지 않습니다.
+- vars accepts only --lds-select-min-width, --lds-select-height, and --lds-select-dropdown-max-height. Consumer root width constraints still override intrinsic measurement.
 - size를 생략하면 일반 표면에서는 기존 md, bounded compact component scope에서는 sm을 사용합니다. 명시한 size가 우선하며 compact Select는 32px trigger와 기존 40px option target을 조합합니다.
 
 ## 정량 규칙
@@ -86,16 +87,16 @@
 ## Responsive
 
 - intrinsic-width 계약: 현재 값이 아니라 option 집합의 가장 긴 label과 icon/status reserve를 기준으로 안정된 폭을 계산합니다. 숨은 측정 subtree는 높이 0·overflow: hidden·max-width: 100%의 in-flow measurement layer 안에 격리되어 root 높이·trigger y 좌표·제약된 조상의 scrollWidth를 바꾸지 않으면서도 root의 max-content 폭에는 가장 긴 label 폭을 기여합니다.
-- WDS 내부 Select/Select component-set(16215:33116)의 직접 축은 Active, Disable, Focus, Negative, Overflow, Render(Chip/Text)입니다. Size는 WDS 직접 축이 아니지만 열린 variant가 48px·16/24px Menu를 직접 포함하므로 md/lg 기본 option 밀도의 composition 근거로 사용합니다. 옵션별 disabled와 동적 잠금은 새 WDS 축이 아니라 APG를 만족하는 LDS 접근성 동작입니다.
-- 시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px inset ring으로 분리합니다.
-- vars accepts only --lds-select-min-width, --lds-select-height, and --lds-select-dropdown-max-height. Consumer root width constraints still override intrinsic measurement.
+- Intrinsic width also budgets the popup's option typography at selected weight, panel/row padding and borders, the trailing check and gap, and the platform's measured vertical scrollbar width. A short trigger must not force unnecessary ellipsis in its wider menu rows; overlay scrollbars contribute zero.
+- Observe individual measurement rows as well as the aggregate grid, and remeasure on open: font metrics can change a menu row without changing the grid's overall width. Recheck selected labels after the opened menu's fonts and layout settle; an earlier fitting frame is insufficient evidence.
+- The closed-state scrollbar probe is transparent rather than visibility: hidden: Chromium can report a zero gutter for a hidden probe while the visible popup consumes a classic scrollbar. Reserve the measured platform gutter consistently, and when open include the actual popup's gutter excluding its borders.
 
 ## Content and writing
 
 - render 축: WDS Render(Chip/Text)의 chip은 선택 값을 트리거 안의 캡슐로 강조하는 표시입니다. chip-trigger는 LDS 확장으로, 작성창 동작 띠처럼 폼 필드가 아닌 자리에서 트리거 전체를 보더 없는 단일 알약으로 그립니다 — 인풋 크롬과 값 캡슐이 겹치는 이중 표면을 만들지 않기 위한 값이며, 포커스 링·invalid 보더·키보드/ARIA 계약은 필드와 동일하게 유지합니다.
+- 시각 델타: Select panel은 DropdownMenu와 같은 shared-menu shell(radius 12px, padding 8px, gap 4px, border, shadow)을 사용하되 trigger 너비와 6px field offset을 유지합니다. 선택은 약한 persistent fill·trailing 16px check·medium weight, pointer hover는 neutral hover fill, keyboard active descendant는 2px inset ring으로 분리합니다.
 - className/style and rootRef target the public field-stack root. The default ref, triggerClassName, and triggerStyle target the native combobox trigger.
 - Stable parts are root, label, control, trigger, value, indicators, dropdown, option, and message. Options additionally expose real data-active, data-selected, and data-disabled state.
-- 커스텀 단일 선택 드롭다운(스타일된 트리거 + 플로팅 패널, 시그널 포커스) — 네이티브 가 아닙니다. 옵션은 options(string[] 또는 {value,label}[]) 또는 자식으로 지정합니다. onChange는 선택된 value를 받습니다.
 
 ## Accessibility
 
@@ -205,3 +206,4 @@
 - [Carbon Dropdown](https://carbondesignsystem.com/components/dropdown/usage/)
 - [Fluent Select](https://fluent2.microsoft.design/components/web/react/core/select/usage)
 - [Fluent Menu](https://fluent2.microsoft.design/components/web/react/core/menu/usage)
+- [APG combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/)

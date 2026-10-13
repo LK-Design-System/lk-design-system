@@ -53,6 +53,7 @@
 ## Behavior and interaction
 
 - checked / defaultChecked / onChange(next) — 제어/비제어.
+- prefers-reduced-motion: reduce에서는 트랙·노브의 transition만 즉시 종료합니다. checked 노브의 translateX를 유지해 색 외 상태 단서를 보존합니다. default/ops와 normal/iOS 모두 같은 guard를 사용합니다.
 
 ## 정량 규칙
 
@@ -61,12 +62,14 @@
 | 명시 규칙 1 | Switch exposes role="switch" with aria-checked; Space and Enter toggle immediately. The control-to-label gap is 8px. |
 | 명시 규칙 2 | 트랙 지오메트리(md 52×32 · sm 40×24), 노브 이동(색이 아닌 위치로도 상태 전달), disabled tabIndex=-1은 변경되지 않았습니다. |
 | 명시 규칙 3 | size — md(52×32) · sm(40×24). label은 오른쪽에 위치. disabled는 토큰 색(회색 트랙·노브)으로 표시. |
+| 명시 규칙 4 | 트랙의 색·포커스 feedback은 --dur-fast(default 120ms, ops 80ms), 노브 위치는 --dur-base(default 200ms, ops 160ms)와 --ease-out을 씁니다. SegmentedControl·Disclosure와 같은 기존 standard 곡선이며 bounce나 새 token을 추가하지 않습니다. |
 | --body2-size | 15px |
-| --color-semantic-fill-normal | light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22) |
 
 ## Content and writing
 
 - 키보드 조작 가능: 포커스 가능, Space/Enter로 토글, 네이비 틴트 포커스 링. 텍스트 라벨이 있는 박스형 on/off는 Checkbox를 쓰세요.
+- checked·ARIA·onChange는 즉시 반영하고 노브의 시각 이동만 보간합니다. 연속 입력은 최신 위치를 향하며 label·폼 값·readOnly 계약을 바꾸지 않습니다.
+- 근거: WAI-ARIA Switch Pattern의 고정된 label과 즉시 읽히는 이진 상태를 유지하고, WCAG 2.2 Animation from Interactions에 따라 비필수 위치 보간을 끌 수 있게 합니다. 속도와 곡선은 기존 LDS motion token을 적용한 LDS 결정입니다.
 
 ## Accessibility
 
@@ -116,7 +119,6 @@
 - `--component-input-gap`
 - `--dur-base`
 - `--dur-fast`
-- `--ease-in-out`
 - `--ease-out`
 - `--font-sans`
 - `--radius-pill`
@@ -135,3 +137,5 @@
 - Switch prompt contract: `components/selection/Switch.prompt.md`
 - Storybook implementation evidence: `stories/SelectionSwitch.stories.jsx`
 - [WAI-ARIA Switch pattern](https://www.w3.org/WAI/ARIA/apg/patterns/switch/)
+- [WAI-ARIA Switch Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/switch/)
+- [WCAG 2.2 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)

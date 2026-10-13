@@ -21,6 +21,7 @@
 - 테스트·특수 embedding에서만 withinPortal=false를 사용하며 이 경우 background inert는 적용하지 않습니다.
 - footer의 선택/취소 버튼처럼 보이는 dismiss 수단을 제공합니다. grab handle이나 scrim만으로 닫게 하지 않습니다.
 - Sheet 위에 다른 modal surface를 상시 중첩하지 않습니다. 불가피한 확인 surface가 열리면 최상위만 상호작용하고 닫힌 뒤 Sheet 내부 호출 지점으로 복원됩니다.
+- 패널 transform의 transitionend 또는 계산된 transition 시간 + 50ms 뒤 제거합니다. 재오픈·unmount는 이전 frame·timer를 취소하므로 닫힘 timer가 새 Sheet를 제거하지 않습니다.
 
 ## Anatomy
 
@@ -57,6 +58,10 @@
 ## Behavior and interaction
 
 - Material Web Dialog: modal surface는 배경 상호작용을 차단하고 필요 시 명시적 initial focus target을 제공해야 한다는 구현 근거를 보조로 사용했습니다.
+- open=false가 되는 즉시 공통 focus controller의 trap·background inert·scroll lock을 해제하고 호출 지점으로 초점을 복원합니다. 퇴장 중 픽셀만 남는 패널은 aria-hidden·inert이며 scrim은 pointer를 받지 않습니다. shell이 자체 inert를 함께 해제하는 경우에는 Drawer처럼 DOM mutation 뒤 초점 handoff를 마칩니다.
+- 퇴장 중 다른 호출 요소로 재오픈하면 새 open edge에서 호출 지점을 다시 캡처해 다음 닫힘이 최신 trigger로 복원되도록 합니다.
+- prefers-reduced-motion: reduce에서는 전환을 0으로 두고 열린 endpoint를 바로 표시합니다. 퇴장 도중 환경설정이 바뀌어도 즉시 제거하며 상태·초점 계약은 유지합니다.
+- WAI-ARIA Modal Dialog의 닫힘 후 호출 지점 복귀는 시각 퇴장을 기다리는 이유가 될 수 없다는 기준으로 적용했습니다. W3C Animation from Interactions의 비필수 이동 비활성화 원칙을 적용했으며, 이는 AAA SC 2.3.3을 참고한 LDS 모션 계약입니다.
 
 ## 정량 규칙
 
@@ -150,3 +155,5 @@ const firstOptionRef = useRef(null);
 - [WAI-ARIA APG Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [Fluent 2 Drawer](https://fluent2.microsoft.design/components/web/react/core/drawer/usage)
 - [Material Web Dialog](https://m2.material.io/develop/web/components/dialogs)
+- [WAI-ARIA Modal Dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
+- [W3C Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)

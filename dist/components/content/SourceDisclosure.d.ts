@@ -50,6 +50,8 @@ export interface SourceDisclosureProps extends Omit<React.HTMLAttributes<HTMLEle
   onSourceActivate?: (source: SourceDisclosureItem) => void;
   /** `inline` collapses the sources behind a recessive "출처 N개" toggle that opens an anchored Popover, so the surrounding layout never shifts. `list` renders the bordered provenance list, one expandable row per source, for comparing several sources' state side by side. `chips` renders each source as a single-line link chip at attachment weight. @default "inline" */
   variant?: SourceDisclosureVariant;
+  /** Opt-in inline provenance rows: two-line titles, supplied kind/location beneath, and 44px trigger/row targets. Does not fetch or infer metadata. Other variants are unchanged. @default false */
+  inlineDetails?: boolean;
   /** Start with the inline source popover open. Only applies to the `inline` variant. @default false */
   defaultOpen?: boolean;
   /** Sources the product withheld upstream, added to the ones this component withholds for `restricted` availability. Reported as one aggregate line; never named, and never folded into the visible source count. @default 0 */

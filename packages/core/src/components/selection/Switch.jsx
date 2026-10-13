@@ -1,9 +1,14 @@
 import React from 'react';
 
+const SWITCH_MOTION_STYLES = `
+@media(prefers-reduced-motion:reduce){
+  [data-lds-switch-motion]{transition-duration:0s!important;transition-delay:0s!important}
+}`;
+
 /**
  * LK ROBOTICS — Switch
  * Instant on/off toggle. The track fills with the LK signal ink when on and
- * the knob slides with the house emphasized ease — calm, no bounce. Track
+ * the knob slides with the house standard ease — calm, no bounce. Track
  * geometry (52×32 / 40×24), LK identity (steel-azure fill, navy-tinted focus).
  * A visually hidden native `<input type="checkbox" role="switch">` wrapped by
  * its own `<label>` owns name, value and keyboard semantics; the track is a
@@ -64,6 +69,8 @@ export function Switch({
   const offBg = platform === 'ios' ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-interaction-inactive)';
   const trackBg = disabledState ? (on ? 'var(--color-semantic-fill-strong)' : 'var(--color-semantic-fill-normal)') : on ? 'var(--color-semantic-primary-normal)' : activeHover ? 'var(--color-semantic-fill-strong)' : offBg;
   return (
+    <>
+    <style>{SWITCH_MOTION_STYLES}</style>
     <label data-disabled={disabledState ? "" : undefined}
       htmlFor={id}
       onMouseEnter={() => setHover(true)}
@@ -105,24 +112,27 @@ export function Switch({
       />
       <span
         aria-hidden="true"
+        data-lds-switch-motion=""
         style={{
           position: 'relative', flexShrink: 0, width: d.w, height: d.h,
           borderRadius: 'var(--radius-pill)',
           background: trackBg,
           boxShadow: activeFocus ? '0 0 0 4px var(--color-semantic-focus-ring)' : 'none',
-          transition: 'background var(--dur-base) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
+          transition: 'background var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)',
         }}
       >
         <span
+          data-lds-switch-motion=""
           style={{
             position: 'absolute', top: d.p, left: d.p, width: d.k, height: d.k, borderRadius: '50%',
             background: disabledState ? 'var(--color-semantic-label-disable)' : 'var(--color-semantic-static-white)', boxShadow: platform === 'ios' ? 'var(--shadow-sm)' : 'var(--shadow-control)',
             transform: on ? `translateX(${d.tx}px)` : 'translateX(0)',
-            transition: 'transform var(--dur-base) var(--ease-in-out)',
+            transition: 'transform var(--dur-base) var(--ease-out)',
           }}
         />
       </span>
       {label != null && <span style={labelStyle}>{label}</span>}
     </label>
+    </>
   );
 }

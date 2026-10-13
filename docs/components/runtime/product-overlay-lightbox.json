@@ -9,7 +9,9 @@
     "Lightbox"
   ],
   "supportingComponents": [
-    "Button"
+    "Button",
+    "Grid",
+    "Thumbnail"
   ],
   "purpose": "사진·스크린샷 같은 미디어를 원본 맥락에서 확대해 집중 검토할 때 적합합니다. 긴 문서, 편집 폼, 확인 작업에는 Lightbox 대신 전용 페이지나 Dialog를 사용하세요.",
   "useWhen": [],
@@ -179,6 +181,14 @@
   "related": [
     {
       "component": "Button",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Grid",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Thumbnail",
       "relationship": "대표 시나리오에서 조합"
     },
     {

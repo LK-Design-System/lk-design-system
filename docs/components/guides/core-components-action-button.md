@@ -19,6 +19,10 @@
 - Button is the WDS Action/Button primitive for primary, secondary, and supporting actions. LDS keeps WDS action roles but maps visual values through LK theme tokens.
 - TypeScript preserves the rendered element's props through the generic as contract. For example, as="a" accepts anchor props such as href, while the default button accepts native button props. Custom components receive their own declared props without widening the public surface to any.
 
+### 사용하지 않음
+
+- W3C Animation from Interactions 기준에 따라 모션 감소 환경에서 상태를 지연시키지 않습니다. 색 전환과 이동 효과의 의미를 구분하고 위치·크기 변화는 버튼 피드백에 추가하지 않습니다.
+
 ## Anatomy
 
 | Part | Contract |
@@ -57,6 +61,7 @@
 
 ## Behavior and interaction
 
+- Compass Button의 짧은 상태 전환을 비교하고 LDS의 기존 fast timing으로 적용합니다. 8px 모서리, 600 굵기와 기본 그림자는 유지하며, 형태 후보는 공유 값 변경 전에 따로 비교합니다.
 - Stable parts are root, content, and loader; each is mirrored by data-slot. data-disabled, data-loading, data-size, and data-variant expose actual component state.
 
 ## 정량 규칙
@@ -64,9 +69,9 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | Hover and pressed feedback use calm tone changes only: no lift, scale, or shadow escalation. Focus remains the shared 2px :focus-visible outline. |
-| 명시 규칙 2 | WCAG 2.2 contrast minimum requires 4.5:1 for normal-size button text. |
-| 명시 규칙 3 | Fluent 2 Button usage applies text contrast across interactive button states. LDS keeps ghost low emphasis through its transparent surface and border, not low-legibility text. |
-| 명시 규칙 4 | Fluent 2 Button의 단일 주요 액션과 toggle/split 역할 분리를 채택합니다. |
+| 명시 규칙 2 | Color, fill, border and opacity use --component-button-transition with the existing fast timing: 120ms/default and 80ms/ops. Reduced motion resolves the timing to zero without delaying activation, focus or unavailable semantics. |
+| 명시 규칙 3 | WCAG 2.2 contrast minimum requires 4.5:1 for normal-size button text. |
+| 명시 규칙 4 | Fluent 2 Button usage applies text contrast across interactive button states. LDS keeps ghost low emphasis through its transparent surface and border, not low-legibility text. |
 | --border-thin | 1px |
 
 ## Responsive
@@ -212,3 +217,5 @@
 - [Fluent 2 Button usage](https://fluent2.microsoft.design/components/web/react/core/button/usage)
 - [WAI-ARIA Button Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/)
 - [Fluent 2 Button](https://fluent2.microsoft.design/components/web/react/core/button/usage)
+- [Compass Button](https://compass.designcompass.org/components/button)
+- [W3C Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)

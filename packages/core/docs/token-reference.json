@@ -2918,7 +2918,7 @@
         },
         "transition": {
           "$type": "transition",
-          "$value": "none",
+          "$value": "background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out)",
           "css": "--component-button-transition"
         },
         "disabledBg": {

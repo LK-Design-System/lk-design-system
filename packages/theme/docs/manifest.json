@@ -67,7 +67,7 @@
       },
       {
         "path": "docs/foundations/motion.md",
-        "sha256": "c6a909e23814fc6a6a8b6f2b112181d8b1a3ae2bb310487bb672aa15c7061a10"
+        "sha256": "9786d99c42f6a19f22d17eea912b8120b042652fcb287a98197830f040df03b8"
       },
       {
         "path": "docs/foundations/typography.md",
@@ -106,8 +106,8 @@
   "resources": {
     "tokens": {
       "fileCount": 9,
-      "bytes": 120265,
-      "sha256": "4aa8e454b3238b0fe6107f4cb7f0c23e8e80f2ab5f05b405ffa7b9147fd8ec29"
+      "bytes": 120322,
+      "sha256": "b04468dec8d1757c2c9d4257990235588f2fd331de37c0575c18e95d077c18d1"
     },
     "assets": {
       "fileCount": 69,
@@ -198,11 +198,11 @@
     },
     {
       "path": "foundations/motion.md",
-      "sha256": "c6a909e23814fc6a6a8b6f2b112181d8b1a3ae2bb310487bb672aa15c7061a10",
+      "sha256": "9786d99c42f6a19f22d17eea912b8120b042652fcb287a98197830f040df03b8",
       "sources": [
         {
           "path": "docs/foundations/motion.md",
-          "sha256": "c6a909e23814fc6a6a8b6f2b112181d8b1a3ae2bb310487bb672aa15c7061a10"
+          "sha256": "9786d99c42f6a19f22d17eea912b8120b042652fcb287a98197830f040df03b8"
         }
       ]
     },
@@ -228,7 +228,7 @@
     },
     {
       "path": "llms.txt",
-      "sha256": "0ab77b1ce9d1c9a9cccaca0c20e1f4ddf8c1df3c6ecd2146e1edf2ed33c4dc40",
+      "sha256": "fc2aad1ba62f382233ec40895f1f5257e7227b2dd26be50e63322042549ec633",
       "sources": [
         {
           "path": "docs/LDS_UI_ADOPTION_WORKFLOW.md",
@@ -252,7 +252,7 @@
         },
         {
           "path": "docs/foundations/motion.md",
-          "sha256": "c6a909e23814fc6a6a8b6f2b112181d8b1a3ae2bb310487bb672aa15c7061a10"
+          "sha256": "9786d99c42f6a19f22d17eea912b8120b042652fcb287a98197830f040df03b8"
         }
       ]
     },

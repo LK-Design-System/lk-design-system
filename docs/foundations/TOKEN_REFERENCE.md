@@ -64,7 +64,7 @@
 | `component.button.tokens.signalBgHover` | color | `--component-button-signal-bg-hover` | `var(--component-button-signal-bg)` | — |
 | `component.button.tokens.signalFg` | color | `--component-button-signal-fg` | `var(--color-semantic-static-white)` | — |
 | `component.button.tokens.textHoverOpacity` | number | `--component-button-text-hover-opacity` | `0.9` | — |
-| `component.button.tokens.transition` | transition | `--component-button-transition` | `none` | — |
+| `component.button.tokens.transition` | transition | `--component-button-transition` | `background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out)` | — |
 | `component.card.tokens.background` | color | `--component-card-bg` | `var(--color-semantic-background-elevated-normal)` | — |
 | `component.card.tokens.backgroundDark` | color | `--component-card-bg-dark` | `var(--color-semantic-inverse-background)` | — |
 | `component.card.tokens.backgroundSubtle` | color | `--component-card-bg-subtle` | `var(--color-semantic-background-elevated-alternative)` | — |

@@ -14,12 +14,18 @@
 
 ### 사용
 
+- LK Portal 740bc9d5(dev, 2026-10-09) — ChatConversationPanel 대화 목록. titleLines=2는 supported by new contract(설치판 0.4.7 미지원). 대화 URL, 이름 바꾸기 API, 목록 커서는 Portal 책임입니다.
 - ConversationList — 사람이 만든 대화·세션 목록을 날짜 묶음, 링크 행, 형제 「더 보기」 메뉴, 현재 항목 표시로 보여 주는 탐색 목록.
+
+### 사용하지 않음
+
+- 메뉴는 DropdownMenu입니다. 항목과 실행은 제품이 소유하고, 삭제 확인은 제품의 ConfirmDialog입니다. 삭제 뒤 focus는 제품이 다음 행(없으면 이전 행, 그것도 없으면 「새 질문」)으로 옮깁니다.
 
 ## Anatomy
 
 | Part | Contract |
 | --- | --- |
+| titleLines | Long titles may occupy two lines. The two-line layout permanently reserves the sibling menu area and gives that action a 44px target. Default one-line row geometry is unchanged. @default 1 |
 | renderLink | 링크를 router link로 치환하는 렌더 훅. |
 | itemActions | 행의 형제 「더 보기」 메뉴 항목(예: 이름 바꾸기, 구분선, 삭제). 비우면 행 동작이 없습니다. |
 | onItemAction | 메뉴 항목 실행 요청. 확인 대화상자와 실제 실행은 제품이 소유합니다. |
@@ -32,6 +38,7 @@
 | Name | Type | Required | Contract |
 | --- | --- | --- | --- |
 | `groups` | `ConversationListGroup[]` | Yes |  |
+| `titleLines` | `1 \| 2` | No | Long titles may occupy two lines. The two-line layout permanently reserves the sibling menu area and gives that action a 44px target. Default one-line row geometry is unchanged. @default 1 |
 | `currentId` | `string` | No | 현재 대화 id. 해당 링크가 aria-current="page", 무채색 채움, 굵기를 받습니다. |
 | `renderLink` | `(item: ConversationListItem, props: React.AnchorHTMLAttributes) = React.ReactElement` | No | 링크를 router link로 치환하는 렌더 훅. |
 | `itemActions` | `ConversationListAction[] \| ((item: ConversationListItem) = ConversationListAction[])` | No | 행의 형제 「더 보기」 메뉴 항목(예: 이름 바꾸기, 구분선, 삭제). 비우면 행 동작이 없습니다. |
@@ -61,22 +68,24 @@
 
 - 키보드: Tab 순서는 링크 → 더 보기 → 다음 링크입니다. 행 사이 방향키 이동(roving)은 v1에 넣지 않았습니다(L-S7b).
 - ListCell selectedPresentation="tint"의 「지금 열린 항목」 무채색 문법을 계승하되, 단계는 SideNav neutral과 같은 opaque cool-neutral 단계를 써서 ShellPanel·NavRail과 한 셸로 읽히게 했습니다.
+- Fluent 2 Nav usage의 탐색과 행 동작 분리와 WCAG Target Size Enhanced의 44px 목표를 검토했습니다. 기본 AA 최소 24px 동작을 위반으로 바꾸는 주장이 아닙니다.
 - Fluent 2 Nav usage — hover나 focus에서만 보이는 동작도 늘 DOM에 있어야 하고 컨텍스트 메뉴로도 제공합니다. 「더 보기」를 늘 렌더하고 opacity로만 숨기는 근거입니다.
 - (제품 참고, 권위 근거 아님) ChatGPT·Claude 대화 목록 — 날짜 묶음, 링크 행, hover 시 행 동작. 아이콘 전용 동작 노출 방식만 참고했습니다.
-- Classification: LK Product Extension · Communication. MessageFeed·ConversationMessage와 같은 계열이며 ShellPanel의 스크롤 구역에 두는 것이 기본입니다. 데이터, 라우트, 날짜 계산과 지역화, 이름 바꾸기·삭제 실행은 제품이 소유합니다.
 
 ## 정량 규칙
 
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 묶음 제목은 headingLevel(기본 3)이며 SideNav 섹션 제목과 같은 문장형 13px medium, subtle 잉크입니다. 묶음 계산과 문구는 제품이 넘깁니다. |
-| 명시 규칙 2 | 행 높이 36px(--component-conversation-list-row-height, SideNav 자식 행과 같음), 한 줄 제목과 말줄임. 전체 제목은 링크의 접근 이름과 native title에 남습니다(2026-10-09 D06 개정). |
-| 명시 규칙 3 | hover와 현재 항목은 행 전체(링크 + 버튼)에 무채색 채움을 주며 li가 :hover, [data-current]로 소유합니다. 현재 항목은 aria-current="page", cool-neutral-96 채움, label-normal, 굵기입니다. 채움 대비가 낮아(1.23:1) 굵기를 비색상 단서로 함께 씁니다(WCAG 1.4.1). forced-colors에서는 현재 링크가 SelectedItem을 받습니다. |
-| 명시 규칙 4 | 「더 보기」는 늘 DOM에 있고 포인터 hover 환경에서는 행 hover, focus-within, 현재 행, 메뉴 열림일 때만 보입니다. @media (hover: none)에서는 늘 보입니다. 버튼 이름은 {제목} 더 보기, 조작 영역은 24px 이상입니다. |
+| 명시 규칙 2 | titleLines — 기본 1은 기존 36px/한 줄 제목입니다. 2는 최대 두 줄 제목·56px 최소 행·44px 형제 메뉴 target과 상시 예약된 메뉴 공간을 사용합니다. 전체 제목과 링크/menu 의미는 같습니다. |
+| 명시 규칙 3 | 행 높이 36px(--component-conversation-list-row-height, SideNav 자식 행과 같음), 한 줄 제목과 말줄임. 전체 제목은 링크의 접근 이름과 native title에 남습니다(2026-10-09 D06 개정). |
+| 명시 규칙 4 | hover와 현재 항목은 행 전체(링크 + 버튼)에 무채색 채움을 주며 li가 :hover, [data-current]로 소유합니다. 현재 항목은 aria-current="page", cool-neutral-96 채움, label-normal, 굵기입니다. 채움 대비가 낮아(1.23:1) 굵기를 비색상 단서로 함께 씁니다(WCAG 1.4.1). forced-colors에서는 현재 링크가 SelectedItem을 받습니다. |
 | --component-conversation-list-active-hover-surface | var(--color-atomic-cool-neutral-95) |
 
 ## Responsive
 
+- 기본 D06 규칙은 유지합니다. titleLines={2}만 메뉴가 숨겨진 순간에도 제목 끝 공간을 예약해 hover/focus에서 줄바꿈이 변하지 않게 합니다. title은 line clamp 2, 한글 keep-all + 긴 식별자 anywhere입니다.
+- 행 높이 56px은 기존 spacing의 space-12 + space-2, 메뉴 44px은 space-10 + space-1입니다. SideNav/ListCell의 14/20px 제목, 현재 행의 무채색 fill·굵기·radius·포커스 문법은 바꾸지 않습니다.
 - D06: 링크 padding 12→8px. hover 환경에서 숨긴 형제 menu button은 absolute로 배치하여 title 공간을 상시 예약하지 않습니다. hover·focus-within·current·menu-open에서 버튼을 보이고 링크 끝 공간을 확보합니다. touch에서는 항상 보이고 공간을 확보합니다. DOM/Tab 순서·최소 24px target·링크와 형제 관계는 보존합니다.
 
 ## Content and writing
@@ -155,6 +164,8 @@ nav[aria-labelledby=panel-title]
 - `--radius-lg`
 - `--space-0-5`
 - `--space-1`
+- `--space-10`
+- `--space-12`
 - `--space-2`
 - `--space-3`
 - `--space-8`
@@ -173,5 +184,6 @@ nav[aria-labelledby=panel-title]
 - [Carbon overflow menu](https://carbondesignsystem.com/components/data-table/usage/)
 - [WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)
 - [Fluent 2 Nav usage](https://fluent2.microsoft.design/components/web/react/core/nav/usage)
+- [WCAG Target Size Enhanced](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html)
 - [WAI-ARIA APG Landmark Regions](https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/)
 - [MDN aria-current](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-current)

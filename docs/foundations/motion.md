@@ -40,7 +40,7 @@
 | Fast | 120ms |
 | Base | 200ms |
 | Slow | 320ms |
-| Reduced motion | transform·continuous animation 제거, 상태는 즉시 반영 |
+| Reduced motion | 이동 보간·continuous animation 중단, 도착 위치와 상태는 즉시 반영 |
 
 ## Do / Don't
 
@@ -88,3 +88,7 @@
 - `prefers-reduced-motion`
 
 ## 참고 자료
+
+- [W3C C39: prefers-reduced-motion으로 이동 전환 중단](https://www.w3.org/WAI/WCAG22/Techniques/css/C39)
+- [W3C Pause, Stop, Hide: 자동 반복 없이 사용자 재생·정지 제공](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html)
+- [MDN Element.animate: 재생 취소와 완료 수명 관리](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate)

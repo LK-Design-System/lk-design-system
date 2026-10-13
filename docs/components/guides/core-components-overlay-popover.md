@@ -18,7 +18,9 @@
 
 ### 사용하지 않음
 
+- Core-private visual presence 동안 Portal과 positioning만 유지합니다. 닫히는 즉시 trigger의 expanded/controls 및 light-dismiss stack은 실제 닫힘 상태가 되고, 퇴장 픽셀은 aria-hidden·inert·pointer-events:none으로 상호작용에서 제외합니다. 좌표를 닫힘 초기에 초기화하지 않아 offscreen으로 튀지 않습니다.
 - Popover는 route 상태, 제출 정책, 중첩 overlay orchestration을 소유하지 않습니다.
+- 기존 OverlayPortal의 interactionOpen에 실제 visible을 전달해 퇴장 중 자식 portal·layer·light-dismiss·menu 엔진을 즉시 비활성화합니다. 재오픈에서는 이전 immediate-unmount와 같은 자식 subtree 초기화를 적용하며 controlled 값은 소비자가 유지합니다. 부모 닫힘으로 자식 dismiss callback을 합성하지 않습니다.
 
 ## Anatomy
 
@@ -58,6 +60,12 @@
 | defaultOpen | 비제어 초기 열림 상태. @default false |
 | onOpenChange | 열림 상태 변경 알림. |
 
+## Behavior and interaction
+
+- Fluent 2 Popover의 관계가 보이는 배치와 비모달 맥락 표면 원칙을 유지합니다. W3C Animation from Interactions의 비필수 이동 비활성화 원칙을 반영하며, 새로운 focus trap이나 배경 차단은 만들지 않습니다.
+- 열림·닫힘 모션 (2026-10-13).
+- 상위 overlay의 실제 닫힘.
+
 ## 정량 규칙
 
 | Subject | Rule |
@@ -65,6 +73,8 @@
 | 명시 규칙 1 | collisionBoundary는 element 또는 ref를 받고, 그 요소와 viewport의 보이는 교집합을 positioning 경계로 사용합니다. 생략하면 기존 viewport 경계입니다. collisionPadding 기본 16px은 모든 경계 가장자리에 적용됩니다. Portal은 계속 owner-document body/provider target에 남으므로 clipping 탈출과 chat panel 내부 geometry 제한을 동시에 충족하며, 선호 width와 style은 경계의 가용 폭·높이를 넘을 수 없습니다. |
 | 명시 규칙 2 | Popover와 HoverCard는 anchoredPanelStyle의 elevated surface, 1px line, WDS Popover r12, shadow-md, 16px padding을 공유합니다. Dropdown Menu의 WDS r16·8×20px menu shell과는 역할과 원본 컴포넌트가 달라 radius/padding을 억지로 합치지 않습니다. |
 | 명시 규칙 3 | Fluent 2 Popover는 비필수 맥락 콘텐츠, Escape dismiss, 관계가 보이는 배치, overflow 접근을 요구합니다. |
+| 명시 규칙 4 | HoverCard와 공유하는 surface·radius·padding·shadow를 유지하며 opacity와 anchor 방향의 space-1 수직 이동만 --dur-fast·--ease-out으로 연결합니다. 선택·제출 상태와 콘텐츠 정책은 추가하지 않습니다. |
+| --space-1 | 4px |
 
 ## Responsive
 
@@ -103,8 +113,11 @@
 
 ### Tokens
 
+- `--dur-fast`
+- `--ease-out`
 - `--lds-popover-max-height`
 - `--lds-popover-width`
+- `--space-1`
 
 ### Source contracts
 
@@ -120,3 +133,4 @@
 - [Fluent 2 Popover](https://fluent2.microsoft.design/components/web/react/core/popover/usage)
 - [WAI-ARIA APG Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [React Aria Popover](https://react-spectrum.adobe.com/react-aria/Popover.html)
+- [W3C Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html)

@@ -23,7 +23,7 @@
 | [Media Patterns](guides/core-components-content-media-patterns.md) | Core / Content | `Thumbnail` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Missing Value](guides/core-components-content-missing-value.md) | Core / Content | `MissingValue` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Overline](guides/core-components-content-overline.md) | Core / Content | `Overline` | mapped | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
-| [Prose](guides/core-components-content-prose.md) | Core / Content | `Prose` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
+| [Prose](guides/core-components-content-prose.md) | Core / Content | `Prose` | mapped | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Step List](guides/core-components-content-step-list.md) | Core / Content | `StepList` | mapped | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [Text Primitives](guides/core-components-content-text-primitives.md) | Core / Content | `Blockquote`, `Code`, `Kbd`, `SourceTag` | mapped | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Timeline](guides/core-components-content-timeline.md) | Core / Content | `Timeline` | mapped | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
@@ -51,13 +51,13 @@
 | [Checkbox](guides/core-components-selection-and-input-checkbox.md) | Core / Selection and Input | `Checkbox` | mapped | implemented | not-tracked | not-tracked | 1 public / 4 hidden |
 | [Chip](guides/core-components-selection-and-input-chip.md) | Core / Selection and Input | `Chip` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 4 hidden |
 | [Date Picker](guides/core-components-selection-and-input-date-picker.md) | Core / Selection and Input | `DatePicker` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
-| [Input](guides/core-components-selection-and-input-input.md) | Core / Selection and Input | `Input` | mapped | implemented | not-tracked | not-tracked | 2 public / 4 hidden |
+| [Input](guides/core-components-selection-and-input-input.md) | Core / Selection and Input | `Input` | mapped | implemented | not-tracked | not-tracked | 2 public / 5 hidden |
 | [Number Field](guides/core-components-selection-and-input-number-field.md) | Core / Selection and Input | `NumberField` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Password Input](guides/core-components-selection-and-input-password-input.md) | Core / Selection and Input | `PasswordInput` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
 | [Radio](guides/core-components-selection-and-input-radio.md) | Core / Selection and Input | `Radio` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
 | [Search and Autocomplete](guides/core-components-selection-and-input-search-and-autocomplete.md) | Core / Selection and Input | `AutoComplete`, `Combobox`, `SearchField`, `TagInput` | mapped | implemented | not-tracked | not-tracked | 3 public / 7 hidden |
 | [Segmented Control](guides/core-components-selection-and-input-segmented-control.md) | Core / Selection and Input | `SegmentedControl` | mapped | implemented | not-tracked | not-tracked | 1 public / 5 hidden |
-| [Select](guides/core-components-selection-and-input-select.md) | Core / Selection and Input | `Select` | mapped | implemented | not-tracked | not-tracked | 2 public / 8 hidden |
+| [Select](guides/core-components-selection-and-input-select.md) | Core / Selection and Input | `Select` | mapped | implemented | not-tracked | not-tracked | 2 public / 9 hidden |
 | [Slider and Range](guides/core-components-selection-and-input-slider-and-range.md) | Core / Selection and Input | `RangeSlider`, `Slider` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
 | [Stepper](guides/core-components-selection-and-input-stepper.md) | Core / Selection and Input | `Stepper` | mapped | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Switch](guides/core-components-selection-and-input-switch.md) | Core / Selection and Input | `Switch` | mapped | implemented | not-tracked | not-tracked | 1 public / 4 hidden |
@@ -79,9 +79,9 @@
 | [Social Login](guides/product-action-social-login.md) | Product / Action | `SocialButton` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Speed Dial](guides/product-action-speed-dial.md) | Product / Action | `SpeedDial` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Split Button](guides/product-action-split-button.md) | Product / Action | `SplitButton` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
-| [Conversation List](guides/product-communication-conversation-list.md) | Product / Communication | `ConversationList` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
+| [Conversation List](guides/product-communication-conversation-list.md) | Product / Communication | `ConversationList` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 0 hidden |
 | [Message](guides/product-communication-message.md) | Product / Communication | `ConversationMessage` | not-tracked | implemented | not-tracked | not-tracked | 12 public / 5 hidden |
-| [Message Composer](guides/product-communication-message-composer.md) | Product / Communication | `MessageComposer` | not-tracked | implemented | not-tracked | not-tracked | 9 public / 1 hidden |
+| [Message Composer](guides/product-communication-message-composer.md) | Product / Communication | `MessageComposer` | not-tracked | implemented | not-tracked | not-tracked | 11 public / 1 hidden |
 | [Message Feed](guides/product-communication-message-feed.md) | Product / Communication | `MessageFeed` | not-tracked | implemented | not-tracked | not-tracked | 8 public / 1 hidden |
 | [Bubble](guides/product-content-bubble.md) | Product / Content | `Bubble` | mapped | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
 | [Checklist Item](guides/product-content-checklist-item.md) | Product / Content | `ChecklistItem` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
@@ -97,7 +97,7 @@
 | [Reaction Bar](guides/product-content-reaction-bar.md) | Product / Content | `ReactionBar` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Record Header](guides/product-content-record-header.md) | Product / Content | `RecordHeader` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
 | [Reorder List](guides/product-content-reorder-list.md) | Product / Content | `ReorderList` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
-| [Source Disclosure](guides/product-content-source-disclosure.md) | Product / Content | `SourceDisclosure` | not-tracked | implemented | not-tracked | not-tracked | 10 public / 0 hidden |
+| [Source Disclosure](guides/product-content-source-disclosure.md) | Product / Content | `SourceDisclosure` | not-tracked | implemented | not-tracked | not-tracked | 11 public / 0 hidden |
 | [Spec Row](guides/product-content-spec-row.md) | Product / Content | `SpecRow` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 2 hidden |
 | [Stat List](guides/product-content-stat-list.md) | Product / Content | `StatList` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Writing Editor](guides/product-content-writing-editor.md) | Product / Content | `Button`, `ContentEditor`, `Icon`, `StatusBadge` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
@@ -159,7 +159,7 @@
 | [Color Swatch](guides/product-selection-and-input-color-swatch.md) | Product / Selection and Input | `ColorSwatch` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Date Range](guides/product-selection-and-input-date-range.md) | Product / Selection and Input | `DateRangeField` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
 | [Field Action](guides/product-selection-and-input-field-action.md) | Product / Selection and Input | `FieldAction` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 4 hidden |
-| [File Upload](guides/product-selection-and-input-file-upload.md) | Product / Selection and Input | `FileUpload` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
+| [File Upload](guides/product-selection-and-input-file-upload.md) | Product / Selection and Input | `FileUpload` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 0 hidden |
 | [File Upload Queue](guides/product-selection-and-input-file-upload-queue.md) | Product / Selection and Input | `FileUploadQueue` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 0 hidden |
 | [Icon Picker](guides/product-selection-and-input-icon-picker.md) | Product / Selection and Input | `IconPicker` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 1 hidden |
 | [Input Group](guides/product-selection-and-input-input-group.md) | Product / Selection and Input | `InputGroup` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |

@@ -74,6 +74,8 @@
 | Component | Relationship |
 | --- | --- |
 | `Button` | 대표 시나리오에서 조합 |
+| `Grid` | 대표 시나리오에서 조합 |
+| `Thumbnail` | 대표 시나리오에서 조합 |
 | `CommandPalette` | 대표 시나리오에서 조합 |
 | `Drawer` | 대표 시나리오에서 조합 |
 | `DrawerSection` | 대표 시나리오에서 조합 |

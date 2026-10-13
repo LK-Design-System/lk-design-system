@@ -23,6 +23,7 @@
 - source 조회, permission, freshness 계산, excerpt 생성과 renderer 선택은 제품이 소유합니다. LDS는 URL이나 timestamp에서 availability를 추론하지 않습니다.
 - SharePoint search security trimming은 사전 트리밍이 "refiner 데이터와 hit count를 통한 정보 유출을 막는다"고 명시합니다. 숨긴 건수를 보이는 총계에 합산하지 않는 근거입니다.
 - USWDS Collection은 모호한 "read more" 대신 각 item의 고유한 heading을 원본에 연결하고 외부 이동을 표시하도록 합니다. source label 자체를 이동 경로로 쓰는 근거입니다.
+- inlineDetails는 기본 false입니다. true는 variant="inline" 패널에서 제목을 최대 두 줄, 전달된 kind/location을 보조 행으로 표시합니다. 자료 종류나 위치를 filename/URL에서 추론하거나 별도 조회하지 않습니다. list/chips는 변경하지 않습니다.
 
 ## Anatomy
 
@@ -42,6 +43,7 @@
 | `emptyMessage` | `React.ReactNode` | No |  |
 | `onSourceActivate` | `(source: SourceDisclosureItem) = void` | No |  |
 | `variant` | `SourceDisclosureVariant` | No | inline collapses the sources behind a recessive "출처 N개" toggle that opens an anchored Popover, so the surrounding layout never shifts. list renders the bordered provenance list, one expandable row per source, for comparing several sources' state side by side. chips renders each source as a single-line link chip at attachment weight. @default "inline" |
+| `inlineDetails` | `boolean` | No | Opt-in inline provenance rows: two-line titles, supplied kind/location beneath, and 44px trigger/row targets. Does not fetch or infer metadata. Other variants are unchanged. @default false |
 | `defaultOpen` | `boolean` | No | Start with the inline source popover open. Only applies to the inline variant. @default false |
 | `hiddenCount` | `number` | No | Sources the product withheld upstream, added to the ones this component withholds for restricted availability. Reported as one aggregate line; never named, and never folded into the visible source count. @default 0 |
 | `hiddenMessage` | `React.ReactNode` | No | Replaces the default withheld-sources line. Name what access is needed and how to ask for it — never name the withheld source. |
@@ -132,6 +134,12 @@
 />
 ```
 
+### 추가 조합 2
+
+```jsx
+<SourceDisclosure inlineDetails sources={sources} onSourceActivate={openSource} />
+```
+
 ## Tokens and API
 
 ### Tokens
@@ -159,6 +167,7 @@
 - `--label1-size`
 - `--radius-sm`
 - `--space-1`
+- `--space-10`
 - `--space-2`
 - `--space-3`
 - `--space-4`

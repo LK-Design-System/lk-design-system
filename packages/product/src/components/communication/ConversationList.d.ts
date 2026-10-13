@@ -30,6 +30,8 @@ export interface ConversationListAction {
 
 export interface ConversationListProps extends Omit<React.HTMLAttributes<HTMLElement>, 'onError'> {
   groups: ConversationListGroup[];
+  /** Long titles may occupy two lines. The two-line layout permanently reserves the sibling menu area and gives that action a 44px target. Default one-line row geometry is unchanged. @default 1 */
+  titleLines?: 1 | 2;
   /** 현재 대화 id. 해당 링크가 `aria-current="page"`, 무채색 채움, 굵기를 받습니다. */
   currentId?: string;
   /** 링크를 router link로 치환하는 렌더 훅. */

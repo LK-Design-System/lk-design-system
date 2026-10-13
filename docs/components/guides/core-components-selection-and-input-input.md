@@ -66,10 +66,10 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | Label, text, icon, fill, and disabled colors resolve semantic roles at the rendered field scope. This keeps nested dark-theme fields from inheriting light values computed by root-level component aliases; disabled labels and values use the shared 0.52-alpha disabled role. |
-| 명시 규칙 2 | Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale. |
-| 명시 규칙 3 | References: Fluent 2 Field, local WDS input evidence under docs/references/wds/. |
+| 명시 규칙 2 | Keyboard focus belongs to the complete rounded Input control: one 2px semantic focus-indicator outline replaces the native input's inner outline and the soft shadow. The same treatment covers invalid and read-only inputs; forced colors uses the system Highlight. |
+| 명시 규칙 3 | Input, Select, AutoComplete, Combobox, PasswordInput, SearchField, InputGroup, NumberField, TimePicker, and DatePicker share --control-h-sm, --component-input-height, --component-input-padding-x, and --component-input-font-size. Do not introduce a local 40/50px field scale. |
+| 명시 규칙 4 | References: Fluent 2 Field, local WDS input evidence under docs/references/wds/. |
 | --color-semantic-label-alternative | light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74) |
-| --color-semantic-label-assistive | light: rgba(55, 56, 60, 0.28); dark: rgba(174, 176, 182, 0.28) |
 
 ## Responsive
 
@@ -147,6 +147,7 @@
 
 - Input prompt contract: `components/forms/Input.prompt.md`
 - Storybook implementation evidence: `stories/FormInput.stories.jsx`
+- [WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html)
 - [GOV.UK Text input](https://design-system.service.gov.uk/components/text-input/)
 - [Carbon Text input](https://carbondesignsystem.com/components/text-input/usage/)
 - [Fluent 2 Field](https://fluent2.microsoft.design/components/web/react/core/field/usage)

@@ -1,6 +1,11 @@
 import React from 'react';
 import { Icon } from '../icon/Icon.jsx';
 
+const ACCORDION_MOTION_STYLES = `
+@media(prefers-reduced-motion:reduce){
+  [data-lds-accordion-motion]{transition-duration:0s!important;transition-delay:0s!important}
+}`;
+
 /* `inert` only became a first-class boolean DOM prop in React 19. React 18 — a
    supported peer (`react: ">=18 <20"`) — treats it as an unknown attribute,
    warns "Received `true` for a non-boolean attribute `inert`", and then drops
@@ -14,7 +19,7 @@ const inertWhen = (isInert) => (isInert ? INERT_VALUE : undefined);
  * LK ROBOTICS — Accordion
  * Disclosure list for FAQs / spec groups. Hairline rows; the open header takes
  * the signal ink and its chevron flips. Grid-rows transition for a calm reveal
- * (respects reduced motion via short durations). `multiple` allows many open.
+ * (reduced motion keeps endpoints and skips transitions). `multiple` allows many open.
  *
  * Accessibility — APG Accordion: "each accordion header is contained in an
  * element with role heading", so the trigger button is wrapped in a real
@@ -37,6 +42,7 @@ export function Accordion({ items = [], multiple = false, defaultOpen = [], head
   });
   return (
     <div style={{ borderTop: '1px solid var(--color-semantic-line-solid-normal)', ...style }} {...rest}>
+      <style>{ACCORDION_MOTION_STYLES}</style>
       {items.map((it, i) => {
         const isOpen = open.has(i);
         const triggerId = `${rawId}-${i}-trigger`;
@@ -49,6 +55,7 @@ export function Accordion({ items = [], multiple = false, defaultOpen = [], head
             <HeadingTag {...headingProps}>
               <button
                 type="button"
+                data-lds-accordion-motion=""
                 id={triggerId}
                 aria-expanded={isOpen}
                 aria-controls={panelId}
@@ -85,10 +92,10 @@ export function Accordion({ items = [], multiple = false, defaultOpen = [], head
                     </span>
                   )}
                 </span>
-                <Icon name="chevron-down-small" size={20} aria-hidden="true" style={{ flexShrink: 0, transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-base) var(--ease-out)' }} />
+                <Icon name="chevron-down-small" size={20} aria-hidden="true" data-lds-accordion-motion="" style={{ flexShrink: 0, transform: isOpen ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-base) var(--ease-out)' }} />
               </button>
             </HeadingTag>
-            <div id={panelId} role="region" aria-labelledby={triggerId} inert={inertWhen(!isOpen)} style={{ display: 'grid', gridTemplateRows: isOpen ? '1fr' : '0fr', transition: 'grid-template-rows var(--dur-base) var(--ease-out)' }}>
+            <div id={panelId} role="region" aria-labelledby={triggerId} inert={inertWhen(!isOpen)} data-lds-accordion-motion="" style={{ display: 'grid', gridTemplateRows: isOpen ? '1fr' : '0fr', transition: 'grid-template-rows var(--dur-base) var(--ease-out)' }}>
               <div style={{ overflow: 'hidden' }}>
                 <div style={{ padding: '0 4px 20px', fontFamily: 'var(--font-sans)', fontSize: 'var(--body2-size)', lineHeight: 1.7, color: 'var(--color-semantic-label-neutral)', wordBreak: 'keep-all' }}>
                   {it.content}

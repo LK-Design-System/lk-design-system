@@ -1,5 +1,6 @@
 import React from 'react';
-import { useOverlayLayer } from './overlay-platform.js';
+import { useOverlayRuntime } from './overlay-platform.js';
+import { useOverlayInteraction, useOverlayLayerRegistration } from './overlay-presence.js';
 
 const useSafeLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
 
@@ -121,7 +122,9 @@ export function useLightDismiss({
   zIndex,
   insideRefs = [],
 }) {
-  const { zIndex: resolvedZIndex, isTopmost } = useOverlayLayer({ open, zIndex });
+  open = useOverlayInteraction(open);
+  const { zIndexBase } = useOverlayRuntime();
+  const { zIndex: resolvedZIndex, isTopmost } = useOverlayLayerRegistration({ open, zIndex, zIndexBase, ownerRef: rootRef });
   const optionsRef = React.useRef(null);
   optionsRef.current = { getTrigger, onDismiss, outsidePress, shouldDismiss, insideRefs };
   const focusLatchRef = React.useRef(null);

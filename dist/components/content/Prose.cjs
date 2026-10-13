@@ -1,8 +1,8 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkYPB7KL4Ncjs = require('../../chunk-YPB7KL4N.cjs');
+var _chunk4Z7WSULNcjs = require('../../chunk-4Z7WSULN.cjs');
 
 
-exports.Prose = _chunkYPB7KL4Ncjs.Prose;
+exports.Prose = _chunk4Z7WSULNcjs.Prose;
 //# sourceMappingURL=Prose.cjs.map

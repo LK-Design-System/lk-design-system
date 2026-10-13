@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "0b1de984b0c2f6efa7f4bc0fc6d10920ec048539e77a98fa2e1d962cb5d54f0f",
+    "storybookIndexSha256": "b3f40b0618b1178c0df3e8c2d5ae7dbb97e9626b1fcb623f43bc0aeacff70299",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -62,27 +62,27 @@
   },
   "summary": {
     "pages": 202,
-    "stories": 794,
-    "publicStories": 558,
-    "hiddenStories": 236,
+    "stories": 802,
+    "publicStories": 564,
+    "hiddenStories": 238,
     "componentDescriptions": 197,
     "pagesWithVisibleCanvasIntroduction": 197,
     "pagesWithDecisionGuidance": 190,
-    "describedPublicStories": 558,
+    "describedPublicStories": 564,
     "reviewedPages": 202,
     "reviewedStories": 794,
-    "staleReviewedPages": 0,
+    "staleReviewedPages": 16,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
       "overview": 185,
       "usage": 42,
-      "variants-states": 129,
+      "variants-states": 135,
       "interaction": 63,
       "responsive": 94,
       "scenario": 29,
       "visual-parity": 102,
-      "internal-contract": 130
+      "internal-contract": 132
     },
     "dispositions": {
       "keep": 201,
@@ -93,9 +93,9 @@
     "layers": {
       "Core": {
         "pages": 66,
-        "stories": 245,
-        "public": 137,
-        "hidden": 108,
+        "stories": 248,
+        "public": 138,
+        "hidden": 110,
         "guideReadyPages": 66
       },
       "Foundation": {
@@ -107,8 +107,8 @@
       },
       "Product": {
         "pages": 115,
-        "stories": 516,
-        "public": 396,
+        "stories": 521,
+        "public": 401,
         "hidden": 120,
         "guideReadyPages": 114
       },
@@ -227,7 +227,7 @@
       "layer": "Core",
       "family": "Action",
       "importPath": "./stories/Button.stories.jsx",
-      "sourceSha256": "d3bca1f0941578884948405273d35bfc2f23d0eecc03a2fcb0f41f06bb7496c1",
+      "sourceSha256": "55b3b3934114c5025e04fb840672df837f2eeef545056bef943acca9d90bf59c",
       "primaryOwner": "Button",
       "ownerComponents": [
         "Button"
@@ -275,7 +275,9 @@
           "ownerComponents": [
             "Button"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "Icon"
+          ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
         },
         {
@@ -873,13 +875,14 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/Feedback.stories.jsx",
-      "sourceSha256": "54a4925a109026f1e6b615f14b5a7f9edfb7a6ba14bc7f0248e9bbdc17f61a85",
+      "sourceSha256": "dbbf84a74690f00276c50e7503618f4c7450925b0448f69a6c39715b64602ec8",
       "primaryOwner": "Avatar",
       "ownerComponents": [
         "Avatar"
       ],
       "supportingComponents": [
-        "AvatarGroup"
+        "AvatarGroup",
+        "Stepper"
       ],
       "visibility": {
         "public": 2,
@@ -923,7 +926,8 @@
             "Avatar"
           ],
           "supportingComponents": [
-            "AvatarGroup"
+            "AvatarGroup",
+            "Stepper"
           ],
           "reviewNote": "2026-07-12 public purpose, entry order, and description review complete."
         },
@@ -1354,7 +1358,7 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/ContentDisclosure.stories.jsx",
-      "sourceSha256": "d9ce569eeb850417f9ca75a95a79cfa77c009c25bc39357e5e313e2d3fc44715",
+      "sourceSha256": "abf778521dd660a35e9434aa69cf125e5383bb13c83a9e58bd05bf38e181b4ca",
       "primaryOwner": "Accordion",
       "ownerComponents": [
         "Accordion",
@@ -1957,21 +1961,21 @@
       "layer": "Core",
       "family": "Content",
       "importPath": "./stories/ContentProse.stories.jsx",
-      "sourceSha256": "56c536ddbee75f038522eb1f2eb35ec716ea7460b4b55aa56fb3a8e3fc0f915b",
+      "sourceSha256": "4bf00123d9b837e1d02406e1d6532db68df8f6f82b24513d6793d624f5127b59",
       "primaryOwner": "Prose",
       "ownerComponents": [
         "Prose"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-content-prose--prose-example",
-        "describedPublicStories": 2,
-        "publicStoriesWithCanvasGuidance": 2,
+        "describedPublicStories": 3,
+        "publicStoriesWithCanvasGuidance": 3,
         "decisionGuidance": true
       },
       "missingGuidance": [],
@@ -2006,6 +2010,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-24 owner review: 신규 Prose 컴포넌트(마크다운 렌더 결과의 문서 타이포그래피 표면) 페이지 추가 — 개요·반응형·parity 스토리와 조판/접근성 계약을 소유자가 확인."
+        },
+        {
+          "id": "lds-core-components-content-prose--chat-typography",
+          "name": "변형·상태 · 채팅 본문 조판",
+          "exportName": "ChatTypography",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "Prose"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-core-components-content-prose--narrow-reflow",
@@ -3192,7 +3219,7 @@
       "layer": "Core",
       "family": "Navigation",
       "importPath": "./stories/NavigationPageIndicator.stories.jsx",
-      "sourceSha256": "62c756cf764b3d57fa5ac3ec9bcb51afe464dfe9c05fb7953a89b0587e7987c7",
+      "sourceSha256": "a3db9c03865d962e33c4da921e8db5f8c0f2998b1c4b3dd047af8b5f9b8d5c6b",
       "primaryOwner": "PageIndicator",
       "ownerComponents": [
         "PageIndicator"
@@ -5354,7 +5381,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormInput.stories.jsx",
-      "sourceSha256": "afadb0a9f9d6bad10f4115d9fd9214292b4aac6859d0f27cacbe5ce10e221eda",
+      "sourceSha256": "ae1d28c229ca53567f7b62f8db23bc862d10a7d8e44978db35af5e65c7a62b67",
       "primaryOwner": "Input",
       "ownerComponents": [
         "Input"
@@ -5364,7 +5391,7 @@
       ],
       "visibility": {
         "public": 2,
-        "hidden": 4
+        "hidden": 5
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -5447,6 +5474,28 @@
           "recommendedVisibility": "hidden",
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Input"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-core-components-selection-and-input-input--input-keyboard-focus-contract",
+          "name": "키보드 포커스 · 전체 컨트롤",
+          "exportName": "InputKeyboardFocusContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
           "ownerComponents": [
             "Input"
           ],
@@ -5861,7 +5910,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormSearchAutocomplete.stories.jsx",
-      "sourceSha256": "75a91340be267b42c3f135329f786fc0c9b647e151e519d202f6668dd6efa584",
+      "sourceSha256": "09a9ef1581e360b25b4aab1d88fa8cb18a19a51079eb71ee6aa21e7c5d1aceda",
       "primaryOwner": "SearchField",
       "ownerComponents": [
         "AutoComplete",
@@ -6141,12 +6190,13 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/SelectionSegmentedControl.stories.jsx",
-      "sourceSha256": "76e7d6d56d98adedfc3f329379f8783dca163748eef6649eeaa4c6c671904902",
+      "sourceSha256": "137a01ff45b4054171c39c8b52c4282b17d341cb9cf1404755d080349de1b5f5",
       "primaryOwner": "SegmentedControl",
       "ownerComponents": [
         "SegmentedControl"
       ],
       "supportingComponents": [
+        "Button",
         "Icon"
       ],
       "visibility": {
@@ -6216,28 +6266,6 @@
           "reviewNote": "2026-08-02 ownership, role, visibility, and contract scope review complete."
         },
         {
-          "id": "lds-core-components-selection-and-input-segmented-control--segmented-keyboard-contract",
-          "name": "로빙 키보드 계약",
-          "exportName": "SegmentedKeyboardContract",
-          "visibility": "hidden",
-          "tags": [
-            "autodocs",
-            "manifest",
-            "play-fn",
-            "test"
-          ],
-          "role": "internal-contract",
-          "hasStoryDescription": false,
-          "hasCanvasGuidance": false,
-          "recommendedVisibility": "hidden",
-          "reviewStatus": "reviewed",
-          "reviewMethod": "source-ast+layer-human-review",
-          "ownerComponents": [
-            "SegmentedControl"
-          ],
-          "supportingComponents": []
-        },
-        {
           "id": "lds-core-components-selection-and-input-segmented-control--segmented-control-states",
           "name": "상태와 좁은 너비",
           "exportName": "SegmentedControlStates",
@@ -6258,6 +6286,30 @@
           ],
           "supportingComponents": [
             "Icon"
+          ]
+        },
+        {
+          "id": "lds-core-components-selection-and-input-segmented-control--segmented-keyboard-contract",
+          "name": "선택·키보드·모션 계약",
+          "exportName": "SegmentedKeyboardContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SegmentedControl"
+          ],
+          "supportingComponents": [
+            "Button"
           ]
         },
         {
@@ -6314,7 +6366,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormSelect.stories.jsx",
-      "sourceSha256": "58d01a78294ae81151ab2b5ebb2b8bd9ff55f67186f0bb137d60fdfe2d60424f",
+      "sourceSha256": "cd5ce94b3f26aa897528968aa6f26ceacbdc24f16e4131dca64530bd58c8962e",
       "primaryOwner": "Select",
       "ownerComponents": [
         "Select"
@@ -6326,7 +6378,7 @@
       ],
       "visibility": {
         "public": 2,
-        "hidden": 8
+        "hidden": 9
       },
       "descriptionEvidence": {
         "componentDescription": true,
@@ -6412,6 +6464,28 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, internal-contract role, ownership, and hidden visibility review complete."
+        },
+        {
+          "id": "lds-core-components-selection-and-input-select--select-scrollable-option-width-contract",
+          "name": "스크롤 옵션 · label 폭",
+          "exportName": "SelectScrollableOptionWidthContract",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "internal-contract",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "Select"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-core-components-selection-and-input-select--select-stable-option-width-contract",
@@ -6815,7 +6889,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/SelectionSwitch.stories.jsx",
-      "sourceSha256": "41c25e30b86b77cd00cced071bf8e5378311254643ca19d1fb5c0d6dd5a02a0c",
+      "sourceSha256": "ac6492334f580dda2bee7ed05a2d2b6463d281005329e5e688e636055de73b22",
       "primaryOwner": "Switch",
       "ownerComponents": [
         "Switch"
@@ -8850,12 +8924,15 @@
       "layer": "Foundation",
       "family": "Foundation",
       "importPath": "./stories/FoundationMotion.stories.jsx",
-      "sourceSha256": "cd9fd53c56d0b1146703dc1e884568d8a35f1327a9443420a683a9e358305829",
+      "sourceSha256": "e1abf3334df1d63edbaf49ed71fa9d64739d64382e9967325361a28f4cd4a021",
       "primaryOwner": "Foundation:Motion",
       "ownerComponents": [
         "Foundation:Motion"
       ],
-      "supportingComponents": [],
+      "supportingComponents": [
+        "Button",
+        "Checkbox"
+      ],
       "visibility": {
         "public": 1,
         "hidden": 0
@@ -8897,7 +8974,10 @@
           "ownerComponents": [
             "Foundation:Motion"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "Button",
+            "Checkbox"
+          ],
           "reviewNote": "2026-07-24 Foundation verification follow-up: shared play coverage checks all ten sections, ten contents links, focusable table scroll ownership, and page-level narrow overflow; built Storybook source reviewed after the change."
         }
       ],
@@ -9986,20 +10066,20 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationConversationList.stories.jsx",
-      "sourceSha256": "e86057a5f44b5c260d942891b50f1753fd7bc42f791b1414c897b40025c7049d",
+      "sourceSha256": "4ad72e5063428f6150a68c01c1eb8c4b4abd906dc3dd98299431945c3646184b",
       "primaryOwner": "ConversationList",
       "ownerComponents": [
         "ConversationList"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 4,
+        "public": 5,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-conversation-list--overview",
-        "describedPublicStories": 4,
+        "describedPublicStories": 5,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -10059,6 +10139,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-10-10 scoped9-page/10-story delta review: Purpose, public Korean role/name/order and owner/visibility reviewed. Reviewed long titles/actions; exact69e9 official desktop manager initial overall PASS, hover/click/tab/waitFor4/4, rerun0, fresh console errors0. Reused unchanged a6b direct Canvas390x600 and1440x1000 plus native Tab/Enter/Escape/menu/focus-return proof. Mobile manager addon-modal inert rerun is excluded and not certified. Exact source69e9fd8e / Pages38029499748; unchanged prior evidence reused."
+        },
+        {
+          "id": "lds-product-communication-conversation-list--two-line-titles",
+          "name": "변형·상태 · 두 줄 제목과 고정 메뉴 공간",
+          "exportName": "TwoLineTitles",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "ConversationList"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-product-communication-conversation-list--states",
@@ -10639,7 +10742,7 @@
       "layer": "Product",
       "family": "Communication",
       "importPath": "./stories/CommunicationMessageComposer.stories.jsx",
-      "sourceSha256": "ea765e087d1ce9483ae480e49b602aee30a20549567bd388426936a605fb92a0",
+      "sourceSha256": "9d62043f249abd13a424fabfc0c700849aeb59cd4250b876d3552c6397a91d67",
       "primaryOwner": "MessageComposer",
       "ownerComponents": [
         "MessageComposer"
@@ -10648,16 +10751,19 @@
         "Button",
         "Chip",
         "Icon",
-        "IconButton"
+        "IconButton",
+        "ListCell",
+        "Spinner",
+        "TextButton"
       ],
       "visibility": {
-        "public": 9,
+        "public": 11,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-communication-message-composer--message-composer-overview",
-        "describedPublicStories": 9,
+        "describedPublicStories": 11,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -10777,6 +10883,29 @@
             "IconButton"
           ],
           "reviewNote": "2026-07-12 domain component expansion (robotics navigation semantics, communication family, virtual keypad) reviewed via source AST, layer classification, and targeted Storybook play/axe on the rebuilt static index; ownership, visibility, and keep disposition confirmed."
+        },
+        {
+          "id": "lds-product-communication-message-composer--uncancellable-request",
+          "name": "변형·상태 · 중지할 수 없는 응답 대기",
+          "exportName": "UncancellableRequest",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "MessageComposer"
+          ],
+          "supportingComponents": []
         },
         {
           "id": "lds-product-communication-message-composer--keyboard-and-ime-contract",
@@ -10932,6 +11061,34 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
+        },
+        {
+          "id": "lds-product-communication-message-composer--file-preparation",
+          "name": "조합 · 파일 이름, 메타데이터, 준비 상태",
+          "exportName": "FilePreparation",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "MessageComposer"
+          ],
+          "supportingComponents": [
+            "Icon",
+            "ListCell",
+            "Spinner",
+            "TextButton"
+          ]
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-05: The human user explicitly approved the recorded IA classification proposal (message: 승인). Retain this page's current owner/disposition and existing story visibility. Current source hash and detailed source rationale are recorded in LDS_SERIES_COMPLETENESS_AUDIT.json#informationArchitectureReview. This approval covers IA classification; independent H3 review remains a separate requirement.\n2026-10-10 scoped9-page/10-story delta review: Reviewed inline composer and width-autosize purposes, retained draft and expansion contracts against unchanged Docs/Canvas evidence. Exact source69e9fd8e; official Pages38029499748; prior unchanged8 Docs/9 specimens and21 primary-description sentences reused. Existing owner/disposition/roles/visibility retained."
@@ -12825,7 +12982,7 @@
       "layer": "Product",
       "family": "Content",
       "importPath": "./stories/ContentSourceDisclosure.stories.jsx",
-      "sourceSha256": "3b72447366cbf678d4a5c98c7c2845cb4dbf3fae3ba92fd56ee84085fdba57a3",
+      "sourceSha256": "4d972783c2817493f6c44a13e39acc8fb98c6ad45b6729f5fbd0bde780ef4661",
       "primaryOwner": "SourceDisclosure",
       "ownerComponents": [
         "SourceDisclosure"
@@ -12834,13 +12991,13 @@
         "Card"
       ],
       "visibility": {
-        "public": 10,
+        "public": 11,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-content-source-disclosure--availability-and-provenance",
-        "describedPublicStories": 10,
+        "describedPublicStories": 11,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -12895,6 +13052,29 @@
           "recommendedVisibility": "public",
           "reviewStatus": "reviewed",
           "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "SourceDisclosure"
+          ],
+          "supportingComponents": []
+        },
+        {
+          "id": "lds-product-content-source-disclosure--inline-details",
+          "name": "변형·상태 · 두 줄 출처 제목과 자료 종류",
+          "exportName": "InlineDetails",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
           "ownerComponents": [
             "SourceDisclosure"
           ],
@@ -21806,13 +21986,15 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayLightbox.stories.jsx",
-      "sourceSha256": "1bbc416da486eaedad4d6c82db459fbf245e793e0b607feb375e7b3ec7793821",
+      "sourceSha256": "686fdf62b9d2591261af5fd3b1a1f7ae6a684221c405f65d2e1e27591e1027f1",
       "primaryOwner": "Lightbox",
       "ownerComponents": [
         "Lightbox"
       ],
       "supportingComponents": [
-        "Button"
+        "Button",
+        "Grid",
+        "Thumbnail"
       ],
       "visibility": {
         "public": 2,
@@ -21843,6 +22025,7 @@
             "autodocs",
             "dev",
             "manifest",
+            "play-fn",
             "test"
           ],
           "role": "overview",
@@ -21854,7 +22037,11 @@
           "ownerComponents": [
             "Lightbox"
           ],
-          "supportingComponents": [],
+          "supportingComponents": [
+            "Button",
+            "Grid",
+            "Thumbnail"
+          ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         },
         {
@@ -21904,7 +22091,9 @@
             "Lightbox"
           ],
           "supportingComponents": [
-            "Button"
+            "Button",
+            "Grid",
+            "Thumbnail"
           ],
           "reviewNote": "2026-07-24 owner review: 소유자가 로컬 Storybook(6006)에서 95페이지 변경 검토 목록(시각 변화 12·기능 버그 7 우선)을 따라 페이지·스토리를 직접 확인했다. 계약 fixture는 스토리 상단의 play 통과 표시로 검증했다."
         },
@@ -22586,20 +22775,20 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormFileUpload.stories.jsx",
-      "sourceSha256": "57017b738d4c3e1af65aa4b9953c34d93cac9a8cf8c47c4152c6b64670b5f10b",
+      "sourceSha256": "64141908d598750039131534576848098e5b0158e2a48ea040163cc130f0cb0e",
       "primaryOwner": "FileUpload",
       "ownerComponents": [
         "FileUpload"
       ],
       "supportingComponents": [],
       "visibility": {
-        "public": 1,
+        "public": 2,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-selection-and-input-file-upload--keyboard-file-selection",
-        "describedPublicStories": 1,
+        "describedPublicStories": 2,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -22635,6 +22824,29 @@
           ],
           "supportingComponents": [],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-selection-and-input-file-upload--button-selection",
+          "name": "변형·상태 · 간단한 파일 선택 버튼",
+          "exportName": "ButtonSelection",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "pending",
+          "reviewMethod": null,
+          "ownerComponents": [
+            "FileUpload"
+          ],
+          "supportingComponents": []
         }
       ],
       "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."

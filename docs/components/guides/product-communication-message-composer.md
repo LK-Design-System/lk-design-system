@@ -14,17 +14,17 @@
 
 ### 사용
 
+- disabled는 native textarea disabled, form/shell의 aria-disabled, shell의 inert를 함께 사용합니다. native control의 비활성 동작과 slot으로 들어온 button/link의 focus·activation 차단을 모두 충족하기 위한 조합입니다.
+- focus 표시는 shell 하나가 소유합니다. textarea에 focus가 있으면 shell border만 중립 회색 --component-message-composer-border-focus(cool-neutral-60, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고, primary 색 border·focus-ring halo·두께 변화는 없습니다(2026-10-09 owner 결정, Claude·ChatGPT 작성창처럼 작성 중에는 caret이 입력 위치를 알립니다).
 - light/dark 모두 LDS semantic input token을 사용하며 exact Figma color, product logo, provider selector와 custom shadow를 만들지 않습니다.
 - compact는 한 줄 textarea를 --space-8, textarea 세로 padding을 --space-1, shell/action 간격을 --space-0-5 중심으로 구성합니다. primary action은 기존 --component-button-height-sm과 Button --lds-button-radius의 --radius-md를 유지합니다. comfortable은 textarea 40px와 세로 inset16px를 쓰며 버튼 geometry와 interaction은 보존합니다.
-- 좁고 짧은 대화 열에서는 body Portal로 clipping을 탈출하되, 공유 primitive가 제공하는 collisionBoundary에 visible conversation column ref를 전달해 viewport와 그 열의 교집합 안에서 panel을 배치합니다. Portal target과 geometry boundary는 같은 책임이 아닙니다.
-- Slack — Set your Enter key preference는 Enter를 보내기로 선택하면 Shift+Enter로 줄바꿈하고, Enter를 줄바꿈으로 선택하면 Mac의 Command+Enter 또는 Windows/Linux의 Ctrl+Enter로 보내는 공식 제품 관습을 설명합니다. 이를 enter와 modifier-enter 계약에 반영했고, 긴 형식 작성에는 더 명시적인 button-only도 제공합니다.
 
 ### 사용하지 않음
 
 - 분류는 LK Product Extension이며 WDS Core parity를 주장하지 않습니다.
 - state는 idle | submitting | streaming | stopping이며 제품이 갱신합니다. callback만으로 다음 lifecycle이나 성공을 추론하지 않습니다.
-- 이 세 모드는 제품이 명시적으로 선택하는 계약이며 사용자 환경을 추측해 런타임에 전환하지 않습니다. enterKeyHint는 enter 모드에서 send, 나머지 모드에서 enter를 기본값으로 제공합니다.
-- submit 뒤 textarea focus를 복귀시키되 value clear, loading 종료와 response 완료는 수행하지 않습니다.
+- onStop이 없는 대기는 기존 Button의 loading presentation과 Spinner를 재사용합니다. transport의 취소 가능 여부는 callback 유무로 명시하고 DS가 추측하지 않습니다. 커스텀 statusLabel이 ReactNode이면 버튼 이름은 기본 phase 문구를 사용합니다.
+- submitMode="modifier-enter": Alt가 없는 Ctrl+Enter 또는 Meta+Enter만 제출합니다. Ctrl+Alt/AltGr와 Option+Command 조합은 문자 입력 충돌을 피하기 위해 제출하지 않습니다.
 
 ## Anatomy
 
@@ -64,7 +64,7 @@
 | `trailingActions` | `React.ReactNode` | No | Actions rendered at the trailing edge of the action band before the primary send/stop control. |
 | `submitLabel` | `string` | No | Accessible name for the submit control (stacked 32px / inline 44px). @default "메시지 보내기" |
 | `stopLabel` | `string` | No | Accessible name for the stop control (stacked 32px / inline 44px). @default "응답 중지" |
-| `onStop` | `() = void` | No | Requests transport cancellation in submitting/streaming states. |
+| `onStop` | `() = void` | No | Requests transport cancellation in submitting/streaming states. Without this callback, non-idle renders a focusable loading control rather than offering an unavailable stop action. The draft stays editable unless readOnly/disabled is supplied. |
 | `textareaProps` | `MessageComposerTextareaProps` | No | Native textarea attributes and event hooks not owned by the controlled contract. |
 
 ## States
@@ -80,9 +80,9 @@
 
 - value는 완전한 controlled value입니다. submit callback 뒤에도 내부에서 지우지 않습니다.
 - attachments, leadingActions, trailingActions는 ReactNode slot입니다. attachment selection/upload, voice capture, model/tool picker와 permission은 slot consumer가 소유합니다.
-- idle은 send, submitting/streaming은 stop을 같은 primary-action 위치에 둡니다. stopping은 중복 stop 요청을 막습니다.
+- 첨부 파일의 이름은 primary title, 형식·범위는 description, 준비 상태는 Spinner와 text로 분리해 읽습니다. 새 파일 schema나 lifecycle prop을 만들지 않고 attachments에 정적인 ListCell을 조합합니다. 서버 job 삭제·진행률·retry와 선택 해제는 제품이 구분합니다.
 - Escape는 암묵적 stop shortcut이 아닙니다. stop은 접근 가능한 이름과 visible focus를 가진 primary action으로 요청합니다.
-- disabled는 native textarea disabled, form/shell의 aria-disabled, shell의 inert를 함께 사용합니다. native control의 비활성 동작과 slot으로 들어온 button/link의 focus·activation 차단을 모두 충족하기 위한 조합입니다.
+- submit 뒤 textarea focus를 복귀시키되 value clear, loading 종료와 response 완료는 수행하지 않습니다.
 
 ## 정량 규칙
 
@@ -90,8 +90,8 @@
 | --- | --- |
 | 명시 규칙 1 | density는 comfortable \| compact입니다. 2026-10-09 승인된 D03 개정으로 stacked 한 줄 입력은 comfortable 40px, compact 32px에서 시작합니다. 16px 입력 글자, 24px line-height와 기존 버튼 모서리는 유지합니다. stacked send/stop은 32px입니다. |
 | 명시 규칙 2 | layout은 stacked \| inline이며 기본값은 stacked입니다. 단순 작성에서 명시한 inline은 textarea와 send/stop을 같은 행에 배치합니다. 입력/내장 action 최소 44px, shell 2px inset과 1px border를 합해 빈 초안 shell은 약 50px입니다. density와 별도 anatomy 축이며 설치된 0.4.7에는 없습니다. |
-| 명시 규칙 3 | composition session과 KeyboardEvent.isComposing을 함께 확인하고 legacy IME keyCode 229도 방어해 한글·일본어·중국어 확정 Enter가 submit으로 이어지지 않게 합니다. 조합 확정 직후에는 같은 keydown을 제출 동작으로 재사용하지 않습니다. |
-| 명시 규칙 4 | focus 표시는 shell 하나가 소유합니다. textarea에 focus가 있으면 shell border만 중립 회색 --component-message-composer-border-focus(cool-neutral-60, 흰 shell 대비 3.45:1, 다크 elevated shell 대비 4.61:1)로 한 단계 진해지고, primary 색 border·focus-ring halo·두께 변화는 없습니다(2026-10-09 owner 결정, Claude·ChatGPT 작성창처럼 작성 중에는 caret이 입력 위치를 알립니다). |
+| 명시 규칙 3 | placeholder는 Input의 컴포넌트 스코프 pseudo-element 방식으로 label-alternative 잉크와 opacity 1을 명시합니다. 제품 CSS reset의 placeholder 색에 기대지 않습니다. disabled 잉크는 기존 label-disable을 유지합니다. |
+| 명시 규칙 4 | composition session과 KeyboardEvent.isComposing을 함께 확인하고 legacy IME keyCode 229도 방어해 한글·일본어·중국어 확정 Enter가 submit으로 이어지지 않게 합니다. 조합 확정 직후에는 같은 keydown을 제출 동작으로 재사용하지 않습니다. |
 | --body1-line | {"fontSize":"16px","lineHeight":"24px","letterSpacing":"0.0057em"} |
 
 ## Responsive
@@ -110,11 +110,11 @@
 
 ## Accessibility
 
+- idle은 send, onStop이 있는 submitting/streaming은 stop을 같은 primary-action 위치에 둡니다. stopping은 중복 stop 요청을 막습니다. onStop이 없으면 non-idle primary action은 focusable loading control이며 존재하지 않는 취소 동작을 암시하지 않습니다. 초안은 편집할 수 있고 추가 제출만 막습니다.
 - canSubmit을 생략하면 trim한 값이 있을 때만 submit할 수 있습니다. readOnly는 focus와 copy를 유지하되 편집·submit을 막습니다.
 - status live region은 내용이 있을 때 mount하지 않고 composer 수명 내내 비어 있는 상태로 상시 mount한 뒤 텍스트만 교체합니다. 텍스트와 함께 삽입된 status node는 기존 live region의 변경이 아니어서 첫 idle→submitting 알림이 누락되기 때문입니다. 보이는 status 문구는 같은 내용을 중복 발표하지 않도록 aria-hidden 장식으로 둡니다.
 - stop 버튼은 stopping에서도 native disabled가 되지 않고 aria-disabled로 중복 요청만 거부합니다. native disabled는 방금 누른 사용자의 초점을 로 떨어뜨립니다. 요청이 끝나 idle로 돌아갈 때 primary action이 초점을 잃으면 submit 뒤와 같은 규칙으로 textarea에 초점을 되돌립니다.
 - disabled: true는 visible disabledReason을 요구하며 textarea의 description에 연결합니다. shell 전체를 inert subtree로 만들어 slot으로 조합한 button/link도 focus와 activation에서 제외합니다.
-- submitMode="enter": modifier 없는 Enter로 제출하고 Shift+Enter는 줄바꿈입니다.
 
 ## Exceptions
 
@@ -128,9 +128,10 @@
 | `Chip` | 대표 시나리오에서 조합 |
 | `Icon` | 대표 시나리오에서 조합 |
 | `IconButton` | 대표 시나리오에서 조합 |
+| `ListCell` | 대표 시나리오에서 조합 |
+| `Spinner` | 대표 시나리오에서 조합 |
+| `TextButton` | 대표 시나리오에서 조합 |
 | `ConversationList` | 대표 시나리오에서 조합 |
-| `ConversationMessage` | 대표 시나리오에서 조합 |
-| `MessageFeed` | 대표 시나리오에서 조합 |
 
 ## Examples
 
@@ -153,9 +154,11 @@
 ### 추가 조합 2
 
 ```jsx
-<MessageComposer layout="inline" density="compact" minRows={1} maxRows={6}
-  value={draft} onValueChange={setDraft} onSubmit={send}
-  placeholder="무엇을 도와드릴까요?" />
+<MessageComposer layout="inline" value={draft} onValueChange={setDraft} onSubmit={send}
+  attachments={<ListCell typography="small" textEllipsis={false} verticalAlign="top" titleStyle={{ overflowWrap: 'anywhere' }}
+    title={file.name} description={<>{file.kind} · {file.scope}<span role="status"><Spinner size={12} /> 자료 준비 중</span></>}
+    trailing={<TextButton onClick={removeSelection}>선택 취소</TextButton>} />}
+/>
 ```
 
 ## Tokens and API
@@ -205,11 +208,11 @@
 
 - MessageComposer prompt contract: `components/communication/MessageComposer.prompt.md`
 - Storybook implementation evidence: `stories/CommunicationMessageComposer.stories.jsx`
+- [WCAG Contrast Minimum](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
+- [Carbon Chat server communication](https://chat.carbondesignsystem.com/tag/latest/docs/documents/Server_communication.html)
 - [MDN ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)
 - [WCAG Target Size](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html)
 - [OpenAI UI guidelines](https://developers.openai.com/plugins/concepts/ui-guidelines)
 - [Claude Academy](https://academy.claude.com/tutorials/getting-started-with-claude)
 - [Claude 제품 페이지](https://claude.com/ko/product/overview)
 - [Slack — Set your Enter key preference](https://slack.com/help/articles/115005523006-Set-your-Enter-key-preference)
-- [Slack — Use Slack with a screen reader](https://slack.com/help/articles/360000411963-Use-Slack-with-a-screen-reader)
-- [MDN — disabled HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/disabled)

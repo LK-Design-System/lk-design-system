@@ -88,6 +88,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :root,
+  :where([data-lds-profile], .lds-profile-ops),
   :where([data-lds-profile='ops'], .lds-profile-ops),
   :root:where([data-lds-profile='ops'], .lds-profile-ops) {
     --dur-fast: 0ms;

@@ -72,6 +72,7 @@
 | Component | Relationship |
 | --- | --- |
 | `AvatarGroup` | 대표 시나리오에서 조합 |
+| `Stepper` | 대표 시나리오에서 조합 |
 | `Badge` | 대표 시나리오에서 조합 |
 | `Chip` | 대표 시나리오에서 조합 |
 | `Notification` | 대표 시나리오에서 조합 |

@@ -9,7 +9,8 @@
     "Avatar"
   ],
   "supportingComponents": [
-    "AvatarGroup"
+    "AvatarGroup",
+    "Stepper"
   ],
   "purpose": "작성자, 담당자, 참여자처럼 동일한 종류의 주체를 빠르게 식별해야 하는 목록과 협업 화면에 적합합니다. 대상의 이름이 핵심이면 텍스트 레이블을 함께 제공하고, 상태나 범주를 나타낼 때는 Avatar 대신 Status Badge나 Content Badge를 사용하세요.",
   "useWhen": [],
@@ -189,6 +190,10 @@
   "related": [
     {
       "component": "AvatarGroup",
+      "relationship": "대표 시나리오에서 조합"
+    },
+    {
+      "component": "Stepper",
       "relationship": "대표 시나리오에서 조합"
     },
     {
