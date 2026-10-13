@@ -2,9 +2,9 @@
 
 
 
-var _chunk2V5H5FGKcjs = require('../../chunk-2V5H5FGK.cjs');
+var _chunkVOWTNISQcjs = require('../../chunk-VOWTNISQ.cjs');
 
 
 
-exports.ToastLiveRegionContext = _chunk2V5H5FGKcjs.ToastLiveRegionContext; exports.ToastStack = _chunk2V5H5FGKcjs.ToastStack;
+exports.ToastLiveRegionContext = _chunkVOWTNISQcjs.ToastLiveRegionContext; exports.ToastStack = _chunkVOWTNISQcjs.ToastStack;
 //# sourceMappingURL=ToastStack.cjs.map
