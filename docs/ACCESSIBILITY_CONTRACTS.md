@@ -101,6 +101,9 @@ Source checks and pending parent visual evidence: [handoff](handoff/2026-10-09-p
 
 ## Focus policy
 
+- `Input` and `PasswordInput` keep native focus on the editable input and draw one 2px semantic focus-indicator outline with a 2px outer offset on the complete rounded control. The inner input outline and soft shadow are suppressed. Invalid and read-only fields keep this focus indicator while the error border remains visible. Nested action buttons retain their own focus boundary; disabled inputs and their disabled actions cannot receive focus.
+- Buttons, links, standalone inputs, SearchField and native textarea retain their existing focus contracts. This field correction changes no shared token value, generic focus geometry or unrelated control policy.
+- [W3C C45](https://www.w3.org/WAI/WCAG22/Techniques/css/C45) explains that text inputs can match `:focus-visible` after pointer focus as well as keyboard focus. [WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html) requires a visible keyboard indicator; LDS places it on the complete field boundary so its shape matches the control.
 - Focus ring은 브랜드 색상보다 `semantic.control.focusRing` 또는 동등한 component token을 우선 사용한다.
 - Focus ring은 hover style과 별도로 보여야 한다.
 - Disabled control은 focusable하지 않게 두는 것을 기본값으로 한다. 설명이 필요한 disabled 항목은 tooltip이나 adjacent text로 이유를 제공한다.

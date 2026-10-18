@@ -2,11 +2,14 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
-## 0.4.9 - 2026-10-13
+## 0.4.9 - 2026-10-18
 
 Paired Robotics release: `0.1.0-rc.53` (unchanged).
 
 ### Fixed
+
+- `Input`·`PasswordInput`이 둥근 control 외곽에 포커스 표시 하나를 그리도록 통일했습니다. 텍스트 입력은 포인터 조작 후에도 `:focus-visible`이 될 수 있으며, 내부 사각 outline과 외곽 halo가 겹치지 않습니다. 오류 테두리와 보조 버튼의 독립 키보드 포커스는 유지합니다.
+- 릴리스의 패키지 버전 조회에서 인증·통신·JSON·Node 실행 실패를 미발행으로 처리하지 않고, VM 준비 전에 중단하도록 고쳤습니다.
 
 - `Toast`와 `ToastStack`의 가용 폭을 제한해 320px 화면에서 20px 가장자리 여백 안으로 줄어들도록 수정했습니다. 긴 URL·식별자는 정보 손실 없이 줄바꿈하며, 넓은 화면의 335px 최소 폭과 520px 최대 폭, action·닫기·키보드·타이머·라이브 영역 계약을 유지합니다.
 - Portal 개발 소비용 Toast-only 후보는 검증 기준 `ec9c770a0f27b26911361b66eed0f0e76f29ca45`에 승인된 Toast 수정 `2e93db3363bdb6ae0138dd74cffae02ab1dfcc9a`의 6파일 diff와 새 버전 메타데이터·공식 Linux 생성물만 적용한 별도 후보로 유지합니다. 이 canonical main 통합본은 기존 Input/Select·Chat·R8 변경과 수동 검토 기록을 보존하며 registry 발행본이 아닙니다.

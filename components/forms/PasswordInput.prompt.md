@@ -20,3 +20,7 @@
 - **autoComplete** — 브라우저 비밀번호 관리자에 전달하는 입력 목적. 기본값은 로그인 맥락의 `current-password`입니다. 회원가입·비밀번호 변경처럼 새 비밀번호를 만드는 폼에서는 `new-password`를 넘겨 관리자가 저장된 값 대신 생성 값을 제안하게 하세요. `off`를 넘기면 자동 채우기를 끌 수 있지만 권장하지 않습니다.
 
 - **capsLockLabel** — Caps Lock이 켜진 상태에서 focus 중에 노출되는 주의 문구이자 live region 문장. 기본값은 `Caps Lock이 켜져 있습니다.`이고, 빈 문자열을 넘기면 경고를 끕니다. 값이 비어 있지 않은 한 문구는 필드가 focus를 잃으면 사라집니다.
+
+## Common focus ownership
+
+The editable input keeps native focus and displays one 2px semantic outline, with a 2px offset, on its complete rounded frame, matching Input. This replaces the inner input outline and soft shadow, including invalid and read-only states; the error border remains visible. The reveal button retains its own indicator, without outlining the complete frame. Forced colors uses the system Highlight. See the [common focus contract](../../docs/ACCESSIBILITY_CONTRACTS.md#focus-policy).

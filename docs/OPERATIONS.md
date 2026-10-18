@@ -55,8 +55,15 @@ label 검사 포함) → `dispatch-package-release.mjs`의 preflight·dispatch �
 runner 해제·guest 폐기(`vm-down.sh`) → 다음 예비 guest 준비 → 세 패키지 버전 확인까지
 한 번에 진행한다. 세션이 끊겨도 끝까지 가도록 `ship-bg.sh <tag>`로 띄운다. 운영자 PC에는
 `release.env.example`을 복사한 `~/.config/lds-release/release.env`, `server04` SSH alias
-(고정 host key), runner 등록 토큰을 발급할 `admin:org` 권한의 `gh`가 필요하다. 사설 주소·
+(고정 host key), runner 등록 토큰을 발급할 `admin:org`와 패키지 버전을 조회할
+`read:packages` 권한의 `gh`가 필요하다. 사설 주소·
 host key·계정명은 public 저장소가 아니라 이 env와 server04의 VM 디렉터리에만 둔다.
+
+발행 사이에 등록 runner가 0개인 것은 일회용 guest 폐기 이후의 정상 상태일 수 있다.
+guest 준비·등록 전의 dispatcher preflight 실패만으로 server04 기반이 없다고 판단하지
+않는다. operator 설정, 기존 host의 준비 스크립트와 lifecycle 기록, 해당 발행의 guest
+qualification을 구분해 확인한다. 패키지 조회의 인증·통신·응답 형식 오류는 `unknown`이며,
+정상 조회로 확인된 정확 버전의 부재만 VM 준비에 진입할 수 있다.
 
 스크립트 밖에서 runner를 등록하지 않는다. 등록할 runner가 이미 있거나, preflight가
 없음·다른 host identity·busy/offline을 보고하면 `release_environment_unavailable`로

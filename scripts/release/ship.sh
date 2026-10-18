@@ -12,9 +12,42 @@ git -C "${LDS_CHECKOUT}" fetch -q origin main "+refs/tags/${TAG}:refs/tags/${TAG
 SHA=$(git -C "${LDS_CHECKOUT}" rev-parse "${TAG}^{commit}")
 git -C "${LDS_CHECKOUT}" merge-base --is-ancestor "${SHA}" origin/main \
   || { echo "release_source_unavailable: ${TAG} is not an ancestor of origin/main" >&2; exit 1; }
-published() { gh api "orgs/${LDS_RELEASE_ORG}/packages/npm/lds-$1/versions" --paginate --jq '.[].name' | grep -qx "${VERSION}"; }
+# 0 = published, 1 = confirmed absent, every other result = unknown.
+# Authentication/transport failures must never authorize VM preparation.
+published() {
+  local pages state
+  if ! pages=$(gh api "orgs/${LDS_RELEASE_ORG}/packages/npm/lds-$1/versions" --paginate --slurp 2>/dev/null); then
+    return 2
+  fi
+  if ! state=$(printf '%s' "${pages}" | node -e '
+    try {
+      const pages = JSON.parse(require("node:fs").readFileSync(0, "utf8"));
+      if (!Array.isArray(pages) || pages.length === 0 || pages.some(page =>
+        !Array.isArray(page) || page.some(version => !version || typeof version !== "object"
+          || Array.isArray(version) || typeof version.name !== "string" || version.name.length === 0))) {
+        process.exit(2);
+      }
+      process.stdout.write(pages.some(page => page.some(version => version.name === process.argv[1])) ? "present" : "absent");
+    } catch {
+      process.exit(2);
+    }
+  ' "${VERSION}" 2>/dev/null && printf ':'); then
+    return 2
+  fi
+  # The suffix keeps unexpected trailing newlines visible to the exact match.
+  case "${state}" in
+    present:) return 0 ;;
+    absent:) return 1 ;;
+    *) return 2 ;;
+  esac
+}
 for package in core theme product; do
-  ! published "${package}" || { echo "already_published: lds-${package}@${VERSION}" >&2; exit 1; }
+  if published "${package}"; then
+    echo "already_published: lds-${package}@${VERSION}" >&2; exit 1
+  else
+    availability=$?
+    [[ "${availability}" -eq 1 ]] || { echo "package_availability_unknown: lds-${package}@${VERSION}" >&2; exit 1; }
+  fi
 done
 release_step "ship ${TAG} ${SHA:0:8}"
 
@@ -62,7 +95,17 @@ if [[ "${conclusion}" != success ]]; then
   wait "${next}" || true; exit 1
 fi
 for package in core theme product; do
-  published "${package}" || { echo "publish_not_visible: lds-${package}@${VERSION}" >&2; wait "${next}" || true; exit 1; }
+  if published "${package}"; then
+    continue
+  else
+    availability=$?
+    if [[ "${availability}" -eq 1 ]]; then
+      echo "publish_not_visible: lds-${package}@${VERSION}" >&2
+    else
+      echo "publish_visibility_unknown: lds-${package}@${VERSION}" >&2
+    fi
+    wait "${next}" || true; exit 1
+  fi
 done
 wait "${next}" || true
 release_step "shipped ${TAG}: lds-core/theme/product@${VERSION}; next warm VM: $(tail -1 "${LDS_RELEASE_LOG_DIR}/prepare-after-${RUN}.log")"
