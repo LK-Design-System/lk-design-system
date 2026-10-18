@@ -111,6 +111,7 @@ export const Input = React.forwardRef(function Input({
       />
       <div
         data-slot="control"
+        data-lds-focus-within=""
         className={partClassName(classNames, 'control', 'lk-input-control') || undefined}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
@@ -131,6 +132,7 @@ export const Input = React.forwardRef(function Input({
           data-slot="input"
           data-lds-field=""
           {...rest}
+          data-lds-focus-target=""
           className={partClassName(classNames, 'input', 'lk-input', inputClassName) || undefined}
           disabled={disabled}
           readOnly={readOnly}

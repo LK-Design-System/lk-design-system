@@ -1,11 +1,11 @@
 /* ==========================================================================
    LK ROBOTICS — Keyboard focus ring
    --------------------------------------------------------------------------
-   A single, token-driven :focus-visible ring for every interactive element.
-   Shows ONLY on keyboard navigation (:focus-visible excludes mouse clicks).
-   `!important` guarantees the ring even where a component sets inline
-   `outline: none`, so no per-component edits are needed to close the
-   focus-indicator a11y gap. Theme-aware.
+   A token-driven :focus-visible fallback for interactive elements.
+   Text inputs may also match after pointer or programmatic focus (W3C C45).
+   `!important` preserves the fallback over inline `outline: none`.
+   Composite fields can own their indicator on the complete bordered control;
+   nested action buttons retain their own focus boundary. Theme-aware.
 
    The outline uses the semantic focus-indicator role. The softer focus-ring
    role remains reserved for input box-shadows.
@@ -30,23 +30,26 @@
   outline-offset: 0 !important;
 }
 
-/* Input owns one indicator around the complete rounded control, including
+/* Input and PasswordInput own one indicator around the complete rounded control, including
    invalid and read-only fields. Keep both rules in this stylesheet so layered
    consumers do not revive the native input's inner rectangular outline.
    Trailing actions remain separate focus targets with their own global ring. */
-.lk-input-control:has(> input.lk-input:focus-visible) {
+.lk-input-control:has(> input.lk-input:focus-visible),
+.lk-password-input-control:has(> input[data-lds-focus-target]:focus-visible) {
   outline: 2px solid var(--color-semantic-focus-indicator) !important;
   outline-offset: 2px !important;
   box-shadow: none !important;
 }
 
-.lk-input-control > input.lk-input:focus-visible {
+.lk-input-control > input.lk-input:focus-visible,
+.lk-password-input-control > input[data-lds-focus-target]:focus-visible {
   outline: none !important;
   outline-offset: 0 !important;
 }
 
 @media (forced-colors: active) {
-  .lk-input-control:has(> input.lk-input:focus-visible) {
+  .lk-input-control:has(> input.lk-input:focus-visible),
+  .lk-password-input-control:has(> input[data-lds-focus-target]:focus-visible) {
     outline-color: Highlight !important;
   }
 }

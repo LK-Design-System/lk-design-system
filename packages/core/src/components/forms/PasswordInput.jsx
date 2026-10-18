@@ -129,6 +129,8 @@ export function PasswordInput({
       <>
       <div
         data-readonly={readOnly ? 'true' : undefined}
+        data-lds-focus-within=""
+        className="lk-password-input-control"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
@@ -150,6 +152,7 @@ export function PasswordInput({
         <input
           {...inputProps}
           ref={inputRef}
+          data-lds-focus-target=""
           id={metadata.fieldId}
           type={revealed ? 'text' : 'password'}
           value={currentValue}

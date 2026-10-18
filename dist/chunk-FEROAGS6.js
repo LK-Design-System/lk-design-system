@@ -126,6 +126,7 @@ var Input = React.forwardRef(function Input2({
           "div",
           {
             "data-slot": "control",
+            "data-lds-focus-within": "",
             className: partClassName(classNames, "control", "lk-input-control") || void 0,
             onMouseEnter: () => setHover(true),
             onMouseLeave: () => setHover(false),
@@ -154,6 +155,7 @@ var Input = React.forwardRef(function Input2({
                   "data-slot": "input",
                   "data-lds-field": "",
                   ...rest,
+                  "data-lds-focus-target": "",
                   className: partClassName(classNames, "input", "lk-input", inputClassName) || void 0,
                   disabled,
                   readOnly,
@@ -187,4 +189,4 @@ var Input = React.forwardRef(function Input2({
 export {
   Input
 };
-//# sourceMappingURL=chunk-SDL7OZVD.js.map
+//# sourceMappingURL=chunk-FEROAGS6.js.map

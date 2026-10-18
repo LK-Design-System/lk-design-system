@@ -125,6 +125,8 @@ function PasswordInput({
           "div",
           {
             "data-readonly": readOnly ? "true" : void 0,
+            "data-lds-focus-within": "",
+            className: "lk-password-input-control",
             onMouseEnter: () => setHovered(true),
             onMouseLeave: () => setHovered(false),
             style: {
@@ -148,6 +150,7 @@ function PasswordInput({
                 {
                   ...inputProps,
                   ref: inputRef,
+                  "data-lds-focus-target": "",
                   id: metadata.fieldId,
                   type: revealed ? "text" : "password",
                   value: currentValue,
@@ -235,4 +238,4 @@ function PasswordInput({
 
 
 exports.PasswordInput = PasswordInput;
-//# sourceMappingURL=chunk-YKZWFNLU.cjs.map
+//# sourceMappingURL=chunk-RASAH47C.cjs.map

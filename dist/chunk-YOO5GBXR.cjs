@@ -126,6 +126,7 @@ var Input = _react2.default.forwardRef(function Input2({
           "div",
           {
             "data-slot": "control",
+            "data-lds-focus-within": "",
             className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "control", "lk-input-control") || void 0,
             onMouseEnter: () => setHover(true),
             onMouseLeave: () => setHover(false),
@@ -154,6 +155,7 @@ var Input = _react2.default.forwardRef(function Input2({
                   "data-slot": "input",
                   "data-lds-field": "",
                   ...rest,
+                  "data-lds-focus-target": "",
                   className: _chunkGWMGPLNWcjs.partClassName.call(void 0, classNames, "input", "lk-input", inputClassName) || void 0,
                   disabled,
                   readOnly,
@@ -187,4 +189,4 @@ var Input = _react2.default.forwardRef(function Input2({
 
 
 exports.Input = Input;
-//# sourceMappingURL=chunk-UCMCIO6W.cjs.map
+//# sourceMappingURL=chunk-YOO5GBXR.cjs.map

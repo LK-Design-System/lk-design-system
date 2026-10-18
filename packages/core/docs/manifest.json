@@ -66,7 +66,7 @@
     "documents": [
       {
         "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-        "sha256": "27e119948ab9e631230f06cb0a590deac4360071a6ff5e6d320933ef242e5b7d"
+        "sha256": "47484fff48f577d9a3f7d9bd348d757dca9c097dd7825e1c934f25900dcdb890"
       },
       {
         "path": "docs/agent-skills/lds-ui/references/anti-patterns.md",
@@ -237,8 +237,8 @@
   "resources": {
     "tokens": {
       "fileCount": 6,
-      "bytes": 37161,
-      "sha256": "d30836874655a9243c0158d4026200ca27c7254b76f4b82d6b13637e2e13bcd0"
+      "bytes": 37434,
+      "sha256": "b82063a5a456daf46dbc5b4592c4ce095841dad19914b689e9e410610d21816c"
     },
     "assets": {
       "fileCount": 365,
@@ -599,11 +599,11 @@
     },
     {
       "path": "policies/ACCESSIBILITY_CONTRACTS.md",
-      "sha256": "c88852b22465e9f7712475e3257bb91a6117146f3853893859ac8f3acf396527",
+      "sha256": "713aa1b5fdb6db24430f61da16375988d1997f70ff57caea38b885044ef1700f",
       "sources": [
         {
           "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-          "sha256": "27e119948ab9e631230f06cb0a590deac4360071a6ff5e6d320933ef242e5b7d"
+          "sha256": "47484fff48f577d9a3f7d9bd348d757dca9c097dd7825e1c934f25900dcdb890"
         }
       ]
     },
