@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "d5f965af567bab9dea9a381d6f5f06831fb4ac9911e4b3b7ad3e1ecde6a16617",
+  "sourceFingerprint": "42c9a28de3d74db7e46195765add3d11aa419c457c6030739c3275f30a059b0d",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -11947,7 +11947,7 @@
           "url": "https://www.patternfly.org/patterns/dashboard/design-guidelines/"
         }
       ],
-      "promptSha256": "472ffe01fa85c3d421de7590230033a329d199b5147ce93ae792eb34770e49aa"
+      "promptSha256": "6b01802464c88d4f3705769e39355536f8dc39d75d48d5f245a3e38bbb74fca7"
     },
     {
       "id": "network-graph",
@@ -69270,6 +69270,7 @@
       ],
       "states": [],
       "behavior": [
+        "Point centers inside the resolved domains, including boundary and singleton points, render whole. Out-of-domain centers are omitted; series paths and the tooltip cursor remain clipped to the plot. This does not expand domains or alter tick positions.",
         "Recharts Tooltip의 활성 시점·다중 지표 정보 구성을 참고했습니다. WCAG 1.4.13에 따라 키보드 진입, Escape, hover 유지로 동일 정보를 제공합니다."
       ],
       "quantitativeRules": [

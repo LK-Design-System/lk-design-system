@@ -31040,6 +31040,7 @@
       ],
       "states": [],
       "behavior": [
+        "Point centers inside the resolved domains, including boundary and singleton points, render whole. Out-of-domain centers are omitted; series paths and the tooltip cursor remain clipped to the plot. This does not expand domains or alter tick positions.",
         "Recharts Tooltip의 활성 시점·다중 지표 정보 구성을 참고했습니다. WCAG 1.4.13에 따라 키보드 진입, Escape, hover 유지로 동일 정보를 제공합니다."
       ],
       "quantitativeRules": [

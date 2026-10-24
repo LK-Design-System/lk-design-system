@@ -415,10 +415,11 @@ function LineChart({
                   )
                 ] }, line.id ?? line.label ?? index);
               }),
-              /* @__PURE__ */ jsxs("g", { clipPath: `url(#${clipId})`, children: [
+              /* @__PURE__ */ jsxs("g", { children: [
                 tooltipEnabled && tooltipVisible && /* @__PURE__ */ jsx(
                   "line",
                   {
+                    clipPath: `url(#${clipId})`,
                     x1: sx(selectedX),
                     x2: sx(selectedX),
                     y1: pad.top,
@@ -434,6 +435,7 @@ function LineChart({
                     item.points.length > 1 && /* @__PURE__ */ jsx(
                       "path",
                       {
+                        clipPath: `url(#${clipId})`,
                         d: path,
                         fill: "none",
                         stroke: color,
@@ -444,7 +446,7 @@ function LineChart({
                         strokeDasharray: item.dashed ? "5 4" : void 0
                       }
                     ),
-                    (showPoints || item.points.length === 1) && item.points.map((point, pointIndex) => /* @__PURE__ */ jsx(
+                    (showPoints || item.points.length === 1) && item.points.map((point, pointIndex) => point.x >= Math.min(xMin, xMax) && point.x <= Math.max(xMin, xMax) && point.y >= Math.min(yMin, yMax) && point.y <= Math.max(yMin, yMax) && /* @__PURE__ */ jsx(
                       "circle",
                       {
                         cx: sx(point.x),
@@ -515,4 +517,4 @@ function ChartTooltip({ enabled, open, anchor, content, children, onOpenChange }
 export {
   LineChart
 };
-//# sourceMappingURL=chunk-GZBKJAUL.js.map
+//# sourceMappingURL=chunk-4FM5FEER.js.map
