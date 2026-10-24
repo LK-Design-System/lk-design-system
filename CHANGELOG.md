@@ -2,6 +2,14 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.4.10 - 2026-10-24
+
+Paired Robotics release: `0.1.0-rc.53` (unchanged).
+
+### Fixed
+
+- `LineChart`의 축 최솟값·최댓값과 양 끝에 있는 점 마커가 plot 경계에서 잘리던 문제를 수정했습니다. 선과 툴팁 가이드는 plot 안으로 잘라내고, domain 안의 마커는 원 전체를 표시합니다. domain 밖의 점은 표시하지 않으며 단일 점, 데이터 값, 축 범위와 툴팁 동작을 유지합니다.
+
 ## 0.4.9 - 2026-10-18
 
 Paired Robotics release: `0.1.0-rc.53` (unchanged).
