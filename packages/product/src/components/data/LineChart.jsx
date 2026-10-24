@@ -498,9 +498,10 @@ export function LineChart({
             );
           })}
 
-        <g clipPath={`url(#${clipId})`}>
+        {/* Clip strokes to the plot, but keep in-domain boundary markers whole. */}
+        <g>
           {tooltipEnabled && tooltipVisible && (
-            <line x1={sx(selectedX)} x2={sx(selectedX)} y1={pad.top} y2={pad.top + innerHeight}
+            <line clipPath={`url(#${clipId})`} x1={sx(selectedX)} x2={sx(selectedX)} y1={pad.top} y2={pad.top + innerHeight}
               stroke="var(--color-semantic-label-alternative)" strokeDasharray="4 4" />
           )}
           {normalized.map((item, index) => {
@@ -511,6 +512,7 @@ export function LineChart({
               <g key={item.id}>
                 {item.points.length > 1 && (
                   <path
+                    clipPath={`url(#${clipId})`}
                     d={path}
                     fill="none"
                     stroke={color}
@@ -523,17 +525,19 @@ export function LineChart({
                 )}
                 {(showPoints || item.points.length === 1) &&
                   item.points.map((point, pointIndex) => (
-                    <circle
-                      key={`${item.id}-${pointIndex}`}
-                      cx={sx(point.x)}
-                      cy={sy(point.y)}
-                      r="3"
-                      fill="var(--color-semantic-background-elevated-normal)"
-                      stroke={color}
-                      style={{ strokeWidth: SERIES_STROKE }}
-                      vectorEffect="non-scaling-stroke"
-                    />
-                  ))}
+                    point.x >= Math.min(xMin, xMax) && point.x <= Math.max(xMin, xMax)
+                    && point.y >= Math.min(yMin, yMax) && point.y <= Math.max(yMin, yMax) && (
+                      <circle
+                        key={`${item.id}-${pointIndex}`}
+                        cx={sx(point.x)}
+                        cy={sy(point.y)}
+                        r="3"
+                        fill="var(--color-semantic-background-elevated-normal)"
+                        stroke={color}
+                        style={{ strokeWidth: SERIES_STROKE }}
+                        vectorEffect="non-scaling-stroke"
+                      />
+                  )))}
               </g>
             );
           })}
