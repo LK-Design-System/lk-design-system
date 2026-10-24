@@ -18,7 +18,7 @@ DashboardShell's low mobile Drawer scrolls all destinations/account and requests
 wide close restores focus to main. ConversationList keeps its sibling menu in DOM/Tab order and shows it on focus
 or touch; full titles remain accessible. Compact Table/EmptyState/MessageComposer preserve headings, native table
 headers, persistent announcements, 16px input text and 24–32px action targets.
-Source checks and pending parent visual evidence: [handoff](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.9/docs/handoff/2026-10-09-portal-density-source-review.md).
+Source checks and pending parent visual evidence: [handoff](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.10/docs/handoff/2026-10-09-portal-density-source-review.md).
 
 | 항목 | 기준 | 증거 |
 | --- | --- | --- |
