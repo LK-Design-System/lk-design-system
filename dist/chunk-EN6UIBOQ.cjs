@@ -1,12 +1,12 @@
-"use client";
-import {
-  Drawer
-} from "./chunk-37AHPLKI.js";
+"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
+
+
+var _chunkZYTXYIAFcjs = require('./chunk-ZYTXYIAF.cjs');
 
 // components/layout/DashboardShell.jsx
-import React from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
-var INERT_VALUE = Number.parseInt(React.version, 10) >= 19 ? true : "true";
+var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+var _jsxruntime = require('react/jsx-runtime');
+var INERT_VALUE = Number.parseInt(_react2.default.version, 10) >= 19 ? true : "true";
 var inertWhen = (isInert) => isInert ? INERT_VALUE : void 0;
 var DASHBOARD_SHELL_STYLES = `
 /* On mobile the Drawer body owns the entire navigation scroll. Desktop's
@@ -93,9 +93,9 @@ var DASHBOARD_SHELL_STYLES = `
 }
 `;
 function withNavigationLabel(node, label) {
-  if (!React.isValidElement(node)) return node;
-  return React.cloneElement(node, {
-    "aria-label": node.props["aria-label"] ?? label
+  if (!_react2.default.isValidElement(node)) return node;
+  return _react2.default.cloneElement(node, {
+    "aria-label": _nullishCoalesce(node.props["aria-label"], () => ( label))
   });
 }
 function isDevelopment() {
@@ -103,16 +103,16 @@ function isDevelopment() {
   return !(env && env.NODE_ENV === "production");
 }
 function RailPanelDrawerBody({ navigation, panel, navigationLabel }) {
-  const footer = React.isValidElement(navigation) ? navigation.props.footer : null;
-  return /* @__PURE__ */ jsxs("div", { "data-rail-panel-drawer": "", style: { display: "flex", flexDirection: "column", minHeight: "100%" }, children: [
-    React.isValidElement(navigation) && /* @__PURE__ */ jsx("div", { "data-rail-panel-drawer-areas": "", style: { flexShrink: 0, padding: "var(--space-2)" }, children: React.cloneElement(navigation, {
+  const footer = _react2.default.isValidElement(navigation) ? navigation.props.footer : null;
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { "data-rail-panel-drawer": "", style: { display: "flex", flexDirection: "column", minHeight: "100%" }, children: [
+    _react2.default.isValidElement(navigation) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-rail-panel-drawer-areas": "", style: { flexShrink: 0, padding: "var(--space-2)" }, children: _react2.default.cloneElement(navigation, {
       surface: "drawer",
       header: null,
       footer: null,
-      "aria-label": navigation.props["aria-label"] ?? navigationLabel
+      "aria-label": _nullishCoalesce(navigation.props["aria-label"], () => ( navigationLabel))
     }) }),
-    panel != null && /* @__PURE__ */ jsx("div", { "data-rail-panel-drawer-panel": "", style: { display: "flex", flexDirection: "column", flex: "1 0 auto", borderTop: "1px solid var(--color-semantic-line-solid-normal)" }, children: panel }),
-    footer != null && /* @__PURE__ */ jsx("div", { "data-rail-panel-drawer-footer": "", style: { flexShrink: 0, padding: "var(--space-2) var(--space-3)", borderTop: "1px solid var(--color-semantic-line-solid-normal)" }, children: footer })
+    panel != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-rail-panel-drawer-panel": "", style: { display: "flex", flexDirection: "column", flex: "1 0 auto", borderTop: "1px solid var(--color-semantic-line-solid-normal)" }, children: panel }),
+    footer != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { "data-rail-panel-drawer-footer": "", style: { flexShrink: 0, padding: "var(--space-2) var(--space-3)", borderTop: "1px solid var(--color-semantic-line-solid-normal)" }, children: footer })
   ] });
 }
 function DashboardShell({
@@ -151,18 +151,18 @@ function DashboardShell({
   style,
   ...rest
 }) {
-  const generatedId = React.useId().replace(/:/g, "");
+  const generatedId = _react2.default.useId().replace(/:/g, "");
   const resolvedMainId = mainId || `lk-dashboard-main-${generatedId}`;
   const resolvedTemporaryNavigationId = temporaryNavigationId || `lk-dashboard-temporary-navigation-${generatedId}`;
   const resolvedTopology = topology === "side-first" || topology === "rail-panel" ? topology : "header-first";
   const railPanel = resolvedTopology === "rail-panel";
   const resolvedPanelId = panelId || `lk-dashboard-panel-${generatedId}`;
-  const [autoNarrow, setAutoNarrow] = React.useState(false);
-  const [autoOverlay, setAutoOverlay] = React.useState(false);
-  const panelRef = React.useRef(null);
-  const mainRef = React.useRef(null);
-  const [mainOverflows, setMainOverflows] = React.useState(false);
-  React.useEffect(() => {
+  const [autoNarrow, setAutoNarrow] = _react2.default.useState(false);
+  const [autoOverlay, setAutoOverlay] = _react2.default.useState(false);
+  const panelRef = _react2.default.useRef(null);
+  const mainRef = _react2.default.useRef(null);
+  const [mainOverflows, setMainOverflows] = _react2.default.useState(false);
+  _react2.default.useEffect(() => {
     if (layout !== "auto" || typeof window === "undefined" || typeof window.matchMedia !== "function") {
       setAutoNarrow(false);
       return void 0;
@@ -170,10 +170,10 @@ function DashboardShell({
     const query = window.matchMedia("(max-width: 767px)");
     const update = () => setAutoNarrow(query.matches);
     update();
-    query.addEventListener?.("change", update);
-    return () => query.removeEventListener?.("change", update);
+    _optionalChain([query, 'access', _ => _.addEventListener, 'optionalCall', _2 => _2("change", update)]);
+    return () => _optionalChain([query, 'access', _3 => _3.removeEventListener, 'optionalCall', _4 => _4("change", update)]);
   }, [layout]);
-  React.useEffect(() => {
+  _react2.default.useEffect(() => {
     if (!railPanel || panelMode !== "auto" || typeof window === "undefined" || typeof window.matchMedia !== "function") {
       setAutoOverlay(false);
       return void 0;
@@ -181,8 +181,8 @@ function DashboardShell({
     const query = window.matchMedia("(min-width: 768px) and (max-width: 1023px)");
     const update = () => setAutoOverlay(query.matches);
     update();
-    query.addEventListener?.("change", update);
-    return () => query.removeEventListener?.("change", update);
+    _optionalChain([query, 'access', _5 => _5.addEventListener, 'optionalCall', _6 => _6("change", update)]);
+    return () => _optionalChain([query, 'access', _7 => _7.removeEventListener, 'optionalCall', _8 => _8("change", update)]);
   }, [railPanel, panelMode]);
   const isNarrowLayout = layout === "narrow" || layout === "auto" && autoNarrow;
   const hasPanel = railPanel && panel != null;
@@ -190,36 +190,36 @@ function DashboardShell({
   const panelExpanded = hasPanel && !!panelOpen && !isNarrowLayout;
   const hasTemporaryNavigation = temporaryNavigation != null || railPanel && navigation != null;
   const temporaryOpen = hasTemporaryNavigation && temporaryNavigationOpen && isNarrowLayout;
-  const previousNarrowLayoutRef = React.useRef(isNarrowLayout);
-  React.useEffect(() => {
+  const previousNarrowLayoutRef = _react2.default.useRef(isNarrowLayout);
+  _react2.default.useEffect(() => {
     const wasNarrow = previousNarrowLayoutRef.current;
     previousNarrowLayoutRef.current = isNarrowLayout;
     if (wasNarrow && !isNarrowLayout && hasTemporaryNavigation && temporaryNavigationOpen) {
-      onTemporaryNavigationClose?.();
+      _optionalChain([onTemporaryNavigationClose, 'optionalCall', _9 => _9()]);
     }
   }, [isNarrowLayout, hasTemporaryNavigation, temporaryNavigationOpen, onTemporaryNavigationClose]);
-  const previousPanelModeRef = React.useRef(resolvedPanelMode);
-  React.useEffect(() => {
+  const previousPanelModeRef = _react2.default.useRef(resolvedPanelMode);
+  _react2.default.useEffect(() => {
     const previous = previousPanelModeRef.current;
     previousPanelModeRef.current = resolvedPanelMode;
-    if (hasPanel && previous === "inline" && resolvedPanelMode === "overlay" && panelOpen) onPanelOpenChange?.(false);
+    if (hasPanel && previous === "inline" && resolvedPanelMode === "overlay" && panelOpen) _optionalChain([onPanelOpenChange, 'optionalCall', _10 => _10(false)]);
   }, [hasPanel, resolvedPanelMode, panelOpen, onPanelOpenChange]);
-  const previousPanelExpandedRef = React.useRef(panelExpanded);
-  React.useLayoutEffect(() => {
+  const previousPanelExpandedRef = _react2.default.useRef(panelExpanded);
+  _react2.default.useLayoutEffect(() => {
     const wasExpanded = previousPanelExpandedRef.current;
     previousPanelExpandedRef.current = panelExpanded;
     if (!wasExpanded || panelExpanded || typeof document === "undefined") return;
-    if (panelRef.current?.contains(document.activeElement)) panelReturnFocusRef?.current?.focus?.();
+    if (_optionalChain([panelRef, 'access', _11 => _11.current, 'optionalAccess', _12 => _12.contains, 'call', _13 => _13(document.activeElement)])) _optionalChain([panelReturnFocusRef, 'optionalAccess', _14 => _14.current, 'optionalAccess', _15 => _15.focus, 'optionalCall', _16 => _16()]);
   }, [panelExpanded, panelReturnFocusRef]);
-  React.useEffect(() => {
+  _react2.default.useEffect(() => {
     if (!railPanel || !isDevelopment()) return;
-    const railName = React.isValidElement(navigation) ? navigation.props["aria-label"] ?? navigationLabel : null;
-    const panelTitle = React.isValidElement(panel) ? panel.props.title : null;
+    const railName = _react2.default.isValidElement(navigation) ? _nullishCoalesce(navigation.props["aria-label"], () => ( navigationLabel)) : null;
+    const panelTitle = _react2.default.isValidElement(panel) ? panel.props.title : null;
     if (typeof railName === "string" && typeof panelTitle === "string" && railName.trim() === panelTitle.trim()) {
       console.warn(`DashboardShell: the rail navigation and the panel navigation share the name "${railName}". Give each navigation landmark a unique name (WAI-ARIA APG landmark regions).`);
     }
   }, [railPanel, navigation, panel, navigationLabel]);
-  React.useEffect(() => {
+  _react2.default.useEffect(() => {
     if (!railPanel) return void 0;
     const node = mainRef.current;
     if (!node) return void 0;
@@ -237,13 +237,13 @@ function DashboardShell({
   const onPanelKeyDown = (event) => {
     if (event.key !== "Escape" || resolvedPanelMode !== "overlay" || !panelExpanded) return;
     event.stopPropagation();
-    onPanelOpenChange?.(false);
-    panelReturnFocusRef?.current?.focus?.();
+    _optionalChain([onPanelOpenChange, 'optionalCall', _17 => _17(false)]);
+    _optionalChain([panelReturnFocusRef, 'optionalAccess', _18 => _18.current, 'optionalAccess', _19 => _19.focus, 'optionalCall', _20 => _20()]);
   };
-  const skipLink = /* @__PURE__ */ jsx("a", { className: "lk-dashboard-shell__skip", href: `#${resolvedMainId}`, inert: inertWhen(temporaryOpen), children: skipLabel });
-  const headerRegion = header != null && /* @__PURE__ */ jsx("div", { className: "lk-dashboard-shell__header", inert: inertWhen(temporaryOpen), children: header });
-  const navigationRegion = navigation != null && !(railPanel && isNarrowLayout) && /* @__PURE__ */ jsx("div", { className: "lk-dashboard-shell__navigation", inert: inertWhen(temporaryOpen), children: withNavigationLabel(navigation, navigationLabel) });
-  const panelRegion = hasPanel && !isNarrowLayout && /* @__PURE__ */ jsx(
+  const skipLink = /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "a", { className: "lk-dashboard-shell__skip", href: `#${resolvedMainId}`, inert: inertWhen(temporaryOpen), children: skipLabel });
+  const headerRegion = header != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-dashboard-shell__header", inert: inertWhen(temporaryOpen), children: header });
+  const navigationRegion = navigation != null && !(railPanel && isNarrowLayout) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-dashboard-shell__navigation", inert: inertWhen(temporaryOpen), children: withNavigationLabel(navigation, navigationLabel) });
+  const panelRegion = hasPanel && !isNarrowLayout && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
     "div",
     {
       ref: panelRef,
@@ -253,11 +253,11 @@ function DashboardShell({
       "aria-hidden": panelExpanded ? void 0 : true,
       inert: inertWhen(!panelExpanded || temporaryOpen),
       onKeyDown: onPanelKeyDown,
-      children: /* @__PURE__ */ jsx("div", { className: "lk-dashboard-shell__panel-content", children: panel })
+      children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-dashboard-shell__panel-content", children: panel })
     }
   );
-  const temporaryContent = temporaryNavigation != null ? withNavigationLabel(temporaryNavigation, temporaryNavigationLabel) : railPanel ? /* @__PURE__ */ jsx(RailPanelDrawerBody, { navigation, panel, navigationLabel }) : null;
-  return /* @__PURE__ */ jsxs(
+  const temporaryContent = temporaryNavigation != null ? withNavigationLabel(temporaryNavigation, temporaryNavigationLabel) : railPanel ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, RailPanelDrawerBody, { navigation, panel, navigationLabel }) : null;
+  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
     "div",
     {
       className: ["lk-dashboard-shell", className].filter(Boolean).join(" "),
@@ -284,16 +284,16 @@ function DashboardShell({
       ...rest,
       children: [
         skipLink,
-        /* @__PURE__ */ jsx("style", { children: DASHBOARD_SHELL_STYLES }),
-        railPanel ? /* @__PURE__ */ jsxs(React.Fragment, { children: [
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "style", { children: DASHBOARD_SHELL_STYLES }),
+        railPanel ? /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
           navigationRegion,
           panelRegion,
           headerRegion
-        ] }) : /* @__PURE__ */ jsxs(React.Fragment, { children: [
+        ] }) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _react2.default.Fragment, { children: [
           headerRegion,
           navigationRegion
         ] }),
-        /* @__PURE__ */ jsx(
+        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
           "main",
           {
             ref: mainRef,
@@ -306,9 +306,9 @@ function DashboardShell({
             children
           }
         ),
-        narrowNavigation != null && /* @__PURE__ */ jsx("div", { className: "lk-dashboard-shell__narrow-navigation", inert: inertWhen(temporaryOpen), children: withNavigationLabel(narrowNavigation, narrowNavigationLabel) }),
-        hasTemporaryNavigation && /* @__PURE__ */ jsx(
-          Drawer,
+        narrowNavigation != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { className: "lk-dashboard-shell__narrow-navigation", inert: inertWhen(temporaryOpen), children: withNavigationLabel(narrowNavigation, narrowNavigationLabel) }),
+        hasTemporaryNavigation && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+          _chunkZYTXYIAFcjs.Drawer,
           {
             id: resolvedTemporaryNavigationId,
             open: temporaryOpen,
@@ -331,7 +331,7 @@ function DashboardShell({
   );
 }
 
-export {
-  DashboardShell
-};
-//# sourceMappingURL=chunk-4KU4QJIP.js.map
+
+
+exports.DashboardShell = DashboardShell;
+//# sourceMappingURL=chunk-EN6UIBOQ.cjs.map

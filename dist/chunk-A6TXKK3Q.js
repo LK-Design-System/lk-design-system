@@ -1,17 +1,17 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } }"use client";
-
-
-var _chunkKXHNWUJLcjs = require('./chunk-KXHNWUJL.cjs');
-
-
-var _chunkHILTSQAOcjs = require('./chunk-HILTSQAO.cjs');
-
-
-var _chunk677EM4M2cjs = require('./chunk-677EM4M2.cjs');
+"use client";
+import {
+  Legend
+} from "./chunk-CPKWHUIJ.js";
+import {
+  Tooltip
+} from "./chunk-ULKGKCCA.js";
+import {
+  VisuallyHidden
+} from "./chunk-LSN3BTKD.js";
 
 // components/data/LineChart.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
 var PALETTE = [
   "var(--color-semantic-data-viz-series-1)",
   "var(--color-semantic-data-viz-series-2)",
@@ -31,7 +31,7 @@ function isFiniteNumber(value) {
 function normalizeSeries(series) {
   return series.map((item, index) => ({
     ...item,
-    id: _nullishCoalesce(_nullishCoalesce(item.id, () => ( item.name)), () => ( index)),
+    id: item.id ?? item.name ?? index,
     points: (item.points || []).filter((point) => isFiniteNumber(point.x) && isFiniteNumber(point.y)).map((point) => ({ x: Number(point.x), y: Number(point.y) }))
   }));
 }
@@ -98,7 +98,7 @@ function resolveTickValues(min, max, ticks, fallbackCount) {
     const values = ticks.filter(isFiniteNumber).map(Number);
     return values.length ? values : buildTicks(min, max, fallbackCount);
   }
-  return buildTicks(min, max, _nullishCoalesce(ticks, () => ( fallbackCount)));
+  return buildTicks(min, max, ticks ?? fallbackCount);
 }
 function linePath(points, sx, sy) {
   return points.map((point, index) => `${index === 0 ? "M" : "L"}${sx(point.x).toFixed(2)} ${sy(point.y).toFixed(2)}`).join(" ");
@@ -112,7 +112,7 @@ function defaultFormatX(value) {
 function nodeText(node) {
   if (typeof node === "string" || typeof node === "number") return String(node);
   if (Array.isArray(node)) return node.map(nodeText).filter(Boolean).join(" ");
-  if (_react2.default.isValidElement(node)) return nodeText(node.props.children);
+  if (React.isValidElement(node)) return nodeText(node.props.children);
   return "";
 }
 function joinIds(...ids) {
@@ -172,17 +172,19 @@ function LineChart({
   const fx = formatX || defaultFormatX;
   const fy = formatY || defaultFormatY;
   const hasData = allPoints.length > 0;
-  const values = [...new Set((_nullishCoalesce(tooltipXValues, () => ( allPoints.map((point) => point.x)))).filter(Number.isFinite))].sort((a, b) => a - b);
-  const [activeX, setActiveX] = _react2.default.useState(null);
-  const [tooltipVisible, setTooltipVisible] = _react2.default.useState(false);
+  const values = [...new Set((tooltipXValues ?? allPoints.map((point) => point.x)).filter(Number.isFinite))].sort((a, b) => a - b);
+  const [activeX, setActiveX] = React.useState(null);
+  const [tooltipVisible, setTooltipVisible] = React.useState(false);
+  const [keyboardFocused, setKeyboardFocused] = React.useState(false);
+  const pointerFocus = React.useRef(false);
   const selectedX = values.includes(activeX) ? activeX : values.at(-1);
   const pointsAtSelectedX = normalized.flatMap((item) => item.points.filter((point) => point.x === selectedX));
   const selectedY = pointsAtSelectedX.length ? pointsAtSelectedX.reduce((sum, point) => sum + point.y, 0) / pointsAtSelectedX.length : (yMin + yMax) / 2;
-  const [tooltipAnchor, setTooltipAnchor] = _react2.default.useState(null);
-  const resolvedTooltipAnchor = _nullishCoalesce(tooltipAnchor, () => ( {
-    x: sx(_nullishCoalesce(selectedX, () => ( xMax))),
+  const [tooltipAnchor, setTooltipAnchor] = React.useState(null);
+  const resolvedTooltipAnchor = tooltipAnchor ?? {
+    x: sx(selectedX ?? xMax),
     y: sy(selectedY)
-  }));
+  };
   const tooltipEnabled = showTooltip && values.length > 0;
   const selectPointer = (event) => {
     const bounds = event.currentTarget.getBoundingClientRect();
@@ -211,7 +213,7 @@ function LineChart({
       setTooltipVisible(false);
     }
   };
-  const rawId = _react2.default.useId();
+  const rawId = React.useId();
   const clipId = `line-chart-${rawId.replace(/:/g, "")}-clip`;
   const descriptionId = `${rawId}-description`;
   const summaryId = `${rawId}-summary`;
@@ -232,16 +234,16 @@ function LineChart({
     const maximum = item.points.reduce((current, point) => point.y > current.y ? point : current, first);
     return `${label}: ${item.points.length}\uAC1C \uC810. \uC2DC\uC791 ${formattedText(fx, first.x)}\uC5D0\uC11C ${formattedText(fy, first.y)}, \uCD5C\uC800 ${formattedText(fy, minimum.y)}, \uCD5C\uACE0 ${formattedText(fy, maximum.y)}, \uB9C8\uC9C0\uB9C9 ${formattedText(fx, last.x)}\uC5D0\uC11C ${formattedText(fy, last.y)}.`;
   }).concat(referenceSummary ? [`\uAE30\uC900\uC120 ${visibleReferenceLines.length}\uAC1C. ${referenceSummary}`] : []).join(" ") : emptyText;
-  const resolvedSummary = _nullishCoalesce(summary, () => ( automaticSummary));
+  const resolvedSummary = summary ?? automaticSummary;
   const legendItems = normalized.map((item, index) => ({
     id: item.id,
-    label: _nullishCoalesce(item.name, () => ( `\uC2DC\uB9AC\uC988 ${index + 1}`)),
+    label: item.name ?? `\uC2DC\uB9AC\uC988 ${index + 1}`,
     color: item.color || PALETTE[index % PALETTE.length],
     shape: "line",
     dashed: item.dashed,
     disabled: item.points.length === 0
   }));
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ jsxs(
     "div",
     {
       style: {
@@ -255,10 +257,10 @@ function LineChart({
       },
       ...rest,
       children: [
-        description != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: descriptionId, children: description }),
-        resolvedSummary != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunk677EM4M2cjs.VisuallyHidden, { id: summaryId, "data-chart-summary": true, children: resolvedSummary }),
-        showLegend && normalized.length > 0 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          _chunkKXHNWUJLcjs.Legend,
+        description != null && /* @__PURE__ */ jsx(VisuallyHidden, { id: descriptionId, children: description }),
+        resolvedSummary != null && /* @__PURE__ */ jsx(VisuallyHidden, { id: summaryId, "data-chart-summary": true, children: resolvedSummary }),
+        showLegend && normalized.length > 0 && /* @__PURE__ */ jsx(
+          Legend,
           {
             items: legendItems,
             size: "sm",
@@ -266,15 +268,15 @@ function LineChart({
             style: { paddingLeft: `${pad.left / chartWidth * 100}%`, maxWidth: "100%" }
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0, ChartTooltip, { enabled: tooltipEnabled, open: tooltipVisible, anchor: resolvedTooltipAnchor, onOpenChange: setTooltipVisible, content: !tooltipEnabled ? null : renderTooltip ? renderTooltip(selectedX) : /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { style: { display: "grid", gap: "var(--space-1)" }, children: [
-          /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "strong", { children: fx(selectedX) }),
-          normalized.flatMap((item) => item.points.filter((point) => point.x === selectedX).map((point) => /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { children: [
+        /* @__PURE__ */ jsx(ChartTooltip, { enabled: tooltipEnabled, open: tooltipVisible, anchor: resolvedTooltipAnchor, onOpenChange: setTooltipVisible, content: !tooltipEnabled ? null : renderTooltip ? renderTooltip(selectedX) : /* @__PURE__ */ jsxs("span", { style: { display: "grid", gap: "var(--space-1)" }, children: [
+          /* @__PURE__ */ jsx("strong", { children: fx(selectedX) }),
+          normalized.flatMap((item) => item.points.filter((point) => point.x === selectedX).map((point) => /* @__PURE__ */ jsxs("span", { children: [
             item.name,
             ": ",
             fy(point.y),
             yLabel ? ` ${yLabel}` : ""
           ] }, item.id)))
-        ] }), children: /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+        ] }), children: /* @__PURE__ */ jsxs(
           "svg",
           {
             viewBox: `0 0 ${chartWidth} ${chartHeight}`,
@@ -285,22 +287,37 @@ function LineChart({
             tabIndex: tooltipEnabled ? 0 : void 0,
             onPointerMove: tooltipEnabled ? selectPointer : void 0,
             onPointerDown: tooltipEnabled ? (event) => {
+              pointerFocus.current = true;
+              setKeyboardFocused(false);
               selectPointer(event);
               event.currentTarget.focus();
             } : void 0,
-            onFocus: tooltipEnabled ? () => setTooltipVisible(true) : void 0,
-            onBlur: tooltipEnabled ? () => setTooltipVisible(false) : void 0,
-            onKeyDown: tooltipEnabled ? selectKeyboard : void 0,
+            onFocus: tooltipEnabled ? (event) => {
+              setKeyboardFocused(!pointerFocus.current && event.currentTarget.matches(":focus-visible"));
+              setTooltipVisible(true);
+            } : void 0,
+            onBlur: tooltipEnabled ? () => {
+              pointerFocus.current = false;
+              setKeyboardFocused(false);
+              setTooltipVisible(false);
+            } : void 0,
+            onKeyDown: tooltipEnabled ? (event) => {
+              pointerFocus.current = false;
+              setKeyboardFocused(true);
+              selectKeyboard(event);
+            } : void 0,
             style: {
               display: "block",
               width: "100%",
               height: "auto",
               aspectRatio: `${chartWidth} / ${chartHeight}`,
-              overflow: "visible"
+              overflow: "visible",
+              outline: keyboardFocused ? "var(--border-medium) solid var(--color-semantic-primary-normal)" : "none",
+              outlineOffset: "var(--space-1)"
             },
             children: [
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "defs", { children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "clipPath", { id: clipId, children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "rect", { x: pad.left, y: pad.top, width: innerWidth, height: innerHeight }) }) }),
-              showGrid && yTickValues.map((tick) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ jsx("defs", { children: /* @__PURE__ */ jsx("clipPath", { id: clipId, children: /* @__PURE__ */ jsx("rect", { x: pad.left, y: pad.top, width: innerWidth, height: innerHeight }) }) }),
+              showGrid && yTickValues.map((tick) => /* @__PURE__ */ jsx(
                 "line",
                 {
                   x1: pad.left,
@@ -312,7 +329,7 @@ function LineChart({
                 },
                 `grid-${tick}`
               )),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ jsx(
                 "line",
                 {
                   x1: pad.left,
@@ -323,7 +340,7 @@ function LineChart({
                   strokeWidth: "1"
                 }
               ),
-              /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ jsx(
                 "line",
                 {
                   x1: pad.left,
@@ -334,7 +351,7 @@ function LineChart({
                   strokeWidth: "1"
                 }
               ),
-              yTickValues.map((tick) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              yTickValues.map((tick) => /* @__PURE__ */ jsx(
                 "text",
                 {
                   x: pad.left - 8,
@@ -346,7 +363,7 @@ function LineChart({
                 },
                 `y-${tick}`
               )),
-              xTickValues.map((tick, index) => /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              xTickValues.map((tick, index) => /* @__PURE__ */ jsx(
                 "text",
                 {
                   x: sx(tick),
@@ -358,7 +375,7 @@ function LineChart({
                 },
                 `x-${tick}`
               )),
-              xLabel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              xLabel && /* @__PURE__ */ jsx(
                 "text",
                 {
                   x: pad.left + innerWidth,
@@ -370,7 +387,7 @@ function LineChart({
                   children: xLabel
                 }
               ),
-              yLabel && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              yLabel && /* @__PURE__ */ jsx(
                 "text",
                 {
                   x: 14,
@@ -386,8 +403,8 @@ function LineChart({
               visibleReferenceLines.map((line, index) => {
                 const y = sy(Number(line.y));
                 const color = line.color || "var(--color-semantic-data-viz-series-5)";
-                return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { children: [
-                  /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                return /* @__PURE__ */ jsxs("g", { children: [
+                  /* @__PURE__ */ jsx(
                     "line",
                     {
                       x1: pad.left,
@@ -400,7 +417,7 @@ function LineChart({
                       strokeDasharray: line.dashed === false ? void 0 : "4 4"
                     }
                   ),
-                  line.label != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  line.label != null && /* @__PURE__ */ jsx(
                     "text",
                     {
                       x: pad.left + innerWidth + 4,
@@ -413,10 +430,10 @@ function LineChart({
                       children: line.label
                     }
                   )
-                ] }, _nullishCoalesce(_nullishCoalesce(line.id, () => ( line.label)), () => ( index)));
+                ] }, line.id ?? line.label ?? index);
               }),
-              /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { children: [
-                tooltipEnabled && tooltipVisible && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              /* @__PURE__ */ jsxs("g", { children: [
+                tooltipEnabled && tooltipVisible && /* @__PURE__ */ jsx(
                   "line",
                   {
                     clipPath: `url(#${clipId})`,
@@ -431,8 +448,8 @@ function LineChart({
                 normalized.map((item, index) => {
                   const color = item.color || PALETTE[index % PALETTE.length];
                   const path = linePath(item.points, sx, sy);
-                  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "g", { children: [
-                    item.points.length > 1 && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                  return /* @__PURE__ */ jsxs("g", { children: [
+                    item.points.length > 1 && /* @__PURE__ */ jsx(
                       "path",
                       {
                         clipPath: `url(#${clipId})`,
@@ -446,7 +463,7 @@ function LineChart({
                         strokeDasharray: item.dashed ? "5 4" : void 0
                       }
                     ),
-                    (showPoints || item.points.length === 1) && item.points.map((point, pointIndex) => point.x >= Math.min(xMin, xMax) && point.x <= Math.max(xMin, xMax) && point.y >= Math.min(yMin, yMax) && point.y <= Math.max(yMin, yMax) && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+                    (showPoints || item.points.length === 1) && item.points.map((point, pointIndex) => point.x >= Math.min(xMin, xMax) && point.x <= Math.max(xMin, xMax) && point.y >= Math.min(yMin, yMax) && point.y <= Math.max(yMin, yMax) && /* @__PURE__ */ jsx(
                       "circle",
                       {
                         cx: sx(point.x),
@@ -462,7 +479,7 @@ function LineChart({
                   ] }, item.id);
                 })
               ] }),
-              !hasData && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+              !hasData && /* @__PURE__ */ jsx(
                 "text",
                 {
                   "data-chart-empty": true,
@@ -485,7 +502,7 @@ function LineChart({
 }
 function ChartTooltip({ enabled, open, anchor, content, children, onOpenChange }) {
   if (!enabled) return children;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ jsxs(
     "span",
     {
       style: { position: "relative", display: "block", width: "100%" },
@@ -494,8 +511,8 @@ function ChartTooltip({ enabled, open, anchor, content, children, onOpenChange }
       },
       children: [
         children,
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          _chunkHILTSQAOcjs.Tooltip,
+        /* @__PURE__ */ jsx(
+          Tooltip,
           {
             content,
             open,
@@ -506,7 +523,7 @@ function ChartTooltip({ enabled, open, anchor, content, children, onOpenChange }
               root: { position: "absolute", left: anchor.x, top: anchor.y, width: 1, height: 1 },
               bubble: { pointerEvents: "auto" }
             },
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { "aria-hidden": "true", style: { display: "block", width: 1, height: 1 } })
+            children: /* @__PURE__ */ jsx("span", { "aria-hidden": "true", style: { display: "block", width: 1, height: 1 } })
           }
         )
       ]
@@ -514,7 +531,7 @@ function ChartTooltip({ enabled, open, anchor, content, children, onOpenChange }
   );
 }
 
-
-
-exports.LineChart = LineChart;
-//# sourceMappingURL=chunk-U4WZGBFZ.cjs.map
+export {
+  LineChart
+};
+//# sourceMappingURL=chunk-A6TXKK3Q.js.map

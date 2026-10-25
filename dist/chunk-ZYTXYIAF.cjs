@@ -84,6 +84,7 @@ function Drawer({
   headerSize = "auto",
   title,
   headerActions,
+  headerStyle,
   subtitle,
   children,
   footer,
@@ -210,7 +211,7 @@ function Drawer({
             "data-density": resolvedDensity,
             "data-header-size": resolvedHeaderSize,
             children: [
-              (title != null || subtitle != null || headerActions != null || onClose) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)", padding: headerPadding, borderBottom: `1px solid ${tones.divider}` }, children: [
+              (title != null || subtitle != null || headerActions != null || onClose) && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)", padding: headerPadding, borderBottom: `1px solid ${tones.divider}`, ...headerStyle }, children: [
                 /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { flex: 1, minWidth: 0, display: "grid", gap: "var(--space-1)" }, children: [
                   title != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { id: titleId, style: { fontSize: "var(--headline1-size)", fontWeight: "var(--fw-extra)", letterSpacing: 0, color: tones.title, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }, children: title }),
                   subtitle != null && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "div", { id: subtitleId, style: { color: tones.body, fontSize: "var(--label1-size)", lineHeight: "var(--label1-reading-line)", overflowWrap: "anywhere" }, children: subtitle })
@@ -283,4 +284,4 @@ function DrawerSection({
 
 
 exports.Drawer = Drawer; exports.DrawerSection = DrawerSection;
-//# sourceMappingURL=chunk-4T4R2GWT.cjs.map
+//# sourceMappingURL=chunk-ZYTXYIAF.cjs.map

@@ -16,6 +16,8 @@ export interface DrawerProps {
   title?: React.ReactNode;
   /** 제목의 말줄임 영역 밖, 닫기 앞에 놓이는 보조 명령. icon-only control에는 접근 가능한 이름을 제공하세요. */
   headerActions?: React.ReactNode;
+  /** Public header presentation, including divider and safe-area padding. */
+  headerStyle?: React.CSSProperties;
   /** 제목 아래의 짧은 보조 설명. dialog의 `aria-describedby`와 연결됩니다. */
   subtitle?: React.ReactNode;
   children?: React.ReactNode;
