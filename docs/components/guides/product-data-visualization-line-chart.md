@@ -20,9 +20,9 @@
 ### 사용하지 않음
 
 - renderTooltip(x)는 제품의 시각·단위·집계·결측 표시를 맡습니다. Portal의 원본 최신값과 집계된 이력을 혼동하지 않도록 툴팁에 집계 단위를 표시합니다. 범례·조회 기간·폴링은 제품 소유입니다.
+- 비교 대상: Legend, Tooltip, BarChart. 차트에 카드 chrome을 추가하지 않고 Core 말풍선의 표면·타이포·간격을 유지합니다. hover 가능한 말풍선과 150ms 닫힘 지연은 포인터 이동을 위한 접근성 차이입니다.
 - 범위: LK Product Extension인 LineChart의 시점 조회만 확장합니다. LK Portal의 장치 리소스 분석이 직접 소비자이며, LK Web Viz와 LK Control Full Daedeok의 transport/실시간 제어 변경은 이 증분에 해당하지 않습니다. 해당 제품의 툴팁 채택을 검증 완료로 주장하지 않습니다.
 - host Card/ChartFrame이 title, surface, action, refresh를 소유합니다. LineChart에는 별도 카드 chrome을 추가하지 않습니다.
-- Carbon accessibility for developers의 meaningful description/data alternative 원칙에 따라 선 모양과 색만 발표하지 않고 시작·범위·마지막 값을 텍스트로 제공합니다.
 
 ## Anatomy
 
@@ -71,8 +71,8 @@
 | 명시 규칙 1 | y축 눈금은 nice tick입니다. yTicks(기본 4)는 간격 수 힌트이고, step은 1·2·2.5·5 × 10ⁿ 중 가장 가까운 값으로 맞춥니다(2.5는 0–1·0–100 백분율 축이 0/25/50/75/100으로 읽히도록 유지). 자동 domain은 step의 배수로 넓히고, yDomain을 명시하면 그 범위를 유지한 채 범위 안의 step 배수에만 눈금을 둡니다. 눈금 값은 step 정밀도로 반올림해 부동소수 잡음이 라벨에 나오지 않습니다. 이전의 데이터 최대값 균등 분할(0 / 0.22 / 0.45 …)은 격자와 대조해 읽을 수 없어 폐기했습니다. |
 | 명시 규칙 2 | 시리즈·point·기준선 stroke는 vector-effect: non-scaling-stroke라서 굵기가 CSS px입니다. responsive viewBox가 width보다 좁게 렌더될 때 2px 선이 1.5px로 가늘어지던 문제를 막습니다. 점선 series는 그대로 점선입니다. |
 | 명시 규칙 3 | 다중 시리즈를 색상만으로 구분하지 않습니다(WCAG 1.4.1). 텍스트 요약이 1차 대안이고, 시각적으로도 시리즈가 셋 이상이거나 색각 이상 사용자를 고려해야 하면 dashed(선 패턴)나 showPoints(마커)를 함께 켜서 색 외 단서를 남기세요. |
-| 명시 규칙 4 | 포인터를 따라가는 동작은 Highcharts tooltip.followPointer의 직접 조작 관례를 따릅니다. 툴팁은 커서와 간격을 두고, WCAG 2.2 SC 1.4.13에 따라 Escape로 닫히며 툴팁 자체를 가리킬 수 있고 포인터나 포커스가 유지되는 동안 사라지지 않습니다. |
-| --color-semantic-background-elevated-normal | light: #FFFFFF; dark: #212225 |
+| 명시 규칙 4 | 터치·마우스 선택은 툴팁의 focus를 유지하되 SVG 전체에 브라우저 기본 테두리를 표시하지 않습니다. Tab 진입과 키보드 조작에는 --border-medium/--color-semantic-primary-normal/--space-1 토큰으로 포커스를 표시합니다. 기존 tabindex, 좌우 방향키·Home/End·Escape와 툴팁 정보는 유지합니다. |
+| --border-medium | 1.5px |
 
 ## Responsive
 
@@ -130,6 +130,7 @@
 
 ### Tokens
 
+- `--border-medium`
 - `--color-semantic-background-elevated-normal`
 - `--color-semantic-data-viz-series-1`
 - `--color-semantic-data-viz-series-2`
@@ -139,6 +140,7 @@
 - `--color-semantic-label-alternative`
 - `--color-semantic-line-normal-alternative`
 - `--color-semantic-line-normal-normal`
+- `--color-semantic-primary-normal`
 - `--font-sans`
 - `--fw-medium`
 - `--fw-semibold`

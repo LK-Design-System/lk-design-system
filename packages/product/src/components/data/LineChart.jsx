@@ -241,6 +241,8 @@ export function LineChart({
   const values = [...new Set((tooltipXValues ?? allPoints.map((point) => point.x)).filter(Number.isFinite))].sort((a, b) => a - b);
   const [activeX, setActiveX] = React.useState(null);
   const [tooltipVisible, setTooltipVisible] = React.useState(false);
+  const [keyboardFocused, setKeyboardFocused] = React.useState(false);
+  const pointerFocus = React.useRef(false);
   const selectedX = values.includes(activeX) ? activeX : values.at(-1);
   const pointsAtSelectedX = normalized.flatMap((item) => item.points.filter((point) => point.x === selectedX));
   const selectedY = pointsAtSelectedX.length
@@ -364,16 +366,18 @@ export function LineChart({
         data-chart-type="line"
         tabIndex={tooltipEnabled ? 0 : undefined}
         onPointerMove={tooltipEnabled ? selectPointer : undefined}
-        onPointerDown={tooltipEnabled ? (event) => { selectPointer(event); event.currentTarget.focus(); } : undefined}
-        onFocus={tooltipEnabled ? () => setTooltipVisible(true) : undefined}
-        onBlur={tooltipEnabled ? () => setTooltipVisible(false) : undefined}
-        onKeyDown={tooltipEnabled ? selectKeyboard : undefined}
+        onPointerDown={tooltipEnabled ? (event) => { pointerFocus.current = true; setKeyboardFocused(false); selectPointer(event); event.currentTarget.focus(); } : undefined}
+        onFocus={tooltipEnabled ? (event) => { setKeyboardFocused(!pointerFocus.current && event.currentTarget.matches(':focus-visible')); setTooltipVisible(true); } : undefined}
+        onBlur={tooltipEnabled ? () => { pointerFocus.current = false; setKeyboardFocused(false); setTooltipVisible(false); } : undefined}
+        onKeyDown={tooltipEnabled ? (event) => { pointerFocus.current = false; setKeyboardFocused(true); selectKeyboard(event); } : undefined}
         style={{
           display: 'block',
           width: '100%',
           height: 'auto',
           aspectRatio: `${chartWidth} / ${chartHeight}`,
           overflow: 'visible',
+          outline: keyboardFocused ? 'var(--border-medium) solid var(--color-semantic-primary-normal)' : 'none',
+          outlineOffset: 'var(--space-1)',
         }}
       >
         <defs>

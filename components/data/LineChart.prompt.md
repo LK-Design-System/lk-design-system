@@ -55,6 +55,7 @@
 ## 시점 조회 (2026-09-09)
 
 - `showTooltip`은 기본 false인 추가 기능입니다. 기존 Core `Tooltip`의 배치·Escape·hover/focus 수명주기를 재사용하며 차트 위에 안정된 읽기 위치로 표시합니다.
+- 터치·마우스 선택은 툴팁의 focus를 유지하되 SVG 전체에 브라우저 기본 테두리를 표시하지 않습니다. Tab 진입과 키보드 조작에는 `--border-medium`/`--color-semantic-primary-normal`/`--space-1` 토큰으로 포커스를 표시합니다. 기존 tabindex, 좌우 방향키·Home/End·Escape와 툴팁 정보는 유지합니다.
 - 포인터 툴팁은 차트 안에서 커서를 따라가되 값은 가까운 x에 스냅합니다. 차트에 Tab으로 진입한 뒤 좌우 방향키·Home/End로 이동하면 선택한 시점의 데이터 높이에 기준점을 둡니다. 터치는 차트를 탭합니다. `tooltipXValues`로 결측 시점도 제공할 수 있습니다.
 - 포인터를 따라가는 동작은 [Highcharts `tooltip.followPointer`](https://api.highcharts.com/highcharts/tooltip.followPointer)의 직접 조작 관례를 따릅니다. 툴팁은 커서와 간격을 두고, [WCAG 2.2 SC 1.4.13](https://www.w3.org/WAI/WCAG22/Understanding/content-on-hover-or-focus.html)에 따라 Escape로 닫히며 툴팁 자체를 가리킬 수 있고 포인터나 포커스가 유지되는 동안 사라지지 않습니다.
 - `renderTooltip(x)`는 제품의 시각·단위·집계·결측 표시를 맡습니다. Portal의 원본 최신값과 집계된 이력을 혼동하지 않도록 툴팁에 집계 단위를 표시합니다. 범례·조회 기간·폴링은 제품 소유입니다.

@@ -16,9 +16,9 @@
   ],
   "avoidWhen": [
     "renderTooltip(x)는 제품의 시각·단위·집계·결측 표시를 맡습니다. Portal의 원본 최신값과 집계된 이력을 혼동하지 않도록 툴팁에 집계 단위를 표시합니다. 범례·조회 기간·폴링은 제품 소유입니다.",
+    "비교 대상: Legend, Tooltip, BarChart. 차트에 카드 chrome을 추가하지 않고 Core 말풍선의 표면·타이포·간격을 유지합니다. hover 가능한 말풍선과 150ms 닫힘 지연은 포인터 이동을 위한 접근성 차이입니다.",
     "범위: LK Product Extension인 LineChart의 시점 조회만 확장합니다. LK Portal의 장치 리소스 분석이 직접 소비자이며, LK Web Viz와 LK Control Full Daedeok의 transport/실시간 제어 변경은 이 증분에 해당하지 않습니다. 해당 제품의 툴팁 채택을 검증 완료로 주장하지 않습니다.",
-    "host Card/ChartFrame이 title, surface, action, refresh를 소유합니다. LineChart에는 별도 카드 chrome을 추가하지 않습니다.",
-    "Carbon accessibility for developers의 meaningful description/data alternative 원칙에 따라 선 모양과 색만 발표하지 않고 시작·범위·마지막 값을 텍스트로 제공합니다."
+    "host Card/ChartFrame이 title, surface, action, refresh를 소유합니다. LineChart에는 별도 카드 chrome을 추가하지 않습니다."
   ],
   "anatomy": [
     {
@@ -210,11 +210,11 @@
     },
     {
       "subject": "명시 규칙 4",
-      "rule": "포인터를 따라가는 동작은 Highcharts tooltip.followPointer의 직접 조작 관례를 따릅니다. 툴팁은 커서와 간격을 두고, WCAG 2.2 SC 1.4.13에 따라 Escape로 닫히며 툴팁 자체를 가리킬 수 있고 포인터나 포커스가 유지되는 동안 사라지지 않습니다."
+      "rule": "터치·마우스 선택은 툴팁의 focus를 유지하되 SVG 전체에 브라우저 기본 테두리를 표시하지 않습니다. Tab 진입과 키보드 조작에는 --border-medium/--color-semantic-primary-normal/--space-1 토큰으로 포커스를 표시합니다. 기존 tabindex, 좌우 방향키·Home/End·Escape와 툴팁 정보는 유지합니다."
     },
     {
-      "subject": "--color-semantic-background-elevated-normal",
-      "rule": "light: #FFFFFF; dark: #212225"
+      "subject": "--border-medium",
+      "rule": "1.5px"
     }
   ],
   "responsive": [
@@ -278,6 +278,7 @@
     }
   ],
   "tokens": [
+    "--border-medium",
     "--color-semantic-background-elevated-normal",
     "--color-semantic-data-viz-series-1",
     "--color-semantic-data-viz-series-2",
@@ -287,6 +288,7 @@
     "--color-semantic-label-alternative",
     "--color-semantic-line-normal-alternative",
     "--color-semantic-line-normal-normal",
+    "--color-semantic-primary-normal",
     "--font-sans",
     "--fw-medium",
     "--fw-semibold",

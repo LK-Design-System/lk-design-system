@@ -31,6 +31,7 @@ const firstFilterRef = useRef(null);
 - 제목이 있으면 `aria-labelledby`, 없으면 `ariaLabel`을 사용합니다.
 - 제품 맥락에 맞는 닫기 명령은 `closeLabel`로 제공하며 inline/overlay 표현을 바꾸어도 같은 이름을 유지할 수 있습니다.
 - `bodyStyle`은 기본 body padding과 scroll contract를 유지하되, `DashboardShell temporaryNavigation`처럼 edge-attached 자식이 자체 padding·divider를 소유할 때만 `padding: 0` 같은 layout override를 전달합니다.
+- `headerStyle`은 Drawer가 소유한 header 표면의 공개 style 합성 지점입니다. 기본값을 바꾸지 않으며, 모바일 탐색 셸이 기존 safe-area padding과 이어지는 표면을 유지해야 할 때 `paddingTop`과 `borderBottom: 0` 등을 전달할 수 있습니다. 소비 제품은 내부 selector를 덮어쓰지 않습니다. 제목·닫기 버튼의 의미, focus trap·복원, 좌우 slide·reduced-motion 계약은 유지합니다.
 
 ## Short header contract (`headerSize`)
 

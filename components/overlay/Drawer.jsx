@@ -88,6 +88,7 @@ export function Drawer({
   headerSize = 'auto',
   title,
   headerActions,
+  headerStyle,
   subtitle,
   children,
   footer,
@@ -231,7 +232,7 @@ export function Drawer({
             data-header-size={resolvedHeaderSize}
           >
             {(title != null || subtitle != null || headerActions != null || onClose) && (
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: headerPadding, borderBottom: `1px solid ${tones.divider}` }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: headerPadding, borderBottom: `1px solid ${tones.divider}`, ...headerStyle }}>
                 <div style={{ flex: 1, minWidth: 0, display: 'grid', gap: 'var(--space-1)' }}>
                   {title != null && <div id={titleId} style={{ fontSize: 'var(--headline1-size)', fontWeight: 'var(--fw-extra)', letterSpacing: 0, color: tones.title, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>}
                   {subtitle != null && <div id={subtitleId} style={{ color: tones.body, fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-reading-line)', overflowWrap: 'anywhere' }}>{subtitle}</div>}

@@ -2,6 +2,18 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.4.11 - 2026-10-26
+
+Paired Robotics release: `0.1.0-rc.53` (unchanged).
+
+### Fixed
+
+- `LineChart`의 터치·마우스 선택 시 SVG 전체에 나타나던 브라우저 기본 포커스 테두리를 제거하고, 키보드 탐색에는 테마 포커스를 유지합니다. 시점 선택과 툴팁, 방향키·Home/End·Escape 동작은 유지합니다.
+
+### Added
+
+- `Drawer.headerStyle` 공개 합성 지점을 추가했습니다. 기존 헤더의 기본 표현을 유지하면서 탐색 셸이 safe-area 여백과 이어지는 표면의 구분선을 명시할 수 있습니다. 패널의 좌우 슬라이드, 배경, 키보드 초점·복원과 reduced-motion 동작은 유지합니다.
+
 ## 0.4.10 - 2026-10-24
 
 Paired Robotics release: `0.1.0-rc.53` (unchanged).

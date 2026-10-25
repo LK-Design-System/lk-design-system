@@ -14,6 +14,7 @@
 
 ### 사용
 
+- 근거: WAI-ARIA APG Modal Dialog Pattern은 dialog가 닫히면 invoker로 초점을 되돌리도록 요구하며, WCAG 2.1 Success Criterion 2.3.3 Animation from Interactions에 따라 motion을 줄인 사용자에게는 exit transition을 생략합니다.
 - 기본 withinPortal=true이며 LdsProvider.portalTarget 또는 명시적 portalTarget에 렌더링됩니다. 가까운 theme scope와 dir을 상속하고 clipping ancestor를 벗어납니다.
 - Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. LDS의 두 density도 anatomy와 sticky region 순서는 공유하고 spacing/type만 바꾸며, 여러 overlay Drawer 동시 노출은 제외했습니다.
 
@@ -30,11 +31,11 @@
 | --- | --- |
 | headerSize | header padding만 선택합니다. auto는 기존 density별 여백, sm은 8×20px이며 body/footer 밀도와 control 크기는 유지합니다. @default "auto" |
 | headerActions | 제목의 말줄임 영역 밖, 닫기 앞에 놓이는 보조 명령. icon-only control에는 접근 가능한 이름을 제공하세요. |
+| headerStyle | Public header presentation, including divider and safe-area padding. |
 | subtitle | 제목 아래의 짧은 보조 설명. dialog의 aria-describedby와 연결됩니다. |
 | ariaLabel | title이 없을 때 사용할 접근 가능한 이름. @default "서랍 패널" |
 | closeLabel | 닫기 버튼의 접근 가능한 이름. @default "닫기" |
 | bodyStyle | 스크롤 body의 padding·layout을 조합별로 조정합니다. |
-| onTransitionEnd | dialog 표면의 transition 종료 handler. Drawer는 slide-out이 끝난 뒤 unmount하며, 제품 handler를 먼저 호출합니다. |
 
 ## Properties
 
@@ -48,6 +49,7 @@
 | `headerSize` | `'auto' \| 'sm'` | No | header padding만 선택합니다. auto는 기존 density별 여백, sm은 8×20px이며 body/footer 밀도와 control 크기는 유지합니다. @default "auto" |
 | `title` | `React.ReactNode` | No |  |
 | `headerActions` | `React.ReactNode` | No | 제목의 말줄임 영역 밖, 닫기 앞에 놓이는 보조 명령. icon-only control에는 접근 가능한 이름을 제공하세요. |
+| `headerStyle` | `React.CSSProperties` | No | Public header presentation, including divider and safe-area padding. |
 | `subtitle` | `React.ReactNode` | No | 제목 아래의 짧은 보조 설명. dialog의 aria-describedby와 연결됩니다. |
 | `children` | `React.ReactNode` | No |  |
 | `footer` | `React.ReactNode` | No |  |
@@ -63,7 +65,6 @@
 | `portalTarget` | `HTMLElement \| null` | No |  |
 | `zIndex` | `number` | No |  |
 | `bodyStyle` | `React.CSSProperties` | No | 스크롤 body의 padding·layout을 조합별로 조정합니다. |
-| `onTransitionEnd` | `React.TransitionEventHandler` | No | dialog 표면의 transition 종료 handler. Drawer는 slide-out이 끝난 뒤 unmount하며, 제품 handler를 먼저 호출합니다. |
 
 ## States
 
@@ -77,8 +78,8 @@
 - density="comfortable"이 기본값이며 default profile의 기존 Drawer 출력과 동일합니다. 검토처럼 읽기 여유가 필요한 보조 표면에 사용합니다. ops에서는 같은 density API가 profile-aware chrome token을 읽습니다.
 - 자식의 명시적 size, padding, density가 항상 상속값보다 우선합니다. Drawer 밖과 comfortable Drawer의 기존 기본 출력은 유지됩니다.
 - header 닫기와 footer는 scope 밖에 있습니다. footer CTA와 보조 액션은 기존 md 40px를 유지하며 body 안의 행 단위 액션도 의미상 필요할 때만 명시적으로 size="sm"을 선택합니다.
+- appearance는 표면만 바꿉니다. anatomy, density, focus/Escape/스크롤 계약, portal·stack 동작은 동일합니다. DashboardShell은 temporaryNavigationAppearance로 이 축을 그대로 전달합니다.
 - open={false}가 되어도 Drawer는 slide-out transition이 끝날 때까지 mount를 유지합니다. 그동안 dialog는 aria-modal을 잃고 aria-hidden·inert가 되어 접근성 트리와 Tab 순서에서 즉시 제외되며, scrim 클릭과 닫기 버튼은 무시됩니다. transitionend(transform) 또는 계산된 transition 시간 + 50ms 뒤에 unmount하고, prefers-reduced-motion: reduce에서는 transition을 0으로 두어 바로 unmount합니다.
-- 초점 복원은 시각 transition을 기다리지 않습니다. useDialogFocus가 modal을 해제하는 layout-effect cleanup은 shell이 배경 inert를 제거하기 전에 실행되므로, Drawer는 그 직후의 layout effect에서 returnFocusRef 또는 열 때 기록한 invoker가 다시 focus 가능해졌는지(hidden·inert·aria-hidden·display:none·disabled 아님) 확인한 뒤 복원합니다. 제품이 닫는 동안 다른 곳으로 초점을 명시적으로 옮겼으면 덮어쓰지 않습니다.
 
 ## 정량 규칙
 
@@ -87,7 +88,7 @@
 | 명시 규칙 1 | Modal과 달리 좌/우 edge에 붙고, side, 380px 기본 폭, 92vw 상한, slide transition을 유지합니다. 이 차이는 본문 맥락과 나란히 연결되는 보조 작업이라는 기능으로 정당화됩니다. |
 | 명시 규칙 2 | 시각 delta inventory: headline typography, divider, elevated fill/foreground, shadow, 20px 닫기 아이콘과 기존 Button 크기, hover/focus/disabled 처리는 유지합니다. default profile의 comfortable은 기존과 동일하게 header/body space-5 space-6, footer space-4 space-6, body body2/1.7을 사용합니다. |
 | 명시 규칙 3 | bodyStyle은 기본 body padding과 scroll contract를 유지하되, DashboardShell temporaryNavigation처럼 edge-attached 자식이 자체 padding·divider를 소유할 때만 padding: 0 같은 layout override를 전달합니다. |
-| 명시 규칙 4 | 이 변경은 기존 Product Extension의 선택적 축입니다. headerSize="auto"가 기본이며 기존 density별 header 출력은 그대로입니다. 문서처럼 제목과 빠른 명령만 놓이는 표면은 headerSize="sm"을 명시해 header padding만 space-2 space-5(8×20px)로 줄입니다. width, body/footer density, 자식 밀도 상속은 독립적입니다. |
+| 명시 규칙 4 | headerStyle은 Drawer가 소유한 header 표면의 공개 style 합성 지점입니다. 기본값을 바꾸지 않으며, 모바일 탐색 셸이 기존 safe-area padding과 이어지는 표면을 유지해야 할 때 paddingTop과 borderBottom: 0 등을 전달할 수 있습니다. 소비 제품은 내부 selector를 덮어쓰지 않습니다. 제목·닫기 버튼의 의미, focus trap·복원, 좌우 slide·reduced-motion 계약은 유지합니다. |
 | --body2-line | 22px |
 
 ## Responsive
@@ -108,9 +109,9 @@
 
 - Modal, Sheet, ConfirmDialog를 sibling으로 확인했습니다. focus/keyboard 계약은 ConfirmDialog와 공유하되 표면은 기존 Drawer 그대로입니다.
 - 제목이 있으면 aria-labelledby, 없으면 ariaLabel을 사용합니다.
+- 이 변경은 기존 Product Extension의 선택적 축입니다. headerSize="auto"가 기본이며 기존 density별 header 출력은 그대로입니다. 문서처럼 제목과 빠른 명령만 놓이는 표면은 headerSize="sm"을 명시해 header padding만 space-2 space-5(8×20px)로 줄입니다. width, body/footer density, 자식 밀도 상속은 독립적입니다.
 - 구현 전 시각 delta inventory: 가장 가까운 Drawer auto, Modal, Sheet와 비교해 제목 단계·글꼴·전경, 20px 닫기 glyph, 현재 profile의 IconButton sm target, gap, divider, fill, shadow, radius, hover/focus/disabled, edge 방향과 읽기·Tab 순서는 유지합니다. 유일한 차이는 header의 수직 여백입니다. 새 marker, 테두리, 고정 높이 또는 control 축소는 추가하지 않습니다.
 - 첫 렌더링의 키보드 시각 검증에서 title 안에 합성한 명령의 focus ring이 기존 ellipsis wrapper에 잘리는 것을 확인했습니다. headerActions는 제목의 말줄임 영역 밖, 닫기 앞에 놓이는 optional quick-action slot입니다. Fluent header quick-action anatomy를 따르며 slot이 없을 때 기존 DOM과 chrome은 유지합니다. 제목 → quick actions → 닫기의 읽기·Tab 순서를 보존하고 overlay overflow를 전역 해제하지 않습니다.
-- DrawerSection.headingLevel은 실제 문서 계층에 맞춰 26을 선택하고 기본값은 3입니다. 짧은 보조 명령은 actions에 두며, headerStyle과 contentStyle은 고유한 레이아웃 조합에만 사용합니다. 이 style escape hatch로 제목 크기·밀도·divider 간격을 다시 정의하지 않습니다.
 
 ## Exceptions
 
