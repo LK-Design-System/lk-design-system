@@ -708,6 +708,10 @@
     "slug": "product-viewer-toolbar"
   },
   {
+    "storybookTitle": "LDS Product/Viewer/Video Playback Controls",
+    "slug": "product-viewer-video-playback-controls"
+  },
+  {
     "storybookTitle": "LDS Product/Viewer/Video Stream",
     "slug": "product-viewer-video-stream"
   },

@@ -212,6 +212,7 @@ export { Map2DCanvas } from '../components/viz/Map2DCanvas';
 export { Scene3DFrame } from '../components/viz/Scene3DFrame';
 export { TelemetryGauge } from '../components/viz/TelemetryGauge';
 export { TelemetryValue } from '../components/viz/TelemetryValue';
+export { VideoPlaybackControls } from '../components/viz/VideoPlaybackControls';
 export { VideoStreamTile } from '../components/viz/VideoStreamTile';
 export { VIEWER_BLOCKING_STATES, VIEWER_STATES, ViewerFrame } from '../components/viz/ViewerFrame';
 export { ViewerToolbar, ViewerToolbarButton } from '../components/viz/ViewerToolbar';

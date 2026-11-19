@@ -15,7 +15,6 @@
 ### 사용하지 않음
 
 - Arrow 키는 dialog 자체에서 처리합니다. document 전역 리스너가 아니므로 위에 열린 overlay가 키를 먼저 가져가고, 이미 처리된(defaultPrevented) 키는 다시 소비하지 않습니다.
-- zoom·pan 컨트롤은 이 계약에 포함하지 않습니다. 확대가 필요한 검토 흐름은 전용 뷰어 화면을 씁니다.
 
 ## Anatomy
 
@@ -44,6 +43,7 @@
 | `previousLabel` | `string` | No | 이전 이미지 버튼의 접근 가능한 이름. @default "이전 이미지" |
 | `nextLabel` | `string` | No | 다음 이미지 버튼의 접근 가능한 이름. @default "다음 이미지" |
 | `positionLabel` | `(position: number, total: number) = string` | No | 위치 표시와 슬라이드 알림 문구를 만드는 formatter. @default (n, total) = 이미지 ${n} / ${total} |
+| `imageSizing` | `'natural' \| 'contain'` | No | natural only shrinks; contain fits the existing viewport box and can upscale, preserving aspect ratio. @default "natural" |
 | `style` | `React.CSSProperties` | No |  |
 
 ## 정량 규칙
@@ -51,10 +51,14 @@
 | Subject | Rule |
 | --- | --- |
 | 명시 규칙 1 | 이미지가 2장 이상이면 화살표 컨트롤과 위치 표시가 함께 나타납니다. 위치 표시는 시각 장식이며 같은 문구를 상시 마운트된 role="status" live region이 polite로 전달합니다. 슬라이드가 바뀌면 위치와 대체 텍스트가 함께 발표됩니다. |
+| 명시 규칙 2 | imageSizing="natural"(기본)은 기존 원본 크기를 유지하고 큰 이미지만86vw/86vh에 맞춰 줄입니다. imageSizing="contain"은 이미지의 실제 aspect ratio를 보존해 같은 viewport 영역에 맞춰 작은 이미지를 업스케일합니다. 한 장에서는 X만 남고 화살표/카운터는 없습니다. zoom·pan 조작이나 이미지 복원 기능은 추가하지 않습니다. 원본82×182 같은 저해상도 crop을 크게 표시해도 새 세부 정보를 만들지는 않습니다. |
+| 명시 규칙 3 | 작은 이미지 viewport 맞춤(2026-10-15) |
 | --color-semantic-inverse-fill-normal | light: rgba(255, 255, 255, 0.12); dark: rgba(255, 255, 255, 0.12) |
 | --color-semantic-inverse-icon-muted | light: rgba(255, 255, 255, 0.75); dark: rgba(255, 255, 255, 0.75) |
-| --color-semantic-inverse-label | light: #FFFFFF; dark: #171719 |
-| --component-dialog-scrim-blur | 2px |
+
+## Responsive
+
+- imageSizing은 opt-in sizing만 소유합니다. 기존 modal/focus, SSR, keyboard, 디코딩 상태, 기존 opacity motion과 controls는 바꾸지 않습니다. 이미지 natural aspect ratio를 decode 뒤 확보하고 CSS min(86vw,86vh×ratio)와 auto height로 크기를 정하므로 border/shadow가 실제 이미지 둘레에 머뭅니다.
 
 ## Content and writing
 
@@ -120,3 +124,5 @@
 - [WAI-ARIA Modal Dialog Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
 - [WAI-ARIA Carousel Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/)
 - [React Aria Modal](https://react-aria.adobe.com/Modal)
+- [MDN object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-fit)
+- [W3C modal dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)

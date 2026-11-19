@@ -61,7 +61,7 @@ WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`
 - visual inventory React story: 817개
 - 접근성 guard 검사 대상 implementation story: 817개
 
-이 수치는 `effe1353`의 [정본 Linux export](https://github.com/LK-Design-System/lk-design-system/actions/runs/44441816548)에서 관측한 검사 대상의 크기입니다. 접근성 검사 결과는 해당 소스의 CI에서 확인합니다.
+이 수치는 `c66c6f55`의 [정본 Linux export](https://github.com/LK-Design-System/lk-design-system/actions/runs/44442335910)에서 관측한 검사 대상의 크기입니다. 접근성 검사 결과는 해당 소스의 CI에서 확인합니다.
 
 ## 생성 영역
 

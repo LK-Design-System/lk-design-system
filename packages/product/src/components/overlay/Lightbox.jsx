@@ -44,6 +44,7 @@ export function Lightbox({
   previousLabel = '이전 이미지',
   nextLabel = '다음 이미지',
   positionLabel = defaultPositionLabel,
+  imageSizing = 'natural',
   style,
   ...rest
 }) {
@@ -68,18 +69,28 @@ export function Lightbox({
   // dialog's only content, so it falls back to the localised position label
   // instead of being announced as decoration (WCAG 1.1.1).
   const hasExplicitAlt = src != null && typeof src === 'object' && typeof src.alt === 'string';
-  return <LightboxStage key="stage" url={url} alt={hasExplicitAlt ? src.alt : position} position={position} count={count} go={go} onClose={onClose} closeLabel={closeLabel} previousLabel={previousLabel} nextLabel={nextLabel} closeFocusRef={closeFocusRef} dialogRef={dialogRef} zIndex={zIndex} ariaLabel={ariaLabel} style={style} rest={rest} />;
+  return <LightboxStage key="stage" url={url} alt={hasExplicitAlt ? src.alt : position} position={position} count={count} go={go} onClose={onClose} closeLabel={closeLabel} previousLabel={previousLabel} nextLabel={nextLabel} closeFocusRef={closeFocusRef} dialogRef={dialogRef} zIndex={zIndex} ariaLabel={ariaLabel} imageSizing={imageSizing} style={style} rest={rest} />;
 }
 
-function LightboxStage({ url, alt, position, count, go, onClose, closeLabel, previousLabel, nextLabel, closeFocusRef, dialogRef, zIndex, ariaLabel, style, rest }) {
+function LightboxStage({ url, alt, position, count, go, onClose, closeLabel, previousLabel, nextLabel, closeFocusRef, dialogRef, zIndex, ariaLabel, imageSizing, style, rest }) {
   const [loaded, setLoaded] = React.useState(false);
+  const [measurement, setMeasurement] = React.useState(null);
   const imgRef = React.useRef(null);
+  const decoded = (image) => {
+    if (image.naturalWidth > 0 && image.naturalHeight > 0) {
+      setMeasurement({url, ratio: image.naturalWidth / image.naturalHeight});
+      setLoaded(true);
+    }
+  };
   React.useEffect(() => {
     setLoaded(false);
     const el = imgRef.current;
-    if (el && el.complete && el.naturalWidth > 0) setLoaded(true);
+    if (el && el.complete && el.naturalWidth > 0) decoded(el);
   }, [url]);
   const multiple = count > 1;
+  // A new slide must never reuse another image's measured aspect ratio while
+  // its decode/effect settles. Controls keep their existing mounted lifetime.
+  const fittedRatio = measurement?.url === url ? measurement.ratio : null;
   // Moving costs a decode, and the incoming frame must not race the outgoing
   // one — but the controls stay mounted and focusable while it lands, because a
   // control that disappears under the caret drops focus to <body> (WCAG 2.4.3).
@@ -98,7 +109,7 @@ function LightboxStage({ url, alt, position, count, go, onClose, closeLabel, pre
     <div ref={dialogRef} role="dialog" aria-modal="true" aria-label={ariaLabel} aria-busy={loaded ? undefined : 'true'} tabIndex={-1} onClick={(e) => { if (e.target === e.currentTarget && onClose) onClose(); }} style={{ position: 'fixed', inset: 0, zIndex, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--component-dialog-scrim)', backdropFilter: 'blur(var(--component-dialog-scrim-blur))', ...style }} {...rest} onKeyDown={(event) => { rest?.onKeyDown?.(event); onKeyDown(event); }}>
       <button ref={closeFocusRef} type="button" aria-label={closeLabel} onClick={onClose} style={{ position: 'absolute', top: 20, right: 20, width: 44, height: 44, borderRadius: '50%', border: 'none', background: 'var(--color-semantic-inverse-fill-normal)', color: 'var(--color-semantic-inverse-label)', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}><Icon name="close" size={22} aria-hidden="true" /></button>
       <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: loaded ? 0 : 280, minHeight: loaded ? 0 : 200 }}>
-        <img ref={imgRef} src={url} alt={alt} onLoad={() => setLoaded(true)} style={{ display: 'block', maxWidth: '86vw', maxHeight: '86vh', borderRadius: 'var(--radius-lg)', boxShadow: loaded ? 'var(--shadow-xl)' : 'none', opacity: loaded ? 1 : 0, transition: 'opacity .18s ease' }} />
+        <img ref={imgRef} src={url} alt={alt} onLoad={(event) => decoded(event.currentTarget)} style={{ display: 'block', width: imageSizing === 'contain' && fittedRatio != null ? `min(86vw, calc(86vh * ${fittedRatio}))` : undefined, height: imageSizing === 'contain' ? 'auto' : undefined, maxWidth: '86vw', maxHeight: '86vh', borderRadius: 'var(--radius-lg)', boxShadow: loaded ? 'var(--shadow-xl)' : 'none', opacity: loaded ? 1 : 0, transition: 'opacity .18s ease' }} />
         {!loaded && <span aria-hidden="true" style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', display: 'inline-flex' }}><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--color-semantic-inverse-icon-muted)" strokeWidth="2.4" strokeLinecap="round"><path d="M12 2a10 10 0 1 0 10 10"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.8s" repeatCount="indefinite" /></path></svg></span>}
         {multiple && <button type="button" data-lightbox-previous aria-label={previousLabel} aria-disabled={loaded ? undefined : 'true'} onClick={() => step(-1)} style={lbArrow('left', !loaded)}><Icon name="chevron-left" size={26} aria-hidden="true" /></button>}
         {multiple && <button type="button" data-lightbox-next aria-label={nextLabel} aria-disabled={loaded ? undefined : 'true'} onClick={() => step(1)} style={lbArrow('right', !loaded)}><Icon name="chevron-right" size={26} aria-hidden="true" /></button>}

@@ -146,7 +146,9 @@
   "accessibility": [
     "label / helper / error / invalid — label을 주면 htmlFor로 연결된 필드 레이블·메시지 스택을 함께 렌더링하고, 그렇지 않으면 셸만 렌더링해 FormField 같은 상위 표면에 맡깁니다. error나 invalid는 aria-invalid와 오류 테두리를 함께 켭니다. fieldStyle은 label/helper/error를 포함한 바깥 스택, style은 스테퍼가 붙은 입력 셸을 스타일링합니다.",
     "native number input이 spinbutton semantics를 소유하고 inline step action은 보조 조작입니다. 보조 action 이름에는 field 이름을 포함합니다. focus/disabled/readOnly는 Input과 같은 component token(fieldBackground·fieldBorderColor)을 사용하며 type=\"number\"는 consumer가 덮어쓰지 못합니다.",
-    "WAI-ARIA Spinbutton pattern의 native editing·Arrow key 기대를 보존합니다."
+    "WAI-ARIA Spinbutton pattern의 native editing·Arrow key 기대를 보존합니다.",
+    "Common focus ownership.",
+    "The editable input keeps native focus and displays one indicator on its visible field frame. Nested action buttons retain their own indicator. Geometry, invalid/read-only behavior and scoped overrides follow the common focus contract."
   ],
   "exceptions": [],
   "related": [

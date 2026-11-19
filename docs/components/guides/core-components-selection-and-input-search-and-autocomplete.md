@@ -80,6 +80,7 @@
 - 지우기 후 포커스 복귀 — 지우기 버튼은 값이 비면 언마운트되므로, 활성화 시 포커스를 입력으로 되돌립니다. 그렇지 않으면 포커스가 로 떨어져 키보드 사용자가 필드를 잃습니다(Carbon Search 관례).
 - value / defaultValue / onChange — 제어/비제어. onSearch — Enter. size sm · md. 시그널 잉크 포커스 링.
 - Input과 MessageComposer의 필드 소유 focus를 비교했습니다. 외곽 border와 외곽 control의 semantic focus-indicator outline으로 위치를 표시합니다. 내부 search input의 전역 outline만 제외하고 clear button의 keyboard outline은 보존합니다. forced-colors는 외곽 Highlight outline입니다. text input은 클릭으로도 :focus-visible에 해당할 수 있으므로 입력 방식만으로 outline 유무를 단정하지 않습니다.
+- Common focus ownership.
 
 ## Related components
 

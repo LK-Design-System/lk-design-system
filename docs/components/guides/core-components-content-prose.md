@@ -34,7 +34,7 @@
 | --- | --- | --- | --- |
 | `children` | `React.ReactNode` | No | 이미 렌더된 형식화 콘텐츠(마크다운을 파싱·정화한 React 노드, 문서 본문, 어시스턴트 rich response). Prose는 이 자식의 요소별 타이포그래피만 소유하며 파싱·정화·하이라이팅·편집은 제품 책임입니다. heading 레벨은 콘텐츠가 정하고 재번호하지 않으므로, 주변 문서 계층에 맞는 레벨을 넘기세요(WCAG 1.3.1). |
 | `measure` | `string` | No | 읽기 폭 상한(measure). 긴 줄이 가독성을 해치지 않도록 제한합니다. |
-| `typography` | `'document' \| 'chat'` | No | Document keeps the existing 14px reading scale. Chat opts into 16px/24px body, a compact heading/rhythm hierarchy and local table scrolling. Heading semantics and parsing stay product-owned. @default "document" |
+| `typography` | `'document' \| 'chat' \| 'reading' \| 'compact'` | No | Document keeps the 14px wiki scale. Chat opts into 16px/24px conversational rhythm and local table scrolling. Reading uses 16px long-form article/report rhythm. Compact uses 13px dense README/panel rhythm. Heading semantics and parsing stay product-owned. @default "document" |
 
 ## Behavior and interaction
 
@@ -88,8 +88,10 @@
 ### Tokens
 
 - `--body1-line`
+- `--body1-reading-line`
 - `--body1-size`
 - `--body1-spacing`
+- `--caption1-size`
 - `--color-semantic-fill-alternative`
 - `--color-semantic-fill-normal`
 - `--color-semantic-fill-strong`
@@ -116,7 +118,9 @@
 - `--label1-reading-line`
 - `--label1-size`
 - `--label1-spacing`
+- `--label2-line`
 - `--label2-size`
+- `--label2-spacing`
 - `--radius-lg`
 - `--radius-md`
 - `--radius-sm`

@@ -20,6 +20,8 @@ const PROSE_CSS = `
 .lk-prose h4{font-size:var(--headline2-size);}
 .lk-prose h5,.lk-prose h6{font-size:var(--body1-size);font-weight:var(--fw-bold);}
 .lk-prose ul,.lk-prose ol{margin:var(--space-4) 0;padding-inline-start:var(--space-5);font-size:var(--label1-size);}
+.lk-prose ul{list-style-type:disc;}
+.lk-prose ol{list-style-type:decimal;}
 .lk-prose li{margin:var(--space-2) 0;}
 .lk-prose li > ul,.lk-prose li > ol{margin:var(--space-2) 0;}
 .lk-prose a{color:var(--color-semantic-primary-normal);text-underline-offset:2px;}
@@ -48,6 +50,14 @@ const PROSE_CSS = `
 .lk-prose[data-typography="chat"] table{display:block;max-width:100%;overflow-x:auto;}
 .lk-prose[data-typography="chat"] > :first-child{margin-top:0;}
 .lk-prose[data-typography="chat"] > :last-child{margin-bottom:0;}
+.lk-prose[data-typography="reading"]{line-height:var(--body1-reading-line, 1.75);letter-spacing:var(--body1-spacing);}
+.lk-prose[data-typography="reading"] p,.lk-prose[data-typography="reading"] ul,.lk-prose[data-typography="reading"] ol{font-size:var(--body1-size);}
+.lk-prose[data-typography="compact"]{line-height:var(--label2-line);letter-spacing:var(--label2-spacing);}
+.lk-prose[data-typography="compact"] p,.lk-prose[data-typography="compact"] ul,.lk-prose[data-typography="compact"] ol{font-size:var(--label2-size);margin:var(--space-3) 0;}
+.lk-prose[data-typography="compact"] h1{font-size:var(--headline1-size);}
+.lk-prose[data-typography="compact"] h2{font-size:var(--body1-size);}
+.lk-prose[data-typography="compact"] h3,.lk-prose[data-typography="compact"] h4{font-size:var(--label1-size);}
+.lk-prose[data-typography="compact"] table{font-size:var(--caption1-size);}
 `;
 
 // Layout effect so the scoped rules are present before the browser paints and
@@ -118,11 +128,13 @@ export function Prose({ children, measure = '68ch', typography = 'document', sty
     return () => observer.disconnect();
   }, [children, typography]);
 
+  const resolvedTypography = ['document', 'chat', 'reading', 'compact'].includes(typography) ? typography : 'document';
+
   return (
     <div
       ref={root}
       className={className ? `lk-prose ${className}` : 'lk-prose'}
-      data-typography={typography === 'chat' ? 'chat' : 'document'}
+      data-typography={resolvedTypography}
       style={{ maxWidth: measure, minWidth: 0, ...style }}
       {...rest}
     >

@@ -17,6 +17,7 @@
 - 근거: WAI-ARIA APG Modal Dialog Pattern은 dialog가 닫히면 invoker로 초점을 되돌리도록 요구하며, WCAG 2.1 Success Criterion 2.3.3 Animation from Interactions에 따라 motion을 줄인 사용자에게는 exit transition을 생략합니다.
 - 기본 withinPortal=true이며 LdsProvider.portalTarget 또는 명시적 portalTarget에 렌더링됩니다. 가까운 theme scope와 dir을 상속하고 clipping ancestor를 벗어납니다.
 - Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. LDS의 두 density도 anatomy와 sticky region 순서는 공유하고 spacing/type만 바꾸며, 여러 overlay Drawer 동시 노출은 제외했습니다.
+- mobileFullWidth를 켜면 767px 이하에서 Drawer가 화면 전체 너비를 사용합니다. headerStyle은 이 모드에서도 적용되므로 상단 안전 영역을 함께 조정할 수 있습니다.
 
 ### 사용하지 않음
 
@@ -47,6 +48,7 @@
 | `appearance` | `'default' \| 'brand'` | No | 패널 표면. "brand"는 chrome(제목 행·닫기 버튼·구분선·본문)까지 네이비 브랜드 표면으로 렌더링합니다. 어두운 masthead와 brand SideNav를 함께 쓰는 모바일 셸에서 표면이 끊기지 않게 합니다. @default "default" |
 | `density` | `'comfortable' \| 'compact'` | No | Drawer의 chrome/body 밀도. body의 density-aware 자식은 이를 상속하며 명시적 size/padding/density가 우선합니다. @default "comfortable" |
 | `headerSize` | `'auto' \| 'sm'` | No | header padding만 선택합니다. auto는 기존 density별 여백, sm은 8×20px이며 body/footer 밀도와 control 크기는 유지합니다. @default "auto" |
+| `mobileFullWidth` | `boolean` | No | 좁은 뷰포트(<=767px)에서 기본 92vw 제한과 그림자를 걷고 100vw 전체 화면 시트로 전환합니다. @default false |
 | `title` | `React.ReactNode` | No |  |
 | `headerActions` | `React.ReactNode` | No | 제목의 말줄임 영역 밖, 닫기 앞에 놓이는 보조 명령. icon-only control에는 접근 가능한 이름을 제공하세요. |
 | `headerStyle` | `React.CSSProperties` | No | Public header presentation, including divider and safe-area padding. |
@@ -64,7 +66,6 @@
 | `withinPortal` | `boolean` | No | Render at the owner-document Portal boundary. @default true |
 | `portalTarget` | `HTMLElement \| null` | No |  |
 | `zIndex` | `number` | No |  |
-| `bodyStyle` | `React.CSSProperties` | No | 스크롤 body의 padding·layout을 조합별로 조정합니다. |
 
 ## States
 

@@ -7,10 +7,10 @@
   },
   "counts": {
     "svgImported": 339,
-    "customSvgImported": 19,
+    "customSvgImported": 20,
     "rasterCopied": 1,
-    "publicIconNames": 359,
-    "sourceIconNames": 358,
+    "publicIconNames": 360,
+    "sourceIconNames": 359,
     "ldsLegacyFallbacks": 1
   },
   "icons": [
@@ -2420,6 +2420,13 @@
       "source": "material-symbols",
       "sourcePath": "assets/icon-source-overrides/route.svg",
       "assetPath": "assets/icons/route.svg",
+      "viewBox": "0 -960 960 960"
+    },
+    {
+      "name": "save",
+      "source": "material-symbols",
+      "sourcePath": "assets/icon-source-overrides/save.svg",
+      "assetPath": "assets/icons/save.svg",
       "viewBox": "0 -960 960 960"
     },
     {

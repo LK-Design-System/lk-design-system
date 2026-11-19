@@ -148,6 +148,7 @@ export function SearchableMultiSelect({
 
       <div style={{ position: 'relative', minWidth: 0 }}>
         <div
+          data-lds-focus-within=""
           onMouseDown={(event) => {
             if (event.target !== inputRef.current && !event.target.closest('button')) event.preventDefault();
             inputRef.current?.focus();
@@ -190,6 +191,7 @@ export function SearchableMultiSelect({
         ))}
         <input
           ref={inputRef}
+          data-lds-focus-target=""
           id={inputId}
           value={search}
           placeholder={maxReached && !search ? `최대 ${maxSelections}개 선택됨` : placeholder}

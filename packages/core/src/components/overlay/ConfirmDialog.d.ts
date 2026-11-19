@@ -21,6 +21,12 @@ export interface ConfirmDialogProps extends Omit<React.HTMLAttributes<HTMLDivEle
   confirmLoading?: boolean;
   /** pending 상태의 접근 가능한 라벨. @default "처리 중" */
   confirmLoadingLabel?: string;
+  /** 파괴적 액션에서 사용자가 대상 식별자/문구를 정확히 입력했을 때만 확인 버튼을 활성화합니다. */
+  requireMatchText?: string;
+  /** `requireMatchText` 사용 시 확인 입력 필드의 레이블. */
+  matchInputLabel?: React.ReactNode;
+  /** `requireMatchText` 사용 시 확인 입력 필드의 placeholder. 기본값은 `requireMatchText`입니다. */
+  matchInputPlaceholder?: string;
   /** 확인 클릭 콜백. */
   onConfirm?: React.MouseEventHandler<HTMLButtonElement>;
   /** 취소 클릭 또는 scrim/Escape dismiss 콜백. */

@@ -54,6 +54,7 @@
 - 애드온 노드는 자기 접근성 의미를 스스로 소유합니다. 컴포넌트가 노드 애드온을 일괄 aria-hidden 처리하지 않으므로 순수 장식 아이콘은 소비자가 직접 aria-hidden을 겁니다(레포의 Icon은 이름을 주지 않으면 스스로 숨깁니다).
 - readOnly remains focusable and selectable. Consumer and generated description ids are merged on the input.
 - prefix / suffix — 애드온 노드. value / defaultValue / onChange — 텍스트. inputProps — 네이티브 input 패스스루. inputProps.onChange/onFocus/onBlur는 폐기되지 않고 컴포넌트 내부 처리보다 먼저 호출됩니다(값 커밋은 그대로 이어집니다). inputProps['aria-describedby']는 생성된 설명 id와 병합됩니다.
+- Common focus ownership.
 
 ## Examples
 

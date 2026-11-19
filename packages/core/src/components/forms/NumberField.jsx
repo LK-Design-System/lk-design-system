@@ -71,9 +71,10 @@ export function NumberField({ value, defaultValue = 0, min = -Infinity, max = In
     );
   };
   const control = (
-    <div style={{ display: 'inline-flex', alignItems: 'stretch', width: 'fit-content', height: h, border: `1px solid ${fieldBorderColor({ disabled, readOnly, invalid: isInvalid, focused })}`, borderRadius: 'var(--component-input-radius)', background: fieldBackground({ disabled, readOnly }), boxShadow: focused ? 'var(--component-input-focus-shadow)' : 'none', overflow: 'hidden', transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)', ...style }}>
+    <div data-lds-focus-within="" style={{ display: 'inline-flex', alignItems: 'stretch', width: 'fit-content', height: h, border: `1px solid ${fieldBorderColor({ disabled, readOnly, invalid: isInvalid, focused })}`, borderRadius: 'var(--component-input-radius)', background: fieldBackground({ disabled, readOnly }), boxShadow: focused ? 'var(--component-input-focus-shadow)' : 'none', overflow: 'hidden', transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)', ...style }}>
       <input
         {...rest}
+        data-lds-focus-target=""
         id={metadata.fieldId}
         type="number" value={draft ?? val} min={min === -Infinity ? undefined : min} max={max === Infinity ? undefined : max} step={step} disabled={disabled} readOnly={readOnly} required={required} placeholder={placeholder}
         aria-label={ariaLabel ?? (label != null ? undefined : (typeof placeholder === 'string' ? placeholder : '숫자 입력'))}

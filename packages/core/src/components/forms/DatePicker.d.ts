@@ -21,5 +21,5 @@ export interface DatePickerProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   style?: React.CSSProperties;
 }
 
-/** Calendar 팝오버를 여는 날짜 필드. */
+/** Calendar를 Core Popover의 owner-document Portal에서 여는 날짜 필드. 부모 overflow clipping을 피합니다. */
 export function DatePicker(props: DatePickerProps): React.JSX.Element;

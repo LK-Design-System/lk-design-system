@@ -26,7 +26,7 @@ parity gates.
 | Visual inventory React stories | 817 | Current implementation-story census; current source accessibility results require the Linux gate |
 | Accessibility checked implementation stories | 817 | Current implementation-story gate scope; no new full accessibility run claimed by the census update |
 
-These counts come from the [canonical Linux index](https://github.com/LK-Design-System/lk-design-system/actions/runs/44441816548) for `effe1353`. The accessibility row records the scope of the gate. CI records the results.
+These counts come from the [canonical Linux index](https://github.com/LK-Design-System/lk-design-system/actions/runs/44442335910) for `c66c6f55`. The accessibility row records the scope of the gate. CI records the results.
 
 ## Parity source of truth
 

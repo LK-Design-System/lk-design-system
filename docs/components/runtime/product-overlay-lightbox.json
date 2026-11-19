@@ -16,8 +16,7 @@
   "purpose": "사진·스크린샷 같은 미디어를 원본 맥락에서 확대해 집중 검토할 때 적합합니다. 긴 문서, 편집 폼, 확인 작업에는 Lightbox 대신 전용 페이지나 Dialog를 사용하세요.",
   "useWhen": [],
   "avoidWhen": [
-    "Arrow 키는 dialog 자체에서 처리합니다. document 전역 리스너가 아니므로 위에 열린 overlay가 키를 먼저 가져가고, 이미 처리된(defaultPrevented) 키는 다시 소비하지 않습니다.",
-    "zoom·pan 컨트롤은 이 계약에 포함하지 않습니다. 확대가 필요한 검토 흐름은 전용 뷰어 화면을 씁니다."
+    "Arrow 키는 dialog 자체에서 처리합니다. document 전역 리스너가 아니므로 위에 열린 overlay가 키를 먼저 가져가고, 이미 처리된(defaultPrevented) 키는 다시 소비하지 않습니다."
   ],
   "anatomy": [
     {
@@ -134,6 +133,13 @@
       "owner": "LightboxProps"
     },
     {
+      "name": "imageSizing",
+      "type": "'natural' | 'contain'",
+      "required": false,
+      "description": "natural only shrinks; contain fits the existing viewport box and can upscale, preserving aspect ratio. @default \"natural\"",
+      "owner": "LightboxProps"
+    },
+    {
       "name": "style",
       "type": "React.CSSProperties",
       "required": false,
@@ -149,23 +155,25 @@
       "rule": "이미지가 2장 이상이면 화살표 컨트롤과 위치 표시가 함께 나타납니다. 위치 표시는 시각 장식이며 같은 문구를 상시 마운트된 role=\"status\" live region이 polite로 전달합니다. 슬라이드가 바뀌면 위치와 대체 텍스트가 함께 발표됩니다."
     },
     {
+      "subject": "명시 규칙 2",
+      "rule": "imageSizing=\"natural\"(기본)은 기존 원본 크기를 유지하고 큰 이미지만86vw/86vh에 맞춰 줄입니다. imageSizing=\"contain\"은 이미지의 실제 aspect ratio를 보존해 같은 viewport 영역에 맞춰 작은 이미지를 업스케일합니다. 한 장에서는 X만 남고 화살표/카운터는 없습니다. zoom·pan 조작이나 이미지 복원 기능은 추가하지 않습니다. 원본82×182 같은 저해상도 crop을 크게 표시해도 새 세부 정보를 만들지는 않습니다."
+    },
+    {
+      "subject": "명시 규칙 3",
+      "rule": "작은 이미지 viewport 맞춤(2026-10-15)"
+    },
+    {
       "subject": "--color-semantic-inverse-fill-normal",
       "rule": "light: rgba(255, 255, 255, 0.12); dark: rgba(255, 255, 255, 0.12)"
     },
     {
       "subject": "--color-semantic-inverse-icon-muted",
       "rule": "light: rgba(255, 255, 255, 0.75); dark: rgba(255, 255, 255, 0.75)"
-    },
-    {
-      "subject": "--color-semantic-inverse-label",
-      "rule": "light: #FFFFFF; dark: #171719"
-    },
-    {
-      "subject": "--component-dialog-scrim-blur",
-      "rule": "2px"
     }
   ],
-  "responsive": [],
+  "responsive": [
+    "imageSizing은 opt-in sizing만 소유합니다. 기존 modal/focus, SSR, keyboard, 디코딩 상태, 기존 opacity motion과 controls는 바꾸지 않습니다. 이미지 natural aspect ratio를 decode 뒤 확보하고 CSS min(86vw,86vh×ratio)와 auto height로 크기를 정하므로 border/shadow가 실제 이미지 둘레에 머뭅니다."
+  ],
   "contentGuidance": [
     "문자열 URL 이미지는 alt를 선언할 수단이 없으므로 positionLabel 결과를 대체 텍스트로 사용합니다. 장식 이미지를 의도한다면 { src, alt: '' }처럼 alt를 명시적으로 넘깁니다.",
     "사용자에게 보이거나 읽히는 문자열은 모두 한국어 기본값이며 prop으로 교체합니다: ariaLabel(다이얼로그 이름), closeLabel, previousLabel, nextLabel, positionLabel(position, total). 표준 style은 dialog 루트에 병합됩니다."
@@ -246,6 +254,21 @@
         "role": "overview"
       },
       {
+        "id": "lds-product-overlay-lightbox--natural-small-image",
+        "name": "변형·상태 · 작은 이미지 원본 크기",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-overlay-lightbox--contain-small-image",
+        "name": "변형·상태 · 작은 이미지 화면 맞춤",
+        "role": "variants-states"
+      },
+      {
+        "id": "lds-product-overlay-lightbox--contain-image-change",
+        "name": "상호작용 · 비율이 다른 이미지 이동",
+        "role": "interaction"
+      },
+      {
         "id": "lds-product-overlay-lightbox--lightbox-keyboard-contract",
         "name": "상호작용 · 초점 순환과 복원",
         "role": "interaction"
@@ -265,7 +288,7 @@
     "states": "omitted-no-evidence",
     "behavior": "omitted-no-evidence",
     "quantitativeRules": "evidence",
-    "responsive": "omitted-no-evidence",
+    "responsive": "evidence",
     "contentGuidance": "evidence",
     "accessibility": "evidence",
     "exceptions": "omitted-no-evidence",

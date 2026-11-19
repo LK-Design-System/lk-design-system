@@ -50,7 +50,7 @@
 | [Card Selection](guides/core-components-selection-and-input-card-selection.md) | Core / Selection and Input | `ChoiceCard` | mapped | implemented | not-tracked | not-tracked | 1 public / 4 hidden |
 | [Checkbox](guides/core-components-selection-and-input-checkbox.md) | Core / Selection and Input | `Checkbox` | mapped | implemented | not-tracked | not-tracked | 1 public / 4 hidden |
 | [Chip](guides/core-components-selection-and-input-chip.md) | Core / Selection and Input | `Chip` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 4 hidden |
-| [Date Picker](guides/core-components-selection-and-input-date-picker.md) | Core / Selection and Input | `DatePicker` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
+| [Date Picker](guides/core-components-selection-and-input-date-picker.md) | Core / Selection and Input | `DatePicker` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Input](guides/core-components-selection-and-input-input.md) | Core / Selection and Input | `Input` | mapped | implemented | not-tracked | not-tracked | 2 public / 5 hidden |
 | [Number Field](guides/core-components-selection-and-input-number-field.md) | Core / Selection and Input | `NumberField` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 1 hidden |
 | [Password Input](guides/core-components-selection-and-input-password-input.md) | Core / Selection and Input | `PasswordInput` | mapped | implemented | not-tracked | not-tracked | 1 public / 3 hidden |
@@ -154,7 +154,7 @@
 | [Command Palette](guides/product-overlay-command-palette.md) | Product / Overlay | `CommandPalette` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
 | [Drawer](guides/product-overlay-drawer.md) | Product / Overlay | `Drawer` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 1 hidden |
 | [Hover Card](guides/product-overlay-hover-card.md) | Product / Overlay | `HoverCard` | mapped | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
-| [Lightbox](guides/product-overlay-lightbox.md) | Product / Overlay | `Lightbox` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
+| [Lightbox](guides/product-overlay-lightbox.md) | Product / Overlay | `Lightbox` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 2 hidden |
 | [Sheet](guides/product-overlay-sheet.md) | Product / Overlay | `Sheet` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Color Swatch](guides/product-selection-and-input-color-swatch.md) | Product / Selection and Input | `ColorSwatch` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
 | [Date Range](guides/product-selection-and-input-date-range.md) | Product / Selection and Input | `DateRangeField` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 0 hidden |
@@ -167,7 +167,7 @@
 | [Property Field](guides/product-selection-and-input-property-field.md) | Product / Selection and Input | `PropertyField` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Searchable Multi Select](guides/product-selection-and-input-searchable-multi-select.md) | Product / Selection and Input | `SearchableMultiSelect` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 0 hidden |
 | [Secret Field](guides/product-selection-and-input-secret-field.md) | Product / Selection and Input | `SecretField` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 0 hidden |
-| [Time Picker](guides/product-selection-and-input-time-picker.md) | Product / Selection and Input | `TimePicker` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 0 hidden |
+| [Time Picker](guides/product-selection-and-input-time-picker.md) | Product / Selection and Input | `TimePicker` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 0 hidden |
 | [Toggle Button](guides/product-selection-and-input-toggle-button.md) | Product / Selection and Input | `ToggleButton` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 1 hidden |
 | [Tree Picker](guides/product-selection-and-input-tree-picker.md) | Product / Selection and Input | `TreePicker` | not-tracked | implemented | not-tracked | not-tracked | 7 public / 1 hidden |
 | [Validation Summary](guides/product-selection-and-input-validation-summary.md) | Product / Selection and Input | `ValidationSummary` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 0 hidden |
@@ -185,6 +185,7 @@
 | [Elevator Fleet Overview](guides/product-viewer-elevator-fleet-overview.md) | Product / Viewer | `ElevatorFleetOverview` | not-tracked | implemented | not-tracked | not-tracked | 1 public / 5 hidden |
 | [Floor Selector](guides/product-viewer-floor-selector.md) | Product / Viewer | `FloorSelector` | not-tracked | implemented | not-tracked | not-tracked | 2 public / 2 hidden |
 | [Toolbar](guides/product-viewer-toolbar.md) | Product / Viewer | `ViewerToolbar` | not-tracked | implemented | not-tracked | not-tracked | 3 public / 1 hidden |
+| [Video Playback Controls](guides/product-viewer-video-playback-controls.md) | Product / Viewer | `VideoPlaybackControls` | not-tracked | implemented | not-tracked | not-tracked | 5 public / 1 hidden |
 | [Video Stream](guides/product-viewer-video-stream.md) | Product / Viewer | `VideoStreamTile` | not-tracked | implemented | not-tracked | not-tracked | 4 public / 2 hidden |
 | [Viewer Frame](guides/product-viewer-viewer-frame.md) | Product / Viewer | `ViewerFrame` | not-tracked | implemented | not-tracked | not-tracked | 6 public / 0 hidden |
 | [LK ROBOTICS Logo](guides/theme-brand-lk-robotics-logo.md) | Theme / Brand | `Lockup` | import-contract | implemented | asset-contract | asset-contract | 1 public / 1 hidden |

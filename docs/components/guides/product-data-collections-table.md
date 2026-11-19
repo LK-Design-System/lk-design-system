@@ -15,6 +15,7 @@
 ### 사용
 
 - Reference: WAI-ARIA APG Table pattern — 열/행 헤더는 와 scope로 표현하고 표에는 이름을 부여합니다. 자사 DataGrid도 같은 기준(scope="col", tableLabel)을 씁니다.
+- mobileLayout="scroll"은 기본 가로 스크롤 표를 유지합니다. 두 열의 속성 표에는 mobileLayout="key-value"를, 제목과 여러 속성을 담는 상세 표에는 mobileLayout="compact-list"를 사용할 수 있습니다. mobileTrailingKey는 목록 제목 옆에 둘 컬럼을 선택합니다.
 
 ### 사용하지 않음
 
@@ -48,6 +49,8 @@
 | `tableLabelledBy` | `string` | No | 표 밖의 제목 요소 id. 보이는 캡션이 없을 때 의 aria-labelledby가 됩니다. |
 | `rowHeaderKey` | `keyof Row & string` | No | 행을 식별하는 컬럼 key. 지정하면 해당 셀이 로 렌더링됩니다. |
 | `groupKey` | `keyof Row & string` | No | 행을 묶는 필드 key. 같은 값의 연속 구간마다 표 전체를 가로지르는 그룹 헤더가 한 번 열립니다. 흩어진 같은 값은 모으지 않고 두 번째 구간을 엽니다 — 호출자의 행 순서가 곧 보고의 순서이기 때문입니다. 그룹 행은 밴드를 입지 않습니다. |
+| `mobileLayout` | `'scroll' \| 'key-value' \| 'compact-list'` | No | 좁은 화면(로, compact-list는 다열 상세표를 제목+속성 목록으로 접습니다. @default "scroll" |
+| `mobileTrailingKey` | `keyof Row & string` | No | mobileLayout="compact-list"에서 모바일 항목 제목 우측에 배치할 컬럼 key. |
 | `getRowId` | `(row: Row, index: number) = React.Key` | No | React key로 쓸 안정적인 행 식별자. 생략하면 row.id, 그다음 배열 index를 씁니다. |
 | `getRowProps` | `(row: Row, index: number) = React.HTMLAttributes` | No | 행별 className, style, data attribute와 이벤트를 에 전달합니다. |
 
@@ -73,7 +76,7 @@
 | 명시 규칙 2 | 결측 값은 공백이나 0으로 위장하지 말고 render에서 보이는 —와 스크린리더용 값 없음을 함께 제공합니다. 로딩·오류는 셀 placeholder가 아니라 표의 resource state로 분리합니다. |
 | 명시 규칙 3 | caption이 있으면 tableLabel과 tableLabelledBy는 무시됩니다. 보이는 캡션을 ARIA 이름으로 덮어쓰면 이름과 보이는 텍스트가 어긋나기 때문입니다(WCAG 2.5.3). |
 | 명시 규칙 4 | columnLabelsHidden — 열 라벨 밴드를 보조기술에만 남기고 감춥니다. 항목·값 표는 각 행의 첫 칸이 곧 열 이름이라 항목 \| 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 씁니다. 감추는 것은 셀이 아니라 라벨입니다. 은 자기 자리와 columns의 width를 그대로 들고 패딩·높이·괘선만 잃고, 라벨만 clip된 안으로 들어갑니다. |
-| --color-semantic-fill-alternative | light: rgba(112, 115, 124, 0.05); dark: rgba(112, 115, 124, 0.12) |
+| --caption1-line | {"fontSize":"12px","lineHeight":"16px","letterSpacing":"0.0252em"} |
 
 ## Responsive
 
@@ -142,9 +145,14 @@
 
 ### Tokens
 
+- `--caption1-line`
+- `--caption1-size`
 - `--color-semantic-fill-alternative`
 - `--color-semantic-fill-normal`
+- `--color-semantic-label-alternative`
+- `--color-semantic-label-normal`
 - `--color-semantic-label-strong`
+- `--color-semantic-line-solid-alternative`
 - `--component-table-cell-padding-md`
 - `--component-table-cell-padding-sm`
 - `--component-table-row-min-height-md`
@@ -152,6 +160,7 @@
 - `--dur-fast`
 - `--ease-out`
 - `--font-sans`
+- `--fw-medium`
 - `--fw-semibold`
 - `--label1-line`
 - `--label1-size`
@@ -161,8 +170,10 @@
 - `--lk-table-row-min-height-sm`
 - `--space-0-5`
 - `--space-1`
+- `--space-1-5`
 - `--space-2`
 - `--space-3`
+- `--space-4`
 - `--space-8`
 
 ### Source contracts
@@ -171,6 +182,10 @@
 - `components/data/Table.d.ts`
 - `components/data/Table.prompt.md`
 - `stories/DataTable.stories.jsx`
+
+## Migration
+
+- 강한 구분선이 필요한 합성에서는 var(--color-semantic-line-solid-strong)을 참조할 수 있습니다. 기존 토큰과 같은 색을 제공하는 별칭입니다.
 
 ## Sources
 

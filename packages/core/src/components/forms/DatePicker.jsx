@@ -1,7 +1,7 @@
 import React from 'react';
 import { Calendar } from '../data/Calendar.jsx';
 import { Icon } from '../icon/Icon.jsx';
-import { useLightDismiss } from '../overlay/anchored-overlay.js';
+import { Popover } from '../overlay/Popover.jsx';
 import { fieldTypography } from './field-shared.js';
 
 /**
@@ -17,19 +17,11 @@ export function DatePicker({ value, defaultValue, onChange, isDateDisabled, minD
   const [open, setOpen] = React.useState(false);
   const [focused, setFocused] = React.useState(false);
   const ref = React.useRef(null);
+  const calendarRootRef = React.useRef(null);
   const buttonRef = React.useRef(null);
-  const popupId = React.useId();
   const expanded = open && !disabled;
-  // Outside dismissal comes from the shared engine, which also makes Escape
-  // close the innermost open surface and keeps a pointer-dismissed trigger from
-  // reopening on the focus that same press gives it. The Escape branch below
-  // calls preventDefault, and the engine stands down for a handled event.
-  useLightDismiss({
-    open,
-    rootRef: ref,
-    getTrigger: () => buttonRef.current,
-    onDismiss: () => setOpen(false),
-  });
+  const expandedRef = React.useRef(expanded);
+  expandedRef.current = expanded;
   React.useEffect(() => {
     if (disabled && open) setOpen(false);
   }, [disabled, open]);
@@ -51,8 +43,13 @@ export function DatePicker({ value, defaultValue, onChange, isDateDisabled, minD
     window.requestAnimationFrame(() => buttonRef.current?.focus());
   };
   return (
-    <div
+    <Popover
       ref={ref}
+      open={expanded}
+      onOpenChange={(next) => { if (!disabled) setOpen(next); }}
+      ariaLabel={ariaLabel ?? placeholder}
+      width={334}
+      styles={{ trigger: { width: full ? '100%' : undefined }, panel: { padding: 0, border: 0, borderRadius: 'var(--radius-xl)', background: 'transparent', scrollbarGutter: 'auto' } }}
       style={{ position: 'relative', display: full ? 'block' : 'inline-block', width: full ? '100%' : undefined, ...style }}
       onKeyDown={(event) => {
         onKeyDown?.(event);
@@ -69,35 +66,34 @@ export function DatePicker({ value, defaultValue, onChange, isDateDisabled, minD
         // of leaving an orphaned dialog behind. A null relatedTarget means the
         // window lost focus, which must not close the popup.
         if (!open) return;
-        const nextTarget = event.relatedTarget;
-        if (!nextTarget || ref.current?.contains(nextTarget)) return;
-        setOpen(false);
+        if (!event.relatedTarget) return;
+        // Calendar can focus a child during the Portal commit before its host
+        // wrapper ref attaches. Check the settled activeElement after commit,
+        // rather than interpreting that transient ref gap as an outside blur.
+        queueMicrotask(() => {
+          if (!expandedRef.current || !ref.current) return;
+          const nextTarget = ref.current.ownerDocument.activeElement;
+          if (ref.current.contains(nextTarget) || calendarRootRef.current?.contains(nextTarget)) return;
+          setOpen(false);
+        });
       }}
       {...rest}
-    >
-      <button
+      trigger={<button
         ref={buttonRef}
         type="button"
         disabled={disabled}
         aria-label={triggerLabel}
-        aria-haspopup="dialog"
-        aria-expanded={expanded}
-        aria-controls={expanded ? popupId : undefined}
         aria-invalid={invalid || undefined}
         aria-describedby={ariaDescribedBy}
-        onClick={() => setOpen((current) => !current)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--component-input-gap)', width: full ? '100%' : undefined, height: h, padding: '0 var(--component-input-padding-x)', minWidth: full ? 0 : 200, boxSizing: 'border-box', background: disabled ? 'var(--color-semantic-fill-normal)' : 'var(--component-input-bg)', border: `1px solid ${borderColor}`, borderRadius: 'var(--component-input-radius)', boxShadow: focused || open ? 'var(--component-input-focus-shadow)' : 'none', cursor: disabled ? 'not-allowed' : 'pointer', fontFamily: 'var(--font-sans)', ...fieldTypography(size), color: disabled ? 'var(--color-semantic-label-disable)' : sel ? 'var(--color-semantic-label-normal)' : 'var(--color-semantic-label-alternative)', transition: 'border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out)' }}
       >
         <Icon name="calendar" size={18} color="var(--color-semantic-label-alternative)" aria-hidden="true" />
         <span style={{ flex: 1, textAlign: 'left' }}>{formattedValue || placeholder}</span>
-      </button>
-      {expanded && (
-        <div id={popupId} role="dialog" aria-label={ariaLabel ?? placeholder} style={{ position: 'absolute', top: 'calc(100% + 8px)', left: 0, zIndex: 40 }}>
-          <Calendar value={sel || undefined} onChange={pick} isDateDisabled={isDateDisabled} minDate={minDate} maxDate={maxDate} autoFocus />
-        </div>
-      )}
-    </div>
+      </button>}
+    >
+      <div ref={calendarRootRef}><Calendar value={sel || undefined} onChange={pick} isDateDisabled={isDateDisabled} minDate={minDate} maxDate={maxDate} autoFocus style={{ width: '100%', boxSizing: 'border-box' }} /></div>
+    </Popover>
   );
 }

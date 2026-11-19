@@ -13,8 +13,8 @@ export interface ProseProps extends React.HTMLAttributes<HTMLDivElement> {
    * @default "68ch"
    */
   measure?: string;
-  /** Document keeps the existing 14px reading scale. Chat opts into 16px/24px body, a compact heading/rhythm hierarchy and local table scrolling. Heading semantics and parsing stay product-owned. @default "document" */
-  typography?: 'document' | 'chat';
+  /** Document keeps the 14px wiki scale. Chat opts into 16px/24px conversational rhythm and local table scrolling. Reading uses 16px long-form article/report rhythm. Compact uses 13px dense README/panel rhythm. Heading semantics and parsing stay product-owned. @default "document" */
+  typography?: 'document' | 'chat' | 'reading' | 'compact';
 }
 
 /** 형식화된 글 한 덩어리에 DS 문서 타이포그래피를 입히는 표면. */

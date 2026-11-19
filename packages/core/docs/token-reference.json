@@ -2094,6 +2094,17 @@
         },
         "origin": "wds-structure-lk-retone"
       },
+      "line-solid-strong": {
+        "$type": "color",
+        "css": "--color-semantic-line-solid-strong",
+        "modes": {
+          "light": "var(--color-semantic-line-solid-_strong)",
+          "dark": "var(--color-semantic-line-solid-_strong)"
+        },
+        "origin": "lds-extension",
+        "group": "line",
+        "$description": "Underscore-free alias for --color-semantic-line-solid-_strong so CSS utility frameworks that convert underscores in arbitrary values do not require workarounds."
+      },
       "accent-background-red-orange": {
         "$type": "color",
         "css": "--color-semantic-accent-background-red-orange",
@@ -2805,6 +2816,61 @@
         },
         "origin": "lds-extension",
         "group": "data-viz"
+      },
+      "on-media-scrim": {
+        "$type": "color",
+        "css": "--color-semantic-on-media-scrim",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-brand-surface) 72%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-brand-surface) 72%, transparent)"
+        },
+        "origin": "lds-extension",
+        "group": "media",
+        "$description": "Translucent dark scrim for HUD badges, timestamps, and labels overlaid on live video or camera frames."
+      },
+      "on-media-scrim-strong": {
+        "$type": "color",
+        "css": "--color-semantic-on-media-scrim-strong",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-brand-surface) 84%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-brand-surface) 84%, transparent)"
+        },
+        "origin": "lds-extension",
+        "group": "media",
+        "$description": "High-contrast dark scrim for small text or bounding-box pills over bright video regions."
+      },
+      "on-media-label": {
+        "$type": "color",
+        "css": "--color-semantic-on-media-label",
+        "modes": {
+          "light": "var(--color-semantic-static-white)",
+          "dark": "var(--color-semantic-static-white)"
+        },
+        "origin": "lds-extension",
+        "group": "media",
+        "$description": "Foreground label color on media scrim overlays, invariant across light and dark page themes."
+      },
+      "on-media-border": {
+        "$type": "color",
+        "css": "--color-semantic-on-media-border",
+        "modes": {
+          "light": "color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent)"
+        },
+        "origin": "lds-extension",
+        "group": "media",
+        "$description": "Hairline border for HUD badges and bounding-box tags overlaid on video or image surfaces."
+      },
+      "media-target": {
+        "$type": "color",
+        "css": "--color-semantic-media-target",
+        "modes": {
+          "light": "var(--color-atomic-cyan-50)",
+          "dark": "var(--color-atomic-cyan-50)"
+        },
+        "origin": "lds-extension",
+        "group": "media",
+        "$description": "High-visibility target highlight stroke for active bounding boxes, Re-ID matches, and frame selections."
       }
     }
   },

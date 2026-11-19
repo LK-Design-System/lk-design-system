@@ -26,7 +26,8 @@
   "useWhen": [
     "근거: WAI-ARIA APG Modal Dialog Pattern은 dialog가 닫히면 invoker로 초점을 되돌리도록 요구하며, WCAG 2.1 Success Criterion 2.3.3 Animation from Interactions에 따라 motion을 줄인 사용자에게는 exit transition을 생략합니다.",
     "기본 withinPortal=true이며 LdsProvider.portalTarget 또는 명시적 portalTarget에 렌더링됩니다. 가까운 theme scope와 dir을 상속하고 clipping ancestor를 벗어납니다.",
-    "Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. LDS의 두 density도 anatomy와 sticky region 순서는 공유하고 spacing/type만 바꾸며, 여러 overlay Drawer 동시 노출은 제외했습니다."
+    "Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. LDS의 두 density도 anatomy와 sticky region 순서는 공유하고 spacing/type만 바꾸며, 여러 overlay Drawer 동시 노출은 제외했습니다.",
+    "mobileFullWidth를 켜면 767px 이하에서 Drawer가 화면 전체 너비를 사용합니다. headerStyle은 이 모드에서도 적용되므로 상단 안전 영역을 함께 조정할 수 있습니다."
   ],
   "avoidWhen": [
     "테스트·특수 embedding에서만 withinPortal=false를 사용하며 이 경우 background inert는 적용하지 않습니다.",
@@ -105,6 +106,13 @@
       "type": "'auto' | 'sm'",
       "required": false,
       "description": "header padding만 선택합니다. auto는 기존 density별 여백, sm은 8×20px이며 body/footer 밀도와 control 크기는 유지합니다. @default \"auto\"",
+      "owner": "DrawerProps"
+    },
+    {
+      "name": "mobileFullWidth",
+      "type": "boolean",
+      "required": false,
+      "description": "좁은 뷰포트(<=767px)에서 기본 92vw 제한과 그림자를 걷고 100vw 전체 화면 시트로 전환합니다. @default false",
       "owner": "DrawerProps"
     },
     {
@@ -224,13 +232,6 @@
       "type": "number",
       "required": false,
       "description": "",
-      "owner": "DrawerProps"
-    },
-    {
-      "name": "bodyStyle",
-      "type": "React.CSSProperties",
-      "required": false,
-      "description": "스크롤 body의 padding·layout을 조합별로 조정합니다.",
       "owner": "DrawerProps"
     }
   ],

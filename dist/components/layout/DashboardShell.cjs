@@ -1,14 +1,14 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunkEN6UIBOQcjs = require('../../chunk-EN6UIBOQ.cjs');
-require('../../chunk-ZYTXYIAF.cjs');
+var _chunkBJY7W4HIcjs = require('../../chunk-BJY7W4HI.cjs');
+require('../../chunk-KALAZUOZ.cjs');
 require('../../chunk-SDTQJAYW.cjs');
 require('../../chunk-ZAM5AMCO.cjs');
 require('../../chunk-LRPJVRUD.cjs');
 require('../../chunk-4WXZPYJG.cjs');
-require('../../chunk-7OXVB7WX.cjs');
+require('../../chunk-V2N47AGD.cjs');
 
 
-exports.DashboardShell = _chunkEN6UIBOQcjs.DashboardShell;
+exports.DashboardShell = _chunkBJY7W4HIcjs.DashboardShell;
 //# sourceMappingURL=DashboardShell.cjs.map

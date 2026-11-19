@@ -1,10 +1,10 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true});"use client";
 
 
-var _chunk5J23ESAEcjs = require('../../chunk-5J23ESAE.cjs');
+var _chunkBOIFTESIcjs = require('../../chunk-BOIFTESI.cjs');
 require('../../chunk-AN2WLZ36.cjs');
-require('../../chunk-7OXVB7WX.cjs');
+require('../../chunk-V2N47AGD.cjs');
 
 
-exports.ListingCard = _chunk5J23ESAEcjs.ListingCard;
+exports.ListingCard = _chunkBOIFTESIcjs.ListingCard;
 //# sourceMappingURL=ListingCard.cjs.map

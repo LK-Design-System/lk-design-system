@@ -268,6 +268,7 @@
   "accessibility": [
     "Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced.",
     "readOnly remains focusable and selectable, uses the alternative field fill, and suppresses editable hover affordance. Positive and negative states use the shared status icon as well as border/message color; color is never the only signal.",
+    "Keyboard focus is drawn once on the visible control frame; the native input keeps focus without a second inner rectangle. Nested action controls keep their own indicator. See the common focus contract for invalid/read-only states and scoped outline geometry.",
     "className/style and rootRef target the public field stack root. The default ref, inputClassName, and inputStyle target the native focus target."
   ],
   "exceptions": [],

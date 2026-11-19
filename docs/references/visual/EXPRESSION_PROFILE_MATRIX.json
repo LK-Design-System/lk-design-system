@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "lds-expression-profile-visual-matrix",
-  "generatedAt": "2026-10-10",
+  "generatedAt": "2026-11-19",
   "matrix": {
     "profiles": [
       "default",
@@ -346,7 +346,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/input-surface--default--light--normal.png",
-      "sha256": "8443207f60a35419c1b199b246e77ec74dda33b3527afc899f7031357bb0bd0b"
+      "sha256": "b68e34be3fb7ba3a7e42726f20bf7aa83b04b63ee2e518b4ee1b342dd2b30d1f"
     },
     {
       "name": "input-surface--ops--light--normal",
@@ -378,7 +378,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/input-surface--ops--light--normal.png",
-      "sha256": "398222b064203254f0c67d1f40baf917ffb100a9be7e76118be2603d55367a85"
+      "sha256": "ca676622476b87278df92dd1694b2514bce186d14cbe9337e4bf521182a004d7"
     },
     {
       "name": "input-surface--default--light--320",
@@ -410,7 +410,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/input-surface--default--light--320.png",
-      "sha256": "2ad631d71d905ab3fdca3848790e0404b19324f4a0b5353366304f3583bb5cd7"
+      "sha256": "eed89f13e56b7d09cdc0d783da571ef66e6d723a3d905a746795c78c136159ff"
     },
     {
       "name": "input-surface--ops--light--320",
@@ -442,7 +442,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/input-surface--ops--light--320.png",
-      "sha256": "cc6cb152274508c2196ceaa8bf2d34adfb0c5fca3890aef2491129f2f82f808b"
+      "sha256": "044dfffaee9e7d8c6a43bec46730dec8d293658a4c5edc6daa87943e3b00c287"
     },
     {
       "name": "input-surface--default--dark--normal",
@@ -474,7 +474,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/input-surface--default--dark--normal.png",
-      "sha256": "a8f880ddc8e6d990b982854e4a366a663815974a06257fb0a3020ddb7ae3f135"
+      "sha256": "71f575b3b1b226c61272e2b452b8d7dec02061f9443cadbd9d7f57170ecccf17"
     },
     {
       "name": "input-surface--ops--dark--normal",
@@ -506,7 +506,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/input-surface--ops--dark--normal.png",
-      "sha256": "bb214814eb30bdf599994f7c1b5c5b62bd2aed768379f846be599a2698f72314"
+      "sha256": "cde9ca406b5912016c9460a14f2463816b697b734dda4bff21a9fbe75fcf0450"
     },
     {
       "name": "input-surface--default--dark--320",
@@ -538,7 +538,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/input-surface--default--dark--320.png",
-      "sha256": "503761756b247508f19c7ea3e1405ed99a0a031e1807fbec37fdd2f28d7b7fea"
+      "sha256": "7d06f0f62205aea4b337ce57731177f26278b2c556905ad7b96b407fbb2769d2"
     },
     {
       "name": "input-surface--ops--dark--320",
@@ -570,7 +570,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/input-surface--ops--dark--320.png",
-      "sha256": "f5d74a3ef74eb11138b4e69c9d6334c281f3741a8283b54a5cd348a246a6bda2"
+      "sha256": "55e14584f9b107acfa95bebb0c8021985d972639748a4caf57bbc1131b38988c"
     },
     {
       "name": "data-dense--default--light--normal",
@@ -994,7 +994,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--default--light--normal.png",
-      "sha256": "065cf910d9624b0bf9cc7d9c59046747af881cee947585fcfeb2ee445a652532"
+      "sha256": "8ed5efc5fa4fffc7a5f40b1c1805330e3d958d67334e74b1f746694a15d813df"
     },
     {
       "name": "navigation-overlay--ops--light--normal",
@@ -1026,7 +1026,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--ops--light--normal.png",
-      "sha256": "7fab297f25d1b3d6ad61eaae49e32828d14d0375c515a0f7952061f96ca00e0c"
+      "sha256": "7d865c4e01e4a364cfc999c081c0baae1dcb0c190ed54341687460676f67e6c6"
     },
     {
       "name": "navigation-overlay--default--light--320",
@@ -1058,7 +1058,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--default--light--320.png",
-      "sha256": "e9524aa2b3f480186a84bba247cf058757803ca5c43f95a19eb647025082e983"
+      "sha256": "5960901df3466f79aff15ea4ab6068329000db9997d26772072f1e62bbdd60a2"
     },
     {
       "name": "navigation-overlay--ops--light--320",
@@ -1090,7 +1090,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--ops--light--320.png",
-      "sha256": "bbe05034ea15fd1ab334a8d2fcbd50908eab4c2981a2f48eafc129675fe45c2e"
+      "sha256": "00d28ad6bd86528ac9905b253a183c5e02d78ea857ece28604bbf7c58ba2f16f"
     },
     {
       "name": "navigation-overlay--default--dark--normal",
@@ -1122,7 +1122,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--default--dark--normal.png",
-      "sha256": "973159bf6fe8b7ab7efa48e970ebf30cf2190c9875f3c077516598895fb7a328"
+      "sha256": "e217be987930e6f478168cb658ecbed87791771be792dbc1bf31fc09c748745f"
     },
     {
       "name": "navigation-overlay--ops--dark--normal",
@@ -1154,7 +1154,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--ops--dark--normal.png",
-      "sha256": "36bff2878d3e8d04c3ae3c3c104c701f92a5e10cb7f886acc1cc2ef0298bce52"
+      "sha256": "d34095036393a66a34a224029969d2efd571c1cd59ca9e9339a108ca653ecd2c"
     },
     {
       "name": "navigation-overlay--default--dark--320",
@@ -1186,7 +1186,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--default--dark--320.png",
-      "sha256": "e2025467afea35d744d462bbea89b6265aa6d8ae6f47e184d151c569fd929fd2"
+      "sha256": "932904160b1456e2a806567eac891ee265da22e5afe72f3ef06bc825a56f378c"
     },
     {
       "name": "navigation-overlay--ops--dark--320",
@@ -1218,7 +1218,7 @@
         }
       },
       "path": "visual-artifacts/expression-profile/navigation-overlay--ops--dark--320.png",
-      "sha256": "91e936ca6937ca4e20ffba635b678505ddc11a93a57141382451c6c6c1d65405"
+      "sha256": "858788bf75962a1cf8a7d5c8f073dfb35201be81372db693ed04a578476b2568"
     }
   ]
 }

@@ -1,9 +1,9 @@
 "use client";
 import {
   Banner
-} from "../../chunk-FQFF5H5U.js";
+} from "../../chunk-OZNPSIL5.js";
 import "../../chunk-L2ZEGNVF.js";
-import "../../chunk-IKUN5X7H.js";
+import "../../chunk-SCAFBDKP.js";
 export {
   Banner
 };

@@ -51,6 +51,10 @@ export interface TableProps<Row extends Record<string, unknown> = Record<string,
    * 순서이기 때문입니다. 그룹 행은 밴드를 입지 않습니다.
    */
   groupKey?: keyof Row & string;
+  /** 좁은 화면(<=767px) 표현 방식. scroll은 가로 스크롤 표를 유지하고, key-value는 2열 속성표를 <dl>로, compact-list는 다열 상세표를 제목+속성 목록으로 접습니다. @default "scroll" */
+  mobileLayout?: 'scroll' | 'key-value' | 'compact-list';
+  /** `mobileLayout="compact-list"`에서 모바일 항목 제목 우측에 배치할 컬럼 key. */
+  mobileTrailingKey?: keyof Row & string;
   /** React key로 쓸 안정적인 행 식별자. 생략하면 `row.id`, 그다음 배열 index를 씁니다. */
   getRowId?: (row: Row, index: number) => React.Key;
   /** 행별 className, style, data attribute와 이벤트를 `<tr>`에 전달합니다. */

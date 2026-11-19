@@ -125,16 +125,16 @@
       "rule": "invalid — 상위 폼이나 DateRangeField가 판정한 검증 실패를 trigger에 싣습니다. Input·Select·Textarea와 같은 우선순위로 negative border를 적용하고 aria-invalid를 trigger button(=초점 요소)에 붙입니다. 오류 문구 자체는 소유하지 않으므로 상위가 aria-describedby로 메시지 id를 전달하면 그대로 trigger에 연결됩니다. role=\"group\"은 ARIA 1.2에서 aria-invalid를 지원하지 않으므로 group이 아니라 이 필드가 오류를 전달합니다."
     },
     {
+      "subject": "명시 규칙 3",
+      "rule": "Portal popup(2026-10-15)"
+    },
+    {
+      "subject": "명시 규칙 4",
+      "rule": "Calendar popup은 Core Popover의 owner-document Portal·위치 flip/clamp·outside/Escape·focus 엔진을 재사용합니다. 부모 툴바나 컨테이너의 overflow:hidden에 잘리지 않도록 inline absolute panel을 제거했습니다. Calendar가 단일 border/radius/padding을 소유하고 Popover panel은 겹치는 border/padding을 제거합니다. normal 폭은 기존 Calendar의334px 외곽 폭, narrow에서는 viewport 안으로 줄어듭니다."
+    },
+    {
       "subject": "--color-semantic-fill-normal",
       "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
-    },
-    {
-      "subject": "--color-semantic-label-alternative",
-      "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
-    },
-    {
-      "subject": "--color-semantic-label-disable",
-      "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
     }
   ],
   "responsive": [],
@@ -180,7 +180,8 @@
     "--control-h-sm",
     "--dur-fast",
     "--ease-out",
-    "--font-sans"
+    "--font-sans",
+    "--radius-xl"
   ],
   "apiLinks": [],
   "migration": [],
@@ -198,6 +199,11 @@
         "id": "lds-core-components-selection-and-input-date-picker--date-input",
         "name": "개요",
         "role": "overview"
+      },
+      {
+        "id": "lds-core-components-selection-and-input-date-picker--portal-clipping",
+        "name": "사용법 · 좁은 영역에서 달력 열기",
+        "role": "usage"
       },
       {
         "id": "lds-core-components-selection-and-input-date-picker--blocked-dates",

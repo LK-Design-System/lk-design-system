@@ -12,7 +12,13 @@
 
 ### 2026-11-19 복원한 예제
 
-[`effe1353`의 Linux export](https://github.com/LK-Design-System/lk-design-system/actions/runs/44441816548)는 203페이지, 817스토리와 202개 Docs 경로를 집계했습니다. 기존 802개 스토리의 ID와 공개 상태를 보존했고 공개 예제 14개와 숨김 시각 회귀 예제 1개를 추가했습니다. 새 예제는 DatePicker, TimePicker, Lightbox, Video Playback Controls에 속합니다.
+[`c66c6f55`의 Linux export](https://github.com/LK-Design-System/lk-design-system/actions/runs/44442335910)는 203개 페이지와 817개 스토리, Docs 경로 202개를 집계했습니다. 기존 802개 스토리의 ID와 공개 상태를 보존했고 공개 예제 14개와 숨김 시각 회귀 예제 1개를 추가했습니다. 새 예제는 DatePicker, TimePicker, Lightbox, Video Playback Controls에 속합니다.
+
+- 공개 스토리: 578개
+- 숨김 스토리: 239개
+- 숨김 visual parity: 103개
+- 숨김 internal contract: 132개
+- 검토 완료 페이지 203/203개, 스토리 817/817개
 
 검토는 변경된 5개 페이지와 새 예제의 소유권, 역할, 이름, 공개 순서와 설명에 한정합니다. 에이전트가 브라우저 동작을 확인했고 사용자가 검토 기록과 정본 생성물 통합을 승인했습니다. 전체 접근성 검사 결과는 CI에서 확인합니다.
 

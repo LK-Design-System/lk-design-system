@@ -125,11 +125,11 @@
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "VideoStreamTile",
+      "component": "VideoPlaybackControls",
       "relationship": "대표 시나리오에서 조합"
     },
     {
-      "component": "ViewerFrame",
+      "component": "VideoStreamTile",
       "relationship": "대표 시나리오에서 조합"
     }
   ],

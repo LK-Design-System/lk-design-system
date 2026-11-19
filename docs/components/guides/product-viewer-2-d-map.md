@@ -117,8 +117,8 @@
 | `Scene3DFrame` | 대표 시나리오에서 조합 |
 | `VIEWER_BLOCKING_STATES` | 대표 시나리오에서 조합 |
 | `VIEWER_STATES` | 대표 시나리오에서 조합 |
+| `VideoPlaybackControls` | 대표 시나리오에서 조합 |
 | `VideoStreamTile` | 대표 시나리오에서 조합 |
-| `ViewerFrame` | 대표 시나리오에서 조합 |
 
 ## Examples
 

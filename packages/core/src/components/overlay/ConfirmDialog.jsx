@@ -1,6 +1,7 @@
 import React from 'react';
 import { ActionArea } from '../buttons/ActionArea.jsx';
 import { Button } from '../buttons/Button.jsx';
+import { Input } from '../forms/Input.jsx';
 import { useDialogFocus } from './dialog-focus.js';
 import { OverlayPortal } from './overlay-platform.js';
 
@@ -21,6 +22,9 @@ export function ConfirmDialog({
   confirmDisabled = false,
   confirmLoading = false,
   confirmLoadingLabel = '처리 중',
+  requireMatchText,
+  matchInputLabel,
+  matchInputPlaceholder,
   onConfirm,
   onCancel,
   onClose,
@@ -37,14 +41,21 @@ export function ConfirmDialog({
 }) {
   const titleId = React.useId();
   const descriptionId = React.useId();
+  const [matchValue, setMatchValue] = React.useState('');
   const cancelFocusRef = React.useRef(null);
   const portalRef = React.useRef(null);
   const portalAnchorRef = React.useRef(null);
+  React.useEffect(() => {
+    if (!open) setMatchValue('');
+  }, [open, requireMatchText]);
   if (open && !portalAnchorRef.current && typeof document !== 'undefined') {
     portalAnchorRef.current = returnFocusRef?.current ?? document.activeElement;
   }
   if (!open) portalAnchorRef.current = null;
   const dismiss = onCancel || onClose;
+  const requiresMatch = typeof requireMatchText === 'string' && requireMatchText.length > 0;
+  const matchSatisfied = !requiresMatch || matchValue === requireMatchText;
+  const isConfirmDisabled = confirmDisabled || !matchSatisfied;
   const Heading = `h${Math.min(6, Math.max(2, headingLevel))}`;
   const { dialogRef, zIndex: resolvedZIndex } = useDialogFocus({
     open,
@@ -94,6 +105,18 @@ export function ConfirmDialog({
           {title != null && <Heading id={titleId} style={{ margin: 0, color: 'var(--color-semantic-label-normal)', fontSize: 'var(--headline1-size)', lineHeight: 'var(--headline1-line)', letterSpacing: 0, fontWeight: 'var(--fw-extra)' }}>{title}</Heading>}
           {children != null && <div id={descriptionId} style={{ color: 'var(--color-semantic-label-neutral)', fontSize: 'var(--body2-size)', lineHeight: 1.7, wordBreak: 'keep-all' }}>{children}</div>}
         </div>
+        {requiresMatch && (
+          <div data-confirm-dialog-match="" style={{ minWidth: 0 }}>
+            <Input
+              size="sm"
+              label={matchInputLabel ?? `확인하려면 '${requireMatchText}'을(를) 입력하세요`}
+              placeholder={matchInputPlaceholder ?? requireMatchText}
+              value={matchValue}
+              onChange={(event) => setMatchValue(event.target.value)}
+              disabled={confirmLoading}
+            />
+          </div>
+        )}
         <ActionArea compact divider={false} align="end" style={{ padding: 0, background: 'transparent' }}>
           <Button data-confirm-dialog-cancel variant="outlined" color="assistive" onClick={() => dismiss?.()}>
             {cancelLabel}
@@ -101,7 +124,7 @@ export function ConfirmDialog({
           <Button
             variant={tone === 'danger' ? 'danger' : 'primary'}
             onClick={onConfirm}
-            disabled={confirmDisabled}
+            disabled={isConfirmDisabled}
             loading={confirmLoading}
             loadingLabel={confirmLoadingLabel}
           >

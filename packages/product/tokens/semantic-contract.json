@@ -164,6 +164,7 @@
     "--component-input-border-width",
     "--component-input-focus-shadow",
     "--component-input-font-size",
+    "--component-input-gap",
     "--component-input-height",
     "--component-input-icon-color",
     "--component-input-label-font-size",

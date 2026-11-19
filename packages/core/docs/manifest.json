@@ -66,7 +66,7 @@
     "documents": [
       {
         "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-        "sha256": "47484fff48f577d9a3f7d9bd348d757dca9c097dd7825e1c934f25900dcdb890"
+        "sha256": "e82caa3214d1d9ffb39f42efa505d41299c2acda8e1b4b7ba247c4508d718f56"
       },
       {
         "path": "docs/agent-skills/lds-ui/references/anti-patterns.md",
@@ -86,7 +86,7 @@
       },
       {
         "path": "docs/components/README.md",
-        "sha256": "2e3910eb39a61c2525cf58e03a2e13a47d03286be4696028706ae8af046ee4d2"
+        "sha256": "f4964e77ad66f25ab1e5cb6806676bb5d3ec1a7107fb13ca231b55b6bc11225f"
       },
       {
         "path": "docs/COPY_REVIEW_CONTRACT.md",
@@ -162,7 +162,7 @@
       },
       {
         "path": "docs/foundations/TOKEN_REFERENCE.md",
-        "sha256": "f0432f76202fade0a662f50996be1afcb0cc7b541724618ff470824ae73c4caa"
+        "sha256": "2adde30427cb7a27bf8d9c28a6be5fb4a1d5c51e02d6e3af27b289cc597c0e4d"
       },
       {
         "path": "docs/foundations/typography.md",
@@ -214,7 +214,7 @@
       },
       {
         "path": "docs/TOKEN_GOVERNANCE.md",
-        "sha256": "492a9d0728e8c0c972adc886e9a3d7f99ba6bfc650a723759dc420b797fbcfe6"
+        "sha256": "0c1c4ee1f8a3b2e13643d95c57a1546161e8097c71f3f207a54652f0151272b3"
       },
       {
         "path": "llms.txt",
@@ -226,24 +226,24 @@
       },
       {
         "path": "packages/core/assets/icons/manifest.json",
-        "sha256": "0530d2bce2947affd03385fa56cb72d596258ff78242b49aa2c478026765f65b"
+        "sha256": "130baa7cddb105a77bf7cff7096008c60df1990ef56c3db8a7a2399ffb23e7fa"
       },
       {
         "path": "tokens/source.json",
-        "sha256": "5220d1b162110e6bde9931fb961b369ba2333647ddc2c91d5b3ce528058b554b"
+        "sha256": "3567006b3f0abfa1c4b1ce5eb2973694c4548fea1580ad12bdc71cd09bbfe881"
       }
     ]
   },
   "resources": {
     "tokens": {
       "fileCount": 6,
-      "bytes": 37435,
-      "sha256": "5f9bd5aec84461860067f8232a9f4578d40251660943a8b506bc7498ef81698d"
+      "bytes": 38901,
+      "sha256": "eb4c39945a7916a1c9147869a2342d5a51e9f2fea22d9762fd28a4773141c065"
     },
     "assets": {
-      "fileCount": 365,
-      "bytes": 2097107,
-      "sha256": "3cc8f73f57611e5d0a4c05b20d5e8cb1335d7d74a27a8562d8ad50708a1d961e"
+      "fileCount": 366,
+      "bytes": 2097787,
+      "sha256": "a184985545ba5c0a2f5ce4222f64f527ea1b54f4786ac2c37c38af01d4f736db"
     }
   },
   "documents": [
@@ -339,21 +339,21 @@
     },
     {
       "path": "assets/icons/manifest.json",
-      "sha256": "0530d2bce2947affd03385fa56cb72d596258ff78242b49aa2c478026765f65b",
+      "sha256": "130baa7cddb105a77bf7cff7096008c60df1990ef56c3db8a7a2399ffb23e7fa",
       "sources": [
         {
           "path": "packages/core/assets/icons/manifest.json",
-          "sha256": "0530d2bce2947affd03385fa56cb72d596258ff78242b49aa2c478026765f65b"
+          "sha256": "130baa7cddb105a77bf7cff7096008c60df1990ef56c3db8a7a2399ffb23e7fa"
         }
       ]
     },
     {
       "path": "components/README.md",
-      "sha256": "51b4b54b1ab51fe699421819846e9dd5f386362e50685d16d1c6ac321b5d1a1e",
+      "sha256": "c4d5c536b3d8bdd0b5adfa01879f5e3af5fe405ddf853e159ada9c3fdabb912a",
       "sources": [
         {
           "path": "docs/components/README.md",
-          "sha256": "2e3910eb39a61c2525cf58e03a2e13a47d03286be4696028706ae8af046ee4d2"
+          "sha256": "f4964e77ad66f25ab1e5cb6806676bb5d3ec1a7107fb13ca231b55b6bc11225f"
         }
       ]
     },
@@ -529,11 +529,11 @@
     },
     {
       "path": "foundations/TOKEN_REFERENCE.md",
-      "sha256": "f0432f76202fade0a662f50996be1afcb0cc7b541724618ff470824ae73c4caa",
+      "sha256": "2adde30427cb7a27bf8d9c28a6be5fb4a1d5c51e02d6e3af27b289cc597c0e4d",
       "sources": [
         {
           "path": "docs/foundations/TOKEN_REFERENCE.md",
-          "sha256": "f0432f76202fade0a662f50996be1afcb0cc7b541724618ff470824ae73c4caa"
+          "sha256": "2adde30427cb7a27bf8d9c28a6be5fb4a1d5c51e02d6e3af27b289cc597c0e4d"
         }
       ]
     },
@@ -599,11 +599,11 @@
     },
     {
       "path": "policies/ACCESSIBILITY_CONTRACTS.md",
-      "sha256": "f4320cfbb453467cf3cdf07550dda80e1e325a3ce170cfe813949f68c9860a87",
+      "sha256": "098ca87f72fc44cffc3c9fa2e2e592e3aba78ca5ca378494976e9f89968bdaaa",
       "sources": [
         {
           "path": "docs/ACCESSIBILITY_CONTRACTS.md",
-          "sha256": "47484fff48f577d9a3f7d9bd348d757dca9c097dd7825e1c934f25900dcdb890"
+          "sha256": "e82caa3214d1d9ffb39f42efa505d41299c2acda8e1b4b7ba247c4508d718f56"
         }
       ]
     },
@@ -649,21 +649,21 @@
     },
     {
       "path": "policies/TOKEN_GOVERNANCE.md",
-      "sha256": "ed9f2dc5a4bf6b5d4090a545f089fb1ca6534e5a879a19cc2da716984fc4a844",
+      "sha256": "81699f4f9697044627bc206be6c435ae037fe8ad0fa5e5f4a658853c81a52ee9",
       "sources": [
         {
           "path": "docs/TOKEN_GOVERNANCE.md",
-          "sha256": "492a9d0728e8c0c972adc886e9a3d7f99ba6bfc650a723759dc420b797fbcfe6"
+          "sha256": "0c1c4ee1f8a3b2e13643d95c57a1546161e8097c71f3f207a54652f0151272b3"
         }
       ]
     },
     {
       "path": "token-reference.json",
-      "sha256": "5220d1b162110e6bde9931fb961b369ba2333647ddc2c91d5b3ce528058b554b",
+      "sha256": "3567006b3f0abfa1c4b1ce5eb2973694c4548fea1580ad12bdc71cd09bbfe881",
       "sources": [
         {
           "path": "tokens/source.json",
-          "sha256": "5220d1b162110e6bde9931fb961b369ba2333647ddc2c91d5b3ce528058b554b"
+          "sha256": "3567006b3f0abfa1c4b1ce5eb2973694c4548fea1580ad12bdc71cd09bbfe881"
         }
       ]
     }

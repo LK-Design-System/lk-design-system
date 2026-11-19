@@ -630,9 +630,15 @@
 | `semantic.colorRoles.line-solid-alternative` | color | `--color-semantic-line-solid-alternative` | `light: #F4F4F5; dark: #2E2F33` | — |
 | `semantic.colorRoles.line-solid-neutral` | color | `--color-semantic-line-solid-neutral` | `light: #EAEBEC; dark: #333438` | — |
 | `semantic.colorRoles.line-solid-normal` | color | `--color-semantic-line-solid-normal` | `light: #E1E2E4; dark: #37383C` | — |
+| `semantic.colorRoles.line-solid-strong` | color | `--color-semantic-line-solid-strong` | `light: var(--color-semantic-line-solid-_strong); dark: var(--color-semantic-line-solid-_strong)` | — |
 | `semantic.colorRoles.material-background-onbackground` | color | `--color-semantic-material-background-onbackground` | `light: #1A1B1E; dark: #E2E3E6` | — |
 | `semantic.colorRoles.material-dimmer` | color | `--color-semantic-material-dimmer` | `light: rgba(23, 23, 25, 0.52); dark: rgba(23, 23, 25, 0.74)` | — |
 | `semantic.colorRoles.material-outline-outline` | color | `--color-semantic-material-outline-outline` | `light: #73767E; dark: #8E9199` | — |
+| `semantic.colorRoles.media-target` | color | `--color-semantic-media-target` | `light: var(--color-atomic-cyan-50); dark: var(--color-atomic-cyan-50)` | — |
+| `semantic.colorRoles.on-media-border` | color | `--color-semantic-on-media-border` | `light: color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent); dark: color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent)` | — |
+| `semantic.colorRoles.on-media-label` | color | `--color-semantic-on-media-label` | `light: var(--color-semantic-static-white); dark: var(--color-semantic-static-white)` | — |
+| `semantic.colorRoles.on-media-scrim` | color | `--color-semantic-on-media-scrim` | `light: color-mix(in srgb, var(--color-semantic-brand-surface) 72%, transparent); dark: color-mix(in srgb, var(--color-semantic-brand-surface) 72%, transparent)` | — |
+| `semantic.colorRoles.on-media-scrim-strong` | color | `--color-semantic-on-media-scrim-strong` | `light: color-mix(in srgb, var(--color-semantic-brand-surface) 84%, transparent); dark: color-mix(in srgb, var(--color-semantic-brand-surface) 84%, transparent)` | — |
 | `semantic.colorRoles.primary-fill` | color | `--color-semantic-primary-fill` | `light: var(--color-semantic-primary-normal); dark: var(--color-semantic-primary-heavy)` | — |
 | `semantic.colorRoles.primary-heavy` | color | `--color-semantic-primary-heavy` | `light: var(--color-atomic-primary-blue-30); dark: var(--color-atomic-primary-blue-45)` | — |
 | `semantic.colorRoles.primary-ink` | color | `--color-semantic-primary-ink` | `light: var(--color-atomic-primary-blue-40); dark: var(--color-atomic-primary-blue-70)` | — |

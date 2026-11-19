@@ -1,8 +1,8 @@
 "use client";
 import {
   Thumbnail
-} from "../../chunk-TZ4A3ESW.js";
-import "../../chunk-IKUN5X7H.js";
+} from "../../chunk-WBES4SKX.js";
+import "../../chunk-SCAFBDKP.js";
 export {
   Thumbnail
 };

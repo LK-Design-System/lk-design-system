@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceFingerprint": "028db90e6d4dda088d8fcb6090d2be497f2b26ab12ec4c81210d2e570f4203fa",
+  "sourceFingerprint": "be89d486264399c3635c52a9485443b997f0956ee42be58e6730d307ce09b392",
   "completionCriteria": [
     "purpose-and-selection",
     "anatomy",
@@ -26,9 +26,9 @@
     "not-tracked": "This repository does not own or assert that platform implementation status."
   },
   "summary": {
-    "componentEntries": 214,
-    "publicExports": 227,
-    "guides": 183,
+    "componentEntries": 215,
+    "publicExports": 228,
+    "guides": 184,
     "entriesWithoutOwnedPage": [
       "Stat",
       "AvatarGroup",
@@ -6850,9 +6850,9 @@
         },
         {
           "name": "typography",
-          "type": "'document' | 'chat'",
+          "type": "'document' | 'chat' | 'reading' | 'compact'",
           "required": false,
-          "description": "Document keeps the existing 14px reading scale. Chat opts into 16px/24px body, a compact heading/rhythm hierarchy and local table scrolling. Heading semantics and parsing stay product-owned. @default \"document\"",
+          "description": "Document keeps the 14px wiki scale. Chat opts into 16px/24px conversational rhythm and local table scrolling. Reading uses 16px long-form article/report rhythm. Compact uses 13px dense README/panel rhythm. Heading semantics and parsing stay product-owned. @default \"document\"",
           "owner": "ProseProps"
         }
       ],
@@ -6895,7 +6895,11 @@
         "--heading2-line",
         "--headline1-line",
         "--headline2-line",
-        "--fw-semibold"
+        "--fw-semibold",
+        "--body1-reading-line",
+        "--label2-line",
+        "--label2-spacing",
+        "--caption1-size"
       ],
       "externalReferences": [
         {
@@ -13467,6 +13471,20 @@
           "owner": "TableProps"
         },
         {
+          "name": "mobileLayout",
+          "type": "'scroll' | 'key-value' | 'compact-list'",
+          "required": false,
+          "description": "좁은 화면(로, compact-list는 다열 상세표를 제목+속성 목록으로 접습니다. @default \"scroll\"",
+          "owner": "TableProps"
+        },
+        {
+          "name": "mobileTrailingKey",
+          "type": "keyof Row & string",
+          "required": false,
+          "description": "mobileLayout=\"compact-list\"에서 모바일 항목 제목 우측에 배치할 컬럼 key.",
+          "owner": "TableProps"
+        },
+        {
           "name": "getRowId",
           "type": "(row: Row, index: number) = React.Key",
           "required": false,
@@ -13503,7 +13521,15 @@
         "--color-semantic-label-strong",
         "--label1-size",
         "--label1-line",
-        "--fw-semibold"
+        "--fw-semibold",
+        "--space-4",
+        "--color-semantic-line-solid-alternative",
+        "--color-semantic-label-alternative",
+        "--fw-medium",
+        "--color-semantic-label-normal",
+        "--space-1-5",
+        "--caption1-size",
+        "--caption1-line"
       ],
       "externalReferences": [
         {
@@ -13543,7 +13569,7 @@
           "url": "https://carbondesignsystem.com/components/data-table/style/"
         }
       ],
-      "promptSha256": "917172e7e6709982ac3b2ee49e82082ef3a7164d843d5785764dc8468faf1aab"
+      "promptSha256": "3eb729b1c48220b729c18f4adcf8632a4f45572fcd2f9c5c1dd9b345c3fe03f6"
     },
     {
       "id": "tree",
@@ -16677,7 +16703,7 @@
           "url": "https://carbondesignsystem.com/components/text-input/usage/"
         }
       ],
-      "promptSha256": "6da7d5d2858919b896dcb97a898e65588e1b53d44461fd0408c033f7648f1d82"
+      "promptSha256": "948eb9b8ec5c21c8fc6d2edd3e743ad696870aa16320581f4dd39a7f78e4e535"
     },
     {
       "id": "checkbox",
@@ -17487,6 +17513,7 @@
         "--component-input-border-color-invalid",
         "--component-input-border-color-focus",
         "--component-input-border-color",
+        "--radius-xl",
         "--component-input-gap",
         "--component-input-padding-x",
         "--color-semantic-fill-normal",
@@ -17508,9 +17535,17 @@
         {
           "label": "WAI-ARIA Dialog pattern",
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+        },
+        {
+          "label": "W3C picker dialog example",
+          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/"
+        },
+        {
+          "label": "React Aria Popover",
+          "url": "https://react-aria.adobe.com/Popover"
         }
       ],
-      "promptSha256": "296c1986f9dd18581f5d5076b9c650aa929fab206186f747996672e74f5ad435"
+      "promptSha256": "e3e91664cacef24e778469a024a7884340afdfac0da1705c5f8d81bdb4f73606"
     },
     {
       "id": "date-range-field",
@@ -18644,7 +18679,7 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/field/usage"
         }
       ],
-      "promptSha256": "3653c23080577f4716c6735c20f6a1ec76f7cfa4d0d7f4fd1c8227a81a679bbf"
+      "promptSha256": "531bc59a381f044e6ad295290466f518b705983088528b3da64e78813190a707"
     },
     {
       "id": "input-group",
@@ -18822,7 +18857,7 @@
           "url": "https://carbondesignsystem.com/components/text-input/usage/"
         }
       ],
-      "promptSha256": "5af7371559c5ad8014f3393cfe37bf21d46249bb14df788db7e6165531b2aa60"
+      "promptSha256": "e97a26e574b3419afb44610c629db8dae0fb4ccd44dd87ea1ca252c74000ad0e"
     },
     {
       "id": "number-field",
@@ -18981,7 +19016,7 @@
           "url": "https://spectrum.adobe.com/page/number-field/"
         }
       ],
-      "promptSha256": "543c05891627284a9ac81fb4c692fcdf992e118d263a7dc60a91c5ee8b9cca2e"
+      "promptSha256": "6fdfbd902a224fdfa5c9f79f05d79b5e58988c165928fd8cea5aa66ae551d150"
     },
     {
       "id": "password-input",
@@ -20252,7 +20287,7 @@
           "url": "https://developer.apple.com/design/human-interface-guidelines/lists-and-tables"
         }
       ],
-      "promptSha256": "8b6efecc9bdba4abc68f762937799280a921ec16c455baa27a7663a4aeee0f98"
+      "promptSha256": "461b3300aaeaacf272ef46617d1f87e955d1e7aaa7fb1d0a372427c21d21f1e3"
     },
     {
       "id": "search-field",
@@ -20493,7 +20528,7 @@
           "url": "https://www.w3.org/TR/WCAG22/#on-focus"
         }
       ],
-      "promptSha256": "6b75dac381c082d3b23833060576cfedba20a1c9826e31403c47818ec45d573d"
+      "promptSha256": "71da87d67a369ace0338724cf753f5ec368650506a4e8ad677f3287acec62f5f"
     },
     {
       "id": "secret-field",
@@ -21416,7 +21451,7 @@
           "url": "https://www.w3.org/TR/WCAG22/#focus-order"
         }
       ],
-      "promptSha256": "a366e621891078a01dcdcf1593ca3002926bba696e916d181ab0e53d95a43cac"
+      "promptSha256": "60e0aacf0bb4855ca1b1f6c771a4ab4d332915ed30d289dd64c35c28421a6b02"
     },
     {
       "id": "textarea",
@@ -21701,7 +21736,7 @@
           "name": "value",
           "type": "string",
           "required": false,
-          "description": "\"HH:MM\" 문자열.",
+          "description": "minute precision: \"HH:MM\". second precision: \"HH:MM:SS\".",
           "owner": "TimePickerProps"
         },
         {
@@ -21726,6 +21761,48 @@
           "owner": "TimePickerProps"
         },
         {
+          "name": "precision",
+          "type": "'minute' | 'second'",
+          "required": false,
+          "description": "Output precision; minute preserves the existing two-select API. @default \"minute\"",
+          "owner": "TimePickerProps"
+        },
+        {
+          "name": "presentation",
+          "type": "'units' | 'field'",
+          "required": false,
+          "description": "units commits each native change; field drafts in a Popover and commits on 확인. @default \"units\"",
+          "owner": "TimePickerProps"
+        },
+        {
+          "name": "minTime",
+          "type": "string",
+          "required": false,
+          "description": "Inclusive same-day minimum, HH:MM or HH:MM:SS. Invalid/reversed bounds disable selection.",
+          "owner": "TimePickerProps"
+        },
+        {
+          "name": "maxTime",
+          "type": "string",
+          "required": false,
+          "description": "Inclusive same-day maximum, HH:MM or HH:MM:SS.",
+          "owner": "TimePickerProps"
+        },
+        {
+          "name": "allowedTimeRanges",
+          "type": "readonly {start: string; end: string}[]",
+          "required": false,
+          "description": "Inclusive same-day clock intervals (HH:MM or HH:MM:SS), intersected with minTime/maxTime. Omitted permits the bound range; [] or invalid intervals disable all choices. Dates and endpoint semantics remain consumer-owned.",
+          "owner": "TimePickerProps"
+        },
+        {
+          "name": "secondStep",
+          "type": "number",
+          "required": false,
+          "description": "초 증가폭(160); precision=\"second\"일 때 사용. @default 1",
+          "owner": "TimePickerProps"
+        },
+        {
           "name": "hourLabel",
           "type": "string",
           "required": false,
@@ -21737,6 +21814,13 @@
           "type": "string",
           "required": false,
           "description": "분 select의 accessible name. @default \"분\"",
+          "owner": "TimePickerProps"
+        },
+        {
+          "name": "secondLabel",
+          "type": "string",
+          "required": false,
+          "description": "초 select의 accessible name. @default \"초\"",
           "owner": "TimePickerProps"
         },
         {
@@ -21772,7 +21856,10 @@
         "--component-input-height",
         "--space-2",
         "--fw-bold",
-        "--color-semantic-label-alternative"
+        "--color-semantic-label-alternative",
+        "--component-input-gap",
+        "--component-input-padding-x",
+        "--space-4"
       ],
       "externalReferences": [
         {
@@ -21782,9 +21869,33 @@
         {
           "label": "WAI-ARIA Authoring Practices: Read Me First",
           "url": "https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/"
+        },
+        {
+          "label": "MDN time value format",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/time#time_value_format"
+        },
+        {
+          "label": "W3C APG native semantics 우선 원칙",
+          "url": "https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/"
+        },
+        {
+          "label": "Ant Design TimePicker",
+          "url": "https://ant.design/components/time-picker/"
+        },
+        {
+          "label": "W3C picker dialog example",
+          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/"
+        },
+        {
+          "label": "Ant Design TimePicker의 disabledHours/disabledMinutes/disabledSeconds",
+          "url": "https://ant.design/components/time-picker/#disabledtime"
+        },
+        {
+          "label": "WHATWG option disabled",
+          "url": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-option-disabled"
         }
       ],
-      "promptSha256": "20fe523df7bbe3e1e0c6ed73328c4cf26493c276142d8c434b9090822abe7a9a"
+      "promptSha256": "94a3ac8eb29eb901adcaa2566ab8edeea02eb5f8054296472560a458c8ea2496"
     },
     {
       "id": "validation-summary",
@@ -24889,6 +25000,7 @@
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
+        "stories/VideoPlaybackControls.stories.jsx",
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
@@ -24898,6 +25010,7 @@
         "Scene3DFrame",
         "VIEWER_BLOCKING_STATES",
         "VIEWER_STATES",
+        "VideoPlaybackControls",
         "VideoStreamTile",
         "ViewerFrame",
         "ViewerToolbar",
@@ -24910,6 +25023,7 @@
         "LDS Product/Viewer/Elevator Fleet Overview",
         "LDS Product/Viewer/Floor Selector",
         "LDS Product/Viewer/Toolbar",
+        "LDS Product/Viewer/Video Playback Controls",
         "LDS Product/Viewer/Video Stream",
         "LDS Product/Viewer/Viewer Frame"
       ],
@@ -27746,6 +27860,27 @@
           "owner": "ConfirmDialogProps"
         },
         {
+          "name": "requireMatchText",
+          "type": "string",
+          "required": false,
+          "description": "파괴적 액션에서 사용자가 대상 식별자/문구를 정확히 입력했을 때만 확인 버튼을 활성화합니다.",
+          "owner": "ConfirmDialogProps"
+        },
+        {
+          "name": "matchInputLabel",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "requireMatchText 사용 시 확인 입력 필드의 레이블.",
+          "owner": "ConfirmDialogProps"
+        },
+        {
+          "name": "matchInputPlaceholder",
+          "type": "string",
+          "required": false,
+          "description": "requireMatchText 사용 시 확인 입력 필드의 placeholder. 기본값은 requireMatchText입니다.",
+          "owner": "ConfirmDialogProps"
+        },
+        {
           "name": "onConfirm",
           "type": "React.MouseEventHandler",
           "required": false,
@@ -27851,7 +27986,7 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/dialog/usage"
         }
       ],
-      "promptSha256": "0db61bec39ceba205ddb7c2a20a0c86c269ab6da4e495108c2095d72a4cabdff"
+      "promptSha256": "c282df5cec2e311b14b1b2fc8b346c14be01c874a5eacf0b64667e3be5b05687"
     },
     {
       "id": "dimmer",
@@ -28024,6 +28159,13 @@
           "type": "'auto' | 'sm'",
           "required": false,
           "description": "header padding만 선택합니다. auto는 기존 density별 여백, sm은 8×20px이며 body/footer 밀도와 control 크기는 유지합니다. @default \"auto\"",
+          "owner": "DrawerProps"
+        },
+        {
+          "name": "mobileFullWidth",
+          "type": "boolean",
+          "required": false,
+          "description": "좁은 뷰포트(<=767px)에서 기본 92vw 제한과 그림자를 걷고 100vw 전체 화면 시트로 전환합니다. @default false",
           "owner": "DrawerProps"
         },
         {
@@ -28301,7 +28443,7 @@
           "url": "https://fluent2.microsoft.design/components/web/react/core/button/usage"
         }
       ],
-      "promptSha256": "7979f5f2926238137c08666ad0a82a11c3e85251b579f48f891266438abc5c33"
+      "promptSha256": "9be6a37d0f5559d568a58f0692d46f9378b5d58b77e42ac9ff68d46b59f19e26"
     },
     {
       "id": "dropdown-menu",
@@ -28896,6 +29038,13 @@
           "owner": "LightboxProps"
         },
         {
+          "name": "imageSizing",
+          "type": "'natural' | 'contain'",
+          "required": false,
+          "description": "natural only shrinks; contain fits the existing viewport box and can upscale, preserving aspect ratio. @default \"natural\"",
+          "owner": "LightboxProps"
+        },
+        {
           "name": "style",
           "type": "React.CSSProperties",
           "required": false,
@@ -28929,9 +29078,17 @@
         {
           "label": "React Aria Modal",
           "url": "https://react-aria.adobe.com/Modal"
+        },
+        {
+          "label": "MDN object-fit",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-fit"
+        },
+        {
+          "label": "W3C modal dialog",
+          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
         }
       ],
-      "promptSha256": "550c59a585835d52876ea3e763dcc19fae246ecfc59b22cd0e5a2c55ecc23130"
+      "promptSha256": "78752bb5df1ec0536864c558ba3494b8ef6afb695f0bec941b91b0eb2b7f1bf6"
     },
     {
       "id": "modal",
@@ -33349,6 +33506,7 @@
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
+        "stories/VideoPlaybackControls.stories.jsx",
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
@@ -33358,6 +33516,7 @@
         "Scene3DFrame",
         "VIEWER_BLOCKING_STATES",
         "VIEWER_STATES",
+        "VideoPlaybackControls",
         "VideoStreamTile",
         "ViewerFrame",
         "ViewerToolbar",
@@ -33370,6 +33529,7 @@
         "LDS Product/Viewer/Elevator Fleet Overview",
         "LDS Product/Viewer/Floor Selector",
         "LDS Product/Viewer/Toolbar",
+        "LDS Product/Viewer/Video Playback Controls",
         "LDS Product/Viewer/Video Stream",
         "LDS Product/Viewer/Viewer Frame"
       ],
@@ -33505,6 +33665,7 @@
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
+        "stories/VideoPlaybackControls.stories.jsx",
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
@@ -33514,6 +33675,7 @@
         "Scene3DFrame",
         "VIEWER_BLOCKING_STATES",
         "VIEWER_STATES",
+        "VideoPlaybackControls",
         "VideoStreamTile",
         "ViewerFrame",
         "ViewerToolbar",
@@ -33526,6 +33688,7 @@
         "LDS Product/Viewer/Elevator Fleet Overview",
         "LDS Product/Viewer/Floor Selector",
         "LDS Product/Viewer/Toolbar",
+        "LDS Product/Viewer/Video Playback Controls",
         "LDS Product/Viewer/Video Stream",
         "LDS Product/Viewer/Viewer Frame"
       ],
@@ -33643,6 +33806,7 @@
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
+        "stories/VideoPlaybackControls.stories.jsx",
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
@@ -33652,6 +33816,7 @@
         "Scene3DFrame",
         "VIEWER_BLOCKING_STATES",
         "VIEWER_STATES",
+        "VideoPlaybackControls",
         "VideoStreamTile",
         "ViewerFrame",
         "ViewerToolbar",
@@ -33664,6 +33829,7 @@
         "LDS Product/Viewer/Elevator Fleet Overview",
         "LDS Product/Viewer/Floor Selector",
         "LDS Product/Viewer/Toolbar",
+        "LDS Product/Viewer/Video Playback Controls",
         "LDS Product/Viewer/Video Stream",
         "LDS Product/Viewer/Viewer Frame"
       ],
@@ -33963,6 +34129,7 @@
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
+        "stories/VideoPlaybackControls.stories.jsx",
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
@@ -33972,6 +34139,7 @@
         "Map2DCanvas",
         "VIEWER_BLOCKING_STATES",
         "VIEWER_STATES",
+        "VideoPlaybackControls",
         "VideoStreamTile",
         "ViewerFrame",
         "ViewerToolbar",
@@ -33984,6 +34152,7 @@
         "LDS Product/Viewer/Elevator Fleet Overview",
         "LDS Product/Viewer/Floor Selector",
         "LDS Product/Viewer/Toolbar",
+        "LDS Product/Viewer/Video Playback Controls",
         "LDS Product/Viewer/Video Stream",
         "LDS Product/Viewer/Viewer Frame"
       ],
@@ -34511,6 +34680,205 @@
       "promptSha256": "e631f19574615baa645dd43f674616197cb0d3ea76bebc85de3be9ca3f22abda"
     },
     {
+      "id": "video-playback-controls",
+      "title": "VideoPlaybackControls",
+      "exports": [
+        "VideoPlaybackControls"
+      ],
+      "source": "components/viz/VideoPlaybackControls.jsx",
+      "typeContract": "components/viz/VideoPlaybackControls.d.ts",
+      "prompt": "components/viz/VideoPlaybackControls.prompt.md",
+      "group": "Viewer product patterns",
+      "ownerLayer": "product",
+      "provenance": "product-extension",
+      "wdsFamily": null,
+      "storyEvidence": [
+        "stories/Viewer3D.stories.jsx",
+        "stories/ViewerDotMatrixPreview.stories.jsx",
+        "stories/ViewerElevatorFleet.stories.jsx",
+        "stories/ViewerFloorSelector.stories.jsx",
+        "stories/ViewerFrame.stories.jsx",
+        "stories/ViewerMap.stories.jsx",
+        "stories/ViewerToolbar.stories.jsx",
+        "stories/VideoPlaybackControls.stories.jsx",
+        "stories/ViewerVideo.stories.jsx"
+      ],
+      "classificationSiblings": [
+        "DotMatrixPreview",
+        "ElevatorFleetOverview",
+        "FloorSelector",
+        "Map2DCanvas",
+        "Scene3DFrame",
+        "VIEWER_BLOCKING_STATES",
+        "VIEWER_STATES",
+        "VideoStreamTile",
+        "ViewerFrame",
+        "ViewerToolbar",
+        "ViewerToolbarButton"
+      ],
+      "storybookPages": [
+        "LDS Product/Viewer/2D Map",
+        "LDS Product/Viewer/3D Viewport Frame",
+        "LDS Product/Viewer/Dot Matrix Preview",
+        "LDS Product/Viewer/Elevator Fleet Overview",
+        "LDS Product/Viewer/Floor Selector",
+        "LDS Product/Viewer/Toolbar",
+        "LDS Product/Viewer/Video Playback Controls",
+        "LDS Product/Viewer/Video Stream",
+        "LDS Product/Viewer/Viewer Frame"
+      ],
+      "props": [
+        {
+          "name": "currentTime",
+          "type": "number",
+          "required": false,
+          "description": "Media position in elapsed seconds. @default 0",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "duration",
+          "type": "number | null",
+          "required": false,
+          "description": "Finite media length in seconds. Missing, nonpositive, NaN or Infinity disables seeking.",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "playing",
+          "type": "boolean",
+          "required": false,
+          "description": "Actual playing state supplied by media events. @default false",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "muted",
+          "type": "boolean",
+          "required": false,
+          "description": "Actual mute state. @default false",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "fullscreen",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the consumer's chosen viewer root is fullscreen. @default false",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "description": "Buffering/loading feedback, independent of availability. @default false",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "All commands unavailable. @default false",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "seekDisabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Seeking unavailable while other commands can remain available. @default false",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "onPlayingChange",
+          "type": "(playing: boolean) = void",
+          "required": false,
+          "description": "Requested play/pause state; the consumer reconciles actual media events.",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "onSeek",
+          "type": "(seconds: number) = void",
+          "required": false,
+          "description": "Requested seconds, once on pointer release or on each native keyboard change.",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "onMutedChange",
+          "type": "(muted: boolean) = void",
+          "required": false,
+          "description": "Requested mute state. Omit to remove the mute control.",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "onFullscreenChange",
+          "type": "(fullscreen: boolean) = void",
+          "required": false,
+          "description": "Requested fullscreen state. Omit when fullscreen is unsupported.",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "appearance",
+          "type": "'minimal' | 'surface' | 'on-dark'",
+          "required": false,
+          "description": "Same viewer surface vocabulary as ViewerToolbar. @default \"on-dark\"",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "variant",
+          "type": "'standalone' | 'embedded'",
+          "required": false,
+          "description": "Perimeter owner: standalone owns border/radius; embedded lets the viewer own them. @default \"standalone\"",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "description": "Accessible group name. @default \"영상 재생 조작\"",
+          "owner": "VideoPlaybackControlsProps"
+        }
+      ],
+      "tokens": [
+        "--color-semantic-background-elevated-normal",
+        "--border-thin",
+        "--color-semantic-line-solid-normal",
+        "--radius-md",
+        "--space-1",
+        "--color-semantic-label-normal",
+        "--space-2",
+        "--font-sans",
+        "--caption1-size",
+        "--caption1-line"
+      ],
+      "externalReferences": [
+        {
+          "label": "W3C Slider pattern",
+          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/slider/"
+        },
+        {
+          "label": "Media seek slider",
+          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/slider/examples/slider-seek/"
+        },
+        {
+          "label": "MDN HTMLMediaElement",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement"
+        },
+        {
+          "label": "MDN waiting",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/waiting_event"
+        },
+        {
+          "label": "error",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/error_event"
+        },
+        {
+          "label": "Fullscreen",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API"
+        },
+        {
+          "label": "MDN video control styling",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Audio_and_video_delivery/Video_player_styling_basics"
+        }
+      ],
+      "promptSha256": "f3e4464b2a1e1dcfe3f4810615a74be27cb4677930cb3b3201afa22406ef1413"
+    },
+    {
       "id": "video-stream-tile",
       "title": "VideoStreamTile",
       "exports": [
@@ -34531,6 +34899,7 @@
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
+        "stories/VideoPlaybackControls.stories.jsx",
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
@@ -34541,6 +34910,7 @@
         "Scene3DFrame",
         "VIEWER_BLOCKING_STATES",
         "VIEWER_STATES",
+        "VideoPlaybackControls",
         "ViewerFrame",
         "ViewerToolbar",
         "ViewerToolbarButton"
@@ -34552,6 +34922,7 @@
         "LDS Product/Viewer/Elevator Fleet Overview",
         "LDS Product/Viewer/Floor Selector",
         "LDS Product/Viewer/Toolbar",
+        "LDS Product/Viewer/Video Playback Controls",
         "LDS Product/Viewer/Video Stream",
         "LDS Product/Viewer/Viewer Frame"
       ],
@@ -34801,6 +35172,7 @@
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
+        "stories/VideoPlaybackControls.stories.jsx",
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
@@ -34809,6 +35181,7 @@
         "FloorSelector",
         "Map2DCanvas",
         "Scene3DFrame",
+        "VideoPlaybackControls",
         "VideoStreamTile",
         "ViewerToolbar",
         "ViewerToolbarButton"
@@ -34820,6 +35193,7 @@
         "LDS Product/Viewer/Elevator Fleet Overview",
         "LDS Product/Viewer/Floor Selector",
         "LDS Product/Viewer/Toolbar",
+        "LDS Product/Viewer/Video Playback Controls",
         "LDS Product/Viewer/Video Stream",
         "LDS Product/Viewer/Viewer Frame"
       ],
@@ -35122,6 +35496,7 @@
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
+        "stories/VideoPlaybackControls.stories.jsx",
         "stories/ViewerVideo.stories.jsx"
       ],
       "classificationSiblings": [
@@ -35132,6 +35507,7 @@
         "Scene3DFrame",
         "VIEWER_BLOCKING_STATES",
         "VIEWER_STATES",
+        "VideoPlaybackControls",
         "VideoStreamTile",
         "ViewerFrame"
       ],
@@ -35142,6 +35518,7 @@
         "LDS Product/Viewer/Elevator Fleet Overview",
         "LDS Product/Viewer/Floor Selector",
         "LDS Product/Viewer/Toolbar",
+        "LDS Product/Viewer/Video Playback Controls",
         "LDS Product/Viewer/Video Stream",
         "LDS Product/Viewer/Viewer Frame"
       ],
@@ -39527,9 +39904,9 @@
         },
         {
           "name": "typography",
-          "type": "'document' | 'chat'",
+          "type": "'document' | 'chat' | 'reading' | 'compact'",
           "required": false,
-          "description": "Document keeps the existing 14px reading scale. Chat opts into 16px/24px body, a compact heading/rhythm hierarchy and local table scrolling. Heading semantics and parsing stay product-owned. @default \"document\"",
+          "description": "Document keeps the 14px wiki scale. Chat opts into 16px/24px conversational rhythm and local table scrolling. Reading uses 16px long-form article/report rhythm. Compact uses 13px dense README/panel rhythm. Heading semantics and parsing stay product-owned. @default \"document\"",
           "owner": "ProseProps"
         }
       ],
@@ -39611,8 +39988,10 @@
       ],
       "tokens": [
         "--body1-line",
+        "--body1-reading-line",
         "--body1-size",
         "--body1-spacing",
+        "--caption1-size",
         "--color-semantic-fill-alternative",
         "--color-semantic-fill-normal",
         "--color-semantic-fill-strong",
@@ -39639,7 +40018,9 @@
         "--label1-reading-line",
         "--label1-size",
         "--label1-spacing",
+        "--label2-line",
         "--label2-size",
+        "--label2-spacing",
         "--radius-lg",
         "--radius-md",
         "--radius-sm",
@@ -43721,6 +44102,14 @@
           "rule": "pending 상태의 접근 가능한 라벨. @default \"처리 중\""
         },
         {
+          "part": "matchInputLabel",
+          "rule": "requireMatchText 사용 시 확인 입력 필드의 레이블."
+        },
+        {
+          "part": "matchInputPlaceholder",
+          "rule": "requireMatchText 사용 시 확인 입력 필드의 placeholder. 기본값은 requireMatchText입니다."
+        },
+        {
           "part": "ariaLabel",
           "rule": "title이 없을 때 사용할 접근 가능한 이름. @default \"확인 다이얼로그\""
         }
@@ -43794,6 +44183,27 @@
           "type": "string",
           "required": false,
           "description": "pending 상태의 접근 가능한 라벨. @default \"처리 중\"",
+          "owner": "ConfirmDialogProps"
+        },
+        {
+          "name": "requireMatchText",
+          "type": "string",
+          "required": false,
+          "description": "파괴적 액션에서 사용자가 대상 식별자/문구를 정확히 입력했을 때만 확인 버튼을 활성화합니다.",
+          "owner": "ConfirmDialogProps"
+        },
+        {
+          "name": "matchInputLabel",
+          "type": "React.ReactNode",
+          "required": false,
+          "description": "requireMatchText 사용 시 확인 입력 필드의 레이블.",
+          "owner": "ConfirmDialogProps"
+        },
+        {
+          "name": "matchInputPlaceholder",
+          "type": "string",
+          "required": false,
+          "description": "requireMatchText 사용 시 확인 입력 필드의 placeholder. 기본값은 requireMatchText입니다.",
           "owner": "ConfirmDialogProps"
         },
         {
@@ -43924,7 +44334,8 @@
       "responsive": [],
       "contentGuidance": [
         "파괴적 액션은 tone=\"danger\"와 구체적인 confirmLabel을 사용합니다.",
-        "tone=\"danger\"는 확인 버튼에 파괴적 스타일을 적용합니다. 위험의 내용과 결과는 별도 상태 뱃지 대신 구체적인 제목·본문·동작 라벨로 설명합니다."
+        "tone=\"danger\"는 확인 버튼에 파괴적 스타일을 적용합니다. 위험의 내용과 결과는 별도 상태 뱃지 대신 구체적인 제목·본문·동작 라벨로 설명합니다.",
+        "대상 식별자를 직접 확인해야 하는 작업에는 requireMatchText를 지정합니다. 입력이 정확히 일치할 때 확인 버튼이 활성화됩니다. matchInputLabel로 무엇을 입력할지 설명하고, matchInputPlaceholder로 입력 힌트를 지정할 수 있습니다."
       ],
       "accessibility": [
         "Modal, Drawer, Sheet와 같은 공통 overlay focus controller를 사용합니다. 열리면 기본적으로 취소 액션으로 초점을 이동하고, 필요하면 initialFocusRef로 다른 내부 요소를 지정할 수 있습니다.",
@@ -47450,16 +47861,16 @@
           "rule": "invalid — 상위 폼이나 DateRangeField가 판정한 검증 실패를 trigger에 싣습니다. Input·Select·Textarea와 같은 우선순위로 negative border를 적용하고 aria-invalid를 trigger button(=초점 요소)에 붙입니다. 오류 문구 자체는 소유하지 않으므로 상위가 aria-describedby로 메시지 id를 전달하면 그대로 trigger에 연결됩니다. role=\"group\"은 ARIA 1.2에서 aria-invalid를 지원하지 않으므로 group이 아니라 이 필드가 오류를 전달합니다."
         },
         {
+          "subject": "명시 규칙 3",
+          "rule": "Portal popup(2026-10-15)"
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "Calendar popup은 Core Popover의 owner-document Portal·위치 flip/clamp·outside/Escape·focus 엔진을 재사용합니다. 부모 툴바나 컨테이너의 overflow:hidden에 잘리지 않도록 inline absolute panel을 제거했습니다. Calendar가 단일 border/radius/padding을 소유하고 Popover panel은 겹치는 border/padding을 제거합니다. normal 폭은 기존 Calendar의334px 외곽 폭, narrow에서는 viewport 안으로 줄어듭니다."
+        },
+        {
           "subject": "--color-semantic-fill-normal",
           "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
-        },
-        {
-          "subject": "--color-semantic-label-alternative",
-          "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
-        },
-        {
-          "subject": "--color-semantic-label-disable",
-          "rule": "light: rgba(55, 56, 60, 0.52); dark: rgba(174, 176, 182, 0.52)"
         }
       ],
       "responsive": [],
@@ -47505,7 +47916,8 @@
         "--control-h-sm",
         "--dur-fast",
         "--ease-out",
-        "--font-sans"
+        "--font-sans",
+        "--radius-xl"
       ],
       "apiLinks": [
         "components/forms/DatePicker.jsx",
@@ -47528,6 +47940,11 @@
             "id": "lds-core-components-selection-and-input-date-picker--date-input",
             "name": "개요",
             "role": "overview"
+          },
+          {
+            "id": "lds-core-components-selection-and-input-date-picker--portal-clipping",
+            "name": "사용법 · 좁은 영역에서 달력 열기",
+            "role": "usage"
           },
           {
             "id": "lds-core-components-selection-and-input-date-picker--blocked-dates",
@@ -47553,6 +47970,14 @@
         {
           "label": "WAI-ARIA Dialog pattern",
           "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
+        },
+        {
+          "label": "W3C picker dialog example",
+          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/"
+        },
+        {
+          "label": "React Aria Popover",
+          "url": "https://react-aria.adobe.com/Popover"
         }
       ],
       "canonicalGuide": null,
@@ -47852,6 +48277,7 @@
       "accessibility": [
         "Field anatomy is consistently label - control - helper/error; labels use the shared input-label tokens and messages use caption typography. Consumer aria-describedby ids are merged with the generated helper/error id rather than replaced.",
         "readOnly remains focusable and selectable, uses the alternative field fill, and suppresses editable hover affordance. Positive and negative states use the shared status icon as well as border/message color; color is never the only signal.",
+        "Keyboard focus is drawn once on the visible control frame; the native input keeps focus without a second inner rectangle. Nested action controls keep their own indicator. See the common focus contract for invalid/read-only states and scoped outline geometry.",
         "className/style and rootRef target the public field stack root. The default ref, inputClassName, and inputStyle target the native focus target."
       ],
       "exceptions": [],
@@ -48143,7 +48569,9 @@
       "accessibility": [
         "label / helper / error / invalid — label을 주면 htmlFor로 연결된 필드 레이블·메시지 스택을 함께 렌더링하고, 그렇지 않으면 셸만 렌더링해 FormField 같은 상위 표면에 맡깁니다. error나 invalid는 aria-invalid와 오류 테두리를 함께 켭니다. fieldStyle은 label/helper/error를 포함한 바깥 스택, style은 스테퍼가 붙은 입력 셸을 스타일링합니다.",
         "native number input이 spinbutton semantics를 소유하고 inline step action은 보조 조작입니다. 보조 action 이름에는 field 이름을 포함합니다. focus/disabled/readOnly는 Input과 같은 component token(fieldBackground·fieldBorderColor)을 사용하며 type=\"number\"는 consumer가 덮어쓰지 못합니다.",
-        "WAI-ARIA Spinbutton pattern의 native editing·Arrow key 기대를 보존합니다."
+        "WAI-ARIA Spinbutton pattern의 native editing·Arrow key 기대를 보존합니다.",
+        "Common focus ownership.",
+        "The editable input keeps native focus and displays one indicator on its visible field frame. Nested action buttons retain their own indicator. Geometry, invalid/read-only behavior and scoped overrides follow the common focus contract."
       ],
       "exceptions": [],
       "related": [
@@ -49088,7 +49516,8 @@
         "readOnly preserves focus and text selection but removes the clear action and editable hover affordance.",
         "지우기 후 포커스 복귀 — 지우기 버튼은 값이 비면 언마운트되므로, 활성화 시 포커스를 입력으로 되돌립니다. 그렇지 않으면 포커스가 로 떨어져 키보드 사용자가 필드를 잃습니다(Carbon Search 관례).",
         "value / defaultValue / onChange — 제어/비제어. onSearch — Enter. size sm · md. 시그널 잉크 포커스 링.",
-        "Input과 MessageComposer의 필드 소유 focus를 비교했습니다. 외곽 border와 외곽 control의 semantic focus-indicator outline으로 위치를 표시합니다. 내부 search input의 전역 outline만 제외하고 clear button의 keyboard outline은 보존합니다. forced-colors는 외곽 Highlight outline입니다. text input은 클릭으로도 :focus-visible에 해당할 수 있으므로 입력 방식만으로 outline 유무를 단정하지 않습니다."
+        "Input과 MessageComposer의 필드 소유 focus를 비교했습니다. 외곽 border와 외곽 control의 semantic focus-indicator outline으로 위치를 표시합니다. 내부 search input의 전역 outline만 제외하고 clear button의 keyboard outline은 보존합니다. forced-colors는 외곽 Highlight outline입니다. text input은 클릭으로도 :focus-visible에 해당할 수 있으므로 입력 방식만으로 outline 유무를 단정하지 않습니다.",
+        "Common focus ownership."
       ],
       "exceptions": [],
       "related": [
@@ -63361,7 +63790,8 @@
       ],
       "purpose": "정렬이나 선택 없이 구조화된 레코드를 같은 열 기준으로 읽을 때 적합합니다. 사용자가 정렬·선택·페이지 이동이나 행 작업을 해야 하면 Table 대신 Data Grid를 사용하세요.",
       "useWhen": [
-        "Reference: WAI-ARIA APG Table pattern — 열/행 헤더는 와 scope로 표현하고 표에는 이름을 부여합니다. 자사 DataGrid도 같은 기준(scope=\"col\", tableLabel)을 씁니다."
+        "Reference: WAI-ARIA APG Table pattern — 열/행 헤더는 와 scope로 표현하고 표에는 이름을 부여합니다. 자사 DataGrid도 같은 기준(scope=\"col\", tableLabel)을 씁니다.",
+        "mobileLayout=\"scroll\"은 기본 가로 스크롤 표를 유지합니다. 두 열의 속성 표에는 mobileLayout=\"key-value\"를, 제목과 여러 속성을 담는 상세 표에는 mobileLayout=\"compact-list\"를 사용할 수 있습니다. mobileTrailingKey는 목록 제목 옆에 둘 컬럼을 선택합니다."
       ],
       "avoidWhen": [
         "getRowId — React key로 쓸 안정적인 행 식별자를 반환합니다. 생략하면 row.id, 그것도 없으면 배열 index를 씁니다. 행이 갱신·재정렬되는 표에서는 호버 같은 행 로컬 상태가 엉뚱한 행에 남지 않도록 반드시 지정하세요.",
@@ -63470,6 +63900,20 @@
           "owner": "TableProps"
         },
         {
+          "name": "mobileLayout",
+          "type": "'scroll' | 'key-value' | 'compact-list'",
+          "required": false,
+          "description": "좁은 화면(로, compact-list는 다열 상세표를 제목+속성 목록으로 접습니다. @default \"scroll\"",
+          "owner": "TableProps"
+        },
+        {
+          "name": "mobileTrailingKey",
+          "type": "keyof Row & string",
+          "required": false,
+          "description": "mobileLayout=\"compact-list\"에서 모바일 항목 제목 우측에 배치할 컬럼 key.",
+          "owner": "TableProps"
+        },
+        {
           "name": "getRowId",
           "type": "(row: Row, index: number) = React.Key",
           "required": false,
@@ -63515,8 +63959,8 @@
           "rule": "columnLabelsHidden — 열 라벨 밴드를 보조기술에만 남기고 감춥니다. 항목·값 표는 각 행의 첫 칸이 곧 열 이름이라 항목 | 값 머리줄이 같은 사실을 한 번 더 적고 44px 크롬을 씁니다. 감추는 것은 셀이 아니라 라벨입니다. 은 자기 자리와 columns의 width를 그대로 들고 패딩·높이·괘선만 잃고, 라벨만 clip된 안으로 들어갑니다."
         },
         {
-          "subject": "--color-semantic-fill-alternative",
-          "rule": "light: rgba(112, 115, 124, 0.05); dark: rgba(112, 115, 124, 0.12)"
+          "subject": "--caption1-line",
+          "rule": "{\"fontSize\":\"12px\",\"lineHeight\":\"16px\",\"letterSpacing\":\"0.0252em\"}"
         }
       ],
       "responsive": [
@@ -63584,9 +64028,14 @@
         }
       ],
       "tokens": [
+        "--caption1-line",
+        "--caption1-size",
         "--color-semantic-fill-alternative",
         "--color-semantic-fill-normal",
+        "--color-semantic-label-alternative",
+        "--color-semantic-label-normal",
         "--color-semantic-label-strong",
+        "--color-semantic-line-solid-alternative",
         "--component-table-cell-padding-md",
         "--component-table-cell-padding-sm",
         "--component-table-row-min-height-md",
@@ -63594,6 +64043,7 @@
         "--dur-fast",
         "--ease-out",
         "--font-sans",
+        "--fw-medium",
         "--fw-semibold",
         "--label1-line",
         "--label1-size",
@@ -63603,8 +64053,10 @@
         "--lk-table-row-min-height-sm",
         "--space-0-5",
         "--space-1",
+        "--space-1-5",
         "--space-2",
         "--space-3",
+        "--space-4",
         "--space-8"
       ],
       "apiLinks": [
@@ -63613,7 +64065,9 @@
         "components/data/Table.prompt.md",
         "stories/DataTable.stories.jsx"
       ],
-      "migration": [],
+      "migration": [
+        "강한 구분선이 필요한 합성에서는 var(--color-semantic-line-solid-strong)을 참조할 수 있습니다. 기존 토큰과 같은 색을 제공하는 별칭입니다."
+      ],
       "platformStatus": {
         "figma": "not-tracked",
         "react": "implemented",
@@ -63718,7 +64172,7 @@
         "examples": "evidence",
         "tokens": "evidence",
         "apiLinks": "evidence",
-        "migration": "omitted-no-evidence"
+        "migration": "evidence"
       }
     },
     {
@@ -78178,7 +78632,8 @@
       "useWhen": [
         "근거: WAI-ARIA APG Modal Dialog Pattern은 dialog가 닫히면 invoker로 초점을 되돌리도록 요구하며, WCAG 2.1 Success Criterion 2.3.3 Animation from Interactions에 따라 motion을 줄인 사용자에게는 exit transition을 생략합니다.",
         "기본 withinPortal=true이며 LdsProvider.portalTarget 또는 명시적 portalTarget에 렌더링됩니다. 가까운 theme scope와 dir을 상속하고 clipping ancestor를 벗어납니다.",
-        "Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. LDS의 두 density도 anatomy와 sticky region 순서는 공유하고 spacing/type만 바꾸며, 여러 overlay Drawer 동시 노출은 제외했습니다."
+        "Fluent 2 Drawer: overlay Drawer는 중요한 짧은 보조 작업에 사용하고, header/body/footer anatomy와 스크롤 body, 예측 가능한 edge 배치를 유지했습니다. LDS의 두 density도 anatomy와 sticky region 순서는 공유하고 spacing/type만 바꾸며, 여러 overlay Drawer 동시 노출은 제외했습니다.",
+        "mobileFullWidth를 켜면 767px 이하에서 Drawer가 화면 전체 너비를 사용합니다. headerStyle은 이 모드에서도 적용되므로 상단 안전 영역을 함께 조정할 수 있습니다."
       ],
       "avoidWhen": [
         "테스트·특수 embedding에서만 withinPortal=false를 사용하며 이 경우 background inert는 적용하지 않습니다.",
@@ -78257,6 +78712,13 @@
           "type": "'auto' | 'sm'",
           "required": false,
           "description": "header padding만 선택합니다. auto는 기존 density별 여백, sm은 8×20px이며 body/footer 밀도와 control 크기는 유지합니다. @default \"auto\"",
+          "owner": "DrawerProps"
+        },
+        {
+          "name": "mobileFullWidth",
+          "type": "boolean",
+          "required": false,
+          "description": "좁은 뷰포트(<=767px)에서 기본 92vw 제한과 그림자를 걷고 100vw 전체 화면 시트로 전환합니다. @default false",
           "owner": "DrawerProps"
         },
         {
@@ -78376,13 +78838,6 @@
           "type": "number",
           "required": false,
           "description": "",
-          "owner": "DrawerProps"
-        },
-        {
-          "name": "bodyStyle",
-          "type": "React.CSSProperties",
-          "required": false,
-          "description": "스크롤 body의 padding·layout을 조합별로 조정합니다.",
           "owner": "DrawerProps"
         }
       ],
@@ -78898,8 +79353,7 @@
       "purpose": "사진·스크린샷 같은 미디어를 원본 맥락에서 확대해 집중 검토할 때 적합합니다. 긴 문서, 편집 폼, 확인 작업에는 Lightbox 대신 전용 페이지나 Dialog를 사용하세요.",
       "useWhen": [],
       "avoidWhen": [
-        "Arrow 키는 dialog 자체에서 처리합니다. document 전역 리스너가 아니므로 위에 열린 overlay가 키를 먼저 가져가고, 이미 처리된(defaultPrevented) 키는 다시 소비하지 않습니다.",
-        "zoom·pan 컨트롤은 이 계약에 포함하지 않습니다. 확대가 필요한 검토 흐름은 전용 뷰어 화면을 씁니다."
+        "Arrow 키는 dialog 자체에서 처리합니다. document 전역 리스너가 아니므로 위에 열린 overlay가 키를 먼저 가져가고, 이미 처리된(defaultPrevented) 키는 다시 소비하지 않습니다."
       ],
       "anatomy": [
         {
@@ -79016,6 +79470,13 @@
           "owner": "LightboxProps"
         },
         {
+          "name": "imageSizing",
+          "type": "'natural' | 'contain'",
+          "required": false,
+          "description": "natural only shrinks; contain fits the existing viewport box and can upscale, preserving aspect ratio. @default \"natural\"",
+          "owner": "LightboxProps"
+        },
+        {
           "name": "style",
           "type": "React.CSSProperties",
           "required": false,
@@ -79031,23 +79492,25 @@
           "rule": "이미지가 2장 이상이면 화살표 컨트롤과 위치 표시가 함께 나타납니다. 위치 표시는 시각 장식이며 같은 문구를 상시 마운트된 role=\"status\" live region이 polite로 전달합니다. 슬라이드가 바뀌면 위치와 대체 텍스트가 함께 발표됩니다."
         },
         {
+          "subject": "명시 규칙 2",
+          "rule": "imageSizing=\"natural\"(기본)은 기존 원본 크기를 유지하고 큰 이미지만86vw/86vh에 맞춰 줄입니다. imageSizing=\"contain\"은 이미지의 실제 aspect ratio를 보존해 같은 viewport 영역에 맞춰 작은 이미지를 업스케일합니다. 한 장에서는 X만 남고 화살표/카운터는 없습니다. zoom·pan 조작이나 이미지 복원 기능은 추가하지 않습니다. 원본82×182 같은 저해상도 crop을 크게 표시해도 새 세부 정보를 만들지는 않습니다."
+        },
+        {
+          "subject": "명시 규칙 3",
+          "rule": "작은 이미지 viewport 맞춤(2026-10-15)"
+        },
+        {
           "subject": "--color-semantic-inverse-fill-normal",
           "rule": "light: rgba(255, 255, 255, 0.12); dark: rgba(255, 255, 255, 0.12)"
         },
         {
           "subject": "--color-semantic-inverse-icon-muted",
           "rule": "light: rgba(255, 255, 255, 0.75); dark: rgba(255, 255, 255, 0.75)"
-        },
-        {
-          "subject": "--color-semantic-inverse-label",
-          "rule": "light: #FFFFFF; dark: #171719"
-        },
-        {
-          "subject": "--component-dialog-scrim-blur",
-          "rule": "2px"
         }
       ],
-      "responsive": [],
+      "responsive": [
+        "imageSizing은 opt-in sizing만 소유합니다. 기존 modal/focus, SSR, keyboard, 디코딩 상태, 기존 opacity motion과 controls는 바꾸지 않습니다. 이미지 natural aspect ratio를 decode 뒤 확보하고 CSS min(86vw,86vh×ratio)와 auto height로 크기를 정하므로 border/shadow가 실제 이미지 둘레에 머뭅니다."
+      ],
       "contentGuidance": [
         "문자열 URL 이미지는 alt를 선언할 수단이 없으므로 positionLabel 결과를 대체 텍스트로 사용합니다. 장식 이미지를 의도한다면 { src, alt: '' }처럼 alt를 명시적으로 넘깁니다.",
         "사용자에게 보이거나 읽히는 문자열은 모두 한국어 기본값이며 prop으로 교체합니다: ariaLabel(다이얼로그 이름), closeLabel, previousLabel, nextLabel, positionLabel(position, total). 표준 style은 dialog 루트에 병합됩니다."
@@ -79133,6 +79596,21 @@
             "role": "overview"
           },
           {
+            "id": "lds-product-overlay-lightbox--natural-small-image",
+            "name": "변형·상태 · 작은 이미지 원본 크기",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-overlay-lightbox--contain-small-image",
+            "name": "변형·상태 · 작은 이미지 화면 맞춤",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-overlay-lightbox--contain-image-change",
+            "name": "상호작용 · 비율이 다른 이미지 이동",
+            "role": "interaction"
+          },
+          {
             "id": "lds-product-overlay-lightbox--lightbox-keyboard-contract",
             "name": "상호작용 · 초점 순환과 복원",
             "role": "interaction"
@@ -79160,6 +79638,14 @@
         {
           "label": "React Aria Modal",
           "url": "https://react-aria.adobe.com/Modal"
+        },
+        {
+          "label": "MDN object-fit",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-fit"
+        },
+        {
+          "label": "W3C modal dialog",
+          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/"
         }
       ],
       "canonicalGuide": null,
@@ -79173,7 +79659,7 @@
         "states": "omitted-no-evidence",
         "behavior": "omitted-no-evidence",
         "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
+        "responsive": "evidence",
         "contentGuidance": "evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
@@ -81412,7 +81898,8 @@
         "애드온은 값 해석에 필수인 문맥이므로 input의 aria-describedby에 연결합니다. 단위·프로토콜(ms, %, https://)이 form 모드 SR 사용자에게도 들리게 하려는 것이며, 소비자가 label/hint에 단위를 중복 기재할 필요가 없습니다.",
         "애드온 노드는 자기 접근성 의미를 스스로 소유합니다. 컴포넌트가 노드 애드온을 일괄 aria-hidden 처리하지 않으므로 순수 장식 아이콘은 소비자가 직접 aria-hidden을 겁니다(레포의 Icon은 이름을 주지 않으면 스스로 숨깁니다).",
         "readOnly remains focusable and selectable. Consumer and generated description ids are merged on the input.",
-        "prefix / suffix — 애드온 노드. value / defaultValue / onChange — 텍스트. inputProps — 네이티브 input 패스스루. inputProps.onChange/onFocus/onBlur는 폐기되지 않고 컴포넌트 내부 처리보다 먼저 호출됩니다(값 커밋은 그대로 이어집니다). inputProps['aria-describedby']는 생성된 설명 id와 병합됩니다."
+        "prefix / suffix — 애드온 노드. value / defaultValue / onChange — 텍스트. inputProps — 네이티브 input 패스스루. inputProps.onChange/onFocus/onBlur는 폐기되지 않고 컴포넌트 내부 처리보다 먼저 호출됩니다(값 커밋은 그대로 이어집니다). inputProps['aria-describedby']는 생성된 설명 id와 병합됩니다.",
+        "Common focus ownership."
       ],
       "exceptions": [],
       "related": [],
@@ -82871,8 +83358,17 @@
       ],
       "purpose": "예약 시작이나 점검 시각처럼 하루 안의 특정 시간을 고를 때 적합합니다. 날짜나 기간까지 함께 필요하면 Time Picker 하나로 확장하지 말고 Date Picker·Date Range와 조합하세요.",
       "useWhen": [],
-      "avoidWhen": [],
+      "avoidWhen": [
+        "공용 계약은 시간 입력만 소유합니다. Full Daedeok ScheduleForm의 native time 입력은 기본 minute API로 조합 가능하며 기존 의미를 유지합니다. LK Portal의 확인한 archived playback seam은 시각 입력을 노출하지 않아 이 확장은 not applicable입니다. LK Web Viz frontend에도 직접 시간 입력 seam이 없어 not applicable입니다.",
+        "minTime/maxTime은 HH:MM 또는 HH:MM:SS의 같은 날 inclusive 범위입니다. 범위 밖 option을 disabled로 노출하고 시·분 변경이 경계에 걸리면 유효 범위로 clamp합니다. 분 정밀도는 lower를 올림·upper를 내림해 범위를 넓히지 않습니다. invalid/뒤집힌 경계와 표현 불가 범위는 선택 불가이며, 자정 넘김을 추측하지 않습니다. 날짜·실제 데이터 유무·소수부·query·timezone은 제품이 소유합니다.",
+        "LK Product Extension의 추가 입력 축 allowedTimeRanges는 {start, end} 배열이며 각 값은 같은 날의 HH:MM 또는 HH:MM:SS inclusive 시각입니다. 생략하면 기존 min/max만 적용하고, 빈 배열·잘못된 구간은 선택을 잠급니다. 각 구간을 min/max와 교차한 뒤 현재 정밀도로 lower 올림·upper 내림합니다. 따라서 08:30:01–08:30:59는 초 정밀도에서 선택할 수 있지만 분 정밀도에서는 선택할 수 없습니다.",
+        "기존 field·native 시/분/초·Core Popover·Button의 시각 문법을 유지합니다. 해당 시 또는 분 안에 유효한 값이 있을 때만 그 단위를 활성화하고, 초는 실제 허용 여부를 그대로 native option.disabled로 전달합니다. 시·분 변경은 선택한 단위 안의 가장 가까운 유효 시각을 draft로 정하며 공백으로 commit하지 않습니다. 범위가 바뀌어도 field의 확인 전에는 onChange를 호출하지 않습니다. 확인·취소·Escape·focus 복귀 계약은 같습니다."
+      ],
       "anatomy": [
+        {
+          "part": "allowedTimeRanges",
+          "rule": "Inclusive same-day clock intervals (HH:MM or HH:MM:SS), intersected with minTime/maxTime. Omitted permits the bound range; [] or invalid intervals disable all choices. Dates and endpoint semantics remain consumer-owned."
+        },
         {
           "part": "hourLabel",
           "rule": "시 select의 accessible name. @default \"시\""
@@ -82880,6 +83376,10 @@
         {
           "part": "minuteLabel",
           "rule": "분 select의 accessible name. @default \"분\""
+        },
+        {
+          "part": "secondLabel",
+          "rule": "초 select의 accessible name. @default \"초\""
         }
       ],
       "properties": [
@@ -82887,7 +83387,7 @@
           "name": "value",
           "type": "string",
           "required": false,
-          "description": "\"HH:MM\" 문자열.",
+          "description": "minute precision: \"HH:MM\". second precision: \"HH:MM:SS\".",
           "owner": "TimePickerProps"
         },
         {
@@ -82912,6 +83412,48 @@
           "owner": "TimePickerProps"
         },
         {
+          "name": "precision",
+          "type": "'minute' | 'second'",
+          "required": false,
+          "description": "Output precision; minute preserves the existing two-select API. @default \"minute\"",
+          "owner": "TimePickerProps"
+        },
+        {
+          "name": "presentation",
+          "type": "'units' | 'field'",
+          "required": false,
+          "description": "units commits each native change; field drafts in a Popover and commits on 확인. @default \"units\"",
+          "owner": "TimePickerProps"
+        },
+        {
+          "name": "minTime",
+          "type": "string",
+          "required": false,
+          "description": "Inclusive same-day minimum, HH:MM or HH:MM:SS. Invalid/reversed bounds disable selection.",
+          "owner": "TimePickerProps"
+        },
+        {
+          "name": "maxTime",
+          "type": "string",
+          "required": false,
+          "description": "Inclusive same-day maximum, HH:MM or HH:MM:SS.",
+          "owner": "TimePickerProps"
+        },
+        {
+          "name": "allowedTimeRanges",
+          "type": "readonly {start: string; end: string}[]",
+          "required": false,
+          "description": "Inclusive same-day clock intervals (HH:MM or HH:MM:SS), intersected with minTime/maxTime. Omitted permits the bound range; [] or invalid intervals disable all choices. Dates and endpoint semantics remain consumer-owned.",
+          "owner": "TimePickerProps"
+        },
+        {
+          "name": "secondStep",
+          "type": "number",
+          "required": false,
+          "description": "초 증가폭(160); precision=\"second\"일 때 사용. @default 1",
+          "owner": "TimePickerProps"
+        },
+        {
           "name": "hourLabel",
           "type": "string",
           "required": false,
@@ -82923,6 +83465,13 @@
           "type": "string",
           "required": false,
           "description": "분 select의 accessible name. @default \"분\"",
+          "owner": "TimePickerProps"
+        },
+        {
+          "name": "secondLabel",
+          "type": "string",
+          "required": false,
+          "description": "초 select의 accessible name. @default \"초\"",
           "owner": "TimePickerProps"
         },
         {
@@ -82940,12 +83489,19 @@
           "owner": "TimePickerProps"
         }
       ],
-      "states": [],
-      "behavior": [],
+      "states": [
+        {
+          "state": "allowedTimeRanges",
+          "rule": "Inclusive same-day clock intervals (HH:MM or HH:MM:SS), intersected with minTime/maxTime. Omitted permits the bound range; [] or invalid intervals disable all choices. Dates and endpoint semantics remain consumer-owned."
+        }
+      ],
+      "behavior": [
+        "Full Daedeok의 확인한 ScheduleForm minute API는 그대로 조합 가능하며 이 제품에 불연속 구간을 새로 부여하지 않습니다. 확인한 Portal archived video seam과 maintenance-only Web Viz Dashboard에는 직접 시각 선택 seam이 없어 해당 확장은 not applicable입니다. time-picker-allowed-ranges-20261015 coverage record에 실제 frontend source pin과 분리된 판단을 남깁니다."
+      ],
       "quantitativeRules": [
         {
           "subject": "명시 규칙 1",
-          "rule": "value / defaultValue / onChange — \"HH:MM\". minuteStep — 160 범위로 정규화되는 분 간격. 제어 값이 step 밖이면 해당 분 option을 끼워 넣어 값을 잃지 않습니다. hourLabel / minuteLabel — 두 select의 accessible name. size — sm|md. disabled — 두 select를 함께 잠급니다."
+          "rule": "value / defaultValue / onChange — 기본 precision=\"minute\"에서는 \"HH:MM\", precision=\"second\"에서는 \"HH:MM:SS\". 초 정밀도에서 누락된 초는 00으로 표현하고 초는 정수 059로 제한합니다. secondStep은 기본1, 160으로 정규화하고 step 밖 controlled 초 option을 보존합니다. secondLabel은 초 select 이름(기본 \"초\")입니다. 날짜·timezone·KST 직렬화는 제품 소유이며 컴포넌트는 시간 단위만 반환합니다."
         },
         {
           "subject": "명시 규칙 2",
@@ -82953,23 +83509,27 @@
         },
         {
           "subject": "명시 규칙 3",
-          "rule": "TimePicker — keyboard와 platform picker를 보존하는 native 시 + 분 select(24시간)입니다."
+          "rule": "TimePicker — keyboard와 platform picker를 보존하는 native 시 + 분(+ 선택적 초) select(24시간)입니다."
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "초 정밀도 확장(2026-10-15)"
         },
         {
           "subject": "--color-semantic-fill-normal",
           "rule": "light: rgba(112, 115, 124, 0.08); dark: rgba(112, 115, 124, 0.22)"
-        },
-        {
-          "subject": "--color-semantic-label-alternative",
-          "rule": "light: rgba(55, 56, 60, 0.74); dark: rgba(174, 176, 182, 0.74)"
         }
       ],
-      "responsive": [],
+      "responsive": [
+        "기존 minute-only 호출·기본5분·두 native select를 유지합니다. 초 단위가 필요한 녹화 조회는 precision=\"second\" minuteStep={1}을 명시합니다. 시·분·초 select는 같은 TimeSelect chrome, 76px 최소 폭, Input 높이·포커스·비활성 문법을 재사용하고 새 listbox/아이콘/색을 만들지 않습니다. 기본 minute와 second의 차이는 필요한 단위 select 하나뿐입니다. 320px에서 세 select를 한 줄로 유지하며 기존 시·분 값 변경은 초를 보존합니다."
+      ],
       "contentGuidance": [],
       "accessibility": [
-        "두 select는 role=\"group\"으로 묶이고 기본 이름은 시간 선택입니다. 어느 시각인지 구분이 필요하면 aria-label로 덮어써서(예: 시작 시간) FormField의 시각 label과 같은 문맥을 프로그램적으로도 제공합니다. 시/분만으로는 어떤 필드의 시각인지 알 수 없기 때문입니다.",
+        "단위 select는 role=\"group\"으로 묶이고 기본 이름은 시간 선택입니다. 어느 시각인지 구분이 필요하면 aria-label로 덮어써서(예: 시작 시간) FormField의 시각 label과 같은 문맥을 프로그램적으로도 제공합니다. 시/분만으로는 어떤 필드의 시각인지 알 수 없기 때문입니다.",
         "Apple Pickers는 distinct value 목록과 date/time 입력에 platform picker를 우선하고 keyboard·pointer·touch 입력을 함께 지원합니다.",
-        "WAI-ARIA Authoring Practices: Read Me First의 native semantics 우선 원칙에 따라 이 단순 numeric selector에는 custom listbox를 만들지 않습니다."
+        "WAI-ARIA Authoring Practices: Read Me First의 native semantics 우선 원칙에 따라 이 단순 numeric selector에는 custom listbox를 만들지 않습니다.",
+        "MDN time value format은 24시간 HH:mm / HH:mm:ss 구분을 명시합니다. W3C APG native semantics 우선 원칙에 따라 기존 native select의 keyboard/type-ahead/mobile picker를 유지합니다. 정밀도 때문에 custom popup을 추가하지 않습니다.",
+        "presentation=\"units\"가 기존 기본이고 각 단위 변경을 즉시 전달합니다. presentation=\"field\"는 HH:MM(:SS)와 clock 아이콘을 한 trigger에 모읍니다. Core Popover에서 기존 native 단위를 draft로 고르고 확인에서만 onChange를 한 번 호출합니다. 취소·바깥 클릭·Escape는 draft를 버리고 trigger로 focus를 복원합니다. 팝업의 native select는 같은 field chrome을 유지하고 320px viewport에서 panel의 가용 폭에 맞춰 줄어듭니다."
       ],
       "exceptions": [],
       "related": [
@@ -83020,8 +83580,10 @@
         "--component-input-border-color",
         "--component-input-border-color-focus",
         "--component-input-focus-shadow",
+        "--component-input-gap",
         "--component-input-height",
         "--component-input-icon-color",
+        "--component-input-padding-x",
         "--component-input-radius",
         "--component-input-text-color",
         "--control-h-sm",
@@ -83030,7 +83592,8 @@
         "--font-sans",
         "--fw-bold",
         "--fw-semibold",
-        "--space-2"
+        "--space-2",
+        "--space-4"
       ],
       "apiLinks": [
         "components/forms/TimePicker.jsx",
@@ -83053,6 +83616,31 @@
             "id": "lds-product-selection-and-input-time-picker--time-input",
             "name": "개요",
             "role": "overview"
+          },
+          {
+            "id": "lds-product-selection-and-input-time-picker--second-precision",
+            "name": "사용법 · 초 단위 입력",
+            "role": "usage"
+          },
+          {
+            "id": "lds-product-selection-and-input-time-picker--bounds-and-unavailable",
+            "name": "변형·상태 · 선택 범위와 선택 불가",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-selection-and-input-time-picker--second-step-and-disabled",
+            "name": "변형·상태 · 초 간격과 비활성",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-selection-and-input-time-picker--field",
+            "name": "상호작용 · 단일 필드에서 선택과 취소",
+            "role": "interaction"
+          },
+          {
+            "id": "lds-product-selection-and-input-time-picker--allowed-time-ranges",
+            "name": "상호작용 · 떨어진 시간 구간 선택",
+            "role": "interaction"
           }
         ],
         "hiddenEvidence": 0
@@ -83073,6 +83661,30 @@
         {
           "label": "WAI-ARIA Authoring Practices: Read Me First",
           "url": "https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/"
+        },
+        {
+          "label": "MDN time value format",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/time#time_value_format"
+        },
+        {
+          "label": "W3C APG native semantics 우선 원칙",
+          "url": "https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/"
+        },
+        {
+          "label": "Ant Design TimePicker",
+          "url": "https://ant.design/components/time-picker/"
+        },
+        {
+          "label": "W3C picker dialog example",
+          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/"
+        },
+        {
+          "label": "Ant Design TimePicker의 disabledHours/disabledMinutes/disabledSeconds",
+          "url": "https://ant.design/components/time-picker/#disabledtime"
+        },
+        {
+          "label": "WHATWG option disabled",
+          "url": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-option-disabled"
         }
       ],
       "canonicalGuide": null,
@@ -83080,13 +83692,13 @@
       "sectionStatus": {
         "purpose": "evidence",
         "useWhen": "omitted-no-evidence",
-        "avoidWhen": "omitted-no-evidence",
+        "avoidWhen": "evidence",
         "anatomy": "evidence",
         "properties": "evidence",
-        "states": "omitted-no-evidence",
-        "behavior": "omitted-no-evidence",
+        "states": "evidence",
+        "behavior": "evidence",
         "quantitativeRules": "evidence",
-        "responsive": "omitted-no-evidence",
+        "responsive": "evidence",
         "contentGuidance": "omitted-no-evidence",
         "accessibility": "evidence",
         "exceptions": "omitted-no-evidence",
@@ -86811,11 +87423,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "VideoStreamTile",
+          "component": "VideoPlaybackControls",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ViewerFrame",
+          "component": "VideoStreamTile",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -87712,11 +88324,11 @@
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "VideoStreamTile",
+          "component": "VideoPlaybackControls",
           "relationship": "대표 시나리오에서 조합"
         },
         {
-          "component": "ViewerFrame",
+          "component": "VideoStreamTile",
           "relationship": "대표 시나리오에서 조합"
         }
       ],
@@ -88381,6 +88993,354 @@
         "tokens": "evidence",
         "apiLinks": "evidence",
         "migration": "evidence"
+      }
+    },
+    {
+      "slug": "product-viewer-video-playback-controls",
+      "title": "Video Playback Controls",
+      "storybookTitle": "LDS Product/Viewer/Video Playback Controls",
+      "layer": "Product",
+      "family": "Viewer",
+      "primaryOwner": "VideoPlaybackControls",
+      "ownerComponents": [
+        "VideoPlaybackControls"
+      ],
+      "supportingComponents": [],
+      "purpose": "재생 위치를 탐색하는 데 적합한 녹화 영상 조작입니다. 실시간 피드만 표시할 때는 영상 스트림을 사용하세요. 재생 상태와 권한, 원본 촬영 시각은 제품이 관리합니다.",
+      "useWhen": [
+        "제품이 와 URL/권한/transport, 실제 play/pause/ended/waiting/error event, seek 가능 구간, fullscreen API, PTS 및 현장 시각, 재시도/복구를 소유합니다. 컴포넌트는 media element나 clock을 만들지 않습니다."
+      ],
+      "avoidWhen": [
+        "live-only iframe이나 무한 duration의 stream을 임의의 녹화 timeline으로 표현하지 않습니다. 자막·재생 속도·다운로드·카메라 선택은 이번 공용 계약에 포함하지 않습니다.",
+        "모든 상태는 controlled입니다. callback은 요청일 뿐 실제 재생·음소거·fullscreen의 성공을 뜻하지 않습니다. 실제 media event로 props를 갱신합니다.",
+        "onMutedChange·onFullscreenChange가 없으면 해당 명령을 숨깁니다. seek callback 또는 play callback이 없으면 그 명령은 비활성입니다.",
+        "MDN video control styling: media command·seek·시간을 연결된 영역으로 묶습니다. 외부 스타일 수치를 복사하지 않고 LDS sibling 문법을 사용합니다."
+      ],
+      "anatomy": [
+        {
+          "part": "label",
+          "rule": "Accessible group name. @default \"영상 재생 조작\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "currentTime",
+          "type": "number",
+          "required": false,
+          "description": "Media position in elapsed seconds. @default 0",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "duration",
+          "type": "number | null",
+          "required": false,
+          "description": "Finite media length in seconds. Missing, nonpositive, NaN or Infinity disables seeking.",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "playing",
+          "type": "boolean",
+          "required": false,
+          "description": "Actual playing state supplied by media events. @default false",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "muted",
+          "type": "boolean",
+          "required": false,
+          "description": "Actual mute state. @default false",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "fullscreen",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the consumer's chosen viewer root is fullscreen. @default false",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "description": "Buffering/loading feedback, independent of availability. @default false",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "All commands unavailable. @default false",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "seekDisabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Seeking unavailable while other commands can remain available. @default false",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "onPlayingChange",
+          "type": "(playing: boolean) = void",
+          "required": false,
+          "description": "Requested play/pause state; the consumer reconciles actual media events.",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "onSeek",
+          "type": "(seconds: number) = void",
+          "required": false,
+          "description": "Requested seconds, once on pointer release or on each native keyboard change.",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "onMutedChange",
+          "type": "(muted: boolean) = void",
+          "required": false,
+          "description": "Requested mute state. Omit to remove the mute control.",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "onFullscreenChange",
+          "type": "(fullscreen: boolean) = void",
+          "required": false,
+          "description": "Requested fullscreen state. Omit when fullscreen is unsupported.",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "appearance",
+          "type": "'minimal' | 'surface' | 'on-dark'",
+          "required": false,
+          "description": "Same viewer surface vocabulary as ViewerToolbar. @default \"on-dark\"",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "variant",
+          "type": "'standalone' | 'embedded'",
+          "required": false,
+          "description": "Perimeter owner: standalone owns border/radius; embedded lets the viewer own them. @default \"standalone\"",
+          "owner": "VideoPlaybackControlsProps"
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "description": "Accessible group name. @default \"영상 재생 조작\"",
+          "owner": "VideoPlaybackControlsProps"
+        }
+      ],
+      "states": [
+        {
+          "state": "loading",
+          "rule": "Buffering/loading feedback, independent of availability. @default false"
+        },
+        {
+          "state": "disabled",
+          "rule": "All commands unavailable. @default false"
+        },
+        {
+          "state": "seekDisabled",
+          "rule": "Seeking unavailable while other commands can remain available. @default false"
+        },
+        {
+          "state": "variant",
+          "rule": "Perimeter owner: standalone owns border/radius; embedded lets the viewer own them. @default \"standalone\""
+        }
+      ],
+      "behavior": [
+        "MDN waiting·error·Fullscreen: buffering/load failure/실제 fullscreen은 다른 상태이며 제품 adapter가 reconciles합니다.",
+        "VideoPlaybackControls — LDS Product의 녹화 미디어 재생 조작입니다. 재생·일시 정지, 초 단위 탐색, 경과/전체 시간, 음소거, 전체 화면 intent를 하나의 controlled 조합으로 제공합니다."
+      ],
+      "quantitativeRules": [
+        {
+          "subject": "명시 규칙 1",
+          "rule": "duration이 미확보, null, NaN, Infinity, 0 이하이면 시간을 —로 표시하고 seek를 비활성화합니다. 미확보 길이 때문에 이미 확인된 경과 시간을 지우지 않습니다. 유효한 0초 위치는 0:00입니다. 값은 [0,duration]에 제한됩니다."
+        },
+        {
+          "subject": "명시 규칙 2",
+          "rule": "pointer drag 중 preview만 갱신하고 release에서 onSeek를 한 번 호출합니다. primary/왼쪽 버튼과 pointerId를 결합하고 cancel·창 blur·capture 손실·unmount·seek 불가 전환은 commit하지 않습니다. keyboard는 native range의 Arrow±0.1초, Home/End를 그대로 사용하고 각 값 변경을 전달합니다."
+        },
+        {
+          "subject": "명시 규칙 3",
+          "rule": "MDN HTMLMediaElement: currentTime/duration과 media events가 실제 상태의 정본입니다. NaN/Infinity를 유효한 길이나 0으로 만들지 않습니다."
+        },
+        {
+          "subject": "명시 규칙 4",
+          "rule": "시각·DOM 순서는 재생 → seek → 시간 → 음소거 → 전체 화면이며, native Tab 순서는 재생 → seek → 음소거 → 전체 화면입니다. 시간은 별도 포커스를 받지 않고 Slider aria-valuetext와 함께 읽습니다. 기본 배치는 한 줄이며 seek가 남은 폭을 사용합니다. 28px 명령과 4px 내부 간격을 유지하고 embedded 높이는 36px, standalone 높이는 38px입니다. 380px 미만에서는 경과 시간만 표시하며 전체 시간은 clock title과 Slider aria-valuetext에 보존합니다."
+        },
+        {
+          "subject": "--border-thin",
+          "rule": "1px"
+        }
+      ],
+      "responsive": [],
+      "contentGuidance": [
+        "seekDisabled는 탐색만 막습니다. appearance는 minimal/surface/on-dark이며 label은 label로 제공합니다.",
+        "W3C Slider pattern·Media seek slider: 명명된 slider, 초 numeric와 분·초 valuetext, 방향키·Home/End. Native range를 우선하고 toolbar 방향키 충돌을 피합니다.",
+        "제품이 영상 위에 촬영 시각을 표시할 때는 var(--color-semantic-on-media-scrim) 위에 var(--color-semantic-on-media-label)을 사용합니다. 밝은 영상의 작은 글자에는 var(--color-semantic-on-media-scrim-strong)으로 배경을 진하게 할 수 있습니다. 라벨이나 경계의 얇은 테두리는 var(--color-semantic-on-media-border), 선택한 대상의 강조선은 var(--color-semantic-media-target)을 사용합니다."
+      ],
+      "accessibility": [
+        "VideoStreamTile은 영상·상태·source identity의 frame, ViewerToolbar는 viewport 명령의 roving toolbar입니다. 두 컴포넌트는 재생 위치와 duration을 소유하지 않습니다. 이 조합은 Slider와 IconButton을 재사용하면서 녹화 탐색의 접근성·시간 표현·pointer commit을 한 곳에서 소유합니다.",
+        "label은 한국어 동사이며 native Slider에 초 단위 numeric range와 분·초 aria-valuetext를 함께 제공합니다. 자동 시간 갱신에 aria-live를 붙이지 않습니다. Focus ring은 Core 전역 계약을 재사용합니다.",
+        "| 항목 | 결정과 근거 | | --- | --- | | control/glyph | ViewerToolbar의 28px/16px 유지. 24px 최소 target을 충족하며 narrow에서도 축소하지 않음 | | radius/hover/disabled/focus/motion | Core IconButton/Slider/Spinner 그대로 사용.",
+        "실제 source story는 stories/VideoPlaybackControls.stories.jsx입니다. Overview/Narrow/Dark는 실제 창고 footage를 VideoStreamTile에 넣은 embedded 조합이며, VariantsStates는 standalone 표면과 ViewerToolbar를 비교합니다. 표적 source bundle, keyboard/drag/controlled callbacks, 760px/320px, light/dark/inverse 및 loading/disabled/unknown duration을 검증합니다."
+      ],
+      "exceptions": [],
+      "related": [
+        {
+          "component": "DotMatrixPreview",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "ElevatorFleetOverview",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "FloorSelector",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "Map2DCanvas",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "Scene3DFrame",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "VIEWER_BLOCKING_STATES",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "VIEWER_STATES",
+          "relationship": "대표 시나리오에서 조합"
+        },
+        {
+          "component": "VideoStreamTile",
+          "relationship": "대표 시나리오에서 조합"
+        }
+      ],
+      "examples": [
+        {
+          "label": "기본 조합",
+          "code": "<VideoPlaybackControls\n  currentTime={media.currentTime} duration={media.duration}\n  playing={media.playing} muted={media.muted} loading={media.buffering}\n  onPlayingChange={requestPlaying} onSeek={requestSeek}\n  onMutedChange={requestMuted} onFullscreenChange={requestFullscreen}\n/>"
+        }
+      ],
+      "tokens": [
+        "--border-thin",
+        "--caption1-line",
+        "--caption1-size",
+        "--color-semantic-background-elevated-normal",
+        "--color-semantic-label-normal",
+        "--color-semantic-line-solid-normal",
+        "--font-sans",
+        "--radius-md",
+        "--space-1",
+        "--space-2"
+      ],
+      "apiLinks": [
+        "components/viz/VideoPlaybackControls.jsx",
+        "components/viz/VideoPlaybackControls.d.ts",
+        "components/viz/VideoPlaybackControls.prompt.md",
+        "stories/VideoPlaybackControls.stories.jsx"
+      ],
+      "migration": [],
+      "platformStatus": {
+        "figma": "not-tracked",
+        "react": "implemented",
+        "ios": "not-tracked",
+        "android": "not-tracked"
+      },
+      "storybook": {
+        "importPath": "./stories/VideoPlaybackControls.stories.jsx",
+        "entryStoryId": "lds-product-viewer-video-playback-controls--overview",
+        "publicStories": [
+          {
+            "id": "lds-product-viewer-video-playback-controls--overview",
+            "name": "개요",
+            "role": "overview"
+          },
+          {
+            "id": "lds-product-viewer-video-playback-controls--dark",
+            "name": "변형·상태 · 다크 테마",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-viewer-video-playback-controls--unknown-duration",
+            "name": "변형·상태 · 전체 시간 미확인",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-viewer-video-playback-controls--variants-states",
+            "name": "변형·상태 · 표면과 가용성",
+            "role": "variants-states"
+          },
+          {
+            "id": "lds-product-viewer-video-playback-controls--narrow",
+            "name": "반응형 · 좁은 폭",
+            "role": "responsive"
+          }
+        ],
+        "hiddenEvidence": 1
+      },
+      "sources": [
+        {
+          "label": "VideoPlaybackControls prompt contract",
+          "path": "components/viz/VideoPlaybackControls.prompt.md"
+        },
+        {
+          "label": "Storybook implementation evidence",
+          "path": "stories/VideoPlaybackControls.stories.jsx"
+        },
+        {
+          "label": "W3C Slider pattern",
+          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/slider/"
+        },
+        {
+          "label": "Media seek slider",
+          "url": "https://www.w3.org/WAI/ARIA/apg/patterns/slider/examples/slider-seek/"
+        },
+        {
+          "label": "MDN HTMLMediaElement",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement"
+        },
+        {
+          "label": "MDN waiting",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/waiting_event"
+        },
+        {
+          "label": "error",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/error_event"
+        },
+        {
+          "label": "Fullscreen",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API"
+        },
+        {
+          "label": "MDN video control styling",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Audio_and_video_delivery/Video_player_styling_basics"
+        }
+      ],
+      "canonicalGuide": null,
+      "guideDeltaFields": [],
+      "sectionStatus": {
+        "purpose": "evidence",
+        "useWhen": "evidence",
+        "avoidWhen": "evidence",
+        "anatomy": "evidence",
+        "properties": "evidence",
+        "states": "evidence",
+        "behavior": "evidence",
+        "quantitativeRules": "evidence",
+        "responsive": "omitted-no-evidence",
+        "contentGuidance": "evidence",
+        "accessibility": "evidence",
+        "exceptions": "omitted-no-evidence",
+        "related": "evidence",
+        "examples": "evidence",
+        "tokens": "evidence",
+        "apiLinks": "evidence",
+        "migration": "omitted-no-evidence"
       }
     },
     {

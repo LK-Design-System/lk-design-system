@@ -31,6 +31,8 @@
 | confirmLabel | 확인 버튼 라벨. @default "확인" |
 | cancelLabel | 취소 버튼 라벨. @default "취소" |
 | confirmLoadingLabel | pending 상태의 접근 가능한 라벨. @default "처리 중" |
+| matchInputLabel | requireMatchText 사용 시 확인 입력 필드의 레이블. |
+| matchInputPlaceholder | requireMatchText 사용 시 확인 입력 필드의 placeholder. 기본값은 requireMatchText입니다. |
 | ariaLabel | title이 없을 때 사용할 접근 가능한 이름. @default "확인 다이얼로그" |
 
 ## Properties
@@ -47,6 +49,9 @@
 | `confirmDisabled` | `boolean` | No | 선행 조건이 충족되지 않았을 때 확인 액션을 비활성화합니다. @default false |
 | `confirmLoading` | `boolean` | No | 확인 요청 중 pending 상태를 표시하고 중복 실행을 막습니다. @default false |
 | `confirmLoadingLabel` | `string` | No | pending 상태의 접근 가능한 라벨. @default "처리 중" |
+| `requireMatchText` | `string` | No | 파괴적 액션에서 사용자가 대상 식별자/문구를 정확히 입력했을 때만 확인 버튼을 활성화합니다. |
+| `matchInputLabel` | `React.ReactNode` | No | requireMatchText 사용 시 확인 입력 필드의 레이블. |
+| `matchInputPlaceholder` | `string` | No | requireMatchText 사용 시 확인 입력 필드의 placeholder. 기본값은 requireMatchText입니다. |
 | `onConfirm` | `React.MouseEventHandler` | No | 확인 클릭 콜백. |
 | `onCancel` | `() = void` | No | 취소 클릭 또는 scrim/Escape dismiss 콜백. |
 | `onClose` | `() = void` | No | onCancel이 없을 때 쓰는 닫기 콜백. |
@@ -87,6 +92,7 @@
 
 - 파괴적 액션은 tone="danger"와 구체적인 confirmLabel을 사용합니다.
 - tone="danger"는 확인 버튼에 파괴적 스타일을 적용합니다. 위험의 내용과 결과는 별도 상태 뱃지 대신 구체적인 제목·본문·동작 라벨로 설명합니다.
+- 대상 식별자를 직접 확인해야 하는 작업에는 requireMatchText를 지정합니다. 입력이 정확히 일치할 때 확인 버튼이 활성화됩니다. matchInputLabel로 무엇을 입력할지 설명하고, matchInputPlaceholder로 입력 힌트를 지정할 수 있습니다.
 
 ## Accessibility
 

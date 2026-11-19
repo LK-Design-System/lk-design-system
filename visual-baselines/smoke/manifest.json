@@ -256,8 +256,8 @@
         "height": 760
       },
       "reducedMotion": "no-preference",
-      "bytes": 11051,
-      "sha256": "eabe24da0f81c3bf0c3b520e57e662dfaa7492210311fd2e6999d3ccaeed8717"
+      "bytes": 11048,
+      "sha256": "4ed6e24ff97ccffd83032a4949f6ab5aa2bbc20e6deb6017ae435f8beee1bd5e"
     },
     {
       "name": "wds-menu-patterns",
@@ -268,8 +268,8 @@
         "height": 860
       },
       "reducedMotion": "no-preference",
-      "bytes": 61644,
-      "sha256": "3ce4a642e9627a1ee37a45fb6c3c7ae3f0c1f471f87f57aa3c20e700e0788c02"
+      "bytes": 61696,
+      "sha256": "7ec1a3ab773190a491e9ad10f11fdc510b44a514dc10ae66c5d11a6491609d7d"
     },
     {
       "name": "wds-menu-patterns-dark",
@@ -356,8 +356,8 @@
         "height": 520
       },
       "reducedMotion": "no-preference",
-      "bytes": 70334,
-      "sha256": "e99e9f58fca120e67e7cd978f1215c9236882a397aff7cbb707b7ad9f5554655"
+      "bytes": 70997,
+      "sha256": "407afbea3b2839abccbe6d7e13e5910b3fe0495859f05086481da7dc6b596e20"
     },
     {
       "name": "product-file-upload-queue",

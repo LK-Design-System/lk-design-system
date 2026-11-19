@@ -114,6 +114,7 @@ export { Map2DCanvas } from '../components/viz/Map2DCanvas.jsx';
 export { Scene3DFrame } from '../components/viz/Scene3DFrame.jsx';
 export { TelemetryGauge } from '../components/viz/TelemetryGauge.jsx';
 export { TelemetryValue } from '../components/viz/TelemetryValue.jsx';
+export { VideoPlaybackControls } from '../components/viz/VideoPlaybackControls.jsx';
 export { VideoStreamTile } from '../components/viz/VideoStreamTile.jsx';
 export { VIEWER_BLOCKING_STATES, VIEWER_STATES, ViewerFrame } from '../components/viz/ViewerFrame.jsx';
 export { ViewerToolbar, ViewerToolbarButton } from '../components/viz/ViewerToolbar.jsx';

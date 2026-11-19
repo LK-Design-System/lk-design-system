@@ -1,8 +1,8 @@
 "use client";
 import {
   TagInput
-} from "../../chunk-FAJF3XYI.js";
-import "../../chunk-IKUN5X7H.js";
+} from "../../chunk-24W3Y5YO.js";
+import "../../chunk-SCAFBDKP.js";
 export {
   TagInput
 };

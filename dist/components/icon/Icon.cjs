@@ -3,10 +3,10 @@
 
 
 
-var _chunk7OXVB7WXcjs = require('../../chunk-7OXVB7WX.cjs');
+var _chunkV2N47AGDcjs = require('../../chunk-V2N47AGD.cjs');
 
 
 
 
-exports.ICON_NAMES = _chunk7OXVB7WXcjs.ICON_NAMES; exports.Icon = _chunk7OXVB7WXcjs.Icon; exports.default = _chunk7OXVB7WXcjs.Icon_default;
+exports.ICON_NAMES = _chunkV2N47AGDcjs.ICON_NAMES; exports.Icon = _chunkV2N47AGDcjs.Icon; exports.default = _chunkV2N47AGDcjs.Icon_default;
 //# sourceMappingURL=Icon.cjs.map

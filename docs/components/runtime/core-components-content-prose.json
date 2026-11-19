@@ -41,9 +41,9 @@
     },
     {
       "name": "typography",
-      "type": "'document' | 'chat'",
+      "type": "'document' | 'chat' | 'reading' | 'compact'",
       "required": false,
-      "description": "Document keeps the existing 14px reading scale. Chat opts into 16px/24px body, a compact heading/rhythm hierarchy and local table scrolling. Heading semantics and parsing stay product-owned. @default \"document\"",
+      "description": "Document keeps the 14px wiki scale. Chat opts into 16px/24px conversational rhythm and local table scrolling. Reading uses 16px long-form article/report rhythm. Compact uses 13px dense README/panel rhythm. Heading semantics and parsing stay product-owned. @default \"document\"",
       "owner": "ProseProps"
     }
   ],
@@ -125,8 +125,10 @@
   ],
   "tokens": [
     "--body1-line",
+    "--body1-reading-line",
     "--body1-size",
     "--body1-spacing",
+    "--caption1-size",
     "--color-semantic-fill-alternative",
     "--color-semantic-fill-normal",
     "--color-semantic-fill-strong",
@@ -153,7 +155,9 @@
     "--label1-reading-line",
     "--label1-size",
     "--label1-spacing",
+    "--label2-line",
     "--label2-size",
+    "--label2-spacing",
     "--radius-lg",
     "--radius-md",
     "--radius-sm",
