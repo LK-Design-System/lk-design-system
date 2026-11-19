@@ -1,12 +1,12 @@
 {
   "version": 1,
   "expected": {
-    "stories": 816,
+    "stories": 817,
     "docs": 202,
     "publicStories": 578,
-    "hiddenStories": 238,
-    "storyIdsSha256": "7424546ab031d31f8317c2a15a3002a799db44dbacee9410108e6ed57e1b9676",
-    "visibilitySha256": "103582ac4db075349158b25b15918d9ecbb3ac94895533f790a5dda25f3b767c"
+    "hiddenStories": 239,
+    "storyIdsSha256": "ce3ff851882781c31dc93efb46ef10a2ba0dc7dc87bb34b281d02ef6560eea58",
+    "visibilitySha256": "52a9b5ab1ac117f56e1d3a272b2639c4c4c1e50efee9e99727222429e8f18415"
   },
   "allowedGuideOmissions": [],
   "canonicalDocs": [
@@ -114,6 +114,7 @@
       "lds-product-viewer-video-playback-controls--dark",
       "lds-product-viewer-video-playback-controls--narrow",
       "lds-product-viewer-video-playback-controls--overview",
+      "lds-product-viewer-video-playback-controls--playback-states-parity",
       "lds-product-viewer-video-playback-controls--unknown-duration",
       "lds-product-viewer-video-playback-controls--variants-states"
     ],

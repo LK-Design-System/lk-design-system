@@ -159,3 +159,9 @@ Carbon의 header/body 동일 높이 권고와 달리 LDS xs는 읽기 header 32p
   여는 행들과 **함께** 있습니다.
 - 유래: 위성(Slides)의 StatusAssessment가 손말이 `<table>`을 유지한 세 번째
   이유가 그룹 행 부재였습니다(`docs/TABLE_MEDIUM_CONTRACT_PROPOSAL.md`).
+
+## 모바일 표현
+
+`mobileLayout="scroll"`은 기본 가로 스크롤 표를 유지합니다. 두 열의 속성 표에는 `mobileLayout="key-value"`를, 제목과 여러 속성을 담는 상세 표에는 `mobileLayout="compact-list"`를 사용할 수 있습니다. `mobileTrailingKey`는 목록 제목 옆에 둘 컬럼을 선택합니다.
+
+강한 구분선이 필요한 합성에서는 `var(--color-semantic-line-solid-strong)`을 참조할 수 있습니다. 기존 토큰과 같은 색을 제공하는 별칭입니다.

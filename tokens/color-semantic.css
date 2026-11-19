@@ -124,10 +124,10 @@
   --color-semantic-data-viz-series-6: var(--color-semantic-accent-foreground-purple);
   --color-semantic-data-viz-series-7: var(--color-atomic-light-blue-30);
   --color-semantic-data-viz-series-8: var(--color-semantic-label-alternative);
-  --color-semantic-on-media-scrim: rgba(5, 19, 43, 0.72);
-  --color-semantic-on-media-scrim-strong: rgba(5, 19, 43, 0.84);
+  --color-semantic-on-media-scrim: color-mix(in srgb, var(--color-semantic-brand-surface) 72%, transparent);
+  --color-semantic-on-media-scrim-strong: color-mix(in srgb, var(--color-semantic-brand-surface) 84%, transparent);
   --color-semantic-on-media-label: var(--color-semantic-static-white);
-  --color-semantic-on-media-border: rgba(255, 255, 255, 0.28);
+  --color-semantic-on-media-border: color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent);
   --color-semantic-media-target: var(--color-atomic-cyan-50);
 }
 
@@ -251,10 +251,10 @@
   --color-semantic-data-viz-series-6: var(--color-semantic-accent-foreground-purple);
   --color-semantic-data-viz-series-7: var(--color-atomic-light-blue-70);
   --color-semantic-data-viz-series-8: var(--color-semantic-label-alternative);
-  --color-semantic-on-media-scrim: rgba(5, 19, 43, 0.72);
-  --color-semantic-on-media-scrim-strong: rgba(5, 19, 43, 0.84);
+  --color-semantic-on-media-scrim: color-mix(in srgb, var(--color-semantic-brand-surface) 72%, transparent);
+  --color-semantic-on-media-scrim-strong: color-mix(in srgb, var(--color-semantic-brand-surface) 84%, transparent);
   --color-semantic-on-media-label: var(--color-semantic-static-white);
-  --color-semantic-on-media-border: rgba(255, 255, 255, 0.28);
+  --color-semantic-on-media-border: color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent);
   --color-semantic-media-target: var(--color-atomic-cyan-50);
 }
 
@@ -379,10 +379,10 @@
     --color-semantic-data-viz-series-6: var(--color-semantic-accent-foreground-purple);
     --color-semantic-data-viz-series-7: var(--color-atomic-light-blue-70);
     --color-semantic-data-viz-series-8: var(--color-semantic-label-alternative);
-    --color-semantic-on-media-scrim: rgba(5, 19, 43, 0.72);
-    --color-semantic-on-media-scrim-strong: rgba(5, 19, 43, 0.84);
+    --color-semantic-on-media-scrim: color-mix(in srgb, var(--color-semantic-brand-surface) 72%, transparent);
+    --color-semantic-on-media-scrim-strong: color-mix(in srgb, var(--color-semantic-brand-surface) 84%, transparent);
     --color-semantic-on-media-label: var(--color-semantic-static-white);
-    --color-semantic-on-media-border: rgba(255, 255, 255, 0.28);
+    --color-semantic-on-media-border: color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent);
     --color-semantic-media-target: var(--color-atomic-cyan-50);
   }
 }

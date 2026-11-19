@@ -2821,8 +2821,8 @@
         "$type": "color",
         "css": "--color-semantic-on-media-scrim",
         "modes": {
-          "light": "rgba(5, 19, 43, 0.72)",
-          "dark": "rgba(5, 19, 43, 0.72)"
+          "light": "color-mix(in srgb, var(--color-semantic-brand-surface) 72%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-brand-surface) 72%, transparent)"
         },
         "origin": "lds-extension",
         "group": "media",
@@ -2832,8 +2832,8 @@
         "$type": "color",
         "css": "--color-semantic-on-media-scrim-strong",
         "modes": {
-          "light": "rgba(5, 19, 43, 0.84)",
-          "dark": "rgba(5, 19, 43, 0.84)"
+          "light": "color-mix(in srgb, var(--color-semantic-brand-surface) 84%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-brand-surface) 84%, transparent)"
         },
         "origin": "lds-extension",
         "group": "media",
@@ -2854,8 +2854,8 @@
         "$type": "color",
         "css": "--color-semantic-on-media-border",
         "modes": {
-          "light": "rgba(255, 255, 255, 0.28)",
-          "dark": "rgba(255, 255, 255, 0.28)"
+          "light": "color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent)",
+          "dark": "color-mix(in srgb, var(--color-semantic-static-white) 28%, transparent)"
         },
         "origin": "lds-extension",
         "group": "media",

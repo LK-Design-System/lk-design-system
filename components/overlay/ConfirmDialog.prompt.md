@@ -49,3 +49,7 @@
 - [Fluent 2 Dialog](https://fluent2.microsoft.design/components/web/react/core/dialog/usage): 확인 surface의 분명한 제목·본문·동작 구조를 유지하고, 불가피한 중첩에서는 최상위 surface만 상호작용하도록 했습니다.
 
 ConfirmDialog는 route 전환, 비동기 실패 정책, 파괴적 작업 권한을 소유하지 않습니다. 제품은 controlled `open` 상태와 실제 실행 정책을 연결합니다.
+
+## 확인 문구 입력
+
+대상 식별자를 직접 확인해야 하는 작업에는 `requireMatchText`를 지정합니다. 입력이 정확히 일치할 때 확인 버튼이 활성화됩니다. `matchInputLabel`로 무엇을 입력할지 설명하고, `matchInputPlaceholder`로 입력 힌트를 지정할 수 있습니다.

@@ -61,3 +61,7 @@
 ## 검증 및 발행 경계
 
 실제 source story는 `stories/VideoPlaybackControls.stories.jsx`입니다. Overview/Narrow/Dark는 실제 창고 footage를 VideoStreamTile에 넣은 embedded 조합이며, VariantsStates는 standalone 표면과 ViewerToolbar를 비교합니다. 표적 source bundle, keyboard/drag/controlled callbacks, 760px/320px, light/dark/inverse 및 loading/disabled/unknown duration을 검증합니다. Source authoring과 앱 local preview만 포함합니다. 정본 generated docs/dist/inventory는 Linux CI export가 소유하며 별도 승인 없는 push·tag·publish는 하지 않습니다. 아직 발행되지 않은 컴포넌트를 설치된 0.4.9의 기능이라고 주장하지 않습니다.
+
+## 영상 위 정보 표시
+
+제품이 영상 위에 촬영 시각을 표시할 때는 `var(--color-semantic-on-media-scrim)` 위에 `var(--color-semantic-on-media-label)`을 사용합니다. 밝은 영상의 작은 글자에는 `var(--color-semantic-on-media-scrim-strong)`으로 배경을 진하게 할 수 있습니다. 라벨이나 경계의 얇은 테두리는 `var(--color-semantic-on-media-border)`, 선택한 대상의 강조선은 `var(--color-semantic-media-target)`을 사용합니다.

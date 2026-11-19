@@ -102,3 +102,7 @@ const firstFilterRef = useRef(null);
 ## Subtitle contract
 
 Use `subtitle` for one short, visible sentence that clarifies the scope or consequence of the Drawer. When present it is rendered directly below `title` and associated with the dialog through `aria-describedby`. Complex instructions, lists, validation, or independently navigable content belong in the body and must not be compressed into the subtitle.
+
+## 좁은 화면 전체 너비
+
+`mobileFullWidth`를 켜면 767px 이하에서 Drawer가 화면 전체 너비를 사용합니다. `headerStyle`은 이 모드에서도 적용되므로 상단 안전 영역을 함께 조정할 수 있습니다.

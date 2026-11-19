@@ -115,3 +115,12 @@ export const Narrow = {
     }
   },
 };
+
+export const PlaybackStatesParity = {
+  name: 'Video playback availability parity',
+  tags: ['!dev', 'visual-parity'],
+  render: () => <div style={{ display: 'grid', gap: 'var(--space-4)', maxWidth: 760 }}>
+    <VideoPlaybackControls duration={3600} currentTime={83} playing loading onPlayingChange={() => {}} onSeek={() => {}} />
+    <VideoPlaybackControls duration={3600} currentTime={83} disabled onPlayingChange={() => {}} onSeek={() => {}} />
+  </div>,
+};
