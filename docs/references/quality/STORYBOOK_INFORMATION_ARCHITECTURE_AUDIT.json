@@ -4,7 +4,7 @@
     "name": "LK Design System Storybook information architecture audit",
     "auditedAt": "2026-07-19",
     "storybookIndex": "storybook-static/index.json",
-    "storybookIndexSha256": "87b3cc9bd15123260c8451c223812e3d6cd32b94db3780be42c17fa1726143a3",
+    "storybookIndexSha256": "83d7c0e0cc5e08030dbf057f56cdf5688dde09916fbb04b4b0add897e67aef3f",
     "publicExportEntry": "src/index.js",
     "contract": "docs/STORYBOOK_INFORMATION_ARCHITECTURE.md",
     "method": "Built Storybook index census plus source-AST ownership/role analysis, followed by page-level human disposition review.",
@@ -61,31 +61,31 @@
     "renamedPageIdPolicy": "Renamed pages keep their previous explicit meta id so public story links remain stable."
   },
   "summary": {
-    "pages": 202,
-    "stories": 802,
-    "publicStories": 564,
-    "hiddenStories": 238,
-    "componentDescriptions": 197,
-    "pagesWithVisibleCanvasIntroduction": 197,
-    "pagesWithDecisionGuidance": 190,
-    "describedPublicStories": 564,
-    "reviewedPages": 202,
-    "reviewedStories": 802,
+    "pages": 203,
+    "stories": 817,
+    "publicStories": 578,
+    "hiddenStories": 239,
+    "componentDescriptions": 198,
+    "pagesWithVisibleCanvasIntroduction": 198,
+    "pagesWithDecisionGuidance": 191,
+    "describedPublicStories": 578,
+    "reviewedPages": 203,
+    "reviewedStories": 817,
     "staleReviewedPages": 0,
     "recommendedVisibilityChanges": 0,
     "roles": {
       "foundation-reference": 20,
-      "overview": 185,
-      "usage": 42,
-      "variants-states": 135,
-      "interaction": 63,
-      "responsive": 94,
+      "overview": 186,
+      "usage": 44,
+      "variants-states": 142,
+      "interaction": 66,
+      "responsive": 95,
       "scenario": 29,
-      "visual-parity": 102,
+      "visual-parity": 103,
       "internal-contract": 132
     },
     "dispositions": {
-      "keep": 201,
+      "keep": 202,
       "merge": 0,
       "split": 0,
       "hide": 1
@@ -93,8 +93,8 @@
     "layers": {
       "Core": {
         "pages": 66,
-        "stories": 248,
-        "public": 138,
+        "stories": 249,
+        "public": 139,
         "hidden": 110,
         "guideReadyPages": 66
       },
@@ -106,11 +106,11 @@
         "guideReadyPages": 12
       },
       "Product": {
-        "pages": 115,
-        "stories": 521,
-        "public": 401,
-        "hidden": 120,
-        "guideReadyPages": 114
+        "pages": 116,
+        "stories": 535,
+        "public": 414,
+        "hidden": 121,
+        "guideReadyPages": 115
       },
       "Theme": {
         "pages": 4,
@@ -5275,7 +5275,7 @@
       "layer": "Core",
       "family": "Selection and Input",
       "importPath": "./stories/FormDateTime.stories.jsx",
-      "sourceSha256": "ac728f34b3a5abfa079663c2e438377567bdde49880ea7a9ae30ef905311adf5",
+      "sourceSha256": "a167249c482ad18ebea8af49f19831d6e8628519160ccf7bc4ae0041957a2ff1",
       "primaryOwner": "DatePicker",
       "ownerComponents": [
         "DatePicker"
@@ -5284,13 +5284,13 @@
         "FormField"
       ],
       "visibility": {
-        "public": 2,
+        "public": 3,
         "hidden": 1
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-core-components-selection-and-input-date-picker--date-input",
-        "describedPublicStories": 2,
+        "describedPublicStories": 3,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -5300,8 +5300,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-08-22",
-      "reviewedSourceSha256": "ac728f34b3a5abfa079663c2e438377567bdde49880ea7a9ae30ef905311adf5",
+      "reviewedAt": "2026-11-19",
+      "reviewedSourceSha256": "a167249c482ad18ebea8af49f19831d6e8628519160ccf7bc4ae0041957a2ff1",
       "stories": [
         {
           "id": "lds-core-components-selection-and-input-date-picker--date-input",
@@ -5326,6 +5326,30 @@
           "supportingComponents": [
             "FormField"
           ]
+        },
+        {
+          "id": "lds-core-components-selection-and-input-date-picker--portal-clipping",
+          "name": "사용법 · 좁은 영역에서 달력 열기",
+          "exportName": "PortalClipping",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "DatePicker"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
         },
         {
           "id": "lds-core-components-selection-and-input-date-picker--blocked-dates",
@@ -5375,7 +5399,7 @@
           "supportingComponents": []
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Restored source reviewed for ownership, story purpose, naming and visibility; the owner approved integration of this review record."
     },
     {
       "title": "LDS Core/Components/Selection and Input/Input",
@@ -9133,7 +9157,7 @@
       "layer": "Foundation",
       "family": "Foundation",
       "importPath": "./stories/FoundationInteraction.stories.jsx",
-      "sourceSha256": "9d32e96d0f3d457cfbdc4ff1f023278594edd4c4c0b220df6fbed6c8d30f349c",
+      "sourceSha256": "ecbb53cfe216cd71f6efcfb1add27bf32c8b6ace385e83fbaf0dc3681553c52e",
       "primaryOwner": "Foundation:State",
       "ownerComponents": [
         "Foundation:State"
@@ -9156,8 +9180,8 @@
       "dispositionReason": "The subject owns a distinct Foundation decision model and a complete ten-section guidance contract; keep it as a public Foundation page.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-30",
-      "reviewedSourceSha256": "9d32e96d0f3d457cfbdc4ff1f023278594edd4c4c0b220df6fbed6c8d30f349c",
+      "reviewedAt": "2026-11-19",
+      "reviewedSourceSha256": "ecbb53cfe216cd71f6efcfb1add27bf32c8b6ace385e83fbaf0dc3681553c52e",
       "stories": [
         {
           "id": "lds-core-foundation-interaction--interaction-tokens",
@@ -9183,7 +9207,7 @@
           "reviewNote": "2026-07-24 Foundation completeness review: structured ten-section source, generated Markdown/LLM reference, built Storybook Canvas, paired examples, desktop and 390px responsive rendering were reviewed; shared Writing representative visual verdict passed at 92/100."
         }
       ],
-      "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px."
+      "reviewNote": "Restored source reviewed for ownership, story purpose, naming and visibility; the owner approved integration of this review record."
     },
     {
       "title": "LDS Core/Foundation/Typography",
@@ -21993,7 +22017,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayLightbox.stories.jsx",
-      "sourceSha256": "686fdf62b9d2591261af5fd3b1a1f7ae6a684221c405f65d2e1e27591e1027f1",
+      "sourceSha256": "ddddcf92d9935ea9426bf561c58eb29cb3ddde1763c54b0e875f05ce6b34da50",
       "primaryOwner": "Lightbox",
       "ownerComponents": [
         "Lightbox"
@@ -22004,13 +22028,13 @@
         "Thumbnail"
       ],
       "visibility": {
-        "public": 2,
+        "public": 5,
         "hidden": 2
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-overlay-lightbox--lightbox-open",
-        "describedPublicStories": 2,
+        "describedPublicStories": 5,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -22020,8 +22044,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-10-13",
-      "reviewedSourceSha256": "686fdf62b9d2591261af5fd3b1a1f7ae6a684221c405f65d2e1e27591e1027f1",
+      "reviewedAt": "2026-11-19",
+      "reviewedSourceSha256": "ddddcf92d9935ea9426bf561c58eb29cb3ddde1763c54b0e875f05ce6b34da50",
       "stories": [
         {
           "id": "lds-product-overlay-lightbox--lightbox-open",
@@ -22050,6 +22074,84 @@
             "Thumbnail"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-overlay-lightbox--natural-small-image",
+          "name": "변형·상태 · 작은 이미지 원본 크기",
+          "exportName": "NaturalSmallImage",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Lightbox"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
+        },
+        {
+          "id": "lds-product-overlay-lightbox--contain-small-image",
+          "name": "변형·상태 · 작은 이미지 화면 맞춤",
+          "exportName": "ContainSmallImage",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Lightbox"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
+        },
+        {
+          "id": "lds-product-overlay-lightbox--contain-image-change",
+          "name": "상호작용 · 비율이 다른 이미지 이동",
+          "exportName": "ContainImageChange",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "Lightbox"
+          ],
+          "supportingComponents": [
+            "Button"
+          ],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
         },
         {
           "id": "lds-product-overlay-lightbox--lightbox-keyboard-contract",
@@ -22128,7 +22230,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas.\n2026-10-13 owner-delegated agent source/IA review: Lightbox retains the overview and ownership; thumbnail controls are supporting components rather than a new page. Existing owner/disposition/visibility retained. This records source/role/description review, not direct human visual approval, H3, full accessibility or package qualification. Browser observations and limits: docs/working/compass-r8/README.md."
+      "reviewNote": "Restored source reviewed for ownership, story purpose, naming and visibility; the owner approved integration of this review record."
     },
     {
       "title": "LDS Product/Overlay/Sheet",
@@ -23864,7 +23966,7 @@
       "layer": "Product",
       "family": "Selection and Input",
       "importPath": "./stories/FormTimePicker.stories.jsx",
-      "sourceSha256": "acd11f73e8a3d11c03ae78a9487181bfa71a22a5eeb1568df5563fd15fb717a1",
+      "sourceSha256": "7fe1a02bf7658675eb6fe41aec08874c49492cbb803f3ee3408ceeded87cdb30",
       "primaryOwner": "TimePicker",
       "ownerComponents": [
         "TimePicker"
@@ -23873,13 +23975,13 @@
         "FormField"
       ],
       "visibility": {
-        "public": 1,
+        "public": 6,
         "hidden": 0
       },
       "descriptionEvidence": {
         "componentDescription": true,
         "storyGuideId": "lds-product-selection-and-input-time-picker--time-input",
-        "describedPublicStories": 1,
+        "describedPublicStories": 6,
         "publicStoriesWithCanvasGuidance": 1,
         "decisionGuidance": true
       },
@@ -23889,8 +23991,8 @@
       "dispositionReason": "Human layer review confirmed a distinct reusable Product contract; keep this page and document workflow context and ownership boundaries.",
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
-      "reviewedAt": "2026-07-25",
-      "reviewedSourceSha256": "acd11f73e8a3d11c03ae78a9487181bfa71a22a5eeb1568df5563fd15fb717a1",
+      "reviewedAt": "2026-11-19",
+      "reviewedSourceSha256": "7fe1a02bf7658675eb6fe41aec08874c49492cbb803f3ee3408ceeded87cdb30",
       "stories": [
         {
           "id": "lds-product-selection-and-input-time-picker--time-input",
@@ -23917,9 +24019,133 @@
             "FormField"
           ],
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
+        },
+        {
+          "id": "lds-product-selection-and-input-time-picker--second-precision",
+          "name": "사용법 · 초 단위 입력",
+          "exportName": "SecondPrecision",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "usage",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TimePicker"
+          ],
+          "supportingComponents": [
+            "FormField"
+          ],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
+        },
+        {
+          "id": "lds-product-selection-and-input-time-picker--bounds-and-unavailable",
+          "name": "변형·상태 · 선택 범위와 선택 불가",
+          "exportName": "BoundsAndUnavailable",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TimePicker"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
+        },
+        {
+          "id": "lds-product-selection-and-input-time-picker--second-step-and-disabled",
+          "name": "변형·상태 · 초 간격과 비활성",
+          "exportName": "SecondStepAndDisabled",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TimePicker"
+          ],
+          "supportingComponents": [
+            "FormField"
+          ],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
+        },
+        {
+          "id": "lds-product-selection-and-input-time-picker--field",
+          "name": "상호작용 · 단일 필드에서 선택과 취소",
+          "exportName": "Field",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TimePicker"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
+        },
+        {
+          "id": "lds-product-selection-and-input-time-picker--allowed-time-ranges",
+          "name": "상호작용 · 떨어진 시간 구간 선택",
+          "exportName": "AllowedTimeRanges",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "interaction",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "TimePicker"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
         }
       ],
-      "reviewNote": "Opted this page into autodocs so its decision guide moves off the Canvas and into a Docs tab. The only source change is `tags: ['autodocs']` on the meta; stories, story names, roles and visibility are untouched. Reviewed in the running dev server: the Canvas now opens on the component itself instead of several thousand pixels of prose, and a 2026-07-26 dedup re-review confirms the Docs tab renders title, page description, and the decision guide only; story specimens and Controls remain on Canvas."
+      "reviewNote": "Restored source reviewed for ownership, story purpose, naming and visibility; the owner approved integration of this review record."
     },
     {
       "title": "LDS Product/Selection and Input/Toggle Button",
@@ -26433,6 +26659,182 @@
         }
       ],
       "reviewNote": "Re-reviewed 2026-07-30 after the review provenance was lost: these stamps pointed at pre-squash sources that no longer exist in this repository, so the recorded hashes could not be diffed against. Verified instead against what actually renders now — every page swept mechanically at 1100/360/320px for horizontal overflow, empty renders and page errors, plus a visual pass over the pages whose source changed after the public release and a sample of the rest. Two defects surfaced and were fixed in the same change: Pagination ran 575px wide inside a 360px viewport and pushed the next-page control off screen, and a Tree row starved its description column to 33px.\n2026-10-14 owner-approved test-delta review: User approved the concrete three-story waitFor-only patch. Main agent reviewed source commit 7f23cff6dae3dbd5f39c21b3f3c778565f162df6 and the three default-motion Storybook plays/UI. Original conditions, errors and focus checks remain. IA names, order, owners, dispositions and visibility are unchanged. This records agent review under user authorization; no direct human visual review is claimed. Reduced motion was not emulated. Official Linux export: https://github.com/LK-Design-System/lk-design-system/actions/runs/38432123367. Browser evidence is retained locally. Full CI qualification remains pending."
+    },
+    {
+      "title": "LDS Product/Viewer/Video Playback Controls",
+      "layer": "Product",
+      "family": "Viewer",
+      "importPath": "./stories/VideoPlaybackControls.stories.jsx",
+      "sourceSha256": "c1d0ea4bf443b18399fadac1074795a92743820aae65481091b0ebf8b45358ac",
+      "primaryOwner": "VideoPlaybackControls",
+      "ownerComponents": [
+        "VideoPlaybackControls"
+      ],
+      "supportingComponents": [],
+      "visibility": {
+        "public": 5,
+        "hidden": 1
+      },
+      "descriptionEvidence": {
+        "componentDescription": true,
+        "storyGuideId": "lds-product-viewer-video-playback-controls--overview",
+        "describedPublicStories": 5,
+        "publicStoriesWithCanvasGuidance": 1,
+        "decisionGuidance": true
+      },
+      "missingGuidance": [],
+      "guidePriority": "high",
+      "disposition": "keep",
+      "dispositionReason": "The page has a distinct audience-facing owner and no duplicate public home in the current taxonomy.",
+      "reviewStatus": "reviewed",
+      "reviewMethod": "source-ast+layer-human-review",
+      "reviewedAt": "2026-11-19",
+      "reviewedSourceSha256": "c1d0ea4bf443b18399fadac1074795a92743820aae65481091b0ebf8b45358ac",
+      "stories": [
+        {
+          "id": "lds-product-viewer-video-playback-controls--overview",
+          "name": "개요",
+          "exportName": "Overview",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "overview",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": true,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "VideoPlaybackControls"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
+        },
+        {
+          "id": "lds-product-viewer-video-playback-controls--dark",
+          "name": "변형·상태 · 다크 테마",
+          "exportName": "Dark",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "VideoPlaybackControls"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
+        },
+        {
+          "id": "lds-product-viewer-video-playback-controls--unknown-duration",
+          "name": "변형·상태 · 전체 시간 미확인",
+          "exportName": "UnknownDuration",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "VideoPlaybackControls"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
+        },
+        {
+          "id": "lds-product-viewer-video-playback-controls--variants-states",
+          "name": "변형·상태 · 표면과 가용성",
+          "exportName": "VariantsStates",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "variants-states",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "VideoPlaybackControls"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
+        },
+        {
+          "id": "lds-product-viewer-video-playback-controls--narrow",
+          "name": "반응형 · 좁은 폭",
+          "exportName": "Narrow",
+          "visibility": "public",
+          "tags": [
+            "autodocs",
+            "dev",
+            "manifest",
+            "play-fn",
+            "test"
+          ],
+          "role": "responsive",
+          "hasStoryDescription": true,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "public",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "VideoPlaybackControls"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
+        },
+        {
+          "id": "lds-product-viewer-video-playback-controls--playback-states-parity",
+          "name": "Video playback availability parity",
+          "exportName": "PlaybackStatesParity",
+          "visibility": "hidden",
+          "tags": [
+            "autodocs",
+            "manifest",
+            "test",
+            "visual-parity"
+          ],
+          "role": "visual-parity",
+          "hasStoryDescription": false,
+          "hasCanvasGuidance": false,
+          "recommendedVisibility": "hidden",
+          "reviewStatus": "reviewed",
+          "reviewMethod": "source-ast+layer-human-review",
+          "ownerComponents": [
+            "VideoPlaybackControls"
+          ],
+          "supportingComponents": [],
+          "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
+        }
+      ],
+      "reviewNote": "Restored source reviewed for ownership, story purpose, naming and visibility; the owner approved integration of this review record."
     },
     {
       "title": "LDS Product/Viewer/Video Stream",

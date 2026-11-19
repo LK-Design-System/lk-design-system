@@ -19,14 +19,14 @@ parity gates.
 | Area | Source baseline | Current status |
 | --- | ---: | --- |
 | Runtime export gaps | 0 | No public export gap required by the WDS source |
-| React component entry exports | 214 | Public package component entries covered by checks |
-| Named public exports | 227 | Public package surface covered by type checks |
-| Storybook public stories | 564 | Component and pattern surfaces only |
-| Storybook hidden visual parity stories | 102 | Tagged `visual-parity` and `!dev` |
-| Visual inventory React stories | 802 | Current implementation-story census; current source accessibility results require the Linux gate |
-| Accessibility checked implementation stories | 802 | Current implementation-story gate scope; no new full accessibility run claimed by the census update |
+| React component entry exports | 215 | Public package component entries covered by checks |
+| Named public exports | 228 | Public package surface covered by type checks |
+| Storybook public stories | 578 | Component and pattern surfaces only |
+| Storybook hidden visual parity stories | 103 | Tagged `visual-parity` and `!dev` |
+| Visual inventory React stories | 817 | Current implementation-story census; current source accessibility results require the Linux gate |
+| Accessibility checked implementation stories | 817 | Current implementation-story gate scope; no new full accessibility run claimed by the census update |
 
-These counts come from the canonical Linux index for `dc4072a1`. The accessibility row records the gate's input scope, not completed checks. CI at `a7009772` stopped on inventory documentation drift before the full accessibility and package-consumer gates; its successful source and dimension checks do not certify those later gates.
+These counts come from the [canonical Linux index](https://github.com/LK-Design-System/lk-design-system/actions/runs/44441816548) for `effe1353`. The accessibility row records the scope of the gate. CI records the results.
 
 ## Parity source of truth
 

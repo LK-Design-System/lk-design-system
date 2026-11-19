@@ -3667,6 +3667,25 @@
       ]
     },
     {
+      "pageTitle": "LDS Product/Viewer/Video Playback Controls",
+      "importPath": "./stories/VideoPlaybackControls.stories.jsx",
+      "storyId": "lds-product-viewer-video-playback-controls--overview",
+      "exportName": "Overview",
+      "descriptionHash": "bda027319b02bcff740d89d99d8be70ff1a913a02a6fba606e23cb5933dcaef9",
+      "sentences": [
+        {
+          "hash": "7530d44ea33ad8707283a77d8d27c39ef7e70a2935b1df4736c306423edc0bcb",
+          "text": "한 시간 길이의 녹화에서 재생·음소거·전체 화면 요청과 seek 위치를 조작합니다.",
+          "decision": "retained-in-canvas"
+        },
+        {
+          "hash": "b965269fd67741d4f5d624d5238f68f0110f66c0bd9d4870dfd3c5afd351827a",
+          "text": "실제 transport 없이 controlled callback과 읽기 순서를 확인합니다.",
+          "decision": "retained-in-canvas"
+        }
+      ]
+    },
+    {
       "pageTitle": "LDS Product/Viewer/Video Stream",
       "importPath": "./stories/ViewerVideo.stories.jsx",
       "storyId": "lds-product-viewer-video-stream--video-stream-overview",

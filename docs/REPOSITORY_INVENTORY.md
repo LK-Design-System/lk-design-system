@@ -5,10 +5,10 @@
 | Type | Current register |
 | Status | Current |
 | Owner | Frontend platform · Design system owner |
-| Last reviewed | 2026-10-13 |
+| Last reviewed | 2026-11-19 |
 | Update | `npm run report:inventory` · `npm run check:inventory` |
 
-Storybook의 802개 스토리 역할·공개 여부·소유 컴포넌트와 202개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
+Storybook의 817개 스토리 역할·공개 여부·소유 컴포넌트와 203개 페이지 판정은 [`STORYBOOK_INFORMATION_ARCHITECTURE.md`](STORYBOOK_INFORMATION_ARCHITECTURE.md) 및 `references/quality/STORYBOOK_INFORMATION_ARCHITECTURE_AUDIT.json`을 기준으로 한다.
 
 이 레포는 Core·Theme·Product owner package를 함께 개발하고 검증하는 LDS workspace입니다. 루트는 배포 패키지가 아니라 private orchestrator이며, Robotics UI는 별도 저장소와 패키지가 소유합니다.
 
@@ -17,8 +17,8 @@ Storybook의 802개 스토리 역할·공개 여부·소유 컴포넌트와 202�
 - 워크스페이스 orchestrator: `@lk-design-system/lds-workspace@0.4.11` · `private: true`
 - Core: `@lk-design-system/lds-core@0.4.11` · source entry 94개 · named export 95개
 - Theme: `@lk-design-system/lds-theme@0.4.11` · source entry 4개 · named export 8개
-- Product: `@lk-design-system/lds-product@0.4.11` · source entry 125개 · named export 133개
-- 로컬 owner-package canonical unique surface: source entry 214개 · named export 227개
+- Product: `@lk-design-system/lds-product@0.4.11` · source entry 126개 · named export 134개
+- 로컬 owner-package canonical unique surface: source entry 215개 · named export 228개
 - Product deprecated compatibility projection: source entry 9개 · named export 9개
 - 외부 Robotics: `@lk-design-system/lds-robotics-ui@0.1.0-rc.53` · source entry 23개 · named export 54개
 - Robotics 정본: `LK-Design-System/lk-design-system-robotics`와 `references/package-split/ROBOTICS_EXTERNAL_SURFACE.json`. 로컬 publishable package는 Robotics를 재노출하지 않으며 consumer는 외부 패키지를 직접 설치합니다.
@@ -52,16 +52,16 @@ Storybook의 802개 스토리 역할·공개 여부·소유 컴포넌트와 202�
 
 WDS parity의 근거는 수락된 로컬 `.fig` 스냅샷(`docs/references/wds/`)과 Storybook의 LDS 컴포넌트/패턴 표면입니다. Storybook은 LDS 컴포넌트와 패턴 표면으로 제한하고, visual parity story는 `!dev`와 `visual-parity` 태그로 숨깁니다.
 
-- 현재 React component entry export: 214개
-- 공개 named export: 227개
-- Storybook 전체 story: 802개
-- Storybook public story: 564개
-- Storybook hidden story: 238개
-- 숨김 visual parity story: 102개
-- visual inventory React story: 802개
-- 접근성 guard 검사 대상 implementation story: 802개
+- 현재 React component entry export: 215개
+- 공개 named export: 228개
+- Storybook 전체 story: 817개
+- Storybook public story: 578개
+- Storybook hidden story: 239개
+- 숨김 visual parity story: 103개
+- visual inventory React story: 817개
+- 접근성 guard 검사 대상 implementation story: 817개
 
-이 수치는 `dc4072a1`의 정본 Linux index census이며 접근성 검사 대상의 크기를 나타냅니다. 전체 접근성 검사의 통과 증거는 별도 exact-SHA CI 결과로 확인합니다. `a7009772` CI는 inventory 문서 drift에서 중단되어 접근성·packed package·소비자 검증까지 완료하지 못했습니다.
+이 수치는 `effe1353`의 [정본 Linux export](https://github.com/LK-Design-System/lk-design-system/actions/runs/44441816548)에서 관측한 검사 대상의 크기입니다. 접근성 검사 결과는 해당 소스의 CI에서 확인합니다.
 
 ## 생성 영역
 
