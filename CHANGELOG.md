@@ -2,6 +2,16 @@
 
 All notable package-facing changes are recorded here. The package follows semantic versioning once external publication is enabled; while `private: true` remains in effect, each release candidate must still maintain the current-version section.
 
+## 0.4.12 - 2026-11-19
+
+Paired Robotics release: `0.1.0-rc.53` (unchanged).
+
+- 녹화 영상 재생·탐색·시간·음소거·전체 화면 요청을 공통으로 제공하는 `VideoPlaybackControls`를 추가했습니다. 키보드 탐색과 24px 탐색 조작 영역을 지원합니다.
+- `TimePicker`에 초 정밀도, 단일 필드 팝업, 최소·최대 및 불연속 허용 시간 범위를 추가했습니다. `DatePicker`는 달력 팝업을 Portal에 렌더링해 부모 경계에서 잘리는 문제를 해결했습니다.
+- `Table`의 모바일 속성표·목록, `Drawer`의 모바일 전체 너비, `Prose`의 읽기·밀집 모드를 추가했습니다.
+- `ConfirmDialog`의 확인 문구 입력, `Lightbox`의 비율 보존 화면 맞춤, 복합 입력 필드의 공통 포커스 표시를 추가했습니다.
+- `save` 아이콘과 영상 위 정보 표시에 사용하는 시맨틱 색상 토큰을 추가했습니다.
+
 ## 0.4.11 - 2026-10-26
 
 Paired Robotics release: `0.1.0-rc.53` (unchanged).

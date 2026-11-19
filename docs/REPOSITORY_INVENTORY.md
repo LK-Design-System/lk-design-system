@@ -14,10 +14,10 @@ Storybook의 817개 스토리 역할·공개 여부·소유 컴포넌트와 203�
 
 ## 패키지 범위
 
-- 워크스페이스 orchestrator: `@lk-design-system/lds-workspace@0.4.11` · `private: true`
-- Core: `@lk-design-system/lds-core@0.4.11` · source entry 94개 · named export 95개
-- Theme: `@lk-design-system/lds-theme@0.4.11` · source entry 4개 · named export 8개
-- Product: `@lk-design-system/lds-product@0.4.11` · source entry 126개 · named export 134개
+- 워크스페이스 orchestrator: `@lk-design-system/lds-workspace@0.4.12` · `private: true`
+- Core: `@lk-design-system/lds-core@0.4.12` · source entry 94개 · named export 95개
+- Theme: `@lk-design-system/lds-theme@0.4.12` · source entry 4개 · named export 8개
+- Product: `@lk-design-system/lds-product@0.4.12` · source entry 126개 · named export 134개
 - 로컬 owner-package canonical unique surface: source entry 215개 · named export 228개
 - Product deprecated compatibility projection: source entry 9개 · named export 9개
 - 외부 Robotics: `@lk-design-system/lds-robotics-ui@0.1.0-rc.53` · source entry 23개 · named export 54개
