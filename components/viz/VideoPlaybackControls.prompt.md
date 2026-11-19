@@ -58,9 +58,9 @@
 - LK Control Full Daedeok `fe43e4ff9f7ecc41ba705d2d4aefc17ac908d435`: `frontend/src/views/alarm/detail.jsx:30–85`. **supported by composition** — native controls 교체 가능, 5초/4회 retry와 API 주소는 제품 소유. 같은 revision의 `frontend/src/views/live-video/index.jsx:388` iframe live의 seek는 **not applicable**입니다.
 - LK Portal `0d2938aa3075683168c82327f2ae6d8c511f267d`: `src/components/devices/DeviceVisionWorkloadsPanel.tsx:767–827,888–894`. **supported by composition** — authorized playback ticket, fetch/abort, blob URL 및 cleanup을 유지한 상태에서 native controls를 조합할 수 있습니다. Portal adapter는 이번 변경 범위 밖입니다.
 
-## 검증 및 발행 경계
+## 사용 예제
 
-실제 source story는 `stories/VideoPlaybackControls.stories.jsx`입니다. Overview/Narrow/Dark는 실제 창고 footage를 VideoStreamTile에 넣은 embedded 조합이며, VariantsStates는 standalone 표면과 ViewerToolbar를 비교합니다. 표적 source bundle, keyboard/drag/controlled callbacks, 760px/320px, light/dark/inverse 및 loading/disabled/unknown duration을 검증합니다. Source authoring과 앱 local preview만 포함합니다. 정본 generated docs/dist/inventory는 Linux CI export가 소유하며 별도 승인 없는 push·tag·publish는 하지 않습니다. 아직 발행되지 않은 컴포넌트를 설치된 0.4.9의 기능이라고 주장하지 않습니다.
+영상 프레임 안에 재생 조작을 배치할 때는 `embedded`를 사용합니다. 조작을 영상 프레임과 분리할 때는 `standalone`으로 자체 테두리를 표시합니다. 좁은 영상에서는 경과 시간이 먼저 보이고, 전체 시간은 탐색 슬라이더의 접근성 설명에서 확인할 수 있습니다.
 
 ## 영상 위 정보 표시
 
