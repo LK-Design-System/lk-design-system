@@ -18,7 +18,7 @@ DashboardShell's low mobile Drawer scrolls all destinations/account and requests
 wide close restores focus to main. ConversationList keeps its sibling menu in DOM/Tab order and shows it on focus
 or touch; full titles remain accessible. Compact Table/EmptyState/MessageComposer preserve headings, native table
 headers, persistent announcements, 16px input text and 24–32px action targets.
-Source checks and pending parent visual evidence: [handoff](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.11/docs/handoff/2026-10-09-portal-density-source-review.md).
+Source checks and pending parent visual evidence: [handoff](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.12/docs/handoff/2026-10-09-portal-density-source-review.md).
 
 | 항목 | 기준 | 증거 |
 | --- | --- | --- |
@@ -131,7 +131,7 @@ Source checks and pending parent visual evidence: [handoff](https://github.com/L
 
 ## Recorded playback controls (2026-10-15 source authoring)
 
-`VideoPlaybackControls` uses a labelled group with native Tab order: play → seek → mute → fullscreen. The clock is not focusable; it is paired with the seek slider through `aria-valuetext`. It does not use the roving ViewerToolbar, so the native Slider owns Arrow/Home/End. Seek exposes seconds plus Korean minute/second `aria-valuetext`; time updates are not live announcements. Unknown/nonfinite duration disables only seek. `loading` and actual `disabled` are independent. Optional unavailable capabilities are omitted. Existing Core focus rings and 28px command targets remain unchanged; pointer release commits once, cancel/unmount does not commit. See [component contract](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.11/components/viz/VideoPlaybackControls.prompt.md) and `stories/VideoPlaybackControls.stories.jsx`. Source-only validation is distinct from package publish and Linux generated inventory export.
+`VideoPlaybackControls` uses a labelled group with native Tab order: play → seek → mute → fullscreen. The clock is not focusable; it is paired with the seek slider through `aria-valuetext`. It does not use the roving ViewerToolbar, so the native Slider owns Arrow/Home/End. Seek exposes seconds plus Korean minute/second `aria-valuetext`; time updates are not live announcements. Unknown/nonfinite duration disables only seek. `loading` and actual `disabled` are independent. Optional unavailable capabilities are omitted. Existing Core focus rings and 28px command targets remain unchanged; pointer release commits once, cancel/unmount does not commit. See [component contract](https://github.com/LK-Design-System/lk-design-system/blob/lds-v0.4.12/components/viz/VideoPlaybackControls.prompt.md) and `stories/VideoPlaybackControls.stories.jsx`. Source-only validation is distinct from package publish and Linux generated inventory export.
 
 ### TimePicker second precision
 
