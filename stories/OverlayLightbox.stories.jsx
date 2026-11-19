@@ -246,6 +246,10 @@ export const ContainImageChange={
     await userEvent.click(canvasElement.querySelector('button'));
     const dialog=canvasElement.querySelector('[role="dialog"]');
     await waitUntilLoaded(dialog);
+    const close = dialog.querySelector('button[aria-label="닫기"]');
+    await waitFor(() => {
+      if (canvasElement.ownerDocument.activeElement !== close) throw new Error('열린 이미지 뷰어에서 닫기 버튼에 초기 포커스가 있어야 합니다.');
+    });
     const next=dialog.querySelector('[data-lightbox-next]');await userEvent.click(next);
     await waitFor(()=>{
       const image=dialog.querySelector('img'),rect=image.getBoundingClientRect(),win=canvasElement.ownerDocument.defaultView;

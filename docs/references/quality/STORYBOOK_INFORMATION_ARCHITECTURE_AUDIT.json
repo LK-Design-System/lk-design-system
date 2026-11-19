@@ -22017,7 +22017,7 @@
       "layer": "Product",
       "family": "Overlay",
       "importPath": "./stories/OverlayLightbox.stories.jsx",
-      "sourceSha256": "ddddcf92d9935ea9426bf561c58eb29cb3ddde1763c54b0e875f05ce6b34da50",
+      "sourceSha256": "46909822a5bab701c81b04b501178c80de63f4de36040ef564cfc04f518045c5",
       "primaryOwner": "Lightbox",
       "ownerComponents": [
         "Lightbox"
@@ -22045,7 +22045,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-11-19",
-      "reviewedSourceSha256": "ddddcf92d9935ea9426bf561c58eb29cb3ddde1763c54b0e875f05ce6b34da50",
+      "reviewedSourceSha256": "46909822a5bab701c81b04b501178c80de63f4de36040ef564cfc04f518045c5",
       "stories": [
         {
           "id": "lds-product-overlay-lightbox--lightbox-open",
@@ -22230,7 +22230,7 @@
           "reviewNote": "2026-07-12 source, role, ownership, and visibility review complete."
         }
       ],
-      "reviewNote": "Restored source reviewed for ownership, story purpose, naming and visibility; the owner approved integration of this review record."
+      "reviewNote": "Scoped review verified the accessibility test adjustment. Story ownership, names, roles and visibility are unchanged."
     },
     {
       "title": "LDS Product/Overlay/Sheet",
@@ -26665,7 +26665,7 @@
       "layer": "Product",
       "family": "Viewer",
       "importPath": "./stories/VideoPlaybackControls.stories.jsx",
-      "sourceSha256": "c1d0ea4bf443b18399fadac1074795a92743820aae65481091b0ebf8b45358ac",
+      "sourceSha256": "30ad4f99605d7b7ff280ae4b4497f6923b809c0d1641758df55c2c3bdf386cc3",
       "primaryOwner": "VideoPlaybackControls",
       "ownerComponents": [
         "VideoPlaybackControls"
@@ -26689,7 +26689,7 @@
       "reviewStatus": "reviewed",
       "reviewMethod": "source-ast+layer-human-review",
       "reviewedAt": "2026-11-19",
-      "reviewedSourceSha256": "c1d0ea4bf443b18399fadac1074795a92743820aae65481091b0ebf8b45358ac",
+      "reviewedSourceSha256": "30ad4f99605d7b7ff280ae4b4497f6923b809c0d1641758df55c2c3bdf386cc3",
       "stories": [
         {
           "id": "lds-product-viewer-video-playback-controls--overview",
@@ -26834,7 +26834,7 @@
           "reviewNote": "Reviewed the restored Storybook example, its role and visibility. Existing story IDs and visibility are preserved."
         }
       ],
-      "reviewNote": "Restored source reviewed for ownership, story purpose, naming and visibility; the owner approved integration of this review record."
+      "reviewNote": "Scoped review verified the accessibility test adjustment. Story ownership, names, roles and visibility are unchanged."
     },
     {
       "title": "LDS Product/Viewer/Video Stream",

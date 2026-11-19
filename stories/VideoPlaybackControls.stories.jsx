@@ -110,7 +110,7 @@ export const Narrow = {
   play: async ({ canvasElement }) => {
     const group = canvasElement.querySelector('[data-video-playback-appearance]');
     if (group.scrollWidth > group.clientWidth + 1) throw new Error('Playback controls must fit 320px without horizontal overflow.');
-    for (const command of group.querySelectorAll('button')) {
+    for (const command of group.querySelectorAll('button,input')) {
       if (command.getBoundingClientRect().width < 24 || command.getBoundingClientRect().height < 24) throw new Error('Control targets must stay at least 24px.');
     }
   },
