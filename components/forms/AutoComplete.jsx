@@ -181,7 +181,7 @@ export function AutoComplete({
       onMouseLeave={() => setHovered(false)}
       style={{ position: 'relative', width: '100%', minWidth: 0, ...style }}
     >
-      <div style={{
+      <div data-lds-focus-within="" style={{
         display: 'flex',
         alignItems: 'center',
         gap: 'var(--component-input-gap)',
@@ -206,6 +206,7 @@ export function AutoComplete({
         ) : null}
         <input
           {...inputProps}
+          data-lds-focus-target=""
           ref={inputRef}
           id={fieldId}
           value={currentValue}

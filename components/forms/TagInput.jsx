@@ -70,6 +70,7 @@ export function TagInput({
         ...style,
       }}
       {...rest}
+      data-lds-focus-within=""
     >
       {tags.map((t) => (
         <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-0-5)', height: 28, padding: '0 2px 0 11px', background: 'var(--color-semantic-primary-surface-strong)', color: 'var(--color-semantic-label-normal)', borderRadius: 'var(--radius-pill)', fontFamily: 'var(--font-sans)', fontSize: 'var(--label2-size)', fontWeight: 'var(--fw-semibold)' }}>
@@ -91,6 +92,7 @@ export function TagInput({
       ))}
       <input
         ref={inputRef}
+        data-lds-focus-target=""
         value={draft} disabled={disabled} placeholder={tags.length ? '' : placeholder}
         aria-label={ariaLabel ?? (typeof placeholder === 'string' ? placeholder : '태그 입력')}
         onChange={(e) => setDraft(e.target.value)}

@@ -195,3 +195,63 @@ export const LightboxSlideAnnouncementContract = {
 };
 
 export const LightboxCard = { ...LightboxCardStory, name: 'Lightbox card parity', tags: ['!dev', 'visual-parity'] };
+
+const smallPortrait='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="82" height="182"%3E%3Crect width="82" height="182" fill="%233878B3"/%3E%3C/svg%3E';
+function SmallImageExample({imageSizing='natural'}) {
+  const [open,setOpen]=React.useState(false);
+  return <><Button onClick={()=>setOpen(true)}>작은 이미지 열기</Button><Lightbox open={open} images={[{src:smallPortrait,alt:'82×182 테스트 사진'}]} imageSizing={imageSizing} onClose={()=>setOpen(false)} /></>;
+}
+export const NaturalSmallImage={
+  name: '변형·상태 · 작은 이미지 원본 크기',
+  parameters: storyDescription('작은 이미지를 기본 크기로 확인합니다.'),
+  render:()=> <SmallImageExample />,
+  play:async({canvasElement})=>{
+    await userEvent.click(canvasElement.querySelector('button'));
+    await waitFor(()=>{const image=canvasElement.querySelector('[role="dialog"] img');if(!image||image.naturalHeight!==182||image.getBoundingClientRect().height!==182)throw new Error('기본 natural은 작은 원본을 임의로 키우면 안 됩니다.');});
+    await userEvent.keyboard('{Escape}');
+  },
+};
+export const ContainSmallImage={
+  name: '변형·상태 · 작은 이미지 화면 맞춤',
+  parameters: storyDescription('작은 이미지를 가로세로 비율을 유지한 채 화면에 맞춰 확대합니다.'),
+  render:()=> <SmallImageExample imageSizing="contain" />,
+  play:async({canvasElement})=>{
+    const doc=canvasElement.ownerDocument,trigger=canvasElement.querySelector('button');
+    await userEvent.click(trigger);
+    await waitFor(()=>{
+      const dialog=canvasElement.querySelector('[role="dialog"]'),image=dialog?.querySelector('img');
+      if(!image||image.naturalHeight!==182)throw new Error('사진이 decode되어야 합니다.');
+      const rect=image.getBoundingClientRect();
+      if(rect.height<=182||rect.width<=82||Math.abs(rect.width/rect.height-82/182)>.002)throw new Error('contain은 종횡비를 지키며 작은 사진을 키워야 합니다.');
+      const expectedWidth=Math.min(doc.defaultView.innerWidth*.86,doc.defaultView.innerHeight*.86*82/182);
+      if(Math.abs(rect.width-expectedWidth)>1)throw new Error('contain은 가용viewport에 최대 맞춤이어야 합니다.');
+      if(rect.width>doc.defaultView.innerWidth*.86+1||rect.height>doc.defaultView.innerHeight*.86+1)throw new Error('이미지는 기존viewport 영역 안에 있어야 합니다.');
+      if(dialog.querySelectorAll('button').length!==1||dialog.querySelector('[data-lightbox-position]'))throw new Error('한 장에는 X 외의 탐색/카운터를 표시하면 안 됩니다.');
+    });
+    await userEvent.keyboard('{Escape}');
+    await waitFor(()=>{if(canvasElement.querySelector('[role="dialog"]')||doc.activeElement!==trigger)throw new Error('Escape/focus 복원을 유지해야 합니다.');});
+  },
+};
+
+function FittedGalleryExample(){
+  const [open,setOpen]=React.useState(false),[index,setIndex]=React.useState(0);
+  return <><Button onClick={()=>setOpen(true)}>비율 변경 갤러리</Button><Lightbox open={open} index={index} onIndexChange={setIndex} onClose={()=>setOpen(false)} imageSizing="contain"
+    images={[{src:smallPortrait,alt:'세로 테스트'},{src:'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="320" height="80"%3E%3Crect width="320" height="80" fill="%232E8B6B"/%3E%3C/svg%3E',alt:'가로 테스트'}]} /></>;
+}
+export const ContainImageChange={
+  name: '상호작용 · 비율이 다른 이미지 이동',
+  parameters: storyDescription('가로세로 비율이 다른 이미지로 이동할 때 각각의 비율을 유지한 채 새 이미지에 맞춥니다.'),
+  render:()=> <FittedGalleryExample />,
+  play:async({canvasElement})=>{
+    await userEvent.click(canvasElement.querySelector('button'));
+    const dialog=canvasElement.querySelector('[role="dialog"]');
+    await waitUntilLoaded(dialog);
+    const next=dialog.querySelector('[data-lightbox-next]');await userEvent.click(next);
+    await waitFor(()=>{
+      const image=dialog.querySelector('img'),rect=image.getBoundingClientRect(),win=canvasElement.ownerDocument.defaultView;
+      if(image.naturalWidth!==320||Math.abs(rect.width/rect.height-4)>.002||Math.abs(rect.width-Math.min(win.innerWidth*.86,win.innerHeight*.86*4))>1)throw new Error('새 이미지의 비율과 최대 맞춤 크기를 사용해야 합니다.');
+      if(!dialog.contains(next)||canvasElement.ownerDocument.activeElement!==next)throw new Error('이미지 변경은 탐색 컨트롤 focus를 잃지 않아야 합니다.');
+    });
+    await userEvent.keyboard('{Escape}');
+  },
+};

@@ -81,3 +81,16 @@ logo SVGs contain paths and do not load the font at runtime.
 - Copyright: Copyright (c) 2021, Kil Hyung-jin, with Reserved Font Name Pretendard
 - License: SIL Open Font License 1.1
 - Full license: `vendor/pretendard-v1.309/OFL.txt`
+
+## Material Symbols — Save
+
+The `save` icon uses Google's Material Symbols Outlined `save_48px.svg`
+(FILL=0). The SVG is normalized for the existing LDS icon registry; its path
+geometry is unchanged.
+
+- Upstream project: https://github.com/google/material-design-icons
+- Source: https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/save/materialsymbolsoutlined/save_48px.svg
+- License: Apache License 2.0
+- Upstream license: https://github.com/google/material-design-icons/blob/master/LICENSE
+- Local source: `assets/icon-source-overrides/save.svg`
+- Full license: `assets/icon-source-overrides/material-symbols-LICENSE.txt`

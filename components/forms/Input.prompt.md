@@ -20,6 +20,7 @@ References: [Fluent 2 Field](https://fluent2.microsoft.design/components/web/rea
 
 ## Public surface and ref
 
+- Keyboard focus is drawn once on the visible control frame; the native input keeps focus without a second inner rectangle. Nested action controls keep their own indicator. See the [common focus contract](../../docs/ACCESSIBILITY_CONTRACTS.md#focus-policy) for invalid/read-only states and scoped outline geometry.
 - `className`/`style` and `rootRef` target the public field stack root. The default ref, `inputClassName`, and `inputStyle` target the native `<input>` focus target.
 - Stable parts are `root`, `label`, `control`, `startIcon`, `input`, `endIcon`, `statusIcon`, `action`, and `message`; conditionally absent content does not leave a slot wrapper.
 - Root state is mirrored through `data-disabled`, `data-readonly`, `data-invalid`, and `data-size`.

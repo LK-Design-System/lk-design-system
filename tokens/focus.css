@@ -4,6 +4,8 @@
    A token-driven :focus-visible fallback for interactive elements.
    Text inputs may also match after pointer or programmatic focus (W3C C45).
    `!important` preserves the fallback over inline `outline: none`.
+   Controls can scope the fallback through --lds-focus-outline and
+   --lds-focus-outline-offset.
    Composite fields can own their indicator on the complete bordered control;
    nested action buttons retain their own focus boundary. Theme-aware.
 
@@ -17,8 +19,36 @@
   [role="radio"], [role="switch"], [role="menuitem"], [role="menuitemcheckbox"],
   [role="menuitemradio"], [role="option"], [role="slider"]
 ):focus-visible {
-  outline: 2px solid var(--color-semantic-focus-indicator) !important;
-  outline-offset: 2px !important;
+  outline: var(--lds-focus-outline, 2px solid var(--color-semantic-focus-indicator)) !important;
+  outline-offset: var(--lds-focus-outline-offset, 2px) !important;
+}
+
+/* Only an explicit owner/target pair can suppress the input's fallback. :has
+   keeps invalid and read-only fields visible without duplicating input chrome. */
+:where([data-lds-focus-within]) {
+  min-width: 0;
+}
+:where([data-lds-focus-within]):has(> [data-lds-focus-target]:focus-visible) {
+  outline: var(--lds-focus-outline, 2px solid var(--color-semantic-focus-indicator)) !important;
+  outline-offset: var(--lds-focus-outline-offset, -2px) !important;
+  box-shadow: none !important;
+}
+/* Touch the invalid field's existing error border rather than covering it.
+   Error text/icon/ARIA remain owned by the component; focus is a separate cue. */
+:where([data-lds-focus-within]):has(> [data-lds-focus-target][aria-invalid="true"]:focus-visible) {
+  outline: var(--lds-focus-outline, 1px solid var(--color-semantic-focus-indicator)) !important;
+  outline-offset: var(--lds-focus-outline-offset, 0px) !important;
+}
+:where([data-lds-focus-within] > [data-lds-focus-target]):focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+}
+
+@media (forced-colors: active) {
+  :where(a[href], button, input, select, textarea, summary, [tabindex], [role]):focus-visible,
+  :where([data-lds-focus-within]):has(> [data-lds-focus-target]:focus-visible) {
+    outline-color: Highlight !important;
+  }
 }
 
 /* SearchField's bordered control owns the complete focus indicator. Keep this

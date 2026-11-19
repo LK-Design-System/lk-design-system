@@ -10,6 +10,9 @@ import { DashboardShell } from '../../components/layout/DashboardShell.jsx';
 import { MessageComposer } from '../../components/communication/MessageComposer.jsx';
 import { ConversationList } from '../../components/communication/ConversationList.jsx';
 import { SearchField } from '../../components/forms/SearchField.jsx';
+import { Prose } from '../../components/content/Prose.jsx';
+import { Drawer } from '../../components/overlay/Drawer.jsx';
+import { ConfirmDialog } from '../../components/overlay/ConfirmDialog.jsx';
 
 export const sourceContracts = <>
   <MessageComposer layout="inline" density="compact" minRows={1} maxRows={6} value="" onValueChange={() => {}} onSubmit={() => {}} placeholder="무엇을 도와드릴까요?" />
@@ -19,6 +22,12 @@ export const sourceContracts = <>
   <ResourceState state="empty" density="compact" emptyReason="search" />
   <ResourceState state="empty" density="compact" emptyReason="filter" />
   <Table size="xs" columns={[{ key: 'title', label: '자료', wrap: true }]} rows={[{ title: '자료' }]} rowHeaderKey="title" />
+  <Table size="sm" mobileLayout="key-value" columns={[{ key: 'property', label: '항목' }, { key: 'value', label: '값' }]} rows={[{ property: '모델', value: 'RK3588' }]} rowHeaderKey="property" />
+  <Table size="sm" mobileLayout="compact-list" mobileTrailingKey="status" columns={[{ key: 'name', label: '장치' }, { key: 'status', label: '상태' }]} rows={[{ name: 'board-01', status: '정상' }]} rowHeaderKey="name" />
+  <Prose typography="reading"><p>보고서 본문</p></Prose>
+  <Prose typography="compact"><p>README 본문</p></Prose>
+  <Drawer open mobileFullWidth title="상세" onClose={() => {}} />
+  <ConfirmDialog open tone="danger" title="저장소 삭제" requireMatchText="lk-portal" matchInputLabel="저장소 이름 입력" onConfirm={() => {}} onCancel={() => {}} />
   <DashboardShell layout="auto" temporaryNavigationOpen onTemporaryNavigationClose={() => {}} panel={<ShellPanel title="채팅" density="compact" primaryAction={{ label: '새 채팅', current: true }} />} />
   <MessageComposer value="" density="compact" onValueChange={() => {}} onSubmit={() => {}} />
   <ConversationList aria-label="최근 대화" groups={[{ id: 'today', label: '오늘', items: [{ id: '1', title: '긴 제목', href: '#1' }] }]} />

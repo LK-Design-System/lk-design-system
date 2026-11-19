@@ -66,7 +66,9 @@ jobs:
         run: npm ci
 
       - name: Generate workspace package sources
-        run: npm run generate:workspace-sources
+        run: |
+          npm run generate:entry
+          npm run generate:workspace-sources
 
       - name: Build Storybook workspace dependencies
         run: node scripts/build-workspace-packages.mjs --implementation-only

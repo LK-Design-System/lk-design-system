@@ -9,7 +9,7 @@ const meta = {
       eyebrow: 'Foundation / Interaction',
       title: '인터랙션 표현은 상태 축은 공통, 시각 표현은 컴포넌트 계열이 담당합니다',
       description:
-        'LDS는 hover·pressed·focus를 하나의 불투명도 램프로 묶지 않습니다. 상태 축(normal·hovered·focused·pressed)은 컴포넌트 API가 공통으로 노출하고, 실제 표현은 계열별 semantic token으로 고정됩니다. 포커스만은 예외 없이 전역 focus ring 계약을 따릅니다.',
+        'LDS는 hover·pressed·focus를 하나의 불투명도 램프로 묶지 않습니다. 공통 포커스 표시는 기본값을 제공하고, 복합 입력창은 바깥 프레임에 표시합니다. 버튼과 링크는 각각의 경계에 표시합니다.',
     },
     docs: {
       description: {
@@ -202,10 +202,10 @@ export const InteractionTokens = {
       <section style={{ ...panelStyle, display: 'grid', gap: 'var(--space-3)' }}>
         <h3 style={headingStyle}>2. 포커스는 링으로만 표현합니다</h3>
         <p style={noteStyle}>
-          포커스는 계열별로 달라지지 않습니다. 모든 인터랙티브 요소는{' '}
+          공통 규칙은 기본 포커스 표시를 제공합니다. 모든 인터랙티브 요소는{' '}
           <code style={codeStyle}>:focus-visible</code>일 때 명확한 포커스 링을 표시합니다.
           <strong> 불투명도를 낮추는 방식으로 포커스를 표현하지 마세요.</strong> 불투명도만으로는 WCAG 2.4.7(Focus
-          Visible) · 2.4.11(Focus Appearance)의 비포커스 대비 요구를 만족할 수 없습니다.
+          Visible)의 위치 식별을 보장하지 못합니다.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 'var(--space-3)' }}>
           <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
@@ -264,6 +264,10 @@ export const InteractionTokens = {
         <p style={{ ...noteStyle, fontSize: 13 }}>
           두 역할은 서로 대체재가 아닙니다. <code style={codeStyle}>--color-semantic-focus-indicator</code>는 전역
           아웃라인 링, <code style={codeStyle}>--color-semantic-focus-ring</code>은 폼 컨트롤 box-shadow 전용입니다.
+          복합 입력창은 입력칸 안쪽의 중복 사각형을 없애고 바깥 프레임에 표시합니다. 내부의 지우기·보기
+          버튼에 포커스를 옮기면 그 버튼의 표시를 사용합니다. 개별 컨트롤의 외곽선과 간격은
+          <code style={codeStyle}>--lds-focus-outline</code>와 <code style={codeStyle}>--lds-focus-outline-offset</code>으로
+          조정할 수 있으며, 오류·읽기 전용·고대비 화면에서도 현재 위치를 식별할 수 있어야 합니다.
           맵·SVG 지오메트리는 사각 외곽선 대신 도형을 따라가는 포커스 표시를 사용할 수 있지만, 같은 대비와
           비포커스 상태 구분 기준을 충족해야 합니다.
         </p>

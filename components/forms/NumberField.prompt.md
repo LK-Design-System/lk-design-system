@@ -14,3 +14,7 @@
 - [WAI-ARIA Spinbutton pattern](https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/)의 native editing·Arrow key 기대를 보존합니다.
 - [WCAG 2.2 Focus Appearance](https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html)에 맞춰 field 전체에 LDS focus ring을 표시합니다.
 - 편집 중 중간값 허용과 확정 시 클램프는 [Carbon Number input](https://carbondesignsystem.com/components/number-input/usage/)·[Spectrum NumberField](https://spectrum.adobe.com/page/number-field/)의 관례를 따릅니다.
+
+## Common focus ownership
+
+The editable input keeps native focus and displays one indicator on its visible field frame. Nested action buttons retain their own indicator. Geometry, invalid/read-only behavior and scoped overrides follow the [common focus contract](../../docs/ACCESSIBILITY_CONTRACTS.md#focus-policy).

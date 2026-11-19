@@ -115,6 +115,7 @@ export function InputGroup({
     >
       <div
         {...groupProps}
+        data-lds-focus-within=""
         data-readonly={readOnly ? 'true' : undefined}
         data-disabled={disabled ? 'true' : undefined}
         onMouseEnter={(event) => {
@@ -143,6 +144,7 @@ export function InputGroup({
         {prefix != null && <Addon node={prefix} side="left" addonId={prefixId} />}
         <input
           {...inputRest}
+          data-lds-focus-target=""
           id={metadata.fieldId}
           value={currentValue}
           disabled={disabled}

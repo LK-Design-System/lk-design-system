@@ -36,3 +36,7 @@
 - [Carbon Dropdown usage](https://carbondesignsystem.com/components/dropdown/usage/)에서 filterable multi-select의 label/helper/field/menu anatomy, 선택 후 열린 menu, error·disabled·read-only 구분을 확인했습니다. 시각 스타일은 복사하지 않고 LDS input·overlay token으로 번역했습니다.
 - [Carbon Dropdown accessibility](https://carbondesignsystem.com/components/dropdown/accessibility/)의 typing/Arrow/Enter/Escape 계약과 Space가 검색 text 입력으로 남아야 한다는 기준을 반영했습니다.
 - [Apple Lists and tables](https://developer.apple.com/design/human-interface-guidelines/lists-and-tables)의 행 기반 스캔, 간결한 항목 문구, 좁은 폭에서 식별 가능한 말줄임 지침을 따라 제목·설명을 한 행의 양 끝에 두고 각각 독립적으로 overflow를 제한합니다.
+
+## Common focus ownership
+
+The editable input keeps native focus and displays one indicator on its visible field frame. Nested action buttons retain their own indicator. Geometry, invalid/read-only behavior and scoped overrides follow the [common focus contract](../../docs/ACCESSIBILITY_CONTRACTS.md#focus-policy).

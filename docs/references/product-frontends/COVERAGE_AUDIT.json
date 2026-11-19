@@ -72,8 +72,244 @@
       }
     },
     {
+      "id": "lightbox-image-sizing-20261015",
+      "scope": [
+        "Product Lightbox optional aspect-preserving viewport fit"
+      ],
+      "stage": "implemented",
+      "designAuthority": "Existing Lightbox owns scrim, controls and viewport limit; imageSizing adds opt-in fit without copying a consumer layout.",
+      "evidence": "components/overlay/Lightbox.prompt.md",
+      "verification": {
+        "source": "React18/19 strict public types, API drift/grammar PASS; NaturalSmallImage/ContainSmallImage/ContainImageChange focused stories authored; root320 actual crop275.1875x610.78125, aspect/overflow0/X-only/Escape/trigger restore native PASS",
+        "release": "unpublished source preview; no dist, release tar or node_modules overwrite"
+      },
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "1aedf33eb93688fa3175a36fcc44ae59237e5c65",
+          "sourceFiles": [
+            "frontend/src/screens/DashboardScreen.tsx"
+          ],
+          "sourceBlobs": [
+            "7674211dfc3129a42c0e86e202f1732c5e30f00e"
+          ],
+          "classification": "not applicable",
+          "reason": "Inspected dashboard seam has no Lightbox image-preview use; this review does not claim coverage of every product image workflow."
+        },
+        {
+          "repo": "full-daedeok",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "fe43e4ff9f7ecc41ba705d2d4aefc17ac908d435",
+          "sourceFiles": [
+            "frontend/src/views/alarm/detail.jsx"
+          ],
+          "sourceBlobs": [
+            "cf644779565135a090676b0200375699183fcf8b"
+          ],
+          "classification": "not applicable",
+          "reason": "Inspected alarm evidence seam presents native video rather than Lightbox images; no product adoption is implied."
+        },
+        {
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "0d2938aa3075683168c82327f2ae6d8c511f267d",
+          "sourceFiles": [
+            "src/components/research/ResearchProfileWorkspace.tsx"
+          ],
+          "sourceBlobs": [
+            "534e49ee427f38bd4002d19032b9f74c25d64754"
+          ],
+          "classification": "not applicable",
+          "reason": "Inspected research profile seam has no Lightbox image interaction. Existing image-preview policies are product-owned; this change does not mandate adoption."
+        }
+      ]
+    },
+    {
+      "id": "date-picker-portal-clipping-20261015",
+      "scope": [
+        "Core DatePicker popup Portal migration"
+      ],
+      "stage": "implemented",
+      "designAuthority": "Existing Core Popover Portal and Calendar own overlay/visual contracts; no new props or consumer CSS escape hatch.",
+      "evidence": "components/forms/DatePicker.prompt.md",
+      "verification": {
+        "source": "React18/19 strict public types,API drift/grammar PASS; focused PortalClipping and existing bounds/Escape/focus stories authored; root native320 popup288x296 outside clipped parent, initial dayfocus, disabled bounds and Escape trigger return PASS",
+        "release": "unpublished source preview using installed public Core peers; no dist/release/node_modules overwrite"
+      },
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "1aedf33eb93688fa3175a36fcc44ae59237e5c65",
+          "sourceFiles": [
+            "frontend/src/screens/DashboardScreen.tsx"
+          ],
+          "sourceBlobs": [
+            "7674211dfc3129a42c0e86e202f1732c5e30f00e"
+          ],
+          "classification": "not applicable",
+          "reason": "Inspected frontend has no DatePicker/native date-input seam."
+        },
+        {
+          "repo": "full-daedeok",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "fe43e4ff9f7ecc41ba705d2d4aefc17ac908d435",
+          "sourceFiles": [
+            "frontend/src/views/schedule/components/ScheduleForm.jsx"
+          ],
+          "sourceBlobs": [
+            "cafc52a906cb6ed8168daa3c6c85d136cdecd05a"
+          ],
+          "classification": "supported by composition",
+          "adoption": "not implemented",
+          "reason": "Date-only scheduling input can compose DatePicker with product-owned plain-date serialization; no scheduling payload policy changed."
+        },
+        {
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "0d2938aa3075683168c82327f2ae6d8c511f267d",
+          "sourceFiles": [
+            "src/components/research/ResearchProfileWorkspace.tsx"
+          ],
+          "sourceBlobs": [
+            "534e49ee427f38bd4002d19032b9f74c25d64754"
+          ],
+          "classification": "supported by composition",
+          "adoption": "not implemented",
+          "reason": "Existing full/sm DatePicker uses maxDate,busy-disabled and local YYYY-MM-DD serialization. Public Date API unchanged; Portal upgrade timing and facts remain Portal-owned."
+        }
+      ]
+    },
+    {
+      "id": "time-picker-second-precision-20261015",
+      "scope": [
+        "TimePicker optional second precision"
+      ],
+      "stage": "implemented",
+      "designAuthority": "Same existing TimeSelect input chrome; native unit-select semantics and MDN HH:mm/HH:mm:ss format reviewed before coding. Product source establishes seams, not visual authority.",
+      "evidence": "components/forms/TimePicker.prompt.md",
+      "verification": {
+        "source": "React18/19 strict public types,API drift/grammar PASS; existing-minute and second-step/disabled native Storybook play added; root actual UI QA pending",
+        "release": "unpublished source preview; installed0.4.9 and release tar/node_modules unchanged"
+      },
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "1aedf33eb93688fa3175a36fcc44ae59237e5c65",
+          "sourceFiles": [
+            "frontend/src/screens/DashboardScreen.tsx"
+          ],
+          "sourceBlobs": [
+            "7674211dfc3129a42c0e86e202f1732c5e30f00e"
+          ],
+          "classification": "not applicable",
+          "reason": "Frontend has no direct TimePicker/native time input seam; TaskRunScreen startTimeRef is elapsed runtime state, not a user time input."
+        },
+        {
+          "repo": "full-daedeok",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "fe43e4ff9f7ecc41ba705d2d4aefc17ac908d435",
+          "sourceFiles": [
+            "frontend/src/views/schedule/components/ScheduleForm.jsx"
+          ],
+          "sourceBlobs": [
+            "cafc52a906cb6ed8168daa3c6c85d136cdecd05a"
+          ],
+          "classification": "supported by composition",
+          "adoption": "not implemented",
+          "reason": "Native time field can use unchanged default minute API; optional seconds do not alter scheduling date/payload policy. No second precision requirement inferred."
+        },
+        {
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "0d2938aa3075683168c82327f2ae6d8c511f267d",
+          "sourceFiles": [
+            "src/components/devices/DeviceVisionWorkloadsPanel.tsx"
+          ],
+          "sourceBlobs": [
+            "2e8691f81e33e0c57de7da22a56dd03ed9f8378f"
+          ],
+          "classification": "not applicable",
+          "reason": "Inspected archived video consumer exposes playback controls but no direct wall-clock time input; broader second input adoption is unverified."
+        }
+      ]
+    },
+    {
+      "id": "video-playback-controls-20261015",
+      "scope": [
+        "VideoPlaybackControls"
+      ],
+      "stage": "implemented",
+      "designAuthority": "Product extension; existing LDS viewer/Slider/IconButton contracts and W3C Slider/MDN media documentation reviewed before implementation. Product sources establish seams, not anatomy or visual authority.",
+      "evidence": "components/viz/VideoPlaybackControls.prompt.md",
+      "verification": {
+        "source": "passed: focused source Storybook Overview/VariantsStates/Narrow/Dark, actual native keyboard/pointer commit, React18/19 strict types, API drift/grammar and layer boundary; evidence visual-artifacts/video-playback-controls-20261015/verification.json",
+        "release": "not published; no dist/vendor/package version or release modification"
+      },
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "1aedf33eb93688fa3175a36fcc44ae59237e5c65",
+          "sourceFiles": [
+            "frontend/src/screens/DashboardScreen.tsx",
+            "frontend/src/services/api.ts"
+          ],
+          "sourceBlobs": [
+            "7674211dfc3129a42c0e86e202f1732c5e30f00e",
+            "efb1a659cec4260394377fdbd4573cbfd50b6f5f"
+          ],
+          "classification": "not applicable",
+          "reason": "No video/HTMLMediaElement consumer in current frontend. Rerun stream URL does not establish recorded playback/seek workflow."
+        },
+        {
+          "repo": "full-daedeok",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "fe43e4ff9f7ecc41ba705d2d4aefc17ac908d435",
+          "sourceFiles": [
+            "frontend/src/views/alarm/detail.jsx",
+            "frontend/src/views/live-video/index.jsx"
+          ],
+          "sourceBlobs": [
+            "cf644779565135a090676b0200375699183fcf8b",
+            "18d04279db9f80cb59af12f6798db1b5168bd7ed"
+          ],
+          "classification": "supported by composition",
+          "adoption": "not implemented",
+          "reason": "EvidenceVideo native controls can compose controlled commands; 5-second/four-attempt retry, source URL and transport remain product-owned. Live iframe seek not applicable without adapter."
+        },
+        {
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "0d2938aa3075683168c82327f2ae6d8c511f267d",
+          "sourceFiles": [
+            "src/components/devices/DeviceVisionWorkloadsPanel.tsx"
+          ],
+          "sourceBlobs": [
+            "2e8691f81e33e0c57de7da22a56dd03ed9f8378f"
+          ],
+          "classification": "supported by composition",
+          "adoption": "not implemented",
+          "reason": "Archived playback native controls can compose commands. Ticket authorization, validated fetch, abort, blob URL and cleanup remain Portal-owned. Current source supersedes historical no-video observation for this seam."
+        }
+      ]
+    },
+    {
       "id": "portal-density-20261009",
-      "scope": ["R01", "R11", "D01", "D02", "D03", "V02", "V03", "D04", "D05", "D06"],
+      "scope": [
+        "R01",
+        "R11",
+        "D01",
+        "D02",
+        "D03",
+        "V02",
+        "V03",
+        "D04",
+        "D05",
+        "D06"
+      ],
       "stage": "implemented",
       "designAuthority": "Approved LDS authoring revision; existing LDS baseline and public axes, with WAI/Carbon/MDN and OpenAI UI/Claude Academy primary references reviewed before implementation. Claude marketing CTA and supplied ChatGPT screenshot observations are not live Claude-home evidence or pixel specifications.",
       "evidence": "docs/handoff/2026-10-09-portal-density-source-review.md",
@@ -82,11 +318,45 @@
         "storybookDev": "127.0.0.1:6006; focused source stories registered, including compact ShellPanel title/header and destination rows, plus inline composer versus default stacked/slot expansion",
         "visual": "Parent source CUA checks passed below; normal light plus focus and SearchField forced-colors only. Exhaustive dark/touch, D02/D04 rendered states and unreported cases remain unverified.",
         "visualEvidence": [
-          { "scope": ["D03", "V02"], "source": "parent CUA report", "screenshot": "ui-improvement/composer-inline-comparison.jpg", "verdict": "empty inline50px vs stacked72px; input16px; same55-char draft desktop44px to88px at390px viewport, value preserved without clipping/overflow; attachments stacked" },
-          { "scope": ["D05"], "source": "parent CUA report; screenshots in ui-improvement/", "verdict": "xs header32px and row36px versus sm44px" },
-          { "scope": ["R01", "V03"], "source": "parent CUA report; screenshots in ui-improvement/", "verdict": "568x320 mobile scroll surface247px/content661px, account keyboard reachable and focus wrap; narrow to768 to767 remains closed with main focus" },
-          { "scope": ["R11"], "source": "parent CUA report; screenshots in ui-improvement/", "verdict": "pointer/keyboard input outline none and shadow none; keyboard outer2px; forced-colors outer Highlight only" },
-          { "scope": ["D01", "D06"], "source": "parent CUA report; screenshots in ui-improvement/", "verdict": "compact destination row36px vs40px; long title native title, idle padding8px and keyboard menu access" }
+          {
+            "scope": [
+              "D03",
+              "V02"
+            ],
+            "source": "parent CUA report",
+            "screenshot": "ui-improvement/composer-inline-comparison.jpg",
+            "verdict": "empty inline50px vs stacked72px; input16px; same55-char draft desktop44px to88px at390px viewport, value preserved without clipping/overflow; attachments stacked"
+          },
+          {
+            "scope": [
+              "D05"
+            ],
+            "source": "parent CUA report; screenshots in ui-improvement/",
+            "verdict": "xs header32px and row36px versus sm44px"
+          },
+          {
+            "scope": [
+              "R01",
+              "V03"
+            ],
+            "source": "parent CUA report; screenshots in ui-improvement/",
+            "verdict": "568x320 mobile scroll surface247px/content661px, account keyboard reachable and focus wrap; narrow to768 to767 remains closed with main focus"
+          },
+          {
+            "scope": [
+              "R11"
+            ],
+            "source": "parent CUA report; screenshots in ui-improvement/",
+            "verdict": "pointer/keyboard input outline none and shadow none; keyboard outer2px; forced-colors outer Highlight only"
+          },
+          {
+            "scope": [
+              "D01",
+              "D06"
+            ],
+            "source": "parent CUA report; screenshots in ui-improvement/",
+            "verdict": "compact destination row36px vs40px; long title native title, idle padding8px and keyboard menu access"
+          }
         ],
         "release": "pending separate per-action approval; no projection/dist/baseline generation"
       },
@@ -95,7 +365,12 @@
           "repo": "portal",
           "repository": "LK-ROBOTICS-AX/lk_portal",
           "sourceRevision": "09e8cf23b451e45b4153efe07b8fd95c2f6d3631",
-          "sourceFiles": ["src/components/layout/Sidebar.tsx", "src/components/layout/AppShell.tsx", "src/components/chat/ChatWorkspace.tsx", "src/components/catalog/RepositoryDirectory.tsx"],
+          "sourceFiles": [
+            "src/components/layout/Sidebar.tsx",
+            "src/components/layout/AppShell.tsx",
+            "src/components/chat/ChatWorkspace.tsx",
+            "src/components/catalog/RepositoryDirectory.tsx"
+          ],
           "classification": "supported by composition",
           "adoption": "pending; read-only source reviewed, concurrent parent Portal changes are not this LDS patch",
           "reason": "Portal owns route/query/state/retry and controlled close; LDS owns navigation overflow, focus, responsive close intent, input sizing, resource empty presentation and compact table/list geometry. Existing compact composer adopted by parent; new ShellPanel density, ListCell typography, ResourceState density/emptyReason, Table xs and MessageComposer inline props await release."
@@ -104,7 +379,9 @@
           "repo": "web-viz",
           "repository": "LK-ROBOTICS/lk_web_viz",
           "sourceRevision": "7e53534197dbad6a165d86379ee0a0eac2be22cf",
-          "sourceFiles": ["frontend/src/screens/DashboardScreen.tsx"],
+          "sourceFiles": [
+            "frontend/src/screens/DashboardScreen.tsx"
+          ],
           "classification": "not applicable",
           "reason": "Maintenance-only legacy reference: inspected flat dashboard uses robot cards, Input and top utilities; no Portal rail-panel conversation workflow. No migration or product write authorized."
         },
@@ -112,9 +389,67 @@
           "repo": "full-daedeok",
           "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
           "sourceRevision": "d8c215fd5fef8633c7b740dc4ec3f6d980db12d4",
-          "sourceFiles": ["frontend/src/layout/MainLayout/index.jsx", "frontend/src/themes/compStyleOverride.jsx"],
+          "sourceFiles": [
+            "frontend/src/layout/MainLayout/index.jsx",
+            "frontend/src/themes/compStyleOverride.jsx"
+          ],
           "classification": "not applicable",
           "reason": "Inspected independent MUI shell owns its own miniDrawer/downMD state and table overrides. No LDS adoption or changes to the separate control plane are in this approval."
+        }
+      ]
+    },
+    {
+      "id": "time-picker-allowed-ranges-20261015",
+      "scope": [
+        "TimePicker additive allowedTimeRanges"
+      ],
+      "stage": "implemented",
+      "designAuthority": "Existing LDS native-unit controls and field Popover; Ant Design disabled time and WHATWG disabled option semantics. No style/token change.",
+      "evidence": "components/forms/TimePicker.prompt.md",
+      "verification": {
+        "source": "Targeted clock-range/consumer tests; strict React18/19 API test; native field gaps, confirm and segment transition fixture pending root.",
+        "release": "unpublished source preview; installed0.4.9 and release tar/node_modules unchanged"
+      },
+      "assetReviews": [
+        {
+          "repo": "web-viz",
+          "repository": "LK-ROBOTICS/lk_web_viz",
+          "sourceRevision": "1aedf33eb93688fa3175a36fcc44ae59237e5c65",
+          "sourceFiles": [
+            "frontend/src/screens/DashboardScreen.tsx"
+          ],
+          "sourceBlobs": [
+            "7674211dfc3129a42c0e86e202f1732c5e30f00e"
+          ],
+          "classification": "not applicable",
+          "reason": "Maintenance-only DashboardScreen has no direct clock-input seam; allowed ranges are not applicable to this inspected surface."
+        },
+        {
+          "repo": "full-daedeok",
+          "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+          "sourceRevision": "0b93d2697622799ef138c07efc29b6e38ed2c9a6",
+          "sourceFiles": [
+            "frontend/src/views/schedule/components/ScheduleForm.jsx"
+          ],
+          "sourceBlobs": [
+            "cafc52a906cb6ed8168daa3c6c85d136cdecd05a"
+          ],
+          "classification": "supported by composition",
+          "adoption": "not implemented",
+          "reason": "Reviewed ScheduleForm native minute fields retain the unchanged default API. No discontinuous schedule availability or seconds requirement inferred."
+        },
+        {
+          "repo": "portal",
+          "repository": "LK-ROBOTICS-AX/lk_portal",
+          "sourceRevision": "fd8929dab3680ce5142d0fc74c1e2ffd67b07989",
+          "sourceFiles": [
+            "src/components/devices/DeviceVisionWorkloadsPanel.tsx"
+          ],
+          "sourceBlobs": [
+            "2e8691f81e33e0c57de7da22a56dd03ed9f8378f"
+          ],
+          "classification": "not applicable",
+          "reason": "Reviewed DeviceVisionWorkloadsPanel has no wall-clock input seam; allowed ranges are not applicable to this inspected surface."
         }
       ]
     }
@@ -3431,5 +3766,54 @@
       ],
       "closureDecision": "The presentation and interaction contract is closed by LDS. O3 alarm-lifecycle readiness stays unverified because no pinned product persists the acknowledgement actor, time, reason, and authority; docs/ALARM_LIFECYCLE_CONTRACT.md §6 lists the evidence bundle that would reopen the R5 audit."
     }
-  ]
+  ],
+  "focusContractReview": {
+    "reviewedAt": "2026-10-07",
+    "runtimeOwner": "core",
+    "provenance": "wds-adjacent",
+    "decision": "redesign existing fallback and field composition; no new public component, props, handlers or semantic colors",
+    "contract": "docs/ACCESSIBILITY_CONTRACTS.md#focus-policy",
+    "consumerRuntimeStatus": "unverified; read-only source review does not upgrade or deploy products",
+    "assetReviews": [
+      {
+        "repo": "web-viz",
+        "repository": "LK-ROBOTICS/lk_web_viz",
+        "sourceRevision": "1aedf33eb93688fa3175a36fcc44ae59237e5c65",
+        "classification": "supported by composition",
+        "reason": "The dashboard consumes Core Input for a narrow numeric ROSBridge port. Existing Input props and size remain compatible; LDS owns focus geometry, the product owns its connection workflow and package upgrade. Current vendored 0.1.0 runtime was not upgraded.",
+        "sourceEvidence": [
+          {
+            "path": "frontend/src/screens/DashboardScreen.tsx",
+            "blobSha": "7674211dfc3129a42c0e86e202f1732c5e30f00e"
+          }
+        ]
+      },
+      {
+        "repo": "control",
+        "repository": "LK-ROBOTICS/lkrobotics-control-full-daedeok",
+        "sourceRevision": "fe43e4ff9f7ecc41ba705d2d4aefc17ac908d435",
+        "classification": "not applicable",
+        "reason": "The login uses MUI OutlinedInput and InputLabel, not LDS Input. Common LDS focus work does not migrate or replace this product-local field implementation.",
+        "sourceEvidence": [
+          {
+            "path": "frontend/src/views/pages/auth-forms/AuthLogin.jsx",
+            "blobSha": "ba21a9488ed7ff6a281d5e1c45c411b3cf3bc649"
+          }
+        ]
+      },
+      {
+        "repo": "portal",
+        "repository": "LK-ROBOTICS-AX/lk_portal",
+        "sourceRevision": "a2729238bfdf0fa9271fe52c90b9e668a47f75e4",
+        "classification": "supported by composition",
+        "reason": "DatasetDetailPage consumes Core Input with a recipe key and busy-disabled state. Existing props and field metadata remain compatible; validation, mutation and package upgrade remain product-owned. Current vendored 0.4.3 runtime was not upgraded.",
+        "sourceEvidence": [
+          {
+            "path": "src/components/catalog/DatasetDetailPage.tsx",
+            "blobSha": "9b16d5f1f7486c8dcbd872639233a3c287d1aa56"
+          }
+        ]
+      }
+    ]
+  }
 }

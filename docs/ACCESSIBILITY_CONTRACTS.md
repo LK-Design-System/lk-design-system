@@ -101,9 +101,10 @@ Source checks and pending parent visual evidence: [handoff](handoff/2026-10-09-p
 
 ## Focus policy
 
-- `Input` and `PasswordInput` keep native focus on the editable input and draw one 2px semantic focus-indicator outline with a 2px outer offset on the complete rounded control. The inner input outline and soft shadow are suppressed. Invalid and read-only fields keep this focus indicator while the error border remains visible. Nested action buttons retain their own focus boundary; disabled inputs and their disabled actions cannot receive focus.
-- Buttons, links, standalone inputs, SearchField and native textarea retain their existing focus contracts. This field correction changes no shared token value, generic focus geometry or unrelated control policy.
-- [W3C C45](https://www.w3.org/WAI/WCAG22/Techniques/css/C45) explains that text inputs can match `:focus-visible` after pointer focus as well as keyboard focus. [WCAG Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html) requires a visible keyboard indicator; LDS places it on the complete field boundary so its shape matches the control.
+- Common focus is a fallback, not a second indicator inside a composite field. `Input`, `SearchField`, `PasswordInput`, `NumberField`, `InputGroup`, `AutoComplete`, `TagInput`, and `SearchableMultiSelect` keep native focus on the editable input and draw the indicator once on its visible frame. Nested clear/reveal/remove buttons retain their own indicator. Invalid and read-only fields retain a visible focus indicator; disabled fields cannot receive focus.
+- A control-scoped `--lds-focus-outline` / `--lds-focus-outline-offset` can customize the fallback geometry without another `!important` override. Buttons, links and standalone controls retain the 2px semantic focus-indicator / 2px offset fallback. The generic explicit field-frame pair uses a 2px inset (-2px), with a 1px / 0px adjacent outline for invalid fields. `Input` and `PasswordInput` instead share one complete rounded 2px outline with a 2px outer offset and no soft shadow, including invalid and read-only states; this keeps the error border visible. These two controls use that fixed component geometry. Keep a visible indicator with sufficient contrast; do not set a page-wide `none`. In forced colors the indicator uses the system `Highlight` color.
+- Internal `data-lds-focus-within` / `data-lds-focus-target` pairs transfer only a direct editable child's indicator. An unpaired target retains the fallback. Segmented PIN/time fields and native textarea retain the indicator on the individual editable element.
+- Reference decisions (2026-10-07): [React Aria useFocusRing](https://react-aria.adobe.com/useFocusRing) supports container-owned focus through `within`; [Carbon text input specifications](https://www.carbondesignsystem.com/building-blocks/core/components/text-input/specifications) apply focus to the field boundary; [Atlassian radius](https://atlassian.design/foundations/radius/) aligns the indicator with the component shape and allows scoped geometry. LDS retains its own semantic colors and field dimensions; only focus ownership and boundary geometry change. [W3C C45](https://www.w3.org/WAI/WCAG22/Techniques/css/C45) notes that text inputs may match `:focus-visible` after pointer focus, and [Focus Visible](https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html) requires a visible keyboard indicator rather than one mandatory shape.
 - Focus ring은 브랜드 색상보다 `semantic.control.focusRing` 또는 동등한 component token을 우선 사용한다.
 - Focus ring은 hover style과 별도로 보여야 한다.
 - Disabled control은 focusable하지 않게 두는 것을 기본값으로 한다. 설명이 필요한 disabled 항목은 tooltip이나 adjacent text로 이유를 제공한다.
@@ -127,3 +128,19 @@ Source checks and pending parent visual evidence: [handoff](handoff/2026-10-09-p
 - `pnpm run check:a11y` 또는 Storybook accessibility 패널에서 blocking violation이 없다.
 - icon-only control은 accessible name이 있다.
 - 색상만으로 상태를 전달하지 않는다.
+
+## Recorded playback controls (2026-10-15 source authoring)
+
+`VideoPlaybackControls` uses a labelled group with native Tab order: play → seek → mute → fullscreen. The clock is not focusable; it is paired with the seek slider through `aria-valuetext`. It does not use the roving ViewerToolbar, so the native Slider owns Arrow/Home/End. Seek exposes seconds plus Korean minute/second `aria-valuetext`; time updates are not live announcements. Unknown/nonfinite duration disables only seek. `loading` and actual `disabled` are independent. Optional unavailable capabilities are omitted. Existing Core focus rings and 28px command targets remain unchanged; pointer release commits once, cancel/unmount does not commit. See [component contract](../components/viz/VideoPlaybackControls.prompt.md) and `stories/VideoPlaybackControls.stories.jsx`. Source-only validation is distinct from package publish and Linux generated inventory export.
+
+### TimePicker second precision
+
+The optional third select uses the existing native-select keyboard and focus contract. The labelled group shares field context, while `hourLabel`, `minuteLabel` and `secondLabel` distinguish each unit. `disabled` locks all units. No custom listbox or automatic submission is added. The default minute-only DOM/API is retained.
+
+### DatePicker portalled Calendar
+
+The trigger keeps its name/value, invalid/describedby, dialog relation and disabled state. Core Popover owns Portal, topmost outside/Escape dismissal and viewport positioning. DatePicker recognizes both trigger and portalled Calendar descendants for Tab-out dismissal, so internal focus does not close the popup. Calendar selection and Escape restore trigger focus. No modal trap is added.
+
+### Lightbox optional viewport fit
+
+Image sizing does not change modal semantics, image alt text, dialog label, Escape, close action, Tab containment or focus restoration. Single-image contain mode renders only X; image changes preserve existing navigation controls while decoding. Sizing is aspect-preserving and is not a zoom/pan or image restoration feature. Existing SSR and reduced-motion contracts are unchanged.

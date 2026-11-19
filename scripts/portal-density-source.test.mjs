@@ -18,7 +18,10 @@ const bundle = await build({
       export { Table, getTableHeaderCellStyle, getTableDataCellStyle } from './components/data/Table.jsx';
       export { MessageComposer } from './components/communication/MessageComposer.jsx';
       export { ShellPanel } from './components/layout/ShellPanel.jsx';
-      export { ConversationList } from './components/communication/ConversationList.jsx';`,
+      export { ConversationList } from './components/communication/ConversationList.jsx';
+      export { Prose } from './components/content/Prose.jsx';
+      export { Drawer } from './components/overlay/Drawer.jsx';
+      export { ConfirmDialog } from './components/overlay/ConfirmDialog.jsx';`,
     resolveDir: process.cwd(),
   },
   bundle: true, write: false, format: 'cjs', platform: 'node',
@@ -72,6 +75,25 @@ test('xs Table shares header/data helpers while preserving native naming and row
   assert.equal(source.getTableHeaderCellStyle({ size: 'xs' }).height, 'var(--space-8)');
   assert.equal(source.getTableDataCellStyle({ size: 'xs' }).height, 'calc(var(--space-8) + var(--space-1))');
   assert.notEqual(source.getTableHeaderCellStyle({ size: 'sm' }).height, source.getTableHeaderCellStyle({ size: 'xs' }).height);
+  const kvHtml = render(source.Table, {
+    size: 'sm',
+    mobileLayout: 'key-value',
+    tableLabel: '장치 정보',
+    rowHeaderKey: 'property',
+    columns: [{ key: 'property', label: '항목' }, { key: 'value', label: '값' }],
+    rows: [{ id: 'os', property: 'OS', value: 'Ubuntu 22.04' }],
+  });
+  assert.match(kvHtml, /data-mobile-layout="key-value"/);
+  assert.match(kvHtml, /<dl[^>]*class="lk-table__mobile"[^>]*>.*?<dt[^>]*>OS<\/dt><dd[^>]*>Ubuntu 22\.04<\/dd>/s);
+  const proseReading = render(source.Prose, { typography: 'reading', children: React.createElement('p', null, '보고서') });
+  assert.match(proseReading, /data-typography="reading"/);
+  const proseCompact = render(source.Prose, { typography: 'compact', children: React.createElement('p', null, 'README') });
+  assert.match(proseCompact, /data-typography="compact"/);
+  const drawerFull = render(source.Drawer, { open: true, withinPortal: false, mobileFullWidth: true, title: '탐색' });
+  assert.match(drawerFull, /data-mobile-full-width="true"/);
+  const confirmMatch = render(source.ConfirmDialog, { open: true, withinPortal: false, tone: 'danger', title: '삭제', requireMatchText: 'robot-01' });
+  assert.match(confirmMatch, /data-confirm-dialog-match=""/);
+  assert.match(confirmMatch, /placeholder="robot-01"/);
 });
 
 test('small list preset is consumed and current creation action remains a quiet real link', () => {

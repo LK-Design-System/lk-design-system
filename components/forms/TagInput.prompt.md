@@ -13,3 +13,7 @@
 - **삭제 버튼 이름은 맥락을 포함합니다.** 이전에는 모든 삭제 버튼이 `aria-label="remove"`(영문, 맥락 없음)였습니다. 칩이 여러 개면 스크린리더 사용자에게 동일한 이름의 버튼이 반복되어 어떤 태그를 지우는지 알 수 없었습니다. 이제 기본값이 `` `${tag} 삭제` ``이며 `removeLabel`로 재정의할 수 있습니다.
 - **삭제 후 포커스를 유지합니다.** 삭제 버튼은 칩과 함께 언마운트되므로 그대로 두면 포커스가 `<body>`로 떨어지고 키보드 사용자는 위치를 잃습니다. 삭제 후 포커스는 **다음 칩의 삭제 버튼**으로, 마지막 칩을 지웠다면 **텍스트 입력**으로 이동합니다.
 - 근거: [WAI-ARIA APG — Grid pattern의 삭제 후 포커스 이동 지침](https://www.w3.org/WAI/ARIA/apg/patterns/grid/), [Carbon Tag(dismissible) accessibility](https://carbondesignsystem.com/components/tag/accessibility/), [WCAG 2.2 2.4.3 Focus Order](https://www.w3.org/TR/WCAG22/#focus-order).
+
+## Common focus ownership
+
+The editable input keeps native focus and displays one indicator on its visible field frame. Nested action buttons retain their own indicator. Geometry, invalid/read-only behavior and scoped overrides follow the [common focus contract](../../docs/ACCESSIBILITY_CONTRACTS.md#focus-policy).

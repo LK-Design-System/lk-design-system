@@ -22,6 +22,8 @@ export interface LightboxProps {
   nextLabel?: string;
   /** 위치 표시와 슬라이드 알림 문구를 만드는 formatter. @default (n, total) => `이미지 ${n} / ${total}` */
   positionLabel?: (position: number, total: number) => string;
+  /** natural only shrinks; contain fits the existing viewport box and can upscale, preserving aspect ratio. @default "natural" */
+  imageSizing?: 'natural' | 'contain';
   style?: React.CSSProperties;
 }
 

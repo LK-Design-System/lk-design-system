@@ -25,6 +25,18 @@ and focus/SearchField forced-colors checks; exhaustive dark/touch and unreported
 
 > **Coverage is observation, not product IA authority.** 이 문서와 audit JSON은 고정 source에서 실제로 확인한 LDS 지원·소비 현황을 기록한다. 특정 제품 화면에 Card, grid, section surface 또는 완성 page anatomy를 강제하는 규격이 아니다. 제품이 정보구조를 바꾸면 해당 화면의 소비자 판정과 source evidence를 갱신하되, LDS가 제품의 section 경계나 시각적 표면을 대신 결정하지 않는다.
 
+## 공통 focus 경계 · 필수 3개 제품 source 검토 · 2026-10-07
+
+공통 fallback은 Core가 소유하며, 기존 8개 복합 필드의 프레임 표시만 개선한다. InputGroup·SearchableMultiSelect의 Product 조합도 같은 private ownership 계약을 사용한다. 설계 근거와 상태별 경계는 [Focus policy](ACCESSIBILITY_CONTRACTS.md#focus-policy)에 있고, 아래 source는 소비 가능 여부와 책임 경계만 증명한다. 기존 17개 workflow 판정과 pin은 갱신하지 않는다.
+
+| 제품 | 고정 source / blob | 판정 | 경계 |
+| --- | --- | --- | --- |
+| LK Web Viz | `1aedf33eb93688fa3175a36fcc44ae59237e5c65` · `frontend/src/screens/DashboardScreen.tsx` · `7674211dfc3129a42c0e86e202f1732c5e30f00e` | supported by composition | Core Input의 좁은 numeric port 입력. props·size는 그대로이며 연결 workflow와 vendored 0.1.0 업그레이드는 제품 소유. |
+| LK Control Full Daedeok | `fe43e4ff9f7ecc41ba705d2d4aefc17ac908d435` · `frontend/src/views/pages/auth-forms/AuthLogin.jsx` · `ba21a9488ed7ff6a281d5e1c45c411b3cf3bc649` | not applicable | MUI OutlinedInput/InputLabel 구현으로 LDS 공통 변경에 따른 자동 이관 없음. |
+| LK Portal | `a2729238bfdf0fa9271fe52c90b9e668a47f75e4` · `src/components/catalog/DatasetDetailPage.tsx` · `9b16d5f1f7486c8dcbd872639233a3c287d1aa56` | supported by composition | Core Input의 recipe key와 busy-disabled 상태. 검증·mutation·vendored 0.4.3 업그레이드는 제품 소유. |
+
+세 파일은 해당 revision의 blob과 working file hash가 일치함을 확인했다. 제품 파일 수정·패키지 pin 변경·제품 배포는 수행하지 않았으며, 세 제품의 새 focus runtime 동작은 `unverified`다. 별도 machine-readable 근거는 기존 audit JSON의 `focusContractReview`에 있다.
+
 ## AlarmCaseBanner · Alarm lifecycle contract · Gungneung alarm case coverage · 2026-09-09
 
 궁릉 긴급 알람 배너를 LDS가 덮도록 `AlarmCaseBanner`를 추가하고 [`ALARM_LIFECYCLE_CONTRACT.md`](ALARM_LIFECYCLE_CONTRACT.md)를 정의했다. 새 workflow는 WF-17이다. 제품 source는 사례 anatomy·축·action 종류를 증명하는 coverage gate이며, 다섯 축 분리와 확인 기록 표시 계약은 prompt의 sibling·ISA-18.2/EEMUA 191/APG 근거에서 독립적으로 도출했다.
@@ -1208,3 +1220,31 @@ ActivityHeatmap·녹음·서명·국제 전화 입력은 이 검토에서 제품
 | `portal` | `546f11e4640b5a9ec81fc210a5085581b9d277bc` | composition compatible, package upgrade required | 고정 `Lockup variant="portal"`과 `ProductLockup product="portal"`은 같은 SemiBold 600 정본이다. 2026-10-09 owner 승인으로 홈 hero·로그인은 회사 보증 형 `ProductLockup product="portal" endorsement="company"`(「LK ROBOTICS Portal」, 20px 최소 슬롯 `237.237513`)를 쓰고, SideNav 머리·모바일 TopBar·Drawer는 회사 `Lockup variant="inline"`, 접힌 rail은 `Lockup variant="mark"`를 쓴다. 「LK PORTAL」은 Portal 셸에서 회사 보증 형과 함께 쓰지 않는다. ProductLockup constructionVersion 3·brand constructionVersion 7을 포함한 릴리스로 올린다. revision pin은 Portal 적용 commit 뒤 다시 잡는다. |
 
 LDS는 LK 심볼·ROBOTICS 워드마크·승인 variant·색·최소 크기·clear space·플랫폼 export와 `ProductLockup`의 승인 key registry, parent-brand-first SemiBold outlined path, hierarchy, layout, positive/reverse appearance, 최소 크기와 접근성 계약을 소유한다. 각 제품은 canonical short lockup name의 제안·승인, identity를 한 번 소유할 TopBar/SideNav, route·click, full-to-mark breakpoint와 배포 시점을 소유한다. 승인 전 이름을 free-form prop으로 넘기거나 제품에서 path·색·효과·간격을 다시 만들 수 없다. 현재 Web Viz·Control의 두 migration gap은 name approval과 registry 등록 전까지 `current`나 `supported`로 올리지 않는다.
+
+## Video playback commands — 2026-10-15 source review
+
+`VideoPlaybackControls` is a Product extension composed from Core Slider/IconButton/Spinner. Its [component contract](../components/viz/VideoPlaybackControls.prompt.md) records the W3C/MDN external basis and visual delta inventory; the `video-playback-controls-20261015` incremental record in [coverage audit](references/product-frontends/COVERAGE_AUDIT.json) pins source revisions/blobs. Source authoring is not consumer adoption or package release.
+
+| Product / pinned revision | Actual workflow seam | Classification | Product-owned boundary |
+| --- | --- | --- | --- |
+| LK Web Viz `1aedf33eb93688fa3175a36fcc44ae59237e5c65` | DashboardScreen.tsx/services/api.ts; no frontend video consumer | not applicable | Rerun stream URL does not establish an archived media adapter |
+| LK Control Full Daedeok `fe43e4ff9f7ecc41ba705d2d4aefc17ac908d435` | alarm/detail.jsx EvidenceVideo native controls | supported by composition | Transport, URL, 5-second/four-attempt retry; live iframe seek remains not applicable |
+| LK Portal `0d2938aa3075683168c82327f2ae6d8c511f267d` | DeviceVisionWorkloadsPanel.tsx archived playback native controls | supported by composition | Ticket/permission, fetch validation/abort, blob URL lifetime; adapter not changed |
+
+All inspected frontend files were clean against their pinned HEAD. This review supersedes historical Portal no-video observations only for this archived playback seam. The new source Storybook provides controlled commands; it does not replicate a product screen or invoke real transport.
+
+### TimePicker optional seconds — source authoring (2026-10-15)
+
+The additive `precision="second"` seam preserves existing minute input and its native controls. [TimePicker contract](../components/forms/TimePicker.prompt.md) and `time-picker-second-precision-20261015` in [coverage audit](references/product-frontends/COVERAGE_AUDIT.json) record source pins and the Full Daedeok minute scheduling composition. Portal and Web Viz reviewed seams do not require direct second input. Product adoption, timezone and query serialization are separate from this unpublished authoring change.
+
+### DatePicker overflow clipping — source authoring (2026-10-15)
+
+The DatePicker popup composes existing Core Popover Portal and Calendar. The [component contract](../components/forms/DatePicker.prompt.md) and `date-picker-portal-clipping-20261015` [coverage record](references/product-frontends/COVERAGE_AUDIT.json) pin Portal ResearchProfile DATE fields and Full Daedeok date scheduling; their value,bounds,busy and plain-date serialization seams stay product-owned. Web Viz has no applicable date-input seam. This source preview does not upgrade those products or publish a package.
+
+### Lightbox small-image fit source review (2026-10-15)
+
+AI Console needs low-resolution person crops to remain visually inspectable in an image-only overlay. The additive `imageSizing="contain"` contract extends existing Lightbox sizing rather than introducing a product-specific modal. Source pins and inspected Portal/Web Viz/Full Daedeok seams are recorded in `lightbox-image-sizing-20261015` in the [coverage audit](references/product-frontends/COVERAGE_AUDIT.json). This does not certify those products' adoption or change their image workflows. The AI consumer uses an explicitly unpublished, SHA-pinned source preview while its installed0.4.9 package remains unchanged.
+
+## TimePicker allowed ranges · 2026-10-15
+
+The additive `allowedTimeRanges` clock-only seam keeps existing minute/second/field chrome. [TimePicker contract](../components/forms/TimePicker.prompt.md) and `time-picker-allowed-ranges-20261015` in [coverage audit](references/product-frontends/COVERAGE_AUDIT.json) pin the reviewed Full Daedeok, Portal and maintenance-only Web Viz frontend sources. Dates, timezone, recording truth, start/end transitions and query submission remain consumer-owned. This is unpublished source authoring; no package release or product deployment is claimed.

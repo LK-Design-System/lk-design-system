@@ -28,6 +28,7 @@ const CUSTOM_ICON_SOURCES = new Map([
   ['battery', 'material-symbols'], // battery_0_bar
   ['battery-charging', 'material-symbols'], // battery_charging_full
   ['gauge', 'material-symbols'], // speed
+  ['save', 'material-symbols'], // save (outlined, FILL=0)
   ['signal', 'material-symbols'], // signal_cellular_alt
   ['crosshair', 'material-symbols'], // gps_fixed
   ['map', 'material-symbols'], // map

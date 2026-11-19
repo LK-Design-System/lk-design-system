@@ -17,3 +17,9 @@
 
 - [WAI-ARIA Date Picker Dialog example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/)의 popup naming, 초기 날짜 focus, Escape, 선택 후 focus return 계약을 따릅니다.
 - [WAI-ARIA Dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)을 기준으로 Calendar popup을 이름 있는 dialog로 노출합니다. 완전한 modal focus trap은 사용하지 않는 non-modal field popup이며, 대신 초점이 필드 밖으로 나가면 popup을 닫아 열린 dialog가 잔류하지 않게 합니다(창 전환처럼 relatedTarget이 없는 blur는 제외).
+
+## Portal popup(2026-10-15)
+
+Calendar popup은 Core Popover의 owner-document Portal·위치 flip/clamp·outside/Escape·focus 엔진을 재사용합니다. 부모 툴바나 컨테이너의 overflow:hidden에 잘리지 않도록 inline absolute panel을 제거했습니다. Calendar가 단일 border/radius/padding을 소유하고 Popover panel은 겹치는 border/padding을 제거합니다. normal 폭은 기존 Calendar의334px 외곽 폭, narrow에서는 viewport 안으로 줄어듭니다. 기존 value/onChange(Date), disabled, min/max/isDateDisabled, invalid, 이름, 선택/Escape focus 복원, Tab-out 닫기 계약은 유지합니다. Portal 내부 focus는 trigger의 DOM 바깥이므로 Calendar 내부 이동을 외부 blur로 오인하지 않습니다. 새 공개 prop이나 consumer private CSS override는 없습니다.
+
+[W3C picker dialog example](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/)의 이름·선택·Escape 복귀와 [React Aria Popover](https://react-aria.adobe.com/Popover)의 Portal/positioning 경계 분리를 참고했습니다. 실제 surface/상호작용은 기존 LDS Core Popover와 Calendar가 소유합니다. FormDateTime PortalClipping story는64px overflow:hidden 부모, bounds·disabled·선택·Escape·외부 클릭을 검증합니다.

@@ -32,4 +32,8 @@
   Modal·Drawer와 같은 `useDialogFocus`가 담당합니다.
 - Arrow 키는 dialog 자체에서 처리합니다. document 전역 리스너가 아니므로 위에 열린 overlay가
   키를 먼저 가져가고, 이미 처리된(`defaultPrevented`) 키는 다시 소비하지 않습니다.
-- zoom·pan 컨트롤은 이 계약에 포함하지 않습니다. 확대가 필요한 검토 흐름은 전용 뷰어 화면을 씁니다.
+- `imageSizing="natural"`(기본)은 기존 원본 크기를 유지하고 큰 이미지만86vw/86vh에 맞춰 줄입니다. `imageSizing="contain"`은 이미지의 실제 aspect ratio를 보존해 같은 viewport 영역에 맞춰 작은 이미지를 업스케일합니다. 한 장에서는 X만 남고 화살표/카운터는 없습니다. zoom·pan 조작이나 이미지 복원 기능은 추가하지 않습니다. 원본82×182 같은 저해상도 crop을 크게 표시해도 새 세부 정보를 만들지는 않습니다.
+
+### 작은 이미지 viewport 맞춤(2026-10-15)
+
+`imageSizing`은 opt-in sizing만 소유합니다. 기존 modal/focus, SSR, keyboard, 디코딩 상태, 기존 opacity motion과 controls는 바꾸지 않습니다. 이미지 natural aspect ratio를 decode 뒤 확보하고 CSS min(86vw,86vh×ratio)와 auto height로 크기를 정하므로 border/shadow가 실제 이미지 둘레에 머뭅니다. 기존 ViewerFrame의 contain/no-crop 의도와 [MDN object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-fit)의 aspect-preserving contain 원칙을 따릅니다. [W3C modal dialog](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)의 명시적 닫기·Escape·focus 복원은 기존 공용 focus 엔진에 유지합니다.

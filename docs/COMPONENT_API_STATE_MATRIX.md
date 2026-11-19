@@ -33,6 +33,8 @@ matrix를 유지하고, 개별 페이지의 생성 가이드를 중복 작성하
 
 ## Required component contract
 
+Composite text fields (`Input`, `SearchField`, `PasswordInput`, `NumberField`, `InputGroup`, `AutoComplete`, `TagInput`, `SearchableMultiSelect`) keep their existing props, refs, keyboard handlers and semantic states. Native editable focus is transferred visually to the field frame; nested action buttons keep separate focus. The shared geometry and forced-color contract is in [Focus policy](ACCESSIBILITY_CONTRACTS.md#focus-policy). Native textarea and segmented PIN/time controls keep individual-element focus.
+
 | 항목 | 내용 |
 | --- | --- |
 | Purpose | 컴포넌트가 해결하는 제품 문제 |
@@ -168,6 +170,7 @@ Operations Dashboard의 기준은 루트 `DESIGN.md`다. Dashboard shell은 land
 | SpatialRegion | polygon/circle; behavior rule, facility kind, terrain kind/traversability/grade; selected/focused/disabled/invalid/stale/hidden, pattern and label | three-category overview, dark rule/state comparison, renderer map filtering, activation/disabled and 320px stories |
 | FacilityTransition | door/lift/dock endpoint, source availability; independent door/event, lift phase/motion/mode/session/map, dock phase; selected/focused/disabled/invalid/stale/hidden | multi-floor lift compound, unavailable/offline/unknown, map filtering, activation/disabled and 320px stories |
 | Scene3DFrame | ready, loading, empty/no-source, degraded, stale, unavailable, error; HUD and viewport-local toolbar | 3D state matrix, dark and narrow stories |
+| VideoPlaybackControls | controlled play/pause, seek, elapsed/duration, mute/fullscreen intent; on-dark/surface/minimal, standalone/embedded perimeter owner, loading independent of disabled, unknown duration | Video Playback Controls footage overview, variants/states and 320px narrow stories; compact single row, native Slider keyboard and pointer-release commit |
 | VideoStreamTile | connecting, live, degraded, stale/frozen, paused, no-signal, error; persistent identity/live truth, interaction-revealed toolbar, optional delayed metadata and retry action | textual state, hover/focus toolbar reveal, delayed last-frame grouping, blocked-content focus suppression, compact tile stories |
 | ViewerToolbar | command, pressed/unpressed toggle, horizontal/vertical, on-dark/minimal, disabled action, roving focus | arrow/Home/End, remembered focus, explicit aria-pressed stories |
 | TelemetryGauge | exact value, min/max, formatter/precision/valueText, app-provided tone, compact size | meter semantics and non-rounded numeric story |
@@ -211,3 +214,15 @@ Operations Dashboard의 기준은 루트 `DESIGN.md`다. Dashboard shell은 land
 - visual parity story는 `!dev`와 `visual-parity` tag를 유지한다.
 - 상태가 많은 컴포넌트는 single playground와 state matrix story를 분리한다.
 - domain/editor/viewer 컴포넌트의 제품 통합은 제품 저장소에서 검증하고, LDS Storybook에는 애플리케이션 워크스페이스를 추가하지 않는다.
+
+### TimePicker optional seconds (2026-10-15)
+
+`precision="minute"` preserves two native selects and `HH:MM`. `precision="second"` adds the same native unit control and returns `HH:MM:SS`; `secondStep` defaults to1 and preserves an off-step controlled second. `secondLabel` supplies the unit name. Dates/timezones remain consumer-owned. Evidence: `FormTimePicker` TimeInput, SecondPrecision and SecondStepAndDisabled; source preview only.
+
+### DatePicker Portal popup — unchanged API
+
+Calendar now renders in the public Core Popover owner-document Portal. Value/date bounds/disabled/invalid/full, Calendar keyboard, selection and Escape focus return retain their contracts. `FormDateTime` BlockedDates and PortalClipping cover focus and bounds through the owner document, including a64px overflow-hidden ancestor.
+
+### Lightbox image sizing — additive opt-in (2026-10-15)
+
+`imageSizing="natural"` preserves existing small-image dimensions. `imageSizing="contain"` fits the decoded natural aspect ratio into the existing86vw/86vh viewport box, including upscaling. The decoded ratio is associated with the source URL, so an incoming slide cannot reuse a previous slide's aspect ratio. One image has only the close action; multiple images retain navigation and its mounted focus context. `OverlayLightbox` NaturalSmallImage, ContainSmallImage and ContainImageChange check default compatibility, exact viewport fit, ratio changes and Escape focus return. Source preview is unpublished.

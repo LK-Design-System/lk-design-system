@@ -1,3 +1,4 @@
+import React from 'react';
 import { userEvent, waitFor } from 'storybook/test';
 import {
   DatePicker,
@@ -63,11 +64,11 @@ export const BlockedDates = {
     const doc = canvasElement.ownerDocument;
     const trigger = canvasElement.querySelector('button[aria-haspopup="dialog"]');
     if (!trigger) throw new Error('DatePicker 트리거가 렌더되어야 합니다.');
-    const popover = () => canvasElement.querySelector('[role="dialog"]');
-    const popoverMonth = () => canvasElement.querySelector('[role="dialog"] [role="grid"]')?.getAttribute('aria-label');
+    const popover = () => doc.getElementById(trigger.getAttribute('aria-controls'));
+    const popoverMonth = () => popover()?.querySelector('[role="grid"]')?.getAttribute('aria-label');
 
     await userEvent.click(trigger);
-    const grid = canvasElement.querySelector('[role="dialog"] [role="grid"]');
+    const grid = popover()?.querySelector('[role="grid"]');
     if (!grid) throw new Error('트리거를 열면 Calendar 팝오버가 나타나야 합니다.');
     if (trigger.getAttribute('aria-expanded') !== 'true' || trigger.getAttribute('aria-controls') !== popover().id) {
       throw new Error('열린 trigger는 aria-expanded와 aria-controls로 팝오버를 가리켜야 합니다.');
@@ -103,7 +104,7 @@ export const BlockedDates = {
 
     // 선택도 팝오버를 닫고 초점을 돌려준다. 이름난 상태를 지키려고 같은 날짜를 다시 고른다.
     await userEvent.click(trigger);
-    const selectedDay = canvasElement.querySelector('[role="dialog"] button[aria-label*="7월 15일"]');
+    const selectedDay = popover()?.querySelector('button[aria-label*="7월 15일"]');
     if (!selectedDay) throw new Error('선택된 날짜 셀이 팝오버에 있어야 합니다.');
     await userEvent.click(selectedDay);
     await waitFor(() => {
@@ -120,3 +121,44 @@ export const BlockedDates = {
 };
 
 export const DatePickerCard = { ...DatePickerCardStory, name: 'DatePicker card parity', tags: ['!dev', 'visual-parity'] };
+
+function ClippedContainerExample() {
+  const [value, setValue] = React.useState(new Date(2026, 9, 13));
+  return <div style={{ width: 320, maxWidth: '100%' }}>
+    <div data-datepicker-clipping style={{ height: 64, overflow: 'hidden', padding: 'var(--space-2)', boxSizing: 'border-box' }}>
+      <DatePicker value={value} onChange={setValue} minDate="2026-10-13" maxDate="2026-10-13" aria-label="녹화 날짜" size="sm" />
+    </div>
+    <button type="button" data-outside-date>다른 필드</button>
+    <DatePicker disabled aria-label="자료 없는 날짜" />
+  </div>;
+}
+
+export const PortalClipping = {
+  name: '사용법 · 좁은 영역에서 달력 열기',
+  parameters: storyDescription('높이가 제한된 영역에서 달력을 열어도 선택할 날짜가 모두 표시됩니다. 날짜를 선택하거나 닫으면 날짜 필드로 돌아옵니다.'),
+  render: () => <ClippedContainerExample />,
+  play: async ({ canvasElement }) => {
+    const doc = canvasElement.ownerDocument;
+    const trigger = canvasElement.querySelector('button[aria-label^="녹화 날짜"]');
+    const clipping = canvasElement.querySelector('[data-datepicker-clipping]');
+    const popup = () => doc.getElementById(trigger.getAttribute('aria-controls'));
+    await userEvent.click(trigger);
+    await waitFor(() => {
+      const dialog = popup();
+      if (!dialog || dialog.getAttribute('data-popover-portal') !== 'true' || clipping.contains(dialog)) throw new Error('Calendar는 clipping 부모 밖 Core Portal에 있어야 합니다.');
+      if (!dialog.contains(doc.activeElement)) throw new Error('Portal 초기 Calendar focus가 popup을 닫거나 BODY로 사라지면 안 됩니다.');
+      if (dialog.getBoundingClientRect().right > doc.defaultView.innerWidth || dialog.scrollWidth > dialog.clientWidth + 1) throw new Error('팝업은 가용 viewport 폭 안에 있어야 합니다.');
+    });
+    const days = popup().querySelectorAll('[role="grid"] button');
+    if ([...days].filter(day => day.getAttribute('aria-disabled') !== 'true').length !== 1) throw new Error('min/max 날짜 제한은 Portal로 옮겨도 유지되어야 합니다.');
+    await userEvent.keyboard('{Escape}');
+    await waitFor(() => { if (popup() || doc.activeElement !== trigger) throw new Error('Escape는 닫고 trigger focus를 복원해야 합니다.'); });
+    await userEvent.click(trigger);
+    await userEvent.click(popup().querySelector('button[aria-label*="10월 13일"]'));
+    await waitFor(() => { if (popup() || doc.activeElement !== trigger || !trigger.getAttribute('aria-label').includes('2026. 10. 13')) throw new Error('날짜 선택·값·focus 계약을 보존해야 합니다.'); });
+    await userEvent.click(trigger);
+    await userEvent.click(canvasElement.querySelector('[data-outside-date]'));
+    await waitFor(() => { if (popup()) throw new Error('외부 클릭은 날짜 팝업을 닫아야 합니다.'); });
+    if (!canvasElement.querySelector('button[aria-label^="자료 없는 날짜"]').disabled) throw new Error('disabled 날짜 trigger는 잠겨 있어야 합니다.');
+  },
+};

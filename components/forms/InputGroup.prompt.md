@@ -16,3 +16,7 @@
 - **prefix / suffix** — 애드온 노드. **value / defaultValue / onChange** — 텍스트. **inputProps** — 네이티브 input 패스스루. `inputProps.onChange`/`onFocus`/`onBlur`는 폐기되지 않고 컴포넌트 내부 처리보다 **먼저** 호출됩니다(값 커밋은 그대로 이어집니다). `inputProps['aria-describedby']`는 생성된 설명 id와 병합됩니다.
 
 - 필드·상태 prop: **status**(`normal`/`positive`/`negative`) · **invalid**(오류 강조 토글) · **fieldStyle**(label·helper·error를 포함한 전체 필드 컨테이너 스타일).
+
+## Common focus ownership
+
+The editable input keeps native focus and displays one indicator on its visible field frame. Nested action buttons retain their own indicator. Geometry, invalid/read-only behavior and scoped overrides follow the [common focus contract](../../docs/ACCESSIBILITY_CONTRACTS.md#focus-policy).

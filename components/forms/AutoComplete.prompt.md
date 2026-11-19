@@ -19,3 +19,7 @@
 - 필드·상태 prop: **status**(`normal`/`positive`/`negative`) · **invalid**(오류 강조 토글) · **helper**(보조 설명) · **error**(오류 메시지, 설정 시 invalid 처리) · **emptyLabel**(결과 없음 문구) · **fieldStyle**(label·helper·error를 포함한 전체 필드 컨테이너 스타일).
 
 - **startIcon** — 컨트롤 앞에 놓는 아이콘. 이 컴포넌트는 겉모습이 `Input`과 같아, 값이 채워져 **placeholder**가 사라지면 그 칸이 목록을 뒤진다는 사실이 화면에 남지 않습니다. 여러 입력이 나란히 선 화면에서 찾는 칸과 적는 칸을 가를 때 쓰세요. `SearchField`의 `startIcon` 파트와 같은 자리이며 기본값은 없습니다 — 켜는 쪽을 소비자가 정합니다. 아이콘은 `aria-hidden`이므로 접근 가능한 이름은 **label** 또는 `aria-label`이 계속 갖습니다.
+
+## Common focus ownership
+
+The editable input keeps native focus and displays one indicator on its visible field frame. Nested action buttons retain their own indicator. Geometry, invalid/read-only behavior and scoped overrides follow the [common focus contract](../../docs/ACCESSIBILITY_CONTRACTS.md#focus-policy).

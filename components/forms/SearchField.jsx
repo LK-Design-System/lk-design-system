@@ -140,6 +140,7 @@ export const SearchField = React.forwardRef(function SearchField({
     >
       <div
         data-slot="control"
+        data-lds-focus-within=""
         data-readonly={readOnly ? 'true' : undefined}
         className={partClassName(classNames, 'control', 'lk-searchfield-control', controlClassName) || undefined}
         onMouseEnter={() => setHovered(true)}
@@ -168,6 +169,7 @@ export const SearchField = React.forwardRef(function SearchField({
           {...inputProps}
           ref={mergedInputRef}
           data-slot="input"
+          data-lds-focus-target=""
           className={partClassName(classNames, 'input', 'lk-searchfield', inputClassName) || undefined}
           id={metadata.fieldId}
           type="search"

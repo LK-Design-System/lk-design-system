@@ -225,6 +225,7 @@ const FIXED_IDS = new Set([
   'elevator-fleet-overview',
   'map2-dcanvas',
   'scene3-dframe',
+  'video-playback-controls',
   'video-stream-tile',
   'viewer-frame',
   'viewer-toolbar',
@@ -428,7 +429,7 @@ function validateEntryDecision(entry) {
 }
 
 export function buildDensityCoverage(componentContent, profileContract) {
-  assert(componentContent?.summary?.componentEntries === 214, `${componentRegistryPath} must currently declare the R3A M0 census of 214 entries.`);
+  assert(componentContent?.summary?.componentEntries === 215, `${componentRegistryPath} must currently declare the census of 215 entries.`);
   assert(Array.isArray(componentContent.entries), `${componentRegistryPath} entries must be an array.`);
   assert(Array.isArray(profileContract?.allowedOverrides), `${profileContractPath} allowedOverrides must be an array.`);
   validateCuratedDecisionSet(componentContent);

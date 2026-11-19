@@ -41,6 +41,9 @@ const useSafeLayoutEffect = typeof window === 'undefined' ? React.useEffect : Re
 const DRAWER_MOTION_STYLES = `
 @media(prefers-reduced-motion:reduce){
   [data-lds-drawer-motion]{transition-duration:0s!important;transition-delay:0s!important}
+}
+@media(max-width:767px){
+  [data-lds-drawer-dialog][data-mobile-full-width="true"]{width:100vw!important;max-width:none!important;box-shadow:none!important}
 }`;
 
 function isAvailableReturnTarget(element) {
@@ -86,6 +89,7 @@ export function Drawer({
   appearance = 'default',
   density = 'comfortable',
   headerSize = 'auto',
+  mobileFullWidth = false,
   title,
   headerActions,
   headerStyle,
@@ -224,7 +228,9 @@ export function Drawer({
             onTransitionEnd={handleTransitionEnd}
             style={{ position: 'absolute', top: 0, bottom: 0, [isRight ? 'right' : 'left']: 0, width, maxWidth: '92vw', display: 'flex', flexDirection: 'column', background: tones.surface, boxShadow: 'var(--shadow-xl)', fontFamily: 'var(--font-sans)', transform: shown ? 'none' : hidden, transition: 'transform var(--dur-slow) var(--ease-out)', ...style }}
             {...rest}
+            data-lds-drawer-dialog=""
             data-lds-drawer-motion=""
+            data-mobile-full-width={mobileFullWidth ? 'true' : undefined}
             aria-modal={open ? 'true' : undefined}
             aria-hidden={open ? undefined : true}
             inert={inertWhen(!open)}

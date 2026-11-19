@@ -13,6 +13,8 @@ export interface DrawerProps {
   density?: 'comfortable' | 'compact';
   /** header padding만 선택합니다. auto는 기존 density별 여백, sm은 8×20px이며 body/footer 밀도와 control 크기는 유지합니다. @default "auto" */
   headerSize?: 'auto' | 'sm';
+  /** 좁은 뷰포트(<=767px)에서 기본 92vw 제한과 그림자를 걷고 100vw 전체 화면 시트로 전환합니다. @default false */
+  mobileFullWidth?: boolean;
   title?: React.ReactNode;
   /** 제목의 말줄임 영역 밖, 닫기 앞에 놓이는 보조 명령. icon-only control에는 접근 가능한 이름을 제공하세요. */
   headerActions?: React.ReactNode;

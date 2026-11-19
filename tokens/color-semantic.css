@@ -1,5 +1,5 @@
 /* ==========================================================================
-   LK ROBOTICS — Semantic color roles — 118 tokens / light and dark (GENERATED — do not hand-edit)
+   LK ROBOTICS — Semantic color roles — 124 tokens / light and dark (GENERATED — do not hand-edit)
    --------------------------------------------------------------------------
    Source of truth: tokens/source.json
    Regenerate: node scripts/generate-lk-color-system.mjs
@@ -51,6 +51,7 @@
   --color-semantic-line-solid-neutral: #EAEBEC;
   --color-semantic-line-solid-alternative: #F4F4F5;
   --color-semantic-line-solid-_strong: #AEB0B6;
+  --color-semantic-line-solid-strong: var(--color-semantic-line-solid-_strong);
   --color-semantic-accent-background-red-orange: #EA7029;
   --color-semantic-accent-background-purple: var(--color-atomic-purple-50);
   --color-semantic-accent-foreground-lime: var(--color-atomic-lime-37);
@@ -123,6 +124,11 @@
   --color-semantic-data-viz-series-6: var(--color-semantic-accent-foreground-purple);
   --color-semantic-data-viz-series-7: var(--color-atomic-light-blue-30);
   --color-semantic-data-viz-series-8: var(--color-semantic-label-alternative);
+  --color-semantic-on-media-scrim: rgba(5, 19, 43, 0.72);
+  --color-semantic-on-media-scrim-strong: rgba(5, 19, 43, 0.84);
+  --color-semantic-on-media-label: var(--color-semantic-static-white);
+  --color-semantic-on-media-border: rgba(255, 255, 255, 0.28);
+  --color-semantic-media-target: var(--color-atomic-cyan-50);
 }
 
 [data-theme="dark"], .theme-dark {
@@ -172,6 +178,7 @@
   --color-semantic-line-solid-neutral: #333438;
   --color-semantic-line-solid-alternative: #2E2F33;
   --color-semantic-line-solid-_strong: #70737C;
+  --color-semantic-line-solid-strong: var(--color-semantic-line-solid-_strong);
   --color-semantic-accent-background-red-orange: #ED864A;
   --color-semantic-accent-background-purple: var(--color-atomic-purple-60);
   --color-semantic-accent-foreground-lime: var(--color-atomic-lime-50);
@@ -244,6 +251,11 @@
   --color-semantic-data-viz-series-6: var(--color-semantic-accent-foreground-purple);
   --color-semantic-data-viz-series-7: var(--color-atomic-light-blue-70);
   --color-semantic-data-viz-series-8: var(--color-semantic-label-alternative);
+  --color-semantic-on-media-scrim: rgba(5, 19, 43, 0.72);
+  --color-semantic-on-media-scrim-strong: rgba(5, 19, 43, 0.84);
+  --color-semantic-on-media-label: var(--color-semantic-static-white);
+  --color-semantic-on-media-border: rgba(255, 255, 255, 0.28);
+  --color-semantic-media-target: var(--color-atomic-cyan-50);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -294,6 +306,7 @@
     --color-semantic-line-solid-neutral: #333438;
     --color-semantic-line-solid-alternative: #2E2F33;
     --color-semantic-line-solid-_strong: #70737C;
+    --color-semantic-line-solid-strong: var(--color-semantic-line-solid-_strong);
     --color-semantic-accent-background-red-orange: #ED864A;
     --color-semantic-accent-background-purple: var(--color-atomic-purple-60);
     --color-semantic-accent-foreground-lime: var(--color-atomic-lime-50);
@@ -366,5 +379,10 @@
     --color-semantic-data-viz-series-6: var(--color-semantic-accent-foreground-purple);
     --color-semantic-data-viz-series-7: var(--color-atomic-light-blue-70);
     --color-semantic-data-viz-series-8: var(--color-semantic-label-alternative);
+    --color-semantic-on-media-scrim: rgba(5, 19, 43, 0.72);
+    --color-semantic-on-media-scrim-strong: rgba(5, 19, 43, 0.84);
+    --color-semantic-on-media-label: var(--color-semantic-static-white);
+    --color-semantic-on-media-border: rgba(255, 255, 255, 0.28);
+    --color-semantic-media-target: var(--color-atomic-cyan-50);
   }
 }

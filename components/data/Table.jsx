@@ -51,6 +51,16 @@ const HIDDEN_HEADER_LABEL_STYLE = {
   border: 0,
 };
 
+const TABLE_RESPONSIVE_STYLES = `
+.lk-table__mobile{display:none}
+@media(max-width:767px){
+  .lk-table-responsive[data-mobile-layout="key-value"] > .lk-table__wide,
+  .lk-table-responsive[data-mobile-layout="compact-list"] > .lk-table__wide{display:none}
+  .lk-table-responsive[data-mobile-layout="key-value"] > .lk-table__mobile,
+  .lk-table-responsive[data-mobile-layout="compact-list"] > .lk-table__mobile{display:block}
+}
+`;
+
 function getTableRowMinHeight(size = 'md') {
   if (size === 'xs') return 'calc(var(--space-8) + var(--space-1))';
   return size === 'sm'
@@ -165,6 +175,8 @@ export function Table({
   tableLabelledBy,
   rowHeaderKey,
   groupKey,
+  mobileLayout = 'scroll',
+  mobileTrailingKey,
   getRowId,
   getRowProps,
   className,
@@ -178,6 +190,8 @@ export function Table({
   // would silently replace that visible name and risk a name/visible-text
   // mismatch (WCAG 2.5.3), so the ARIA names only apply without a caption.
   const nameFromAria = caption == null;
+  const resolvedMobileLayout = ['scroll', 'key-value', 'compact-list'].includes(mobileLayout) ? mobileLayout : 'scroll';
+  const hasResponsiveMobileView = resolvedMobileLayout !== 'scroll' && columns.length > 0;
 
   /* The surface scrolls horizontally when the columns outrun their container.
    * WCAG 2.1.1 / `scrollable-region-focusable`: whatever a pointer can scroll,
@@ -220,87 +234,193 @@ export function Table({
   const surfaceNamedBy = tableLabelledBy ?? rest['aria-labelledby'] ?? (caption != null ? captionId : undefined);
   const surfaceNamed = surfaceName != null || surfaceNamedBy != null;
 
+  const tableElement = (
+    <table
+      aria-label={nameFromAria ? tableLabel : undefined}
+      aria-labelledby={nameFromAria ? tableLabelledBy : undefined}
+      style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-sans)' }}
+    >
+      {caption != null && (
+        <caption
+          id={captionId}
+          style={{
+            captionSide: 'top',
+            paddingBottom: 'var(--space-2)',
+            color: 'var(--color-semantic-label-strong)',
+            fontSize: 'var(--label1-size)',
+            lineHeight: 'var(--label1-line)',
+            fontWeight: 'var(--fw-semibold)',
+            textAlign: 'left',
+          }}
+        >
+          {caption}
+        </caption>
+      )}
+      <thead data-column-labels={columnLabelsHidden ? 'hidden' : undefined}>
+        <tr>
+          {columns.map((c) => (
+            <th
+              key={c.key}
+              scope="col"
+              style={columnLabelsHidden
+                ? hiddenHeaderCellStyle(c.align || 'left', getColumnSizingStyle({ width: c.width, truncate: c.truncate, wrap: c.wrap }))
+                : getTableHeaderCellStyle({ size, padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate, wrap: c.wrap })}
+            >
+              {columnLabelsHidden
+                ? <span style={HIDDEN_HEADER_LABEL_STYLE}>{c.label}</span>
+                : <TableCellContent truncate={c.truncate}>{c.label}</TableCellContent>}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r, ri) => {
+          const group = groupKey == null ? undefined : r?.[groupKey];
+          const opensGroup = group != null && group !== (groupKey == null ? undefined : rows[ri - 1]?.[groupKey]);
+          const row = (
+            <TableRow
+              key={getRowId ? getRowId(r, ri) : (r?.id ?? ri)}
+              columns={columns}
+              row={r}
+              rowIndex={ri}
+              size={size}
+              pad={pad}
+              hover={hover}
+              banded={banded}
+              rowHeaderKey={rowHeaderKey}
+              getRowProps={getRowProps}
+            />
+          );
+          if (!opensGroup) return row;
+          return (
+            <React.Fragment key={`group-${group}-${ri}`}>
+              <tr data-table-group>
+                <th scope="colgroup" colSpan={columns.length} style={groupThStyle(pad)}>{group}</th>
+              </tr>
+              {row}
+            </React.Fragment>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+
+  if (!hasResponsiveMobileView) {
+    return (
+      <div
+        {...rest}
+        ref={surfaceRef}
+        className={['lk-scroll-surface', className].filter(Boolean).join(' ')}
+        data-scrollbar="auto"
+        data-scroll-gutter="auto"
+        role={rest.role ?? (scrolls && surfaceNamed ? 'region' : undefined)}
+        aria-label={rest['aria-label'] ?? (scrolls && surfaceName != null ? surfaceName : undefined)}
+        aria-labelledby={rest['aria-labelledby'] ?? (scrolls && surfaceName == null ? surfaceNamedBy : undefined)}
+        tabIndex={rest.tabIndex ?? (scrolls ? 0 : undefined)}
+        style={{ overflowX: 'auto', scrollbarGutter: 'auto', ...style }}
+      >
+        {tableElement}
+      </div>
+    );
+  }
+
+  const renderCell = (column, row) => (typeof column.render === 'function' ? column.render(row) : row?.[column.key]);
+  const mobileTitleColumn = rowHeaderKey ? columns.find((column) => column.key === rowHeaderKey) : columns[0];
+  const mobileTrailingColumn = mobileTrailingKey && mobileTrailingKey !== mobileTitleColumn?.key
+    ? columns.find((column) => column.key === mobileTrailingKey)
+    : undefined;
+  const detailColumns = columns.filter(
+    (column) => column.key !== mobileTitleColumn?.key && column.key !== mobileTrailingColumn?.key,
+  );
+
   return (
     <div
       {...rest}
       ref={surfaceRef}
-      className={['lk-scroll-surface', className].filter(Boolean).join(' ')}
+      className={['lk-scroll-surface', 'lk-table-responsive', className].filter(Boolean).join(' ')}
       data-scrollbar="auto"
       data-scroll-gutter="auto"
+      data-mobile-layout={resolvedMobileLayout}
       role={rest.role ?? (scrolls && surfaceNamed ? 'region' : undefined)}
       aria-label={rest['aria-label'] ?? (scrolls && surfaceName != null ? surfaceName : undefined)}
       aria-labelledby={rest['aria-labelledby'] ?? (scrolls && surfaceName == null ? surfaceNamedBy : undefined)}
       tabIndex={rest.tabIndex ?? (scrolls ? 0 : undefined)}
       style={{ overflowX: 'auto', scrollbarGutter: 'auto', ...style }}
     >
-      <table
-        aria-label={nameFromAria ? tableLabel : undefined}
-        aria-labelledby={nameFromAria ? tableLabelledBy : undefined}
-        style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-sans)' }}
-      >
-        {caption != null && (
-          <caption
-            id={captionId}
-            style={{
-              captionSide: 'top',
-              paddingBottom: 'var(--space-2)',
-              color: 'var(--color-semantic-label-strong)',
-              fontSize: 'var(--label1-size)',
-              lineHeight: 'var(--label1-line)',
-              fontWeight: 'var(--fw-semibold)',
-              textAlign: 'left',
-            }}
-          >
-            {caption}
-          </caption>
-        )}
-        <thead data-column-labels={columnLabelsHidden ? 'hidden' : undefined}>
-          <tr>
-            {columns.map((c) => (
-              <th
-                key={c.key}
-                scope="col"
-                style={columnLabelsHidden
-                  ? hiddenHeaderCellStyle(c.align || 'left', getColumnSizingStyle({ width: c.width, truncate: c.truncate, wrap: c.wrap }))
-                  : getTableHeaderCellStyle({ size, padding: pad, align: c.align || 'left', width: c.width, truncate: c.truncate, wrap: c.wrap })}
-              >
-                {columnLabelsHidden
-                  ? <span style={HIDDEN_HEADER_LABEL_STYLE}>{c.label}</span>
-                  : <TableCellContent truncate={c.truncate}>{c.label}</TableCellContent>}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r, ri) => {
-            const group = groupKey == null ? undefined : r?.[groupKey];
-            const opensGroup = group != null && group !== (groupKey == null ? undefined : rows[ri - 1]?.[groupKey]);
-            const row = (
-              <TableRow
-                key={getRowId ? getRowId(r, ri) : (r?.id ?? ri)}
-                columns={columns}
-                row={r}
-                rowIndex={ri}
-                size={size}
-                pad={pad}
-                hover={hover}
-                banded={banded}
-                rowHeaderKey={rowHeaderKey}
-                getRowProps={getRowProps}
-              />
-            );
-            if (!opensGroup) return row;
+      <style>{TABLE_RESPONSIVE_STYLES}</style>
+      <div className="lk-table__wide">{tableElement}</div>
+      {resolvedMobileLayout === 'key-value' ? (
+        <dl
+          className="lk-table__mobile"
+          aria-label={nameFromAria ? tableLabel : undefined}
+          aria-labelledby={nameFromAria ? tableLabelledBy : undefined}
+          style={{ margin: 0, fontFamily: 'var(--font-sans)' }}
+        >
+          {rows.map((row, ri) => {
+            const key = getRowId ? getRowId(row, ri) : (row?.id ?? ri);
+            const term = mobileTitleColumn ? renderCell(mobileTitleColumn, row) : null;
+            const valueColumn = detailColumns[0] ?? columns[1];
+            const value = valueColumn ? renderCell(valueColumn, row) : null;
             return (
-              <React.Fragment key={`group-${group}-${ri}`}>
-                <tr data-table-group>
-                  <th scope="colgroup" colSpan={columns.length} style={groupThStyle(pad)}>{group}</th>
-                </tr>
-                {row}
-              </React.Fragment>
+              <div
+                key={key}
+                style={{
+                  display: 'grid',
+                  gap: 'var(--space-1)',
+                  padding: 'var(--space-3) var(--space-4)',
+                  borderTop: ri > 0 ? '1px solid var(--color-semantic-line-solid-alternative)' : undefined,
+                }}
+              >
+                <dt style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', fontWeight: 'var(--fw-medium)', overflowWrap: 'anywhere' }}>{term}</dt>
+                <dd style={{ margin: 0, minWidth: 0, color: 'var(--color-semantic-label-normal)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', overflowWrap: 'anywhere' }}>{value}</dd>
+              </div>
             );
           })}
-        </tbody>
-      </table>
+        </dl>
+      ) : (
+        <ul
+          className="lk-table__mobile"
+          aria-label={nameFromAria ? tableLabel : undefined}
+          aria-labelledby={nameFromAria ? tableLabelledBy : undefined}
+          style={{ listStyle: 'none', margin: 0, padding: 0, fontFamily: 'var(--font-sans)' }}
+        >
+          {rows.map((row, ri) => {
+            const key = getRowId ? getRowId(row, ri) : (row?.id ?? ri);
+            return (
+              <li
+                key={key}
+                style={{
+                  padding: 'var(--space-3) var(--space-4)',
+                  borderTop: ri > 0 ? '1px solid var(--color-semantic-line-solid-alternative)' : undefined,
+                }}
+              >
+                {mobileTitleColumn && (
+                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--space-2)' }}>
+                    <div data-table-mobile-title="true" style={{ minWidth: 0, color: 'var(--color-semantic-label-strong)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', fontWeight: 'var(--fw-semibold)', overflowWrap: 'anywhere' }}>
+                      {renderCell(mobileTitleColumn, row)}
+                    </div>
+                    {mobileTrailingColumn && (
+                      <div data-table-mobile-trailing="true" style={{ flexShrink: 0 }}>
+                        {renderCell(mobileTrailingColumn, row)}
+                      </div>
+                    )}
+                  </div>
+                )}
+                {detailColumns.length > 0 && (
+                  <dl style={{ margin: mobileTitleColumn ? 'var(--space-2) 0 0' : 0, display: 'grid', gap: 'var(--space-1-5)' }}>
+                    {detailColumns.map((column) => (
+                      <div key={column.key} style={{ display: 'grid', gridTemplateColumns: 'minmax(5.5rem, 34%) minmax(0, 1fr)', gap: 'var(--space-2)', alignItems: 'start' }}>
+                        <dt style={{ color: 'var(--color-semantic-label-alternative)', fontSize: 'var(--caption1-size)', lineHeight: 'var(--caption1-line)' }}>{column.label}</dt>
+                        <dd style={{ margin: 0, minWidth: 0, color: 'var(--color-semantic-label-normal)', fontSize: 'var(--label1-size)', lineHeight: 'var(--label1-line)', overflowWrap: 'anywhere' }}>{renderCell(column, row)}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }

@@ -307,7 +307,7 @@ existing checks. No token-hygiene baseline allowance is added.
   시도였으나, 실제 시스템은 hover/pressed를 컴포넌트 계열별 semantic token으로,
   focus는 링으로만 표현한다. 특히 `--interaction-opacity-focused: 0.84`가 전제하는
   "불투명도로 포커스를 표현한다"는 모델은 `tokens/focus.css`의 포커스 링 계약과
-  충돌하며 WCAG 2.4.7 / 2.4.11을 만족할 수 없다. 재도입 불가.
+  충돌하며 키보드 포커스의 식별성을 보장하지 못한다. 재도입 불가.
 - 대체:
 
   | 제거 토큰 | 대체 |

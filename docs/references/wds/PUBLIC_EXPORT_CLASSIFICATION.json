@@ -784,6 +784,7 @@
         "stories/ViewerFrame.stories.jsx",
         "stories/ViewerMap.stories.jsx",
         "stories/ViewerToolbar.stories.jsx",
+        "stories/VideoPlaybackControls.stories.jsx",
         "stories/ViewerVideo.stories.jsx"
       ],
       "exports": [
@@ -794,6 +795,7 @@
         "Scene3DFrame",
         "VIEWER_BLOCKING_STATES",
         "VIEWER_STATES",
+        "VideoPlaybackControls",
         "VideoStreamTile",
         "ViewerFrame",
         "ViewerToolbar",
@@ -945,6 +947,10 @@
     {
       "path": "components/forms/field-shared.js",
       "ownerLayer": "core"
+    },
+    {
+      "path": "components/forms/timePickerRanges.js",
+      "ownerLayer": "product"
     },
     {
       "path": "components/internal/telemetryStatusLabel.js",

@@ -1,12 +1,12 @@
 {
   "version": 1,
   "expected": {
-    "stories": 802,
-    "docs": 201,
-    "publicStories": 564,
+    "stories": 816,
+    "docs": 202,
+    "publicStories": 578,
     "hiddenStories": 238,
-    "storyIdsSha256": "b81b2ca5332773e97688fc46dce451df30780f71f0f80359662145e057bcb604",
-    "visibilitySha256": "7a35e423c0fcfea8602378791c66555a7ad53d875929ec28d0e5049b28081b27"
+    "storyIdsSha256": "7424546ab031d31f8317c2a15a3002a799db44dbacee9410108e6ed57e1b9676",
+    "visibilitySha256": "103582ac4db075349158b25b15918d9ecbb3ac94895533f790a5dda25f3b767c"
   },
   "allowedGuideOmissions": [],
   "canonicalDocs": [
@@ -95,5 +95,28 @@
       "lds-product-data-operations-data-toolbar--adaptive-filter-group"
     ],
     "reason": "Source census observed from successful canonical Linux Pages run 38025722928 at 54cc9062f8fa90f3c93c09ca3a088db0709694d5 and matched against the retained 783-story IA baseline: ten public specimens (nine Portal-density additions in 894625c7 and the T01 AdaptiveFilterGroup addition in 950b8cf7), with all existing IDs and visibility retained. This records census facts only; page/story IA review stamps remain unchanged and require review."
+  },
+  "restoredSourceExtension": {
+    "observedAt": "2026-11-19",
+    "retainedStoryIds": 802,
+    "removedStoryIds": [],
+    "changedExistingVisibility": [],
+    "addedStoryIds": [
+      "lds-core-components-selection-and-input-date-picker--portal-clipping",
+      "lds-product-overlay-lightbox--contain-image-change",
+      "lds-product-overlay-lightbox--contain-small-image",
+      "lds-product-overlay-lightbox--natural-small-image",
+      "lds-product-selection-and-input-time-picker--allowed-time-ranges",
+      "lds-product-selection-and-input-time-picker--bounds-and-unavailable",
+      "lds-product-selection-and-input-time-picker--field",
+      "lds-product-selection-and-input-time-picker--second-precision",
+      "lds-product-selection-and-input-time-picker--second-step-and-disabled",
+      "lds-product-viewer-video-playback-controls--dark",
+      "lds-product-viewer-video-playback-controls--narrow",
+      "lds-product-viewer-video-playback-controls--overview",
+      "lds-product-viewer-video-playback-controls--unknown-duration",
+      "lds-product-viewer-video-playback-controls--variants-states"
+    ],
+    "reason": "Restored DatePicker, TimePicker, Lightbox and VideoPlaybackControls stories extend the published 0.4.11 index without changing any existing story ID or its public/hidden status."
   }
 }
