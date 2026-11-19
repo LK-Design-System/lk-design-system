@@ -148,8 +148,8 @@
         "height": 520
       },
       "reducedMotion": "no-preference",
-      "bytes": 45081,
-      "sha256": "390f4ab342f80dd6fb6997219f0201c34711ed9573335c47faa03234389c410f"
+      "bytes": 45086,
+      "sha256": "bea494731061ec7d8102c4c752ea4c58589748e07af2605f18672b65894aa446"
     },
     {
       "name": "react-forms",
@@ -268,8 +268,8 @@
         "height": 860
       },
       "reducedMotion": "no-preference",
-      "bytes": 61696,
-      "sha256": "7ec1a3ab773190a491e9ad10f11fdc510b44a514dc10ae66c5d11a6491609d7d"
+      "bytes": 61644,
+      "sha256": "3ce4a642e9627a1ee37a45fb6c3c7ae3f0c1f471f87f57aa3c20e700e0788c02"
     },
     {
       "name": "wds-menu-patterns-dark",

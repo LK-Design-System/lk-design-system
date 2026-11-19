@@ -5,6 +5,15 @@ import { Slider } from '@lk-design-system/lds-core/components/forms/Slider';
 import { Spinner } from '@lk-design-system/lds-core/components/status/Spinner';
 import { VIEWER_OVERLAY_SURFACE } from './_viewerOverlaySurface.js';
 
+const SEEK_TARGET_STYLES = `
+  .lk-video-playback-controls [data-video-playback-seek] {
+    height: var(--space-6) !important;
+    background-size: 100% var(--space-1-5) !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+  }
+`;
+
 const useClientLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
 
 function timeText(value) {
@@ -135,6 +144,7 @@ export function VideoPlaybackControls({
         ...style,
       }}
     >
+      <style>{SEEK_TARGET_STYLES}</style>
       <IconButton
         variant="plain" size={28} round={false}
         label={playing ? '영상 일시 정지' : '영상 재생'} disabled={disabled || !onPlayingChange}
@@ -143,11 +153,12 @@ export function VideoPlaybackControls({
         {loading ? <Spinner size={16} color="currentColor" aria-hidden="true" /> : <Icon name={playing ? 'pause' : 'play'} size={16} />}
       </IconButton>
       <Slider
+        data-video-playback-seek=""
         aria-label="영상 재생 위치"
         aria-valuetext={hasDuration ? `${spokenTime(shownTime)}, 전체 ${spokenTime(duration)}` : `현재 ${spokenTime(shownTime)}, 전체 시간 미확인, 탐색 불가`}
         min={0} max={hasDuration ? duration : 1} step={0.1}
         value={hasDuration ? shownTime : 0} disabled={!canSeek}
-        style={{ width: '100%', minWidth: 0, paddingBlock: 'var(--space-2)' }}
+        style={{ width: '100%', minWidth: 0 }}
         onPointerDown={(event) => { if (canSeek && event.isPrimary && event.button === 0) drag.current = { pointerId: event.pointerId, value: position }; }}
         onLostPointerCapture={() => { drag.current = null; setPreview(null); }}
         onBlur={() => { drag.current = null; setPreview(null); }}

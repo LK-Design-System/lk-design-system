@@ -84,7 +84,7 @@
 - VideoStreamTile은 영상·상태·source identity의 frame, ViewerToolbar는 viewport 명령의 roving toolbar입니다. 두 컴포넌트는 재생 위치와 duration을 소유하지 않습니다. 이 조합은 Slider와 IconButton을 재사용하면서 녹화 탐색의 접근성·시간 표현·pointer commit을 한 곳에서 소유합니다.
 - label은 한국어 동사이며 native Slider에 초 단위 numeric range와 분·초 aria-valuetext를 함께 제공합니다. 자동 시간 갱신에 aria-live를 붙이지 않습니다. Focus ring은 Core 전역 계약을 재사용합니다.
 - | 항목 | 결정과 근거 | | --- | --- | | control/glyph | ViewerToolbar의 28px/16px 유지. 24px 최소 target을 충족하며 narrow에서도 축소하지 않음 | | radius/hover/disabled/focus/motion | Core IconButton/Slider/Spinner 그대로 사용.
-- 실제 source story는 stories/VideoPlaybackControls.stories.jsx입니다. Overview/Narrow/Dark는 실제 창고 footage를 VideoStreamTile에 넣은 embedded 조합이며, VariantsStates는 standalone 표면과 ViewerToolbar를 비교합니다. 표적 source bundle, keyboard/drag/controlled callbacks, 760px/320px, light/dark/inverse 및 loading/disabled/unknown duration을 검증합니다.
+- 영상 프레임 안에 재생 조작을 배치할 때는 embedded를 사용합니다. 조작을 영상 프레임과 분리할 때는 standalone으로 자체 테두리를 표시합니다. 좁은 영상에서는 경과 시간이 먼저 보이고, 전체 시간은 탐색 슬라이더의 접근성 설명에서 확인할 수 있습니다.
 
 ## Related components
 
@@ -125,7 +125,8 @@
 - `--font-sans`
 - `--radius-md`
 - `--space-1`
-- `--space-2`
+- `--space-1-5`
+- `--space-6`
 
 ### Source contracts
 

@@ -1,25 +1,25 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; } function _nullishCoalesce(lhs, rhsFn) { if (lhs != null) { return lhs; } else { return rhsFn(); } } function _optionalChain(ops) { let lastAccessLHS = undefined; let value = ops[0]; let i = 1; while (i < ops.length) { const op = ops[i]; const fn = ops[i + 1]; i += 2; if ((op === 'optionalAccess' || op === 'optionalCall') && value == null) { return undefined; } if (op === 'access' || op === 'optionalAccess') { lastAccessLHS = value; value = fn(value); } else if (op === 'call' || op === 'optionalCall') { value = fn((...args) => value.call(lastAccessLHS, ...args)); lastAccessLHS = undefined; } } return value; }"use client";
-
-
-var _chunk2NP74HUDcjs = require('./chunk-2NP74HUD.cjs');
-
-
-var _chunkEWU3IXB2cjs = require('./chunk-EWU3IXB2.cjs');
-
-
-var _chunkP65KUIKJcjs = require('./chunk-P65KUIKJ.cjs');
-
-
-var _chunkCJUHIK6Xcjs = require('./chunk-CJUHIK6X.cjs');
+"use client";
+import {
+  VIEWER_OVERLAY_SURFACE
+} from "./chunk-OQ6XG6EU.js";
+import {
+  Spinner
+} from "./chunk-6ZLQ2VTH.js";
+import {
+  IconButton
+} from "./chunk-XGWWAYSQ.js";
+import {
+  Icon
+} from "./chunk-2ABKRX7D.js";
 
 // components/viz/VideoPlaybackControls.jsx
-var _react = require('react'); var _react2 = _interopRequireDefault(_react);
+import React2 from "react";
 
 // packages/core/dist/chunk-5YYTHQDT.js
-
-var _jsxruntime = require('react/jsx-runtime');
+import React from "react";
+import { jsx, jsxs } from "react/jsx-runtime";
 function useSliderStyles() {
-  _react2.default.useEffect(() => {
+  React.useEffect(() => {
     if (typeof document === "undefined" || document.getElementById("lk-slider-css")) return;
     const el = document.createElement("style");
     el.id = "lk-slider-css";
@@ -33,20 +33,20 @@ input.lk-slider:disabled::-webkit-slider-thumb{border-color:var(--color-semantic
 function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChange, disabled = false, showValue = false, style, "aria-label": ariaLabel, ...rest }) {
   useSliderStyles();
   const isControlled = value !== void 0;
-  const [internal, setInternal] = _react2.default.useState(defaultValue);
+  const [internal, setInternal] = React.useState(defaultValue);
   const val = isControlled ? value : internal;
   const set = (v) => {
     if (!isControlled) setInternal(v);
     onChange && onChange(v);
   };
   const pct = (val - min) / (max - min) * 100;
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "div", { style: { display: "flex", alignItems: "center", gap: "var(--space-3-5)", ...style }, children: [
-    /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+  return /* @__PURE__ */ jsxs("div", { style: { display: "flex", alignItems: "center", gap: "var(--space-3-5)", ...style }, children: [
+    /* @__PURE__ */ jsx(
       "input",
       {
         className: "lk-slider",
         type: "range",
-        "aria-label": _nullishCoalesce(ariaLabel, () => ( "\uAC12 \uC870\uC808")),
+        "aria-label": ariaLabel ?? "\uAC12 \uC870\uC808",
         min,
         max,
         step,
@@ -66,13 +66,21 @@ function Slider({ value, defaultValue = 0, min = 0, max = 100, step = 1, onChang
         ...rest
       }
     ),
-    showValue && /* @__PURE__ */ _jsxruntime.jsx.call(void 0, "span", { style: { minWidth: 36, textAlign: "right", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: val })
+    showValue && /* @__PURE__ */ jsx("span", { style: { minWidth: 36, textAlign: "right", fontFamily: "var(--font-sans)", fontSize: "var(--label1-size)", fontWeight: "var(--fw-bold)", color: "var(--color-semantic-label-neutral)", fontVariantNumeric: "tabular-nums" }, children: val })
   ] });
 }
 
 // components/viz/VideoPlaybackControls.jsx
-
-var useClientLayoutEffect = typeof window === "undefined" ? _react2.default.useEffect : _react2.default.useLayoutEffect;
+import { Fragment, jsx as jsx2, jsxs as jsxs2 } from "react/jsx-runtime";
+var SEEK_TARGET_STYLES = `
+  .lk-video-playback-controls [data-video-playback-seek] {
+    height: var(--space-6) !important;
+    background-size: 100% var(--space-1-5) !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+  }
+`;
+var useClientLayoutEffect = typeof window === "undefined" ? React2.useEffect : React2.useLayoutEffect;
 function timeText(value) {
   if (!Number.isFinite(value) || value < 0) return "\u2014";
   const seconds = Math.floor(value);
@@ -94,10 +102,10 @@ var SURFACES = {
     borderRadius: "var(--radius-md)"
   },
   "on-dark": {
-    background: _chunk2NP74HUDcjs.VIEWER_OVERLAY_SURFACE.strong.surface,
-    border: _chunk2NP74HUDcjs.VIEWER_OVERLAY_SURFACE.strong.border,
+    background: VIEWER_OVERLAY_SURFACE.strong.surface,
+    border: VIEWER_OVERLAY_SURFACE.strong.border,
     borderRadius: "var(--radius-md)",
-    backdropFilter: _chunk2NP74HUDcjs.VIEWER_OVERLAY_SURFACE.strong.blur
+    backdropFilter: VIEWER_OVERLAY_SURFACE.strong.blur
   }
 };
 function VideoPlaybackControls({
@@ -120,17 +128,17 @@ function VideoPlaybackControls({
   className,
   ...rootProps
 }) {
-  const [preview, setPreview] = _react2.default.useState(null);
-  const [compactClock, setCompactClock] = _react2.default.useState(false);
-  const rootRef = _react2.default.useRef(null);
-  const drag = _react2.default.useRef(null);
-  const callbacks = _react2.default.useRef({ onSeek, disabled, seekDisabled, duration });
+  const [preview, setPreview] = React2.useState(null);
+  const [compactClock, setCompactClock] = React2.useState(false);
+  const rootRef = React2.useRef(null);
+  const drag = React2.useRef(null);
+  const callbacks = React2.useRef({ onSeek, disabled, seekDisabled, duration });
   callbacks.current = { onSeek, disabled, seekDisabled, duration };
   const hasDuration = Number.isFinite(duration) && duration > 0;
   const canSeek = hasDuration && !disabled && !seekDisabled && typeof onSeek === "function";
   const elapsed = Math.max(0, Number.isFinite(currentTime) ? currentTime : 0);
   const position = hasDuration ? Math.min(duration, elapsed) : elapsed;
-  const shownTime = _nullishCoalesce(preview, () => ( position));
+  const shownTime = preview ?? position;
   const resolvedAppearance = SURFACES[appearance] ? appearance : "on-dark";
   const onDark = resolvedAppearance === "on-dark";
   const commandStyle = { flex: "0 0 auto", width: 28, height: 28, padding: 0 };
@@ -139,12 +147,12 @@ function VideoPlaybackControls({
     if (!node) return;
     const update = () => setCompactClock(node.getBoundingClientRect().width < 380);
     update();
-    const Observer = _optionalChain([node, 'access', _ => _.ownerDocument, 'access', _2 => _2.defaultView, 'optionalAccess', _3 => _3.ResizeObserver]);
+    const Observer = node.ownerDocument.defaultView?.ResizeObserver;
     const observer = Observer ? new Observer(update) : null;
-    _optionalChain([observer, 'optionalAccess', _4 => _4.observe, 'call', _5 => _5(node)]);
-    return () => _optionalChain([observer, 'optionalAccess', _6 => _6.disconnect, 'call', _7 => _7()]);
+    observer?.observe(node);
+    return () => observer?.disconnect();
   }, []);
-  _react2.default.useEffect(() => {
+  React2.useEffect(() => {
     const finish = (event) => {
       const active = drag.current;
       if (!active || event.pointerId !== active.pointerId) return;
@@ -152,11 +160,11 @@ function VideoPlaybackControls({
       setPreview(null);
       const state = callbacks.current;
       if (!state.disabled && !state.seekDisabled && Number.isFinite(state.duration) && state.duration > 0) {
-        _optionalChain([state, 'access', _8 => _8.onSeek, 'optionalCall', _9 => _9(Math.max(0, Math.min(state.duration, active.value)))]);
+        state.onSeek?.(Math.max(0, Math.min(state.duration, active.value)));
       }
     };
     const cancel = (event) => {
-      if (event.type === "pointercancel" && event.pointerId !== _optionalChain([drag, 'access', _10 => _10.current, 'optionalAccess', _11 => _11.pointerId])) return;
+      if (event.type === "pointercancel" && event.pointerId !== drag.current?.pointerId) return;
       drag.current = null;
       setPreview(null);
     };
@@ -170,13 +178,13 @@ function VideoPlaybackControls({
       window.removeEventListener("blur", cancel);
     };
   }, []);
-  _react2.default.useEffect(() => {
+  React2.useEffect(() => {
     if (!canSeek) {
       drag.current = null;
       setPreview(null);
     }
   }, [canSeek]);
-  return /* @__PURE__ */ _jsxruntime.jsxs.call(void 0,
+  return /* @__PURE__ */ jsxs2(
     "div",
     {
       ...rootProps,
@@ -197,29 +205,31 @@ function VideoPlaybackControls({
         alignItems: "center",
         gap: "var(--space-1)",
         padding: "var(--space-1)",
-        color: onDark ? _chunk2NP74HUDcjs.VIEWER_OVERLAY_SURFACE.strong.ink : "var(--color-semantic-label-normal)",
-        "--viewer-foreground": onDark ? _chunk2NP74HUDcjs.VIEWER_OVERLAY_SURFACE.strong.ink : "var(--color-semantic-label-normal)",
+        color: onDark ? VIEWER_OVERLAY_SURFACE.strong.ink : "var(--color-semantic-label-normal)",
+        "--viewer-foreground": onDark ? VIEWER_OVERLAY_SURFACE.strong.ink : "var(--color-semantic-label-normal)",
         ...SURFACES[resolvedAppearance],
         ...variant === "embedded" ? { border: 0, borderRadius: 0, boxShadow: "none" } : null,
         ...style
       },
       children: [
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          _chunkP65KUIKJcjs.IconButton,
+        /* @__PURE__ */ jsx2("style", { children: SEEK_TARGET_STYLES }),
+        /* @__PURE__ */ jsx2(
+          IconButton,
           {
             variant: "plain",
             size: 28,
             round: false,
             label: playing ? "\uC601\uC0C1 \uC77C\uC2DC \uC815\uC9C0" : "\uC601\uC0C1 \uC7AC\uC0DD",
             disabled: disabled || !onPlayingChange,
-            onClick: () => _optionalChain([onPlayingChange, 'optionalCall', _12 => _12(!playing)]),
+            onClick: () => onPlayingChange?.(!playing),
             style: commandStyle,
-            children: loading ? /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkEWU3IXB2cjs.Spinner, { size: 16, color: "currentColor", "aria-hidden": "true" }) : /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkCJUHIK6Xcjs.Icon, { name: playing ? "pause" : "play", size: 16 })
+            children: loading ? /* @__PURE__ */ jsx2(Spinner, { size: 16, color: "currentColor", "aria-hidden": "true" }) : /* @__PURE__ */ jsx2(Icon, { name: playing ? "pause" : "play", size: 16 })
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
+        /* @__PURE__ */ jsx2(
           Slider,
           {
+            "data-video-playback-seek": "",
             "aria-label": "\uC601\uC0C1 \uC7AC\uC0DD \uC704\uCE58",
             "aria-valuetext": hasDuration ? `${spokenTime(shownTime)}, \uC804\uCCB4 ${spokenTime(duration)}` : `\uD604\uC7AC ${spokenTime(shownTime)}, \uC804\uCCB4 \uC2DC\uAC04 \uBBF8\uD655\uC778, \uD0D0\uC0C9 \uBD88\uAC00`,
             min: 0,
@@ -227,7 +237,7 @@ function VideoPlaybackControls({
             step: 0.1,
             value: hasDuration ? shownTime : 0,
             disabled: !canSeek,
-            style: { width: "100%", minWidth: 0, paddingBlock: "var(--space-2)" },
+            style: { width: "100%", minWidth: 0 },
             onPointerDown: (event) => {
               if (canSeek && event.isPrimary && event.button === 0) drag.current = { pointerId: event.pointerId, value: position };
             },
@@ -249,7 +259,7 @@ function VideoPlaybackControls({
             }
           }
         ),
-        /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, "span", { "data-video-playback-time": "", "aria-hidden": "true", title: `${timeText(shownTime)} / ${timeText(hasDuration ? duration : null)}`, style: {
+        /* @__PURE__ */ jsxs2("span", { "data-video-playback-time": "", "aria-hidden": "true", title: `${timeText(shownTime)} / ${timeText(hasDuration ? duration : null)}`, style: {
           minWidth: 0,
           maxWidth: "100%",
           whiteSpace: "nowrap",
@@ -259,13 +269,13 @@ function VideoPlaybackControls({
           fontVariantNumeric: "tabular-nums"
         }, children: [
           timeText(shownTime),
-          !compactClock && /* @__PURE__ */ _jsxruntime.jsxs.call(void 0, _jsxruntime.Fragment, { children: [
+          !compactClock && /* @__PURE__ */ jsxs2(Fragment, { children: [
             " / ",
             timeText(hasDuration ? duration : null)
           ] })
         ] }),
-        onMutedChange && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          _chunkP65KUIKJcjs.IconButton,
+        onMutedChange && /* @__PURE__ */ jsx2(
+          IconButton,
           {
             variant: "plain",
             size: 28,
@@ -274,11 +284,11 @@ function VideoPlaybackControls({
             disabled,
             onClick: () => onMutedChange(!muted),
             style: commandStyle,
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkCJUHIK6Xcjs.Icon, { name: muted ? "volume-x" : "volume-2", size: 16 })
+            children: /* @__PURE__ */ jsx2(Icon, { name: muted ? "volume-x" : "volume-2", size: 16 })
           }
         ),
-        onFullscreenChange && /* @__PURE__ */ _jsxruntime.jsx.call(void 0,
-          _chunkP65KUIKJcjs.IconButton,
+        onFullscreenChange && /* @__PURE__ */ jsx2(
+          IconButton,
           {
             variant: "plain",
             size: 28,
@@ -287,7 +297,7 @@ function VideoPlaybackControls({
             disabled,
             onClick: () => onFullscreenChange(!fullscreen),
             style: commandStyle,
-            children: /* @__PURE__ */ _jsxruntime.jsx.call(void 0, _chunkCJUHIK6Xcjs.Icon, { name: "maximize", size: 16 })
+            children: /* @__PURE__ */ jsx2(Icon, { name: "maximize", size: 16 })
           }
         )
       ]
@@ -295,7 +305,7 @@ function VideoPlaybackControls({
   );
 }
 
-
-
-exports.VideoPlaybackControls = VideoPlaybackControls;
-//# sourceMappingURL=chunk-7KAMQFB3.cjs.map
+export {
+  VideoPlaybackControls
+};
+//# sourceMappingURL=chunk-APNUBKCR.js.map
